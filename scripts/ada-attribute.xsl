@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-attribute.xsl,v 8434c8cef9e5 2012/01/02 18:10:19 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -38,7 +38,7 @@
   <xsl:template name="at:identifier-record">
     <xsl:choose>
 
-      <!-- Output only identifier attributes, in document (model) 
+      <!-- Output only identifier attributes, in document (model)
            order. -->
       <xsl:when test="count(attribute[@identifier]) &gt; 0">
         <xsl:value-of select="$I"/>
@@ -153,7 +153,8 @@
   <xsl:template mode="at:instance-record-component" match="*"/>
 
 
-  <!-- Generate get specs. -->
+  <!-- Generate get specs (instance attributes only). Include dont-use
+       comment for generated associative referential attributes. -->
   <xsl:template
     match="class/attribute[not(@class)]"
     mode="at:attribute-get-spec">
@@ -163,7 +164,7 @@
       <xsl:when test="@refers">
 
         <!-- We need to avoid generating an accessor that the user has
-             specified (only likely to occur for [[formalizes]]
+             specified (only at all likely to occur for {formalizes}
              attributes). -->
 
         <xsl:variable name="operation-name">
@@ -173,20 +174,17 @@
 
         <xsl:if test="not(../operation[name=$operation-name])">
 
-          <xsl:if test="not(@role='Parent')">
+          <!-- If this is an association, rather than an inheritance,
+               tell them to use navgation operations. -->
+
+          <xsl:variable name="rel" select="@relation"/>
+          <xsl:if test="/domain/association/name=$rel">
             <xsl:value-of select="$I"/>
             <xsl:text>--  Private use only, use navigation operations&#10;</xsl:text>
           </xsl:if>
 
           <xsl:call-template name="at:attribute-get-header"/>
           <xsl:text>;&#10;</xsl:text>
-
-          <!--
-          <xsl:value-of select="$I"/>
-          <xsl:text>pragma Inline_Always (</xsl:text>
-          <xsl:value-of select="$operation-name"/>
-          <xsl:text>);&#10;</xsl:text>
-          -->
 
           <xsl:value-of select="$blank-line"/>
 
@@ -234,39 +232,53 @@
   </xsl:template>
 
 
-  <!-- Generate set specs (non-identifier instance attributes only). -->
+  <!-- Generate set specs (non-identifier instance attributes
+       only). Include dont-use comment for generated associative
+       referential attributes. -->
   <xsl:template
     match="class/attribute[not(@identifier) and not(@class)]"
     mode="at:attribute-set-spec">
 
-    <xsl:if test="@refers or $generate-accessors='yes'">
+    <xsl:choose>
 
-      <!-- Set procedure, with comment for generated associative
-           referential attributes. -->
+      <xsl:when test="@refers">
 
-      <!-- XXX I don't understand why the test for there being a
-           relation? What does @relation mean anyway? Also, why are
-           set accessors handled differently from gets? -->
+        <!-- We need to avoid generating an accessor that the user has
+             specified (only at all likely to occur for {formalizes}
+             attributes; and they are likely to be identifying). -->
 
-      <xsl:if test="@refers">
-        <xsl:variable name="rel" select="@relation"/>
-        <xsl:if test="/domain/association/name=$rel and not(name)">
-          <xsl:value-of select="$I"/>
-          <xsl:text>--  Private use only, use Link/Unlink&#10;</xsl:text>
+        <xsl:variable name="operation-name">
+          <xsl:text>Set_</xsl:text>
+          <xsl:call-template name="at:attribute-name"/>
+        </xsl:variable>
+
+        <xsl:if test="not(../operation[name=$operation-name])">
+
+          <!-- If this is an association, rather than an inheritance,
+               tell them to use navgation operations. -->
+
+          <xsl:variable name="rel" select="@relation"/>
+          <xsl:if test="/domain/association/name=$rel">
+            <xsl:value-of select="$I"/>
+            <xsl:text>--  Private use only, use Link/Unlink&#10;</xsl:text>
+          </xsl:if>
+
+          <xsl:call-template name="at:attribute-set-header"/>
+          <xsl:text>;&#10;</xsl:text>
+
+          <xsl:value-of select="$blank-line"/>
+
         </xsl:if>
-      </xsl:if>
 
-      <xsl:call-template name="at:attribute-set-header"/>
-      <xsl:text>;&#10;</xsl:text>
-      <!--
-      <xsl:value-of select="$I"/>
-      <xsl:text>pragma Inline_Always (Set_</xsl:text>
-      <xsl:call-template name="attribute-name"/>
-      <xsl:text>);&#10;</xsl:text>
-      -->
-      <xsl:value-of select="$blank-line"/>
+      </xsl:when>
 
-    </xsl:if>
+      <xsl:when test="$generate-accessors='yes'">
+        <xsl:call-template name="at:attribute-set-header"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:when>
+
+    </xsl:choose>
 
   </xsl:template>
 
@@ -311,7 +323,7 @@
       <xsl:when test="@refers">
 
         <!-- We need to avoid generating an accessor that the user has
-             specified (only likely to occur for [[formalizes]]
+             specified (only likely to occur for {formalizes}
              attributes). -->
 
         <xsl:variable name="operation-name">
@@ -359,9 +371,38 @@
     match="class/attribute[not(@identifier) and not(@class)]"
     mode="at:attribute-set-body">
 
-    <xsl:if test="@refers or $generate-accessors='yes'">
+    <xsl:choose>
 
-      <!-- Set procedure -->
+      <xsl:when test="@refers">
+
+        <!-- We need to avoid generating an accessor that the user has
+             specified (only likely to occur for {formalizes}
+             attributes). -->
+
+        <xsl:variable name="operation-name">
+          <xsl:text>Set_</xsl:text>
+          <xsl:call-template name="at:attribute-name"/>
+        </xsl:variable>
+
+        <xsl:if test="not(../operation[name=$operation-name])">
+          <xsl:call-template name="at:attribute-set-body"/>
+        </xsl:if>
+
+      </xsl:when>
+
+      <xsl:when test="$generate-accessors='yes'">
+        <xsl:call-template name="at:attribute-set-body"/>
+      </xsl:when>
+
+    </xsl:choose>
+
+  </xsl:template>
+
+  <xsl:template mode="at:attribute-set-body" match="*"/>
+
+
+  <xsl:template name="at:attribute-set-body">
+
       <xsl:call-template name="at:attribute-set-header"/>
       <xsl:text> is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -376,11 +417,7 @@
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
-    </xsl:if>
-
   </xsl:template>
-
-  <xsl:template mode="at:attribute-set-body" match="*"/>
 
 
   <!-- Called at {class,type}/attribute to generate a record component,

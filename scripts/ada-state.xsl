@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-state.xsl,v 12a6c3b1d22b 2012/01/22 19:05:53 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -144,6 +144,7 @@
            this source. NB, needs to be sorted as it's constructed,
            because preceding-sibling:: is in document order, not
            sorted order.  -->
+      <!-- XXX why include action? -->
       <xsl:variable name="leaving-transitions">
         <xsl:for-each select="../../transition[source=current()]">
           <xsl:sort select="event"/>
@@ -298,7 +299,7 @@
   <xsl:template match="*" mode="st:event-handler-specs"/>
 
 
-  <!-- Generate event handler bodies for <<event>>s. -->
+  <!-- Generate event handler bodies for events. -->
   <xsl:template match="statemachine/event" mode="st:event-handler-bodies">
 
     <!--
@@ -412,7 +413,7 @@
   </xsl:template>
 
 
-  <!-- Generate event handler bodies for <<class events>>s. -->
+  <!-- Generate event handler bodies for class events. -->
   <xsl:template match="event[@class]" mode="st:event-handler-bodies">
 
     <!--
@@ -420,35 +421,15 @@
          begin
             ColdFrame.Project.Log_Info
               ("handling {domain}.{class}.{event}");
-            {receiver} (The_Event);
+            {action} (The_Event.Payload);
          end Handler;
          -->
 
-    <xsl:variable name="e" select="name"/>
-    <xsl:variable
-      name="op"
-      select="../operation[@handler
-              and count(parameter)=1
-              and parameter/type=$e]"/>
-
-    <xsl:if test="not($op)">
-      <xsl:call-template name="ut:log-error"/>
-      <xsl:message>
-        <xsl:text>Error: no handler for </xsl:text>
-        <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
-      </xsl:message>
-    </xsl:if>
-    <xsl:if test="count($op) &gt; 1">
-      <xsl:call-template name="ut:log-error"/>
-      <xsl:message>
-        <xsl:text>Error: more than one handler for </xsl:text>
-        <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
-      </xsl:message>
-    </xsl:if>
+    <xsl:variable name="ev" select="."/>
 
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Handler (The_Event : </xsl:text>
-    <xsl:value-of select="$e"/>
+    <xsl:value-of select="name"/>
     <xsl:text>) is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
@@ -466,9 +447,32 @@
       <xsl:text>");&#10;</xsl:text>
     </xsl:if>
 
-    <xsl:value-of select="$II"/>
-    <xsl:value-of select="$op/name"/>
-    <xsl:text> (The_Event);&#10;</xsl:text>
+    <xsl:for-each select="action">
+      <xsl:variable name="a" select="."/>
+      <xsl:variable name="op" select="../../operation[name=$a]"/>
+      <xsl:choose>
+        <xsl:when test="not($op)">
+          <xsl:call-template name="ut:log-error"/>
+          <xsl:message>
+            <xsl:text>Error: class event </xsl:text>
+            <xsl:value-of select="../../name"/>.<xsl:value-of select="$ev/name"/>
+            <xsl:text> expects operation </xsl:text>
+            <xsl:value-of select="$a"/>
+          </xsl:message>
+        </xsl:when>
+        <xsl:when test="not($op[count(parameter)=1 and parameter/type=$ev/type])">
+          <xsl:message>
+            <xsl:text>Error: class event </xsl:text>
+            <xsl:value-of select="../../name"/>.<xsl:value-of select="$ev/name"/>
+            <xsl:text> parameter mismatch with operation </xsl:text>
+            <xsl:value-of select="$a"/>
+          </xsl:message>
+        </xsl:when>
+      </xsl:choose>
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="$op/name"/>
+      <xsl:text> (The_Event.Payload);&#10;</xsl:text>
+    </xsl:for-each>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Handler;&#10;</xsl:text>
@@ -540,36 +544,36 @@
     <xsl:value-of select="$tr/target"/>
     <xsl:text>;&#10;</xsl:text>
 
-    <!-- Do any transition action (only one possible). -->
-    <xsl:if test="$tr/action">
+    <!-- Do any transition actions. -->
+    <xsl:for-each select="$tr/action">
       <!-- Check for actions after instance deletion. -->
       <xsl:variable name="impl-class">
         <xsl:call-template name="st:class-of-operation-for-action">
-          <xsl:with-param name="class" select="../.."/>
-          <xsl:with-param name="action" select="$tr/action"/>
+          <xsl:with-param name="class" select="../../.."/>
+          <xsl:with-param name="action" select="."/>
         </xsl:call-template>
       </xsl:variable>
       <xsl:variable
         name="actual-action-operation"
-        select="/domain/class[name=$impl-class]/operation[name=$tr/action]"/>
-      <xsl:if test="($tr/action='Delete'
+        select="/domain/class[name=$impl-class]/operation[name=.]"/>
+      <xsl:if test="(.='Delete'
                      or $actual-action-operation/@final)
                     and $target/action">
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
           <xsl:text>Error: entry action(s) after final action on transition to state </xsl:text>
-          <xsl:value-of select="../../name"/>
+          <xsl:value-of select="../../../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="$tr/target"/>
         </xsl:message>
       </xsl:if>
       <xsl:call-template name="st:call-action">
-        <xsl:with-param name="class" select="../.."/>
+        <xsl:with-param name="class" select="../../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
-        <xsl:with-param name="action" select="$tr/action"/>
+        <xsl:with-param name="action" select="."/>
         <xsl:with-param name="indent" select="$indent"/>
       </xsl:call-template>
-    </xsl:if>
+    </xsl:for-each>
 
     <!-- Do entry action(s) in the target state. -->
     <xsl:for-each select="$target/action">

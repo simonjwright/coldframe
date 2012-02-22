@@ -8,12 +8,12 @@
 with AUnit.Reporter.Text;
 with AUnit.Run;
 
-with House_Management.Test_Suite;
+with House_Management.Lamp.Test_Suite;
 with GNAT.Exception_Traces;
 
 procedure House_Management.Harness is
 
-   procedure Run is new AUnit.Run.Test_Runner (Test_Suite.Suite);
+   procedure Run is new AUnit.Run.Test_Runner (Lamp.Test_Suite.Suite);
 
    Reporter : AUnit.Reporter.Text.Text_Reporter;
 

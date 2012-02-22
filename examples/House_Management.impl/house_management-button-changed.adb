@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: house_management-button-changed.adb,v $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
+--  $Author: simonjwright $
 
 --  Acts as receiver of state changes from Digital IO, via Signal
 --  State Callback. Posts a (class) Button Event (only if the button
@@ -44,11 +44,9 @@ begin
       if S.S in Floors then
 
          declare
-            E : constant ColdFrame.Project.Events.Event_P
-              := new Button_Event;
-            P : Button_Name renames Button_Event (E.all).Payload;
+            E : constant ColdFrame.Project.Events.Event_P := new Button_Pushed;
          begin
-            P := Buttons (S.S);
+            Button_Pushed (E.all).Payload := Buttons (S.S);
             ColdFrame.Project.Events.Post (E, On => Events.Dispatcher);
          end;
 

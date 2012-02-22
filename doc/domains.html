@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: domains.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Domains</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -45,18 +45,11 @@ stand a better chance of getting the tool to do what you need.
 <h2>Modelling</h2>
 
 <p>Given the above, the obvious way to model domains is as packages in
-the logical model (in Rose, the package is the unit of change control
-and separate development).
+the logical model, stereotyped <em>&#171;domain&#187;</em>.
 
 <p>Domain packages can have child packages. This might be to make the
 model structure clearer (for example, by separating off all the type
-definitions), or perhaps to keep tentative parts of the model out of
-the way of code generation.
-
-<p>In the latter case, you'll need (with Rose, at any rate) to be
-careful about associations; they too are held in packages, and you
-need to make sure that the associations you do want are in packages
-visible to code generation, and vice versa.
+definitions).
 
 <h3><a name="tags">Tagged values</a></h3>
 
@@ -68,18 +61,16 @@ called before any other domain initialization.
 <p><tt>revision = <i>revision-id-string</i></tt> specifies the
 domain's version control ID.
 
-<p>In Rose with CVS, you'd select the domain Package in the browser
-and add the line
+<h3>Testing</h3>
 
-<!-- couldn't actually use the $ here! -->
-<pre>
-  { revision = &#36;Revision&#36; }
-</pre>
-
-<p>to the documentation pane. Modify as required by your version
-control system, being careful to avoid commas (so, with CVS or RCS,
-avoid
-<tt>&#36;Id&#36;</tt> and <tt>&#36;RCSfile&#36;</tt>).
+<p><a href="testing.html#separating">For testing purposes</a>, it may
+be convenient to gather the &#171;public&#187; classes and public
+types of a domain into a child package
+stereotyped <em>&#171;domain-interface&#187;</em>. The package name
+should be <tt><i>Domain</i> Interface</tt>, which controls where the
+generated code is placed, and the tagged
+value <tt>name=<i>Domain</i></tt> set so that the Ada package names
+match those of the actual software.
 
 <h2>Translation</h2>
 
@@ -87,10 +78,10 @@ avoid
 derived from the package name using the usual name conversion rules
 (it can be overridden using the <tt>{name=<i>new-name</i>}</tt> tag).
 
-<p>Child UML packages are included (recursively) if they are marked
-<em>&#171;generate&#187;</em>. The child UML package structure is
-<em>not</em> reflected in the generated code (for example, all classes
-end up as direct Ada child packages of the domain package).
+<p>Child UML packages are included (recursively). The child UML
+package structure is <em>not</em> reflected in the generated code (for
+example, all classes end up as direct Ada child packages of the domain
+package).
 
 <p>Domain <a href="types.html">types</a> are implemented in the domain
 package. For string types, a string hash function is generated as a
@@ -192,10 +183,6 @@ connections and also to files.
 program. Because it's a child unit, it must be <tt>with</tt>ed
 explicitly.
 
-<p>For unit tests, <a
-href="#cascade-initialize"><tt><i>Domain</i>.Cascade_Initialize</tt></a>
-may save trouble.
-
 <p>If you're building your application, rather than unit tests, you'll
 probably want to pass <tt><i>Domain</i>.Initialize</tt> the Event
 Queue that <tt><i>Domain</i></tt> is to use.
@@ -208,7 +195,8 @@ clauses, though):
 <pre>
    <b>with <i>Domain.Other_Class</i>;</b>
    separate (<i>Domain.Class</i>)
-   procedure Foo is
+   procedure Foo
+   is
    begin
       <b><i>Other_Class</i></b>.Bar;
       ...

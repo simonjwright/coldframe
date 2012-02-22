@@ -65,7 +65,8 @@ else
 endif
 
 # Work out the location of this file (the top level of ColdFrame).
-COLDFRAME := $(shell echo $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) | sed -e "s;/$$;;")
+COLDFRAME := $(shell echo $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) \
+	| sed -e "s;/$$;;")
 
 # Where's the base for the build directories?
 export BUILD_BASE ?= $(COLDFRAME)/.build
@@ -100,10 +101,10 @@ SH ?= sh
 TAR ?= tar
 TEXI2HTML ?= texi2html
 TRUE ?= true
+UNZIP ?= unzip
 ZIP ?= zip
 
 # Non-standard commands
-ITCLSH ?= tclsh
 SAXON_CLASSPATH ?= /usr/local/lib/saxon/saxon.jar
 SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) com.icl.saxon.StyleSheet
 
@@ -114,72 +115,99 @@ MAXIMPLDEPTH ?= 1
 CODEGEN_SCRIPT ?= $(SCRIPTS)/generate-ada.xsl
 DIAGRAM_SCRIPT = $(SCRIPTS)/generate-diagrams.xsl
 HTMLGEN_SCRIPT = $(SCRIPTS)/generate-html.xsl
-NORMALIZE_RAW_SCRIPT = $(SCRIPTS)/normalize-raw.xsl
-NORMALIZE_ROSE_SCRIPT = $(SCRIPTS)/normalize-rose.tcl
 
-# Construct the build directories if necessary.
-build-dirs::
-	@[ -n "$(BUILD_BASE)" ] \
-	  || ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
-	@for d in coldframe fixes main; do \
-	  [ -d $(BUILD_BASE)/$$d ] || \
-	    ($(ECHO) $(MKDIR) -p $(BUILD_BASE)/$$d; \
-	     $(MKDIR) -p $(BUILD_BASE)/$$d);\
-	done
+# All code generation scripts, for development use
+CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
+  $(SCRIPTS)/ada-association.xsl		\
+  $(SCRIPTS)/ada-association-collection.xsl	\
+  $(SCRIPTS)/ada-attribute.xsl			\
+  $(SCRIPTS)/ada-callback.xsl			\
+  $(SCRIPTS)/ada-class.xsl			\
+  $(SCRIPTS)/ada-collection.xsl			\
+  $(SCRIPTS)/ada-inheritance.xsl		\
+  $(SCRIPTS)/ada-operation.xsl			\
+  $(SCRIPTS)/ada-serialization.xsl		\
+  $(SCRIPTS)/ada-state.xsl			\
+  $(SCRIPTS)/ada-type.xsl			\
+  $(SCRIPTS)/ada-teardown.xsl			\
+  $(SCRIPTS)/ada-unittest.xsl			\
+  $(SCRIPTS)/ada-utilities.xsl
 
 # Pattern rules
 
-# Generate .raw files.
-# Must have ply installed in python.
-# Will need extra dependencies if there are controlled child packages.
-$(COLDFRAMEOUT)/%.raw: $(MODELS)/%.cat
-	python $(SCRIPTS)/cat2raw.py -o $@ $<
+# Generate .rr files (resolved references in ArgoUML files) from .uml.
+# XXX This contains a workround for ArgoUML Issue 6385.
+# XXX This contains a workround for an XML/Ada issue.
+$(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
+	$(SED)								\
+	  -e "s;<pgml ;<pgml xmlns:argouml='http://argouml.org' ;"	\
+	  <$<								\
+	  >$@~1
+	$(SAXON)							  \
+	  $@~1								  \
+	  $(COLDFRAME)/scripts/resolve-references.xsl			  \
+	  library_path=$(COLDFRAME)/lib/				  \
+	  >$@~2								  \
+	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
+	$(SED)								\
+	  -e "s;org.omg.xmi.namespace.UML;http://www.omg.org/spec/XMI;"	\
+	  <$@~2								\
+	  >$@
 
-%.raw-norm: $(COLDFRAMEOUT)/%.raw
-	  $(SAXON) $< $(NORMALIZE_RAW_SCRIPT)  >$@
+# Generate .rr files (resolved references in ArgoUML files) from .zargo.
+# XXX This contains a workround for an XML/Ada issue.
+$(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
+	$(UNZIP) -p $< $(*F).xmi >$@~1
+	$(SAXON)							  \
+	  $@~1								  \
+	  $(COLDFRAME)/scripts/resolve-references.xsl			  \
+	  library_path=$(COLDFRAME)/lib/				  \
+	  >$@~2								  \
+	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
+	$(SED)								\
+	  -e "s;org.omg.xmi.namespace.UML;http://www.omg.org/spec/XMI;"	\
+	  <$@~2								\
+	  >$@
 
-# Generate .norm files.
-%.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
-	@$(ECHO) generating $@ ...
-	$(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
-	    --casing '$(CASE_EXCEPTIONS)' \
-	    $(NORM_CHECKING) \
-	    $(NORM_DOMAIN_NAME) \
-	    --output $@ \
-	    $(NORM_STACK_DUMP) \
-	    $(NORM_VERBOSE) \
-	    <$< || ($(RM) -f $@; $(EXIT) 1)
+# Generate .norm files from .rr.
+# This is actually cast as a rule to generate .norm-stamp files from .rr,
+# because a .rr file can contain any number of domains.
+%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
+	$(COLDFRAME)/tools/normalize_xmi	\
+	  -c $(CASE_EXCEPTIONS)			\
+	  $<
+	touch $@
 
 # Generate .html (and image) files.
 # Do the diagrams first, because the HTML requires the cmapx output.
 # The cwd parameter to the HTML script is because XSLT has no access
 # otherwise.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
-	@if [ "$(GENERATE_DIAGRAMS)" = "yes" ]; then \
-	  $(RM) -rf `basename $@ .html`.images; \
-	  $(MKDIR) `basename $@ .html`.images; \
-	  $(ECHO) generating diagrams for $@ ...; \
-	  $(SAXON) $< $(DIAGRAM_SCRIPT) \
-	    >`basename $@ .html`.images/$@.sh; \
-	  $(SH) -v `basename $@ .html`.images/$@.sh; \
+	@if [ "$(GENERATE_DIAGRAMS)" = "yes" ]; then	\
+	  $(RM) -rf `basename $@ .html`.images;		\
+	  $(MKDIR) `basename $@ .html`.images;		\
+	  $(ECHO) generating diagrams for $@ ...;	\
+	  $(SAXON) $< $(DIAGRAM_SCRIPT)			\
+	    >`basename $@ .html`.images/$@.sh;		\
+	  $(SH) -v `basename $@ .html`.images/$@.sh;	\
 	fi
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT) \
-	  cwd=$(shell pwd) diagrams=$(GENERATE_DIAGRAMS) >$@ || \
+	@$(SAXON) $< $(HTMLGEN_SCRIPT)				\
+	  cwd=$(shell pwd) diagrams=$(GENERATE_DIAGRAMS) >$@ ||	\
 	  ($(RM) -f $@; $(EXIT) 1)
 
 # Generate .ada files.
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(CODEGEN_SCRIPT) \
-	  add-blank-lines=$(BLANK_LINES) \
-	  checking-policy=$(CHECKING) \
-	  generate-accessors=$(GENERATE_ACCESSORS) \
-	  generate-event-logging=$(GENERATE_EVENT_LOGGING) \
-	  generate-stubs=$(GENERATE_STUBS) \
-	  unit-test-support=$(UNIT_TEST_SUPPORT) \
-	  verbose=$(VERBOSE) \
-	  >$@-t \
+	@$(SAXON) $< $(CODEGEN_SCRIPT)					  \
+	  add-blank-lines=$(BLANK_LINES)				  \
+	  checking-policy=$(CHECKING)					  \
+	  generate-accessors=$(GENERATE_ACCESSORS)			  \
+	  generate-event-logging=$(GENERATE_EVENT_LOGGING)		  \
+	  generate-stubs=$(GENERATE_STUBS)				  \
+	  unit-test-support=$(UNIT_TEST_SUPPORT)			  \
+	  verbose=$(VERBOSE)						  \
+	  >$@-t								  \
 	  || ($(ECHO) "Generation problem."; $(RM) -f $@ $@-t; $(EXIT) 1)
 	@$(SED) -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
 	  <$@-t >$@
@@ -188,11 +216,11 @@ $(COLDFRAMEOUT)/%.raw: $(MODELS)/%.cat
 # Generate .h files.
 %.h: %.norm $(C_CODEGEN_SCRIPTS)
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(C_CODEGEN_SCRIPT) \
-	  add-blank-lines=$(BLANK_LINES) \
-	  generate-accessors=$(GENERATE_ACCESSORS) \
-	  verbose=$(VERBOSE) \
-	  >$@ \
+	@$(SAXON) $< $(C_CODEGEN_SCRIPT)				\
+	  add-blank-lines=$(BLANK_LINES)				\
+	  generate-accessors=$(GENERATE_ACCESSORS)			\
+	  verbose=$(VERBOSE)						\
+	  >$@								\
 	  || ($(ECHO) "Generation problem."; $(RM) -f $@; $(EXIT) 1)
 
 # Generate the .gen directory.
@@ -212,24 +240,24 @@ $(COLDFRAMEOUT)/%.raw: $(MODELS)/%.cat
 	@-$(RM) -rf $@
 	@$(MKDIR) $@
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
-	@if [ -d $*.impl ]; then \
-	  TODELETE=""; \
-	  IMPLFILES=`$(FIND) $*.impl \
-	    -maxdepth $(MAXIMPLDEPTH) \
-	    -name \*.ad[bs]`; \
-	  for f in $$IMPLFILES; do \
-	    GENFILE=$@/`basename $$f`; \
-	    if [ -f $$GENFILE ]; then \
-	      TODELETE="$$TODELETE $$GENFILE"; \
-	    else \
-	      $(ECHO) "  extra source file $$f"; \
-	    fi; \
-	  done; \
-	  for f in $$TODELETE; do \
-	    if [ -f $$f ]; then \
-	      $(ECHO) "    removing $$f"; $(RM) $$f; \
-	    fi; \
-	  done; \
+	@if [ -d $*.impl ]; then			\
+	  TODELETE="";					\
+	  IMPLFILES=`$(FIND) $*.impl			\
+	    -maxdepth $(MAXIMPLDEPTH)			\
+	    -name \*.ad[bs]`;				\
+	  for f in $$IMPLFILES; do			\
+	    GENFILE=$@/`basename $$f`;			\
+	    if [ -f $$GENFILE ]; then			\
+	      TODELETE="$$TODELETE $$GENFILE";		\
+	    else					\
+	      $(ECHO) "  extra source file $$f";	\
+	    fi;						\
+	  done;						\
+	  for f in $$TODELETE; do			\
+	    if [ -f $$f ]; then				\
+	      $(ECHO) "    removing $$f"; $(RM) $$f;	\
+	    fi;						\
+	  done;						\
 	fi
 	@$(CHMOD) -R a-w $@
 	@$(CHMOD) u+w $@

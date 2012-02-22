@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: conversion.html,v ca26b77e66f1 2012/02/19 11:56:12 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Conversion to standard form</title>
@@ -17,40 +17,33 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <p>ColdFrame's "standard form" uses a home-grown <a
 href="ColdFrame-norm.xsd">schema</a> rather than the standard XMI
-Metadata Interchange (XMI) one. This is, I'm afraid, because I didn't
-think to check what standardisation activities were under way;
-however, I think it would have taken a lot longer if I'd used
-XMI. Perhaps an appropriate approach would be to use an XSL transform
-to convert documents from XMI to ColdFrame.
+Metadata Interchange (XMI) one.
 
-<p>See <a href="xml-schemas.html">here</a> for schema validation (both
-of the schema itself and of files that are supposed to conform to it).
+<p>The processing is done using the Ada
+program <tt>normalize_xmi</tt>, which uses
+the <a href="resources.html#xml">XIA</a> (XPath In Ada) package to
+access the XMI in the ArgoUML <tt>.uml</tt> file.
 
-<p>The processing is done using the <em><a
-href="resources.html#tcl">itcl</a></em> script
-<tt>normalize-rose.tcl</tt>, which uses the <a
-href="resources.html#xml">TclXML</a> package to handle the parse of
-the <tt><i>package-name</i>.raw</tt> file. The Makefile places the
-output in <tt><i>package-name</i>.norm</tt>.
-
+<!--
 <p>You can see a <a href="error-messages.html">listing and explanation
 of error and warning messages</a> that may appear.
+-->
 
 <h2>Options</h2>
 
-<p><tt>normalize-rose.tcl</tt> takes the options
+<p><tt>normalize_xmi</tt> takes the options
 
 <dl>
 
-<dt><tt>--casing <i>filename</i></tt>
+<dt><tt>-c <i>filename</i></tt>
 
 <dd>Specifies the name of one or more case-exceptions files.
 
 <br>If there is more than one file, separate them using a colon
 <tt>:</tt> on Unix, a semicolon <tt>;</tt> on Windows.
 
-<br>The file format and the casing rules are as used by AdaCore's
-GLIDE (Emacs <tt>ada-mode</tt>).
+<br>The file format and the casing rules are as used by
+Emacs <tt>ada-mode</tt>.
 
 <br>Each line contains a single specification of a desired
 casing. <tt>ColdFrame</tt> means that all occurrences of the string
@@ -62,16 +55,13 @@ want <tt>io</tt> to be capitalized as <tt>IO</tt> even if it occurs in
 <tt>text_io</tt>, resulting in <tt>Text_IO</tt>, you have to write
 <tt>*IO</tt> in the exceptions file.
 
-<br><tt>--casing</tt> can be repeated as often as required for
-multiple case exception files. If an exception occurs multiple times,
-the last one counts.
-
 <br>Default is to do "title case" casing always (so <tt>text io</tt>
 comes out as <tt>Text_Io</tt>).
 
 <br>The Make variable is <tt>CASE_EXCEPTIONS</tt>, default
-is <tt>~/.emacs_case_exceptions</tt>.
+is <tt>$(COLDFRAME)/scripts/emacs_case_exceptions</tt>.
 
+<!--
 <dt><tt>--checking <i>policy</i></tt>
 
 <dd>If the <i>policy</i> is not <tt>strict</tt>, certain errors are
@@ -104,6 +94,7 @@ debugging ColdFrame, not your model!
 <dd>Specifies whether ColdFrame should report what it's doing.
 
 <br>The Make variable is <tt>VERBOSE</tt>, default is <tt>no</tt>.
+-->
 
 </dl>
 

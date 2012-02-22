@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: generalizations.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -77,7 +77,7 @@ inherited operations.
 decide whether increased precision in the model is worth the extra run
 time costs of maintaining the model.
 
-<p>At present (11 June 2002), ColdFrame expects the set of child
+<p>At present (10.ii.12), ColdFrame expects the set of child
 instances to be complete, which is why <i>Pool Van</i> appears in the
 model above. Every <i>Van</i> must be either a <i>Hired Van</i> or a
 <i>Pool Van</i>. This only actually shows up in implementing
@@ -96,9 +96,10 @@ inheritance relationships.
 
 <ul>
 
-<li>You can mark an instance operation <em>&#171;abstract&#187;</em>
-in a parent to show that it will be implemented (differently,
-presumably!) by the children.
+<li>You can mark an instance operation <i>abstract</i> in a parent to
+show that it will be implemented (differently, presumably!) by the
+children. Check the <i>isAbstract</i> in the <i>modifiers</i> section
+of the ArgoUML <i>Properties</i> tab.
 
 <li>A public or protected concrete (non-abstract) instance operation
 in a parent class has matching versions available to be called in all
@@ -108,14 +109,17 @@ to them).
 <br>Note that this includes <em>&#171;accessor&#187;</em> operations
 (this is how to get at parental attributes).
 
-
 </ul>
 
 <p>ColdFrame supports multiple inheritance, but not partitioned
 inheritance. In spite of this, you need to name all the
 generalization/specialization links in your class diagram,
 <em>and all the links for a particular relationship must have the same
-name</em> (<a href="#rentawreck"><i>r2</i> in the diagram</a>).
+name</em> (<a href="#rentawreck"><i>r2</i> in the diagram</a>). Note
+that ArgoUML (at 0.34) implements UML 1.4, in
+which <a href="http://argouml.tigris.org/issues/show_bug.cgi?id=6398">labels
+on generalization links represwnt something other than the
+generalization name</a>.
 
 <h2>Translation</h2>
 
@@ -194,7 +198,7 @@ inheritance trees, which in any case aren't really related to
 for each parent. Note particularly that this means you get an
 identifier with one identifying attribute for each parent.
 
-<h3>Extended mapping</h3>
+<h3><a name="extended-mapping">Extended mapping</a></h3>
 
 <p>There's <a href="generalizations-extended.html">additional
 support</a>, particularly for dynamic classification (subtype
@@ -202,13 +206,13 @@ migration).
 
 <h3>Operations</h3>
 
-<p>Instance operations marked <em>&#171;abstract&#187;</em> are
+<p>Abstract instance operations (<i>isAbstract</i> checked) are
 dispatched to the current child (skipping down the inheritance tree
 until a concrete implementation is found), while a child class
 receives upward-dispatching implementations of all concrete parental
 instance operations provided that
 <ul>
-<li>they aren't <em>&#171;class&#187;</em> operations,
+<li>they aren't class operations (<i>ownerScope</i> unchecked),
 <li>they are public or protected.
 </ul>
 
@@ -222,7 +226,8 @@ necessary visibility.
 
 <h2>Use</h2>
 
-<p>The fact that the relationships are managed using
+<p>Without the <a href="generalizations-extended.html">extended
+mapping</a>, the fact that the relationships are managed using
 <tt>ColdFrame.Instances.Handle</tt> means that you need to do view
 conversions rather more often than is quite friendly.
 

@@ -14,7 +14,8 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
-# This Makefile is used for distribution generation.
+# This Makefile is used for distribution generation in the project/
+# subdirectory.
 
 # DIST is the location where distribution files are to be copied, eg
 # /Users/simon/coldframe/cf-20110731hg
@@ -23,8 +24,6 @@ include ../Makefile.inc
 
 all:
 	@echo "Only meant to be called from the parent Makefile.dist."
-
-DATE = $(subst cf-,,$(notdir $(DIST)))
 
 ALL =								\
   coldframe-project-calendar.adb				\

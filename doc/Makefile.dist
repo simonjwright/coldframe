@@ -21,99 +21,110 @@
 
 include ../Makefile.inc
 
+# For test only
+DIST ?= ./dist
+
 all:
 	@echo "Only meant to be called from the parent Makefile.dist."
 
 DATE = $(subst cf-,,$(notdir $(DIST)))
 
-DOCS =							\
-  cf.css						\
-  active-classes.html					\
-  analysis.html						\
-  annotations.html					\
-  architecture.html					\
-  associations.html					\
-  attributes.html					\
-  bugs.html						\
-  callbacks.html					\
-  classes.html						\
-  compilation.html					\
-  conversion.html					\
-  copying.html						\
-  directions.html					\
-  documentation.html					\
-  domains.html						\
-  error-messages.html					\
-  events.html						\
-  event-modelling.html					\
-  event-motivation.html					\
-  event-translation.html				\
-  event-use.html					\
-  extending.html					\
-  extraction.html					\
-  faq.html						\
-  generalizations.html generalizations-extended.html	\
-  generation.html					\
-  house-2.gif						\
-  index.html						\
-  initialization.html					\
-  installation.html					\
-  operation-parameters.html				\
-  operations.html					\
-  preparation.html					\
-  principles.html					\
-  releases.html						\
-  reserved-names.html					\
-  resources.html					\
-  serialization-page.html				\
-  strategy.html						\
-  support.html						\
-  target.html						\
-  testing.html						\
-  translation-rules.html				\
-  types.html						\
-  use-of-bcs.html					\
-  xml-schemas.html States-check.xsv States-check.html	\
-  ColdFrame-raw.xsd ColdFrame-norm.xsd
+DOCS =						\
+  cf.css					\
+  active-classes.html				\
+  analysis.html					\
+  annotations.html				\
+  architecture.html				\
+  associations.html				\
+  attributes.html				\
+  bugs.html					\
+  callbacks.html				\
+  classes.html					\
+  compilation.html				\
+  conversion.html				\
+  copying.html					\
+  documentation.html				\
+  domains.html					\
+  error-messages.html				\
+  events.html					\
+  event-modelling.html				\
+  event-motivation.html				\
+  event-translation.html			\
+  event-use.html				\
+  extending.html				\
+  extraction.html				\
+  faq.html					\
+  generalizations.html 				\
+  generalizations-extended.html			\
+  generation.html				\
+  index.html					\
+  initialization.html				\
+  installation.html				\
+  operation-parameters.html			\
+  operations.html				\
+  preparation.html				\
+  principles.html				\
+  releases.html					\
+  reserved-names.html				\
+  resources.html				\
+  serialization-page.html			\
+  strategy.html					\
+  support.html					\
+  target.html					\
+  testing.html					\
+  translation-rules.html			\
+  types.html					\
+  use-of-bcs.html				\
+  ColdFrame-norm.xsd
 
-GIFS = States.gif States-Monitor.gif
+GIFS = States.gif States-Monitor.gif house-2.gif
 
 JPEGS = navigation.jpg window-screen.jpg
 
-PNGS = \
-better-association.png \
-browse-state-model.png \
-class-mappings.png \
-collections-mapping.png \
-digital-io.png \
-digital-io-interface.png \
-discriminated-record.png \
-event-mapping.png \
-hierarchies-full.png \
-hierarchies.png \
-house-digital-io.png \
-house-management.png \
-house-management-operation.png \
-inheritance.png \
-lamp.png \
-lamp-state.png\
-lamp-state-resetting.png\
-metamodel.png \
-operations-mapping.png \
-real_time.png \
-recordable_real_time.png \
-reflexive.png \
-relationships-mapping.png \
-sample_a.png \
-serialization-class-model-t.png \
-serialization-class-model.png \
-serialization-sequence-t.png \
-serialization-sequence.png \
-serialization-state-t.png \
-serialization-state.png \
-serialization.png \
-simple-association.png \
-type-mapping.png \
+PNGS =						\
+Screenshot-Project_Properties-Profiles.png	\
+Screenshot-Settings-Diagram_Appearance.png	\
+Screenshot-Settings-Notations.png		\
+Screenshot-Settings-Profiles.png		\
+Screenshot-Settings-User.png			\
+argouml-installation.html			\
+better-association.png				\
+browse-state-model.png				\
+button-class-state-machine.png			\
+class-mappings.png				\
+collections-mapping.png				\
+digital-io-interface.png			\
+digital-io.png					\
+discriminated-record.png			\
+event-mapping.png				\
+event-payload.png				\
+hierarchies-full.png				\
+hierarchies.png					\
+house-digital-io.png				\
+house-management-operation.png			\
+house-management.png				\
+inheritance.png					\
+lamp-button-event-browsing.png			\
+lamp-state-resetting.png			\
+lamp-state.png					\
+lamp.png					\
+metamodel.png					\
+operations-mapping.png				\
+real_time.png					\
+recordable_real_time.png			\
+reflexive.png					\
+relationships-mapping.png			\
+sample_a.png					\
+save-project-as-uml.png				\
+serialization-class-model-t.png			\
+serialization-class-model.png			\
+serialization-sequence-t.png			\
+serialization-sequence.png			\
+serialization-state-t.png			\
+serialization-state.png				\
+serialization.png				\
+simple-association.png				\
+type-mapping.png				\
 vague-association.png
 
 ALL = $(DOCS) $(GIFS) $(JPEGS) $(PNGS)
@@ -124,6 +135,7 @@ DATED_FILES =					\
 
 # Files that need to be generated
 GENERATED_FILES =				\
+  ColdFrameProfile.html				\
   coldframe-architecture.html			\
   self-events.png				\
   use-cases.html
@@ -145,13 +157,13 @@ coldframe-architecture.html: $(COLDFRAMEOUT)/Architecture.raw
 use-cases.html: use-cases.texi
 	$(TEXI2HTML) -monolithic $<
 
+ColdFrameProfile.html: $(COLDFRAMEOUT)/ColdFrameProfile.rr
+	$(SAXON) $< $(COLDFRAME)/scripts/generate-profile-html.xsl >$@
+
 dist::
 	-$(RM) -rf $(DIST)/doc
 	$(MKDIR) -p $(DIST)/doc
 	$(CP) -p $(ALL) $(DIST)/doc/
-
-dist::
-	$(CP) -p ../scripts/rose-addin.mnu $(DIST)/doc/
 
 dist::
 	for f in $(DATED_FILES); do \

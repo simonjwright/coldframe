@@ -14,8 +14,8 @@
 
 # $Id$
 
-# Makefile for tests, use with Cygwin under Windows or Unix (assumes a
-# Unix system if Cygwin not detected).
+# Makefile for examples, use with Cygwin under Windows or Unix
+# (assumes a Unix system if Cygwin not detected).
 
 # It's assumed that no project-special settings are in place and that
 # the command 'gnatmake' will compile and generate an executable.
@@ -46,25 +46,25 @@ EXECUTABLES += library_test_harness$(exe)
 library_test_harness$(exe): Library.gen force
 	$(app) gnatmake -p -PLibrary
 
-EXECUTABLES += performance_harness$(exe)
+#EXECUTABLES += performance_harness$(exe)
 performance_harness$(exe): Performance.gen force
 	$(app) gnatmake -p -PPerformance
 
-EXECUTABLES += problem_reporting_harness$(exe)
+#EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
 	$(app) gnatmake -p -PProblem_Reporting
 
-EXECUTABLES += serialization_client$(exe)
+#EXECUTABLES += serialization_client$(exe)
 serialization_client$(exe): serialization_server$(exe)
 
-EXECUTABLES += serialization_server$(exe)
+#EXECUTABLES += serialization_server$(exe)
 serialization_server: Serialization.gen \
  Serialization_Demo.gen \
  Serialization_Demo_Other.gen \
  force
 	$(app) gnatmake -p -PSerialization
 
-EXECUTABLES += states-t$(exe)
+#EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
 	$(app) gnatmake -p -PStates
 
@@ -72,12 +72,29 @@ EXECUTABLES += stairwell_demo$(exe)
 stairwell_demo$(exe): House_Management.gen Digital_IO.gen force
 	$(app) gnatmake -p -Pstairwell_demo
 
+EXECUTABLES += van_fleet-demo$(exe)
+van_fleet-demo$(exe): Van_Fleet.gen
+	$(app) gnatmake -p -PVan_Fleet
+
 all:: $(EXECUTABLES)
 
-Digital_IO_Interface.gen: $(COLDFRAMEOUT)/Digital_IO_Interface.raw
+Digital_IO_Interface.gen: Digital_IO_Interface.norm
 	$(MAKE) -f $(COLDFRAME)/Makefile.inc $@ \
-	  DOMAIN_NAME=Digital_IO \
 	  GENERATE_STUBS=yes
+
+# ArgoUML support
+
+NORM_FILES =					\
+ Digital_IO.norm				\
+ Digital_IO_Interface.norm			\
+ House_Management.norm				\
+ Interrupt_Handling.norm			\
+ Library.norm					\
+ Van_Fleet.norm
+
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 clean::
 	find $(BUILD_BASE) -type f -name \*.o -o -name \*.ali | xargs rm -f

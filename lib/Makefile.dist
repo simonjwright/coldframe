@@ -14,17 +14,15 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
-# This Makefile is used for distribution generation.
+# This Makefile is used for distribution generation in the lib/
+# subdirectory.
 
 # DIST is the location where distribution files are to be copied, eg
 # /Users/simon/coldframe/cf-20110731hg
 
 include ../Makefile.inc
 
-all:
-	@echo "Only meant to be called from the parent Makefile.dist."
-
-DATE = $(subst cf-,,$(notdir $(DIST)))
+all::
 
 ALL =									\
 coldframe-bounded_storage_pools.adb					\
@@ -94,6 +92,18 @@ coldframe-unbounded_storage_pools.ads					\
 coldframe-unbounded_strings.adb						\
 coldframe-unbounded_strings.ads						\
 coldframe.ads
+
+ALL += default-uml14.xmi ColdFrameProfile.xmi
+
+default-uml14.xmi:
+	wget http://argouml.org/profiles/uml14/default-uml14.xmi
+
+ColdFrameProfile.xmi: ../models/ColdFrameProfile.uml \
+	../scripts/normalize-profile.xsl
+	$(SAXON)				\
+	  $<					\
+	  ../scripts/normalize-profile.xsl	\
+	  >$@
 
 dist:
 	-$(RM) -rf $(DIST)/lib

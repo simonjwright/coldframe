@@ -21,6 +21,9 @@
 
 include ../Makefile.inc
 
+# For test only
+DIST ?= ./dist
+
 all:
 	@echo "Only meant to be called from the parent Makefile.dist."
 
@@ -37,6 +40,7 @@ STAIRWELL_DEMO =						\
   Digital_IO.impl/digital_io-signal-initialize.adb		\
   Digital_IO.impl/digital_io-signal-set_state.adb		\
   House_Management.impl/house_management-button-changed.adb	\
+  House_Management.impl/house_management-button-initialize.adb	\
   House_Management.impl/house_management-button-pushed.adb	\
   House_Management.impl/house_management-events-initialize.adb	\
   House_Management.impl/house_management-lamp-clear_timeout.adb	\
@@ -46,11 +50,12 @@ STAIRWELL_DEMO =						\
   House_Management.impl/house_management-lamp-turn_on.adb	\
   House_Management.impl/stairwell_demo.adb
 
-HOUSE_MANAGEMENT_TEST =					\
-  House_Management_Test.gpr				\
-  House_Management.test/house_management-harness.adb	\
-  House_Management.test/house_management-test_suite.adb	\
-  House_Management.test/house_management-test_suite.ads
+HOUSE_MANAGEMENT_TEST =						\
+  House_Management_Test.gpr					\
+  House_Management.test/house_management-harness.adb		\
+  House_Management.test/house_management-harness.ads		\
+  House_Management.test/house_management-lamp-test_suite.adb	\
+  House_Management.test/house_management-lamp-test_suite.ads
 
 SERIALIZATION =								\
   Serialization.gpr							\
@@ -119,9 +124,19 @@ STATES = 							\
   States.impl/states-t.adb					\
   States.impl/states-t.ads
 
+VAN_FLEET =						\
+  Van_Fleet.gpr						\
+  Van_Fleet.impl/van_fleet-demo.adb			\
+  Van_Fleet.impl/van_fleet-demo.ads			\
+  Van_Fleet.impl/van_fleet-hired_van-cleanup.adb	\
+  Van_Fleet.impl/van_fleet-hired_van-image.adb		\
+  Van_Fleet.impl/van_fleet-pool_van-image.adb		\
+  Van_Fleet.impl/van_fleet-van-lend.adb			\
+  Van_Fleet.impl/van_fleet-van-returned.adb
+
 ALL = $(STAIRWELL_DEMO) $(HOUSE_MANAGEMENT_TEST) $(SERIALIZATION)	\
   $(INTERRUPT_HANDLING) $(LIBRARY) $(PERFORMANCE) $(PROBLEM_REPORTING)	\
-  $(STATES)
+  $(STATES) $(VAN_FLEET)
 
 ALL += Makefile
 

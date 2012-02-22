@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: digital_io-signal-set_state.adb,v $
+--  $Revision: bc58c45ca10d $
+--  $Date: 2012/01/23 12:07:05 $
+--  $Author: simonjwright $
 
 --  Set the signal's state as indicated; call Changed if it has
 --  changed.
@@ -23,7 +23,7 @@
 separate (Digital_IO.Signal)
 procedure Set_State
   (This : Handle;
-   To : Boolean) is
+   To : Boolean := True) is
 begin
 
    if To /= This.State then

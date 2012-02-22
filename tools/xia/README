@@ -1,0 +1,284 @@
+XIA (XPath In Ada) is a native Ada implementation of the XPath 1.0
+specification.  XIA is built atop the DOM component of AdaCore's
+XML/Ada implementation.
+
+Submitting XPath queries is done via the XPath_Query function in
+package McKae.XML.XPath.XIA.  The function returns a Node_List, as
+defined in DOM.Core, and whose contents can be accessed with the Item
+function in DOM.Core.Nodes;
+
+A script, txia, and an input file of XPath queries, txia_tests.txt,
+are provided to jam a bunch of queries through the test program (if
+more test queries are added, be sure to leave the empty line at the
+bottom of the file).  txia_tests.txt also exhibits a wide variety of
+XPath queries, although the majority of these are nonsense queries as
+far as realistic usage is concerned, they're tailored to exercise and
+test various aspects of XIA's implementation.
+
+To generate the test program, cd to the test directory and invoke
+gnatmake as follows:
+
+gnatmake -O2 -I.. -I../booch4xia test_xpath `xmlada-config`
+
+
+AdaBrowse generated source code documentation resides in the doc
+subdirectory.
+
+Please let me know if you have any questions or find bugs with the
+current functionality.
+
+Marc A. Criley
+mc@mckae.com
+
+------------------------------------------------------------------
+
+Version history:
+
+XIA v1.00
+=========
+
+Eliminated the problem with XPath "keywords" being treated as reserved
+words, thanks to some assistance from Dr. Martin Carlisle.  This fix
+removes any limitations on the names of the elements that can be
+selected from XML documents.
+
+To test the above fix, another simple XML test file was added, whose
+contents consists entirely of XPath keywords.  A number of XPath
+queries against this file are provided for testing.  (See the
+keyword_content.xml and keyword_content_tests.txt files.)
+
+XIA v0.61
+=========
+
+This version corrects one of the known bugs in XIA 0.60--where a
+predicate containing an expression that is a union (|) of node sets
+generated a syntax error.
+
+Additional test cases added txia_tests.txt as well.
+
+XIA v0.60
+=========
+
+This release completes the required functionality for the XML Path
+Language (XPath) Version 1.0.
+
+This itself is not a 1.0 version because it has not been fully shaken
+out for bugs, and it is in fact being released with two known bugs and
+a limitation:
+
+- Predicates containing an expression that is a union (|) of node sets
+generates in a syntax error.
+
+- The axis and node test names are being treated as reserved words,
+hence if the XML document being processed contains elements that have
+those names (e.g., child, ancestor), any XPath queries that refer to
+those elements will be rejected as having a syntax error.
+
+- The id() core library function is implemented, but inoperable.  It
+relies on the XMLAda implementation of Get_Element_By_ID, which is not
+implemented.
+
+Changes since the last release include fixing some minor bugs and
+completing the implementation of the core library functions.
+
+- In some situations the descendant-or-self axis was ignoring the
+"self".
+
+- When using consecutive predicates, the result of evaluating
+subsequent ones was being union'ed to the node set, rather than doing
+additional filtering.
+
+New and completed functions:
+     id
+     lang
+     name
+     local-name
+     namespace-uri
+
+The txia_test.txt file, containg a list of XPath queries that
+seriously exercise the predicate filtering capabilities of XIA, has
+been updated to 140 queries.  In addition, a test results file,
+txia_results.txt, is now included that shows the expected output from
+running the txia test series.
+
+
+XIA v0.50
+=========
+
+This release implements the handling of path expressions within
+predicates, and adds/completes functions that work with node-sets
+acquired by the evaluation of such paths.
+
+Therefore this release has sufficient capabilities implemented that
+one may now consider it for actual XML applications, rather than just
+something to play around with.
+
+Remaining core library functions and capabilites will continue to be
+implemented in subsequent releases.
+
+There is only one known significant bug: The parser treats "and",
+"or", "not", "div", the axis names ("child", "ancestor", etc.), and
+node type names ("text", etc.) as reserved words.  Meaning that if an
+XML document uses such a term as an element tag, referencing it as
+part of the path in an XPath expression will generate a syntax error.
+
+New and completed functions:
+     count
+     normalize-string
+     sum
+     translate
+
+The txia_test.txt file, containg a list of XPath queries that
+seriously exercise the predicate filtering capabilities of XIA, has
+been updated (119 queries and growing!), as has the personal.xml and
+personal.dtd test files.
+
+
+XIA v0.30
+=========
+
+First release with partial implementation of predicate filtering.
+
+The arithmetic and relational operators have been implemented for
+numeric, boolean, and string operands.  (This means that they're not
+yet handling node-set operands.)
+
+A majority of the core library functions have been implemented, though
+again those dealing with node-set arguments may not be implemented, or
+may only support the numeric, boolean, and string arguments.
+
+Predicate expressions utilizing paths are not yet implemented.
+
+List of core library functions in this release:
+     boolean
+     count
+     concat
+     contains
+     ceiling
+     false
+     floor
+     last
+     not
+     number
+     position
+     round
+     string
+     starts-with
+     substring-before
+     substring-after
+     substring
+     string-length
+     sum
+     true
+
+
+See the txia_test.txt file for a list of XPath queries that seriously
+exercise the predicate filtering capabilities of XIa.
+
+
+XIA v0.20
+=========
+
+Same thing only better.
+
+This version fixes bugs pertaining to extracting the queried nodes,
+but really the only functional difference between this and the
+previous version is that XPath expressions containing predicates are
+now completely syntactically checked.  Previously you could have
+pretty much any gibberish between the brackets and so long as the rest
+of the query was correct, the query would be accepted.  Not so any
+more.
+
+However, internally the entire parsing implementation has been
+replaced with one generated with the aid of AdaGOOP/scaflex/scayacc.
+
+Those generated parsing files (modified), along with the xpath.g
+grammar used as AdaGOOP input, are included.  Although what you get
+out of AdaGOOP won't exactly match what is included in this archive.
+Modifications were done to raise an exception in the case of a syntax
+error instead of printing a message, and the IO package was modified
+to get its input from a string rather than a file.
+
+A script, txia, and an input file of XPath queries, txia_tests.txt,
+are provided to jam a bunch of queries through the test program (if
+you add more test queries, be sure to leave the empty line at the
+bottom of the file).
+
+The archive now contains the specific Booch components needed to build
+XIA.  You don't need to use the provided subset if you already have
+the components installed (as they're unchanged from the primary
+distribution), but they're provided here as a convenience.
+
+A command line to compile the test program in the xia-0.20/test
+directory is:
+
+gnatmake -I.. -I../booch4xia test_xpath `xmlada-config`
+
+Please let me know if you have any questions or find bugs with the
+current functionality.
+
+mc@mckae.com
+
+
+XIA v0.10
+=========
+
+XIA utilizes Ada Core's XML/Ada distribution, and is known to work on
+Linux (RedHat 9) under GNAT 3.15p and GNAT 3.4.2.  There should be no
+Linux-specific dependencies.
+
+There's nothing special about building or incorporating XIA into your
+application.  Simply unpack the archive into a directory and either
+explicitly include (-I) that directory on the command line or add it
+as part of the ADA_INCLUDE_PATH environment variable setting.
+
+AdaBrowse generated documentation is available in the doc
+subdirectory.
+
+A rudimentary query test program is provided as test_xpath.adb.
+Compile it on Linux as:
+
+gnatmake test_xpath `xmlada-config`
+
+You'll be asked for the name of an XML file, and then an XPath query
+string.  Enter your query, and when done use an empty carriage return
+to end the program.  Within Test_XPath, McKae.XML.XPath.XPath_Query is
+invoked with the document's root (document) node and the query and a
+list of nodes (which may be empty) is returned.  The contents of each
+node is displayed--if it's an element node, its first level of
+children are displayed, otherwise the value of the node (such as its
+non-blank text) appears.
+
+
+A simple XML file is provided, "personal.xml".
+
+Here are some queries to try on it:
+
+//@id
+
+Extract all the attribute nodes named "id".
+
+//email
+
+Extracts all email nodes.
+
+/personnel/person/link/@subordinates
+
+Finds all the "subordinate" attribute nodes associated with the link
+node that corresponds to the given path
+
+//given/parent::*
+
+Find any parent node of all "given" nodes
+
+//family/text()
+
+Get the text node children that are associated with the family element
+(Note that test_xpath removes any white space from the text before
+displaying it, which if it's all whitespace, leaves nothing to
+display)
+
+//name/following::email
+
+Find all email nodes that follow a name node
+

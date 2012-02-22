@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: callbacks.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Callbacks</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -38,37 +38,22 @@ more normal to connect at initialization and stay connected.
 
 <h3>Server-side</h3>
 
-<p>In the lower-level domain, create a <em>&#171;type&#187;</em>
-corresponding to the event that clients need notifying about.
+<p>In the lower-level domain, create a type corresponding to the event
+that clients need notifying about.
 
-<p>Mark it as a callback type by
-
-<ul>
-
-<li>Using <em>&#171;callback&#187;</em>. This is a shorthand for
-
-<li>Using <em>&#171;type, callback&#187;</em>. This is rather clunky.
-
-<li>Using <em>&#171;type&#187;</em> and including the tag
-<i>{callback}</i>.
-
-</ul>
-
-<p>Either the first or third is neat; which to use depends on how
-important it is to know that this is a callback type just from the
-diagram. Since callbacks are an important part of the domain's
-interface, it's probably best to use the first. You could use a colour
-convention (callback types are <font color='purple'>mauve</font> ...)
+<p>Mark it as a callback type by applying
+the <em>&#171;callback&#187;</em> stereotype.
 
 <h3>Client-side</h3>
 
 <p>If it's not a basic type (such as <i>Boolean</i>), import the
-callback <em>&#171;type&#187;</em> from the server domain
-(<i>{imported = Server}</i>).
+callback type from the server domain (the
+stereotype <em>&#171;imported&#187;</em> and the
+tag <tt>{imported=Server}</tt>).
 
-<p>In an appropriate class, create a <em>&#171;class&#187;</em>
-operation, taking a single (<tt>in</tt>) parameter of the callback
-type, to act as the receiver.
+<p>In an appropriate class, create a class operation
+(<i>ownerScope</i> checked), taking a single (<tt>in</tt>) parameter
+of the callback type, to act as the receiver.
 
 <h2>Translation</h2>
 
@@ -85,19 +70,16 @@ For a callback type <i>CB</i>, ColdFrame generates an instantiation:
 events</a>.
 
 <p>If all you want to say is that something has happened, mark your
-<em>&#171;callback&#187;</em> type <i>{null}</i>. ColdFrame generates
-a <tt>null record</tt> declaration. To create an instance of a null
-record (to call the callbacks with), say <tt>(null record)</tt>.
+&#171;callback&#187; datatype <em>&#171;null&#187;</em> . ColdFrame
+generates a <tt>null record</tt> declaration. To create an instance of
+a null record (to call the callbacks with), say <tt>(null
+record)</tt>.
 
 <p>Don't bother to deregister for callbacks during AUnit test
 teardown; ColdFrame automatically does this for you.
 
 <!--
-
-cool example code
-null record
 exceptions
-
 -->
 
 <p><hr>

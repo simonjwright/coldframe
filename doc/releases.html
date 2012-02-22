@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 127c231499eb 2011/11/13 19:24:08 simonjwright $ -->
+<!-- $Id: releases.html,v ca26b77e66f1 2012/02/19 11:56:12 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -75,10 +75,48 @@ zipped release of 30 January 2001.
 </ul>
 -->
 
-<dt>DATE
+<dt>20120219
 
 <dd>
 <ul class="release">
+
+<li><b>General</b>
+
+<li>ColdFrame can't currently be installed on Windows or Debian
+(problems with TclXML). This has prompted a long-overdue move from
+modelling with Rational Rose to modelling
+with <a href="http://argouml.tigris.org/">ArgoUML</a>.
+
+<li>Unfortunately there's no easy route from a Rose model to an ArgoUML
+one, but Rose has never been freely available.
+
+<li>The changes to ColdFrame's source are on the <i>ArgoUML</i> branch
+in the Sourceforge repository. The Rose version is on
+the <i>RationalRose</i> branch (currently the same as the default).
+
+<li>The old <tt>.raw</tt> files and related scripts are no longer
+used. Instead, the ArgoUML <tt>.uml</tt> model files, containing XMI,
+are converted directly to ColdFrame's <tt>.norm</tt> format, and code
+is then generated as before. The conversion is done by an Ada program
+(<i>normalize_xmi</i>), which
+uses <a href="resources.html#xml">XIA</a> (a copy is included with
+ColdFrame).
+
+<li><b>Modelling</b>
+
+<li>ColdFrame's previous profile hasn't been completely migrated
+yet. The main omissions are the data typing options, for example
+constraints, conventions, and modular types. A lot of the problem is
+the UML 1.4 preference for tagged values to be regarded as properties
+of stereotypes, which leads to
+some <a href="classes.html#class-abbreviation">contortions</a>.
+
+<p>See the model <i>ColdFrame_Examples.uml</i> in the <tt>models/</tt>
+subdirectory for example models.
+
+<li>The ability to extend ColdFrame's processing (by using your own
+profile and code generation) isn't supported; unrecognised stereotypes
+and tagged values are ignored. This may change.
 
 <li><b>Code</b>
 
@@ -97,8 +135,8 @@ on <tt>ADA_PROJECT_PATH</tt>.
 
 <li><b>Installation</b>
 
-<li>ColdFrame can't currently be installed on Windows (problems with
-TclXML).
+<li>Much changed, please see
+the <a href="installation.html">documentation</a>.
 
 </ul>
 

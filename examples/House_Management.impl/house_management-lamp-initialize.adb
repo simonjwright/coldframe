@@ -12,18 +12,16 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: house_management-lamp-initialize.adb,v $
+--  $Revision: 2d8bf8c091b8 $
+--  $Date: 2012/02/17 17:17:34 $
+--  $Author: simonjwright $
 
---  This operation initializes the Lamps and Buttons, and connects to
---  the Digital IO domaion.
+--  This operation initializes the Lamps and Buttons.
 
 with House_Management.Button;
 with House_Management.Button_To_Lamp;
 with House_Management.A1;
-with Digital_IO.Signal_State_Callback;
 
 separate (House_Management.Lamp)
 procedure Initialize is
@@ -84,8 +82,5 @@ begin
    Connect (The_Button => Basement, To => Ground_Floor);
 
    Connect (The_Button => Basement, To => Basement);
-
-   --  Register for button state changes.
-   Digital_IO.Signal_State_Callback.Register (Button.Changed'Access);
 
 end Initialize;

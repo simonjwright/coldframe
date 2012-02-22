@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: generated_lines.adb,v $
+--  $Revision: fd881b1b7e39 $
+--  $Date: 2011/12/11 15:20:54 $
+--  $Author: simonjwright $
 
 with GNAT.Command_Line;
 with GNAT.Directory_Operations; use GNAT.Directory_Operations;
@@ -55,7 +55,9 @@ procedure Generated_Lines is
                      Recursively => Recursively,
                      Logging => Logging);
                else
-                  Generated_Lines_Support.Count (Named & Str (1 .. Last),
+                  Generated_Lines_Support.Count (Named
+                                                   & Directory_Separator
+                                                   & Str (1 .. Last),
                                                  Verbosely => Verbosely,
                                                  Logging => Logging);
                end if;

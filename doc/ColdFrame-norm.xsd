@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
-<!-- $Id$ -->
+<!-- $Id: ColdFrame-norm.xsd,v bc58c45ca10d 2012/01/23 12:07:05 simonjwright $ -->
 
-<!-- 
+<!--
 
      This schema describes the format of .norm files, used as input to
      ColdFrame's XSLT-based code generator.
@@ -20,7 +20,7 @@
 
   <!--
        I don't know why we have to have a default namespace here!
-       The examples in Professional XML 2nd Edition don't show it .. 
+       The examples in Professional XML 2nd Edition don't show it ..
        but, if it's left out, the "ref"s don't work.
        Could be an XSV feature.
        -->
@@ -48,7 +48,8 @@
           <xsd:element ref="type"/>
         </xsd:choice>
         <xsd:element ref="exception" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:group ref="relationship" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="association" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="inheritance" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="references" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -175,7 +176,6 @@
         </xsd:complexType>
       </xsd:element>
       <xsd:element name="imported"/>
-      <xsd:element name="null"/>
       <xsd:element name="renames"/>
     </xsd:choice>
   </xsd:group>
@@ -240,43 +240,37 @@
       <xsd:sequence>
         <xsd:element name="name"/>
         <xsd:element name="type"/>
-        <xsd:element name="initial" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="default" minOccurs="0" maxOccurs="1"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
       <xsd:attribute name="mode"/>
     </xsd:complexType>
   </xsd:element>
 
+  <!-- 'action' only occurs when @class is true. -->
   <xsd:element name="event">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="name"/>
         <xsd:element name="type" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="action" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
       <xsd:attribute name="class"/>
     </xsd:complexType>
   </xsd:element>
 
+  <!-- Only event/name is relevant here. -->
   <xsd:element name="statemachine">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="name"/>
         <xsd:element ref="state" minOccurs="1" maxOccurs="unbounded"/>
-        <xsd:element ref="sm-event" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="transition" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <!-- NB, this element's name is actually plain 'event'; can't be
-       changed until all old .norm files have been replaced.
-       Would be much better if the statemachine had only
-       <xsd:element name="name"/>. -->
-  <xsd:element name="sm-event">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="name"/>
-      </xsd:sequence>
+      <xsd:attribute name="class"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -295,14 +289,14 @@
   <xsd:element name="transition">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="event" minOccurs="0" maxOccurs="1"/>     <!-- XXX -->
-        <xsd:element name="action" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="event" minOccurs="0" maxOccurs="1"/>  <!-- XXX -->
+        <xsd:element name="action" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element name="source"/>
         <xsd:element name="target"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
       <xsd:attribute name="ignore"/>
-      <xsd:attribute name="self"/>
+      <xsd:attribute name="self"/>  <!-- ?? -->
     </xsd:complexType>
   </xsd:element>
 
@@ -350,13 +344,6 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
-
-  <xsd:group name="relationship">
-    <xsd:choice>
-      <xsd:element ref="association"/>
-      <xsd:element ref="inheritance"/>
-    </xsd:choice>
-  </xsd:group>
 
   <xsd:element name="references"/>
 

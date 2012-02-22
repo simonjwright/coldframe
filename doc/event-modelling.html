@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: event-modelling.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -17,6 +17,7 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h2>State modelling</h2>
 
+<!--
 <blockquote>
 A word of warning: although Rational Rose gives you the impression
 that there can be more than one state model per class, and that
@@ -36,6 +37,7 @@ State/Activity Model be either literally <tt>State/Activity Model</tt>
 (with a possible trailing number, eg <tt>State/Activity
 Model<b>2</b></tt>) or a name that can be translated into a simple Ada
 name.
+-->
 
 <h3>Restrictions</h3>
 
@@ -77,31 +79,33 @@ you can extend the period by pushing again while it's still on.
 
 <ol>
 
-<li>The state model starts at the <i>initial</i> state (the black
-spot). Since the transition from the <i>initial</i> state requires no
+<li>The state model starts at the <i>Initial</i> state (the black
+spot). Since the transition from the <i>Initial</i> state requires no
 event to trigger it (it's a "completion transition"), the model
-immediately transitions to the <i>idle</i> state.
+immediately transitions to the <i>Idle</i> state.
 
-<li>On entry to the <i>idle</i> state, the entry action <i>turn off</i>
+<li>On entry to the <i>Idle</i> state, the entry action <i>Turn_Off</i>
 is executed.
 
-<li>The state model remains in the <i>idle</i> state until a <i>button
-push</i> event occurs. It then transitions to the <i>lit</i> state.
+<li>The state model remains in the <i>Idle</i> state until
+a <i>Lamp.Button_Push</i> event occurs. It then transitions to
+the <i>Lit</i> state.
 
-<li>On entry to the <i>lit</i> state, the entry actions <i>turn on</i>
-and <i>set timeout</i> are executed, in the order shown in the
+<li>On entry to the <i>Lit</i> state, the entry actions <i>Turn_On</i>
+and <i>Set_Timeout</i> are executed, in the order shown in the
 model. It would be possible for the timeout period to be controlled by
 a Lamp instance variable, if required.
 
 <li>If no further user action occurs, the timeout set at step 4
-occurs, and the state model transitions back to the <i>idle</i> state
+occurs, and the state model transitions back to the <i>Idle</i> state
 (step 2), where the lamp is turned off.
 
-<li>If on the other hand the user pushes the button again, the state
-model transitions to the current (<i>lit</i>) state, by indivisibly
+<li>If on the other hand the user pushes the button again
+(a <i>Lamp.Button_Push</i> event), the state model transitions to the
+current (<i>Lit</i>) state, by indivisibly
 <ul>
 
-<li>calling the <i>clear timeout</i> transition action which cancels
+<li>calling the <i>Clear_Timeout</i> transition action which cancels
 the timeout set in step 4, and
 
 <li>re-entering this sequence at step 4.
@@ -142,7 +146,7 @@ specified interval,
 <dt>plain <i>Post</i><dd>This is the normal way of posting
 events. The queuing is strictly first in, first out.
 
-<dt><a name="post-to-self"/><i>Post To Self</i><dd>Sometimes you
+<dt><a name="post-to-self"/><i>Post_To_Self</i><dd>Sometimes you
 have to send an event to the current instance as a way of moving the
 state machine on (perhaps you've come across an error condition). If
 this happens, you need the event to take precedence over any other
@@ -172,35 +176,83 @@ been handled, and the event won't be delivered.
 <i>Unset</i> before being <i>Set</i> again, it's a very good idea
 never to manipulate a timer except in a state machine action.
 
-<h3>Event kinds and payloads</h3>
+<h3>Event modelling</h3>
 
-<p>Events are always directed to a specific class. They may be
-Instance Events (used in state machines), which are directed to
+<p>In ColdFrame, events are always directed to a specific class. They
+may be Instance Events (used in state machines), which are directed to
 individual instances of the class, or Class Events (typically used for
 domain isolation).
 
-<p>Class Events will always carry a payload; Instance Events need not.
+<p>However, in UML 1.4, and therefore in ArgoUML, events belong to the
+package in which they're declared rather than to a class. One way of
+handling this would be to put each class that has events associated
+with it in its own child package; this seems rather clumsy, so
+instead, prefix each event's name with the class it belongs to, as in
+the <a href="#lamp-state.img">Lamp statechart</a>. When generating
+code, ColdFrame discards all but the final name component (for
+example, <i>Lamp.Button_Push</i> becomes <tt>Button_Push</tt> when
+it's declared inside the <tt>Lamp</tt> package).
+
+<p>It's possible to use ArgoUML's <i>Properties</i> to set
+up <i>entry</i> and <i>transition</i> actions. However, because
+the <i>Properties</i> dialogs are so strongly related to the (complex)
+UML metamodel, it's much much easier to set them up by directly
+editing the statechart. In the case of an <i>entry</i> action,
+double-click in the body of the state and
+type <tt>entry&nbsp;/&nbsp;Action_1;&nbsp;Action_2</tt>
+(the <i>action</i> part is a semicolon-separated list of actions); in
+the case of a <i>transition</i>, draw the transition, double-click in
+the label and type <tt>Class.Event</tt> or, if there are
+actions, <tt>Class.Event&nbsp;/&nbsp;Action_1;&nbsp;Action_2</tt>.
+
+<h3><a name="class-events">Class events</a></h3>
+
+<p>Instance events don't need to have any action associated with them,
+if all they do is cause transitions in the statechart. However, class
+events always need to have an action.
+
+<p>In the ArgoUML-supporting version of ColdFrame, this is organised
+using a <i>StateMachine</i> stereotyped <em>&#171;class&#187;</em>,
+containing a dummy state and the required event/action association as
+a transition:
+<p><img src="button-class-state-machine.png" alt="">
+
+<p>ArgoUML alows you to have as many <i>StateMachine</i>s on
+a <i>Class</i> as you like (quite what that would mean isn't
+clear). ColdFrame allows you to have at most one
+unstereotyped <i>StateMachine</i>, and at most one stereotyped
+&#171;class&#187;.
+
+<p>Because you can have both, it may be best (to avoid confusing the
+reader) if the events include <i>.Class</i> in the name, as
+in <i>Button.Class.Button_Pushed</i> above. As before, ColdFrame
+discards all but the last component of the name, so the translation
+(in the <tt>Button</tt> package) will be <tt>Button_Pushed</tt>.
+
+<p>In any case, ColdFrame requires that class events be
+stereotyped <em>&#171;class&#187;</em>, as in
+<p><img src="lamp-button-event-browsing.png" alt="">
+<p>(note, this demonstrates the point above, that in UML events belong
+to the package).
+
+<h3>Payloads</h3>
+
+<p>Class Events will always carry a payload (though it might be
+an <a href="types.html#null-record">empty record</a>); Instance Events
+need not.
 
 <p>To model an instance event without any payload, it's only necessary
 to <a href="#lamp-state.img">show it on a statechart</a>.
 
-<p>To model an event with a payload, show a dependency, named with the
-event name and stereotyped <em>&#171;instance&nbsp;event&#187;</em> or
-<em>&#171;class&nbsp;event&#187;</em> as appropriate, from the class
-to the <em>&#171;type&#187;</em> involved; this is shown in <a
-href="#lamp.png">the diagram below</a>.
+<p>To model a payload, enter it in the <i>Parameters</i> section of
+the <i>Properties</i> tab for the event:
+<p><img src="event-payload.png" alt="">
 
-<p>It's best if the payload doesn't contain allocated data, because it
-may lead to memory leaks (this depends on the way the support software
-works).
+<p>There can be no more than one parameter. ColdFrame will disregard
+its name, but it might as well be <i>Payload</i>!
 
-<p>You need a <em>&#171;type&#187;</em> to model an event with a
-payload, but it doesn't have to be a special
-<em>&#171;type&#187;</em>. Also, you can use the same
-<em>&#171;type&#187;</em> as the payload for several different events.
-
-<p>You always need instance events to manage state machines, even if
-the class concerned is a <em>&#171;singleton&#187;</em>.
+<p>It's best if the payload doesn't contain allocated data, because
+that may lead to memory leaks.
 
 <h3>Transitions</h3>
 
@@ -215,22 +267,28 @@ completely ignored, and in particular any entry actions don't get
 called. <em>Don't</em> do this with a completion transition (one with
 no triggering event).
 
+<p>At
+present, <a href="http://argouml.tigris.org/issues/show_bug.cgi?id=6407">ArgoUML
+doesn't display the &#171;ignore&#187; stereotype on the
+statechart</a>.
+
 <p>Note that you need to reserve <i>Can't Happen</i> for when it's
 logically impossible for the event to happen in the state, not just
 when it's undesirable!
 
 <h2>Class modelling</h2>
 
-<p><a name="lamp.png"><img src="lamp.png"></a>
+<p><img src="lamp.png">
 
 <h3>Instance events and actions</h3>
 
 <p>The <a href="#lamp-state.img">statechart</a> for the Lamp class
 needs supporting in the class model.
 
-<p>The instance operations <i>turn on</i>, <i>turn off</i>, <i>set
-timeout</i> and <i>clear timeout</i> correspond to the entry actions
-on the statechart.
+<p>The instance
+operations <i>Turn_On</i>, <i>Turn_Off</i>, <i>Set_Timeout</i>
+and <i>Clear_Timeout</i> correspond to the entry actions on the
+statechart.
 
 <p>Instance entry and transition actions can have a single parameter
 (aside from the implicit <tt>This</tt>): if you specify it, it must be
@@ -247,7 +305,7 @@ state). Of course, it needs to be the <em>last</em> action.
 you must mark the operation <em>&#171;final&#187;</em>. A
 &#171;final&#187; operation <em>must</em> delete the instance.
 
-<p>The instance attribute <i>timeout</i>, of the ColdFrame-special
+<p>The instance attribute <i>Timeout</i>, of the ColdFrame-special
 type <i>Timer</i>, is used to hold timeouts. The concept of operation
 for timeouts is:
 
@@ -272,29 +330,15 @@ Timer variable for each.
 
 <h3><a name="class-event-handlers">Class events and handlers</a></h3>
 
-<p>In addition, the class diagram shows
-<i>&#171;class&nbsp;event&#187;</i> support.
-
-<p>Instance events are about state machines; class events are mainly
-intended for use where you have <a
-href="event-motivation.html">communication between domains</a>.
-
-<p>There is a <i>Button</i> class event <i>Button&nbsp;Event</i>,
-which carries a payload of type <i>Button Name</i>.
-
-<p>The event is handled by the operation <i>pushed</i>; ColdFrame
-knows this because
-
-<ol type="alpha">
-
-<li>the operation is stereotyped <i>&#171;handler&#187;</i>
-
-<li>it has a single parameter of type <i>Button&nbsp;Event</i>.
-
-</ol>
+<p>As shown <a href="#class-events">above</a>, class events are
+associated with a handler or action, in this
+case <i>Button.Pushed</i>. The action must take a parameter of the
+same type as the event's payload, and must be a class operation
+(<i>ownerScope</i> checked in the <i>modifiers</i> section of
+the <i>Properties</i> tab).
 
 <p>Class events can be posted to run later
-or <a name="class-timers"><i>set</i> on Timers</a>; however, mixing
+or <a name="class-timers"><i>Set</i> on Timers</a>; however, mixing
 class timers with state machines may be a symptom of a poor state
 model. You'll probably want to make the Timer concerned
 a <em>&#171;class&#187;</em> attribute.

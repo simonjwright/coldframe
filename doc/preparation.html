@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: preparation.html,v ca26b77e66f1 2012/02/19 11:56:12 simonjwright $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,18 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 </div>
 
 <h1>ColdFrame: Preparation</h1>
+
+<h2>ArgoUML aspects</h2>
+
+<p>Installation and setup (overall and project-specific) is
+covered <a href="argouml-installation.html">elsewhere</a>.
+
+<p>However, ArgoUML's default format for saving a project is in a
+zip-compressed <tt>.zargo</tt> file. Compressed (ie binary) files
+don't work very well with most revision control systems, so (although
+ColdFrame will handle <tt>.zargo</tt> files) it's probably best to
+save in <tt>.uml</tt> form.
+<p><img src="save-project-as-uml.png" alt="">
 
 <h2>Executable UML aspects</h2>
 
@@ -119,9 +131,9 @@ unconditional, which is good.
 the <i>Van</i>, is independent of whether the <i>Van</i> is currently
 hired out or in the pool.
 
-<p>At present (2 Feb 2002), ColdFrame expects the set of child
-instances to be complete, which is why <i>Pool Van</i> appears in the
-model above. Every <i>Van</i> must be either a <i>Hired Van</i> or a
+<p>ColdFrame expects the set of child instances to be complete, which
+is why <i>Pool Van</i> appears in the model above. Every <i>Van</i>
+must be either a <i>Hired Van</i> or a
 <i>Pool Van</i>. This only actually shows up in implementing
 dispatching operations; if you try calling a dispatching operation for
 an instance without a current child you'll get a
@@ -132,10 +144,10 @@ only <i>Pool Van</i>s can be sent for servicing.
 <h3>Polymorphism and dispatching</h3>
 
 <p>ColdFrame supports polymorphism. Instance operations marked
-<em>&#171;abstract&#187;</em> are dispatched to the current child
-(skipping down the inheritance tree until a concrete implementation is
-found), while a child class receives upward-dispatching
-implementations of all normal concrete parental instance operations.
+<em>abstract</em> are dispatched to the current child (skipping down
+the inheritance tree until a concrete implementation is found), while
+a child class receives upward-dispatching implementations of all
+normal concrete parental instance operations.
 
 <h3>Containers</h3>
 
@@ -157,36 +169,46 @@ where clearly there are many <em>Window</em>s but only one
 <em>Screen</em>, you'd need a referential attribute
 <em>screen&nbsp;id</em> in the <em>Window</em> instance.
 
-<p>ColdFrame, however, follows <a
-href="resources.html#build-object-models">Executable UML</a>; you
-usually don't need to provide referential attributes (it would be
-quite cumbersome to do so, since Rose, a typical UML tool, is unaware
-of the concept). Instead, ColdFrame automatically implements the
-relationships. Sometimes it needs a little help, for example for <a
-href="attributes.html#formalizes">complex formalization</a> or <a
-href="#source">in a symmetric association</a>.
+<p>ColdFrame, however,
+follows <a href="resources.html#build-object-models">Executable
+UML</a>; you usually don't need to provide referential attributes (it
+would be quite cumbersome to do so, since ArgoUML, a typical UML tool,
+is unaware of the concept). Instead, ColdFrame automatically
+implements the relationships. Sometimes it needs a little help, for
+example for <a href="attributes.html#formalizes">complex
+formalization</a> or <a href="#source">in a symmetric association</a>.
 
 <h2>Use of Stereotypes</h2>
 
+<p>These are some examples of the more common uses of stereotypes. The
+full list of ColdFrame's <a href="ColdFrameProfile.html#Stereotypes">
+stereotypes</a>, <a href="ColdFrameProfile.html#Tags">tagged
+values</a> and <a href="ColdFrameProfile.html#Types">basic types</a>
+are listed in
+the <a href="ColdFrameProfile.html#Stereotypes">profile</a>.
+
 <h3>On packages</h3>
 
-<p>Normally, ColdFrame doesn't descend into UML packages inside the
-domain package. You might have classes that you don't want to generate
-code for (perhaps they're not complete; perhaps they represent other
-domains).
+<p>ColdFrame searches the ArgoUML <tt>.uml</tt> file for packages
+stereotyped <em>&#171;domain&#187;</em>. All the classes, types and
+relationships that make up the domain are in this package and its
+children (recursively).
 
-<p>However, you may find it handy to reduce clutter in the browser
-panel to put some classes into child packages; for example, all the
-&#171;type&#187;s. In this case, you do want to generate code for
-them; so mark the child package as <em>&#171;generate&#187;</em>.
+<p>You may find it handy to reduce clutter in the browser panel by
+putting some classes into child packages; for example, all the types.
 
-<p>&#171;generate&#187; has the semantics of "include" - there's no
-hierarchy in the generated code.
+<p>To make unit tests easier, it can help to separate those Public
+classes and types in the domain that form the interface it presents to
+other domains into one of the child packages, stereotyped
+<em>&#171;domain-interface&#187;</em> (and, by convention,
+called <tt><i>Domain Name</i> Interface</tt>).
 
 <h3>On classes</h3>
 
-<p>Classes which represent user-defined types are marked with the
-stereotype <em>&#171;type&#187;</em>.
+<p>The ArgoUML implementation of <em>DataType</em> doesn't provide any
+visualisation of types with attributes, so classes which represent
+user-defined types are marked with the
+stereotype <em>&#171;datatype&#187;</em>.
 
 <p>Classes of which there is always precisely one instance are marked
 with the stereotype <em>&#171;singleton&#187;</em>.
@@ -197,41 +219,20 @@ Domain, are marked with the stereotype
 <em>&#171;singleton&#187;</em>. Public classes can't take part in
 relationships.
 
-<p>Abstract classes (which must be parents in inheritance
-relationships) may be marked with the stereotype
-<em>&#171;abstract&#187;</em>. This has no effect on code generation
-at present (3.i.02). <em>&#171;abstract&#187;</em> is an alternative
-to the use of the <i>Abstract</i> checkbox in the Rose <i>Class
-Specification</i> dialog (<i>Detail</i> tab).
-
 <h3>On attributes</h3>
 
 <p>Identifying attributes are marked with the stereotype
 <em>&#171;id&#187;</em>.
 
-<p>Class attributes are marked with the stereotype
-<em>&#171;class&#187;</em>.
-
 <h3>On operations</h3>
-
-<p>Dispatching operations are marked with the stereotype
-<em>&#171;abstract&#187;</em>. The operation will be implemented in a
-child class.
-
-<p><em>&#171;access&#187;</em> indicates that the operation is in fact
-an access type (pointer-to-subprogram with the indicated profile).
-
-<p>Class operations (no <tt>This</tt> parameter will be generated) are
-marked with the stereotype <em>&#171;class&#187;</em>.
 
 <p>Operations to be called from the Domain <tt>Initialize</tt>
 procedure are marked with the stereotype
-<em>&#171;init&#187;</em>. This implies the stereotype
-<em>&#171;class&#187;</em>. These operations must be parameterless
+<em>&#171;init&#187;</em>. These operations must be parameterless
 procedures.
 
 <p>If an operation used as a state machine action deletes the
-instance, if must be stereotyped <em>&#171;final&#187;</em>.
+instance, it must be stereotyped <em>&#171;final&#187;</em>.
 
 <p>Operations to be called to clean up as an instance is deleted (for
 example, to tidy up associations) are marked with the stereotype
@@ -240,28 +241,39 @@ Ada's controlled types, but that depends on your target language being
 Ada). Also, it's possible to have more than one &#171;finalize&#187;
 operation.
 
-<p>Use <em>&#171;generated&#187;</em> for operations which are
-automatically generated by ColdFrame but which you need to be present
-so that they can be used on sequence diagrams (eg, <tt>Find</tt>,
-<tt>Delete</tt>, <tt>All_Instances</tt>).  If you don't use the
-stereotype, ColdFrame will generate an ordinary user operation as well
-as the automatic one, which will probably be illegal and certainly
-confusing.
+<h2>Tagged Values</h2>
 
-<p><em>&#171;navigation&#187;</em> is similar to
-<em>&#171;generated&#187;</em>; the idea is for you to use it when you
-want to show navigating associations on sequence diagrams. You might
-use a naming convention like <tt>r2.appears on</tt> (an operation of
-<i>Screen</i> that returns a collection of <i>Window</i>s).
+<p>In UML 1.4, tagged values are considered to be properties of
+stereotypes, so ColdFrame specifies which tagged values are permitted
+for each stereotype in
+the <a href="ColdFrameProfile.html#Tags">profile</a>.
 
-<p><em>&#171;instantiation&#187;</em> is similar to
-<em>&#171;generated&#187;</em>; the idea is for you to use it when you
-want to show local-to-operation instantiations of generics provided by
-ColdFrame (eg, <tt><i>Domain.Class</i>.Selection_Function</tt>) on
-sequence diagrams.
+<p>In previous versions of ColdFrame, using Rational Rose as the front
+end, this was not the case, and tagged values could be inserted freely
+in, for example, documentation sections. This feature is no longer
+available.
 
-<h2><a name="annotation">Other annotations</a></h2>
+<h2>Extending ColdFrame</h2>
 
+<p>In previous versions of ColdFrame it was possible to support
+extensions:
+
+<blockquote>
+Any unrecognised tagged values are included in the normalized XML as
+attributes, so that you can add your own post-processing (for example,
+special code generation methods).
+</blockquote>
+<!--
+Any unrecognised tagged values are included in the normalized XML
+as attributes, so that you can add your own post-processing (for
+example, <a href="extending.html">special code generation
+methods</a>).
+-->
+
+<p>This is no longer the case; an equivalent facility may be
+reintroduced in a future release.
+
+<!--
 <p>It's not at all convenient to put all the extra information you
 need for code generation into stereotypes. Instead, UML tagged values
 are used, usually in the documentation section (in Rose the bottom
@@ -313,13 +325,7 @@ useful for symmetrical associations <i>1:1</i>, <i>1c:1c</i>,
 </ul>
 
 </ul>
-
-<p>You can have as many tagged value sections per documentation
-section as you like, and each section can contain a comma-separated
-list of tagged values (so a value can't contain a comma, hence the
-restriction on <tt>revision</tt>).
-
-<p>
+-->
 
 <hr>
 <i>

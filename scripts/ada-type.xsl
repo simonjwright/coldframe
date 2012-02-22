@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-type.xsl,v 45ea517722e2 2012/02/02 18:04:10 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -42,7 +42,7 @@
       <xsl:text>with Ada.Numerics;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for 
+    <!-- Context for
          (a) {counterpart} and Counterpart
          (b) use of domain classes as attribute/parameter/result type. -->
     <xsl:variable name="counterpart">
@@ -161,8 +161,13 @@
     </xsl:message>
     -->
 
-    <!-- Output the types for this pass -->
-    <xsl:for-each select="$nodes">
+    <!-- Output the types for this pass. -->
+    <!-- We don't actually output @access-to-operation types, they
+         merely act as carriers for operations marked @access. This is
+         an ArgoUML/UML 1.4 issue; if you give an attribute or
+         operation of type Foo, there'd better be some Class or
+         DataType in the model called Foo or it'll invent one.  -->
+    <xsl:for-each select="$nodes[not(@access-to-operation)]">
       <xsl:sort select="name"/>
       <xsl:call-template name="ty:domain-type"/>
       <xsl:call-template name="ut:commentary">
@@ -181,8 +186,8 @@
     </xsl:variable>
 
     <!-- The set of types output so far -->
-    <xsl:variable 
-      name="processed" 
+    <xsl:variable
+      name="processed"
       select="$finished | $nodes | $access-types"/>
 
     <!-- The set of types not yet output and dependent only on types
@@ -268,7 +273,7 @@
                 </xsl:choose>
                 <xsl:value-of select="$n"/>
               </xsl:message>
-              <xsl:for-each 
+              <xsl:for-each
                 select="$types
                         [attribute/type=$n
                         or array/type=$n
@@ -293,8 +298,8 @@
           <xsl:call-template name="ty:sorted-domain-types">
             <xsl:with-param name="types" select="$types"/>
             <xsl:with-param name="next" select="/.."/>
-            <xsl:with-param 
-              name="finished" 
+            <xsl:with-param
+              name="finished"
               select="$processed | $missing-types"/>
           </xsl:call-template>
 
@@ -394,7 +399,7 @@
             <xsl:text>end case;&#10;</xsl:text>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
-            
+
           </xsl:when>
 
           <xsl:when test="@protected">
@@ -667,7 +672,7 @@
             <xsl:value-of select="$base"/>
             <xsl:text>'First .. </xsl:text>
             <xsl:value-of select="$base"/>
-            <xsl:text>'Last</xsl:text>           
+            <xsl:text>'Last</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:text>;&#10;</xsl:text>
@@ -926,15 +931,15 @@
     mode="ty:domain-type-operation-body">
 
     <xsl:choose>
-      
+
       <xsl:when test="$generate-stubs='yes'">
-        
+
         <xsl:variable name="subprogram-name">
           <xsl:value-of select="../../name"/>
           <xsl:text>.</xsl:text>
-          <xsl:value-of select="name"/>          
+          <xsl:value-of select="name"/>
         </xsl:variable>
-        
+
         <xsl:call-template name="ut:should-not-edit"/>
         <xsl:call-template name="ut:identification-info"/>
 
@@ -956,7 +961,7 @@
           <xsl:with-param name="is-class" select="'no'"/>
         </xsl:call-template>
         <xsl:text> is&#10;</xsl:text>
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>Lock : ColdFrame.Stubs.Lock (ColdFrame.Stubs.Mutex'Access);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -1037,19 +1042,19 @@
         <xsl:text>end </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
-        
+
       </xsl:when>
 
       <xsl:otherwise>
-        
+
         <xsl:call-template name="ut:should-edit"/>
         <xsl:value-of select="$blank-line"/>
-        
+
         <xsl:call-template name="ut:commentary">
           <xsl:with-param name="indent" select="''"/>
           <xsl:with-param name="separate-pars" select="$blank-line"/>
         </xsl:call-template>
-        
+
         <xsl:text>separate (</xsl:text>
         <xsl:value-of select="../../name"/>
         <xsl:text>)&#10;</xsl:text>
@@ -1058,7 +1063,7 @@
           <xsl:with-param name="is-class" select="'no'"/>
         </xsl:call-template>
         <xsl:text> is&#10;</xsl:text>
-        
+
         <!-- If it's a function, we have to organize a return value. -->
         <xsl:variable name="return-info">
           <xsl:if test="@return">
@@ -1088,34 +1093,34 @@
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>raise Unimplemented;&#10;</xsl:text>
-        
+
         <xsl:if test="@return">
-          
+
           <xsl:value-of select="$I"/>
           <xsl:text>return </xsl:text>
-          
+
           <xsl:choose>
-            
+
             <xsl:when test="not($return-info/return-value='')">
               <xsl:value-of select="$return-info/return-value"/>
             </xsl:when>
-            
+
             <xsl:otherwise>
               <xsl:text>Dummy</xsl:text>
             </xsl:otherwise>
-            
+
           </xsl:choose>
-          
+
           <xsl:text>;&#10;</xsl:text>
-          
+
         </xsl:if>
-        
+
         <xsl:text>end </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
-        
+
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
   </xsl:template>

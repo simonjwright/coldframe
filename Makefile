@@ -87,12 +87,13 @@ TOP_LEVEL_ITEMS =				\
   ColdFrame.gpr					\
   Options.gpr
 
-SUBDIRS = doc examples extras lib models project scripts test
+SUBDIRS = doc examples extras lib models project scripts test tools
 
 cf-$(DATE): force
 	-$(RM) -rf $@
 	$(MKDIR) -p $@/coldframeout
 	$(CP) -p $(TOP_LEVEL_ITEMS) $@/
+	$(CP) -p Makefile-for-distribution $@/Makefile
 	for s in $(SUBDIRS); do						\
 	  make -C $$s -f Makefile.dist DIST=$(COLDFRAME)/$@ dist;	\
 	done
