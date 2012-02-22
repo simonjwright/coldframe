@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 4cb55120e72a $
---  $Date: 2012/02/09 14:20:03 $
+--  $Revision: 35795c28c9fa $
+--  $Date: 2012/02/22 17:50:03 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -133,6 +133,9 @@ package body Normalize_XMI.Model.Operations is
       end;
       if O.Has_Stereotype ("entry") then
          Put (To, " entry='true'");
+      end if;
+      if O.Has_Stereotype ("final") then
+         Put (To, " final='true'");
       end if;
       if O.Has_Stereotype ("init") then
          Put (To, " initialize='true'");
