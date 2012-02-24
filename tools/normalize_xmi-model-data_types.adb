@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: c3a01e5d21e1 $
---  $Date: 2012/02/09 17:17:31 $
+--  $Revision: d49b39c21049 $
+--  $Date: 2012/02/24 12:12:17 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -143,6 +143,20 @@ package body Normalize_XMI.Model.Data_Types is
                  & (+T.Name)
                  & " has both {imported} and {renames} specified.");
          end if;
+         if T.Has_Stereotype ("bounded-string")
+           and not T.Has_Tag ("length") then
+            Messages.Error
+              ("Type "
+                 & (+T.Name)
+                 & " has <<bounded-string>> but not {length}.");
+         end if;
+         if T.Has_Stereotype ("fixed-string")
+           and not T.Has_Tag ("length") then
+            Messages.Error
+              ("Type "
+                 & (+T.Name)
+                 & " has <<fixed-string>> but not {length}.");
+         end if;
          if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
             Messages.Error
               ("Type "
@@ -205,6 +219,18 @@ package body Normalize_XMI.Model.Data_Types is
       T.Output_Documentation (To);
       if T.Has_Stereotype ("counterpart") then
          Put_Line (To, "<counterpart/>");
+      end if;
+      if T.Has_Stereotype ("bounded-string") then
+         Put_Line (To,
+                   "<string><max>"
+                     & T.Tag_As_Value ("length")
+                     & "</max></string>");
+      end if;
+      if T.Has_Stereotype ("fixed-string") then
+         Put_Line (To,
+                   "<string><fixed>"
+                     & T.Tag_As_Value ("length")
+                     & "</fixed></string>");
       end if;
       if T.Has_Tag ("imported") then
          Put_Line (To,
