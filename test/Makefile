@@ -104,6 +104,15 @@ clean::
 	-$(MAKE) $(basename $@).gen 2>&1 | tee $(basename $@).log
 	touch $@
 
+# ArgoUML support
+
+NORM_FILES =					\
+  Stub_Test_Interface.norm
+
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(NORM_FILES): ColdFrame_Tests.norm-stamp ;
+
 clean::
 	-rm -rf *.{ada,gen,log,norm,stamp*}
 
