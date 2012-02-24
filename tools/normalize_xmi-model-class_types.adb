@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: c3a01e5d21e1 $
---  $Date: 2012/02/09 17:17:31 $
+--  $Revision: a68f9f9f82dc $
+--  $Date: 2012/02/24 12:13:04 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -99,10 +99,22 @@ package body Normalize_XMI.Model.Class_Types is
    begin
       Put_Line (Standard_Error, "... checking class type " & (+T.Name));
       if T.Attributes.Is_Empty then
-         Messages.Warning
-           ("Type "
-              & (+T.Name)
-              & " has no attributes, assumed null.");
+         if T.Has_Stereotype ("discriminated") then
+            Messages.Error
+              ("Type "
+                 & (+T.Name)
+                 & " is <<discriminated>> but has no attributes.");
+         elsif T.Has_Stereotype ("protected") then
+            Messages.Error
+              ("Type "
+                 & (+T.Name)
+                 & " is <<protected>> but has no attributes.");
+         else
+            Messages.Warning
+              ("Type "
+                 & (+T.Name)
+                 & " has no attributes, assumed null.");
+         end if;
       end if;
       T.Attributes.Iterate (Resolve'Access);
       T.Operations.Iterate (Resolve'Access);
@@ -126,6 +138,12 @@ package body Normalize_XMI.Model.Class_Types is
       end if;
       if T.Has_Stereotype ("callback") then
          Put (To, " callback='true'");
+      end if;
+      if T.Has_Stereotype ("discriminated") then
+         Put (To, " discriminated='true'");
+      end if;
+      if T.Has_Stereotype ("protected") then
+         Put (To, " protected='true'");
       end if;
       if T.Attributes.Is_Empty then
          Put (To, " null='true'");
