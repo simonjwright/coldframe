@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-stubs.adb,v $
+--  $Revision: de1b76b31e12 $
+--  $Date: 2012/02/24 12:15:24 $
+--  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
 with Ada.Strings.Unbounded;
@@ -384,6 +384,8 @@ package body ColdFrame.Stubs is
    function Number_Of_Calls (For_Subprogram_Named : String) return Natural is
       S : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
+      Lck : Lock (Mutex'Access);
+      pragma Unreferenced (Lck);
    begin
       if not Unbounded_String_Sets.Is_Member (Subprograms, S) then
          Ada.Exceptions.Raise_Exception
@@ -402,6 +404,8 @@ package body ColdFrame.Stubs is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
+      Lck : Lock (Mutex'Access);
+      pragma Unreferenced (Lck);
    begin
       if not Unbounded_String_Sets.Is_Member (Subprograms, SU) then
          Ada.Exceptions.Raise_Exception
