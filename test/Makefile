@@ -53,31 +53,31 @@ fails:: Bad_Model_Regressions.stamp-regardless
 fails:: Bad_Code_Regressions.stamp-regardless
 
 event_test-harness$(exe): Event_Test.stamp force
-	$(app) gnatmake -PEvent_Test 2>&1 | tee -a Event_Test.log
+	$(app) gnatmake -p -PEvent_Test 2>&1 | tee -a Event_Test.log
 exes:: event_test-harness$(exe)
 clean::
 	-$(app) gnatclean -PEvent_Test
 
 hierarchies-harness$(exe): Hierarchies.stamp force
-	$(app) gnatmake -PHierarchies 2>&1 | tee -a Hierarchies.log
+	$(app) gnatmake -p -PHierarchies 2>&1 | tee -a Hierarchies.log
 exes:: hierarchies-harness$(exe)
 clean::
 	-$(app) gnatclean -PHierarchies
 
 initialization-harness$(exe): Initialization.stamp force
-	$(app) gnatmake -PInitialization 2>&1 | tee -a Initialization.log
+	$(app) gnatmake -p -PInitialization 2>&1 | tee -a Initialization.log
 exes:: initialization-harness$(exe)
 clean::
 	-$(app) gnatclean -PInitialization
 
 regression_tests$(exe): Regressions.stamp Compilation_Regressions.stamp force
-	$(app) gnatmake -PRegressions 2>&1 | tee -a Regressions.log
+	$(app) gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
 exes:: regression_tests$(exe)
 clean::
 	-$(app) gnatclean -PRegressions
 
 stub_test_harness$(exe): Stub_Test_Interface.stamp force
-	$(app) gnatmake -PStub_Test 2>&1 | tee -a Stub_Test.log
+	$(app) gnatmake -p -PStub_Test 2>&1 | tee -a Stub_Test.log
 Stub_Test_Interface.stamp: Stub_Test_Interface.norm
 	$(MAKE) $(basename $@).gen GENERATE_STUBS=yes 2>&1 \
 	  | tee $(basename $@).log
@@ -87,7 +87,7 @@ clean::
 	-$(app) gnatclean -PStub_Test
 
 unit_testing-harness$(exe): Unit_Testing.stamp force
-	$(app) gnatmake -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
+	$(app) gnatmake -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
 Unit_Testing.stamp: Unit_Testing.norm
 	$(MAKE) $(basename $@).gen UNIT_TEST_SUPPORT=yes 2>&1 \
 	  | tee $(basename $@).log
