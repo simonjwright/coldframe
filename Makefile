@@ -85,7 +85,8 @@ TOP_LEVEL_ITEMS =				\
   COPYING					\
   Makefile.inc					\
   ColdFrame.gpr					\
-  Options.gpr
+  Options.gpr					\
+  debian-6.diff
 
 SUBDIRS = doc examples extras lib models project scripts test tools
 

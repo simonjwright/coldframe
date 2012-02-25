@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: d49b39c21049 $
---  $Date: 2012/02/24 12:12:17 $
+--  $Revision: 486acaebb170 $
+--  $Date: 2012/02/25 11:12:54 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -118,8 +118,9 @@ package body Normalize_XMI.Model.Data_Types is
                     & " operations.");
             else
                declare
-                  Operation_Name : constant String
-                    := +T.Operations.First_Element.Name;
+                  --  Workround for gcc-4.4 limitation in Debian 6.
+                  Operation : constant Element_P := T.Operations.First_Element;
+                  Operation_Name : constant String := +Operation.Name;
                begin
                   if Operation_Name /= +T.Name then
                      Messages.Warning
@@ -130,7 +131,7 @@ package body Normalize_XMI.Model.Data_Types is
                           & " renamed to "
                           & (+T.Name)
                           & ".");
-                     T.Operations.First_Element.Name := T.Name;
+                     Operation.Name := T.Name;
                   end if;
                end;
             end if;

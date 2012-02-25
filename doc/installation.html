@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v ca26b77e66f1 2012/02/19 11:56:12 simonjwright $ -->
+<!-- $Id: installation.html,v 486acaebb170 2012/02/25 11:12:54 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -36,9 +36,18 @@ Components</a> (an Ada 95 container library, compatible with Ada2005)
 
 <h2>ColdFrame setup</h2>
 
-<p>Once you've unpacked ColdFrame (it unpacks into a
+<p>First, unpack ColdFrame (it unpacks into a
 directory <tt>cf-<i>yyyymmdd</i></tt>, for
-example <tt>cf-20120218</tt>), enter that directory and run
+example <tt>cf-20120218</tt>), and enter that directory.
+
+<p>If you're running Debian 6 (<i>squeeze</i>), there are a couple of
+changes needed (<i>gnatmake</i> doesn't
+understand <tt>external_as_list()</tt> in a Project file): say
+<pre>
+   <i>$</i> patch -p1 &lt;debian-6.diff
+</pre>
+
+<p>In all cases, say
 <pre>
    <i>$</i> make setup
 </pre>

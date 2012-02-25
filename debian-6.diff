@@ -1,0 +1,22 @@
+diff -r de1b76b31e12 Options.gpr
+--- a/Options.gpr	Fri Feb 24 12:15:24 2012 +0000
++++ b/Options.gpr	Sat Feb 25 10:58:17 2012 +0000
+@@ -64,7 +64,6 @@
+ 
+   --  GNATLINK configuration options.
+   package Linker is
+-     for Default_Switches ("ada") use External_As_List ("LDFLAGS", " ");
+   end Linker;
+ 
+ end Options;
+diff -r de1b76b31e12 tools/tools.gpr
+--- a/tools/tools.gpr	Fri Feb 24 12:15:24 2012 +0000
++++ b/tools/tools.gpr	Sat Feb 25 10:58:17 2012 +0000
+@@ -52,7 +52,6 @@
+    end Binder;
+ 
+    package Linker is
+-      for Default_Switches ("ada") use External_As_List ("LDFLAGS", " ");
+    end Linker;
+ 
+ end Tools;
