@@ -107,6 +107,7 @@ clean::
 # ArgoUML support
 
 NORM_FILES =					\
+  Initialization.norm				\
   Stub_Test_Interface.norm
 
 # NB! the ';' at the end is important - without it, Make may not know
