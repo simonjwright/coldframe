@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: testing.html,v b67fea07c9b1 2012/02/26 12:46:18 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -54,7 +54,7 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <hr/>
 
-<h2><a name="aunit"><a href="http://libre.act-europe.fr/aunit/">AUnit</a></a></h2>
+<h2><a name="aunit"><a href="http://libre.adacore.com/libre/tools/aunit/">AUnit</a></a></h2>
 
 <p>AUnit has the concept <i>test case</i>; for each test case there is
 a <i>fixture</i>, which corresponds to the standard setup that each
@@ -69,12 +69,18 @@ test procedure in the test case expects.
 href="domains.html#cascade-initialize"><tt>Cascade_Initialize</tt></a>)
 procedures.
 
-<p>ColdFrame supports <tt>Tear_Down</tt> by providing 
+<p>ColdFrame supports <tt>Tear_Down</tt> by providing
 <a href="domains.html#teardown"><tt><i>Domain</i>.Tear_Down</tt></a>
 (and
 <a
 href="domains.html#cascade-teardown"><tt>Cascade_Tear_Down</tt></a>)
 procedures.
+
+<p>The <tt>examples/</tt> and <tt>test/</tt> subdirectories contain
+AUnit tests of aspects of ColdFrame's functionality. Note that these
+tests are written using version 3 of AUnit, as supplied with GNAT GPL
+2011, and <b>will not work with the Debian-supplied software</b> (up
+to at least <i>wheezy</i>) because it uses AUnit 1.03.
 
 <h3><a name="access-to-private">Access to private information</a></h3>
 
@@ -160,11 +166,9 @@ more amenable to testing.
 
 <h3><a name="separating">Separating out the interface</a></h3>
 
-<p>The first thing to do is to make a child package, <i>Digital IO
-Interface</i>, stereotyped &#171;include&#187;. You may like to make
-it a separately controlled unit; you might even choose to create it as
-part of the development of the using domain, depending on the order of
-development.
+<p>The first thing to do is, within <i>Digital IO</i>, to make a child
+package, <i>Digital IO Interface</i>, stereotyped
+&#171;domain-interface&#187;.
 
 <p>In this package put all the &#171;public&#187; classes and
 &#171;callback&#187; types, any &#171;type&#187; types used by them,
@@ -179,32 +183,11 @@ and any &#171;exception&#187;s.
 </table>
 
 <p>In the Interface package, include the tag <tt>{name = Digital
-IO}</tt>. This means that if you select the <i>Digital IO
-Interface</i> package and generate code from it, code will be
-generated as if it were the package <i>Digital IO</i> (though the code
-will still be placed in the directory derived from the actual package
+IO}</tt>. This means that when generating code from the <i>Digital IO
+Interface</i>, it will be generated as if it were the
+package <i>Digital IO</i> (though the code will still be placed in the
+directory derived from the actual package
 name, <tt>Digital_IO_Interface.gen/</tt>).
-
-<i><p>If this domain is not a new development, there may be existing
-stub implementations that expect the "Digital IO Interface" name. If
-so, you may not be able to use the {name} tag; as an alternative, you
-can specify the <tt>DOMAIN_NAME</tt> variable to <tt>make</tt>:</i>
-
-<i><pre>
-   $ make Digital_IO_Interface.gen DOMAIN_NAME=Digital_IO
-</pre></i>
-
-<i><p>or</i>
-
-<i><pre>
-   $ make Digital_IO_Interface.gen DOMAIN_NAME='Digital IO'
-</pre></i>
-
-<i><p>The command line method overrides the {name} tag if both are
-given.</i>
-
-<i><p><b>Don't</b> set <tt>DOMAIN_NAME</tt> as an environment
-variable!</i>
 
 <h3><a name="implementing-stub">Implementing stub functionality</a></h3>
 
@@ -376,9 +359,10 @@ calls should have been made).
 subdirectory of the source distribution.
 
 <p>Note that the test suite is a child of
-the <tt>House_Management</tt> domain. This is so that the test code
-has access to private members of the domain (non-&#171;public&#187;
-classes and associations, for a start).
+the <tt>House_Management.Lamp</tt> package. This is so that the test
+code has access to private members of the domain
+(non-&#171;public&#187; classes and associations, for a start) and to
+private subprograms of the class.
 
 <ul>
 
@@ -436,20 +420,23 @@ classes and associations, for a start).
 
 <p><a name="main">The main program</a>:
 <pre>
-   with AUnit.Test_Runner;
-   with House_Management.Test_Suite;
+   with AUnit.Reporter.Text;
+   with AUnit.Run;
+   with House_Management.Lamp.Test_Suite;
    with GNAT.Exception_Traces;
 
    procedure House_Management.Harness is
 
-      procedure Run is new AUnit.Test_Runner (Test_Suite.Suite);
+      procedure Run is new AUnit.Run.Test_Runner (Lamp.Test_Suite.Suite);
+
+      Reporter : AUnit.Reporter.Text.Text_Reporter;
 
    begin
 
       GNAT.Exception_Traces.Trace_On
         (Kind => GNAT.Exception_Traces.Unhandled_Raise);
 
-      Run;
+      Run (Reporter);
 
    end House_Management.Harness;
 </pre>
@@ -458,38 +445,33 @@ classes and associations, for a start).
 <pre>
    with AUnit.Test_Suites;
 
-   package House_Management.Test_Suite is
+   package House_Management.Lamp.Test_Suite is
 
       function Suite return AUnit.Test_Suites.Access_Test_Suite;
 
-   end House_Management.Test_Suite;
+   end House_Management.Lamp.Test_Suite;
 </pre>
 
 <p>The test suite body:
 
 <p><a name="aunit-withs">Standard AUnit withs</a>:
 <pre>
-   with AUnit.Assertions; use AUnit.Assertions;
-   with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
    with AUnit.Test_Cases; use AUnit.Test_Cases;
-   with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 </pre>
 
 <p><a name="test-withs">Test-specific withs</a>:
 <pre>
    with ColdFrame.Project.Events.Standard.Test;
    with ColdFrame.Stubs;
-   with Digital_IO.Application;
    with Digital_IO.Initialize;
    with Digital_IO.Tear_Down;
    with House_Management.Initialize;
-   with House_Management.Lamp;
    with House_Management.Tear_Down;
 </pre>
 
 <p><a name="suite-body">The actual body</a>:
 <pre>
-   package body House_Management.Test_Suite is
+   package body House_Management.Lamp.Test_Suite is
 </pre>
 
 <p><a name="instantiations">Instantiations of <tt>ColdFrame.Stubs</tt> generics</a>:
@@ -506,7 +488,7 @@ classes and associations, for a start).
          type Case_1 is new Test_Case with private;
       private
          type Case_1 is new Test_Case with null record;
-         function Name (C : Case_1) return String_Access;
+         function Name (C : Case_1) return AUnit.Message_String;
          procedure Register_Tests (C : in out Case_1);
          procedure Set_Up (C : in out Case_1);
          procedure Tear_Down (C : in out Case_1);
@@ -608,7 +590,7 @@ enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
 
 <p><a name="case-name">The test case name</a>:
 <pre>
-         function Name (C : Case_1) return String_Access is
+         function Name (C : Case_1) return AUnit.Message_String  is
             pragma Unreferenced (C);
          begin
             return new String'("Lamps.Case_1");
@@ -668,7 +650,7 @@ enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
 
 <p><a name="end-suite">End of test suite</a>:
 <pre>
-   end House_Management.Test_Suite;
+   end House_Management.Lamp.Test_Suite;
 </pre>
 
 <h2><a name="inspecting-event-queues">Inspecting event queues</a></h2>
@@ -738,7 +720,7 @@ raise <tt>Not_Found</tt> if there is no such event.
 
 <p>Additionally, you can access the event held on a <i>Timer</i>:
 <pre>
-   function Event_Of (The_Timer : Timer) return Event_P; 
+   function Event_Of (The_Timer : Timer) return Event_P;
 </pre>
 <p>(returns <tt>null</tt> if there isn't one).
 
