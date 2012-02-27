@@ -108,7 +108,8 @@ clean::
 
 NORM_FILES =					\
   Initialization.norm				\
-  Stub_Test_Interface.norm
+  Stub_Test_Interface.norm			\
+  Unit_Testing.norm
 
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
