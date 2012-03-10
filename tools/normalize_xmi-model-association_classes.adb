@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 560e36d2bc31 $
+--  $Date: 2012/03/10 16:57:07 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -48,9 +48,9 @@ package body Normalize_XMI.Model.Association_Classes is
       Class_Name : constant String := +AC.Name;
    begin
       --  We could have adjusted the names while reading, because we
-      --  know (at the time of writing!!) that Domains reads Classes
-      --  before AssociationClasses ... but not a good idea for the
-      --  long term.
+      --  know (at the time of first coding!!) that Domains reads
+      --  Classes before AssociationClasses ... but not a good idea
+      --  for the long term.
       AC.Class := AC.Find_Class (Class_Name);
       if AC.Class.Has_Tag ("association-class-name") then
          AC.Class.Name := +(AC.Class.Tag_As_Name ("association-class-name"));
@@ -91,7 +91,7 @@ package body Normalize_XMI.Model.Association_Classes is
                            when Zero =>
                               case E2.Lower is
                                  when Zero =>
-                                    --  1c:1c; obey <<source>>
+                                    --  1-(1c:1c); obey <<source>>
                                     if E1.Source then
                                        --  The identifying formalizing
                                        --  attribute is taken from end
@@ -109,9 +109,10 @@ package body Normalize_XMI.Model.Association_Classes is
                                           With_Source_Role_Name => +E2.Name,
                                           Forming_Identifier => False);
                                     else
-                                       --  Checked above that one end
-                                       --  _is_ marked <<source>>.
-                                       --  The identifying formalizing
+                                       --  E2.Source; checked above
+                                       --  that one end _is_ marked
+                                       --  <<source>>.  The
+                                       --  identifying formalizing
                                        --  attribute is taken from end
                                        --  2.
                                        Assoc.Create_Referential_Attribute
@@ -128,6 +129,7 @@ package body Normalize_XMI.Model.Association_Classes is
                                           Forming_Identifier => True);
                                     end if;
                                  when One =>
+                                    --  1-(1c:1)
                                     --  The identifying formalizing
                                     --  attribute is taken from end 2.
                                     if E1.Source then
@@ -156,6 +158,7 @@ package body Normalize_XMI.Model.Association_Classes is
                            when One =>
                               case E2.Lower is
                                  when Zero =>
+                                    --  1-(1:1c)
                                     --  The identifying formalizing
                                     --  attribute is taken from end 1.
                                     if E2.Source then
@@ -181,7 +184,7 @@ package body Normalize_XMI.Model.Association_Classes is
                                        With_Source_Role_Name => +E2.Name,
                                        Forming_Identifier => False);
                                  when One =>
-                                    --  1c:1c; obey <<source>>
+                                    --  1-(1:1); obey <<source>>
                                     if E1.Source then
                                        --  The identifying formalizing
                                        --  attribute is taken from end
@@ -199,9 +202,10 @@ package body Normalize_XMI.Model.Association_Classes is
                                           With_Source_Role_Name => +E2.Name,
                                           Forming_Identifier => False);
                                     else
-                                       --  Checked above that one end
-                                       --  _is_ marked <<source>>.
-                                       --  The identifying formalizing
+                                       --  E2.Source; checked above
+                                       --  that one end _is_ marked
+                                       --  <<source>>.  The
+                                       --  identifying formalizing
                                        --  attribute is taken from end
                                        --  2.
                                        Assoc.Create_Referential_Attribute
@@ -220,6 +224,7 @@ package body Normalize_XMI.Model.Association_Classes is
                               end case;
                         end case;
                      when Many =>
+                        --  1-(1:*) or 1-(1c:*)
                         --  The identifying formalizing attribute is
                         --  taken from the many end (2).
                         Assoc.Create_Referential_Attribute
@@ -238,6 +243,7 @@ package body Normalize_XMI.Model.Association_Classes is
                when Many =>
                   case E2.Upper is
                      when One =>
+                        --  1-(*:1) or 1-(*:1c)
                         --  The identifying formalizing attribute is
                         --  taken from the many end (1).
                         Assoc.Create_Referential_Attribute
@@ -253,6 +259,7 @@ package body Normalize_XMI.Model.Association_Classes is
                            With_Source_Role_Name => +E2.Name,
                            Forming_Identifier => False);
                      when Many =>
+                        --  1-(*:*)
                         --  The identifying formalizing attributes are
                         --  taken from both ends.
                         Assoc.Create_Referential_Attribute

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 560e36d2bc31 $
+--  $Date: 2012/03/10 16:57:07 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -131,10 +131,11 @@ package body Normalize_XMI.Model.Associations is
                                        With_Source_Role_Name => +E1.Name,
                                        Forming_Identifier => False);
                                  else
-                                    --  Checked above that one end
-                                    --  _is_ marked <<source>>.
-                                    --  Formalizing attribute to be
-                                    --  added to the class at E1.
+                                    --  E2.Source: checked above that
+                                    --  one end _is_ marked
+                                    --  <<source>>.  Formalizing
+                                    --  attribute to be added to the
+                                    --  class at E1.
                                     C1C.Create_Referential_Attribute
                                       (Referring_To => C2,
                                        For_Relationship => A'Unchecked_Access,
@@ -142,6 +143,7 @@ package body Normalize_XMI.Model.Associations is
                                        Forming_Identifier => False);
                                  end if;
                               when One =>
+                                 --  1c:1
                                  --  The formalizing attribute is
                                  --  added to the conditional end,
                                  --  here E1.
@@ -164,6 +166,7 @@ package body Normalize_XMI.Model.Associations is
                         when One =>
                            case E2.Lower is
                               when Zero =>
+                                 --  1:1c
                                  --  The formalizing attribute is
                                  --  added to the conditional end,
                                  --  here E2.
@@ -183,7 +186,7 @@ package body Normalize_XMI.Model.Associations is
                                     With_Source_Role_Name => +E1.Name,
                                     Forming_Identifier => False);
                               when One =>
-                                 --  1c:1c; obey <<source>>
+                                 --  1:1; obey <<source>>
                                  if E1.Source then
                                     --  Formalizing attribute to be
                                     --  added to the class at E2.
@@ -193,10 +196,11 @@ package body Normalize_XMI.Model.Associations is
                                        With_Source_Role_Name => +E1.Name,
                                        Forming_Identifier => False);
                                  else
-                                    --  Checked above that one end
-                                    --  _is_ marked <<source>>.
-                                    --  Formalizing attribute to be
-                                    --  added to the class at E1.
+                                    --  E2.Source: checked above that
+                                    --  one end _is_ marked
+                                    --  <<source>>.  Formalizing
+                                    --  attribute to be added to the
+                                    --  class at E1.
                                     C1C.Create_Referential_Attribute
                                       (Referring_To => C2,
                                        For_Relationship => A'Unchecked_Access,
@@ -206,6 +210,7 @@ package body Normalize_XMI.Model.Associations is
                            end case;
                      end case;
                   when Many =>
+                     --  1:* or 1c:*
                      --  Formalizing attribute to be added to the
                      --  class at E2.
                      if E2.Source then
@@ -227,6 +232,7 @@ package body Normalize_XMI.Model.Associations is
             when Many =>
                case E2.Upper is
                   when One =>
+                     --  *:1 or *:1c
                      --  Formalizing attribute to be added to the
                      --  class at E1.
                      if E1.Source then
