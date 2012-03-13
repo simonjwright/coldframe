@@ -14,9 +14,9 @@
 
 separate (Event_Test.Recipient)
 procedure Information_Handler
-  (I : Information) is
+  (I : Content) is
    use type ColdFrame.Project.Calendar.Time;
 begin
-   This.Ordinal := I.Payload.Ordinal;
-   This.Offset := ColdFrame.Project.Calendar.Clock - I.Payload.Expected_At;
+   This.Ordinal := I.Ordinal;
+   This.Offset := ColdFrame.Project.Calendar.Clock - I.Expected_At;
 end Information_Handler;

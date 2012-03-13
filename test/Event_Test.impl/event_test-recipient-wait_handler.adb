@@ -14,7 +14,7 @@
 
 separate (Event_Test.Recipient)
 procedure Wait_Handler
-  (W : Wait) is
+  (W : Waiting) is
 begin
-   delay W.Payload.Interval;
+   delay W.Interval;
 end Wait_Handler;

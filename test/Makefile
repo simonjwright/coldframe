@@ -33,13 +33,13 @@ all:: build-dirs runs fails
 runs:: event_test-harness$(exe)
 	./$< -v 2>&1 | tee -a event_test.log
 
-runs:: hierarchies-harness$(exe)
+xruns:: hierarchies-harness$(exe)
 	./$< -v 2>&1 | tee -a hierarchies.log
 
 runs:: initialization-harness$(exe)
 	./$< -v 2>&1 | tee -a initialization.log
 
-runs:: regression_tests$(exe)
+xruns:: regression_tests$(exe)
 	./$< -v 2>&1 | tee -a regressions.log
 
 runs:: stub_test_harness$(exe)
@@ -107,6 +107,7 @@ clean::
 # ArgoUML support
 
 NORM_FILES =					\
+  Event_Test.norm				\
   Initialization.norm				\
   Stub_Test_Interface.norm			\
   Unit_Testing.norm

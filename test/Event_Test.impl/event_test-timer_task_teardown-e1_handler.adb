@@ -14,7 +14,7 @@
 
 separate (Event_Test.Timer_Task_Teardown)
 procedure E1_Handler
-  (E : E1) is
+  (E : Dummy) is
    pragma Warnings (Off, E);
 begin
    null;
