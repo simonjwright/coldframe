@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 457fee341738 $
+--  $Date: 2012/03/13 21:34:27 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -75,17 +75,8 @@ package body Normalize_XMI.Model.Classes is
                O : constant Element_P :=
                  Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J),
                                             Parent => N);
-               Name : constant String := +O.Name;
             begin
-               if C.Operations.Contains (Name) then
-                  Messages.Error
-                    ("Class "
-                       & (+C.Name)
-                       & " has duplicate operation "
-                       & Name);
-               else
-                  C.Operations.Insert (Key => Name, New_Item => O);
-               end if;
+               C.Operations.Append (O);
             end;
          end loop;
       end;
@@ -214,7 +205,7 @@ package body Normalize_XMI.Model.Classes is
    begin
       Put_Line (Standard_Error, "... checking class " & (+C.Name));
       C.Attributes.Iterate (Resolve_M'Access);
-      C.Operations.Iterate (Resolve_M'Access);
+      C.Operations.Iterate (Resolve_V'Access);
       C.State_Machines.Iterate (Resolve_V'Access);
    end Resolve;
 
@@ -275,7 +266,7 @@ package body Normalize_XMI.Model.Classes is
       Put_Line (To, "</abbreviation>");
       C.Output_Documentation (To);
       C.Attributes.Iterate (Output_M'Access);
-      C.Operations.Iterate (Output_M'Access);
+      C.Operations.Iterate (Output_V'Access);
       C.State_Machines.Iterate (Output_V'Access);
       Put_Line (To, "</class>");
    end Output;

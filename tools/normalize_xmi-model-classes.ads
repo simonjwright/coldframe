@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 457fee341738 $
+--  $Date: 2012/03/13 21:34:27 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Classes is
@@ -53,9 +53,9 @@ private package Normalize_XMI.Model.Classes is
 private
 
    type Class_Element is new Element with record
-      Attributes     : Element_Maps.Map;
-      Operations     : Element_Maps.Map;
-      State_Machines : Element_Vectors.Vector;
+      Attributes     : Element_Maps.Map;        -- no duplicates
+      Operations     : Element_Vectors.Vector;  -- possible duplicates
+      State_Machines : Element_Vectors.Vector;  -- not named
    end record;
    overriding
    procedure Resolve (C : in out Class_Element);
