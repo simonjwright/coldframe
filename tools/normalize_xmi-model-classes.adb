@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 457fee341738 $
---  $Date: 2012/03/13 21:34:27 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -31,14 +31,13 @@ package body Normalize_XMI.Model.Classes is
    function Read_Class (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Class_Element;
       C : Class_Element renames Class_Element (N.all);
    begin
       C.Parent := Parent;
       C.Populate (From => From);
       C.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading class " & (+C.Name));
+      Messages.Trace ("... reading class " & (+C.Name));
 
       --  Attributes
       declare
@@ -153,7 +152,7 @@ package body Normalize_XMI.Model.Classes is
            := Element_Maps.Element (Pos).Tag_As_Name ("formalizes");
       begin
          if Formalizes = +For_Relationship.Name then
-            Ada.Text_IO.Put_Line
+            Messages.Information
               ("Association "
                  & (+For_Relationship.Name)
                  & " already formalized.");
@@ -189,7 +188,6 @@ package body Normalize_XMI.Model.Classes is
    overriding
    procedure Resolve (C : in out Class_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve_M (Pos : Element_Maps.Cursor);
       procedure Resolve_V (Pos : Element_Vectors.Cursor);
       procedure Resolve_M (Pos : Element_Maps.Cursor)
@@ -203,7 +201,7 @@ package body Normalize_XMI.Model.Classes is
          Element_Vectors.Element (Pos).Resolve;
       end Resolve_V;
    begin
-      Put_Line (Standard_Error, "... checking class " & (+C.Name));
+      Messages.Trace ("... checking class " & (+C.Name));
       C.Attributes.Iterate (Resolve_M'Access);
       C.Operations.Iterate (Resolve_V'Access);
       C.State_Machines.Iterate (Resolve_V'Access);

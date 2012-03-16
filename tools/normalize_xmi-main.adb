@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-main.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with Ada.Command_Line;
@@ -45,7 +45,7 @@ procedure Normalize_XMI.Main is
 begin
 
    loop
-      case GNAT.Command_Line.Getopt ("c: h") is
+      case GNAT.Command_Line.Getopt ("c: h v") is
          when ASCII.NUL => exit;
          when 'c' =>
             Identifiers.Read_Case_Exceptions
@@ -53,6 +53,8 @@ begin
          when 'h' =>
             Usage;
             return;
+         when 'v' =>
+            Messages.Set_Verbosity (To => True);
          when others =>
             Usage;
             Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
@@ -82,7 +84,7 @@ begin
             exit;
          end if;
 
-         Put_Line (Standard_Error, "... processing " & Arg);
+         Messages.Information ("processing " & Arg);
 
          begin
             Input_Sources.File.Open (Arg, File_Source);
@@ -110,9 +112,8 @@ begin
             "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
               & "@name='domain']");
 
-         Put_Line
-           (Standard_Error,
-            "... number of domains:"
+         Messages.Trace
+           ("number of domains:"
               & Natural'Image (DOM.Core.Nodes.Length (Domains)));
 
          for J in 0 .. DOM.Core.Nodes.Length (Domains) - 1 loop
@@ -125,9 +126,8 @@ begin
             "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
               & "@name='domain-interface']");
 
-         Put_Line
-           (Standard_Error,
-            "... number of domain interfaces:"
+         Messages.Trace
+           ("number of domain interfaces:"
               & Natural'Image (DOM.Core.Nodes.Length (Domains)));
 
          for J in 0 .. DOM.Core.Nodes.Length (Domains) - 1 loop

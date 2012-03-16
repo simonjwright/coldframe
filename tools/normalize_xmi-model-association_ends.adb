@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.adb,v $
---  $Revision: 4b73aa0c47e2 $
---  $Date: 2012/01/24 23:56:23 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,15 +29,13 @@ package body Normalize_XMI.Model.Association_Ends is
      (From : DOM.Core.Node;
       Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Association_End_Element;
       E : Association_End_Element renames Association_End_Element (N.all);
    begin
       E.Parent := Parent;
       E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error,
-                "...... reading association_end " & (+E.Name));
+      Messages.Trace ("...... reading association_end " & (+E.Name));
 
       --  Lower
       declare
@@ -134,10 +132,8 @@ package body Normalize_XMI.Model.Association_Ends is
    overriding
    procedure Resolve (E : in out Association_End_Element)
    is
-      use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error,
-                "...... checking association_end " & (+E.Name));
+      Messages.Trace ("...... checking association_end " & (+E.Name));
    end Resolve;
 
 

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: 486acaebb170 $
---  $Date: 2012/02/25 11:12:54 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -28,13 +28,12 @@ package body Normalize_XMI.Model.Data_Types is
    function Read_Data_Type (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Data_Type_Element;
       T : Data_Type_Element renames Data_Type_Element (N.all);
    begin
       T.Parent := Parent;
       T.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading data type " & (+T.Name));
+      Messages.Trace ("... reading data type " & (+T.Name));
       T.Populate (From => From);
 
       --  Attributes
@@ -79,7 +78,6 @@ package body Normalize_XMI.Model.Data_Types is
    overriding
    procedure Resolve (T : in out Data_Type_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve (Pos : Element_Maps.Cursor);
       procedure Resolve (Pos : Element_Maps.Cursor)
       is
@@ -88,7 +86,7 @@ package body Normalize_XMI.Model.Data_Types is
       end Resolve;
       use type Ada.Containers.Count_Type;
    begin
-      Put_Line (Standard_Error, "... checking data type " & (+T.Name));
+      Messages.Trace ("... checking data type " & (+T.Name));
       if T.Has_Stereotype ("access") then
          declare
             Target_Type_Name : constant String

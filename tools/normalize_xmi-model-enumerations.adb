@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: c3a01e5d21e1 $
---  $Date: 2012/02/09 17:17:31 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -28,14 +28,13 @@ package body Normalize_XMI.Model.Enumerations is
    function Read_Enumeration (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Enumeration_Element;
       E : Enumeration_Element renames Enumeration_Element (N.all);
    begin
       E.Parent := Parent;
       E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading enumeration " & (+E.Name));
+      Messages.Trace ("... reading enumeration " & (+E.Name));
 
       --  Literals
       declare
@@ -76,7 +75,6 @@ package body Normalize_XMI.Model.Enumerations is
    overriding
    procedure Resolve (E : in out Enumeration_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve (Pos : Element_Maps.Cursor);
       procedure Resolve (Pos : Element_Maps.Cursor)
       is
@@ -84,7 +82,7 @@ package body Normalize_XMI.Model.Enumerations is
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
    begin
-      Put_Line (Standard_Error, "... checking enumeration " & (+E.Name));
+      Messages.Trace ("... checking enumeration " & (+E.Name));
       E.Operations.Iterate (Resolve'Access);
    end Resolve;
 

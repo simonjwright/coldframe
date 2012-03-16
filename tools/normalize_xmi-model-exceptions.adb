@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -25,14 +25,13 @@ package body Normalize_XMI.Model.Exceptions is
    function Read_Exception (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Exception_Element;
       E : Exception_Element renames Exception_Element (N.all);
    begin
       E.Parent := Parent;
       E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading exception " & (+E.Name));
+      Messages.Trace ("... reading exception " & (+E.Name));
       return N;
    end Read_Exception;
 
@@ -40,9 +39,8 @@ package body Normalize_XMI.Model.Exceptions is
    overriding
    procedure Resolve (E : in out Exception_Element)
    is
-      use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "... checking exception " & (+E.Name));
+      Messages.Trace ("... checking exception " & (+E.Name));
       if E.Has_Tag ("imported") and E.Has_Tag ("renames") then
          Messages.Error
            ("Exception "

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 35795c28c9fa $
---  $Date: 2012/02/22 17:50:03 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -28,14 +28,13 @@ package body Normalize_XMI.Model.Operations is
    function Read_Operation (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Operation_Element;
       O : Operation_Element renames Operation_Element (N.all);
    begin
       O.Parent := Parent;
       O.Populate (From => From);
       O.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "...... reading operation " & (+O.Name));
+      Messages.Trace ("...... reading operation " & (+O.Name));
 
       --  Parameters
       declare
@@ -76,7 +75,6 @@ package body Normalize_XMI.Model.Operations is
    overriding
    procedure Resolve (O : in out Operation_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve (Pos : Element_Vectors.Cursor);
       procedure Resolve (Pos : Element_Vectors.Cursor)
       is
@@ -84,7 +82,7 @@ package body Normalize_XMI.Model.Operations is
          Element_Vectors.Element (Pos).Resolve;
       end Resolve;
    begin
-      Put_Line (Standard_Error, "...... checking operation " & (+O.Name));
+      Messages.Trace ("...... checking operation " & (+O.Name));
       if O.Has_Stereotype ("entry")
         and Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Messages.Error

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: 95ae55573149 $
---  $Date: 2012/02/09 14:08:24 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -28,14 +28,13 @@ package body Normalize_XMI.Model.Parameters is
    function Read_Parameter (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Parameter_Element;
       P : Parameter_Element renames Parameter_Element (N.all);
    begin
       P.Parent := Parent;
       P.Populate (From => From);
       P.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "......... reading parameter " & (+P.Name));
+      Messages.Trace ("......... reading parameter " & (+P.Name));
 
       --  Type
       declare
@@ -69,9 +68,8 @@ package body Normalize_XMI.Model.Parameters is
    overriding
    procedure Resolve (P : in out Parameter_Element)
    is
-      use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "......... checking parameter " & (+P.Name));
+      Messages.Trace ("......... checking parameter " & (+P.Name));
    end Resolve;
 
 

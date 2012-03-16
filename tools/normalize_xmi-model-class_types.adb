@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: a68f9f9f82dc $
---  $Date: 2012/02/24 12:13:04 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,14 +29,13 @@ package body Normalize_XMI.Model.Class_Types is
    function Read_Class_Type (From   : not null DOM.Core.Node;
                              Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Class_Type_Element;
       T : Class_Type_Element renames Class_Type_Element (N.all);
    begin
       T.Parent := Parent;
       T.Populate (From => From);
       T.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading class type " & (+T.Name));
+      Messages.Trace ("... reading class type " & (+T.Name));
 
       --  Attributes
       declare
@@ -89,7 +88,6 @@ package body Normalize_XMI.Model.Class_Types is
    overriding
    procedure Resolve (T : in out Class_Type_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve (Pos : Element_Maps.Cursor);
       procedure Resolve (Pos : Element_Maps.Cursor)
       is
@@ -97,7 +95,7 @@ package body Normalize_XMI.Model.Class_Types is
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
    begin
-      Put_Line (Standard_Error, "... checking class type " & (+T.Name));
+      Messages.Trace ("... checking class type " & (+T.Name));
       if T.Attributes.Is_Empty then
          if T.Has_Stereotype ("discriminated") then
             Messages.Error

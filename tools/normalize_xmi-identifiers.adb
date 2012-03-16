@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -90,9 +90,8 @@ package body Normalize_XMI.Identifiers is
                        := L (Words (1).L + 1 .. Words (1).U);
                   begin
                      if Sub_Case_Exceptions.Contains (Word) then
-                        Ada.Text_IO.Put_Line
-                          (Ada.Text_IO.Standard_Error,
-                           "Sub-case exception already found for '"
+                        Messages.Warning
+                          ("Sub-case exception already found for '"
                              & Word
                              & "'");
                      else
@@ -105,9 +104,8 @@ package body Normalize_XMI.Identifiers is
                        := L (Words (1).L .. Words (1).U);
                   begin
                      if Case_Exceptions.Contains (Word) then
-                        Ada.Text_IO.Put_Line
-                          (Ada.Text_IO.Standard_Error,
-                           "Case exception already found for '"
+                        Messages.Warning
+                          ("Case exception already found for '"
                              & Word
                              & "'");
                      else
@@ -127,8 +125,8 @@ package body Normalize_XMI.Identifiers is
             Name : constant String := From (Files (F).L .. Files (F).U);
             Exceptions : File_Type;
          begin
-            Put_Line (Standard_Error,
-                      "reading case exceptions from '" & Name & "'");
+            Messages.Information
+              ("reading case exceptions from '" & Name & "'");
             Open (Exceptions, Mode => In_File, Name => Name);
             while not End_Of_File (Exceptions) loop
                Add_Exception (Get_Line (Exceptions));
@@ -136,10 +134,9 @@ package body Normalize_XMI.Identifiers is
             Close (Exceptions);
          exception
             when Mode_Error | Name_Error =>
-               Put_Line (Standard_Error,
-                         "Unable to open case exceptions file '"
-                           & Name
-                           & "'");
+               Messages.Error ("Unable to open case exceptions file '"
+                                 & Name
+                                 & "'");
                raise;
          end;
       end loop;

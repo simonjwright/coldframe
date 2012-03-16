@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 560e36d2bc31 $
---  $Date: 2012/03/10 16:57:07 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -40,13 +40,12 @@ package body Normalize_XMI.Model.Associations is
                                            From       : not null DOM.Core.Node;
                                            Parent     : not null Element_P)
    is
-      use Ada.Text_IO;
       A : Association_Element renames Association_Element (Of_Element.all);
    begin
       A.Parent := Parent;
       A.Populate (From => From);
       A.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading association " & (+A.Name));
+      Messages.Trace ("... reading association " & (+A.Name));
 
       --  Ends
       declare
@@ -79,7 +78,6 @@ package body Normalize_XMI.Model.Associations is
    overriding
    procedure Resolve (A : in out Association_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve (Pos : Element_Vectors.Cursor);
       procedure Resolve (Pos : Element_Vectors.Cursor)
       is
@@ -98,7 +96,7 @@ package body Normalize_XMI.Model.Associations is
       C2C : Classes.Class_Element renames Classes.Class_Element (C2.all);
       use Association_Ends;
    begin
-      Put_Line (Standard_Error, "... checking association " & (+A.Name));
+      Messages.Trace ("... checking association " & (+A.Name));
       A.Ends.Iterate (Resolve'Access);
       if E1.Source and E2.Source then
          Messages.Error

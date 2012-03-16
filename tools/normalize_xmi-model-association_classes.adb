@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 560e36d2bc31 $
---  $Date: 2012/03/10 16:57:07 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -38,7 +38,6 @@ package body Normalize_XMI.Model.Association_Classes is
    overriding
    procedure Resolve (AC : in out Association_Class_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve (Pos : Element_Vectors.Cursor);
       procedure Resolve (Pos : Element_Vectors.Cursor)
       is
@@ -57,7 +56,7 @@ package body Normalize_XMI.Model.Association_Classes is
       else
          AC.Class.Name := +(Class_Name & "_Class");
       end if;
-      Put_Line (Standard_Error, "... checking association " & (+AC.Name));
+      Messages.Trace ("... checking association " & (+AC.Name));
       AC.Ends.Iterate (Resolve'Access);
       declare
          Assoc : Classes.Class_Element

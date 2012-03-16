@@ -57,7 +57,7 @@ else
 endif
 
 ifeq ($(VERBOSE), yes)
-  NORM_VERBOSE = --verbose
+  NORM_VERBOSE = -v
   CHOP_VERBOSE =
 else
   NORM_VERBOSE =
@@ -175,6 +175,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 %.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
 	$(COLDFRAME)/tools/normalize_xmi	\
 	  -c $(CASE_EXCEPTIONS)			\
+	  $(NORM_VERBOSE)			\
 	  $<
 	touch $@
 

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -30,7 +30,6 @@ package body Normalize_XMI.Model.Generalizations is
       Parent          :        not null Element_P;
       Accumulating_In : in out Element_Maps.Map)
    is
-      use Ada.Text_IO;
       Name : constant String := Read_Name (From_Element => From);
       Parent_Nodes : constant DOM.Core.Node_List
         := McKae.XML.XPath.XIA.XPath_Query (From,
@@ -51,7 +50,7 @@ package body Normalize_XMI.Model.Generalizations is
                            & Parent_Name);
          return;
       end if;
-      Put_Line (Standard_Error, "... reading generalization " & Name);
+      Messages.Trace ("... reading generalization " & Name);
       if Accumulating_In.Contains (Name) then
          N := Accumulating_In.Element (Name);
       else
@@ -84,7 +83,6 @@ package body Normalize_XMI.Model.Generalizations is
    overriding
    procedure Resolve (G : in out Generalization_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve (Pos : Element_Vectors.Cursor);
       procedure Resolve (Pos : Element_Vectors.Cursor)
       is
@@ -98,7 +96,7 @@ package body Normalize_XMI.Model.Generalizations is
             Forming_Identifier => True);
       end Resolve;
    begin
-      Put_Line (Standard_Error, "... checking generalization " & (+G.Name));
+      Messages.Trace ("... checking generalization " & (+G.Name));
       G.Child_Classes.Iterate (Resolve'Access);
    end Resolve;
 

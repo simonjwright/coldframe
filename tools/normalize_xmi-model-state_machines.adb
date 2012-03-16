@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: 114ef9b7bebc $
---  $Date: 2012/01/24 17:42:51 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -88,9 +88,8 @@ package body Normalize_XMI.Model.State_Machines is
    overriding
    procedure Resolve (T : in out Transition_Element)
    is
-      use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "......... checking transition");
+      Messages.Trace ("......... checking transition");
    end Resolve;
 
    overriding
@@ -120,7 +119,6 @@ package body Normalize_XMI.Model.State_Machines is
       --  Convenience function to read Source or Target state.
       function Read_State (With_Xmi_Id : String) return Element_P;
 
-      use Ada.Text_IO;
       S : State_Machine_Element renames State_Machine_Element (Parent.all);
 
       function Read_State (With_Xmi_Id : String) return Element_P
@@ -153,7 +151,7 @@ package body Normalize_XMI.Model.State_Machines is
       T.Parent := Parent;
       T.Populate (From => From);
       T.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "......... reading transition " & (+T.Name));
+      Messages.Trace ("......... reading transition " & (+T.Name));
 
       --  Trigger
       declare
@@ -235,9 +233,8 @@ package body Normalize_XMI.Model.State_Machines is
    overriding
    procedure Resolve (S : in out State_Element)
    is
-      use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "......... checking state " & (+S.Name));
+      Messages.Trace ("......... checking state " & (+S.Name));
    end Resolve;
 
    overriding
@@ -263,7 +260,6 @@ package body Normalize_XMI.Model.State_Machines is
    function Read_State (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new State_Element;
       S : State_Element renames State_Element (N.all);
       Node_Name : constant String := DOM.Core.Nodes.Node_Name (From);
@@ -271,7 +267,7 @@ package body Normalize_XMI.Model.State_Machines is
       S.Parent := Parent;
       S.Populate (From => From);
       S.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "............ reading state " & (+S.Name));
+      Messages.Trace ("............ reading state " & (+S.Name));
 
       if Node_Name = "UML:Pseudostate" then
          S.Kind := Initial;
@@ -316,9 +312,8 @@ package body Normalize_XMI.Model.State_Machines is
    overriding
    procedure Resolve (E : in out Event_Element)
    is
-      use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "......... checking event " & (+E.Name));
+      Messages.Trace ("......... checking event " & (+E.Name));
 
       --  If this is a class event, copy the Effect from the
       --  Transition which it triggers.
@@ -367,7 +362,6 @@ package body Normalize_XMI.Model.State_Machines is
    function Read_Event (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Event_Element;
       E : Event_Element renames Event_Element (N.all);
    begin
@@ -387,7 +381,7 @@ package body Normalize_XMI.Model.State_Machines is
                                        From => Name'Last,
                                        Going => Ada.Strings.Backward);
       begin
-         Put_Line (Standard_Error, "............ reading event " & Name);
+         Messages.Trace ("............ reading event " & Name);
          if Dot = 0 then
             E.Name := +Name;
          else
@@ -421,7 +415,6 @@ package body Normalize_XMI.Model.State_Machines is
    overriding
    procedure Resolve (S : in out State_Machine_Element)
    is
-      use Ada.Text_IO;
       procedure Resolve_M (Pos : Element_Maps.Cursor);
       procedure Resolve_V (Pos : Element_Vectors.Cursor);
       procedure Resolve_M (Pos : Element_Maps.Cursor)
@@ -435,7 +428,7 @@ package body Normalize_XMI.Model.State_Machines is
          Element_Vectors.Element (Pos).Resolve;
       end Resolve_V;
    begin
-      Put_Line (Standard_Error, "...... checking state_machine " & (+S.Name));
+      Messages.Trace ("...... checking state_machine " & (+S.Name));
       S.Transitions.Iterate (Resolve_V'Access);
       S.States.Iterate (Resolve_M'Access);
       S.Events.Iterate (Resolve_M'Access);
@@ -478,14 +471,13 @@ package body Normalize_XMI.Model.State_Machines is
    function Read_State_Machine (From   : not null DOM.Core.Node;
                                 Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new State_Machine_Element;
       S : State_Machine_Element renames State_Machine_Element (N.all);
    begin
       S.Parent := Parent;
       S.Populate (From => From);
       S.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "...... reading state_machine " & (+S.Name));
+      Messages.Trace ("...... reading state_machine " & (+S.Name));
 
       --  We only want Events for Transitions between States in this
       --  StateMachine, so we start at the top and work down.

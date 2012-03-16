@@ -13,13 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 95ae55573149 $
---  $Date: 2012/02/09 14:08:24 $
+--  $Revision: ed50dbb2a776 $
+--  $Date: 2012/03/16 19:52:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Model.Type_References;
+with Normalize_XMI.Messages;
 
 package body Normalize_XMI.Model.Attributes is
 
@@ -27,14 +28,13 @@ package body Normalize_XMI.Model.Attributes is
    function Read_Attribute (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Attribute_Element;
       A : Attribute_Element renames Attribute_Element (N.all);
    begin
       A.Parent := Parent;
       A.Populate (From => From);
       A.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "...... reading attribute " & (+A.Name));
+      Messages.Trace ("...... reading attribute " & (+A.Name));
 
       --  Type
       declare
@@ -69,9 +69,8 @@ package body Normalize_XMI.Model.Attributes is
    overriding
    procedure Resolve (A : in out Attribute_Element)
    is
-      use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "...... checking attribute " & (+A.Name));
+      Messages.Trace ("...... checking attribute " & (+A.Name));
    end Resolve;
 
 
