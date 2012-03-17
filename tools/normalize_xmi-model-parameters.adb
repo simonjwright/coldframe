@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 055cb66c10cc $
+--  $Date: 2012/03/17 18:20:48 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -40,13 +40,20 @@ package body Normalize_XMI.Model.Parameters is
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From, "UML:Parameter.type/*");
-         pragma Assert
-           (DOM.Core.Nodes.Length (Nodes) = 1,
-            "should be 1 'UML:Parameter.type/*' child of a Parameter");
       begin
-         P.Parameter_Type :=
-           Type_References.Read_Type_Reference (DOM.Core.Nodes.Item (Nodes, 0),
-                                                Parent => N);
+         if DOM.Core.Nodes.Length (Nodes) = 0 then
+            Messages.Error ("No type specified for parameter "
+                              & (+P.Parent.Parent.Name)
+                              & "."
+                              & (+P.Parent.Name)
+                              & "."
+                              & (+P.Name));
+         else
+            P.Parameter_Type :=
+              Type_References.Read_Type_Reference
+              (DOM.Core.Nodes.Item (Nodes, 0),
+               Parent => N);
+         end if;
       end;
 
       --  Default value

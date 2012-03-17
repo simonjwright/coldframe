@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 055cb66c10cc $
+--  $Date: 2012/03/17 18:20:48 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -40,14 +40,17 @@ package body Normalize_XMI.Model.Attributes is
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From, "UML:StructuralFeature.type/*");
-         pragma Assert
-           (DOM.Core.Nodes.Length (Nodes) = 1,
-            "should be 1 'UML:StructuralFeature.type/*' child"
-              & "of an Attribute");
       begin
-         A.Attribute_Type :=
-           Type_References.Read_Type_Reference (DOM.Core.Nodes.Item (Nodes, 0),
-                                                Parent => N);
+         if DOM.Core.Nodes.Length (Nodes) = 0 then
+            Messages.Error ("No type specified for attribute "
+                              & (+A.Parent.Name)
+                              & "."
+                              & (+A.Name));
+         else
+            A.Attribute_Type := Type_References.Read_Type_Reference
+              (DOM.Core.Nodes.Item (Nodes, 0),
+               Parent => N);
+         end if;
       end;
 
       --  Initial value
