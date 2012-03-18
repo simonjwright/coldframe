@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 82b96c9fec61 $
+--  $Date: 2012/03/18 11:49:21 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -52,10 +52,32 @@ package body Normalize_XMI.Model.Association_Classes is
       --  for the long term.
       AC.Class := AC.Find_Class (Class_Name);
       if AC.Class.Has_Tag ("association-class-name") then
-         AC.Class.Name := +(AC.Class.Tag_As_Name ("association-class-name"));
-      else
-         AC.Class.Name := +(Class_Name & "_Class");
+         Messages.Warning
+           ("Deprecated <<association-class-name>> on "
+              & Class_Name);
       end if;
+      case AC.Class.Has_Tag ("association-name") is
+         when False =>
+            case AC.Class.Has_Tag ("class-name") is
+               when False =>
+                  if AC.Class.Has_Tag ("association-class-name") then
+                     AC.Class.Name :=
+                       +(AC.Class.Tag_As_Name ("association-class-name"));
+                  else
+                     AC.Class.Name := +(Class_Name & "_Class");
+                  end if;
+               when True =>
+                  AC.Class.Name := +(AC.Class.Tag_As_Name ("class-name"));
+            end case;
+         when True =>
+            AC.Name := +(AC.Tag_As_Name ("association-name"));
+            case AC.Class.Has_Tag ("class-name") is
+               when False =>
+                  null;
+               when True =>
+                  AC.Class.Name := +(AC.Class.Tag_As_Name ("class-name"));
+            end case;
+      end case;
       Messages.Trace ("... checking association " & (+AC.Name));
       AC.Ends.Iterate (Resolve'Access);
       declare

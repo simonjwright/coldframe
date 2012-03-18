@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Feb 24 11:23:18 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Mar 17 18:18:38 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/02/24 12:12:17 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/03/18 11:49:21 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -810,6 +810,13 @@ This stereotype marks the association end from which the referential attribute (
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC5'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>true</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC2'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
           <UML:Stereotype.definedTag>
             <UML:TagDefinition xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4E'
@@ -825,7 +832,7 @@ This stereotype marks the association end from which the referential attribute (
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C51'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>This tag is used to specify the name to be used for the class part of an AssociationClass (the association part retains the name specified in the model). If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>This tag is used to specify the name to be used for the class part of an AssociationClass. If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
                   </UML:TaggedValue.type>
@@ -1052,6 +1059,73 @@ The implementation may limit the size of objects that can be treated as atomic.<
                 <UML:TaggedValue xmi.id = '-64--88-1-2--3513d2a7:135a6123f16:-8000:0000000000000FD6'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>Specifies the length of the «fixed-string» string.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
+            </UML:TagDefinition>
+          </UML:Stereotype.definedTag>
+        </UML:Stereotype>
+        <UML:TagDefinition xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC2'
+          name = 'deprecated' isSpecification = 'false'>
+          <UML:TagDefinition.multiplicity>
+            <UML:Multiplicity xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC4'>
+              <UML:Multiplicity.range>
+                <UML:MultiplicityRange xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC3'
+                  lower = '0' upper = '0'/>
+              </UML:Multiplicity.range>
+            </UML:Multiplicity>
+          </UML:TagDefinition.multiplicity>
+        </UML:TagDefinition>
+        <UML:Stereotype xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC6'
+          name = 'association-class-naming' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false'>
+          <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC7'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>This stereotype supports the tags {association-name}, which is used to specify the name to be used for the association part of an AssociationClass, and {class-name}, which is used to specify the name to be used for the class part. Both can be supplied; if only one is supplied, the other part retains the name specified in the model; if neither is supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
+          <UML:Stereotype.definedTag>
+            <UML:TagDefinition xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC8'
+              name = 'class-name' isSpecification = 'false'>
+              <UML:TagDefinition.multiplicity>
+                <UML:Multiplicity xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DCA'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC9'
+                      lower = '0' upper = '0'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:TagDefinition.multiplicity>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DCE'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>This tag is used to specify the name to be used for the class part of an AssociationClass. If neither this tag nor {association-name} is supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
+            </UML:TagDefinition>
+            <UML:TagDefinition xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DCB'
+              name = 'association-name' isSpecification = 'false'>
+              <UML:TagDefinition.multiplicity>
+                <UML:Multiplicity xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DCD'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DCC'
+                      lower = '0' upper = '0'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:TagDefinition.multiplicity>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DCF'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>This tag is used to specify the name to be used for the association part of an AssociationClass. If not supplied, the name used is the AssociationClass name.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
                   </UML:TaggedValue.type>
@@ -3060,7 +3134,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig2"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 368, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 32, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011E6"
        fill="1"
        fillcolor="white"
@@ -3071,8 +3145,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </private>
     
     <rectangle name="Fig2.0"
-      x="280"
-      y="368"
+      x="472"
+      y="32"
       width="114"
       height="45"
       fill="1"
@@ -3081,8 +3155,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       strokecolor="black"
     />
     <text name="Fig2.1"
-      x="281"
-      y="369"
+      x="473"
+      y="33"
       width="112"
       height="43"
       fill="0"
@@ -3097,7 +3171,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >domain</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 369, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 33, 112, 20]"
          href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011E6"
          fill="0"
          fillcolor="white"
@@ -3108,8 +3182,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       </private>
       
       <rectangle name="Fig2.2.0"
-        x="281"
-        y="369"
+        x="473"
+        y="33"
         width="112"
         height="20"
         fill="0"
@@ -3118,8 +3192,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
         strokecolor="black"
       />
       <text name="Fig2.2.1"
-        x="281"
-        y="369"
+        x="473"
+        y="33"
         width="112"
         height="18"
         fill="0"
@@ -3136,7 +3210,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig3"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 88, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 144, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-4--4b388e1c:133c835cf94:-8000:0000000000000B81"
        fill="1"
        fillcolor="white"
@@ -3148,7 +3222,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig3.0"
       x="472"
-      y="88"
+      y="144"
       width="114"
       height="45"
       fill="1"
@@ -3158,7 +3232,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig3.1"
       x="473"
-      y="89"
+      y="145"
       width="112"
       height="43"
       fill="0"
@@ -3173,7 +3247,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >entry</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 89, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 145, 112, 20]"
          href="-64--88-1-4--4b388e1c:133c835cf94:-8000:0000000000000B81"
          fill="0"
          fillcolor="white"
@@ -3185,7 +3259,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig3.2.0"
         x="473"
-        y="89"
+        y="145"
         width="112"
         height="20"
         fill="0"
@@ -3195,7 +3269,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig3.2.1"
         x="473"
-        y="89"
+        y="145"
         width="112"
         height="18"
         fill="0"
@@ -3212,7 +3286,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig4"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 368, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 32, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2--1f15b0ea:133d63b1278:-8000:0000000000000A82"
        fill="1"
        fillcolor="white"
@@ -3223,8 +3297,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </private>
     
     <rectangle name="Fig4.0"
-      x="472"
-      y="368"
+      x="656"
+      y="32"
       width="114"
       height="45"
       fill="1"
@@ -3233,8 +3307,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       strokecolor="black"
     />
     <text name="Fig4.1"
-      x="473"
-      y="369"
+      x="657"
+      y="33"
       width="112"
       height="43"
       fill="0"
@@ -3249,7 +3323,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >id</text>
     <group name="Fig4.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 369, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 33, 112, 20]"
          href="-64--88-1-2--1f15b0ea:133d63b1278:-8000:0000000000000A82"
          fill="0"
          fillcolor="white"
@@ -3260,8 +3334,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       </private>
       
       <rectangle name="Fig4.2.0"
-        x="473"
-        y="369"
+        x="657"
+        y="33"
         width="112"
         height="20"
         fill="0"
@@ -3270,8 +3344,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
         strokecolor="black"
       />
       <text name="Fig4.2.1"
-        x="473"
-        y="369"
+        x="657"
+        y="33"
         width="112"
         height="18"
         fill="0"
@@ -3288,7 +3362,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig5"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 256, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 312, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011EA"
        fill="1"
        fillcolor="white"
@@ -3300,7 +3374,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig5.0"
       x="656"
-      y="256"
+      y="312"
       width="114"
       height="45"
       fill="1"
@@ -3310,7 +3384,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig5.1"
       x="657"
-      y="257"
+      y="313"
       width="112"
       height="43"
       fill="0"
@@ -3325,7 +3399,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >public</text>
     <group name="Fig5.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 257, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 313, 112, 20]"
          href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011EA"
          fill="0"
          fillcolor="white"
@@ -3337,7 +3411,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig5.2.0"
         x="657"
-        y="257"
+        y="313"
         width="112"
         height="20"
         fill="0"
@@ -3347,7 +3421,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig5.2.1"
         x="657"
-        y="257"
+        y="313"
         width="112"
         height="18"
         fill="0"
@@ -3364,7 +3438,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig6"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 312, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 368, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-75974079:133cb9477e4:-8000:0000000000001277"
        fill="1"
        fillcolor="white"
@@ -3376,7 +3450,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig6.0"
       x="280"
-      y="312"
+      y="368"
       width="116"
       height="45"
       fill="1"
@@ -3386,7 +3460,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig6.1"
       x="281"
-      y="313"
+      y="369"
       width="114"
       height="43"
       fill="0"
@@ -3401,7 +3475,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >datatype</text>
     <group name="Fig6.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 313, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 369, 114, 20]"
          href="-64--88-1-3-75974079:133cb9477e4:-8000:0000000000001277"
          fill="0"
          fillcolor="white"
@@ -3413,7 +3487,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig6.2.0"
         x="281"
-        y="313"
+        y="369"
         width="114"
         height="20"
         fill="0"
@@ -3423,7 +3497,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig6.2.1"
         x="281"
-        y="313"
+        y="369"
         width="114"
         height="18"
         fill="0"
@@ -3440,7 +3514,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig7"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 312, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 368, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001015"
        fill="1"
        fillcolor="white"
@@ -3452,7 +3526,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig7.0"
       x="656"
-      y="312"
+      y="368"
       width="116"
       height="45"
       fill="1"
@@ -3462,7 +3536,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig7.1"
       x="657"
-      y="313"
+      y="369"
       width="114"
       height="43"
       fill="0"
@@ -3477,7 +3551,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >renaming</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 313, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 369, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001015"
          fill="0"
          fillcolor="white"
@@ -3489,7 +3563,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig7.2.0"
         x="657"
-        y="313"
+        y="369"
         width="114"
         height="20"
         fill="0"
@@ -3499,7 +3573,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig7.2.1"
         x="657"
-        y="313"
+        y="369"
         width="114"
         height="18"
         fill="0"
@@ -3516,7 +3590,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig8"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 32, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 88, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000101D"
        fill="1"
        fillcolor="white"
@@ -3528,7 +3602,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig8.0"
       x="656"
-      y="32"
+      y="88"
       width="116"
       height="45"
       fill="1"
@@ -3538,7 +3612,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig8.1"
       x="657"
-      y="33"
+      y="89"
       width="114"
       height="43"
       fill="0"
@@ -3553,7 +3627,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >imported</text>
     <group name="Fig8.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 33, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 89, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000101D"
          fill="0"
          fillcolor="white"
@@ -3565,7 +3639,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig8.2.0"
         x="657"
-        y="33"
+        y="89"
         width="114"
         height="20"
         fill="0"
@@ -3575,7 +3649,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig8.2.1"
         x="657"
-        y="33"
+        y="89"
         width="114"
         height="18"
         fill="0"
@@ -3592,7 +3666,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 200, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 256, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001021"
        fill="1"
        fillcolor="white"
@@ -3604,7 +3678,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig9.0"
       x="280"
-      y="200"
+      y="256"
       width="116"
       height="45"
       fill="1"
@@ -3614,7 +3688,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig9.1"
       x="281"
-      y="201"
+      y="257"
       width="114"
       height="43"
       fill="0"
@@ -3629,7 +3703,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >counterpart</text>
     <group name="Fig9.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 201, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 257, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001021"
          fill="0"
          fillcolor="white"
@@ -3641,7 +3715,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig9.2.0"
         x="281"
-        y="201"
+        y="257"
         width="114"
         height="20"
         fill="0"
@@ -3651,7 +3725,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig9.2.1"
         x="281"
-        y="201"
+        y="257"
         width="114"
         height="18"
         fill="0"
@@ -3668,7 +3742,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig10"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 256, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 312, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001022"
        fill="1"
        fillcolor="white"
@@ -3680,7 +3754,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig10.0"
       x="280"
-      y="256"
+      y="312"
       width="116"
       height="45"
       fill="1"
@@ -3690,7 +3764,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig10.1"
       x="281"
-      y="257"
+      y="313"
       width="114"
       height="43"
       fill="0"
@@ -3705,7 +3779,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >discriminated</text>
     <group name="Fig10.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 257, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 313, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001022"
          fill="0"
          fillcolor="white"
@@ -3717,7 +3791,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig10.2.0"
         x="281"
-        y="257"
+        y="313"
         width="114"
         height="20"
         fill="0"
@@ -3727,7 +3801,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig10.2.1"
         x="281"
-        y="257"
+        y="313"
         width="114"
         height="18"
         fill="0"
@@ -3744,7 +3818,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig11"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 144, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 200, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001023"
        fill="1"
        fillcolor="white"
@@ -3756,7 +3830,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig11.0"
       x="472"
-      y="144"
+      y="200"
       width="116"
       height="45"
       fill="1"
@@ -3766,7 +3840,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig11.1"
       x="473"
-      y="145"
+      y="201"
       width="114"
       height="43"
       fill="0"
@@ -3781,7 +3855,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >final</text>
     <group name="Fig11.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 145, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 201, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001023"
          fill="0"
          fillcolor="white"
@@ -3793,7 +3867,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig11.2.0"
         x="473"
-        y="145"
+        y="201"
         width="114"
         height="20"
         fill="0"
@@ -3803,7 +3877,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig11.2.1"
         x="473"
-        y="145"
+        y="201"
         width="114"
         height="18"
         fill="0"
@@ -3820,7 +3894,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig12"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 200, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 256, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001024"
        fill="1"
        fillcolor="white"
@@ -3832,7 +3906,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig12.0"
       x="472"
-      y="200"
+      y="256"
       width="116"
       height="45"
       fill="1"
@@ -3842,7 +3916,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig12.1"
       x="473"
-      y="201"
+      y="257"
       width="114"
       height="43"
       fill="0"
@@ -3857,7 +3931,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >finalize</text>
     <group name="Fig12.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 201, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 257, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001024"
          fill="0"
          fillcolor="white"
@@ -3869,7 +3943,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig12.2.0"
         x="473"
-        y="201"
+        y="257"
         width="114"
         height="20"
         fill="0"
@@ -3879,7 +3953,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig12.2.1"
         x="473"
-        y="201"
+        y="257"
         width="114"
         height="18"
         fill="0"
@@ -3896,7 +3970,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig13"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 312, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 368, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001026"
        fill="1"
        fillcolor="white"
@@ -3908,7 +3982,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig13.0"
       x="472"
-      y="312"
+      y="368"
       width="116"
       height="45"
       fill="1"
@@ -3918,7 +3992,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig13.1"
       x="473"
-      y="313"
+      y="369"
       width="114"
       height="43"
       fill="0"
@@ -3933,7 +4007,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >ignore</text>
     <group name="Fig13.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 313, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 369, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001026"
          fill="0"
          fillcolor="white"
@@ -3945,7 +4019,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig13.2.0"
         x="473"
-        y="313"
+        y="369"
         width="114"
         height="20"
         fill="0"
@@ -3955,7 +4029,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig13.2.1"
         x="473"
-        y="313"
+        y="369"
         width="114"
         height="18"
         fill="0"
@@ -3972,7 +4046,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig14"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 88, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 144, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001027"
        fill="1"
        fillcolor="white"
@@ -3984,7 +4058,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig14.0"
       x="656"
-      y="88"
+      y="144"
       width="116"
       height="45"
       fill="1"
@@ -3994,7 +4068,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig14.1"
       x="657"
-      y="89"
+      y="145"
       width="114"
       height="43"
       fill="0"
@@ -4009,7 +4083,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >init</text>
     <group name="Fig14.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 89, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 145, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001027"
          fill="0"
          fillcolor="white"
@@ -4021,7 +4095,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig14.2.0"
         x="657"
-        y="89"
+        y="145"
         width="114"
         height="20"
         fill="0"
@@ -4031,7 +4105,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig14.2.1"
         x="657"
-        y="89"
+        y="145"
         width="114"
         height="18"
         fill="0"
@@ -4048,7 +4122,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig15"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 200, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 256, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001028"
        fill="1"
        fillcolor="white"
@@ -4060,7 +4134,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig15.0"
       x="656"
-      y="200"
+      y="256"
       width="116"
       height="45"
       fill="1"
@@ -4070,7 +4144,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig15.1"
       x="657"
-      y="201"
+      y="257"
       width="114"
       height="43"
       fill="0"
@@ -4085,7 +4159,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >protected</text>
     <group name="Fig15.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 201, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 257, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001028"
          fill="0"
          fillcolor="white"
@@ -4097,7 +4171,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig15.2.0"
         x="657"
-        y="201"
+        y="257"
         width="114"
         height="20"
         fill="0"
@@ -4107,7 +4181,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig15.2.1"
         x="657"
-        y="201"
+        y="257"
         width="114"
         height="18"
         fill="0"
@@ -4124,7 +4198,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig16"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 368, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[832, 32, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001029"
        fill="1"
        fillcolor="white"
@@ -4135,8 +4209,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </private>
     
     <rectangle name="Fig16.0"
-      x="656"
-      y="368"
+      x="832"
+      y="32"
       width="116"
       height="45"
       fill="1"
@@ -4145,8 +4219,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       strokecolor="black"
     />
     <text name="Fig16.1"
-      x="657"
-      y="369"
+      x="833"
+      y="33"
       width="114"
       height="43"
       fill="0"
@@ -4161,7 +4235,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >singleton</text>
     <group name="Fig16.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 369, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[833, 33, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001029"
          fill="0"
          fillcolor="white"
@@ -4172,8 +4246,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       </private>
       
       <rectangle name="Fig16.2.0"
-        x="657"
-        y="369"
+        x="833"
+        y="33"
         width="114"
         height="20"
         fill="0"
@@ -4182,8 +4256,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
         strokecolor="black"
       />
       <text name="Fig16.2.1"
-        x="657"
-        y="369"
+        x="833"
+        y="33"
         width="114"
         height="18"
         fill="0"
@@ -4200,7 +4274,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig17"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[832, 88, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[832, 144, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000102A"
        fill="1"
        fillcolor="white"
@@ -4212,7 +4286,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig17.0"
       x="832"
-      y="88"
+      y="144"
       width="116"
       height="45"
       fill="1"
@@ -4222,7 +4296,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig17.1"
       x="833"
-      y="89"
+      y="145"
       width="114"
       height="43"
       fill="0"
@@ -4237,7 +4311,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >teardown</text>
     <group name="Fig17.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[833, 89, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[833, 145, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000102A"
          fill="0"
          fillcolor="white"
@@ -4249,7 +4323,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig17.2.0"
         x="833"
-        y="89"
+        y="145"
         width="114"
         height="20"
         fill="0"
@@ -4259,7 +4333,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig17.2.1"
         x="833"
-        y="89"
+        y="145"
         width="114"
         height="18"
         fill="0"
@@ -4276,7 +4350,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig18"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 144, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 200, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB8"
        fill="1"
        fillcolor="white"
@@ -4288,7 +4362,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig18.0"
       x="656"
-      y="144"
+      y="200"
       width="116"
       height="45"
       fill="1"
@@ -4298,7 +4372,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig18.1"
       x="657"
-      y="145"
+      y="201"
       width="114"
       height="43"
       fill="0"
@@ -4313,7 +4387,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >null</text>
     <group name="Fig18.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 145, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 201, 114, 20]"
          href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB8"
          fill="0"
          fillcolor="white"
@@ -4325,7 +4399,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig18.2.0"
         x="657"
-        y="145"
+        y="201"
         width="114"
         height="20"
         fill="0"
@@ -4335,7 +4409,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig18.2.1"
         x="657"
-        y="145"
+        y="201"
         width="114"
         height="18"
         fill="0"
@@ -4352,7 +4426,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig19"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 88, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 144, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9"
        fill="1"
        fillcolor="white"
@@ -4364,7 +4438,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig19.0"
       x="280"
-      y="88"
+      y="144"
       width="116"
       height="45"
       fill="1"
@@ -4374,7 +4448,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig19.1"
       x="281"
-      y="89"
+      y="145"
       width="114"
       height="43"
       fill="0"
@@ -4389,7 +4463,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >callback</text>
     <group name="Fig19.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 89, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 145, 114, 20]"
          href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9"
          fill="0"
          fillcolor="white"
@@ -4401,7 +4475,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig19.2.0"
         x="281"
-        y="89"
+        y="145"
         width="114"
         height="20"
         fill="0"
@@ -4411,7 +4485,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig19.2.1"
         x="281"
-        y="89"
+        y="145"
         width="114"
         height="18"
         fill="0"
@@ -4428,7 +4502,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig20"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[832, 32, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[832, 88, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000001064"
        fill="1"
        fillcolor="white"
@@ -4440,7 +4514,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig20.0"
       x="832"
-      y="32"
+      y="88"
       width="116"
       height="45"
       fill="1"
@@ -4450,7 +4524,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig20.1"
       x="833"
-      y="33"
+      y="89"
       width="114"
       height="43"
       fill="0"
@@ -4465,7 +4539,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >source</text>
     <group name="Fig20.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[833, 33, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[833, 89, 114, 20]"
          href="-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000001064"
          fill="0"
          fillcolor="white"
@@ -4477,7 +4551,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig20.2.0"
         x="833"
-        y="33"
+        y="89"
         width="114"
         height="20"
         fill="0"
@@ -4487,7 +4561,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig20.2.1"
         x="833"
-        y="33"
+        y="89"
         width="114"
         height="18"
         fill="0"
@@ -4656,7 +4730,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig23"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 144, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 200, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2"
        fill="1"
        fillcolor="white"
@@ -4668,7 +4742,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig23.0"
       x="280"
-      y="144"
+      y="200"
       width="116"
       height="45"
       fill="1"
@@ -4678,7 +4752,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig23.1"
       x="281"
-      y="145"
+      y="201"
       width="114"
       height="43"
       fill="0"
@@ -4693,7 +4767,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >class</text>
     <group name="Fig23.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 145, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 201, 114, 20]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2"
          fill="0"
          fillcolor="white"
@@ -4705,7 +4779,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig23.2.0"
         x="281"
-        y="145"
+        y="201"
         width="114"
         height="20"
         fill="0"
@@ -4715,7 +4789,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig23.2.1"
         x="281"
-        y="145"
+        y="201"
         width="114"
         height="18"
         fill="0"
@@ -4732,7 +4806,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig24"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[464, 32, 129, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[464, 88, 129, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-4--39825520:13506c8d4e1:-8000:0000000000000EEA"
        fill="1"
        fillcolor="white"
@@ -4744,7 +4818,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig24.0"
       x="464"
-      y="32"
+      y="88"
       width="129"
       height="45"
       fill="1"
@@ -4754,7 +4828,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig24.1"
       x="465"
-      y="33"
+      y="89"
       width="127"
       height="43"
       fill="0"
@@ -4769,7 +4843,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >domain-interface</text>
     <group name="Fig24.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[465, 33, 127, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[465, 89, 127, 20]"
          href="-64--88-1-4--39825520:13506c8d4e1:-8000:0000000000000EEA"
          fill="0"
          fillcolor="white"
@@ -4781,7 +4855,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig24.2.0"
         x="465"
-        y="33"
+        y="89"
         width="127"
         height="20"
         fill="0"
@@ -4791,7 +4865,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig24.2.1"
         x="465"
-        y="33"
+        y="89"
         width="127"
         height="18"
         fill="0"
@@ -4960,7 +5034,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig27"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 368, 105, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[288, 32, 105, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-41a92590:13525ed9d2d:-8000:0000000000000C49"
        fill="1"
        fillcolor="white"
@@ -4971,8 +5045,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </private>
     
     <rectangle name="Fig27.0"
-      x="80"
-      y="368"
+      x="288"
+      y="32"
       width="105"
       height="45"
       fill="1"
@@ -4981,8 +5055,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       strokecolor="black"
     />
     <text name="Fig27.1"
-      x="81"
-      y="369"
+      x="289"
+      y="33"
       width="103"
       height="43"
       fill="0"
@@ -4997,7 +5071,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >atomic</text>
     <group name="Fig27.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 369, 103, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[289, 33, 103, 20]"
          href="-64--88-1-3-41a92590:13525ed9d2d:-8000:0000000000000C49"
          fill="0"
          fillcolor="white"
@@ -5008,8 +5082,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
       </private>
       
       <rectangle name="Fig27.2.0"
-        x="81"
-        y="369"
+        x="289"
+        y="33"
         width="103"
         height="20"
         fill="0"
@@ -5018,8 +5092,8 @@ The implementation may limit the size of objects that can be treated as atomic.<
         strokecolor="black"
       />
       <text name="Fig27.2.1"
-        x="81"
-        y="369"
+        x="289"
+        y="33"
         width="103"
         height="18"
         fill="0"
@@ -5036,7 +5110,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig28"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[832, 144, 105, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[832, 200, 105, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-41a92590:13525ed9d2d:-8000:0000000000000C4B"
        fill="1"
        fillcolor="white"
@@ -5048,7 +5122,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig28.0"
       x="832"
-      y="144"
+      y="200"
       width="105"
       height="45"
       fill="1"
@@ -5058,7 +5132,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig28.1"
       x="833"
-      y="145"
+      y="201"
       width="103"
       height="43"
       fill="0"
@@ -5073,7 +5147,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >volatile</text>
     <group name="Fig28.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[833, 145, 103, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[833, 201, 103, 20]"
          href="-64--88-1-3-41a92590:13525ed9d2d:-8000:0000000000000C4B"
          fill="0"
          fillcolor="white"
@@ -5085,7 +5159,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig28.2.0"
         x="833"
-        y="145"
+        y="201"
         width="103"
         height="20"
         fill="0"
@@ -5095,7 +5169,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig28.2.1"
         x="833"
-        y="145"
+        y="201"
         width="103"
         height="18"
         fill="0"
@@ -5112,7 +5186,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig29"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 32, 119, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[280, 88, 119, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2--3513d2a7:135a6123f16:-8000:0000000000000FD0"
        fill="1"
        fillcolor="white"
@@ -5124,7 +5198,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig29.0"
       x="280"
-      y="32"
+      y="88"
       width="119"
       height="45"
       fill="1"
@@ -5134,7 +5208,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig29.1"
       x="281"
-      y="33"
+      y="89"
       width="117"
       height="43"
       fill="0"
@@ -5149,7 +5223,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >bounded-string</text>
     <group name="Fig29.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 33, 117, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 89, 117, 20]"
          href="-64--88-1-2--3513d2a7:135a6123f16:-8000:0000000000000FD0"
          fill="0"
          fillcolor="white"
@@ -5161,7 +5235,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig29.2.0"
         x="281"
-        y="33"
+        y="89"
         width="117"
         height="20"
         fill="0"
@@ -5171,7 +5245,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig29.2.1"
         x="281"
-        y="33"
+        y="89"
         width="117"
         height="18"
         fill="0"
@@ -5188,7 +5262,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     </group>
   </group>
   <group name="Fig30"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 256, 105, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[472, 312, 105, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2--3513d2a7:135a6123f16:-8000:0000000000000FD1"
        fill="1"
        fillcolor="white"
@@ -5200,7 +5274,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     
     <rectangle name="Fig30.0"
       x="472"
-      y="256"
+      y="312"
       width="105"
       height="45"
       fill="1"
@@ -5210,7 +5284,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
     />
     <text name="Fig30.1"
       x="473"
-      y="257"
+      y="313"
       width="103"
       height="43"
       fill="0"
@@ -5225,7 +5299,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       justification="Center"
     >fixed-string</text>
     <group name="Fig30.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 257, 103, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 313, 103, 20]"
          href="-64--88-1-2--3513d2a7:135a6123f16:-8000:0000000000000FD1"
          fill="0"
          fillcolor="white"
@@ -5237,7 +5311,7 @@ The implementation may limit the size of objects that can be treated as atomic.<
       
       <rectangle name="Fig30.2.0"
         x="473"
-        y="257"
+        y="313"
         width="103"
         height="20"
         fill="0"
@@ -5247,8 +5321,84 @@ The implementation may limit the size of objects that can be treated as atomic.<
       />
       <text name="Fig30.2.1"
         x="473"
-        y="257"
+        y="313"
         width="103"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«stereotype»</text>
+    </group>
+  </group>
+  <group name="Fig31"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[48, 376, 186, 45]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC6"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig31.0"
+      x="48"
+      y="376"
+      width="186"
+      height="45"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig31.1"
+      x="49"
+      y="377"
+      width="184"
+      height="43"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >association-class-naming</text>
+    <group name="Fig31.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[49, 377, 184, 20]"
+         href="-64--88-1-3-3b70b8e0:136215becf0:-8000:0000000000000DC6"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig31.2.0"
+        x="49"
+        y="377"
+        width="184"
+        height="20"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig31.2.1"
+        x="49"
+        y="377"
+        width="184"
         height="18"
         fill="0"
         fillcolor="white"
