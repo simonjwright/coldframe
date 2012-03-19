@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Van Fleet Class Diagram</activediagram>
+      <activediagram>House Management Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -98,10 +98,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 19 16:28:07 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 19 16:45:27 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/03/19 16:38:37 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/03/19 16:47:12 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -126,7 +126,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 98fbb55791c1 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -577,7 +577,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 98fbb55791c1 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -702,14 +702,14 @@ This package is free software; you can redistribute it and/or modify it under te
               name = 'Current' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name'/>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
               </UML:ModelElement.stereotype>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3-6ad088d1:134cd8c9bd0:-8000:0000000000000C30'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>Current Loan</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name-td-association-class-name'/>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
@@ -750,14 +750,14 @@ This package is free software; you can redistribute it and/or modify it under te
               name = 'History' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name'/>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
               </UML:ModelElement.stereotype>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3-6ad088d1:134cd8c9bd0:-8000:0000000000000C31'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>Loan History</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name-td-association-class-name'/>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
@@ -816,7 +816,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 98fbb55791c1 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1100,14 +1100,14 @@ Tell the associated Lamps.</UML:TaggedValue.dataValue>
               name = 'A1' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name'/>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
               </UML:ModelElement.stereotype>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C33'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>Button_To_Lamp</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name-td-association-class-name'/>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C4E'
@@ -1442,7 +1442,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015CB'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 98fbb55791c1 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1465,7 +1465,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9B'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>$Revision: 98fbb55791c1 $</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-revision'/>
                   </UML:TaggedValue.type>
@@ -1979,7 +1979,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0B'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 98fbb55791c1 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -2187,7 +2187,7 @@ This demonstration shows how ColdFrame&apos;s support for messages and state mac
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E60'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 98fbb55791c1 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -5492,7 +5492,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         bold="false"
         textsize="13"
         justification="Center"
-      >«association-class-name»</text>
+      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig4.3"
       x="0"
@@ -5718,7 +5718,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         bold="false"
         textsize="13"
         justification="Center"
-      >«association-class-name»</text>
+      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig7.3"
       x="696"
@@ -6298,7 +6298,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </path>
   </group>
   <group name="Fig3"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[368, 208, 203, 87]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[368, 208, 203, 105]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
        fill="1"
        fillcolor="white"
@@ -6312,7 +6312,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       x="368"
       y="208"
       width="203"
-      height="87"
+      height="105"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -6370,7 +6370,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         bold="false"
         textsize="13"
         justification="Center"
-      >«association-class-name»</text>
+      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig3.3"
       x="368"
@@ -6383,7 +6383,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 253, 201, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 253, 201, 29]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -6397,7 +6397,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         x="369"
         y="253"
         width="201"
-        height="21"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -6406,7 +6406,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </group>
     <rectangle name="Fig3.5"
       x="368"
-      y="273"
+      y="282"
       width="203"
       height="1"
       fill="1"
@@ -6415,7 +6415,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 274, 201, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 283, 201, 29]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -6427,9 +6427,9 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       
       <rectangle name="Fig3.6.0"
         x="369"
-        y="274"
+        y="283"
         width="201"
-        height="21"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
