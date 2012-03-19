@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: associations.html,v 43c7986f5d01 2012/03/19 15:19:15 simonjwright $ -->
 <head>
 <title>ColdFrame: Associations</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -68,12 +68,13 @@ implemented the association and the associative class as two different
 things. UML (and therefore ArgoUML) regard them as one thing,
 an <i>AssociationClass</i>.
 
-<p>At 10.ii.12, ColdFrame still generates two packages, one for the
-association and one for the associative class. The association takes
-the name in the model; by default, the associative class is named by
-appending <tt>_Class</tt>, but this can be overridden by the
-stereotype <em>&#171;association-class-name&#187;</em> and the
-associated tag <tt>{association-class-name=<i>new-name</i>}</tt>.
+<p>At 18.iii.12, ColdFrame still generates two packages, one for the
+association and one for the associative class. By default, the
+association takes the name in the model and the associative class is
+named by appending <tt>_Class</tt>. This can be overridden by the
+stereotype <em>&#171;association-class-naming&#187;</em> and the
+associated tags <tt>{association-name=<i>new-name</i>}</tt>
+and <tt>{class-name=<i>new-name</i>}</tt>.
 
 <p>This behaviour isn't ideal; a better approach would be to merge the
 generated packages.
