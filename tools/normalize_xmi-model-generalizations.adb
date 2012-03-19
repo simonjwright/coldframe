@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 6d3131ae7241 $
+--  $Date: 2012/03/19 16:38:37 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
+with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Classes;
 
@@ -30,7 +31,11 @@ package body Normalize_XMI.Model.Generalizations is
       Parent          :        not null Element_P;
       Accumulating_In : in out Element_Maps.Map)
    is
-      Name : constant String := Read_Name (From_Element => From);
+      Model_Name : constant String := Read_Name (From_Element => From);
+      Discriminator : constant String :=
+        Identifiers.Normalize
+        (Read_Attribute ("discriminator", From_Element => From));
+      Name : Ada.Strings.Unbounded.Unbounded_String;
       Parent_Nodes : constant DOM.Core.Node_List
         := McKae.XML.XPath.XIA.XPath_Query (From,
                                             "UML:Generalization.parent/*");
@@ -43,22 +48,40 @@ package body Normalize_XMI.Model.Generalizations is
         := Read_Name (From_Element => DOM.Core.Nodes.Item (Child_Nodes, 0));
       N : Element_P;
    begin
-      if Name'Length = 0 then
-         Messages.Error ("Unnamed generalization from "
-                           & Child_Name
-                           & " to "
-                           & Parent_Name);
-         return;
+      if Model_Name'Length = 0 then
+         if Discriminator'Length = 0 then
+            Messages.Error ("Unnamed/undiscriminated generalization from "
+                              & Child_Name
+                              & " to "
+                              & Parent_Name);
+            return;
+         else
+            Name := +Discriminator;
+         end if;
+      else
+         if Discriminator'Length = 0 or else Discriminator = Model_Name then
+            Name := +Model_Name;
+         else
+            Messages.Error ("Mismatch between generalization name ("
+                              & Model_Name
+                              & ") and discriminator ("
+                              & Discriminator
+                              & ") from "
+                              & Child_Name
+                              & " to "
+                              & Parent_Name);
+            return;
+         end if;
       end if;
-      Messages.Trace ("... reading generalization " & Name);
-      if Accumulating_In.Contains (Name) then
-         N := Accumulating_In.Element (Name);
+      Messages.Trace ("... reading generalization " & (+Name));
+      if Accumulating_In.Contains (+Name) then
+         N := Accumulating_In.Element (+Name);
       else
          N := new Generalization_Element;
-         Accumulating_In.Insert (Key => Name, New_Item => N);
+         Accumulating_In.Insert (Key => +Name, New_Item => N);
          N.Parent := Parent;
          N.Populate (From);
-         N.Name := +Name;
+         N.Name := Name;
          Generalization_Element (N.all).Parent_Class
            := N.Find_Class (Parent_Name);
       end if;
@@ -67,7 +90,7 @@ package body Normalize_XMI.Model.Generalizations is
       begin
          if +G.Parent_Class.Name /= Parent_Name then
             Messages.Error ("Generalization "
-                              & Name
+                              & (+Name)
                               & " from "
                               & Child_Name
                               & " has different parent ("

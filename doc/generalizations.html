@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: generalizations.html,v 6d3131ae7241 2012/03/19 16:38:37 simonjwright $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -118,8 +118,10 @@ generalization/specialization links in your class diagram,
 name</em> (<a href="#rentawreck"><i>r2</i> in the diagram</a>). Note
 that ArgoUML (at 0.34) implements UML 1.4, in
 which <a href="http://argouml.tigris.org/issues/show_bug.cgi?id=6398">labels
-on generalization links represwnt something other than the
-generalization name</a>.
+on generalization links represent the discriminator rather than the
+generalization name</a>. ColdFrame will use either the generalization
+name or the discriminator if only one is present; if both are present,
+they must be the same.
 
 <h2>Translation</h2>
 

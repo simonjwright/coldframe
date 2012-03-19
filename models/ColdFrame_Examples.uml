@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>States Class Diagram</activediagram>
+      <activediagram>Van Fleet Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -75,15 +75,15 @@
               diagramclass="org.argouml.uml.diagram.state.ui.UMLStateDiagram"
               diagramname="Device Lifecycle" />
       <member type="pgml"
-              name="ColdFrame_Examples_ClassDiagram.pgml"
+              name="ColdFrame_Examples_StatesClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="States Class Diagram" />
       <member type="pgml"
-              name="ColdFrame_Examples_States0.pgml"
+              name="ColdFrame_Examples_MonitorLifecycle.pgml"
               diagramclass="org.argouml.uml.diagram.state.ui.UMLStateDiagram"
               diagramname="Monitor Lifecycle" />
       <member type="pgml"
-              name="ColdFrame_Examples_States0.pgml"
+              name="ColdFrame_Examples_MonitorClassEvents.pgml"
               diagramclass="org.argouml.uml.diagram.state.ui.UMLStateDiagram"
               diagramname="Monitor Class Events" />
       <member type="todo"
@@ -98,10 +98,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Feb 22 15:20:33 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 19 16:28:07 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/02/22 15:21:30 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/03/19 16:38:37 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -126,7 +126,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de9235d211ce $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -332,7 +332,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
               </UML:Classifier.feature>
             </UML:Class>
             <UML:Generalization xmi.id = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098C'
-              name = 'G1' isSpecification = 'false'>
+              name = 'G1' isSpecification = 'false' discriminator = 'G1'>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000000E1C'
                   isSpecification = 'false'>
@@ -350,7 +350,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
               </UML:Generalization.parent>
             </UML:Generalization>
             <UML:Generalization xmi.id = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098D'
-              name = 'G1' isSpecification = 'false'>
+              name = 'G1' isSpecification = 'false' discriminator = 'G1'>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000000E1D'
                   isSpecification = 'false'>
@@ -577,7 +577,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de9235d211ce $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -816,7 +816,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de9235d211ce $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1442,7 +1442,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015CB'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de9235d211ce $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1465,7 +1465,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9B'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>$Revision: de9235d211ce $</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-revision'/>
                   </UML:TaggedValue.type>
@@ -1942,7 +1942,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
               </UML:Classifier.feature>
             </UML:Class>
             <UML:Generalization xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BF'
-              name = 'G1' isSpecification = 'false'>
+              name = 'G1' isSpecification = 'false' discriminator = 'G1'>
               <UML:Generalization.child>
                 <UML:Class xmi.idref = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BD'/>
               </UML:Generalization.child>
@@ -1951,7 +1951,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
               </UML:Generalization.parent>
             </UML:Generalization>
             <UML:Generalization xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015C0'
-              name = 'G1' isSpecification = 'false'>
+              name = 'G1' isSpecification = 'false' discriminator = 'G1'>
               <UML:Generalization.child>
                 <UML:Class xmi.idref = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BE'/>
               </UML:Generalization.child>
@@ -1979,7 +1979,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0B'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de9235d211ce $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -2187,7 +2187,7 @@ This demonstration shows how ColdFrame&apos;s support for messages and state mac
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E60'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de9235d211ce $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 6d3131ae7241 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -4525,8 +4525,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
                         ownerhref="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098C"
-                        angle="270.0"
-                        offset="-10" />
+                        angle="-263.0"
+                        offset="46" />
     </private>
     <path name="Fig5.0"
       description="org.argouml.gefext.ArgoFigPoly"
@@ -4556,8 +4556,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
                         ownerhref="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098D"
-                        angle="270.0"
-                        offset="-10" />
+                        angle="298.99999999999994"
+                        offset="10" />
     </private>
     <path name="Fig6.0"
       description="org.argouml.gefext.ArgoFigPoly"
@@ -9708,7 +9708,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >- Monitor</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 105, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[281, 105, 225, 0]"
          href="-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E65"
          fill="0"
          fillcolor="white"
@@ -9722,7 +9722,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig1.2.0"
         x="281"
         y="105"
-        width="64"
+        width="225"
         height="0"
         fill="0"
         fillcolor="white"
@@ -10088,7 +10088,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig2.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10197,7 +10197,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig4.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10306,7 +10306,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig6.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10415,7 +10415,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig8.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10524,7 +10524,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig10.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10633,7 +10633,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig12.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10664,7 +10664,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig13.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10695,7 +10695,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig14.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10730,7 +10730,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig15.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10841,7 +10841,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig17.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10872,7 +10872,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig18.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -10981,7 +10981,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig20.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -11012,7 +11012,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="41" />
     </private>
     <path name="Fig21.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -11043,7 +11043,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig22.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -11156,7 +11156,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="7" />
     </private>
     <path name="Fig24.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -11187,7 +11187,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="3" />
     </private>
     <path name="Fig25.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -11218,7 +11218,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig26.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -11333,7 +11333,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="10" />
     </private>
     <path name="Fig1.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
