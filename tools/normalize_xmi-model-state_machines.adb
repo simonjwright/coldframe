@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 9cd837f9524c $
+--  $Date: 2012/03/19 15:21:07 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -235,6 +235,21 @@ package body Normalize_XMI.Model.State_Machines is
    is
    begin
       Messages.Trace ("......... checking state " & (+S.Name));
+      if S.Has_Stereotype ("final") then
+         case S.Kind is
+            when Initial =>
+               Messages.Error
+                 ("Initial state "
+                    & (+S.Parent.Name)
+                    & "."
+                    & (+S.Name)
+                    & " is marked <<final>>");
+            when Normal =>
+               S.Kind := Final;
+            when Final =>
+               null;
+         end case;
+      end if;
    end Resolve;
 
    overriding
@@ -246,7 +261,8 @@ package body Normalize_XMI.Model.State_Machines is
       case S.Kind is
          when Initial =>
             Put (To, " initial='true'");
-         when Normal => null;
+         when Normal =>
+            null;
          when Final =>
             Put (To, " final='true'");
       end case;

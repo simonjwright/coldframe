@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Mar 17 18:18:38 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 19 15:06:57 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/03/18 11:49:21 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/03/19 15:21:07 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -608,10 +608,12 @@ To be applied to a Class stereotyped «datatype» and with attributes.</UML:Tagg
           name = 'final' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>SimpleState</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--29007e96:1351af64880:-8000:0000000000000E96'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>Indicates that the marked operation deletes the instance.
+              <UML:TaggedValue.dataValue>If applied to a (Simple)State, indicates that the marked state is a final state; no outgoing transitions are allowed.
+If applied to an Operation, indicates that the marked operation deletes the instance.
 Used in state machines to ensure that no further accesses are made to the deleted instance.
 The (generated) operation Delete is automatically «final».</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
@@ -722,8 +724,8 @@ To be applied to a Class stereotyped «datatype» and with attributes.</UML:Tagg
         <UML:Stereotype xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9'
           name = 'callback' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC2'
               isSpecification = 'false'>
@@ -763,8 +765,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAA'
           name = 'abbreviation' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAF'
               isSpecification = 'false'>
@@ -805,7 +807,7 @@ This stereotype marks the association end from which the referential attribute (
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>This stereotype supports the tag {association-class-name}, which is used to specify the name to be used for the class part of an AssociationClass (the association part retains the name specified in the model). If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>This deprecated stereotype supports the tag {association-class-name}, which is used to specify the name to be used for the class part of an AssociationClass (the association part retains the name specified in the model). If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -832,7 +834,7 @@ This stereotype marks the association end from which the referential attribute (
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C51'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>This tag is used to specify the name to be used for the class part of an AssociationClass. If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>This deprecated tag is used to specify the name to be used for the class part of an AssociationClass. If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
                   </UML:TaggedValue.type>
@@ -844,8 +846,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2'
           name = 'class' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>CallEvent</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>SignalEvent</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>CallEvent</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>StateMachine</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF3'
