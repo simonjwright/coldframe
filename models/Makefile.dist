@@ -31,7 +31,7 @@ DATE = $(subst cf-,,$(notdir $(DIST)))
 
 EXAMPLES = ColdFrame_Examples.uml
 
-TEST =
+TEST = ColdFrame_Tests.uml
 
 ALL = ColdFrameProfile.uml $(EXAMPLES) $(TEST)
 
