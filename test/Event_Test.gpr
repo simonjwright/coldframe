@@ -30,10 +30,7 @@ project Event_Test is
 
   for Object_Dir use Options'Object_Dir & "/main";
   package IDE renames Options.IDE;
-  package Builder is
-     for Default_Switches ("ada")
-       use Options.Builder'Default_Switches ("ada") & "-a";
-  end Builder;
+  package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
   package Linker renames Options.Linker;
