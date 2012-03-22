@@ -44,6 +44,7 @@ with Hierarchies.F_2.Collections;
 package body Hierarchies.Test_Creations is
 
    subtype CIH is ColdFrame.Instances.Handle;
+   use type CIH;
    use type R_1.Handle;
    use type R_2.Handle;
    use type R_3.Handle;

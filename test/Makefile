@@ -33,7 +33,7 @@ all:: build-dirs runs fails
 runs:: event_test-harness$(exe)
 	./$< -v 2>&1 | tee -a event_test.log
 
-xruns:: hierarchies-harness$(exe)
+runs:: hierarchies-harness$(exe)
 	./$< -v 2>&1 | tee -a hierarchies.log
 
 runs:: initialization-harness$(exe)
@@ -108,6 +108,7 @@ clean::
 
 NORM_FILES =					\
   Event_Test.norm				\
+  Hierarchies.norm				\
   Initialization.norm				\
   Stub_Test_Interface.norm			\
   Unit_Testing.norm
