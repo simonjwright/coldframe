@@ -28,7 +28,11 @@ include ../Makefile.inc
 
 app = ADA_PROJECT_PATH=$$ADA_PROJECT_PATH:$(COLDFRAME)
 
-all:: build-dirs runs fails
+all:: runs fails
+
+# In case no actual targets.
+runs::
+fails::
 
 runs:: event_test-harness$(exe)
 	./$< -v 2>&1 | tee -a event_test.log
@@ -48,9 +52,9 @@ runs:: stub_test_harness$(exe)
 runs:: unit_testing-harness$(exe)
 	./$< -v 2>&1 | tee -a unit_testing.log
 
-fails:: Bad_Model_Regressions.stamp-regardless
+xfails:: Bad_Model_Regressions.stamp-regardless
 
-fails:: Bad_Code_Regressions.stamp-regardless
+xfails:: Bad_Code_Regressions.stamp-regardless
 
 event_test-harness$(exe): Event_Test.stamp force
 	$(app) gnatmake -p -PEvent_Test 2>&1 | tee -a Event_Test.log
