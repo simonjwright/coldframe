@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 486acaebb170 2012/02/25 11:12:54 simonjwright $ -->
+<!-- $Id: releases.html,v 82e9c8ea4ad5 2012/03/24 17:31:13 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -75,18 +75,38 @@ zipped release of 30 January 2001.
 </ul>
 -->
 
-<dt>DATE
+<dt>20120324
 
 <dd>
 <ul class="release">
 
 <li><b>Modelling</b>
 
+<li>Added &#171;bounded-string&#187;, &#171;discriminated&#187;,
+&#171;fixed-string&#187; and &#171;protected&#187;.
+
+<li>Reworked <i>AssociationClass</i> handling; the stereotype is now
+&#171;association-class-naming&#187;, and you can
+specify <tt>{association-name}</tt>, <tt>{class-name}</tt>, or both
+(though that would add another layer of confusion).
+
+<li>You can specify the <i>discriminator</i> of
+a <i>Generalization</i>, which has the advantage of appearing on the
+class diagram. If you specify both the name and the discriminator,
+they have to match.
+
 <li><b>Generation</b>
 
-<li><b>Code</b>
+<li>Progress is only traced if <i>make</i> is
+given <tt>VERBOSE=yes</tt>.
 
 <li><b>Testing</b>
+
+<li> Added <tt>example/</tt> and <tt>test/</tt> code.
+
+<li>Noted that many of the tests use AUnit 3 (as supplied with GNAT
+GPL 2011), and aren't compatible with the AUnit 1.03 provided with
+Debian (up to <i>wheezy</i>).
 
 <li><b>Installation</b>
 

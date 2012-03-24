@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 486acaebb170 2012/02/25 11:12:54 simonjwright $ -->
+<!-- $Id: installation.html,v 82e9c8ea4ad5 2012/03/24 17:31:13 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -146,7 +146,7 @@ of a project's model files).
 <td>$COLDFRAME/models
 
 <tr><td>SAXON
-<td>How to run Saxon. Shouldn't need to be overrideden.
+<td>How to run Saxon. Shouldn't need to be overridden.
 <td>$JAVA -cp $SAXON_CLASSPATH com.icl.saxon.StyleSheet
 
 <tr><td>SAXON_CLASSPATH
@@ -161,11 +161,9 @@ of a project's model files).
 <td>Should unit test support code (enabling inspection etc) be generated?
 <td>no
 
-<!--
 <tr><td>VERBOSE
 <td>Should ColdFrame be chatty as it generates code?
 <td>no
--->
 
 </table>
 
@@ -174,8 +172,9 @@ of a project's model files).
 <p>Your project will in general consist of a number
 of <a href="domains.html">domains</a>, and (unlike some other
 modelling tools, such as Rational Rose) ArgoUML offers no facility to
-keep the domains in separately-controlled files. The choice is then to
-have one UML file per domain, one per project, or somethng in between.
+keep the domains in separately-controlled files. Your choice is then
+to have one UML file per domain, one per project, or somethng in
+between.
 
 <p>ColdFrame supports having multiple domains per UML file.
 
@@ -203,7 +202,8 @@ suppose that the model is <tt><i>/where/ever/</i>Model.uml</tt> and it
 contains domains <i>House Management</i> and <i>Digital IO</i> (the
 latter containing a child package stereotyped
 &#171;domain-interface&#187; called <i>Digital IO Interface</i> with
-the tag <tt>{name=Digital IO}</tt>, see <font color="red">XXX</font>):
+the tag <tt>{name=Digital IO}</tt>, see the section
+on <a href="testing.html#stubs">testing with stubs</a>):
 
 <pre>
    DOMAINS = House_Management Digital_IO Digital_IO_Interface
@@ -243,27 +243,24 @@ Project</a> file</h3>
 
 <p>If you don't need to override any of the <tt>ColdFrame.Project</tt>
 source, your project file can be pretty simple: the supplied
-<tt>Regressions.gpr</tt> (in the <tt>test/</tt> subdirectory) is
+<tt>Event_Test.gpr</tt> (in the <tt>test/</tt> subdirectory) is
 
 <pre>
-   with "Options";
    with "ColdFrame";
-   with "bc";
+   with "Options";
    with "aunit";
+   with "bc";
 
-   project Regressions is
+   project Event_Test is
 
-     for Main use ("<i>regression_tests.adb</i>");
+     for Main use ("event_test-harness");
 
      for Exec_Dir use ".";
 
      for Source_Dirs use
-       (
-	"<i>Compilation_Regressions</i>.impl",
-	"<i>Compilation_Regressions</i>.gen",
-	"<i>Regressions</i>.impl",
-	"<i>Regressions</i>.gen"
-       );
+       ("<i>Event_Test.impl"</i>,
+        "<i>Event_Test.gen</i>",
+        "<i>Event_Test.test</i>");
 
      for Object_Dir use Options'Object_Dir & "/main";
      package IDE renames Options.IDE;
@@ -272,7 +269,7 @@ source, your project file can be pretty simple: the supplied
      package Binder renames Options.Binder;
      package Linker renames Options.Linker;
 
-   end Regressions;
+   end Event_Test;
 </pre>
 
 <p>Add further domains as required, of course.
@@ -299,12 +296,12 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 
 <p><pre>
    with "Options";
-   with "bc";
    with "aunit";
+   with "bc";
 
-   project Regressions is
+   project Event_Test is
 
-     for Main use ("<i>regression_tests</i>");
+     for Main use ("event_test-harness");
 
      for Exec_Dir use ".";
 
@@ -312,8 +309,9 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 
      for Source_Dirs use
        (
-	"<i>Regressions</i>.impl",
-	"<i>Regressions</i>.gen",
+        "<i>Event_Test.impl"</i>,
+        "<i>Event_Test.gen</i>",
+        "<i>Event_Test.test</i>",
 	external ("COLDFRAME") & "/lib",
 	Project_Base & "/project",
 	Project_Base & "/inherited"
@@ -326,7 +324,7 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
      package Binder renames Options.Binder;
      package Linker renames Options.Linker;
 
-   end Regressions;
+   end Event_Test;
 </pre>
 
 <hr>
