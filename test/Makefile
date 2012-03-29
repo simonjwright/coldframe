@@ -43,7 +43,7 @@ runs:: hierarchies-harness$(exe)
 runs:: initialization-harness$(exe)
 	./$< -v 2>&1 | tee -a initialization.log
 
-xruns:: regression_tests$(exe)
+runs:: regression_tests$(exe)
 	./$< -v 2>&1 | tee -a regressions.log
 
 runs:: stub_test_harness$(exe)
@@ -73,12 +73,6 @@ initialization-harness$(exe): Initialization.stamp force
 exes:: initialization-harness$(exe)
 clean::
 	-$(app) gnatclean -PInitialization
-
-regression_tests$(exe): Regressions.stamp Compilation_Regressions.stamp force
-	$(app) gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
-exes:: regression_tests$(exe)
-clean::
-	-$(app) gnatclean -PRegressions
 
 stub_test_harness$(exe): Stub_Test_Interface.stamp force
 	$(app) gnatmake -p -PStub_Test 2>&1 | tee -a Stub_Test.log
@@ -121,7 +115,25 @@ NORM_FILES =					\
 # to rebuild the .gen directories.
 $(NORM_FILES): ColdFrame_Tests.norm-stamp ;
 
+# Regression tests
+
+REGRESSION_DOMAINS =				\
+  SF_2991721
+
+REGRESSION_NORMS = $(addsuffix .norm,$(REGRESSION_DOMAINS))
+$(REGRESSION_NORMS): Regressions.norm-stamp ;
+
+REGRESSION_STAMPS = $(addsuffix .stamp,$(REGRESSION_DOMAINS))
+
+# Has to come after definition of REGRESSION_STAMPS
+regression_tests$(exe): $(REGRESSION_STAMPS) force
+	$(app) gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
+exes:: regression_tests$(exe)
 clean::
-	-rm -rf *.{ada,gen,log,norm,stamp*}
+	-$(app) gnatclean -PRegressions
+
+
+clean::
+	-rm -rf *.{ada,gen,log,norm,norm-stamp,stamp*}
 
 .PHONY: all force clean

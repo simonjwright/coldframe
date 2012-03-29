@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-class.xsl,v c08b5cbfa4a1 2012/03/29 23:10:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1326,7 +1326,7 @@
     <!-- .. create the new instance, maybe catching storage error .. -->
     <xsl:choose>
       <xsl:when test="$max &lt;= $max-bounded-container">
-        <!-- We used a bounded storage pool, so Storage_Error 
+        <!-- We used a bounded storage pool, so Storage_Error
              implies attempt to create too many instances. -->
         <xsl:value-of select="$II"/>
         <xsl:text>begin&#10;</xsl:text>
@@ -1342,7 +1342,7 @@
         <xsl:text>end;&#10;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <!-- If we're using an unbounded storage pool, no point in 
+        <!-- If we're using an unbounded storage pool, no point in
              catching Storage_Error (the world is about to end anyway!) -->
         <xsl:value-of select="$II"/>
         <xsl:text>Result := new Instance;&#10;</xsl:text>
@@ -2326,15 +2326,34 @@
       <xsl:choose>
 
         <xsl:when test="type='Autonumber'">
-          <!-- Must be the only identifying attribute. -->
+
+          <!-- Must be the only identifying attribute.
+               Result := Result xor M ({type-name}'Pos (I.{name}));
+               -->
+
           <xsl:value-of select="$I"/>
           <xsl:text>Result := Result xor M (I.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text> mod 2**31);&#10;</xsl:text>
+
+        </xsl:when>
+
+        <xsl:when test="$type/integer or type='Integer'">
+
+          <!--
+               Result := Result xor M ({type-name}'Pos (I.{name}) mod 2**30);
+               -->
+
+          <xsl:value-of select="$I"/>
+          <xsl:text>Result := Result xor M (</xsl:text>
+          <xsl:value-of select="$type-name"/>
+          <xsl:text>'Pos (I.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>) mod 2**30);&#10;</xsl:text>
+
         </xsl:when>
 
         <xsl:when test="$type/enumeration or type='Boolean'
-                        or $type/integer or type='Integer'
                         or type='Natural' or type='Positive'
                         or $type/unsigned
                         or $type/@hash">
@@ -2509,7 +2528,7 @@
     <xsl:value-of select="$I"/>
     <xsl:text>type T_P is access T;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>function CF_Is_Terminated (It : T_P) return Boolean;&#10;</xsl:text> 
+    <xsl:text>function CF_Is_Terminated (It : T_P) return Boolean;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>package Task_Deletion is new ColdFrame.Task_Deletion_G (T, T_P, CF_Is_Terminated);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>

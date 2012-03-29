@@ -25,10 +25,8 @@ project Regressions is
 
   for Source_Dirs use
     (
-     "Compilation_Regressions.impl",
-     "Compilation_Regressions.gen",
-     "Regressions.impl",
-     "Regressions.gen"
+     "SF_2991721.gen",
+     "Regressions.test"
     );
 
   for Object_Dir use Options'Object_Dir & "/main";

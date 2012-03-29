@@ -12,9 +12,28 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-separate (Regressions.Self_Immolator)
-task body T is
-begin
-   accept Quit;
-   Terminate_Self (Handle (This));
-end T;
+--  Regression tests for ColdFrame.
+
+--  Units that need testing
+
+with SF_2991721.Test;
+
+--  Call up units that only have to compile
+
+pragma Warnings (Off);
+--  with Compilation_Regressions.Subunits;
+pragma Warnings (On);
+
+package body Regressions_Suite is
+
+
+   function Suite return AUnit.Test_Suites.Access_Test_Suite is
+      Result : constant AUnit.Test_Suites.Access_Test_Suite
+        := new AUnit.Test_Suites.Test_Suite;
+   begin
+      AUnit.Test_Suites.Add_Test (Result, new SF_2991721.Test.Case_1);
+      return Result;
+   end Suite;
+
+
+end Regressions_Suite;

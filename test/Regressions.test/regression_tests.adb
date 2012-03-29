@@ -12,9 +12,21 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-separate (Regressions.PT_Owner)
-function Get_H_Access
-  return PT_Holder_P is
+--  Regression tests for ColdFrame.
+
+with AUnit.Reporter.Text;
+with AUnit.Run;
+with GNAT.Exception_Traces;
+with Regressions_Suite;
+
+procedure Regression_Tests is
+   procedure Run is new AUnit.Run.Test_Runner (Regressions_Suite.Suite);
+   Reporter : AUnit.Reporter.Text.Text_Reporter;
 begin
-   return This.H'Access;
-end Get_H_Access;
+
+   GNAT.Exception_Traces.Trace_On
+     (Kind => GNAT.Exception_Traces.Unhandled_Raise);
+
+   Run (Reporter);
+
+end Regression_Tests;
