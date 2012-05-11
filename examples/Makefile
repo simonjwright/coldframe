@@ -46,8 +46,8 @@ EXECUTABLES += library_test_harness$(exe)
 library_test_harness$(exe): Library.gen force
 	$(app) gnatmake -p -PLibrary
 
-#EXECUTABLES += performance_harness$(exe)
-performance_harness$(exe): Performance.gen force
+EXECUTABLES += performance-harness$(exe)
+performance-harness$(exe): Performance.gen force
 	$(app) gnatmake -p -PPerformance
 
 #EXECUTABLES += problem_reporting_harness$(exe)
@@ -90,6 +90,7 @@ NORM_FILES =					\
  House_Management.norm				\
  Interrupt_Handling.norm			\
  Library.norm					\
+ Performance.norm				\
  States.norm					\
  Van_Fleet.norm
 
