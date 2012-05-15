@@ -115,18 +115,28 @@ NORM_FILES =					\
 # to rebuild the .gen directories.
 $(NORM_FILES): ColdFrame_Tests.norm-stamp ;
 
-# Regression tests
+# Regression tests (by which I mean, tests related to bug reports on
+# Sourceforge)
 
+# Some of the domains are in the ColdFrame_Development model.
+DEVELOPMENT_DOMAINS =				\
+  Associations					\
+  Association_Classes
+
+# Others (more regression-specific) in the Regressions model.
 REGRESSION_DOMAINS =				\
   SF_2991721
 
+DEVELOPMENT_NORMS = $(addsuffix .norm,$(DEVELOPMENT_DOMAINS))
+$(DEVELOPMENT_NORMS): ColdFrame_Development.norm-stamp ;
+DEVELOPMENT_STAMPS = $(addsuffix .stamp,$(DEVELOPMENT_DOMAINS))
+
 REGRESSION_NORMS = $(addsuffix .norm,$(REGRESSION_DOMAINS))
 $(REGRESSION_NORMS): Regressions.norm-stamp ;
-
 REGRESSION_STAMPS = $(addsuffix .stamp,$(REGRESSION_DOMAINS))
 
-# Has to come after definition of REGRESSION_STAMPS
-regression_tests$(exe): $(REGRESSION_STAMPS) force
+# Has to come after definition of DEVELOPMENT_STAMPS, REGRESSION_STAMPS
+regression_tests$(exe): $(DEVELOPMENT_STAMPS) $(REGRESSION_STAMPS) force
 	$(app) gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
 exes:: regression_tests$(exe)
 clean::

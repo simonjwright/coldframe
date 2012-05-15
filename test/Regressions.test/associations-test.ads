@@ -12,30 +12,16 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-with "ColdFrame";
-with "Options";
-with "aunit";
-with "bc";
+--  Regression tests for ColdFrame.
 
-project Regressions is
+with AUnit.Test_Cases; use AUnit.Test_Cases;
 
-  for Main use ("regression_tests");
-
-  for Exec_Dir use ".";
-
-  for Source_Dirs use
-    (
-     "Associations.gen",
-     "Association_Classes.gen",
-     "SF_2991721.gen",
-     "Regressions.test"
-    );
-
-  for Object_Dir use Options'Object_Dir & "/main";
-  package IDE renames Options.IDE;
-  package Builder renames Options.Builder;
-  package Compiler renames Options.Compiler;
-  package Binder renames Options.Binder;
-  package Linker renames Options.Linker;
-
-end Regressions;
+package Associations.Test is
+   type Case_1 is new Test_Case with private;
+private
+   type Case_1 is new Test_Case with null record;
+   function Name (C : Case_1) return AUnit.Message_String;
+   procedure Register_Tests (C : in out Case_1);
+   procedure Set_Up (C : in out Case_1);
+   procedure Tear_Down (C : in out Case_1);
+end Associations.Test;

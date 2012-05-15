@@ -12,30 +12,17 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-with "ColdFrame";
-with "Options";
-with "aunit";
-with "bc";
+--  Regression tests for ColdFrame.
 
-project Regressions is
+with Associations.Test;
+with Association_Classes.Test;
 
-  for Main use ("regression_tests");
-
-  for Exec_Dir use ".";
-
-  for Source_Dirs use
-    (
-     "Associations.gen",
-     "Association_Classes.gen",
-     "SF_2991721.gen",
-     "Regressions.test"
-    );
-
-  for Object_Dir use Options'Object_Dir & "/main";
-  package IDE renames Options.IDE;
-  package Builder renames Options.Builder;
-  package Compiler renames Options.Compiler;
-  package Binder renames Options.Binder;
-  package Linker renames Options.Linker;
-
-end Regressions;
+function SF_3086637_Suite return AUnit.Test_Suites.Access_Test_Suite
+is
+   Result : constant AUnit.Test_Suites.Access_Test_Suite
+     := new AUnit.Test_Suites.Test_Suite;
+begin
+   AUnit.Test_Suites.Add_Test (Result, new Associations.Test.Case_1);
+   AUnit.Test_Suites.Add_Test (Result, new Association_Classes.Test.Case_1);
+   return Result;
+end SF_3086637_Suite;

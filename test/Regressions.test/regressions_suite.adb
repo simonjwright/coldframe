@@ -17,6 +17,7 @@
 --  Units that need testing
 
 with SF_2991721.Test;
+with SF_3086637_Suite;
 
 --  Call up units that only have to compile
 
@@ -32,6 +33,7 @@ package body Regressions_Suite is
         := new AUnit.Test_Suites.Test_Suite;
    begin
       AUnit.Test_Suites.Add_Test (Result, new SF_2991721.Test.Case_1);
+      AUnit.Test_Suites.Add_Test (Result, SF_3086637_Suite);
       return Result;
    end Suite;
 
