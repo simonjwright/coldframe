@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v f5a039e1b4b0 2011/12/20 22:41:32 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v 4d189aeebf3b 2012/05/15 18:38:43 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1516,16 +1516,33 @@
 
       <xsl:otherwise>
 
-        <!--
-             return {b}.Handle
-               ({a}.Get_{ref-attr} ({a-abbrev}));
+        <!-- We need to use the long-winded form, because we're past
+             the 'begin'.
+
+             if {a}."/=" ({a-abbrev}, null) then
+                return null;
+             else
+                return {b}.Handle
+                  ({a}.Get_{ref-attr} ({a-abbrev}));
+             end if;
              -->
 
         <xsl:value-of select="$II"/>
+        <xsl:text>if </xsl:text>
+        <xsl:value-of select="$a"/>
+        <xsl:text>."=" (</xsl:text>
+        <xsl:value-of
+          select="/domain/class[name=$role-a/classname]/abbreviation"/>
+        <xsl:text>, null) then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>return null;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>else&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
         <xsl:text>return </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Handle&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
+        <xsl:value-of select="$IIIC"/>
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$a"/>
         <xsl:text>.Get_</xsl:text>
@@ -1541,6 +1558,8 @@
         <xsl:value-of
           select="/domain/class[name=$role-a/classname]/abbreviation"/>
         <xsl:text>));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
 
       </xsl:otherwise>
 
