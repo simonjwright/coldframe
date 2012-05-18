@@ -31,8 +31,8 @@ with Association_Classes.Tear_Down;
 
 package body Association_Classes.Test is
 
-   procedure Navigate_A0_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A0_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A0_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A0_From_Null_L_To_R (C : in out Test_Case'Class) is
       RH : R.Handle;
       use type R.Handle;
    begin
@@ -40,10 +40,10 @@ package body Association_Classes.Test is
       Assert (C,
               RH = null,
               "expected null R handle");
-   end Navigate_A0_From_Null_L;
+   end Navigate_A0_From_Null_L_To_R;
 
-   procedure Navigate_A0_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A0_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A0_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A0_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -51,10 +51,10 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A0_From_Null_R;
+   end Navigate_A0_From_Null_R_To_L;
 
-   procedure Navigate_A1_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A1_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A1_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A1_From_Null_L_To_R (C : in out Test_Case'Class) is
       RH : R.Handle;
       use type R.Handle;
    begin
@@ -62,10 +62,10 @@ package body Association_Classes.Test is
       Assert (C,
               RH = null,
               "expected null R handle");
-   end Navigate_A1_From_Null_L;
+   end Navigate_A1_From_Null_L_To_R;
 
-   procedure Navigate_A1_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A1_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A1_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A1_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -73,10 +73,10 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A1_From_Null_R;
+   end Navigate_A1_From_Null_R_To_L;
 
-   procedure Navigate_A2_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A2_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A2_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A2_From_Null_L_To_R (C : in out Test_Case'Class) is
       RH : R.Handle;
       use type R.Handle;
    begin
@@ -84,10 +84,10 @@ package body Association_Classes.Test is
       Assert (C,
               RH = null,
               "expected null R handle");
-   end Navigate_A2_From_Null_L;
+   end Navigate_A2_From_Null_L_To_R;
 
-   procedure Navigate_A2_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A2_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A2_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A2_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -95,10 +95,10 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A2_From_Null_R;
+   end Navigate_A2_From_Null_R_To_L;
 
-   procedure Navigate_A3_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A3_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A3_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A3_From_Null_L_To_R (C : in out Test_Case'Class) is
       RH : R.Handle;
       use type R.Handle;
    begin
@@ -106,10 +106,10 @@ package body Association_Classes.Test is
       Assert (C,
               RH = null,
               "expected null R handle");
-   end Navigate_A3_From_Null_L;
+   end Navigate_A3_From_Null_L_To_R;
 
-   procedure Navigate_A3_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A3_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A3_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A3_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -117,20 +117,20 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A3_From_Null_R;
+   end Navigate_A3_From_Null_R_To_L;
 
-   procedure Navigate_A4_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A4_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A4_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A4_From_Null_L_To_R (C : in out Test_Case'Class) is
       RC : R.Collections.Collection;
    begin
       RC := A4.A4L (A_L => null);
       Assert (C,
               R.Collections.Length (RC) = 0,
               "expected empty R collection");
-   end Navigate_A4_From_Null_L;
+   end Navigate_A4_From_Null_L_To_R;
 
-   procedure Navigate_A4_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A4_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A4_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A4_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -138,20 +138,20 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A4_From_Null_R;
+   end Navigate_A4_From_Null_R_To_L;
 
-   procedure Navigate_A5_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A5_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A5_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A5_From_Null_L_To_R (C : in out Test_Case'Class) is
       RC : R.Collections.Collection;
    begin
       RC := A5_Association.A5L (A_L => null);
       Assert (C,
               R.Collections.Length (RC) = 0,
               "expected empty R collection");
-   end Navigate_A5_From_Null_L;
+   end Navigate_A5_From_Null_L_To_R;
 
-   procedure Navigate_A5_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A5_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A5_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A5_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -159,20 +159,20 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A5_From_Null_R;
+   end Navigate_A5_From_Null_R_To_L;
 
-   procedure Navigate_A6_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A6_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A6_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A6_From_Null_L_To_R (C : in out Test_Case'Class) is
       RC : R.Collections.Collection;
    begin
       RC := A6.A6L (A_L => null);
       Assert (C,
               R.Collections.Length (RC) = 0,
               "expected empty R collection");
-   end Navigate_A6_From_Null_L;
+   end Navigate_A6_From_Null_L_To_R;
 
-   procedure Navigate_A6_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A6_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A6_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A6_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -180,20 +180,20 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A6_From_Null_R;
+   end Navigate_A6_From_Null_R_To_L;
 
-   procedure Navigate_A7_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A7_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A7_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A7_From_Null_L_To_R (C : in out Test_Case'Class) is
       RC : R.Collections.Collection;
    begin
       RC := A7_Association.A7L (A_L => null);
       Assert (C,
               R.Collections.Length (RC) = 0,
               "expected empty R collection");
-   end Navigate_A7_From_Null_L;
+   end Navigate_A7_From_Null_L_To_R;
 
-   procedure Navigate_A7_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A7_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A7_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A7_From_Null_R_To_L (C : in out Test_Case'Class) is
       LH : L.Handle;
       use type L.Handle;
    begin
@@ -201,27 +201,27 @@ package body Association_Classes.Test is
       Assert (C,
               LH = null,
               "expected null L handle");
-   end Navigate_A7_From_Null_R;
+   end Navigate_A7_From_Null_R_To_L;
 
-   procedure Navigate_A8_From_Null_L (C : in out Test_Case'Class);
-   procedure Navigate_A8_From_Null_L (C : in out Test_Case'Class) is
+   procedure Navigate_A8_From_Null_L_To_R (C : in out Test_Case'Class);
+   procedure Navigate_A8_From_Null_L_To_R (C : in out Test_Case'Class) is
       RC : R.Collections.Collection;
    begin
       RC := A8.A8L (A_L => null);
       Assert (C,
               R.Collections.Length (RC) = 0,
               "expected empty R collection");
-   end Navigate_A8_From_Null_L;
+   end Navigate_A8_From_Null_L_To_R;
 
-   procedure Navigate_A8_From_Null_R (C : in out Test_Case'Class);
-   procedure Navigate_A8_From_Null_R (C : in out Test_Case'Class) is
+   procedure Navigate_A8_From_Null_R_To_L (C : in out Test_Case'Class);
+   procedure Navigate_A8_From_Null_R_To_L (C : in out Test_Case'Class) is
       LC : L.Collections.Collection;
    begin
       LC := A8.A8R (A_R => null);
       Assert (C,
               L.Collections.Length (LC) = 0,
               "expected empty L collection");
-   end Navigate_A8_From_Null_R;
+   end Navigate_A8_From_Null_R_To_L;
 
    function Name (C : Case_1) return AUnit.Message_String is
       pragma Unreferenced (C);
@@ -233,76 +233,76 @@ package body Association_Classes.Test is
    begin
       Registration.Register_Routine
         (C,
-         Navigate_A0_From_Null_L'Access,
-         "can navigate 1:1 from null L");
+         Navigate_A0_From_Null_L_To_R'Access,
+         "can navigate 1:1 from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A0_From_Null_R'Access,
-         "can navigate 1:1 from null R");
+         Navigate_A0_From_Null_R_To_L'Access,
+         "can navigate 1:1 from null R to L");
       Registration.Register_Routine
         (C,
-         Navigate_A1_From_Null_L'Access,
-         "can navigate 1c:1c from null L");
+         Navigate_A1_From_Null_L_To_R'Access,
+         "can navigate 1c:1c from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A1_From_Null_R'Access,
+         Navigate_A1_From_Null_R_To_L'Access,
          "can navigate 1c:1c from null R");
       Registration.Register_Routine
         (C,
-         Navigate_A2_From_Null_L'Access,
-         "can navigate 1c:1 from null");
+         Navigate_A2_From_Null_L_To_R'Access,
+         "can navigate 1c:1 from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A2_From_Null_R'Access,
-         "can navigate 1:1c from null");
+         Navigate_A2_From_Null_R_To_L'Access,
+         "can navigate 1c:1 from null R to L");
       Registration.Register_Routine
         (C,
-         Navigate_A3_From_Null_L'Access,
-         "can navigate 1:1c from null");
+         Navigate_A3_From_Null_L_To_R'Access,
+         "can navigate 1:1c from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A3_From_Null_R'Access,
-         "can navigate 1c:1 from null");
+         Navigate_A3_From_Null_R_To_L'Access,
+         "can navigate 1:1c from null R to L");
       Registration.Register_Routine
         (C,
-         Navigate_A4_From_Null_L'Access,
-         "can navigate 1c:Mc from null");
+         Navigate_A4_From_Null_L_To_R'Access,
+         "can navigate 1c:Mc from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A4_From_Null_R'Access,
-         "can navigate Mc:1c from null");
+         Navigate_A4_From_Null_R_To_L'Access,
+         "can navigate 1c:Mc from null R to L");
       Registration.Register_Routine
         (C,
-         Navigate_A5_From_Null_L'Access,
-         "can navigate 1c:M from null");
+         Navigate_A5_From_Null_L_To_R'Access,
+         "can navigate 1c:M from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A5_From_Null_R'Access,
-         "can navigate M:1c from null");
+         Navigate_A5_From_Null_R_To_L'Access,
+         "can navigate 1c:M from null R to L");
       Registration.Register_Routine
         (C,
-         Navigate_A6_From_Null_L'Access,
-         "can navigate 1:Mc from null");
+         Navigate_A6_From_Null_L_To_R'Access,
+         "can navigate 1:Mc from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A6_From_Null_R'Access,
-         "can navigate Mc:1 from null");
+         Navigate_A6_From_Null_R_To_L'Access,
+         "can navigate 1:Mc from null R to L");
       Registration.Register_Routine
         (C,
-         Navigate_A7_From_Null_L'Access,
-         "can navigate 1:M from null");
+         Navigate_A7_From_Null_L_To_R'Access,
+         "can navigate 1:M from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A7_From_Null_R'Access,
-         "can navigate M:1 from null");
+         Navigate_A7_From_Null_R_To_L'Access,
+         "can navigate 1:M from null R to L");
       Registration.Register_Routine
         (C,
-         Navigate_A8_From_Null_L'Access,
-         "can navigate Mc:Mc from null");
+         Navigate_A8_From_Null_L_To_R'Access,
+         "can navigate Mc:Mc from null L to R");
       Registration.Register_Routine
         (C,
-         Navigate_A8_From_Null_R'Access,
-         "can navigate Mc:Mc from null");
+         Navigate_A8_From_Null_R_To_L'Access,
+         "can navigate Mc:Mc from null R to L");
    end Register_Tests;
 
    procedure Set_Up (C : in out Case_1) is

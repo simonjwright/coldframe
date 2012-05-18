@@ -213,67 +213,67 @@ package body Associations.Test is
       Registration.Register_Routine
         (C,
          Navigate_A0_From_Null_L'Access,
-         "can navigate 1:1 from null L");
+         "can navigate 1:1 from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A0_From_Null_R'Access,
-         "can navigate 1:1 from null R");
+         "can navigate 1:1 from null R to L");
       Registration.Register_Routine
         (C,
          Navigate_A1_From_Null_L'Access,
-         "can navigate 1c:1c from null L");
+         "can navigate 1c:1c from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A1_From_Null_R'Access,
-         "can navigate 1c:1c from null R");
+         "can navigate 1c:1c from null R to L");
       Registration.Register_Routine
         (C,
          Navigate_A2_From_Null_L'Access,
-         "can navigate 1c:1 from null");
+         "can navigate 1c:1 from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A2_From_Null_R'Access,
-         "can navigate 1:1c from null");
+         "can navigate 1c:1 from null R to L");
       Registration.Register_Routine
         (C,
          Navigate_A3_From_Null_L'Access,
-         "can navigate 1:1c from null");
+         "can navigate 1:1c from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A3_From_Null_R'Access,
-         "can navigate 1c:1 from null");
+         "can navigate 1:1c from null R to L");
       Registration.Register_Routine
         (C,
          Navigate_A4_From_Null_L'Access,
-         "can navigate 1c:Mc from null");
+         "can navigate 1c:Mc from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A4_From_Null_R'Access,
-         "can navigate Mc:1c from null");
+         "can navigate 1c:Mc from null R to L");
       Registration.Register_Routine
         (C,
          Navigate_A5_From_Null_L'Access,
-         "can navigate 1c:M from null");
+         "can navigate 1c:M from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A5_From_Null_R'Access,
-         "can navigate M:1c from null");
+         "can navigate 1c:M from null R to L");
       Registration.Register_Routine
         (C,
          Navigate_A6_From_Null_L'Access,
-         "can navigate 1:Mc from null");
+         "can navigate 1:Mc from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A6_From_Null_R'Access,
-         "can navigate Mc:1 from null");
+         "can navigate 1:Mc from null R to L");
       Registration.Register_Routine
         (C,
          Navigate_A7_From_Null_L'Access,
-         "can navigate 1:M from null");
+         "can navigate 1:M from null L to R");
       Registration.Register_Routine
         (C,
          Navigate_A7_From_Null_R'Access,
-         "can navigate M:1 from null");
+         "can navigate 1:M from null R to L");
    end Register_Tests;
 
    procedure Set_Up (C : in out Case_1) is
