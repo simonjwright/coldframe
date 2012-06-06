@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 4d189aeebf3b 2012/05/15 18:38:43 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v 0e4361e85c1a 2012/06/06 17:26:34 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1519,7 +1519,7 @@
         <!-- We need to use the long-winded form, because we're past
              the 'begin'.
 
-             if {a}."/=" ({a-abbrev}, null) then
+             if {a}."=" ({a-abbrev}, null) then
                 return null;
              else
                 return {b}.Handle
@@ -1597,14 +1597,40 @@
     <xsl:text> is&#10;</xsl:text>
 
     <!--
-         H : constant ColdFrame.Instances.Handle
-           := {c}.Get_{b-ref-attr} ({a-abbr});
+         use type {assoc}.Handle;
          -->
 
     <xsl:value-of select="$II"/>
-    <xsl:text>H : constant ColdFrame.Instances.Handle&#10;</xsl:text>
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= </xsl:text>
+    <xsl:text>use type </xsl:text>
+    <xsl:value-of select="$assoc"/>
+    <xsl:text>.Handle;&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+
+    <!--
+         if {assoc-abbr} = null then
+            return null;
+         else
+            return {b}.Handle
+              ({c}.Get_{b-ref-attr} ({assoc-abbr});
+         end if;
+         -->
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>if </xsl:text>
+    <xsl:value-of select="/domain/class[name=$assoc]/abbreviation"/>
+    <xsl:text> = null then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>return null;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>else&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>return </xsl:text>
+    <xsl:value-of select="$b"/>
+    <xsl:text>.Handle&#10;</xsl:text>
+    <xsl:value-of select="$IIIC"/>
+    <xsl:text>(</xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Get_</xsl:text>
     <xsl:call-template name="at:attribute-name">
@@ -1618,19 +1644,9 @@
     <xsl:text> (</xsl:text>
     <xsl:value-of
       select="/domain/class[name=$assoc]/abbreviation"/>
-    <xsl:text>);&#10;</xsl:text>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <!--
-         return {b}.Handle (H);
-         -->
-
+    <xsl:text>));&#10;</xsl:text>
     <xsl:value-of select="$II"/>
-    <xsl:text>return </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Handle (H);&#10;</xsl:text>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
