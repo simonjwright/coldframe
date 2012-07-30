@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-utilities.xsl,v 1a6cffdcff2c 2012/07/30 20:43:07 simonjwright $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -363,7 +363,7 @@
           </xsl:when>
 
           <xsl:when test="$type/unsigned and number($type/unsigned/mod)">
-            
+
             <xsl:value-of select="$type/unsigned/mod"/>
 
           </xsl:when>
@@ -413,7 +413,7 @@
           <xsl:when test="$type/@hash='enumeration'">yes</xsl:when>
 
           <!-- Bounded integer types, if small enough. -->
-          <xsl:when 
+          <xsl:when
             test="number($type/integer/lower) and number($type/integer/upper)">
             <xsl:choose>
               <xsl:when
@@ -543,7 +543,7 @@
       <xsl:when test="$the-type/@standard">
 
         <xsl:choose>
-        
+
           <!-- Date or Time -->
           <xsl:when test="$type='Date' or $type='Time'">
             <xsl:text>ColdFrame.Project.Calendar.Clock</xsl:text>
@@ -569,23 +569,26 @@
             <xsl:text>null</xsl:text>
           </xsl:when>
 
-          <!-- Other standard types are scalars -->
+          <!-- Other standard types are scalars (but may be renamed) -->
           <xsl:otherwise>
-            <xsl:value-of select="$type"/>
+            <xsl:call-template name="ut:type-name">
+              <xsl:with-param name="type" select="$type"/>
+              <xsl:with-param name="is-class" select="false()"/>
+            </xsl:call-template>
             <xsl:text>'First</xsl:text>
           </xsl:otherwise>
-          
+
         </xsl:choose>
 
       </xsl:when>
-      
+
       <xsl:otherwise>
 
         <xsl:choose>
 
           <!-- Access -->
           <xsl:when test="/domain/type/@access=$type">
-            <xsl:text>null</xsl:text>        
+            <xsl:text>null</xsl:text>
           </xsl:when>
 
           <!-- Bounded string -->
