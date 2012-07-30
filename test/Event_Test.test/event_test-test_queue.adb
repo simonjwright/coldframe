@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Test;
 with ColdFrame.Project.Events.Standard.Test_Trace;
@@ -26,7 +28,7 @@ package body Event_Test.Test_Queue is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Tear_Down_Unstarted_Queue
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Dispatcher : ColdFrame.Project.Events.Event_Queue_P
         := new ColdFrame.Project.Events.Standard.Event_Queue_Base
         (Start_Started => False,
@@ -36,11 +38,11 @@ package body Event_Test.Test_Queue is
    begin
       select
          delay 1.0;
-         Assert (R, False, "queue wasn't torn down");
+         Assert (False, "queue wasn't torn down");
       then abort
          ColdFrame.Project.Events.Stop (Dispatcher);
          ColdFrame.Project.Events.Tear_Down (Dispatcher);
-         Assert (R, Dispatcher = null, "dispatcher not nulled");
+         Assert (Dispatcher = null, "dispatcher not nulled");
       end select;
    end Tear_Down_Unstarted_Queue;
 
@@ -52,7 +54,7 @@ package body Event_Test.Test_Queue is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Start_Low_Priority_Queue
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Dispatcher : ColdFrame.Project.Events.Event_Queue_P
         := new ColdFrame.Project.Events.Standard.Event_Queue_Base
         (Start_Started => False,
@@ -61,7 +63,7 @@ package body Event_Test.Test_Queue is
    begin
       select
          delay 1.0;
-         Assert (R, False, "queue wasn't started");
+         Assert (False, "queue wasn't started");
       then abort
          ColdFrame.Project.Events.Start (Dispatcher);
          ColdFrame.Project.Events.Stop (Dispatcher);
@@ -75,7 +77,7 @@ package body Event_Test.Test_Queue is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Wait_Until_Idle_On_Unstarted_Queue
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Dispatcher : ColdFrame.Project.Events.Event_Queue_P
         := new ColdFrame.Project.Events.Standard.Test.Event_Queue_Base
         (Start_Started => False,
@@ -85,7 +87,7 @@ package body Event_Test.Test_Queue is
       ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher);
       ColdFrame.Project.Events.Stop (Dispatcher);
       ColdFrame.Project.Events.Tear_Down (Dispatcher);
-      Assert (R, False, "there was no exception");
+      Assert (False, "there was no exception");
    exception
       when ColdFrame.Exceptions.Use_Error =>
          ColdFrame.Project.Events.Stop (Dispatcher);
@@ -98,7 +100,7 @@ package body Event_Test.Test_Queue is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Test_Trace_Queue_Starts_Unstarted
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Dispatcher : ColdFrame.Project.Events.Event_Queue_P
         := new ColdFrame.Project.Events.Standard.Test_Trace.Event_Queue;
    begin
@@ -109,7 +111,7 @@ package body Event_Test.Test_Queue is
       when ColdFrame.Exceptions.Use_Error =>
          ColdFrame.Project.Events.Stop (Dispatcher);
          ColdFrame.Project.Events.Tear_Down (Dispatcher);
-         Assert (R, False, "was started");
+         Assert (False, "was started");
    end Test_Trace_Queue_Starts_Unstarted;
 
 
@@ -138,7 +140,7 @@ package body Event_Test.Test_Queue is
    end Register_Tests;
 
    function Name (T : Test_Case) return AUnit.Message_String is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       return new String'("Event queue");
    end Name;

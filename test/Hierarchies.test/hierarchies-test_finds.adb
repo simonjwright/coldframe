@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with ColdFrame.Instances;
 
 with Hierarchies.Initialize;
@@ -48,9 +50,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Root_One
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
-      Assert (R,
-              S_2.Inheritance.Find_R_1_Parent (S2_H) = R1_H,
+      Assert (S_2.Inheritance.Find_R_1_Parent (S2_H) = R1_H,
               "parent not found");
    end Find_Root_One;
 
@@ -58,9 +60,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Root_Two
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
-      Assert (R,
-              T_2.Inheritance.Find_R_1_Parent (T2_H) = R1_H,
+      Assert (T_2.Inheritance.Find_R_1_Parent (T2_H) = R1_H,
               "parent not found");
    end Find_Root_Two;
 
@@ -68,9 +70,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Root_Three
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
-      Assert (R,
-              F_2.Inheritance.Find_R_1_Parent (F2_H) = R1_H,
+      Assert (F_2.Inheritance.Find_R_1_Parent (F2_H) = R1_H,
               "parent not found");
    end Find_Root_Three;
 
@@ -78,9 +80,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Intermediate_One
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
-      Assert (R,
-              F_2.Inheritance.Find_T_2_Parent (F2_H) = T2_H,
+      Assert (F_2.Inheritance.Find_T_2_Parent (F2_H) = T2_H,
               "parent not found");
    end Find_Intermediate_One;
 
@@ -88,9 +90,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Intermediate_Two
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
-      Assert (R,
-              F_2.Inheritance.Find_S_2_Parent (F2_H) = S2_H,
+      Assert (F_2.Inheritance.Find_S_2_Parent (F2_H) = S2_H,
               "parent not found");
    end Find_Intermediate_Two;
 

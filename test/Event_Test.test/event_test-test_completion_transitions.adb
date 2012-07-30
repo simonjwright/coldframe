@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
@@ -27,19 +29,17 @@ package body Event_Test.Test_Completion_Transitions is
       (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Complete_Lifecycle
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
    begin
       ColdFrame.Project.Events.Start (Events.Dispatcher);
-      Assert (R,
-              Completion_Transitions.Get_Status = 1,
+      Assert (Completion_Transitions.Get_Status = 1,
               "incorrect status " & Completion_Transitions.Get_Status'Img);
       ColdFrame.Project.Events.Post
         (The_Event =>
            new Completion_Transitions.E2 (Completion_Transitions.Find),
          On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R,
-              Completion_Transitions.Get_Status = 3,
+      Assert (Completion_Transitions.Get_Status = 3,
               "incorrect status " & Completion_Transitions.Get_Status'Img);
    end Complete_Lifecycle;
 

@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
@@ -32,14 +34,14 @@ package body Event_Test.Test_Instance is
       (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Post_To_Self
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Machine.Mark (H);
    begin
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Post_To_Self (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R, False, "no exception");
+      Assert (False, "no exception");
    exception
       when ColdFrame.Exceptions.Use_Error => null;
    end Post_To_Self;
@@ -50,7 +52,7 @@ package body Event_Test.Test_Instance is
       (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_As_Action
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
         := new Machine.Kill (H);
       Ev2 : constant ColdFrame.Project.Events.Event_P
@@ -60,8 +62,7 @@ package body Event_Test.Test_Instance is
       ColdFrame.Project.Events.Post (Ev2, On => Events.Dispatcher);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R,
-              Machine.Collections.Is_Empty (Machine.All_Instances),
+      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
               Machine.Collections.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action;
@@ -72,7 +73,7 @@ package body Event_Test.Test_Instance is
       (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_As_Action_With_Timer
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Machine.Kill (H);
    begin
@@ -80,8 +81,7 @@ package body Event_Test.Test_Instance is
       Machine.Set_Timer (H, 2.5);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R,
-              Machine.Collections.Is_Empty (Machine.All_Instances),
+      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
               Machine.Collections.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action_With_Timer;
@@ -92,7 +92,7 @@ package body Event_Test.Test_Instance is
       (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_As_Action_With_Held
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
         := new Machine.Kill (H);
       Ev2 : constant ColdFrame.Project.Events.Event_P
@@ -106,8 +106,7 @@ package body Event_Test.Test_Instance is
                                      To_Fire_After => 0.2);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R,
-              Machine.Collections.Is_Empty (Machine.All_Instances),
+      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
               Machine.Collections.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action_With_Held;
@@ -118,7 +117,7 @@ package body Event_Test.Test_Instance is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Simple_Event
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Machine.Mark (H);
       Inf : Machine.Mark renames Machine.Mark (Ev.all);
@@ -128,8 +127,7 @@ package body Event_Test.Test_Instance is
                       Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R,
-              Machine.Get_Ordinal (H) = 2000,
+      Assert (Machine.Get_Ordinal (H) = 2000,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
    end Simple_Event;
 
@@ -139,7 +137,7 @@ package body Event_Test.Test_Instance is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Event_To_Self
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Machine.Self (H);
       Inf : Machine.Self renames Machine.Self (Ev.all);
@@ -149,8 +147,7 @@ package body Event_Test.Test_Instance is
                       Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R,
-              Machine.Get_Ordinal (H) = 2002,
+      Assert (Machine.Get_Ordinal (H) = 2002,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
    end Event_To_Self;
 
@@ -176,20 +173,20 @@ package body Event_Test.Test_Instance is
    end Register_Tests;
 
    function Name (T : Test_Case) return AUnit.Message_String is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       return new String'("Instance events");
    end Name;
 
    procedure Set_Up (T : in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Initialize;
       H := Machine.Create;
    end Set_Up;
 
    procedure Tear_Down (T :  in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Tear_Down;
       H := null;

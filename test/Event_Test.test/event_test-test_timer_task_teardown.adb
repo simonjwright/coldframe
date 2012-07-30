@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
@@ -27,12 +29,12 @@ package body Event_Test.Test_Timer_Task_Teardown is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Run
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
+      pragma Unreferenced (R);
    begin
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       Timer_Task_Teardown.Start;
       delay 0.5;
-      Assert (R, True, "shouldn't fail");
+      Assert (True, "shouldn't fail");
    end Run;
 
    procedure Register_Tests (T : in out Test_Case) is
@@ -42,19 +44,19 @@ package body Event_Test.Test_Timer_Task_Teardown is
    end Register_Tests;
 
    function Name (T : Test_Case) return AUnit.Message_String is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       return new String'("Timer/task teardown");
    end Name;
 
    procedure Set_Up (T : in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Initialize;
    end Set_Up;
 
    procedure Tear_Down (T :  in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Tear_Down;
    end Tear_Down;

@@ -12,6 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
 with AUnit.Test_Cases; use AUnit.Test_Cases;
 
 with Initialization.Checking_Domain_Initialization;
@@ -27,12 +28,12 @@ package body Check_Domain_Initialization is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Check
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
       --  We have to allow time for the task to loop round and see the
       --  initialized value.
       delay 0.2;
-      Assert (R,
-              Checking_Domain_Initialization.Get_Initialized_As_Seen
+      Assert (Checking_Domain_Initialization.Get_Initialized_As_Seen
                 = True,
               "not properly initialized: "
                 & Checking_Domain_Initialization.Get_Initialized_As_Seen'Img);

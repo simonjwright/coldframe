@@ -14,6 +14,8 @@
 
 --  Regression tests for ColdFrame.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with Associations.A0;
 with Associations.A1;
 with Associations.A2;
@@ -32,173 +34,173 @@ package body Associations.Test is
 
    procedure Navigate_A0_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A0_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RH : R.Handle;
       use type R.Handle;
    begin
       RH := A0.A0L (null);
-      Assert (C,
-              RH = null,
+      Assert (RH = null,
               "expected null R handle");
    end Navigate_A0_From_Null_L;
 
    procedure Navigate_A0_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A0_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A0.A0R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A0_From_Null_R;
 
    procedure Navigate_A1_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A1_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RH : R.Handle;
       use type R.Handle;
    begin
       RH := A1.A1L (null);
-      Assert (C,
-              RH = null,
+      Assert (RH = null,
               "expected null R handle");
    end Navigate_A1_From_Null_L;
 
    procedure Navigate_A1_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A1_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A1.A1R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A1_From_Null_R;
 
    procedure Navigate_A2_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A2_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RH : R.Handle;
       use type R.Handle;
    begin
       RH := A2.A2L (null);
-      Assert (C,
-              RH = null,
+      Assert (RH = null,
               "expected null R handle");
    end Navigate_A2_From_Null_L;
 
    procedure Navigate_A2_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A2_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A2.A2R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A2_From_Null_R;
 
    procedure Navigate_A3_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A3_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RH : R.Handle;
       use type R.Handle;
    begin
       RH := A3.A3L (null);
-      Assert (C,
-              RH = null,
+      Assert (RH = null,
               "expected null R handle");
    end Navigate_A3_From_Null_L;
 
    procedure Navigate_A3_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A3_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A3.A3R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A3_From_Null_R;
 
    procedure Navigate_A4_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A4_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RC : R.Collections.Collection;
    begin
       RC := A4.A4L (null);
-      Assert (C,
-              R.Collections.Length (RC) = 0,
+      Assert (R.Collections.Length (RC) = 0,
               "expected empty R collection");
    end Navigate_A4_From_Null_L;
 
    procedure Navigate_A4_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A4_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A4.A4R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A4_From_Null_R;
 
    procedure Navigate_A5_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A5_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RC : R.Collections.Collection;
    begin
       RC := A5.A5L (null);
-      Assert (C,
-              R.Collections.Length (RC) = 0,
+      Assert (R.Collections.Length (RC) = 0,
               "expected empty R collection");
    end Navigate_A5_From_Null_L;
 
    procedure Navigate_A5_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A5_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A5.A5R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A5_From_Null_R;
 
    procedure Navigate_A6_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A6_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RC : R.Collections.Collection;
    begin
       RC := A6.A6L (null);
-      Assert (C,
-              R.Collections.Length (RC) = 0,
+      Assert (R.Collections.Length (RC) = 0,
               "expected empty R collection");
    end Navigate_A6_From_Null_L;
 
    procedure Navigate_A6_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A6_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A6.A6R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A6_From_Null_R;
 
    procedure Navigate_A7_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A7_From_Null_L (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       RC : R.Collections.Collection;
    begin
       RC := A7.A7L (null);
-      Assert (C,
-              R.Collections.Length (RC) = 0,
+      Assert (R.Collections.Length (RC) = 0,
               "expected empty R collection");
    end Navigate_A7_From_Null_L;
 
    procedure Navigate_A7_From_Null_R (C : in out Test_Case'Class);
    procedure Navigate_A7_From_Null_R (C : in out Test_Case'Class) is
+      pragma Unreferenced (C);
       LH : L.Handle;
       use type L.Handle;
    begin
       LH := A7.A7R (null);
-      Assert (C,
-              LH = null,
+      Assert (LH = null,
               "expected null L handle");
    end Navigate_A7_From_Null_R;
 

@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with Ada.Unchecked_Deallocation;
 with ColdFrame.Project.Events;
 with Event_Test.Events;
@@ -159,7 +161,7 @@ package body Event_Test.Test_Engine is
                                      On => Events.Dispatcher,
                                      To_Fire_After => 0.0);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R, Result = 2, "wrong result" & Result'Img);
+      Assert (Result = 2, "wrong result" & Result'Img);
    end Post_Now;
 
 
@@ -181,8 +183,7 @@ package body Event_Test.Test_Engine is
          begin
             --  Of course, the real check is that the procedure
             --  manages to pass this point!
-            Assert (R,
-                    True,
+            Assert (True,
                     "lock wasn't achieved");
          end;
       end;
@@ -215,8 +216,7 @@ package body Event_Test.Test_Engine is
          null;
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (R,
-              Sentinel,
+      Assert (Sentinel,
               "lock wasn't respected");
    end Lock_Vs_Lock;
 
@@ -238,15 +238,13 @@ package body Event_Test.Test_Engine is
                                      On => Events.Dispatcher);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       delay 0.01;
-      Assert (R,
-              Waiting,
+      Assert (Waiting,
               "event is not being handled");
       declare
          L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
          pragma Warnings (Off, L);
       begin
-         Assert (R,
-                 not Waiting,
+         Assert (not Waiting,
                  "event is still being handled");
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
@@ -276,8 +274,7 @@ package body Event_Test.Test_Engine is
          L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
          pragma Warnings (Off, L);
       begin
-         Assert (R,
-                 Result = 17,
+         Assert (Result = 17,
                  "event has fired");
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
@@ -298,7 +295,7 @@ package body Event_Test.Test_Engine is
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       select
          delay 1.0;
-         Assert (R, False, "lock wasn't achieved");
+         Assert (False, "lock wasn't achieved");
       then abort
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end select;
@@ -352,6 +349,7 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Unset_Fired_Timer
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
         := new Store (The_Instance);
       Ev2 : constant ColdFrame.Project.Events.Event_P
@@ -375,7 +373,7 @@ package body Event_Test.Test_Engine is
                                        After => 0.5);
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-      Assert (R, Result = 1, "wrong result from Ev1" & Result'Img);
+      Assert (Result = 1, "wrong result from Ev1" & Result'Img);
 
       declare
          T : ColdFrame.Project.Events.Timer;
@@ -391,7 +389,7 @@ package body Event_Test.Test_Engine is
                                          On => Events.Dispatcher);
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-      Assert (R, Result = 1, "wrong result from Ev2" & Result'Img);
+      Assert (Result = 1, "wrong result from Ev2" & Result'Img);
 
       declare
          T : ColdFrame.Project.Events.Timer;
@@ -412,7 +410,7 @@ package body Event_Test.Test_Engine is
          end;
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-      Assert (R, Result = 1, "wrong result from Ev3" & Result'Img);
+      Assert (Result = 1, "wrong result from Ev3" & Result'Img);
 
    end Unset_Fired_Timer;
 

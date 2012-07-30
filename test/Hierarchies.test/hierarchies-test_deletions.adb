@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with AUnit.Assertions; use AUnit.Assertions;
+
 with ColdFrame.Instances;
 
 with Hierarchies.Initialize;
@@ -63,28 +65,22 @@ package body Hierarchies.Test_Deletions is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_Root
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
       R_1.Delete (R1_H);
-      Assert (R,
-              R_1.Collections.Length (R_1.All_Instances) = 0,
+      Assert (R_1.Collections.Length (R_1.All_Instances) = 0,
               "R_1 still present");
-      Assert (R,
-              R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R,
-              R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              S_2.Collections.Length (S_2.All_Instances) = 0,
+      Assert (S_2.Collections.Length (S_2.All_Instances) = 0,
               "S_2 still present");
-      Assert (R,
-              S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              T_2.Collections.Length (T_2.All_Instances) = 0,
+      Assert (T_2.Collections.Length (T_2.All_Instances) = 0,
               "T_2 still present");
-      Assert (R,
-              F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
               "F_2 still present");
    end Delete_Root;
 
@@ -92,28 +88,22 @@ package body Hierarchies.Test_Deletions is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_Root_Child
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
       R_1.Inheritance.Delete_Child (R1_H);
-      Assert (R,
-              R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R,
-              R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R,
-              R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              S_2.Collections.Length (S_2.All_Instances) = 0,
+      Assert (S_2.Collections.Length (S_2.All_Instances) = 0,
               "S_2 still present");
-      Assert (R,
-              S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              T_2.Collections.Length (T_2.All_Instances) = 0,
+      Assert (T_2.Collections.Length (T_2.All_Instances) = 0,
               "T_2 still present");
-      Assert (R,
-              F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
               "F_2 still present");
    end Delete_Root_Child;
 
@@ -121,28 +111,22 @@ package body Hierarchies.Test_Deletions is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_Second_Child
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
       S_2.Inheritance.Delete_Child (S2_H);
-      Assert (R,
-              R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R,
-              R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R,
-              R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (R,
-              S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              T_2.Collections.Length (T_2.All_Instances) = 0,
+      Assert (T_2.Collections.Length (T_2.All_Instances) = 0,
               "T_2 still present");
-      Assert (R,
-              F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
               "F_2 still present");
    end Delete_Second_Child;
 
@@ -150,28 +134,22 @@ package body Hierarchies.Test_Deletions is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_Third_Child
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
       T_2.Inheritance.Delete_Child (T2_H);
-      Assert (R,
-              R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R,
-              R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R,
-              R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (R,
-              S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (R,
-              F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
               "F_2 still present");
    end Delete_Third_Child;
 
@@ -179,29 +157,23 @@ package body Hierarchies.Test_Deletions is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_Without_Child
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (R);
    begin
       T_2.Inheritance.Delete_Child (T2_H);
       R_1.Inheritance.Delete_Child (R1_H);
-      Assert (R,
-              R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R,
-              R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R,
-              R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              S_2.Collections.Length (S_2.All_Instances) = 0,
+      Assert (S_2.Collections.Length (S_2.All_Instances) = 0,
               "S_2 still present");
-      Assert (R,
-              S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (R,
-              T_2.Collections.Length (T_2.All_Instances) = 0,
+      Assert (T_2.Collections.Length (T_2.All_Instances) = 0,
               "T_2 missing");
-      Assert (R,
-              F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
               "F_2 still present");
    end Delete_Without_Child;
 
