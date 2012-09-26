@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Performance Class Diagram</activediagram>
+      <activediagram>Digital IO Interface Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -87,7 +87,7 @@
               diagramclass="org.argouml.uml.diagram.state.ui.UMLStateDiagram"
               diagramname="Monitor Class Events" />
       <member type="pgml"
-              name="ColdFrame_Examples_ClassDiagram.pgml"
+              name="ColdFrame_Examples_PerformanceClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Performance Class Diagram" />
       <member type="todo"
@@ -102,10 +102,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri May 11 15:20:53 BST 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Aug 31 17:44:16 BST 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/05/11 14:26:27 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/09/26 17:55:05 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -130,7 +130,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -581,7 +581,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -820,7 +820,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1446,7 +1446,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015CB'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1469,7 +1469,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9B'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-revision'/>
                   </UML:TaggedValue.type>
@@ -1653,7 +1653,8 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
                   <UML:ModelElement.taggedValue>
                     <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB2'
                       isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>The interface offered to support HCI.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.dataValue>The interface offered to support HCI.
+This interface is used by the TASH demonstration (it won&apos;t be used in the real application, which will have real switches).</UML:TaggedValue.dataValue>
                       <UML:TaggedValue.type>
                         <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
                       </UML:TaggedValue.type>
@@ -1983,7 +1984,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0B'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -2191,7 +2192,7 @@ This demonstration shows how ColdFrame&apos;s support for messages and state mac
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E60'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -2985,7 +2986,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000F48'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 033fa73305f2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 74ca316f44d9 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -8843,7 +8844,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </group>
   </group>
   <group name="Fig1"
-       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[672, 56, 134, 210]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
+       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[136, 192, 134, 210]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
        href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9F"
        fill="1"
        fillcolor="white"
@@ -8854,8 +8855,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </private>
     
     <rectangle name="Fig1.0"
-      x="672"
-      y="56"
+      x="136"
+      y="192"
       width="134"
       height="210"
       fill="1"
@@ -8864,8 +8865,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <text name="Fig1.1"
-      x="673"
-      y="57"
+      x="137"
+      y="193"
       width="132"
       height="43"
       fill="0"
@@ -8880,7 +8881,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Signal_Name</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[673, 57, 132, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[137, 193, 132, 20]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9F"
          fill="0"
          fillcolor="white"
@@ -8891,8 +8892,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig1.2.0"
-        x="673"
-        y="57"
+        x="137"
+        y="193"
         width="132"
         height="20"
         fill="0"
@@ -8901,8 +8902,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         strokecolor="black"
       />
       <text name="Fig1.2.1"
-        x="673"
-        y="57"
+        x="137"
+        y="193"
         width="132"
         height="18"
         fill="0"
@@ -8918,8 +8919,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       >«enumeration»</text>
     </group>
     <rectangle name="Fig1.3"
-      x="672"
-      y="100"
+      x="136"
+      y="236"
       width="134"
       height="1"
       fill="1"
@@ -8928,7 +8929,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[673, 101, 132, 144]"
+         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[137, 237, 132, 144]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9F"
          fill="0"
          fillcolor="white"
@@ -8939,8 +8940,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig1.4.0"
-        x="673"
-        y="101"
+        x="137"
+        y="237"
         width="132"
         height="144"
         fill="0"
@@ -8949,8 +8950,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         strokecolor="black"
       />
       <text name="Fig1.4.1"
-        x="673"
-        y="101"
+        x="137"
+        y="237"
         width="132"
         height="17"
         fill="0"
@@ -8965,8 +8966,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >Floor_0</text>
       <text name="Fig1.4.2"
-        x="673"
-        y="118"
+        x="137"
+        y="254"
         width="132"
         height="17"
         fill="0"
@@ -8981,8 +8982,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >Floor_1</text>
       <text name="Fig1.4.3"
-        x="673"
-        y="135"
+        x="137"
+        y="271"
         width="132"
         height="17"
         fill="0"
@@ -8997,8 +8998,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >Floor_2</text>
       <text name="Fig1.4.4"
-        x="673"
-        y="152"
+        x="137"
+        y="288"
         width="132"
         height="17"
         fill="0"
@@ -9013,8 +9014,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >Floor_3</text>
       <text name="Fig1.4.5"
-        x="673"
-        y="169"
+        x="137"
+        y="305"
         width="132"
         height="17"
         fill="0"
@@ -9029,8 +9030,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >Lamp_A</text>
       <text name="Fig1.4.6"
-        x="673"
-        y="186"
+        x="137"
+        y="322"
         width="132"
         height="17"
         fill="0"
@@ -9045,8 +9046,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >Lamp_B</text>
       <text name="Fig1.4.7"
-        x="673"
-        y="203"
+        x="137"
+        y="339"
         width="132"
         height="17"
         fill="0"
@@ -9061,8 +9062,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >Lamp_C</text>
       <text name="Fig1.4.8"
-        x="673"
-        y="220"
+        x="137"
+        y="356"
         width="132"
         height="23"
         fill="0"
@@ -9078,8 +9079,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       >Lamp_D</text>
     </group>
     <rectangle name="Fig1.5"
-      x="672"
-      y="244"
+      x="136"
+      y="380"
       width="134"
       height="1"
       fill="1"
@@ -9088,7 +9089,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[673, 245, 132, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[137, 381, 132, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9F"
          fill="0"
          fillcolor="white"
@@ -9099,8 +9100,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig1.6.0"
-        x="673"
-        y="245"
+        x="137"
+        y="381"
         width="132"
         height="21"
         fill="0"
@@ -9111,7 +9112,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </group>
   </group>
   <group name="Fig2"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[680, 288, 125, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[296, 192, 125, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
        fill="1"
        fillcolor="white"
@@ -9122,8 +9123,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </private>
     
     <rectangle name="Fig2.0"
-      x="680"
-      y="288"
+      x="296"
+      y="192"
       width="125"
       height="126"
       fill="1"
@@ -9132,8 +9133,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <text name="Fig2.1"
-      x="681"
-      y="289"
+      x="297"
+      y="193"
       width="123"
       height="61"
       fill="0"
@@ -9148,7 +9149,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Signal_State</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[681, 289, 123, 38]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[297, 193, 123, 38]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -9159,8 +9160,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig2.2.0"
-        x="681"
-        y="289"
+        x="297"
+        y="193"
         width="123"
         height="38"
         fill="0"
@@ -9169,8 +9170,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         strokecolor="black"
       />
       <text name="Fig2.2.1"
-        x="681"
-        y="289"
+        x="297"
+        y="193"
         width="123"
         height="18"
         fill="0"
@@ -9185,8 +9186,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Center"
       >«datatype»</text>
       <text name="Fig2.2.2"
-        x="681"
-        y="307"
+        x="297"
+        y="211"
         width="123"
         height="18"
         fill="0"
@@ -9202,8 +9203,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       >«callback»</text>
     </group>
     <rectangle name="Fig2.3"
-      x="680"
-      y="350"
+      x="296"
+      y="254"
       width="125"
       height="1"
       fill="1"
@@ -9212,7 +9213,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[681, 351, 123, 42]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[297, 255, 123, 42]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -9223,8 +9224,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig2.4.0"
-        x="681"
-        y="351"
+        x="297"
+        y="255"
         width="123"
         height="42"
         fill="0"
@@ -9233,8 +9234,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         strokecolor="black"
       />
       <text name="Fig2.4.1"
-        x="681"
-        y="351"
+        x="297"
+        y="255"
         width="123"
         height="17"
         fill="0"
@@ -9249,8 +9250,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >+S : Signal_Name</text>
       <text name="Fig2.4.2"
-        x="681"
-        y="368"
+        x="297"
+        y="272"
         width="123"
         height="23"
         fill="0"
@@ -9266,8 +9267,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       >+State : Boolean</text>
     </group>
     <rectangle name="Fig2.5"
-      x="680"
-      y="392"
+      x="296"
+      y="296"
       width="125"
       height="1"
       fill="1"
@@ -9276,7 +9277,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[681, 393, 123, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[297, 297, 123, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -9287,8 +9288,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig2.6.0"
-        x="681"
-        y="393"
+        x="297"
+        y="297"
         width="123"
         height="21"
         fill="0"
@@ -9299,7 +9300,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </group>
   </group>
   <group name="Fig3"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[136, 232, 416, 108]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[576, 336, 416, 108]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1"
        fill="1"
        fillcolor="white"
@@ -9310,8 +9311,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </private>
     
     <rectangle name="Fig3.0"
-      x="136"
-      y="232"
+      x="576"
+      y="336"
       width="416"
       height="108"
       fill="1"
@@ -9320,8 +9321,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <text name="Fig3.1"
-      x="137"
-      y="233"
+      x="577"
+      y="337"
       width="414"
       height="43"
       fill="0"
@@ -9336,7 +9337,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ HCI</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[137, 233, 414, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[577, 337, 414, 20]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1"
          fill="0"
          fillcolor="white"
@@ -9347,8 +9348,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig3.2.0"
-        x="137"
-        y="233"
+        x="577"
+        y="337"
         width="414"
         height="20"
         fill="0"
@@ -9357,8 +9358,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         strokecolor="black"
       />
       <text name="Fig3.2.1"
-        x="137"
-        y="233"
+        x="577"
+        y="337"
         width="414"
         height="18"
         fill="0"
@@ -9374,8 +9375,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       >«public»</text>
     </group>
     <rectangle name="Fig3.3"
-      x="136"
-      y="276"
+      x="576"
+      y="380"
       width="416"
       height="1"
       fill="1"
@@ -9384,7 +9385,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[137, 277, 414, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[577, 381, 414, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1"
          fill="0"
          fillcolor="white"
@@ -9395,8 +9396,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig3.4.0"
-        x="137"
-        y="277"
+        x="577"
+        y="381"
         width="414"
         height="21"
         fill="0"
@@ -9406,8 +9407,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       />
     </group>
     <rectangle name="Fig3.5"
-      x="136"
-      y="297"
+      x="576"
+      y="401"
       width="416"
       height="1"
       fill="1"
@@ -9416,7 +9417,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[137, 298, 414, 42]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[577, 402, 414, 42]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1"
          fill="0"
          fillcolor="white"
@@ -9427,8 +9428,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       </private>
       
       <rectangle name="Fig3.6.0"
-        x="137"
-        y="298"
+        x="577"
+        y="402"
         width="414"
         height="42"
         fill="0"
@@ -9437,8 +9438,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         strokecolor="black"
       />
       <text name="Fig3.6.1"
-        x="137"
-        y="298"
+        x="577"
+        y="402"
         width="414"
         height="17"
         fill="0"
@@ -9453,8 +9454,8 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
         justification="Left"
       >+Get_State(Of_Signal : Signal_Name) : Boolean</text>
       <text name="Fig3.6.2"
-        x="137"
-        y="315"
+        x="577"
+        y="419"
         width="414"
         height="23"
         fill="0"
@@ -11935,7 +11936,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Person</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[113, 177, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[113, 177, 141, 0]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EE3"
          fill="0"
          fillcolor="white"
@@ -11949,7 +11950,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig0.2.0"
         x="113"
         y="177"
-        width="64"
+        width="141"
         height="0"
         fill="0"
         fillcolor="white"
@@ -12076,7 +12077,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Owner</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[113, 329, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[113, 329, 67, 0]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EE4"
          fill="0"
          fillcolor="white"
@@ -12090,7 +12091,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig1.2.0"
         x="113"
         y="329"
-        width="64"
+        width="67"
         height="0"
         fill="0"
         fillcolor="white"
@@ -12182,7 +12183,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="15" />
     </private>
     <path name="Fig2.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -12232,7 +12233,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Pet</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[505, 177, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[505, 177, 213, 0]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EE6"
          fill="0"
          fillcolor="white"
@@ -12246,7 +12247,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig3.2.0"
         x="505"
         y="177"
-        width="64"
+        width="213"
         height="0"
         fill="0"
         fillcolor="white"
@@ -12453,7 +12454,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Cat</text>
     <group name="Fig4.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[513, 361, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[513, 361, 111, 0]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EE7"
          fill="0"
          fillcolor="white"
@@ -12467,7 +12468,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig4.2.0"
         x="513"
         y="361"
-        width="64"
+        width="111"
         height="0"
         fill="0"
         fillcolor="white"
@@ -12594,7 +12595,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Dog</text>
     <group name="Fig5.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 361, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 361, 111, 0]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EE8"
          fill="0"
          fillcolor="white"
@@ -12608,7 +12609,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig5.2.0"
         x="657"
         y="361"
-        width="64"
+        width="111"
         height="0"
         fill="0"
         fillcolor="white"
@@ -12716,7 +12717,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="27" />
     </private>
     <path name="Fig6.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -12747,7 +12748,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="46" />
     </private>
     <path name="Fig7.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -12804,7 +12805,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="0" />
     </private>
     <path name="Fig8.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -12969,7 +12970,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       destFigNode="Fig9"
     </private>
     <path name="Fig10.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -14138,7 +14139,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         offset="5" />
     </private>
     <path name="Fig13.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
