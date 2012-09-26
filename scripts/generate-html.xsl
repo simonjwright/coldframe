@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: generate-html.xsl,v d4297151bff2 2012/09/26 17:50:15 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -33,7 +33,7 @@
 
   <xsl:strip-space elements="*"/>
 
-  <xsl:output 
+  <xsl:output
     method="html"
     doctype-public="-//W3C/DTD HTML 4.01 Transitional//EN"
     doctype-system="http://www.w3.org/TR/html4/loose.dtd"/>
@@ -102,8 +102,8 @@
   <xsl:template match="domain">
     <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
       <head>
-        <meta 
-          http-equiv="Content-type" 
+        <meta
+          http-equiv="Content-type"
           content="text/html; charset=iso-8859-1"/>
         <!--
         <link href="cf-gen-doc-styles.css" rel="stylesheet" type="text/css"/>
@@ -139,7 +139,7 @@
           dl dl { margin-left : 2em; }
           ol, ul { margin-left : 2.2em; }
           table { margin-left : 1em;
-          font-size : 100%; 
+          font-size : 100%;
           border : thin solid black;
           border-collapse : collapse;
           empty-cells : show; }
@@ -166,9 +166,9 @@
         <h1>Contents</h1>
         <h2>All classes</h2>
         <xsl:if test="$diagrams='yes'">
-          <xsl:copy-of 
+          <xsl:copy-of
             select="document(concat($cwd, '/', name, '.images/', name, '.overall.cmapx'))"/>
-          <img 
+          <img
             src="{name}.images/{name}.overall.png"
             border="0"
             ismap="true"
@@ -278,10 +278,10 @@
     <h2><a name="{$name}"><xsl:value-of select="$name"/></a></h2>
 
     <xsl:if test="$diagrams='yes'">
-      <xsl:copy-of 
+      <xsl:copy-of
         select="document(concat($cwd, '/', ../name, '.images/', ../name, '.', name, '.class.cmapx'))"/>
-      <img 
-        src="{../name}.images/{../name}.{name}.class.png" 
+      <img
+        src="{../name}.images/{../name}.{name}.class.png"
         border="0"
         ismap="true"
         usemap="#{name}.class"
@@ -297,7 +297,7 @@
       </p>
     </xsl:for-each>
 
-    <xsl:variable 
+    <xsl:variable
       name="super"
       select="../inheritance[parent=$name]"/>
     <xsl:if test="$super">
@@ -384,7 +384,7 @@
     <xsl:if test="operation[@class and @visibility='public']">
       <h3>Public class operations</h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[@class and @visibility='public']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -394,7 +394,7 @@
     <xsl:if test="operation[@class and @visibility='protected']">
       <h3>Protected class operations</h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[@class and @visibility='protected']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -404,7 +404,7 @@
     <xsl:if test="operation[@class and @visibility='private']">
       <h3>Private class operations</h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[@class and @visibility='private']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -414,7 +414,7 @@
     <xsl:if test="operation[@class and @visibility='implementation']">
       <h3>Implementation class operations </h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[@class and @visibility='implementation']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -424,7 +424,7 @@
     <xsl:if test="operation[not(@class) and @visibility='public']">
       <h3>Public instance operations</h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[not(@class) and @visibility='public']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -434,7 +434,7 @@
     <xsl:if test="operation[not(@class) and @visibility='protected']">
       <h3>Protected instance operations</h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[not(@class) and @visibility='protected']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -444,7 +444,7 @@
     <xsl:if test="operation[not(@class) and @visibility='private']">
       <h3>Private instance operations</h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[not(@class) and @visibility='private']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -454,7 +454,7 @@
     <xsl:if test="operation[not(@class) and @visibility='implementation']">
       <h3>Implementation instance operations</h3>
       <dl>
-        <xsl:apply-templates 
+        <xsl:apply-templates
           select="operation[not(@class) and @visibility='implementation']">
           <xsl:sort select="."/>
         </xsl:apply-templates>
@@ -872,7 +872,7 @@
     </li>
   </xsl:template>
 
-  <xsl:template match="domain/type">
+  <xsl:template match="domain/type[not(@access-to-operation)]">
     <h2><a name="{name}"><xsl:value-of select="name"/></a></h2>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@callback">
@@ -1077,6 +1077,15 @@
         </xsl:apply-templates>
       </dl>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="domain/type[@access-to-operation]">
+    <h2><a name="{name}"><xsl:value-of select="name"/></a></h2>
+    <dl>
+      <xsl:apply-templates select="operation">
+        <xsl:sort select="."/>
+      </xsl:apply-templates>
+    </dl>
   </xsl:template>
 
 
