@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: bugs.html,v 8a17844dd795 2012/09/26 17:47:52 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -19,7 +19,7 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
   If a bug is numbered <i>nnnn</i> it's only reported in this
   document. If a bug is numbered <i>nnnn</i>/<i>mmmmmmm</i>,
   the <i>mmmmmmm</i> is
-  the <a href="https://sourceforge.net/tracker/?group_id=135558&atid=733915">SourceForge</a>
+  the (old) <a href="https://sourceforge.net/tracker/?group_id=135558&atid=733915">SourceForge</a>
   bug number.
 
   Bugs after <a href="#0376">0376</a> are only logged
@@ -136,7 +136,7 @@ action.
 use <a href="event-modelling.html#post-to-self">events-to-self</a>
 from an event that's being handled synchronously.
 
-<dt>0342/1401275 (raised 10.i.06)
+<dt>0342/<a href="https://sourceforge.net/support/tracker.php?aid=1401275">1401275</a> (raised 10.i.06)
 
 <dd>ColdFrame's checks on state machines don't properly handle the
 case where actions are inherited; in particular, the error of having
@@ -153,7 +153,7 @@ problem still exists.</i>
 <br><i>On the whole it's best if public classes don't have attributes
 at all.</i>
 
-<dt>0369/1964067 (raised 14.v.2008)
+<dt>0369/<a href="https://sourceforge.net/support/tracker.php?aid=1964067">1964067</a> (raised 14.v.08)
 
 <dd>If an instance event is declared with &#171;instance event&#187;
 but there's no corresponding transition on the state machine, the
@@ -169,7 +169,7 @@ generated spec requires a handler which the body doesn't provide.
 
 <dl>
 
-<dt><a name="0376">0376</a>/2080418 (raised 28.viii.08)
+<dt><a name="0376">0376</a>/<a href="https://sourceforge.net/support/tracker.php?aid=2080418">2080418</a> (raised 28.viii.08)
 
 <dd>If you have a sequence diagram with messages that contain a quote
 (for example), they are backslash-escaped; and cat2raw.py (the lex
@@ -181,7 +181,7 @@ component, I guess) rejects them.
 
 <dl>
 
-<dt>0371/2009429 (raised 3.vii.08)
+<dt>0371/<a href="https://sourceforge.net/support/tracker.php?aid=2009429">2009429</a> (raised 3.vii.08)
 
 <dd>When an active instance is deleted, no check is made for whether
 its task has actually terminated. If it hasn't, the task won't
@@ -193,15 +193,15 @@ actually get deleted, and memory will leak.
 classes can leak memory with some older releases of GNAT.
 <br><i>This was originally notified 31.i.06.</i>
 
-<dt>0373/2013298 (raised 8.vii.08)
+<dt>0373/<a href="https://sourceforge.net/support/tracker.php?aid=2013298">2013298</a> (raised 8.vii.08)
 
 <dd>Exception renaming/import requires old [[annotation]] syntax.
 
-<dt>0374/2013300 (raised 8.vii.08)
+<dt>0374/<a href="https://sourceforge.net/support/tracker.php?aid=2013300">2013300</a> (raised 8.vii.08)
 
 <dd>Generated HTML doesn't include exceptions.
 
-<dt>0375/2013830 (raised 8.vii.08)
+<dt>0375/<a href="https://sourceforge.net/support/tracker.php?aid=2013830">2013830</a> (raised 8.vii.08)
 
 <dd>Generated HTML doesn't include &#171;abstract&#187; in
 single-class diagrams.
@@ -212,7 +212,7 @@ single-class diagrams.
 
 <dl>
 
-<dt>0370/1983328 (raised 3.vi.08)
+<dt>0370/<a href="https://sourceforge.net/support/tracker.php?aid=1983328">1983328</a> (raised 3.vi.08)
 
 <dd>The code generated when GENERATE_EVENT_LOGGING=yes doesn't match
 the recent changes to ColdFrame.Project logging.
@@ -235,7 +235,7 @@ non-singleton party is marked <tt>{source}</tt>.
 
 <dl>
 
-<dt>0368/1811578 (raised 11.x.07)
+<dt>0368/<a href="https://sourceforge.net/support/tracker.php?aid=1811578">1811578</a> (raised 11.x.07)
 
 <dd>The generated code for a protected function doesn't handle the
 many non-simple possibilities for return value types (eg, arrays).
@@ -246,7 +246,7 @@ many non-simple possibilities for return value types (eg, arrays).
 
 <dl>
 
-<dt>0361/1546249 (raised 24.viii.06)
+<dt>0361/<a href="https://sourceforge.net/support/tracker.php?aid=1546249">1546249</a> (raised 24.viii.06)
 
 <dd>While doing unit tests
 using <tt>ColdFrame.Project.Events.Standard.Inspection</tt>, it wasn't
@@ -257,7 +257,7 @@ using <tt>Event_Of</tt> and invoking its <tt>Handler</tt>, because
 the <tt>Timer</tt> was still set.
 <br>Added a new procedure <tt>Inspection.Fire (A_Timer)</tt>.
 
-<dt>0367/1744249 (raised 27.vi.07)
+<dt>0367/<a href="https://sourceforge.net/support/tracker.php?aid=1744249">1744249</a> (raised 27.vi.07)
 
 <dd>A ColdFrame.Interrupts.Handler must detach itself from the
 interrupt if there was no previous handler to replace.
@@ -268,7 +268,7 @@ interrupt if there was no previous handler to replace.
 
 <dl>
 
-<dt>0359/1544856 (raised 22.viii.06)
+<dt>0359/<a href="https://sourceforge.net/support/tracker.php?aid=1544856">1544856</a> (raised 22.viii.06)
 
 <dd>At present, class and instance events have the same priority.
 However, since class events are usually used to isolate one domain
@@ -283,7 +283,7 @@ next class event.
 
 <dl>
 
-<dt>0366/1687327 (raised 23.iii.07)
+<dt>0366/<a href="https://sourceforge.net/support/tracker.php?aid=1687327">1687327</a> (raised 23.iii.07)
 
 <dd>The error of having multiple transitions from a state triggered by
 the same event isn't detected (the fix implemented in response to 0206
@@ -300,7 +300,7 @@ didn't always work).
 <dd>ColdFrame doesn't detect the error of having more than one type
 with the same name.
 
-<dt>0364/1605567 (raised 29.xi.06)
+<dt>0364/<a href="https://sourceforge.net/support/tracker.php?aid=1605567">1605567</a> (raised 29.xi.06)
 
 <dd>The error of a domain having two different type definitions isn't
 detected. This could happen with an interface child UML package.
@@ -311,7 +311,7 @@ detected. This could happen with an interface child UML package.
 
 <dl>
 
-<dt>0363/1589302 (raised 3.xi.06)
+<dt>0363/<a href="https://sourceforge.net/support/tracker.php?aid=1589302">1589302</a> (raised 3.xi.06)
 
 <dd>Hash function generation doesn't recognise modular types.
 <br><i>Use {hash=discrete} in the &#171;type&#187;.</i>
@@ -322,7 +322,7 @@ detected. This could happen with an interface child UML package.
 
 <dl>
 
-<dt>0358/1517591 (raised 7.vii.06)
+<dt>0358/<a href="https://sourceforge.net/support/tracker.php?aid=1517591">1517591</a> (raised 7.vii.06)
 
 <dd>When a class has an attribute whose type is a protected type the
 generated Unit_Test child package fails to compile.
@@ -354,7 +354,7 @@ semantics).
 
 <dl>
 
-<dt>0353/1472823 (raised 19.iv.06)
+<dt>0353/<a href="https://sourceforge.net/support/tracker.php?aid=1472823">1472823</a> (raised 19.iv.06)
 
 <dd>ColdFrame reports:
 <pre>
@@ -373,7 +373,7 @@ a type with:
 The problem is not reported if a dummy type is declared which has an
 attribute of Serialization_Base_Class_P.
 
-<dt>0354/1473115 (raised 19.iv.06)
+<dt>0354/<a href="https://sourceforge.net/support/tracker.php?aid=1473115">1473115</a> (raised 19.iv.06)
 
 <dd>The functions Is_Set and Expires_At in ColdFrame.Events_G.Test_G
 are not dispatching operations in the same way as Wait_Until_Idle,
@@ -435,7 +435,7 @@ about a Timer being destroyed while holding an event).
 
 <dl>
 
-<dt>0348/1442276 (raised 3.iii.06)
+<dt>0348/<a href="https://sourceforge.net/support/tracker.php?aid=1442276">1442276</a> (raised 3.iii.06)
 
 <dd>When inspecting an event queue, held events are in time order
 whereas you would expect them to be in posting order.
@@ -446,7 +446,7 @@ whereas you would expect them to be in posting order.
 
 <dl>
 
-<dt>0346/1433373 (raised 17.ii.06)
+<dt>0346/<a href="https://sourceforge.net/support/tracker.php?aid=1433373">1433373</a> (raised 17.ii.06)
 
 <dd>The documentation says that atomic and volatile can be specified
 using stereotypes on objects; in fact they can only be specified using
@@ -493,19 +493,19 @@ didn't either.
 
 <dl>
 
-<dt>0338/1359556 (raised 18.xi.05)
+<dt>0338/<a href="https://sourceforge.net/support/tracker.php?aid=1359556">1359556</a> (raised 18.xi.05)
 
 <dd>The supplied <tt>test/Makefile</tt> may not work if the
 environment has been customised by the project; particularly, the Ada
 project path shouldn't introduce additional dependencies, and
 executables generated need to run on the host.
 
-<dt>0339/1365266 (raised 24.xi.05)
+<dt>0339/<a href="https://sourceforge.net/support/tracker.php?aid=1365266">1365266</a> (raised 24.xi.05)
 
 <dd><tt>Domain_Initialized</tt> can't be used by a task to tell when
 initialization is complete.
 
-<dt>0340/1371468 (raised 2.xii.05)
+<dt>0340/<a href="https://sourceforge.net/support/tracker.php?aid=1371468">1371468</a> (raised 2.xii.05)
 
 <dd>A <tt>ColdFrame.Project.Events.Standard.Test_Trace</tt> event
 queue starts in the started state.
@@ -516,7 +516,7 @@ queue starts in the started state.
 
 <dl>
 
-<dt>0334/1315548 (raised 7.x.05)
+<dt>0334/<a href="https://sourceforge.net/support/tracker.php?aid=1315548">1315548</a> (raised 7.x.05)
 
 <dd>There is a storage leak if a state machine action that is not
 marked &#171;final&#187; or named <tt>Delete</tt> deletes the
@@ -531,7 +531,7 @@ its contract ...</i>
 
 <dl>
 
-<dt>0337/1337007 (raised 25.x.05)
+<dt>0337/<a href="https://sourceforge.net/support/tracker.php?aid=1337007">1337007</a> (raised 25.x.05)
 
 <dd> There's a potential deadly embrace if a dispatched action tries
  to delete an instance after the Held Event Manager has finished.
@@ -542,14 +542,14 @@ its contract ...</i>
 
 <dl>
 
-<dt>0335/1331554 (raised 19.x.05)
+<dt>0335/<a href="https://sourceforge.net/support/tracker.php?aid=1331554">1331554</a> (raised 19.x.05)
 
 <dd> The 'normalization' phase of code generation takes a very long
 time on Windows systems; observed on Windows2000 and XP. Seemed bad
 enough on 2k (about 60 times slower than on Linux), really painful on
 XP.
 
-<dt>0336/1331565 (raised 19.x.05)
+<dt>0336/<a href="https://sourceforge.net/support/tracker.php?aid=1331565">1331565</a> (raised 19.x.05)
 
 <dd>A <tt>cat2raw.py</tt> problem: the Python stack trace ends
 with:<br>
@@ -576,13 +576,13 @@ instantiations don't compile.
 
 <dl>
 
-<dt>0326/1266456 (raised 22.viii.05)
+<dt>0326/<a href="https://sourceforge.net/support/tracker.php?aid=1266456">1266456</a> (raised 22.viii.05)
 
 <dd> Especially when running under Windows, it's all too possible for
 the Makefiles to pick the wrong version of a command (eg
 <tt>find</tt>).
 
-<dt>0327/1265701 (raised 22.viii.05)
+<dt>0327/<a href="https://sourceforge.net/support/tracker.php?aid=1265701">1265701</a> (raised 22.viii.05)
 
 <dd>It would be helpful to output a domain's {revision}, to standard
 error; that way you could see the revision in captured logs.
@@ -619,20 +619,20 @@ memory accesses if the instance was deleted by the event handler.
 
 <dl>
 
-<dt>0321/1239282 (raised 16.vii.05)
+<dt>0321/<a href="https://sourceforge.net/support/tracker.php?aid=1239282">1239282</a> (raised 16.vii.05)
 
 <dd>It would be helpful to check that subprogram names and parameters
 passed to the stub mechanism are correct; also that overridings are
 intended.
 
-<dt>0322/1252188 (raised 4.viii.05)
+<dt>0322/<a href="https://sourceforge.net/support/tracker.php?aid=1252188">1252188</a> (raised 4.viii.05)
 
 <dd> If you have an event queue which doesn't start at creation (all
 Test event queues, or any queue with Start_Started false), there's a
 possible race condition (especially if the queue is low priority)
 which can lead to lockup when Start is eventually called.
 
-<dt>0323/1253254 (raised 6.viii.05)
+<dt>0323/<a href="https://sourceforge.net/support/tracker.php?aid=1253254">1253254</a> (raised 6.viii.05)
 
 <dd>The stub mechanism isn't thread-safe.
 
@@ -663,7 +663,7 @@ class attributes with default values have been set up).
 
 <dl>
 
-<dt>0317/1231591 (raised 4.vii.05)
+<dt>0317/<a href="https://sourceforge.net/support/tracker.php?aid=1231591">1231591</a> (raised 4.vii.05)
 
 <dd>Protected function return types aren't taken account of when
 calculating the order in which to output type declarations.
@@ -685,7 +685,7 @@ identifying attribute.
 
 <dl>
 
-<dt>0314/1219816 (raised 13.vi.05)
+<dt>0314/<a href="https://sourceforge.net/support/tracker.php?aid=1219816">1219816</a> (raised 13.vi.05)
 
 <dd>The body code generated for the Create and Find operations of a
 many-to-many reflexive association doesn't compile (it uses the same
@@ -770,7 +770,7 @@ after a few years, and people don't seem to want to delete it).
 
 <dl>
 
-<dt>0305/1199638 (raised 11.v.05)
+<dt>0305/<a href="https://sourceforge.net/support/tracker.php?aid=1199638">1199638</a> (raised 11.v.05)
 
 <dd> It is not possible to use a class called System as compiling the
 generated code fails with: "Storage_Elements" not declared in
@@ -816,7 +816,7 @@ public type.
 
 <dl>
 
-<dt>0300/1182842 (raised 14.iv.05)
+<dt>0300/<a href="https://sourceforge.net/support/tracker.php?aid=1182842">1182842</a> (raised 14.iv.05)
 
 <dd>The Wait_Until_Idle operation of test event queues has an option
 to ignore events that are held on timers (and can be retracted) but
@@ -835,7 +835,7 @@ to delete itself, so it would be a good idea to report it.
 
 <dl>
 
-<dt>0298/1183184 (raised 14.iv.05)
+<dt>0298/<a href="https://sourceforge.net/support/tracker.php?aid=1183184">1183184</a> (raised 14.iv.05)
 
 <dd>The supplied storage pools fill memory with 16#deadbeef# both
 before returning it from Allocate and when it's returned to
@@ -843,7 +843,7 @@ Deallocate. Might be helpful to fill with something different in the
 two cases.
 <br><i>Deallocated memory is filled with 16#dead#.</i>
 
-<dt>0299/1183180 (raised 14.iv.05)
+<dt>0299/<a href="https://sourceforge.net/support/tracker.php?aid=1183180">1183180</a> (raised 14.iv.05)
 
 <dd>The provided storage pools fill memory with 16#deadbeef#. This
 looks fine on PowerPC (big-endian) hardware but less visible on Intel
@@ -3221,7 +3221,7 @@ extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
 
-<dt>0330/1303319 (raised 24.ix.05)
+<dt>0330/<a href="https://sourceforge.net/support/tracker.php?aid=1303319">1303319</a> (raised 24.ix.05)
 
 <dd>If a state model has a completion transition from the initial
 state, the transition is performed synchronously during instance
@@ -3233,7 +3233,7 @@ but <b>before</b> any class &#171;init&#187; operations have been
 called; which means that those entry actions had better not depend on
 any of the class initializations.
 
-<dt>0347/1434319 (raised 18.ii.06)
+<dt>0347/<a href="https://sourceforge.net/support/tracker.php?aid=1434319">1434319</a> (raised 18.ii.06)
 
 <dd>Especially with large arrays (or perhaps just with large records),
 the performance of converting a serialized output stream to XML is
@@ -3242,7 +3242,7 @@ very sluggish.
 see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
 better to have a primitive Print operation.</i>
 
-<dt>0365/1664467 (raised 4.iii.07)
+<dt>0365/<a href="https://sourceforge.net/support/tracker.php?aid=1664467">1664467</a> (raised 4.iii.07)
 
 <dd>If an type is serializable in its source domain
 (<tt>{serializable-there}</tt>) it would be helpful if it could also
@@ -3322,7 +3322,7 @@ used instead of <tt>Natural_Duration</tt>?
 
 <dl>
 
-<dt>0360/1544860 (raised 22.viii.06)
+<dt>0360/<a href="https://sourceforge.net/support/tracker.php?aid=1544860">1544860</a> (raised 22.viii.06)
 
 <dd>It would be helpful to allow an action to be attached to stubbed
 operations (perhaps just procedures?).
