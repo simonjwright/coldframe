@@ -13,6 +13,7 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with AUnit.Assertions; use AUnit.Assertions;
 with ColdFrame.Exceptions;
 
 with Library.Initialize;
@@ -136,7 +137,7 @@ package body Library.Tests is
       use type Borrower.Handle;
    begin
       B := Authorship.Wrote (Mysterious_Happenings);
-      Assert (T, B = Bob, "B = Bob");
+      Assert (B = Bob, "B = Bob");
    end T2;
 
    procedure T3 (T : in out AUnit.Test_Cases.Test_Case'Class) is
@@ -145,8 +146,7 @@ package body Library.Tests is
       use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (null);
-      Assert (T,
-              Book.Collections.Length (Bks) = 0,
+      Assert (Book.Collections.Length (Bks) = 0,
               "Book.Collections.Length (Bks) = 0");
    end T3;
 
@@ -156,8 +156,7 @@ package body Library.Tests is
       use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (Carol);
-      Assert (T,
-              Book.Collections.Length (Bks) = 0,
+      Assert (Book.Collections.Length (Bks) = 0,
               "Book.Collections.Length (Bks) = 0");
    end T4;
 
@@ -167,20 +166,15 @@ package body Library.Tests is
       use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (Alice);
-      Assert (T,
-              Book.Collections.Length (Bks) = 3,
+      Assert (Book.Collections.Length (Bks) = 3,
               "Book.Collections.Length (Bks) = 3");
-      Assert (T,
-              Book.Collections.Location (Bks, Glorious_Deeds) /= 0,
+      Assert (Book.Collections.Location (Bks, Glorious_Deeds) /= 0,
               "Book.Collections.Location (Bks, Glorious_Deeds) /= 0");
-      Assert (T,
-              Book.Collections.Location (Bks, Dark_Doings) /= 0,
+      Assert (Book.Collections.Location (Bks, Dark_Doings) /= 0,
               "Book.Collections.Location (Bks, Dark_Doings) /= 0");
-      Assert (T,
-              Book.Collections.Location (Bks, Fiendish_Frolics) /= 0,
+      Assert (Book.Collections.Location (Bks, Fiendish_Frolics) /= 0,
               "Book.Collections.Location (Bks, Fiendish_Frolics) /= 0");
-      Assert (T,
-              Book.Collections.Location (Bks, Mysterious_Happenings) = 0,
+      Assert (Book.Collections.Location (Bks, Mysterious_Happenings) = 0,
               "Book.Collections.Location (Bks, Mysterious_Happenings) = 0");
    end T5;
 
@@ -189,8 +183,7 @@ package body Library.Tests is
       Bs : Borrower.Collections.Collection;
    begin
       Bs := Authorship.From_Collections.Wrote (Book.Collections.Null_Container);
-      Assert (T,
-              Borrower.Collections.Length (Bs) = 0,
+      Assert (Borrower.Collections.Length (Bs) = 0,
               "Borrower.Collections.Length (Bs) = 0");
    end T6;
 
@@ -199,20 +192,15 @@ package body Library.Tests is
       Bs : Borrower.Collections.Collection;
    begin
       Bs := Authorship.From_Collections.Wrote (Book.All_Instances);
-      Assert (T,
-              Borrower.Collections.Length (Bs) = 2,
+      Assert (Borrower.Collections.Length (Bs) = 2,
               "Borrower.Collections.Length (Bs) = 2");
-      Assert (T,
-              Borrower.Collections.Location (Bs, Alice) /= 0,
+      Assert (Borrower.Collections.Location (Bs, Alice) /= 0,
               "Borrower.Collections.Location (Bs, Alice) /= 0");
-      Assert (T,
-              Borrower.Collections.Location (Bs, Bob) /= 0,
+      Assert (Borrower.Collections.Location (Bs, Bob) /= 0,
               "Borrower.Collections.Location (Bs, Bob) /= 0");
-      Assert (T,
-              Borrower.Collections.Location (Bs, Carol) = 0,
+      Assert (Borrower.Collections.Location (Bs, Carol) = 0,
               "Borrower.Collections.Location (Bs, Carol) = 0");
-      Assert (T,
-              Borrower.Collections.Location (Bs, Dave) = 0,
+      Assert (Borrower.Collections.Location (Bs, Dave) = 0,
               "Borrower.Collections.Location (Bs, Dave) = 0");
    end T7;
 
@@ -222,8 +210,7 @@ package body Library.Tests is
    begin
       Bks := Authorship.From_Collections.Was_Written_By
         (Borrower.Collections.Null_Container);
-      Assert (T,
-              Book.Collections.Length (Bks) = 0,
+      Assert (Book.Collections.Length (Bks) = 0,
               "Book.Collections.Length (Bks) = 0");
    end T8;
 
@@ -233,8 +220,7 @@ package body Library.Tests is
    begin
       Bks := Authorship.From_Collections.Was_Written_By
         (Borrower.All_Instances);
-      Assert (T,
-              Book.Collections.Length (Bks) = 4,
+      Assert (Book.Collections.Length (Bks) = 4,
               "Book.Collections.Length (Bks) = 4");
    end T9;
 
@@ -255,7 +241,7 @@ package body Library.Tests is
       use type Borrower.Handle;
    begin
       B := Current.Is_Borrowing (Book.Handle'(null));
-      Assert (T, B = null, "B = null");
+      Assert (B = null, "B = null");
    end T11;
 
    procedure T12 (T : in out AUnit.Test_Cases.Test_Case'Class) is
@@ -264,7 +250,7 @@ package body Library.Tests is
       use type Borrower.Handle;
    begin
       B := Current.Is_Borrowing (Glorious_Deeds);
-      Assert (T, B = null, "B = null");
+      Assert (B = null, "B = null");
    end T12;
 
    procedure T13 (T : in out AUnit.Test_Cases.Test_Case'Class) is
@@ -273,7 +259,7 @@ package body Library.Tests is
       use type Borrower.Handle;
    begin
       B := Current.Is_Borrowing (Mysterious_Happenings);
-      Assert (T, B = Alice, "B = Alice");
+      Assert (B = Alice, "B = Alice");
    end T13;
 
    procedure T14 (T : in out AUnit.Test_Cases.Test_Case'Class) is
@@ -281,8 +267,7 @@ package body Library.Tests is
       Bks : Book.Collections.Collection;
    begin
       Bks := Current.Is_On_Loan_To (null);
-      Assert (T,
-              Book.Collections.Length (Bks) = 0,
+      Assert (Book.Collections.Length (Bks) = 0,
               "Book.Collections.Length (Bks) = 0");
    end T14;
 
