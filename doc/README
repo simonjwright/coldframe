@@ -1,0 +1,132 @@
+************
+* 20130413 *
+************
+
+General
+=======
+
+This is a maintenance release.
+
+Generation
+==========
+
+Fixed bug 60 (Can't have negative values for Integer identifier
+components).
+
+Fixed bug 63 (Constraint error navigating n:1 from (null)).
+
+Fixed bug 74 (Confusing document generated for access-to-operation).
+
+Testing
+=======
+
+Fixed bug 76 (Test cases don't compile).
+
+Installation
+============
+
+The script to convert case exception data from Emacs to GPS format
+(scripts/case_exceptions.py) has been made executable.
+
+Documentation
+=============
+
+Links changed to match migration of the ColdFrame Sourceforge
+project to the new Allura platform.
+
+
+************
+* 20120324 *
+************
+
+Modelling
+=========
+
+Added <<bounded-string>>, <<discriminated>>, <<fixed-string>> and
+<<protected>>.
+
+Reworked AssociationClass handling; the stereotype is now
+<<association-class-naming>>, and you can specify {association-name},
+{class-name}, or both (though that would add another layer of
+confusion).
+
+You can specify the discriminator of a Generalization, which has the
+advantage of appearing on the class diagram. If you specify both the
+name and the discriminator, they have to match.
+
+Generation
+==========
+
+Progress is only traced if make is given VERBOSE=yes.
+
+Testing
+=======
+
+Added example/ and test/ code.
+
+Noted that many of the tests use AUnit 3 (as supplied with GNAT GPL
+2011), and aren't compatible with the AUnit 1.03 provided with Debian
+(up to wheezy).
+
+Installation
+============
+
+Changes for Debian 6 compatibility (see installation notes).
+
+
+************
+* 20120219 *
+************
+
+General
+=======
+
+ColdFrame can't currently be installed on Windows or Debian (problems
+with TclXML). This has prompted a long-overdue move from modelling
+with Rational Rose to modelling with ArgoUML.
+
+Unfortunately there's no easy route from a Rose model to an ArgoUML
+one, but Rose has never been freely available.
+
+The changes to ColdFrame's source are on the ArgoUML branch in the
+Sourceforge repository. The Rose version is on the RationalRose branch
+(currently the same as the default).
+
+The old .raw files and related scripts are no longer used. Instead,
+the ArgoUML .uml model files, containing XMI, are converted directly
+to ColdFrame's .norm format, and code is then generated as before. The
+conversion is done by an Ada program (normalize_xmi), which uses XIA
+(a copy is included with ColdFrame).
+
+Modelling
+=========
+
+ColdFrame's previous profile hasn't been completely migrated yet. The
+main omissions are the data typing options, for example constraints,
+conventions, and modular types. A lot of the problem is the UML 1.4
+preference for tagged values to be regarded as properties of
+stereotypes, which leads to some contortions.
+
+See the model ColdFrame_Examples.uml in the models/ subdirectory for
+example models.
+
+The ability to extend ColdFrame's processing (by using your own
+profile and code generation) isn't supported; unrecognised stereotypes
+and tagged values are ignored. This may change.
+
+Code
+====
+
+Implemented a workround for a bug in GNAT GPL 2011/GCC 4.7 (GCC
+Bugzilla #50934)
+
+Testing
+=======
+
+AUnit (version 3), the Booch Components and TclAdaShell (for
+examples/) are expected to be installed or on ADA_PROJECT_PATH.
+
+Installation
+============
+
+Much changed, please see the documentation.

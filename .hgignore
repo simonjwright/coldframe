@@ -62,7 +62,6 @@ examples/states-t{.exe,}
 examples/van_fleet-demo{.exe,}
 
 # lib
-lib/default-uml14.xmi
 lib/ColdFrameProfile.xmi
 
 # test
