@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: 9cd837f9524c $
---  $Date: 2012/03/19 15:21:07 $
+--  $Revision: 1c18bd87bab7 $
+--  $Date: 2013/04/14 16:49:28 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -88,6 +88,7 @@ package body Normalize_XMI.Model.State_Machines is
    overriding
    procedure Resolve (T : in out Transition_Element)
    is
+      pragma Unreferenced (T);
    begin
       Messages.Trace ("......... checking transition");
    end Resolve;
