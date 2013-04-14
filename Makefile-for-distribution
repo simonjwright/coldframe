@@ -28,4 +28,4 @@ setup:
 	  make -C $$s setup;			\
 	done
 
-.PHONY: force setup
+.PHONY: all force setup

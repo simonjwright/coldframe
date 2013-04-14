@@ -14,20 +14,9 @@
 
 # This Makefile is used to set up the tools and for tool development.
 
-include ../Makefile.inc
-
-all:
+all::
 
 setup:
 	gnatmake -p -P tools.gpr
 
-NORM_FILES =					\
- Association_Classes.norm			\
- Associations.norm				\
- Classes.norm					\
- Generalizations.norm				\
- Types.norm
-
-$(NORM_FILES): ColdFrame_Development.norm-stamp
-
-.PHONY: setup
+.PHONY: all setup

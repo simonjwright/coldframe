@@ -146,4 +146,4 @@ clean::
 clean::
 	-rm -rf *.{ada,gen,log,norm,norm-stamp,stamp*}
 
-.PHONY: all force clean
+.PHONY: all exes force clean runs fails

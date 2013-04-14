@@ -19,25 +19,27 @@
 # DIST is the location where distribution files are to be copied, eg
 # /Users/simon/coldframe/cf-20110731hg
 
+all:
+	@echo "Only meant to be called from the parent Makefile.dist."
+
 include ../Makefile.inc
 
 # For test only
 DIST ?= ./dist
 
-all:
-	@echo "Only meant to be called from the parent Makefile.dist."
-
 DATE = $(subst cf-,,$(notdir $(DIST)))
 
 EXAMPLES = ColdFrame_Examples.uml
 
-TEST = ColdFrame_Tests.uml
+TESTS = ColdFrame_Tests.uml Regressions.uml
 
-ALL = ColdFrameProfile.uml $(EXAMPLES) $(TEST)
+MISC = ColdFrame_Development.uml
+
+ALL = ColdFrameProfile.uml $(EXAMPLES) $(TESTS) $(MISC)
 
 dist:
 	-$(RM) -rf $(DIST)/models
 	$(MKDIR) -p $(DIST)/models
 	$(CP) -p $(ALL) $(DIST)/models/
 
-.PHONY: dist force
+.PHONY: all dist

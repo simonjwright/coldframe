@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 # Copyright (C) Simon Wright <simon@pushface.org>
 
 # This package is free software; you can redistribute it and/or
@@ -12,13 +14,14 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
-# This Makefile is used for processing in the lib/ subdirectory.
+# Contains rules for setting up XMI files; used for setup and for
+# distribution.
 
-all:
+# Users should also include ../Makefile.inc.
 
-include ../Makefile.inc
-include Makefile.inc
-
-setup: ColdFrameProfile.xmi
-
-.PHONY: all setup
+ColdFrameProfile.xmi: ../models/ColdFrameProfile.uml \
+	../scripts/normalize-profile.xsl
+	$(SAXON)				\
+	  $<					\
+	  ../scripts/normalize-profile.xsl	\
+	  >$@

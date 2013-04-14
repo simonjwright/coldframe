@@ -26,9 +26,9 @@ all:
 
 DATE = $(subst cf-,,$(notdir $(DIST)))
 
-COMPILATION_REGRESSIONS = \
+COMPILATION_REGRESSIONS +=								   \
   Compilation_Regressions.impl/compilation_regressions-aliased_components-check_access.adb \
-  Compilation_Regressions.impl/compilation_regressions-subunits.adb \
+  Compilation_Regressions.impl/compilation_regressions-subunits.adb			   \
   Compilation_Regressions.impl/compilation_regressions-subunits.ads
 
 EVENT_TEST +=							\
@@ -100,28 +100,19 @@ INITIALIZATION +=							   \
   Initialization.impl/initialization-suite.ads				   \
   Initialization.impl/initialization-suite-check_domain_initialization.adb
 
-REGRESSIONS +=								\
-  Regressions.gpr							\
-  Regressions.impl/regressions-event_holder-set_timer.adb		\
-  Regressions.impl/regressions-event_holder-t.adb			\
-  Regressions.impl/regressions-find_active_singleton-t.adb		\
-  Regressions.impl/regressions-find_active-t.adb			\
-  Regressions.impl/regressions-max_more-f.adb				\
-  Regressions.impl/regressions-max_more-t.adb				\
-  Regressions.impl/regressions-max_one-f.adb				\
-  Regressions.impl/regressions-max_one-t.adb				\
-  Regressions.impl/regressions-phoenix-reincarnate.adb			\
-  Regressions.impl/regressions-pt_holder.adb				\
-  Regressions.impl/regressions-pt_owner-get_h_access.adb		\
-  Regressions.impl/regressions-pt_user-get_state.adb			\
-  Regressions.impl/regressions-pt_user-set_state.adb			\
-  Regressions.impl/regressions-rule-create.adb				\
-  Regressions.impl/regressions-self_immolator-t.adb			\
-  Regressions.impl/regressions-self_immolator-terminate_self.adb	\
-  Regressions.impl/regressions-self_immolator-terminate_yourself.adb	\
-  Regressions.impl/regressions-suite.adb				\
-  Regressions.impl/regressions-suite.ads				\
-  Regressions.impl/regression_tests.adb
+REGRESSIONS +=						\
+  Regressions.gpr					\
+  Regressions.test/association_classes-test.adb		\
+  Regressions.test/association_classes-test.ads		\
+  Regressions.test/associations-test.adb		\
+  Regressions.test/associations-test.ads		\
+  Regressions.test/regression_tests.adb			\
+  Regressions.test/regressions_suite.adb		\
+  Regressions.test/regressions_suite.ads		\
+  Regressions.test/sf_2991721-test.adb			\
+  Regressions.test/sf_2991721-test.ads			\
+  Regressions.test/sf_3086637_suite.adb			\
+  Regressions.test/sf_3086637_suite.ads
 
 STUB_TEST +=					\
   Stub_Test.gpr					\

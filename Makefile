@@ -12,8 +12,18 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
+all::
+	@echo "Say 'make setup' if you wish to set ColdFrame up."
+
 # See Makefile.inc for overridable variable definitions.
 include Makefile.inc
+
+SETUP_SUBDIRS = lib tools
+
+setup:
+	for s in $(SETUP_SUBDIRS); do		\
+	  make -C $$s setup;			\
+	done
 
 # Used to construct release IDs (eg, cf-20050423hg). You can set the
 # whole thing from the command line -- for example, if creating a patch
@@ -107,4 +117,4 @@ cf-$(DATE).zip: cf-$(DATE)
 	-$(RM) $@
 	$(ZIP) -r -9 $@ $</*
 
-.PHONY: dist force upload-docs
+.PHONY: all dist force setup upload-docs

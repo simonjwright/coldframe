@@ -20,9 +20,10 @@
 # DIST is the location where distribution files are to be copied, eg
 # /Users/simon/coldframe/cf-20110731hg
 
-include ../Makefile.inc
-
 all::
+
+include ../Makefile.inc
+include Makefile.inc
 
 ALL =									\
 coldframe-bounded_storage_pools.adb					\
@@ -93,21 +94,12 @@ coldframe-unbounded_strings.adb						\
 coldframe-unbounded_strings.ads						\
 coldframe.ads
 
-ALL += default-uml14.xmi ColdFrameProfile.xmi
-
-default-uml14.xmi:
-	wget http://argouml.org/profiles/uml14/default-uml14.xmi
-
-ColdFrameProfile.xmi: ../models/ColdFrameProfile.uml \
-	../scripts/normalize-profile.xsl
-	$(SAXON)				\
-	  $<					\
-	  ../scripts/normalize-profile.xsl	\
-	  >$@
+ALL += default-uml14.xmi ColdFrameProfile.xmi Makefile
 
 dist:
 	-$(RM) -rf $(DIST)/lib
 	$(MKDIR) -p $(DIST)/lib
 	$(CP) -p $(ALL) $(DIST)/lib/
+	$(CP) -p Makefile-for-distribution $(DIST)/lib/Makefile
 
-.PHONY: dist force
+.PHONY: all dist setup
