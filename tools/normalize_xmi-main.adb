@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-main.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 98360a058182 $
+--  $Date: 2013/04/14 22:52:50 $
 --  $Author: simonjwright $
 
 with Ada.Command_Line;
@@ -164,4 +164,5 @@ begin
 exception
    when E : others =>
       Put_Line (Ada.Exceptions.Exception_Information (E));
+      Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
 end Normalize_XMI.Main;
