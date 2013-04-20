@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v bc58c45ca10d 2012/01/23 12:07:05 simonjwright $ -->
+<!-- $Id: ColdFrame-norm.xsd,v e3150056b314 2013/04/20 12:59:49 simonjwright $ -->
 
 <!--
 
@@ -82,7 +82,6 @@
       <xsd:attribute name="singleton"/>
       <xsd:attribute name="stack"/>
       <xsd:attribute name="utility"/>
-      <xsd:attribute name="visible"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -94,6 +93,8 @@
         <xsd:group ref="typeDetail"/>
         <xsd:element ref="operation" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
+      <!-- NB, some of these are mutually exclusive; perhaps they
+           should be elements in typeDetail. -->
       <xsd:attribute name="access"/>
       <xsd:attribute name="atomic"/>
       <xsd:attribute name="callback"/>
@@ -102,13 +103,11 @@
       <xsd:attribute name="field-image"/>
       <xsd:attribute name="hash"/>
       <xsd:attribute name="null"/>
-      <xsd:attribute name="private"/>
       <xsd:attribute name="protected"/>
       <xsd:attribute name="serializable"/>
       <xsd:attribute name="serializable-there"/>
       <xsd:attribute name="standard"/>
       <xsd:attribute name="type-image"/>
-      <xsd:attribute name="unconstrained"/>
       <xsd:attribute name="visibility"/>
       <xsd:attribute name="volatile"/>
     </xsd:complexType>
