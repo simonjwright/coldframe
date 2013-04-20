@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- $Id: generate-profile-html.xsl,v 2502fb0e3c2e 2012/02/02 18:09:26 simonjwright $ -->
+<!-- $Id: generate-profile-html.xsl,v 890a45f07abd 2013/04/20 13:02:21 simonjwright $ -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -140,11 +140,14 @@
         </table>
       </td>
       <td>
-        <xsl:value-of
-          select="UML:ModelElement.taggedValue
-                  /UML:TaggedValue
-                  [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
-                  /UML:TaggedValue.dataValue"/>
+        <xsl:call-template name="break">
+          <xsl:with-param
+            name="text"
+            select="UML:ModelElement.taggedValue
+                    /UML:TaggedValue
+                    [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
+                    /UML:TaggedValue.dataValue"/>
+        </xsl:call-template>
       </td>
       <td>
         <table>
@@ -170,11 +173,14 @@
         <a name="st-{../../@name}-tag-{@name}"><xsl:value-of select="@name"/></a>
       </td>
       <td>
-        <xsl:value-of
-          select="UML:ModelElement.taggedValue
-                  /UML:TaggedValue
-                  [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
-                  /UML:TaggedValue.dataValue"/>
+        <xsl:call-template name="break">
+          <xsl:with-param
+            name="text"
+            select="UML:ModelElement.taggedValue
+                    /UML:TaggedValue
+                    [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
+                    /UML:TaggedValue.dataValue"/>
+        </xsl:call-template>
       </td>
       <td>
         <a href="#st-{../../@name}"><xsl:value-of select="../../@name"/></a>
@@ -188,11 +194,14 @@
         <xsl:value-of select="@name"/>
       </td>
       <td>
-        <xsl:value-of
-          select="UML:ModelElement.taggedValue
-                  /UML:TaggedValue
-                  [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
-                  /UML:TaggedValue.dataValue"/>
+        <xsl:call-template name="break">
+          <xsl:with-param
+            name="text"
+            select="UML:ModelElement.taggedValue
+                    /UML:TaggedValue
+                    [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
+                    /UML:TaggedValue.dataValue"/>
+        </xsl:call-template>
       </td>
     </tr>
   </xsl:template>
@@ -200,6 +209,27 @@
   <xsl:template match="*">
     <xsl:apply-templates select="@*"/>
     <xsl:apply-templates/>
+  </xsl:template>
+
+  <!--
+       See http://stackoverflow.com/questions/561235/xslt-replace-n-with-br-only-in-one-node
+       -->
+  <xsl:template name="break">
+    <xsl:param name="text" select="."/>
+    <xsl:choose>
+      <xsl:when test="contains($text, '&#xa;')">
+        <xsl:value-of select="substring-before($text, '&#xa;')"/>
+        <br/>
+        <xsl:call-template name="break">
+          <xsl:with-param
+            name="text"
+            select="substring-after($text, '&#xa;')"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$text"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
