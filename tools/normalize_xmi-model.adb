@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 51732bcbec70 $
---  $Date: 2012/02/09 14:15:28 $
+--  $Revision: ddde93bac78e $
+--  $Date: 2013/04/20 15:37:31 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -22,6 +22,7 @@ with Ada.Strings.Maps.Constants;
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
+with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Domains;
 with Unicode.CES;
 
@@ -83,21 +84,23 @@ package body Normalize_XMI.Model is
                  := McKae.XML.XPath.XIA.XPath_Query
                  (DOM.Core.Nodes.Item (T, J),
                   "UML:TaggedValue.type/UML:TagDefinition/@name");
-               pragma Assert
-                 (DOM.Core.Nodes.Length (Tag) = 1,
-                  "bad length for "
-                    & "UML:TaggedValue.type/UML:TagDefinition/@name");
                Value : constant DOM.Core.Node_List
                  := McKae.XML.XPath.XIA.XPath_Query
                  (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
-               pragma Assert
-                 (DOM.Core.Nodes.Length (Value) = 1,
-                  "bad length for "
-                    & "UML:TaggedValue.dataValue");
             begin
-               E.Tagged_Values.Insert
-                 (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Tag, 0)),
-                  Read_Text (DOM.Core.Nodes.Item (Value, 0)));
+               if DOM.Core.Nodes.Length (Tag) = 1
+                 and DOM.Core.Nodes.Length (Value) = 1 then
+                  E.Tagged_Values.Insert
+                    (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Tag, 0)),
+                     Read_Text (DOM.Core.Nodes.Item (Value, 0)));
+               else
+                  if DOM.Core.Nodes.Length (Tag) /= 1 then
+                     Messages.Error ("Bad tag name in " & (+E.Name));
+                  end if;
+                  if DOM.Core.Nodes.Length (Value) /= 1 then
+                     Messages.Error ("Bad tag value in " & (+E.Name));
+                  end if;
+               end if;
             end;
          end loop;
       end;
