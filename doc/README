@@ -1,4 +1,16 @@
 ************
+* 20130420 *
+************
+
+Modelling
+=========
+
+Added DataType stereotype <<constraint>> with tags {constrains} (names
+the type to be constrained), lower, and upper, in response to the
+support request "Declaration of Datatypes as Integer Ranges".
+
+
+************
 * 20130413 *
 ************
 
