@@ -121,7 +121,8 @@ $(NORM_FILES): ColdFrame_Tests.norm-stamp ;
 # Some of the domains are in the ColdFrame_Development model.
 DEVELOPMENT_DOMAINS =				\
   Associations					\
-  Association_Classes
+  Association_Classes				\
+  Types
 
 # Others (more regression-specific) in the Regressions model.
 REGRESSION_DOMAINS =				\

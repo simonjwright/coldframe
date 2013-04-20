@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: types.html,v 3674cc18ad0f 2013/04/20 16:09:38 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -60,9 +60,10 @@ displays these as <i>Signals</i></a>).
 the <i>Visibility</i> section of the ArgoUML <i>Properties</i>
 dialog.
 
+<!--
 <p>The previous (Rational Rose) version of ColdFrame offered several
-other facilities, which will appear in future releases of this
-version:
+other facilities, which may appear in future releases of this version:
+-->
 
 <h3>Stereotypes that apply to <i>DataTypes</i> only</h3>
 <dl>
@@ -72,7 +73,9 @@ version:
 another type (ie, a pointer type).
 
 <br>Specify the target type name using the <tt>{access-to-type}</tt>
-tag.
+tag. It can't be one of
+the <a href="ColdFrameProfile.html#Types">types that ColdFrame
+defines</a> (such as <tt>Integer</tt>).
 
 <br>It's probably a good idea to adopt a naming convention:
 ColdFrame's precedent would be to append
@@ -93,6 +96,17 @@ recognises as a type.
 this stereotype. ColdFrame then requires you to provide a single
 operation, whose name doesn't matter (though you will be warned if
 it's not the same as the name of the data type).
+
+<dt><em>&#171;constraint&#187;</em>
+<dd>is used to define a constrained version of a parent scalar
+type. The type to be constrained is specified using
+the <tt>{constrains}</tt> tag; there are no ColdFrame-imposed
+restrictions, so you can for example constrain <tt>Long_Float</tt>.
+
+<br>The new lower bound is specified via the <tt>{lower}</tt> tag, and
+the new upper bound via <tt>{upper}</tt>. At least one of these tags
+must be supplied; if either is omitted, the corresponding bound of the
+parent type is used.
 
 <dt><em>&#171;counterpart&#187;</em>
 <dd>is used for references to instances in other domains.
@@ -146,11 +160,6 @@ notified when something has changed in the lower-level Domain.
 and optionally <tt>, unconstrained</tt>.
 <br>Please <em>don't</em> use arrays to implement associations!
 
-<li><tt>constrains = <i>parent</i> | lower <i>low-bound</i> |
-upper <i>upper-bound</i></tt>
-<br>Specifies that the type is a subrange of <i>parent</i> (which of
-course has to be scalar).
-
 <li><tt>convention = <i>language</i></tt> specifies that the type is
 to be laid out using the conventions of the specified programming
 language (typically C).
@@ -192,10 +201,6 @@ the type to an external medium. See
 or <i>{renames}</i> types) specifies that the type is
 <i>{serializable}</i> in the package in which it is actually declared.
 See <a href="serialization-page.html">separate information</a>.
-
-<li><tt>string = fixed <i>fixed-length</i></tt>
-
-<li><tt>string = max <i>max-length</i></tt>
 
 <li><tt>type-image = <i>image-operation</i></tt> specifies the
 operation to be used to print values of the type when it has been

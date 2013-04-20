@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 3674cc18ad0f $
+--  $Date: 2013/04/20 16:09:38 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -44,8 +44,8 @@ package body Normalize_XMI.Model.Data_Types is
          if DOM.Core.Nodes.Length (Nodes) > 0 then
             Messages.Error
               ("DataType "
-              & (+T.Name)
-              & " is not permitted to have attributes.");
+                 & (+T.Name)
+                 & " is not permitted to have attributes.");
          end if;
       end;
 
@@ -88,86 +88,106 @@ package body Normalize_XMI.Model.Data_Types is
    begin
       Messages.Trace ("... checking data type " & (+T.Name));
       if T.Has_Stereotype ("access") then
-         declare
-            Target_Type_Name : constant String
-              := T.Tag_As_Name ("access-to-type");
-            Target_Type : constant Element_P := T.Find_Type (Target_Type_Name);
-         begin
-            if Target_Type = null then
-               Messages.Error
-                 ("Type '"
-                    & Target_Type_Name
-                    & "' designated by <<access>> type "
-                    & (+T.Name)
-                    & " not found.");
-            else
-               Types.Type_Element (Target_Type.all).Accessor
-                 := T'Unchecked_Access;
-            end if;
-         end;
-      else
-         if T.Has_Stereotype ("access-to-operation") then
-            if T.Operations.Length /= 1 then
-               Messages.Error
-                 ("Type "
-                    & (+T.Name)
-                    & " is marked <<access-to-operation>> but has"
-                    & T.Operations.Length'Img
-                    & " operations.");
-            else
-               declare
-                  --  Workround for gcc-4.4 limitation in Debian 6.
-                  Operation : constant Element_P := T.Operations.First_Element;
-                  Operation_Name : constant String := +Operation.Name;
-               begin
-                  if Operation_Name /= +T.Name then
-                     Messages.Warning
-                       ("Operation "
-                          & (+T.Name)
-                          & "."
-                          & Operation_Name
-                          & " renamed to "
-                          & (+T.Name)
-                          & ".");
-                     Operation.Name := T.Name;
-                  end if;
-               end;
-            end if;
-         end if;
-         --  There are all sorts of complicated illegal possibilities
-         --  here!
-         if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
+         if not T.Has_Tag ("access-to-type") then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has both {imported} and {renames} specified.");
+                 & " has <<access>> but not {access-to-type}.");
+         else
+            declare
+               Target_Type_Name : constant String
+                 := T.Tag_As_Name ("access-to-type");
+               Target_Type : constant Element_P
+                 := T.Find_Type (Target_Type_Name);
+            begin
+               if Target_Type = null then
+                  Messages.Error
+                    ("Type '"
+                       & Target_Type_Name
+                       & "' designated by <<access>> type "
+                       & (+T.Name)
+                       & " not found.");
+               else
+                  Types.Type_Element (Target_Type.all).Accessor
+                    := T'Unchecked_Access;
+               end if;
+            end;
          end if;
-         if T.Has_Stereotype ("bounded-string")
-           and not T.Has_Tag ("length") then
+      end if;
+      if T.Has_Stereotype ("access-to-operation") then
+         if T.Operations.Length /= 1 then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has <<bounded-string>> but not {length}.");
+                 & " is marked <<access-to-operation>> but has"
+                 & T.Operations.Length'Img
+                 & " operations.");
+         else
+            declare
+               --  Workround for gcc-4.4 limitation in Debian 6.
+               Operation : constant Element_P := T.Operations.First_Element;
+               Operation_Name : constant String := +Operation.Name;
+            begin
+               if Operation_Name /= +T.Name then
+                  Messages.Warning
+                    ("Operation "
+                       & (+T.Name)
+                       & "."
+                       & Operation_Name
+                       & " renamed to "
+                       & (+T.Name)
+                       & ".");
+                  Operation.Name := T.Name;
+               end if;
+            end;
          end if;
-         if T.Has_Stereotype ("fixed-string")
-           and not T.Has_Tag ("length") then
+      end if;
+      --  There are all sorts of complicated illegal possibilities
+      --  here!
+      if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has both {imported} and {renames} specified.");
+      end if;
+      if T.Has_Stereotype ("bounded-string")
+        and not T.Has_Tag ("length") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has <<bounded-string>> but not {length}.");
+      end if;
+      if T.Has_Stereotype ("constraint") then
+         if not T.Has_Tag ("constrains") then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has <<fixed-string>> but not {length}.");
-         end if;
-         if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
+                 & " has <<constraint>> but not {constrains}.");
+         elsif not (T.Has_Tag ("lower") or T.Has_Tag ("upper")) then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has <<imported>> but not {imported}.");
+                 & " has neither {lower} nor {upper}.");
          end if;
-         if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
-            Messages.Error
-              ("Type "
-                 & (+T.Name)
-                 & " has <<renaming>> but not {renames}.");
-         end if;
+      end if;
+      if T.Has_Stereotype ("fixed-string")
+        and not T.Has_Tag ("length") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has <<fixed-string>> but not {length}.");
+      end if;
+      if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has <<imported>> but not {imported}.");
+      end if;
+      if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has <<renaming>> but not {renames}.");
       end if;
       T.Operations.Iterate (Resolve'Access);
    end Resolve;
@@ -224,6 +244,19 @@ package body Normalize_XMI.Model.Data_Types is
                    "<string><max>"
                      & T.Tag_As_Value ("length")
                      & "</max></string>");
+      end if;
+      if T.Has_Stereotype ("constraint") then
+         Put (To,
+              "<subtype constrains="""
+                & T.Tag_As_Value ("constrains")
+                & """>");
+         if T.Has_Tag ("lower") then
+            Put (To, "<lower>" & T.Tag_As_Value ("lower") & "</lower>");
+         end if;
+         if T.Has_Tag ("upper") then
+            Put (To, "<upper>" & T.Tag_As_Value ("upper") & "</upper>");
+         end if;
+         Put_Line (To, "</subtype>");
       end if;
       if T.Has_Stereotype ("fixed-string") then
          Put_Line (To,
