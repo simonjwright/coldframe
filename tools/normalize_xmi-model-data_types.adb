@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: 3674cc18ad0f $
---  $Date: 2013/04/20 16:09:38 $
+--  $Revision: 7790302b4adb $
+--  $Date: 2013/04/22 15:37:22 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -107,6 +107,13 @@ package body Normalize_XMI.Model.Data_Types is
                        & "' designated by <<access>> type "
                        & (+T.Name)
                        & " not found.");
+               elsif not (Target_Type.all in Data_Type_Element'Class) then
+                  Messages.Error
+                    ("Type '"
+                       & Target_Type_Name
+                       & "' designated by <<access>> type "
+                       & (+T.Name)
+                       & " is not a data type.");
                else
                   Types.Type_Element (Target_Type.all).Accessor
                     := T'Unchecked_Access;
@@ -158,16 +165,43 @@ package body Normalize_XMI.Model.Data_Types is
               & " has <<bounded-string>> but not {length}.");
       end if;
       if T.Has_Stereotype ("constraint") then
-         if not T.Has_Tag ("constrains") then
+         if T.Has_Tag ("constrains") then
+            declare
+               Constrained_Type_Name : constant String
+                 := T.Tag_As_Name ("constrains");
+               Constrained_Type : constant Element_P
+                 := T.Find_Type (Constrained_Type_Name);
+            begin
+               if Constrained_Type = null then
+                  Messages.Error
+                    ("Type '"
+                       & Constrained_Type_Name
+                       & "', to be constrained by "
+                       & (+T.Name)
+                       & ", not found.");
+               elsif
+                 not (Constrained_Type.all in Data_Type_Element'Class)
+                 and not (Constrained_Type.all in Standard_Type_Element'Class)
+               then
+                  Messages.Error
+                    ("Type '"
+                       & Constrained_Type_Name
+                       & "', to be constrained by "
+                       & (+T.Name)
+                       & ", is not a data type.");
+               end if;
+            end;
+         else
             Messages.Error
               ("Type "
                  & (+T.Name)
                  & " has <<constraint>> but not {constrains}.");
-         elsif not (T.Has_Tag ("lower") or T.Has_Tag ("upper")) then
+         end if;
+         if not (T.Has_Tag ("lower") or T.Has_Tag ("upper")) then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has neither {lower} nor {upper}.");
+                 & " has <<constraint>> but neither {lower} nor {upper}.");
          end if;
       end if;
       if T.Has_Stereotype ("fixed-string")

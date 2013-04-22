@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 7790302b4adb $
+--  $Date: 2013/04/22 15:37:22 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -322,20 +322,13 @@ package body Normalize_XMI.Model.Domains is
    end Output;
 
 
-   type Standard_Type is new Element with null record;
-   overriding
-   procedure Resolve (ST : in out Standard_Type);
-   overriding
-   procedure Output (ST : Standard_Type; To : Ada.Text_IO.File_Type);
-
-
    procedure Add_Standard_Types (To : in out Element_Maps.Map)
    is
       procedure Add_Standard_Type (Named : String);
       procedure Add_Standard_Type (Named : String)
       is
-         N : constant Element_P := new Standard_Type;
-         ST : Standard_Type renames Standard_Type (N.all);
+         N : constant Element_P := new Standard_Type_Element;
+         ST : Standard_Type_Element renames Standard_Type_Element (N.all);
       begin
          ST.Name := +Named;
          To.Insert (Key => Named, New_Item => N);
@@ -360,25 +353,6 @@ package body Normalize_XMI.Model.Domains is
       Add_Standard_Type ("Timer");
       Add_Standard_Type ("Unbounded_String");
    end Add_Standard_Types;
-
-
-   overriding
-   procedure Resolve (ST : in out Standard_Type)
-   is
-   begin
-      null;
-   end Resolve;
-
-
-   overriding
-   procedure Output (ST : Standard_Type; To : Ada.Text_IO.File_Type)
-   is
-      use Ada.Text_IO;
-   begin
-      Put_Line (To, "<type standard='true'>");
-      Put_Line (To, "<name>" & (+ST.Name) & "</name>");
-      Put_Line (To, "</type>");
-   end Output;
 
 
 end Normalize_XMI.Model.Domains;

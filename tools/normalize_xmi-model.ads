@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 51732bcbec70 $
---  $Date: 2012/02/09 14:15:28 $
+--  $Revision: 7790302b4adb $
+--  $Date: 2013/04/22 15:37:22 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -63,6 +63,7 @@ private
    end record;
 
    --  Fill in the Node, Stereotypes, and Tagged_Values fields.
+   not overriding
    procedure Populate (E : in out Element; From : DOM.Core.Node);
 
    --  Search up the Parent tree to find a Class which is named
@@ -75,33 +76,42 @@ private
    --
    --  Overridden in Domains, which searches its class map, which is
    --  keyed by the original name.
+   not overriding
    function Find_Class (Known_To        : Element;
                         With_Model_Name : String) return Element_P;
 
    --  Similarly for Types.
+   not overriding
    function Find_Type (Known_To        : Element;
                        With_Model_Name : String) return Element_P;
 
+   not overriding
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean;
 
+   not overriding
    function Has_Tag (E : Element; Tag : String) return Boolean;
 
    --  Read the named tagged value and normalize it (or empty string
    --  if not found).
+   not overriding
    function Tag_As_Name (E : Element; Tag : String) return String;
 
    --  Read the named tagged value (or empty string if not found).
+   not overriding
    function Tag_As_Value (E : Element; Tag : String) return String;
 
    --  Complete any aspects of the Element that can't be determined by
    --  a simple top-down scan.
+   not overriding
    procedure Resolve (E : in out Element) is abstract;
 
    --  Output the Element and its contents to the open file To, in
    --  normalized XML.
+   not overriding
    procedure Output (E : Element; To : Ada.Text_IO.File_Type) is abstract;
 
    --  Outputs the contents of the "document" tag, split into paragraphs.
+   not overriding
    procedure Output_Documentation (E : Element; To : Ada.Text_IO.File_Type);
 
    package Element_Maps is new Ada.Containers.Indefinite_Ordered_Maps
@@ -115,6 +125,21 @@ private
    package String_Vectors is new Ada.Containers.Indefinite_Vectors
      (Index_Type => Positive,
       Element_Type => String);
+
+   ----------------------
+   --  Standard types  --
+   ----------------------
+
+   --  This type is used to hold ColdFrame's predeclared types
+   --  (Integer, Date etc).
+
+   type Standard_Type_Element is new Element with null record;
+
+   overriding
+   procedure Resolve (ST : in out Standard_Type_Element);
+
+   overriding
+   procedure Output (ST : Standard_Type_Element; To : Ada.Text_IO.File_Type);
 
    ----------------
    --  Utilities --

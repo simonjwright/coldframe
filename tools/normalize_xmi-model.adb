@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: ddde93bac78e $
---  $Date: 2013/04/20 15:37:31 $
+--  $Revision: 7790302b4adb $
+--  $Date: 2013/04/22 15:37:22 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -59,6 +59,7 @@ package body Normalize_XMI.Model is
    --  Element operations  --
    --------------------------
 
+   not overriding
    procedure Populate (E : in out Element; From : DOM.Core.Node)
    is
    begin
@@ -107,6 +108,7 @@ package body Normalize_XMI.Model is
    end Populate;
 
 
+   not overriding
    function Find_Class (Known_To        : Element;
                         With_Model_Name : String) return Element_P
    is
@@ -117,6 +119,7 @@ package body Normalize_XMI.Model is
    end Find_Class;
 
 
+   not overriding
    function Find_Type (Known_To        : Element;
                        With_Model_Name : String) return Element_P
    is
@@ -127,6 +130,7 @@ package body Normalize_XMI.Model is
    end Find_Type;
 
 
+   not overriding
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean
    is
    begin
@@ -134,6 +138,7 @@ package body Normalize_XMI.Model is
    end Has_Stereotype;
 
 
+   not overriding
    function Has_Tag (E : Element; Tag : String) return Boolean
    is
    begin
@@ -141,6 +146,7 @@ package body Normalize_XMI.Model is
    end Has_Tag;
 
 
+   not overriding
    function Tag_As_Name (E : Element; Tag : String) return String
    is
    begin
@@ -152,6 +158,7 @@ package body Normalize_XMI.Model is
    end Tag_As_Name;
 
 
+   not overriding
    function Tag_As_Value (E : Element; Tag : String) return String
    is
    begin
@@ -163,6 +170,7 @@ package body Normalize_XMI.Model is
    end Tag_As_Value;
 
 
+   not overriding
    procedure Output_Documentation (E : Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Strings;
@@ -202,6 +210,29 @@ package body Normalize_XMI.Model is
       end loop;
       Put_Line (To, "</documentation>");
    end Output_Documentation;
+
+
+   ----------------------
+   --  Standard types  --
+   ----------------------
+
+   overriding
+   procedure Resolve (ST : in out Standard_Type_Element)
+   is
+   begin
+      null;
+   end Resolve;
+
+
+   overriding
+   procedure Output (ST : Standard_Type_Element; To : Ada.Text_IO.File_Type)
+   is
+      use Ada.Text_IO;
+   begin
+      Put_Line (To, "<type standard='true'>");
+      Put_Line (To, "<name>" & (+ST.Name) & "</name>");
+      Put_Line (To, "</type>");
+   end Output;
 
 
    --------------------
