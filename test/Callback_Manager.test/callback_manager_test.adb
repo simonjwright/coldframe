@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: callback_manager_test.adb,v $
---  $Revision: 60df48bec9e0 $
---  $Date: 2010/10/16 19:18:46 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with Ada.Exceptions;
 with Ada.Text_IO; use Ada.Text_IO;

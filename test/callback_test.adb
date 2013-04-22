@@ -1,4 +1,4 @@
---  $Id: callback_test.adb,v 3400fba22cc4 2003/08/28 21:10:52 simon $
+--  $Id$
 
 with Ada.Exceptions;
 with ColdFrame.Callbacks;

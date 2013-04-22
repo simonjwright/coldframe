@@ -7,10 +7,10 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile: recording-buffer.adb,v $
---  $Revision: 82f7e66d9931 $
---  $Date: 2006/05/17 05:52:16 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with Ada.Finalization;
 with Ada.Streams;

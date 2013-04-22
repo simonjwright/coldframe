@@ -1,7 +1,7 @@
 --  Copyright (C) Simon Wright <simon@pushface.org>
 
 --  This package is free software; you can redistribute it and/or
---  modify it under terms of the GNU General Public License as
+--  modify it under the terms of the GNU General Public License as
 --  published by the Free Software Foundation; either version 2, or
 --  (at your option) any later version. This package is distributed in
 --  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -12,32 +12,29 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Top_Half.gpr,v 6f3f2ff0d5f7 2011/11/08 15:45:44 simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
-with "ColdFrame";
-with "Options";
-with "bc";
+with Ada.Text_IO; use Ada.Text_IO;
 
-project Top_Half is
+package body Callback_Manager_Test_Support is
 
-  for Main use ("top_half-harness");
 
-  for Exec_Dir use ".";
+   procedure Callback_Handler (Value : Integer)
+   is
+   begin
+      Put_Line ("Callback_Manager_Test_Support.Callback_Handler:"
+                  & " value:" & Value'Img);
+   end Callback_Handler;
 
-  for Source_Dirs use
-     (
-      "Top_Half.impl",
-      "Top_Half.gen",
-      "Top_Half.Bottom_Half.impl",
-      "Top_Half.Bottom_Half.gen",
-      "Top_Half.test"
-      );
 
-  for Object_Dir use Options'Object_Dir & "/main";
-  package IDE renames Options.IDE;
-  package Builder renames Options.Builder;
-  package Compiler renames Options.Compiler;
-  package Binder renames Options.Binder;
-  package Linker renames Options.Linker;
+   procedure Handler (Ev : Class_Event)
+   is
+   begin
+      Integer_Callbacks.Call_Callbacks (Ev.Value);
+   end Handler;
 
-end Top_Half;
+
+end Callback_Manager_Test_Support;

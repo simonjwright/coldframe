@@ -7,10 +7,10 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile: recording-recorder-t.adb,v $
---  $Revision: 3f1d0e8217cf $
---  $Date: 2006/05/17 05:58:12 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with Ada.Dynamic_Priorities;
 with Ada.Exceptions;

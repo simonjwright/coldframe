@@ -1,9 +1,0 @@
-# !/bin/bash
-
-# Validate the first argument against ColdFrame's "normalized" schema.
-# Uses XSV (assumes in ~) and a python with LTXML included; you would
-# have thought that Mandrake 8.2's Python 2.2 would have done allowed
-# me to buld & install LTXML, no such luck, so use the /opt/local one.
-
-export PYTHONPATH=~/xmlschema
-/opt/local/bin/python ~/xmlschema/XSV/commandLine.py $1 ColdFrame.xsd

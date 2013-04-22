@@ -7,10 +7,10 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile: recording_support.adb,v $
---  $Revision: ef76ca9d66ef $
---  $Date: 2006/05/03 22:07:21 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with Ada.Unchecked_Deallocation;
 

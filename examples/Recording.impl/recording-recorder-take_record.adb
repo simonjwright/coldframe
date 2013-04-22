@@ -7,23 +7,21 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile: recording-interface-take_record.adb,v $
---  $Revision: ef76ca9d66ef $
---  $Date: 2006/05/03 22:07:21 $
---  $Author: simonjwright $
-
-with Recording.Recorder;
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 --  Buffers a data value for recording.
 
---  If the recording buffer is full, the data will be silently dropped
---  (though statistics on the number of dropped records may be kept
---  and output).
-
-separate (Recording.Interface)
+separate (Recording.Recorder)
 procedure Take_Record
   (Item : Recordable) is
-   pragma Assert (Domain_Initialized, "Recording not initialized");
+   Str : Stream;
+   Capacity : constant Positive := 256;  --  would be adaptable
 begin
-   Recorder.Take_Record (Item);
+   This.Buff.Get_Stream (Str, Capacity => Capacity);
+   if Str /= null then
+      Recordable'Output (Str, Item);
+   end if;
 end Take_Record;
