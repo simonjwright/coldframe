@@ -138,6 +138,7 @@ CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
 # Generate .rr files (resolved references in ArgoUML files) from .uml.
 # XXX This contains a workround for ArgoUML Issue 6385.
 # XXX This contains a workround for an XML/Ada issue.
+$(COLDFRAMEOUT)/%.rr: LANG=C
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 	$(SED)								\
 	  -e "s;<pgml ;<pgml xmlns:argouml='http://argouml.org' ;"	\
@@ -156,6 +157,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 
 # Generate .rr files (resolved references in ArgoUML files) from .zargo.
 # XXX This contains a workround for an XML/Ada issue.
+$(COLDFRAMEOUT)/%.rr: LANG=C
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	$(UNZIP) -p $< $(*F).xmi >$@~1
 	$(SAXON)							  \
@@ -264,4 +266,3 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	@$(CHMOD) u+w $@
 	@$(ECHO) "checking for unimplemented bodies ..."
 	@$(GREP) -rl 'edit this' $@ || $(ECHO) "... none."
-
