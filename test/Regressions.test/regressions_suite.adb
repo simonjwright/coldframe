@@ -23,6 +23,7 @@ with SF_3086637_Suite;
 
 pragma Warnings (Off);
 --  with Compilation_Regressions.Subunits;
+with Ignored_Child_Packages;
 pragma Warnings (On);
 
 package body Regressions_Suite is

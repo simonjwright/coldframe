@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: domains.html,v 90bbed8d5ab0 2013/04/26 14:44:30 simonjwright $ -->
 <head>
 <title>ColdFrame: Domains</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -49,7 +49,11 @@ the logical model, stereotyped <em>&#171;domain&#187;</em>.
 
 <p>Domain packages can have child packages. This might be to make the
 model structure clearer (for example, by separating off all the type
-definitions).
+definitions). Alternatively, they might contain model statements that
+aren't intended to be translated; such child packages can be
+stereotyped <em>&#171;ignore&#187;</em> (to be honest, any package in
+the model which is stereotyped <em>&#171;ignore&#187;</em> will be
+ignored, as will all its children, recursively).
 
 <h3><a name="tags">Tagged values</a></h3>
 

@@ -27,6 +27,7 @@ project Regressions is
     (
      "Associations.gen",
      "Association_Classes.gen",
+     "Ignored_Child_Packages.gen",
      "SF_2991721.gen",
      "Regressions.test"
     );

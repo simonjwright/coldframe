@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Types Class Diagram</activediagram>
+      <activediagram>main_Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -66,6 +66,22 @@
               name="ColdFrame_Development_FiguresClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Figures Class Diagram" />
+      <member type="pgml"
+              name="ColdFrame_Development_ClassDiagram.pgml"
+              diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
+              diagramname="Ignored Child Packages Class Diagram" />
+      <member type="pgml"
+              name="ColdFrame_Development_ClassDiagram.pgml"
+              diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
+              diagramname="First Child Class Diagram" />
+      <member type="pgml"
+              name="ColdFrame_Development_ClassDiagram10.pgml"
+              diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
+              diagramname="Grandchild Class Diagram" />
+      <member type="pgml"
+              name="ColdFrame_Development_ClassDiagram.pgml"
+              diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
+              diagramname="main_Class Diagram" />
       <member type="todo"
               name="ColdFrame_Development.todo" />
     </members>
@@ -78,10 +94,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Apr 20 16:56:39 BST 2013'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Apr 26 12:06:02 BST 2013'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2013/04/20 16:09:38 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2013/04/26 14:44:30 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -98,7 +114,7 @@
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--5ef3403a:1345db48283:-8000:0000000000000BED'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 3674cc18ad0f $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 90bbed8d5ab0 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -504,7 +520,7 @@
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--5ef3403a:1345db48283:-8000:0000000000000BEC'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 3674cc18ad0f $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 90bbed8d5ab0 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1056,7 +1072,7 @@
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001160'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 3674cc18ad0f $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 90bbed8d5ab0 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1871,6 +1887,90 @@
                 </UML:Attribute>
               </UML:Classifier.feature>
             </UML:Class>
+          </UML:Namespace.ownedElement>
+        </UML:Package>
+        <UML:Package xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E83'
+          name = 'Ignored Child Packages' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false'>
+          <UML:ModelElement.stereotype>
+            <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
+          </UML:ModelElement.stereotype>
+          <UML:Namespace.ownedElement>
+            <UML:Package xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E84'
+              name = 'First Child' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:ModelElement.stereotype>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-ignore'/>
+              </UML:ModelElement.stereotype>
+              <UML:Namespace.ownedElement>
+                <UML:Package xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8C'
+                  name = 'Grandchild' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false'>
+                  <UML:ModelElement.stereotype>
+                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-ignore'/>
+                  </UML:ModelElement.stereotype>
+                  <UML:Namespace.ownedElement>
+                    <UML:DataType xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8D'
+                      name = 'No Such Type in Grandchild' isSpecification = 'false' isRoot = 'false'
+                      isLeaf = 'false' isAbstract = 'false'>
+                      <UML:ModelElement.stereotype>
+                        <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming'/>
+                      </UML:ModelElement.stereotype>
+                      <UML:ModelElement.taggedValue>
+                        <UML:TaggedValue xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8E'
+                          isSpecification = 'false'>
+                          <UML:TaggedValue.dataValue>No Such Package For Grandchild.No Such Type</UML:TaggedValue.dataValue>
+                          <UML:TaggedValue.type>
+                            <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming-td-renames'/>
+                          </UML:TaggedValue.type>
+                        </UML:TaggedValue>
+                      </UML:ModelElement.taggedValue>
+                    </UML:DataType>
+                  </UML:Namespace.ownedElement>
+                </UML:Package>
+                <UML:DataType xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8F'
+                  name = 'No Such Type In First Child' isSpecification = 'false' isRoot = 'false'
+                  isLeaf = 'false' isAbstract = 'false'>
+                  <UML:ModelElement.stereotype>
+                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming'/>
+                  </UML:ModelElement.stereotype>
+                  <UML:ModelElement.taggedValue>
+                    <UML:TaggedValue xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E90'
+                      isSpecification = 'false'>
+                      <UML:TaggedValue.dataValue>No Such Package For First Child.No Such Type</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.type>
+                        <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming-td-renames'/>
+                      </UML:TaggedValue.type>
+                    </UML:TaggedValue>
+                  </UML:ModelElement.taggedValue>
+                </UML:DataType>
+              </UML:Namespace.ownedElement>
+            </UML:Package>
+            <UML:Package xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8B'
+              name = 'Second Child' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:ModelElement.stereotype>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-ignore'/>
+              </UML:ModelElement.stereotype>
+              <UML:Namespace.ownedElement>
+                <UML:DataType xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E91'
+                  name = 'No Such Child In Second Child' isSpecification = 'false' isRoot = 'false'
+                  isLeaf = 'false' isAbstract = 'false'>
+                  <UML:ModelElement.stereotype>
+                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming'/>
+                  </UML:ModelElement.stereotype>
+                  <UML:ModelElement.taggedValue>
+                    <UML:TaggedValue xmi.id = '-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E92'
+                      isSpecification = 'false'>
+                      <UML:TaggedValue.dataValue>No Such Package For Second Child.No Such Type</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.type>
+                        <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming-td-renames'/>
+                      </UML:TaggedValue.type>
+                    </UML:TaggedValue>
+                  </UML:ModelElement.taggedValue>
+                </UML:DataType>
+              </UML:Namespace.ownedElement>
+            </UML:Package>
           </UML:Namespace.ownedElement>
         </UML:Package>
       </UML:Namespace.ownedElement>
@@ -2741,7 +2841,7 @@
       <text name="Fig4.4.6"
         x="641"
         y="290"
-        width="163"
+        width="161"
         height="17"
         fill="0"
         fillcolor="white"
@@ -4227,6 +4327,120 @@
       x="72"
       y="412"
       width="141"
+      height="56"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    ></text>
+  </group>
+  <group name="Fig6"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[320, 368, 220, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E83"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig6.0"
+      x="320"
+      y="368"
+      width="220"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig6.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="320"
+              y="368" />
+      <lineto x="490"
+              y="368" />
+      <lineto x="490"
+              y="412" />
+      <lineto x="539"
+              y="412" />
+      <lineto x="539"
+              y="467" />
+      <lineto x="320"
+              y="467" />
+      <lineto x="320"
+              y="368" />
+    </path>
+    <text name="Fig6.2"
+      x="320"
+      y="368"
+      width="171"
+      height="45"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Left"
+    >Ignored Child Packages</text>
+    <group name="Fig6.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[320, 368, 170, 21]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E83"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig6.3.0"
+        x="320"
+        y="368"
+        width="170"
+        height="21"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig6.3.1"
+        x="320"
+        y="368"
+        width="170"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«domain»</text>
+    </group>
+    <text name="Fig6.4"
+      x="320"
+      y="412"
+      width="220"
       height="56"
       fill="0"
       fillcolor="white"
@@ -9952,6 +10166,736 @@
       <lineto x="632"
               y="280" />
     </path>
+  </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E83"
+      name="Ignored Child Packages Class Diagram"
+>
+  <group name="Fig0"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[160, 96, 141, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E84"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig0.0"
+      x="160"
+      y="96"
+      width="141"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig0.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="160"
+              y="96" />
+      <lineto x="251"
+              y="96" />
+      <lineto x="251"
+              y="140" />
+      <lineto x="300"
+              y="140" />
+      <lineto x="300"
+              y="195" />
+      <lineto x="160"
+              y="195" />
+      <lineto x="160"
+              y="96" />
+    </path>
+    <text name="Fig0.2"
+      x="160"
+      y="96"
+      width="92"
+      height="45"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Left"
+    >First Child</text>
+    <group name="Fig0.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[160, 96, 91, 21]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E84"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.3.0"
+        x="160"
+        y="96"
+        width="91"
+        height="21"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.3.1"
+        x="160"
+        y="96"
+        width="91"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«ignore»</text>
+    </group>
+    <text name="Fig0.4"
+      x="160"
+      y="140"
+      width="141"
+      height="56"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    ></text>
+  </group>
+  <group name="Fig1"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[456, 96, 148, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8B"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig1.0"
+      x="456"
+      y="96"
+      width="148"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig1.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="456"
+              y="96" />
+      <lineto x="554"
+              y="96" />
+      <lineto x="554"
+              y="140" />
+      <lineto x="603"
+              y="140" />
+      <lineto x="603"
+              y="195" />
+      <lineto x="456"
+              y="195" />
+      <lineto x="456"
+              y="96" />
+    </path>
+    <text name="Fig1.2"
+      x="456"
+      y="96"
+      width="99"
+      height="45"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Left"
+    >Second Child</text>
+    <group name="Fig1.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[456, 96, 98, 21]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8B"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig1.3.0"
+        x="456"
+        y="96"
+        width="98"
+        height="21"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig1.3.1"
+        x="456"
+        y="96"
+        width="98"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«ignore»</text>
+    </group>
+    <text name="Fig1.4"
+      x="456"
+      y="140"
+      width="148"
+      height="56"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    ></text>
+  </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E84"
+      name="First Child Class Diagram"
+>
+  <group name="Fig0"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[536, 88, 141, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8C"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig0.0"
+      x="536"
+      y="88"
+      width="141"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig0.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="536"
+              y="88" />
+      <lineto x="627"
+              y="88" />
+      <lineto x="627"
+              y="132" />
+      <lineto x="676"
+              y="132" />
+      <lineto x="676"
+              y="187" />
+      <lineto x="536"
+              y="187" />
+      <lineto x="536"
+              y="88" />
+    </path>
+    <text name="Fig0.2"
+      x="536"
+      y="88"
+      width="92"
+      height="45"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Left"
+    >Grandchild</text>
+    <group name="Fig0.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[536, 88, 91, 21]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8C"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.3.0"
+        x="536"
+        y="88"
+        width="91"
+        height="21"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.3.1"
+        x="536"
+        y="88"
+        width="91"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«ignore»</text>
+    </group>
+    <text name="Fig0.4"
+      x="536"
+      y="132"
+      width="141"
+      height="56"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    ></text>
+  </group>
+  <group name="Fig1"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[128, 120, 191, 84]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8F"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig1.0"
+      x="128"
+      y="120"
+      width="191"
+      height="84"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig1.1"
+      x="129"
+      y="121"
+      width="189"
+      height="61"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >No Such Type In First Child</text>
+    <group name="Fig1.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[129, 121, 189, 38]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8F"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig1.2.0"
+        x="129"
+        y="121"
+        width="189"
+        height="38"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig1.2.1"
+        x="129"
+        y="121"
+        width="189"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«datatype»</text>
+      <text name="Fig1.2.2"
+        x="129"
+        y="139"
+        width="189"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«renaming»</text>
+    </group>
+    <rectangle name="Fig1.3"
+      x="128"
+      y="182"
+      width="191"
+      height="1"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+    <group name="Fig1.4"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[129, 183, 189, 21]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8F"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig1.4.0"
+        x="129"
+        y="183"
+        width="189"
+        height="21"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
+  </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8C"
+      name="Grandchild Class Diagram"
+>
+  <group name="Fig0"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[168, 88, 198, 102]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8D"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig0.0"
+      x="168"
+      y="88"
+      width="198"
+      height="102"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig0.1"
+      x="169"
+      y="89"
+      width="196"
+      height="61"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >No Such Type in Grandchild</text>
+    <group name="Fig0.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[169, 89, 196, 38]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8D"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.2.0"
+        x="169"
+        y="89"
+        width="196"
+        height="38"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.2.1"
+        x="169"
+        y="89"
+        width="196"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«datatype»</text>
+      <text name="Fig0.2.2"
+        x="169"
+        y="107"
+        width="196"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«renaming»</text>
+    </group>
+    <rectangle name="Fig0.3"
+      x="168"
+      y="150"
+      width="198"
+      height="1"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+    <group name="Fig0.4"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[169, 151, 196, 38]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8D"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.4.0"
+        x="169"
+        y="151"
+        width="196"
+        height="38"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
+  </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8B"
+      name="main_Class Diagram"
+>
+  <group name="Fig0"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[136, 72, 211, 84]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E91"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig0.0"
+      x="136"
+      y="72"
+      width="211"
+      height="84"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig0.1"
+      x="137"
+      y="73"
+      width="209"
+      height="61"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >No Such Child In Second Child</text>
+    <group name="Fig0.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[137, 73, 209, 38]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E91"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.2.0"
+        x="137"
+        y="73"
+        width="209"
+        height="38"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.2.1"
+        x="137"
+        y="73"
+        width="209"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«datatype»</text>
+      <text name="Fig0.2.2"
+        x="137"
+        y="91"
+        width="209"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«renaming»</text>
+    </group>
+    <rectangle name="Fig0.3"
+      x="136"
+      y="134"
+      width="211"
+      height="1"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+    <group name="Fig0.4"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[137, 135, 209, 21]"
+         href="-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E91"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.4.0"
+        x="137"
+        y="135"
+        width="209"
+        height="21"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
   </group>
 </pgml>
 <todo>

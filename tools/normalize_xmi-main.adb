@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-main.adb,v $
---  $Revision: 98360a058182 $
---  $Date: 2013/04/14 22:52:50 $
+--  $Revision: 90bbed8d5ab0 $
+--  $Date: 2013/04/26 14:44:30 $
 --  $Author: simonjwright $
 
 with Ada.Command_Line;
@@ -106,6 +106,47 @@ begin
          Input_Sources.File.Close (File_Source);
 
          Doc := DOM.Readers.Get_Tree (XML_Source_Reader);
+
+         declare
+            Ignored_Packages : constant DOM.Core.Node_List
+              := McKae.XML.XPath.XIA.XPath_Query
+              (Doc,
+               "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
+                 & "@name='ignore']");
+         begin
+            --  We're processing in document order, so each node
+            --  precedes its children. Processing in reverse order
+            --  means that we hit the children first, so no risk of
+            --  pruning already-pruned nodes.
+            for J in reverse
+              0 .. DOM.Core.Nodes.Length (Ignored_Packages) - 1 loop
+               declare
+                  Node_To_Prune : constant DOM.Core.Node
+                    := DOM.Core.Nodes.Item (Ignored_Packages, J);
+                  Name : constant DOM.Core.Node_List
+                    := McKae.XML.XPath.XIA.XPath_Query
+                    (Node_To_Prune, "@name");
+                  Parent : constant DOM.Core.Node
+                    := DOM.Core.Nodes.Parent_Node (Node_To_Prune);
+                  Pruned_Node : DOM.Core.Node;
+                  use type DOM.Core.Node;
+               begin
+                  if DOM.Core.Nodes.Length (Name) > 0 then
+                     Messages.Trace
+                       ("discarding <<ignore>>d package "
+                          & DOM.Core.Nodes.Node_Value
+                          (DOM.Core.Nodes.Item (Name, 0)));
+                  else
+                     Messages.Trace ("discarding <<ignore>>d unnamed package");
+                  end if;
+                  Pruned_Node :=
+                    DOM.Core.Nodes.Remove_Child (Parent,
+                                                 Old_Child => Node_To_Prune);
+                  pragma Assert (Pruned_Node = Node_To_Prune);
+                  DOM.Core.Nodes.Free (Pruned_Node);
+               end;
+            end loop;
+         end;
 
          Domains := McKae.XML.XPath.XIA.XPath_Query
            (Doc,

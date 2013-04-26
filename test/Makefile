@@ -122,6 +122,7 @@ $(NORM_FILES): ColdFrame_Tests.norm-stamp ;
 DEVELOPMENT_DOMAINS =				\
   Associations					\
   Association_Classes				\
+  Ignored_Child_Packages			\
   Types
 
 # Others (more regression-specific) in the Regressions model.
