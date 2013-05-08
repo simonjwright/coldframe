@@ -6,7 +6,7 @@
       <authoremail>simon@pushface.org</authoremail>
       <version>0.34</version>
       <description>
-        
+
       </description>
     </documentation>
     <settings>
@@ -22,7 +22,7 @@
       <showstereotypes>false</showstereotypes>
       <showsingularmultiplicities>true</showsingularmultiplicities>
       <defaultshadowwidth>1</defaultshadowwidth>
-      <hidebidirectionalarrows>true</hidebidirectionalarrows>    
+      <hidebidirectionalarrows>true</hidebidirectionalarrows>
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
@@ -55,7 +55,7 @@
 <XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Apr 26 11:51:36 BST 2013'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2013/04/26 14:44:30 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2013/05/08 14:33:59 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -76,7 +76,7 @@
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>A domain is a separate real, hypothetical, or abstract world inhabited by a distinct set of classes that behave according to rules and policies characteristic of that domain.
 A domain is translated as a top-level Ada package, with the name derived from the package name using the usual name conversion rules (it can be overridden using the tagged value {name}).
-Child UML packages are included (recursively). The child UML package structure is not reflected in the generated code (for example, all classes end up as direct Ada child packages of the domain package).</UML:TaggedValue.dataValue>
+Child UML packages are included (recursively), unless they are steretyped «ignore». The child UML package structure is not reflected in the generated code (for example, all classes end up as direct Ada child packages of the domain package).</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -869,7 +869,7 @@ This stereotype marks the association end from which the referential attribute (
             <UML:TaggedValue xmi.id = '-64--88-1-4--39825520:13506c8d4e1:-8000:0000000000000EEB'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>Supports unit test.
-Marks a package (which needs to be a child of a domain» package) as containing all the «public» classes and «callback» types, any types used by them, and any exceptions that form part of the external interface of the parent package.
+Marks a package (which needs to be a child of a «domain» package) as containing all the «public» classes and «callback» types, any types used by them, and any exceptions that form part of the external interface of the parent package.
 Use the {name} tag to define the name to generate (the code will still be placed in the directory derived from the actual package name, which should be &lt;parent&gt;_Interface).</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
@@ -1148,9 +1148,9 @@ The implementation may limit the size of objects that can be treated as atomic.<
               isSpecification = 'false'/>
             <UML:TaggedValue xmi.id = '-64--88-1-74--7c52fd22:13e1eed2031:-8000:0000000000001004'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>Indicates that the type is a constrained subtype of the type specified in the accompanying {constrained-type}.
+              <UML:TaggedValue.dataValue>Indicates that the type is a constrained subtype of the type specified in the accompanying {constrains}.
 The constraints are indicated in the accompanying {lower} and {upper}, at least one of which must be present.
-If either {lower} or {upper} is absent, the lower or upper bound respectively of the {constrained-type} is used.</UML:TaggedValue.dataValue>
+If either {lower} or {upper} is absent, the lower or upper bound respectively of the {constrains} type is used.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -1236,7 +1236,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig0.0"
       x="64"
       y="24"
@@ -1273,7 +1273,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig0.2.0"
         x="65"
         y="25"
@@ -1321,7 +1321,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig0.4.0"
         x="65"
         y="69"
@@ -1344,7 +1344,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig1.0"
       x="472"
       y="288"
@@ -1381,7 +1381,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig1.2.0"
         x="473"
         y="289"
@@ -1429,7 +1429,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig1.4.0"
         x="473"
         y="333"
@@ -1452,7 +1452,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig2.0"
       x="336"
       y="112"
@@ -1489,7 +1489,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig2.2.0"
         x="337"
         y="113"
@@ -1537,7 +1537,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig2.4.0"
         x="337"
         y="157"
@@ -1560,7 +1560,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig3.0"
       x="336"
       y="200"
@@ -1597,7 +1597,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig3.2.0"
         x="337"
         y="201"
@@ -1645,7 +1645,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig3.4.0"
         x="337"
         y="245"
@@ -1668,7 +1668,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig4.0"
       x="336"
       y="288"
@@ -1705,7 +1705,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig4.2.0"
         x="337"
         y="289"
@@ -1753,7 +1753,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig4.4.0"
         x="337"
         y="333"
@@ -1776,7 +1776,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig5.0"
       x="64"
       y="112"
@@ -1813,7 +1813,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig5.2.0"
         x="65"
         y="113"
@@ -1861,7 +1861,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig5.4.0"
         x="65"
         y="157"
@@ -1884,7 +1884,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig6.0"
       x="64"
       y="200"
@@ -1921,7 +1921,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig6.2.0"
         x="65"
         y="201"
@@ -1969,7 +1969,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig6.4.0"
         x="65"
         y="245"
@@ -1992,7 +1992,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig7.0"
       x="64"
       y="288"
@@ -2029,7 +2029,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig7.2.0"
         x="65"
         y="289"
@@ -2077,7 +2077,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig7.4.0"
         x="65"
         y="333"
@@ -2100,7 +2100,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig8.0"
       x="200"
       y="24"
@@ -2137,7 +2137,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig8.2.0"
         x="201"
         y="25"
@@ -2185,7 +2185,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig8.4.0"
         x="201"
         y="69"
@@ -2208,7 +2208,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig9.0"
       x="200"
       y="112"
@@ -2245,7 +2245,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig9.2.0"
         x="201"
         y="113"
@@ -2293,7 +2293,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig9.4.0"
         x="201"
         y="157"
@@ -2316,7 +2316,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig10.0"
       x="200"
       y="200"
@@ -2353,7 +2353,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig10.2.0"
         x="201"
         y="201"
@@ -2401,7 +2401,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig10.4.0"
         x="201"
         y="245"
@@ -2424,7 +2424,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig11.0"
       x="200"
       y="288"
@@ -2461,7 +2461,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig11.2.0"
         x="201"
         y="289"
@@ -2509,7 +2509,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig11.4.0"
         x="201"
         y="333"
@@ -2532,7 +2532,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig12.0"
       x="336"
       y="24"
@@ -2569,7 +2569,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig12.2.0"
         x="337"
         y="25"
@@ -2617,7 +2617,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig12.4.0"
         x="337"
         y="69"
@@ -2640,7 +2640,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig13.0"
       x="472"
       y="24"
@@ -2677,7 +2677,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig13.2.0"
         x="473"
         y="25"
@@ -2725,7 +2725,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig13.4.0"
         x="473"
         y="69"
@@ -2748,7 +2748,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig14.0"
       x="472"
       y="112"
@@ -2785,7 +2785,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig14.2.0"
         x="473"
         y="113"
@@ -2833,7 +2833,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig14.4.0"
         x="473"
         y="157"
@@ -2856,7 +2856,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig15.0"
       x="472"
       y="200"
@@ -2893,7 +2893,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig15.2.0"
         x="473"
         y="201"
@@ -2941,7 +2941,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig15.4.0"
         x="473"
         y="245"
@@ -2964,7 +2964,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig16.0"
       x="608"
       y="24"
@@ -3001,7 +3001,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig16.2.0"
         x="609"
         y="25"
@@ -3049,7 +3049,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig16.4.0"
         x="609"
         y="69"
@@ -3076,7 +3076,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig0.0"
       x="80"
       y="200"
@@ -3113,7 +3113,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig0.2.0"
         x="81"
         y="201"
@@ -3152,7 +3152,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig1.0"
       x="80"
       y="256"
@@ -3189,7 +3189,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig1.2.0"
         x="81"
         y="257"
@@ -3228,7 +3228,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig2.0"
       x="472"
       y="88"
@@ -3265,7 +3265,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig2.2.0"
         x="473"
         y="89"
@@ -3304,7 +3304,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig3.0"
       x="472"
       y="200"
@@ -3341,7 +3341,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig3.2.0"
         x="473"
         y="201"
@@ -3380,7 +3380,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig4.0"
       x="656"
       y="88"
@@ -3417,7 +3417,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig4.2.0"
         x="657"
         y="89"
@@ -3456,7 +3456,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig5.0"
       x="656"
       y="368"
@@ -3493,7 +3493,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig5.2.0"
         x="657"
         y="369"
@@ -3532,7 +3532,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig6.0"
       x="472"
       y="32"
@@ -3569,7 +3569,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig6.2.0"
         x="473"
         y="33"
@@ -3608,7 +3608,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig7.0"
       x="840"
       y="32"
@@ -3645,7 +3645,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig7.2.0"
         x="841"
         y="33"
@@ -3684,7 +3684,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig8.0"
       x="656"
       y="144"
@@ -3721,7 +3721,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig8.2.0"
         x="657"
         y="145"
@@ -3760,7 +3760,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig9.0"
       x="280"
       y="312"
@@ -3797,7 +3797,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig9.2.0"
         x="281"
         y="313"
@@ -3836,7 +3836,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig10.0"
       x="280"
       y="368"
@@ -3873,7 +3873,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig10.2.0"
         x="281"
         y="369"
@@ -3912,7 +3912,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig11.0"
       x="472"
       y="256"
@@ -3949,7 +3949,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig11.2.0"
         x="473"
         y="257"
@@ -3988,7 +3988,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig12.0"
       x="472"
       y="312"
@@ -4025,7 +4025,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig12.2.0"
         x="473"
         y="313"
@@ -4064,7 +4064,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig13.0"
       x="656"
       y="32"
@@ -4101,7 +4101,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig13.2.0"
         x="657"
         y="33"
@@ -4140,7 +4140,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig14.0"
       x="656"
       y="200"
@@ -4177,7 +4177,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig14.2.0"
         x="657"
         y="201"
@@ -4216,7 +4216,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig15.0"
       x="656"
       y="312"
@@ -4253,7 +4253,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig15.2.0"
         x="657"
         y="313"
@@ -4292,7 +4292,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig16.0"
       x="840"
       y="88"
@@ -4329,7 +4329,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig16.2.0"
         x="841"
         y="89"
@@ -4368,7 +4368,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig17.0"
       x="840"
       y="200"
@@ -4405,7 +4405,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig17.2.0"
         x="841"
         y="201"
@@ -4444,7 +4444,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig18.0"
       x="656"
       y="256"
@@ -4481,7 +4481,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig18.2.0"
         x="657"
         y="257"
@@ -4520,7 +4520,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig19.0"
       x="280"
       y="144"
@@ -4557,7 +4557,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig19.2.0"
         x="281"
         y="145"
@@ -4596,7 +4596,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig20.0"
       x="840"
       y="144"
@@ -4633,7 +4633,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig20.2.0"
         x="841"
         y="145"
@@ -4672,7 +4672,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig21.0"
       x="80"
       y="32"
@@ -4709,7 +4709,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig21.2.0"
         x="81"
         y="33"
@@ -4748,7 +4748,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig22.0"
       x="48"
       y="312"
@@ -4785,7 +4785,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig22.2.0"
         x="49"
         y="313"
@@ -4824,7 +4824,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig23.0"
       x="280"
       y="200"
@@ -4861,7 +4861,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig23.2.0"
         x="281"
         y="201"
@@ -4900,7 +4900,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig24.0"
       x="464"
       y="144"
@@ -4937,7 +4937,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig24.2.0"
         x="465"
         y="145"
@@ -4976,7 +4976,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig25.0"
       x="80"
       y="88"
@@ -5013,7 +5013,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig25.2.0"
         x="81"
         y="89"
@@ -5052,7 +5052,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig26.0"
       x="64"
       y="144"
@@ -5089,7 +5089,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig26.2.0"
         x="65"
         y="145"
@@ -5128,7 +5128,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig27.0"
       x="288"
       y="32"
@@ -5165,7 +5165,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig27.2.0"
         x="289"
         y="33"
@@ -5204,7 +5204,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig28.0"
       x="840"
       y="256"
@@ -5241,7 +5241,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig28.2.0"
         x="841"
         y="257"
@@ -5280,7 +5280,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig29.0"
       x="280"
       y="88"
@@ -5317,7 +5317,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig29.2.0"
         x="281"
         y="89"
@@ -5356,7 +5356,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig30.0"
       x="480"
       y="368"
@@ -5393,7 +5393,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig30.2.0"
         x="481"
         y="369"
@@ -5432,7 +5432,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig31.0"
       x="48"
       y="376"
@@ -5469,7 +5469,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig31.2.0"
         x="49"
         y="377"
@@ -5508,7 +5508,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
   >
     <private>
     </private>
-    
+
     <rectangle name="Fig32.0"
       x="280"
       y="256"
@@ -5545,7 +5545,7 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
     >
       <private>
       </private>
-      
+
       <rectangle name="Fig32.2.0"
         x="281"
         y="257"
