@@ -63,7 +63,7 @@ procedure Bench_Xpath is
    N             : Node;
 
    File_Source : File.File_Input;
-   
+
    Start, Stop : Ada.Calendar.Time;
 
 begin
@@ -71,7 +71,7 @@ begin
 
    Readers.Parse(XML_Source_Reader, File_Source);
    File.Close(File_Source);
-   
+
    N := Readers.Get_Tree(XML_Source_Reader);
    for I in 1 .. 10 loop
       Start := Clock;
@@ -205,7 +205,7 @@ begin
       Queried_Nodes := Xpath_Query(N, "/personnel/person[@id=""four.worker"" and @xml:lang=""en-US""]");
       Queried_Nodes := Xpath_Query(N, "/personnel/person[@id=""five.worker"" and @xml:lang=""en-US""]/email");
       Queried_Nodes := Xpath_Query(N, "/personnel/person[number(age) > 40]/@id");
---      Queried_Nodes := Xpath_Query(N, "/personnel/person[(number(age) > 40) | (number(age) < 30)]/@id");
+      Queried_Nodes := Xpath_Query(N, "/personnel/person[(number(age) > 40) or (number(age) < 30)]/@id");
       Queried_Nodes := Xpath_Query(N, "/personnel/person[@id=""four.worker""]|/personnel/person/age");
       Queried_Nodes := Xpath_Query(N, "//@*");
       Queried_Nodes := Xpath_Query(N, "//person/@*");
