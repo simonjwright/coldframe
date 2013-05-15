@@ -42,16 +42,6 @@ package body McKae.XML.XPath.Predicates is
 
    ------------------------------------------------------------------------
 
-   function "<"(L, R : Xia_Parser_Model.Parseable_Ptr)
-               return Boolean is
-      -- There is no imposed ordering of token ptrs, return False to
-      --  ensure that each one gets appended
-   begin
-      return False;
-   end "<";
-
-   ------------------------------------------------------------------------
-
    procedure Add_Predicate_Parse
      (Handle : in out Predicate_Handles;
       T      : in     Xia_Parser_Model.Parseable_Ptr)

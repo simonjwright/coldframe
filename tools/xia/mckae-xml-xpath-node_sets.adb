@@ -28,100 +28,49 @@
 -- (http://www.mckae.com).                                            --
 ------------------------------------------------------------------------
 
-with Bc.Support.Standard_Storage;
-
-with System.Address_To_Access_Conversions;
-with System.Storage_Elements;
-
-package body Mckae.XML.XPath.Node_Sets is
+package body McKae.XML.XPath.Node_Sets is
 
 
-   ---------------------------------------------------------------------
-
-   function Null_Container return Set is
-      Empty: Set;
+   function "=" (L, R : Current_Matchings) return Boolean is
    begin
-      return Empty;
-   end Null_Container;
+      return L.Matching_Node = R.Matching_Node;
+   end "=";
 
-   ---------------------------------------------------------------------
+   -------------------------------------------------------------------
 
-   procedure Insert (C : in out Set; Elem : Current_Matchings) is
-      --  Add the item to the front of the collection.
-      Not_Present : Boolean := False;
-      Item    : Current_Matchings := Elem;
+   not overriding
+   procedure Insert (Container : in out Set;
+                     New_Item : Current_Matchings)
+   is
    begin
-      Match_Nodes.Add(C.Presence, Elem.Matching_Node, Not_Present);
-      if Not_Present then
-         Matchings_Sets.Insert(Matchings_Sets.Collection(C), Item);
+      if not Container.Contains (New_Item) then
+         Container.Insert (New_Item => New_Item,
+                           Before => Container.First_Index);
       end if;
    end Insert;
 
-   ---------------------------------------------------------------------
-
-   procedure Append (C : in out Set; Elem : Current_Matchings) is
-      --  Add the item to the collection, starting at the end, if it
-      --  is not already in the set
-
-      Not_Present : Boolean := False;
-      Item    : Current_Matchings := Elem;
+   -------------------------------------------------------------------
+   overriding
+   procedure Append (Container : in out Set;
+                     New_Item : Current_Matchings;
+                     Count : Ada.Containers.Count_Type := 1)
+   is
    begin
-      Match_Nodes.Add(C.Presence, Elem.Matching_Node, Not_Present);
-      if Not_Present then
-         Matchings_Sets.Append(Matchings_Sets.Collection(C), Item);
+      if not Container.Contains (New_Item) then
+         Matchings_Sets.Vector (Container).Append (New_Item);
       end if;
    end Append;
 
-   ---------------------------------------------------------------------
-
-   procedure Clear (C : in out Set)
-   is
-      -- Clear the node set _and_ the associated node presence list
-   begin
-      Matchings_Sets.Clear(Matchings_Sets.Collection(C));
-      Match_Nodes.Clear(C.Presence);
-   end Clear;
-
    -------------------------------------------------------------------
 
-   procedure Union (S : in out Set; O : Set) is
-      Iter : Matchings_Containers.Iterator'Class := New_Iterator(O);
+   not overriding
+   procedure Union (Target : in out Set; Source : Set) is
+      procedure Append (Position : Matchings_Sets.Cursor) is
+      begin
+         Target.Append (New_Item => Matchings_Sets.Element (Position));
+      end Append;
    begin
-      while not Matchings_Containers.Is_Done(Iter) loop
-         Append(S, Matchings_Containers.Current_Item(Iter));
-         Matchings_Containers.Next(Iter);
-      end loop;
+      Source.Iterate (Append'Access);
    end Union;
-
-   ---------------------------------------------------------------------
-
-   function "<"(L, R : Sortable_Matches) return Boolean is
-   begin
-     return L.Key < R.Key;
-   end "<";
-
-   ---------------------------------------------------------------------
-
-   package Node_Hashing_Package is new System.Address_To_Access_Conversions(Dom.Core.Node_Record);
-
-   -- Since Node is a pointer, and addresses are nearly always even,
-   --  and also usually divisible by 4, drop the lower two bits of the
-   --  address.
-   function Generate_Hash(N : Node) return Natural is
-
-      use System.Storage_Elements;
-      use Node_Hashing_Package;
-
-      -- Convert the node access value to an address
-      Node_Addr : constant System.Address
-        := To_Address(Node_Hashing_Package.Object_Pointer(N));
-
-      Natural_Bit_Factor : constant
-        System.Storage_Elements.Storage_Offset := (2 ** (Natural'Size - 1));
-   begin
-      return Natural(Node_Addr mod Natural_Bit_Factor) / 4;
-   end Generate_Hash;
-
-   -------------------------------------------------------------------
 
 end Mckae.XML.XPath.Node_Sets;

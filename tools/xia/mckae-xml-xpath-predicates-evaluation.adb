@@ -43,26 +43,28 @@ package body McKae.XML.XPath.Predicates.Evaluation is
 
       use Mckae.XML.XPath;
 
-      Iter : Node_Sets.Matchings_Containers.Iterator'Class := Node_Sets.New_Iterator(Nodes);
-      Node_Set_Size      : Natural := Node_Sets.Length(Nodes);
+      Cursor             : Node_Sets.Matchings_Sets.Cursor;
+      Node_Set_Size      : Natural := Natural (Nodes.Length);
       Node_Item_Index    : Natural := 0;
       Node_Item_Position : Natural := 0;
       Node_Item          : Expressions.Node_Items;
 
       Expression : Expressions.Expression_Values;
       Predicate_Count : constant Natural :=
-        Predicate_Handle_Pkg.Length(Handle.Predicate_List);
+        Natural (Handle.Predicate_List.Length);
 
       Filtered_Nodes : Node_Sets.Set;
+
+      use type Node_Sets.Matchings_Sets.Cursor;
 
    begin
       if Predicate_Count >= 1 then
          for P in 1 .. Predicate_Count loop
             Node_Item_Index := 1;
-            Node_Set_Size   := Node_Sets.Length(Nodes);
-            Node_Sets.Matchings_Containers.Reset(Iter);
+            Node_Set_Size   := Natural (Nodes.Length);
+            Cursor := Nodes.First;
 
-            while not Node_Sets.Matchings_Containers.Is_Done(Iter) loop
+            while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
                if Locations.Forward_Axis(Originating_Axis) then
                   Node_Item_Position := Node_Item_Index;
                else
@@ -70,25 +72,26 @@ package body McKae.XML.XPath.Predicates.Evaluation is
                   Node_Item_Position := (Node_Set_Size - Node_Item_Index) + 1;
                end if;
 
-               Node_Item := (N             => Node_Sets.Matchings_Containers.Current_Item(Iter).
-                                                      Matching_Node,
-                             Node_Position => Node_Item_Position,
-                             Node_Set_Size => Node_Set_Size);
-               Xia_Parser_Model.Evaluate(Predicate_Handle_Pkg.Item_At(Handle.Predicate_List, P).all,
+               Node_Item :=
+                 (N             =>
+                    Node_Sets.Matchings_Sets.Element (Cursor).Matching_Node,
+                  Node_Position => Node_Item_Position,
+                  Node_Set_Size => Node_Set_Size);
+               Xia_Parser_Model.Evaluate(Handle.Predicate_List.Element (P).all,
                                          Node_Item,
                                          Expression);
                Expressions.Coerce(Expression, Expressions.As_Boolean);
 
                if Expression.B then
-                  Node_Sets.Append(Filtered_Nodes, Node_Sets.Matchings_Containers.Current_Item(Iter));
+                  Filtered_Nodes.Append
+                    (Node_Sets.Matchings_Sets.Element (Cursor));
                end if;
 
-               Node_Sets.Matchings_Containers.Next(Iter);
+               Node_Sets.Matchings_Sets.Next (Cursor);
                Node_Item_Index := Node_Item_Index + 1;
             end loop;
-            Node_Sets.Clear(Nodes);
             Nodes := Filtered_Nodes;
-            Node_Sets.Clear(Filtered_Nodes);
+            Filtered_Nodes.Clear;
          end loop;
       end if;
 
@@ -101,4 +104,3 @@ package body McKae.XML.XPath.Predicates.Evaluation is
    ----------------------------------------------------------------------
 
 end McKae.XML.XPath.Predicates.Evaluation;
-

@@ -1,4 +1,3 @@
-with "bc";
 with "xmlada";
 
 project XIA is

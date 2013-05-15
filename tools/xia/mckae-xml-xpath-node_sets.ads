@@ -28,18 +28,13 @@
 -- (http://www.mckae.com).                                            --
 ------------------------------------------------------------------------
 
-with Bc.Containers.Collections.Unbounded;
-with Bc.Containers.Sets.Unbounded;
-with Bc.Containers.Trees.Avl;
-with Bc.Support.Standard_Storage;
+with Ada.Containers.Vectors;
 
 with Dom.Core;
 use  Dom.Core;
 
 with Mckae.XML.XPath.Locations;
 use  Mckae.XML.XPath.Locations;
-with Mckae.Space.Unbounded_String_Expandable;
-use  Mckae.Space.Unbounded_String_Expandable;
 
 package Mckae.XML.XPath.Node_Sets is
 
@@ -64,69 +59,36 @@ package Mckae.XML.XPath.Node_Sets is
       end case;
    end record;
 
-   -------------------------------------------------------------------
+   function "=" (L, R : Current_Matchings) return Boolean;
 
-   package Matchings_Containers is new BC.Containers (Item => Current_Matchings);
-   package Matchings_Collections is new Matchings_Containers.Collections;
-   package Matchings_Sets is new Matchings_Collections.Unbounded
-     (Storage => BC.Support.Standard_Storage.Pool);
+   package Matchings_Sets
+   is new Ada.Containers.Vectors (Index_Type => Natural,
+                                  Element_Type => Current_Matchings);
 
-   type Set is new Matchings_Sets.Collection with private;
+   type Set is new Matchings_Sets.Vector with private;
 
-   function Null_Container return Set;
+   not overriding
+   procedure Insert (Container : in out Set;
+                     New_Item : Current_Matchings);
+   --  Inserts New_Item (at the beginning) unless it's already present.
 
-   procedure Insert (C : in out Set; Elem : Current_Matchings);
-   --  Add the item to the front of the collection, if it is not
-   --  already in the set
+   overriding
+   procedure Append (Container : in out Set;
+                     New_Item : Current_Matchings;
+                     Count : Ada.Containers.Count_Type := 1);
+   --  Appends New_Item unless it's already present.
+   --
+   --  This subprogram can't sensibly be written as 'not overriding',
+   --  leaving out the Count parameter. If we did, users would have no
+   --  way of distinguishing a call to this subprogram from one to the
+   --  inherited subprgram with Count defaulted.
 
-   procedure Append (C : in out Set; Elem : Current_Matchings);
-   --  Add the item to the collection, starting at the end, if it is
-   --  not already in the set
-
-   procedure Clear (C : in out Set);
-   --  Empty the collection of all items.
-
-   procedure Union (S : in out Set; O : Set);
-   --  Perform a logical set union; at the completion of this
-   --  operation, the set S contains the items found in its original
-   --  state combined with the set O (but without duplication). For
-   --  each item in the set O, if the item is not already a distinct
-   --  member of the set S, copy the item and add it to the set S. If
-   --  the item already is a member, do nothing.
-
-   -------------------------------------------------------------------
-
-   type Sortable_Matches is record
-      Key          : Expandable_String;
-      Matched_Node : Node;
-   end record;
-
-   function "<"(L, R : Sortable_Matches) return Boolean;
-
-   package Sorting_Containers is new BC.Containers (Item => Sortable_Matches);
-
-   package Match_Trees is new Sorting_Containers.Trees;
-
-   package Sortable_Matching_Tree is new Match_Trees.Avl
-     (Storage => BC.Support.Standard_Storage.Pool);
+   not overriding
+   procedure Union (Target : in out Set; Source : Set);
+   --  Union inserts into Target the elements of Source that are not
+   --  equivalent to some element already in Target.
 
 private
-   -- Use some of the lower bits of the address of the "Node" pointer
-   --  to be the hash value.
-   function Generate_Hash(N : Node) return Natural;
-
-   ---------------------------------------------------------------------
-
-   package Match_Nodes_Containers is new BC.Containers (Item => Dom.Core.Node);
-   package Match_Nodes_Sets       is new Match_Nodes_Containers.Sets;
-   package Match_Nodes is new Match_Nodes_Sets.Unbounded
-     (Hash => Generate_Hash,
-      Buckets => 991,
-      Storage => BC.Support.Standard_Storage.Pool);
-
-   type Set is new Matchings_Sets.Collection with
-      record
-         Presence : Match_Nodes.Set;
-      end record;
+   type Set is new Matchings_Sets.Vector with null record;
 
 end Mckae.XML.XPath.Node_Sets;

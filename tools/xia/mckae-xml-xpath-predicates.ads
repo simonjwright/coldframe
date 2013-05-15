@@ -28,8 +28,7 @@
 -- (http://www.mckae.com).                                            --
 ------------------------------------------------------------------------
 
-with BC.Containers.Collections.Ordered.Unbounded;
-with Bc.Support.Standard_Storage;
+with Ada.Containers.Vectors;
 with XIA_Parser_Model;
 
 package McKae.XML.XPath.Predicates is
@@ -46,8 +45,8 @@ package McKae.XML.XPath.Predicates is
    -- Null instances of a predicate definition
    Null_Predicate : constant Predicate_Handles;
 
-   -- Release the contents of a predicate handle (which may consists
-   --  of one or more individual predicate definitions).  Not that
+   -- Release the contents of a predicate handle (which may consist
+   --  of one or more individual predicate definitions).  Note that
    --  this does _not_ release the associated parse subtree associated
    --  with each predicate instance.
    procedure Release(Handle : in out Predicate_Handles);
@@ -60,27 +59,15 @@ private
    function "="(L, R : Xia_Parser_Model.Parseable_Ptr) return Boolean
      renames Xia_Parser_Model."=";
 
-   -- This is a "filler" less-than function.  There is no intrinsic
-   --  ordering of token pointer instances.  The Ordered variation of
-   --  the collection is being used to simply ensure that the contents
-   --  of the list are maintained in the order in which they're
-   --  inserted.
-   function "<"(L, R : Xia_Parser_Model.Parseable_Ptr) return Boolean;
-
-   package Predicate_Containers is
-      new Bc.Containers(Item => Xia_Parser_Model.Parseable_Ptr);
-   package Predicate_Collections is
-      new Predicate_Containers.Collections;
-   package Ordered_Predicate_Collections is
-      new Predicate_Collections.Ordered;
-   package Predicate_Handle_Pkg is new Ordered_Predicate_Collections.Unbounded
-     (Storage => BC.Support.Standard_Storage.Pool);
+   package Predicate_Handle_Pkg is new Ada.Containers.Vectors
+     (Index_Type => Positive,
+      Element_Type => Xia_Parser_Model.Parseable_Ptr);
 
    type Predicate_Handles is record
-      Predicate_List : Predicate_Handle_Pkg.Collection;
+      Predicate_List : Predicate_Handle_Pkg.Vector;
    end record;
 
    Null_Predicate : constant Predicate_Handles
-     := (Predicate_List => Predicate_Handle_Pkg.Null_Container);
+     := (Predicate_List => Predicate_Handle_Pkg.Empty_Vector);
 
 end McKae.XML.XPath.Predicates;

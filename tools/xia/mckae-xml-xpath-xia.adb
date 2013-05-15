@@ -28,6 +28,7 @@
 -- (http://www.mckae.com).                                            --
 ------------------------------------------------------------------------
 
+with Ada.Containers.Ordered_Maps;
 with Ada.Strings.Fixed;
 use  Ada.Strings.Fixed;
 with Ada.Strings.Unbounded;
@@ -37,7 +38,6 @@ with Dom.Core.Append_Node;
 --with Dom.Core.Attrs;
 with Dom.Core.Nodes;
 
-with Mckae.Space.Unbounded_String_Expandable;
 with Mckae.Xml.Xpath.Locations;
 use  Mckae.Xml.Xpath.Locations;
 with Mckae.Xml.Xpath.Node_Sets;
@@ -52,7 +52,6 @@ package body Mckae.XML.XPath.XIA is
    use Ada.Strings;
    use Dom.Core;
    use Dom.Core.Nodes;
-   use Mckae.Space.Unbounded_String_Expandable;
 
    -------------------------------------------------------------------
 
@@ -228,9 +227,7 @@ package body Mckae.XML.XPath.XIA is
             for I in 1 .. Length(Children) loop
                Child := Item(Children, I - 1);
                if Is_Node_Match(Child, Location_Step) then
-                  Append(Matchings,
-                         (Self_Axis,
-                          Child));
+                  Matchings.Append ((Self_Axis, Child));
                end if;
             end loop;
 
@@ -239,9 +236,7 @@ package body Mckae.XML.XPath.XIA is
             for I in N_Index + 1 .. Length(Children) - 1 loop
                Child := Item(Children, I);
                if Is_Node_Match(Child, Location_Step) then
-                  Append(Matchings,
-                         (Self_Axis,
-                          Child));
+                  Matchings.Append ((Self_Axis, Child));
                end if;
             end loop;
 
@@ -250,9 +245,7 @@ package body Mckae.XML.XPath.XIA is
             for I in 0 .. N_Index - 1 loop
                Child := Item(Children, I);
                if Is_Node_Match(Child, Location_Step) then
-                  Append(Matchings,
-                         (Self_Axis,
-                          Child));
+                  Matchings.Append ((Self_Axis, Child));
                end if;
             end loop;
 
@@ -268,7 +261,7 @@ package body Mckae.XML.XPath.XIA is
             -- Check the node for a match
             if (Ancestor /= null)
               and then Is_Node_Match(Ancestor, Location_Step) then
-               Append(Matchings, (Self_Axis, Ancestor));
+               Matchings.Append ((Self_Axis, Ancestor));
             end if;
 
          when Ancestor_Axis | Ancestor_Or_Self_Axis =>
@@ -283,7 +276,7 @@ package body Mckae.XML.XPath.XIA is
             loop
                exit when Ancestor = null;
                if Is_Node_Match(Ancestor, Location_Step) then
-                  Insert(Matchings, (Self_Axis, Ancestor));
+                  Matchings.Insert ((Self_Axis, Ancestor));
                end if;
                Ancestor := Parent_Node(Ancestor);
             end loop;
@@ -293,7 +286,8 @@ package body Mckae.XML.XPath.XIA is
             for I in 1 .. Length(Attrs) loop
                Attr := Item(Attrs, I - 1);
                if Is_Node_Match(Attr, Location_Step) then
-                  Append(Matchings, (Attribute_Axis, Attr,
+                  Matchings.Append ((Attribute_Axis,
+                                     Attr,
                                      Owner_Node => N,
                                      Attr_Index => I));
                end if;
@@ -310,7 +304,7 @@ package body Mckae.XML.XPath.XIA is
                begin
                   Deferred_Match.Matching_Node := N;
                   Deferred_Match.Branch_Step := Location_Step;
-                  Append(Matchings, Deferred_Match);
+                  Matchings.Append (Deferred_Match);
                end;
             else
                Do_Final_Traversal(N, Location_Step, Matchings,
@@ -456,8 +450,7 @@ package body Mckae.XML.XPath.XIA is
             -- This node matches the original traversal-requiring match, now
             --  check the next location step
             if Include_Self and Is_Node_Match(N, Location_Step) then
-               Node_Sets.Append
-                 (Matchings, (Self_Axis, N));
+               Matchings.Append ((Self_Axis, N));
             end if;
 
             -- Process the child nodes
@@ -508,16 +501,16 @@ package body Mckae.XML.XPath.XIA is
 
       Match         : Node_Sets.Current_Matchings;
       New_Matchings : Node_Sets.Set;
-      Iter          : Node_Sets.Matchings_Containers.Iterator'Class
-        := Node_Sets.New_Iterator(Matchings);
+      Cursor        : Node_Sets.Matchings_Sets.Cursor := Matchings.First;
 
+      use type Node_Sets.Matchings_Sets.Cursor;
       use type Predicates.Predicate_Handles;
 
    begin
       -- Iterate through the current set of matchings, evaluating each
       --  against the path step
-      while not Node_Sets.Matchings_Containers.Is_Done(Iter) loop
-         Match := Node_Sets.Matchings_Containers.Current_Item(Iter);
+      while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
+         Match := Node_Sets.Matchings_Sets.Element (Cursor);
 
          -- Check whether this is a direct node check, or a deferred traversal
          if Match.Axis = Self_Axis then
@@ -527,14 +520,17 @@ package body Mckae.XML.XPath.XIA is
             -- This is a workaround for an XML/Ada bug wherein
             --  invoking Parent_Node() on an attribute node returns
             --  null instead of its parent.
-            Do_Matching(Match.Matching_Node, Location_Step, New_Matchings, Match.Owner_Node);
+            Do_Matching(Match.Matching_Node,
+                        Location_Step,
+                        New_Matchings,
+                        Match.Owner_Node);
 
          else
             -- A deferred traversal
             Deferred_Traversal(Location_Step, Match, New_Matchings);
          end if;
 
-         Node_Sets.Matchings_Containers.Next(Iter);
+         Node_Sets.Matchings_Sets.Next (Cursor);
       end loop;
 
       -- Now check the predicate criteria
@@ -542,7 +538,6 @@ package body Mckae.XML.XPath.XIA is
          Predicate_Filtration(New_Matchings, Location_Step);
       end if;
 
-      Node_Sets.Clear(Matchings);
       Matchings := New_Matchings;
 
    exception
@@ -567,7 +562,7 @@ package body Mckae.XML.XPath.XIA is
       for S in 1 .. Location_Steps.Steps loop
          Extract_Nodes(Location_Steps.Path(S), Matchings);
 
-         exit when Node_Sets.Is_Empty(Matchings);
+         exit when Matchings.Is_Empty;
       end loop;
 
       Free(Location_Steps);
@@ -579,114 +574,110 @@ package body Mckae.XML.XPath.XIA is
 
    -------------------------------------------------------------------
 
-   procedure Create_Node_Key(Node_Sorter : in out Node_Sets.Sortable_Matches) is
+   --  This is used to obtain the set of matching nodes in document
+   --  order.
+   package Sortable_Matching_Tree
+   is new Ada.Containers.Ordered_Maps (Key_Type => Unbounded_String,
+                                       Element_Type => DOM.Core.Node);
 
-      This_List : Node_List;
+   -------------------------------------------------------------------
+
+   function Create_Node_Key (For_Node : Node) return Unbounded_String
+   is
+
+      This_List  : Node_List;
       Index      : Natural;
       Parent     : Node;
 
-   begin
-      Get_Index_And_List(Node_Sorter.Matched_Node, Index, This_List);
+      Result : Unbounded_String;
 
-      Parent := Parent_Node(Node_Sorter.Matched_Node);
+   begin
+      Get_Index_And_List(For_Node, Index, This_List);
+
+      Parent := Parent_Node (For_Node);
       if Parent /= null then
-         Node_Sorter.Matched_Node := Parent;
-         Create_Node_Key(Node_Sorter);
+         Result := Create_Node_Key (For_Node => Parent);
       end if;
 
       declare
          Zeroed_Index : constant Natural := Index + 1000000;
          Index_Img : constant String := Natural'Image(Zeroed_Index);
       begin
-         Append(Node_Sorter.Key, Index_Img(3 .. Index_Img'Last));
+         Append (Result, Index_Img(3 .. Index_Img'Last));
       end;
+      return Result;
    end Create_Node_Key;
 
    -------------------------------------------------------------------
 
-   Sorted_Results : Node_List;
-
-   procedure Output_Node (Elem : in     Node_Sets.Sortable_Matches;
-                          Ok   :    out Boolean) is
+   procedure Output_Nodes (M     : in     Sortable_Matching_Tree.Map;
+                           Nodes :    out Node_List)
+   is
+      procedure Output_Node (Position : in Sortable_Matching_Tree.Cursor)
+      is
+      begin
+         Dom.Core.Append_Node (Nodes,
+                               Sortable_Matching_Tree.Element (Position));
+      end Output_Node;
    begin
-      Dom.Core.Append_Node(Sorted_Results, Elem.Matched_Node);
-      Ok := True;
-   end Output_Node;
-
-   procedure Output_Nodes is new Node_Sets.Sortable_Matching_Tree.Visit(Output_Node);
+      M.Iterate (Process => Output_Node'Access);
+   end Output_Nodes;
 
    -------------------------------------------------------------------
 
    procedure Finalize_Matchings (Matchings   : in     Node_Sets.Set;
                                  Xpath_Nodes :    out Node_List) is
 
-      use Node_Sets.Sortable_Matching_Tree;
+      Sorting_Tree   : Sortable_Matching_Tree.Map;
 
-      Sorting_Tree   : Avl_Tree;
-
-      Matching_Node : Node;
-      Iter          : Node_Sets.Matchings_Containers.Iterator'Class
-        := Node_Sets.New_Iterator(Matchings);
+      Cursor        : Node_Sets.Matchings_Sets.Cursor := Matchings.First;
 
       Current       : Node_Sets.Current_Matchings;
-      Node_Sorter   : Node_Sets.Sortable_Matches;
-      Node_Key      : Expandable_String;
-      Not_Found     : Boolean;
+      Node_Key      : Unbounded_String;
 
-      Empty_Node_List : Node_List;
+      Sorted_Results  : Node_List;
 
+      use type Node_Sets.Matchings_Sets.Cursor;
    begin
-      Sorted_Results := Empty_Node_List;
-
       -- Perform a tree insertion sort of all the nodes
-      while not Node_Sets.Matchings_Containers.Is_Done(Iter) loop
+      while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
 
          -- Get the matching info for the node
-         Current := Node_Sets.Matchings_Containers.Current_Item(Iter);
+         Current := Node_Sets.Matchings_Sets.Element (Cursor);
 
-         pragma Assert((Current.Axis = Self_Axis) or (Current.Axis = Attribute_Axis));
+         pragma Assert((Current.Axis = Self_Axis)
+                       or (Current.Axis = Attribute_Axis));
 
-         -- Most nodes are simply a node on the DOM tree; attribute
-         --  nodes are "special" for some reason, so we have to go get
-         --  their owner element specifically
-         Matching_Node := Current.Matching_Node;
          if Current.Axis = Attribute_Axis then
---          Matching_Node := Attrs.Owner_Element(Current.Matching_Node);
-            ----- Workaround bug in XMLAda 1.0 -----
-            Matching_Node := Current.Owner_Node;
-         end if;
-
-         Node_Sorter.Matched_Node := Matching_Node;
-         Clear(Node_Sorter.Key);
-
-         Create_Node_Key(Node_Sorter);
-
-         -- ... and because of this attribute node ownership
-         --  silliness, an extra effort has to be made to get them
-         --  back into document order
-         if Current.Axis = Attribute_Axis then
+            --  Most nodes are simply a node on the DOM tree;
+            --  attribute nodes are "special" for some reason, so we
+            --  have to go get their owner element specifically.
+            --
+            --  XXX this may still be an XML/Ada bug; in XML/Ada 1.0,
+            --  Attrs.Owner_Element(Current.Matching_Node) didn't
+            --  work.
+            --
+            --  Make the key for the parent ...
+            Node_Key := Create_Node_Key (Current.Owner_Node);
+            --  ... and append the key for the attribute.
             declare
                Zeroed_Index : constant Natural := Current.Attr_Index + 1000000;
                Index_Img : constant String := Natural'Image(Zeroed_Index);
             begin
-               Append(Node_Sorter.Key, Index_Img(3 .. Index_Img'Last));
+               Append (Node_Key, Index_Img(3 .. Index_Img'Last));
             end;
-            Matching_Node := Current.Matching_Node;
+         else
+            Node_Key := Create_Node_Key (Current.Matching_Node);
          end if;
 
-         Copy(Node_Key, Node_Sorter.Key);
+         Sorting_Tree.Insert (Node_Key, Current.Matching_Node);
 
-         Insert(Sorting_Tree, (Node_Key, Matching_Node), Not_Found);
-         pragma Assert(Not_Found);
-
-         Node_Sets.Matchings_Containers.Next(Iter);
+         Node_Sets.Matchings_Sets.Next (Cursor);
       end loop;
 
       -- All the nodes are now inserted, do an in-order traversal to
-      --  get the nodes back in document order
-      Output_Nodes(Sorting_Tree);
-
-      Xpath_Nodes := Sorted_Results;
+      --  get the nodes back in document order, and output them.
+      Output_Nodes(Sorting_Tree, XPath_Nodes);
    end Finalize_Matchings;
 
    -------------------------------------------------------------------
@@ -707,7 +698,7 @@ package body Mckae.XML.XPath.XIA is
 
    begin
       loop
-         Node_Sets.Clear(Matchings);
+         Matchings.Clear;
 
          -- The given node is either a document node or an element node
          --  within a document.
@@ -721,8 +712,7 @@ package body Mckae.XML.XPath.XIA is
             raise Inappropriate_Node;
          end if;
 
-         Node_Sets.Append
-           (Matchings, (Self_Axis, Starting_Node));
+         Matchings.Append((Self_Axis, Starting_Node));
 
          -- Process this as a concatenation of queries, i.e.,
          --  different queries separated by '|'.  Watch out for '|'s
@@ -736,7 +726,7 @@ package body Mckae.XML.XPath.XIA is
          end if;
 
          -- Merge the distinct sets
-         Node_Sets.Union(Total_Matchings, Matchings);
+         Total_Matchings.Union (Matchings);
 
          exit when Split = 0;
 
@@ -747,11 +737,7 @@ package body Mckae.XML.XPath.XIA is
       --  document order and returning them as a Node_List;
       Finalize_Matchings(Total_Matchings, Xpath_Nodes);
 
-      Node_Sets.Clear(Matchings);
-      Node_Sets.Clear(Total_Matchings);
-
       return Xpath_Nodes;
-
    end XPath_Query;
 
    -------------------------------------------------------------------
