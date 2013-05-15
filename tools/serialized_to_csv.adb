@@ -15,10 +15,10 @@
 --  Provides conversion from the XML output of ColdFrams's
 --  'serialization' facility to CSV files.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: serialized_to_csv.adb,v $
+--  $Revision: 76f35906ecb5 $
+--  $Date: 2013/05/15 16:17:11 $
+--  $Author: simonjwright $
 
 with Ada.Text_IO;
 with Ada.Strings.Unbounded.Text_IO;
@@ -128,8 +128,8 @@ begin
                          Index (Line, """", Going => Backward) - 1);
             Output : Access_File;
          begin
-            if Is_Bound (Files, Record_Name) then
-               Output := Item_Of (Files, Record_Name);
+            if Files.Contains (Record_Name) then
+               Output := Files.Element (Record_Name);
                Process_Record (Output.all, New_File => False);
             else
                Put_Line (Record_Name);
@@ -144,7 +144,7 @@ begin
                              Name => +Record_Name & ".csv",
                              Mode => Out_File);
                end;
-               Bind (Files, Record_Name, Output);
+               Files.Insert (Record_Name, Output);
                Process_Record (Output.all, New_File => True);
             end if;
          end;
@@ -160,4 +160,3 @@ begin
    end loop;
 
 end Serialized_To_Csv;
-

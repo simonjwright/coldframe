@@ -12,13 +12,12 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: generated_lines_support.adb,v $
+--  $Revision: 76f35906ecb5 $
+--  $Date: 2013/05/15 16:17:11 $
+--  $Author: simonjwright $
 
-with BC.Containers.Collections.Unbounded;
-with BC.Support.Standard_Storage;
+with Ada.Containers.Vectors;
 with Ada.Text_IO; use Ada.Text_IO;
 with GNAT.Regpat; use GNAT.Regpat;
 
@@ -33,12 +32,9 @@ package body Generated_Lines_Support is
    end record;
    type Info is access Info_Base;
 
-   package Abstract_Containers is new BC.Containers (Info);
-   package Abstract_Collections is new Abstract_Containers.Collections;
-   package Collections is new Abstract_Collections.Unbounded
-     (Storage => BC.Support.Standard_Storage.Pool);
+   package Collections is new Ada.Containers.Vectors (Positive, Info);
 
-   Patterns : Collections.Collection;
+   Patterns : Collections.Vector;
 
    procedure Setup (Pattern, Named : String);
    function Count_Lines (In_File_Named : Path_Name) return Natural;
@@ -48,21 +44,20 @@ package body Generated_Lines_Support is
                     Verbosely : Boolean;
                     Logging : Boolean) is
       N : constant Path_Name := File_Name (File_Named);
-      It : Abstract_Containers.Iterator'Class
-        := Collections.New_Iterator (Patterns);
-      use Abstract_Containers;
+      It : Collections.Cursor := Patterns.First;
+      use Collections;
    begin
       loop
-         if Is_Done (It) then
+         if It = No_Element then
             if Verbosely then
                Put_Line (Standard_Error,
                          "file " & File_Named & " didn't match any rule.");
             end if;
             exit;
          end if;
-         if Match (Current_Item (It).For_Pattern.all, N) >= N'First then
+         if Match (Element (It).For_Pattern.all, N) >= N'First then
             declare
-               I : Info_Base renames Current_Item (It).all;
+               I : Info renames Element (It);
             begin
                if Logging then
                   Put_Line (Standard_Error, I.Named.all & " caught " & N);
@@ -79,20 +74,17 @@ package body Generated_Lines_Support is
 
    procedure Report (For_Directory : Path_Name;
                      With_Header : Boolean) is
-      It : Abstract_Containers.Iterator'Class
-        := Collections.New_Iterator (Patterns);
-      use Abstract_Containers;
+      It : Collections.Cursor := Patterns.First;
+      use Collections;
    begin
       if With_Header then
          Put_Line ("Directory, Category, Files, Lines,");
       end if;
-      while not Is_Done (It) loop
+      while It /= No_Element loop
          declare
-            I : Info_Base renames Current_Item (It).all;
+            I : Info renames Element (It);
          begin
-            Put_Line (Base_Name (For_Directory
-                                   (For_Directory'First
-                                      .. For_Directory'Last - 1)) & ","
+            Put_Line (Base_Name (For_Directory) & ","
                         & I.Named.all & ","
                         & I.Files'Img & ","
                         & I.Lines'Img & ",");

@@ -14,31 +14,23 @@
 
 --  Provides maps from Unbounded_String to File_Access.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: serialized_to_csv_support.ads,v $
+--  $Revision: 76f35906ecb5 $
+--  $Date: 2013/05/15 16:17:11 $
+--  $Author: simonjwright $
 
+with Ada.Containers.Ordered_Maps;
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
-with BC.Containers.Maps.Unmanaged;
-with ColdFrame.Hash.Strings.Unbounded;
 
 package Serialized_To_Csv_Support is
 
    type Access_File is access Ada.Text_IO.File_Type;
 
-   package Abstract_Access_File_Containers
-   is new BC.Containers (Access_File);
-
-   package Abstract_Access_File_Maps
-   is new Abstract_Access_File_Containers.Maps
-     (Key => Ada.Strings.Unbounded.Unbounded_String,
-      "=" => Ada.Strings.Unbounded."=");
-
    package Access_File_Maps
-   is new Abstract_Access_File_Maps.Unmanaged
-     (Hash => ColdFrame.Hash.Strings.Unbounded,
-      Buckets => 47);
+   is new Ada.Containers.Ordered_Maps
+     (Key_Type => Ada.Strings.Unbounded.Unbounded_String,
+      Element_Type => Access_File,
+      "<" => Ada.Strings.Unbounded."<");
 
 end Serialized_To_Csv_Support;
