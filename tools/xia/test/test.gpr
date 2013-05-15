@@ -10,6 +10,6 @@ project Test is
      for Default_Switches ("Ada") use ("-E");
    end Binder;
    package Linker is
-      for Default_Switches ("Ada") use ("-Wl,-no_pie");
+      for Default_Switches ("Ada") use External_As_List ("LDFLAGS", " ");
    end Linker;
 end Test;
