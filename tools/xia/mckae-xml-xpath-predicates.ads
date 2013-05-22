@@ -28,8 +28,9 @@
 -- (http://www.mckae.com).                                            --
 ------------------------------------------------------------------------
 
-with Ada.Containers.Vectors;
 with XIA_Parser_Model;
+
+private with Ada.Containers.Vectors;
 
 package McKae.XML.XPath.Predicates is
 

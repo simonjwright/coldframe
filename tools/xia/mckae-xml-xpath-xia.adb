@@ -501,16 +501,16 @@ package body Mckae.XML.XPath.XIA is
 
       Match         : Node_Sets.Current_Matchings;
       New_Matchings : Node_Sets.Set;
-      Cursor        : Node_Sets.Matchings_Sets.Cursor := Matchings.First;
+      Cursor        : Node_Sets.Cursor := Matchings.First;
 
-      use type Node_Sets.Matchings_Sets.Cursor;
+      use type Node_Sets.Cursor;
       use type Predicates.Predicate_Handles;
 
    begin
       -- Iterate through the current set of matchings, evaluating each
       --  against the path step
-      while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
-         Match := Node_Sets.Matchings_Sets.Element (Cursor);
+      while Cursor /= Node_Sets.No_Element loop
+         Match := Node_Sets.Element (Cursor);
 
          -- Check whether this is a direct node check, or a deferred traversal
          if Match.Axis = Self_Axis then
@@ -530,7 +530,7 @@ package body Mckae.XML.XPath.XIA is
             Deferred_Traversal(Location_Step, Match, New_Matchings);
          end if;
 
-         Node_Sets.Matchings_Sets.Next (Cursor);
+         Node_Sets.Next (Cursor);
       end loop;
 
       -- Now check the predicate criteria
@@ -630,20 +630,20 @@ package body Mckae.XML.XPath.XIA is
 
       Sorting_Tree   : Sortable_Matching_Tree.Map;
 
-      Cursor        : Node_Sets.Matchings_Sets.Cursor := Matchings.First;
+      Cursor        : Node_Sets.Cursor := Matchings.First;
 
       Current       : Node_Sets.Current_Matchings;
       Node_Key      : Unbounded_String;
 
       Sorted_Results  : Node_List;
 
-      use type Node_Sets.Matchings_Sets.Cursor;
+      use type Node_Sets.Cursor;
    begin
       -- Perform a tree insertion sort of all the nodes
-      while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
+      while Cursor /= Node_Sets.No_Element loop
 
          -- Get the matching info for the node
-         Current := Node_Sets.Matchings_Sets.Element (Cursor);
+         Current := Node_Sets.Element (Cursor);
 
          pragma Assert((Current.Axis = Self_Axis)
                        or (Current.Axis = Attribute_Axis));
@@ -672,7 +672,7 @@ package body Mckae.XML.XPath.XIA is
 
          Sorting_Tree.Insert (Node_Key, Current.Matching_Node);
 
-         Node_Sets.Matchings_Sets.Next (Cursor);
+         Node_Sets.Next (Cursor);
       end loop;
 
       -- All the nodes are now inserted, do an in-order traversal to

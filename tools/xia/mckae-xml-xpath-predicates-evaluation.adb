@@ -43,7 +43,7 @@ package body McKae.XML.XPath.Predicates.Evaluation is
 
       use Mckae.XML.XPath;
 
-      Cursor             : Node_Sets.Matchings_Sets.Cursor;
+      Cursor             : Node_Sets.Cursor;
       Node_Set_Size      : Natural := Natural (Nodes.Length);
       Node_Item_Index    : Natural := 0;
       Node_Item_Position : Natural := 0;
@@ -55,7 +55,7 @@ package body McKae.XML.XPath.Predicates.Evaluation is
 
       Filtered_Nodes : Node_Sets.Set;
 
-      use type Node_Sets.Matchings_Sets.Cursor;
+      use type Node_Sets.Cursor;
 
    begin
       if Predicate_Count >= 1 then
@@ -64,7 +64,7 @@ package body McKae.XML.XPath.Predicates.Evaluation is
             Node_Set_Size   := Natural (Nodes.Length);
             Cursor := Nodes.First;
 
-            while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
+            while Cursor /= Node_Sets.No_Element loop
                if Locations.Forward_Axis(Originating_Axis) then
                   Node_Item_Position := Node_Item_Index;
                else
@@ -74,7 +74,7 @@ package body McKae.XML.XPath.Predicates.Evaluation is
 
                Node_Item :=
                  (N             =>
-                    Node_Sets.Matchings_Sets.Element (Cursor).Matching_Node,
+                    Node_Sets.Element (Cursor).Matching_Node,
                   Node_Position => Node_Item_Position,
                   Node_Set_Size => Node_Set_Size);
                Xia_Parser_Model.Evaluate(Handle.Predicate_List.Element (P).all,
@@ -83,11 +83,10 @@ package body McKae.XML.XPath.Predicates.Evaluation is
                Expressions.Coerce(Expression, Expressions.As_Boolean);
 
                if Expression.B then
-                  Filtered_Nodes.Append
-                    (Node_Sets.Matchings_Sets.Element (Cursor));
+                  Filtered_Nodes.Append (Node_Sets.Element (Cursor));
                end if;
 
-               Node_Sets.Matchings_Sets.Next (Cursor);
+               Node_Sets.Next (Cursor);
                Node_Item_Index := Node_Item_Index + 1;
             end loop;
             Nodes := Filtered_Nodes;

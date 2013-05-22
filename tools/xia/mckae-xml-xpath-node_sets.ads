@@ -28,13 +28,16 @@
 -- (http://www.mckae.com).                                            --
 ------------------------------------------------------------------------
 
-with Ada.Containers.Vectors;
+with Ada.Containers;
 
 with Dom.Core;
 use  Dom.Core;
 
 with Mckae.XML.XPath.Locations;
 use  Mckae.XML.XPath.Locations;
+
+private with Ada.Containers.Ordered_Sets;
+private with Ada.Containers.Vectors;
 
 package Mckae.XML.XPath.Node_Sets is
 
@@ -47,7 +50,7 @@ package Mckae.XML.XPath.Node_Sets is
          when Attribute_Axis =>
             Owner_Node  : Node;    -- Work around bug in XMLAda wherein the
                                    -- parent node of an attribute is always
-                                   -- set to Null, making it impossible to
+                                   -- set to null, making it impossible to
                                    -- get the owner element
             Attr_Index  : Natural;
 
@@ -59,29 +62,50 @@ package Mckae.XML.XPath.Node_Sets is
       end case;
    end record;
 
-   function "=" (L, R : Current_Matchings) return Boolean;
+   ------------------------------------------------------------------
+   --  We need a container which has both vector-like properties (to
+   --  keep nodes in document order or, in the case of ancestor- or
+   --  previous- axes, reverse document order) as well as set-like
+   --  properties (so that each node is only entered once).
+   --
+   --  Clearly there might be some confusion if a node is entered
+   --  through two routes (for example, a union (node-set |
+   --  node-set). However, the document ordering is only important at
+   --  a single step, so this isn't an issue.
+   --
+   --  This code is written in the style of Ada.Containers, but with
+   --  only the interfaces required to support this application.
+   ------------------------------------------------------------------
 
-   package Matchings_Sets
-   is new Ada.Containers.Vectors (Index_Type => Natural,
-                                  Element_Type => Current_Matchings);
+   type Set is tagged private;
+   type Cursor is private;
+   No_Element : constant Cursor;
 
-   type Set is new Matchings_Sets.Vector with private;
+   not overriding
+   function Length (Container : Set) return Ada.Containers.Count_Type;
+
+   not overriding
+   function Is_Empty (Container : Set) return Boolean;
+
+   not overriding
+   procedure Clear (Container : in out Set);
+
+   not overriding
+   function First (Container : Set) return Cursor;
+
+   function Element (Position : Cursor) return Current_Matchings;
+
+   procedure Next (Position : in out Cursor);
 
    not overriding
    procedure Insert (Container : in out Set;
                      New_Item : Current_Matchings);
    --  Inserts New_Item (at the beginning) unless it's already present.
 
-   overriding
+   not overriding
    procedure Append (Container : in out Set;
-                     New_Item : Current_Matchings;
-                     Count : Ada.Containers.Count_Type := 1);
-   --  Appends New_Item unless it's already present.
-   --
-   --  This subprogram can't sensibly be written as 'not overriding',
-   --  leaving out the Count parameter. If we did, users would have no
-   --  way of distinguishing a call to this subprogram from one to the
-   --  inherited subprgram with Count defaulted.
+                     New_Item : Current_Matchings);
+   --  Appends New_Item (at the end) unless it's already present.
 
    not overriding
    procedure Union (Target : in out Set; Source : Set);
@@ -89,6 +113,27 @@ package Mckae.XML.XPath.Node_Sets is
    --  equivalent to some element already in Target.
 
 private
-   type Set is new Matchings_Sets.Vector with null record;
+   function "=" (L, R : Current_Matchings) return Boolean;
+   function "<" (L, R : Current_Matchings) return Boolean;
+
+   package Matchings_Vectors
+   is new Ada.Containers.Vectors (Index_Type => Positive,
+                                  Element_Type => Current_Matchings);
+
+   package Matchings_Sets
+   is new Ada.Containers.Ordered_Sets (Element_Type => Current_Matchings);
+
+   type Set is tagged record
+      Elements : Matchings_Vectors.Vector;
+      Presence : Matchings_Sets.Set;
+   end record;
+   --  Doesn't need to be controlled, since both the components are.
+
+   type Cursor is record
+      Elements_Cursor : Matchings_Vectors.Cursor;
+   end record;
+
+   No_Element : constant Cursor
+     := Cursor'(Elements_Cursor => Matchings_Vectors.No_Element);
 
 end Mckae.XML.XPath.Node_Sets;

@@ -28,13 +28,60 @@
 -- (http://www.mckae.com).                                            --
 ------------------------------------------------------------------------
 
+with System;
+
 package body McKae.XML.XPath.Node_Sets is
 
-
-   function "=" (L, R : Current_Matchings) return Boolean is
+   not overriding
+   function Length (Container : Set) return Ada.Containers.Count_Type
+   is
    begin
-      return L.Matching_Node = R.Matching_Node;
-   end "=";
+      return Container.Elements.Length;
+   end Length;
+
+   -------------------------------------------------------------------
+
+   not overriding
+   function Is_Empty (Container : Set) return Boolean
+   is
+   begin
+      return Container.Elements.Is_Empty;
+   end Is_Empty;
+
+   -------------------------------------------------------------------
+
+   not overriding
+   procedure Clear (Container : in out Set)
+   is
+   begin
+      Container.Elements.Clear;
+      Container.Presence.Clear;
+   end Clear;
+
+   -------------------------------------------------------------------
+
+   not overriding
+   function First (Container : Set) return Cursor
+   is
+   begin
+      return Cursor'(Elements_Cursor => Container.Elements.First);
+   end First;
+
+   -------------------------------------------------------------------
+
+   function Element (Position : Cursor) return Current_Matchings
+   is
+   begin
+      return Matchings_Vectors.Element (Position.Elements_Cursor);
+   end Element;
+
+   -------------------------------------------------------------------
+
+   procedure Next (Position : in out Cursor)
+   is
+   begin
+      Matchings_Vectors.Next (Position.Elements_Cursor);
+   end Next;
 
    -------------------------------------------------------------------
 
@@ -43,21 +90,23 @@ package body McKae.XML.XPath.Node_Sets is
                      New_Item : Current_Matchings)
    is
    begin
-      if not Container.Contains (New_Item) then
-         Container.Insert (New_Item => New_Item,
-                           Before => Container.First_Index);
+      if not Container.Presence.Contains (New_Item) then
+         Container.Presence.Insert (New_Item);
+         Container.Elements.Insert (New_Item => New_Item,
+                                    Before => Container.Elements.First_Index);
       end if;
    end Insert;
 
    -------------------------------------------------------------------
-   overriding
+
+   not overriding
    procedure Append (Container : in out Set;
-                     New_Item : Current_Matchings;
-                     Count : Ada.Containers.Count_Type := 1)
+                     New_Item : Current_Matchings)
    is
    begin
-      if not Container.Contains (New_Item) then
-         Matchings_Sets.Vector (Container).Append (New_Item);
+      if not Container.Presence.Contains (New_Item) then
+         Container.Presence.Insert (New_Item);
+         Container.Elements.Append (New_Item);
       end if;
    end Append;
 
@@ -65,12 +114,27 @@ package body McKae.XML.XPath.Node_Sets is
 
    not overriding
    procedure Union (Target : in out Set; Source : Set) is
-      procedure Append (Position : Matchings_Sets.Cursor) is
+      procedure Append (Position : Matchings_Vectors.Cursor) is
       begin
-         Target.Append (New_Item => Matchings_Sets.Element (Position));
+         Target.Append (New_Item => Matchings_Vectors.Element (Position));
       end Append;
    begin
-      Source.Iterate (Append'Access);
+      Source.Elements.Iterate (Append'Access);
    end Union;
+
+   -------------------------------------------------------------------
+
+   function "=" (L, R : Current_Matchings) return Boolean is
+   begin
+      return L.Matching_Node = R.Matching_Node;
+   end "=";
+
+   -------------------------------------------------------------------
+
+   function "<" (L, R : Current_Matchings) return Boolean is
+      use System;
+   begin
+      return L.Matching_Node.all'Address < R.Matching_Node.all'Address;
+   end "<";
 
 end Mckae.XML.XPath.Node_Sets;
