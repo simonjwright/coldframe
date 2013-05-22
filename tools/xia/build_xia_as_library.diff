@@ -1,6 +1,6 @@
 diff -r 21fb1a7fc020 tools/xia/README-coldframe
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/tools/xia/README-coldframe	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/README-coldframe	Wed May 22 09:58:11 2013 +0100
 @@ -0,0 +1,17 @@
 +This directory contains XIA-1.0.0 from McKae Technologies
 +(http://www.mckae.com), patched for use with ColdFrame.
@@ -21,7 +21,7 @@ diff -r 21fb1a7fc020 tools/xia/README-coldframe
 +  subdirectory, which includes test.gpr.
 diff -r 21fb1a7fc020 tools/xia/XIA.gpr
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/tools/xia/XIA.gpr	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/XIA.gpr	Wed May 22 09:58:11 2013 +0100
 @@ -0,0 +1,38 @@
 +with "xmlada";
 +
@@ -301,41 +301,33 @@ diff -r 21fb1a7fc020 tools/xia/bench_xpath.adb
 -end Bench_Xpath;
 diff -r 21fb1a7fc020 tools/xia/build_xia_as_library.diff
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/tools/xia/build_xia_as_library.diff	Wed May 15 17:57:19 2013 +0100
-@@ -0,0 +1,806 @@
-+diff -r 21fb1a7fc020 -r 5477bb2b475a .hgtags
-+--- a/.hgtags	Tue Jan 24 11:55:36 2012 +0000
-++++ b/.hgtags	Tue Jan 24 13:11:36 2012 +0000
-+@@ -137,3 +137,4 @@
-+ d1e1ac472cd12895ff6ae5109ceecc9ac33c722c Rev_20030126b
-+ 78dede6c2e8674347b4e2bdd3f5841535a50b161 Release_20110720
-+ 127c231499eb0f504a9ec2458dbda943d9642481 Release_20111113
-++21fb1a7fc0206b6e8ffa00d939a0e012fce8a3cd Import_XIA-1.0.0
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/README-coldframe
++++ b/tools/xia/build_xia_as_library.diff	Wed May 22 09:58:11 2013 +0100
+@@ -0,0 +1,278 @@
++diff -r 21fb1a7fc020 tools/xia/README-coldframe
 +--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-++++ b/tools/xia/README-coldframe	Tue Jan 24 13:11:36 2012 +0000
-+@@ -0,0 +1,16 @@
+++++ b/tools/xia/README-coldframe	Wed May 22 09:58:11 2013 +0100
++@@ -0,0 +1,17 @@
 ++This directory contains XIA-1.0.0 from McKae Technologies
 ++(http://www.mckae.com), patched for use with ColdFrame.
 ++
 ++The patches are contained in build_xia_as_library.diff in this
 ++directory, and make the following changes:
 ++
-++* XIA.gpr is included, to build XIA as a library. It assumes that the
-++  Booch Components and XML/Ada are available on ADA_PROJECT_PATH.
+++* XIA.gpr is included, to build XIA as a library. It assumes that
+++  XML/Ada is available on ADA_PROJECT_PATH.
 ++
-++* Some source files are modified to prevent style warnings in user
-++  code (the changes are to ensure consistency of casing, eg McKae
-++  throughout instead of Mckae in some places. Internal warnings
-++  haven't been suppressed, and will appear during initial builds.)
+++* Ada.Containers are used instead of the Booch Components.
+++
+++* Some spec source files are modified to prevent style warnings in
+++  user code (the changes are to ensure consistency of casing, eg McKae
+++  throughout instead of Mckae in some places.)
 ++
 ++* bench_xpath.adb and test_xpath.adb have been moved to the test/
 ++  subdirectory, which includes test.gpr.
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/XIA.gpr
++diff -r 21fb1a7fc020 tools/xia/XIA.gpr
 +--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-++++ b/tools/xia/XIA.gpr	Tue Jan 24 13:11:36 2012 +0000
-+@@ -0,0 +1,42 @@
-++with "bc";
+++++ b/tools/xia/XIA.gpr	Wed May 22 09:58:11 2013 +0100
++@@ -0,0 +1,38 @@
 ++with "xmlada";
 ++
 ++project XIA is
@@ -346,7 +338,6 @@ diff -r 21fb1a7fc020 tools/xia/build_xia_as_library.diff
 ++   for Library_Name use "xia";
 ++   for Library_Kind use Library_Type;
 ++   for Library_Dir use "./lib-" & Library_Type;
-++   for Library_Options use External_As_List ("LDFLAGS", " ");
 ++
 ++   for Languages use ("ada");
 ++
@@ -370,14 +361,12 @@ diff -r 21fb1a7fc020 tools/xia/build_xia_as_library.diff
 ++     for Default_Switches ("ada") use
 ++       (
 ++        "-gnatqQfo",
-++        "-gnatwaL",
-++        "-gnat95",
 ++        "-O2"
 ++       );
 ++  end Compiler;
 ++
 ++end XIA;
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/bench_xpath.adb
++diff -r 21fb1a7fc020 tools/xia/bench_xpath.adb
 +--- a/tools/xia/bench_xpath.adb	Tue Jan 24 11:55:36 2012 +0000
 ++++ /dev/null	Thu Jan 01 00:00:00 1970 +0000
 +@@ -1,234 +0,0 @@
@@ -591,524 +580,8 @@ diff -r 21fb1a7fc020 tools/xia/build_xia_as_library.diff
 +---      Queried_Nodes := Xpath_Query(N, "/personnel/person[(number(age) > 40) | (number(age) < 30)]/@id");
 +-      Queried_Nodes := Xpath_Query(N, "/personnel/person[@id=""four.worker""]|/personnel/person/age");
 +-      Queried_Nodes := Xpath_Query(N, "//@*");
-+-      Queried_Nodes := Xpath_Query(N, "//person/@*");
-+-      Queried_Nodes := Xpath_Query(N, "//node()[name(.)=""#text""]");
-+-      Queried_Nodes := Xpath_Query(N, "//node()[local-name(.)=name(.)]");
-+-      Queried_Nodes := Xpath_Query(N, "//@*[string(namespace-uri(.))]");
-+-      Queried_Nodes := Xpath_Query(N, "//@*[namespace-uri(.)]");
-+-      Queried_Nodes := Xpath_Query(N, "//link[@manager]");
-+-      Queried_Nodes := Xpath_Query(N, "//link[@subordinates]");
-+-      Queried_Nodes := Xpath_Query(N, "//link[@manager|@subordinates]");
-+-      Queried_Nodes := Xpath_Query(N, "//person[number('This is not a number')]/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[4 div 0]/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[string(number('This is not a number')) = 'NaN']/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[string(number('This is not a number')) = 'This is not a number']/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[string(4 div 0) = 'Infinity']/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[concat(string(position()), '23') = '323']/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[starts-with(concat(string(position()), '23'), '22')]/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[contains(concat(string(position()), '23', string(position()), '47'), '34')]/@id");
-+-      Queried_Nodes := Xpath_Query(N, "//person[substring-before(concat(string(position()), '23', string(position()), '47'), '35') = '52']/@id");
-+-      Stop := Clock;
-+-      Put_Line(Duration'Image(Stop - Start));
-+-   end loop;
-+-
-+--- Disconnect_From_Server;
-+-
-+-end Bench_Xpath;
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/mckae-xml-xpath-expressions.ads
-+--- a/tools/xia/mckae-xml-xpath-expressions.ads	Tue Jan 24 11:55:36 2012 +0000
-++++ b/tools/xia/mckae-xml-xpath-expressions.ads	Tue Jan 24 13:11:36 2012 +0000
-+@@ -32,7 +32,7 @@
-+ use  Ada.Strings.Unbounded;
-+ with Dom.Core;
-+ 
-+-package Mckae.XML.XPath.Expressions is
-++package McKae.XML.XPath.Expressions is
-+ 
-+    type String_Ptr is access all String;
-+ 
-+@@ -152,4 +152,4 @@
-+                                 Args          : in out Argument_List;
-+                                 Result        :    out Expression_Values);
-+ 
-+-end Mckae.XML.XPath.Expressions;
-++end McKae.XML.XPath.Expressions;
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/mckae-xml-xpath-locations.ads
-+--- a/tools/xia/mckae-xml-xpath-locations.ads	Tue Jan 24 11:55:36 2012 +0000
-++++ b/tools/xia/mckae-xml-xpath-locations.ads	Tue Jan 24 13:11:36 2012 +0000
-+@@ -29,10 +29,10 @@
-+ ------------------------------------------------------------------------
-+ 
-+ with Ada.Strings.Unbounded;
-+-with Mckae.XML.XPath.Predicates;
-++with McKae.XML.XPath.Predicates;
-+ with Unicode.CES;
-+ 
-+-package Mckae.XML.XPath.Locations is
-++package McKae.XML.XPath.Locations is
-+ 
-+    use Ada.Strings.Unbounded;
-+    use McKae.XML.XPath;
-+@@ -121,7 +121,7 @@
-+       end record;
-+ 
-+    -- Redefinition of strings to be compatible with the DOM interface
-+-   subtype Xpath_String is Unicode.CES.Byte_Sequence;
-++   subtype XPath_String is Unicode.CES.Byte_Sequence;
-+ 
-+ 
-+    -- Add a newly defined location step to the path
-+@@ -144,4 +144,4 @@
-+    --  procedure.
-+    procedure Reset_For_Parsing;
-+ 
-+-end Mckae.XML.XPath.Locations;
-++end McKae.XML.XPath.Locations;
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/mckae-xml-xpath-xia.ads
-+--- a/tools/xia/mckae-xml-xpath-xia.ads	Tue Jan 24 11:55:36 2012 +0000
-++++ b/tools/xia/mckae-xml-xpath-xia.ads	Tue Jan 24 13:11:36 2012 +0000
-+@@ -39,7 +39,7 @@
-+ 
-+ with Dom.Core;
-+ 
-+-package Mckae.XML.XPath.XIA is
-++package McKae.XML.XPath.XIA is
-+ 
-+    function XPath_Query
-+      (N     : Dom.Core.Node;
-+@@ -62,4 +62,4 @@
-+    Inappropriate_Node : exception;
-+    -- Raised when the starting node does not correspond to the type of query
-+ 
-+-end Mckae.XML.XPath.XIA;
-++end McKae.XML.XPath.XIA;
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/test/bench_xpath.adb
-+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-++++ b/tools/xia/test/bench_xpath.adb	Tue Jan 24 13:11:36 2012 +0000
-+@@ -0,0 +1,234 @@
-++------------------------------------------------------------------------
-++--                                                                    --
-++--                     McKae Software Utilities                       --
-++--                                                                    --
-++--           Copyright (C) 2004 McKae Technologies                    --
-++--                                                                    --
-++-- The  McKae   software  utilities   are  free  software;   you  can --
-++-- redistribute it  and/or modify it  under terms of the  GNU General --
-++-- Public  License  as published  by  the  Free Software  Foundation; --
-++-- either version  2, or (at  your option) any later  version.  McKae --
-++-- Software Utilities are  distributed in the hope that  they will be --
-++-- useful,  but  WITHOUT  ANY  WARRANTY;  without  even  the  implied --
-++-- warranty of  MERCHANTABILITY or FITNESS FOR  A PARTICULAR PURPOSE. --
-++-- See the GNU  General Public License for more  details.  You should --
-++-- have received a copy of the GNU General Public License distributed --
-++-- with DTraq; see file COPYING.   If not, write to the Free Software --
-++-- Foundation, 59  Temple Place -  Suite 330, Boston,  MA 02111-1307, --
-++-- USA.                                                               --
-++--                                                                    --
-++-- As a  special exception, if other files  instantiate generics from --
-++-- this unit,  or you link this  unit with other files  to produce an --
-++-- executable,  this unit  does  not by  itself  cause the  resulting --
-++-- executable to be covered by  the GNU General Public License.  This --
-++-- exception does  not however invalidate  any other reasons  why the --
-++-- executable file might be covered by the GNU Public License.        --
-++--                                                                    --
-++-- The McKae Software Utilities  are maintained by McKae Technologies --
-++-- (http://www.mckae.com).                                            --
-++------------------------------------------------------------------------
-++
-++with Ada.Strings.Fixed;
-++with Ada.Strings.Maps;
-++with Ada.Calendar;
-++use Ada.Calendar;
-++
-++with Dom.Core.Nodes;
-++with Mckae.XML.XPath.XIA;
-++with Dom.Readers;
-++with Unicode.CES;
-++
-++--  with Dtraq.Client_Transport;
-++--  use  Dtraq.Client_Transport;
-++
-++with Mckae.Xml.Xpath.Locations;
-++
-++with Input_Sources.File;
-++
-++with Text_IO; use Text_IO;
-++
-++procedure Bench_Xpath is
-++
-++   use Dom;
-++   use Dom.Core;
-++   use Input_Sources;
-++   use Mckae.Xml.XPath.Locations;
-++   use Mckae.Xml.XPath.XIA;
-++   use Ada.Strings.Fixed;
-++   use Ada.Strings.Maps;
-++
-++
-++   XML_Source_Reader : Dom.Readers.Tree_Reader;
-++   Queried_Nodes : Node_List;
-++   N             : Node;
-++
-++   File_Source : File.File_Input;
-++   
-++   Start, Stop : Ada.Calendar.Time;
-++
-++begin
-++   File.Open("personal.xml", File_Source);
-++
-++   Readers.Parse(XML_Source_Reader, File_Source);
-++   File.Close(File_Source);
-++   
-++   N := Readers.Get_Tree(XML_Source_Reader);
-++   for I in 1 .. 10 loop
-++      Start := Clock;
-++      Queried_Nodes := Xpath_Query(N, "//given/..");
-++      Queried_Nodes := Xpath_Query(N, "//email");
-++      Queried_Nodes := Xpath_Query(N, "//@id");
-++      Queried_Nodes := Xpath_Query(N, "//@aid");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person/link/attribute::subordinates");
-++      Queried_Nodes := Xpath_Query(N, "personnel/person/name/family");
-++      Queried_Nodes := Xpath_Query(N, "//family/ancestor::name");
-++      Queried_Nodes := Xpath_Query(N, "//family/text()");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person/name/family/..");
-++      Queried_Nodes := Xpath_Query(N, "./pesonnel");
-++      Queried_Nodes := Xpath_Query(N, "./personnel");
-++      Queried_Nodes := Xpath_Query(N, "personnel/person/email/preceding::name/given/text()");
-++      Queried_Nodes := Xpath_Query(N, ".//*");
-++      Queried_Nodes := Xpath_Query(N, "//email/following-sibling::link/@manager");
-++      Queried_Nodes := Xpath_Query(N, "//email/following-sibling::link/@subordinates");
-++      Queried_Nodes := Xpath_Query(N, "//@id/parent::*");
-++      Queried_Nodes := Xpath_Query(N, "//given/..");
-++      Queried_Nodes := Xpath_Query(N, "//email/preceding-sibling::*");
-++      Queried_Nodes := Xpath_Query(N, "//email/following-sibling::*");
-++      Queried_Nodes := Xpath_Query(N, "//family/ancestor::person/link");
-++      Queried_Nodes := Xpath_Query(N, "//name/ancestor::*");
-++      Queried_Nodes := Xpath_Query(N, "//name/ancestor-or-self::*");
-++      Queried_Nodes := Xpath_Query(N, "//name/descendant::*");
-++      Queried_Nodes := Xpath_Query(N, "//name/descendant-or-self::*");
-++      Queried_Nodes := Xpath_Query(N, "//@subordinates");
-++      Queried_Nodes := Xpath_Query(N, "//@subordinates/..");
-++      Queried_Nodes := Xpath_Query(N, "//@subordinates/../preceding::*");
-++      Queried_Nodes := Xpath_Query(N, "//@subordinates/../following::*");
-++      Queried_Nodes := Xpath_Query(N, "..");
-++      Queried_Nodes := Xpath_Query(N, ".");
-++      Queried_Nodes := Xpath_Query(N, "..//email");
-++      Queried_Nodes := Xpath_Query(N, "//person[3]/following-sibling::*");
-++      Queried_Nodes := Xpath_Query(N, "//person[3]/following-sibling::*/@id[2]");
-++      Queried_Nodes := Xpath_Query(N, "//person[3]/preceding-sibling::*/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[3]/preceding-sibling::*[2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[3]/preceding-sibling::*/@id[2]");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[2]/email/preceding-sibling::name/given/ancestor-or-self::*[3]");
-++      Queried_Nodes := Xpath_Query(N, "//family");
-++      Queried_Nodes := Xpath_Query(N, "//given");
-++      Queried_Nodes := Xpath_Query(N, "//family|//given");
-++      Queried_Nodes := Xpath_Query(N, "//family|//given[2]");
-++      Queried_Nodes := Xpath_Query(N, "//person[last()]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position()=2]/@id");
-++--      Queried_Nodes := Xpath_Query(N, "//person[position(3)=2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//@id[3]");
-++      Queried_Nodes := Xpath_Query(N, "//@id[true()]");
-++      Queried_Nodes := Xpath_Query(N, "//@id[false()]");
-++      Queried_Nodes := Xpath_Query(N, "//@id[not(position()=2)]");
-++      Queried_Nodes := Xpath_Query(N, "//@id[position() >= 5]");
-++      Queried_Nodes := Xpath_Query(N, "//person[3 - 1]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[3 * 2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[5 mod 2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[5 mod -2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[(-5 mod 2) + 4]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[(-5 mod -2) + 2 * true()]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[round(1.1*3)]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[1 or 2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[4 and -2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[4 and (3 > 10)]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position() != 3]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[3 * 1.1]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[5 - 0.0001]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[(((position() mod 2)))]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position() mod 2 = 0]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position() = floor(last() div 2 + 0.5) or position() = ceiling(last() div 2 + 0.5)]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position() > 3]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position() < 3]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position() <= 2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[position() div 2 + 2]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[5 + -true()]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[number(""This is not a number"")]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[4 div 0]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(number(""This is not a number"")) = ""NaN""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(number(""This is not a number"")) = ""This is not a number""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(4 div 0) = ""Infinity""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[concat(string(position()), ""23"") = ""323""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[starts-with(concat(string(position()), ""23""), ""22"")]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[contains(concat(string(position()), ""23"", string(position()), ""47""), ""34"")]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring-before(concat(string(position()), ""23"", string(position()), ""47""), ""35"") = ""52""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring-after(concat(string(position()), ""23"", string(position()), ""47""), ""35"") = ""47""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), 4, 3) = ""347""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), 4) = ""347""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), -42, 1 div 0) = ""223247""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), 0 div 0, 3) = ""3""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), 0 div 0, 3) = """"]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), 1.5, 2.6) = '234']/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), 0, 3) = '52']/@id");
-++--      Queried_Nodes := Xpath_Query(N, "//person[substring(concat(string(position()), ""23"", string(position()), ""47""), -1 div 0, 1 div 0) = ""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[(string-length(string(position())) * position()) = ""4""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(-3)]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(35.3)]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(0)]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(0 div 0)]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(-4 div 0)]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(10 div 0)]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(string())]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(string(last()))]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(substring-before(""123"", ""5""))]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/descendant-or-self::email[boolean(number())]/text()");
-++      Queried_Nodes := Xpath_Query(N, "//person[email]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//name[given = ""Big""]/family");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[string-length(string(name/family)) < 5]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//*[attribute::id=""five.worker""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//*[../email=""chief@foo.com""]");
-++      Queried_Nodes := Xpath_Query(N, "//given[.=""Four""]");
-++      Queried_Nodes := Xpath_Query(N, "/descendant::node()[count(ancestor::node()) = 3]");
-++      Queried_Nodes := Xpath_Query(N, "//name[given=""Five""]/given");
-++      Queried_Nodes := Xpath_Query(N, "//name[normalize-space(given)=""Five""]/given");
-++      Queried_Nodes := Xpath_Query(N, "//name[translate(normalize-space(string(given)), ""Five"", ""Four"")=""Four""]/given");
-++      Queried_Nodes := Xpath_Query(N, "//name[translate(string(given), ""Oneabcd"", ""Two"")=""Two""]/given");
-++      Queried_Nodes := Xpath_Query(N, "//name[translate(string(given), ""FFFF"", ""Four"")=""Four""]/given");
-++      Queried_Nodes := Xpath_Query(N, "//name[translate(string(given), ""Thre"", ""One"")=""One""]/given");
-++      Queried_Nodes := Xpath_Query(N, "//name/given[normalize-space()=""Big""]/text()");
-++      Queried_Nodes := Xpath_Query(N, "//name/given[number()=""Big""]/text()");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person/age[count(preceding::age)=2]/../@id");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person/age[(sum(preceding::age) - 21)=56]/../@id");
-++      Queried_Nodes := Xpath_Query(N, "//personnel[lang(""en"")]");
-++      Queried_Nodes := Xpath_Query(N, "//personnel[lang(""pl"")]");
-++      Queried_Nodes := Xpath_Query(N, "//*[lang(""en"")]");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[5]/name/given/ancestor-or-self::*[@xml:lang][2]");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[5]/name/given/ancestor-or-self::*[@xml:lang][last()]");
-++      Queried_Nodes := Xpath_Query(N, "//person[2][@id=""three.worker""]/name/given");
-++      Queried_Nodes := Xpath_Query(N, "//*[lang(""EN-US"")]");
-++      Queried_Nodes := Xpath_Query(N, "//person[number(age)=""37""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(number(email))=""NaN""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(number(email))=""5""]/@id");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[@id=""four.worker"" and @xml:lang=""en-US""]");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[@id=""five.worker"" and @xml:lang=""en-US""]/email");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[number(age) > 40]/@id");
-++--      Queried_Nodes := Xpath_Query(N, "/personnel/person[(number(age) > 40) | (number(age) < 30)]/@id");
-++      Queried_Nodes := Xpath_Query(N, "/personnel/person[@id=""four.worker""]|/personnel/person/age");
-++      Queried_Nodes := Xpath_Query(N, "//@*");
-++      Queried_Nodes := Xpath_Query(N, "//person/@*");
-++      Queried_Nodes := Xpath_Query(N, "//node()[name(.)=""#text""]");
-++      Queried_Nodes := Xpath_Query(N, "//node()[local-name(.)=name(.)]");
-++      Queried_Nodes := Xpath_Query(N, "//@*[string(namespace-uri(.))]");
-++      Queried_Nodes := Xpath_Query(N, "//@*[namespace-uri(.)]");
-++      Queried_Nodes := Xpath_Query(N, "//link[@manager]");
-++      Queried_Nodes := Xpath_Query(N, "//link[@subordinates]");
-++      Queried_Nodes := Xpath_Query(N, "//link[@manager|@subordinates]");
-++      Queried_Nodes := Xpath_Query(N, "//person[number('This is not a number')]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[4 div 0]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(number('This is not a number')) = 'NaN']/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(number('This is not a number')) = 'This is not a number']/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[string(4 div 0) = 'Infinity']/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[concat(string(position()), '23') = '323']/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[starts-with(concat(string(position()), '23'), '22')]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[contains(concat(string(position()), '23', string(position()), '47'), '34')]/@id");
-++      Queried_Nodes := Xpath_Query(N, "//person[substring-before(concat(string(position()), '23', string(position()), '47'), '35') = '52']/@id");
-++      Stop := Clock;
-++      Put_Line(Duration'Image(Stop - Start));
-++   end loop;
-++
-++-- Disconnect_From_Server;
-++
-++end Bench_Xpath;
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/test/test.gpr
-+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-++++ b/tools/xia/test/test.gpr	Tue Jan 24 13:11:36 2012 +0000
-+@@ -0,0 +1,15 @@
-++with "../XIA";
-++project Test is
-++   for Main use ("bench_xpath.adb", "test_xpath.adb");
-++   for Exec_Dir use ".";
-++   for Object_Dir use ".build";
-++   package Builder is
-++      for Default_Switches ("Ada") use ("-g");
-++   end Builder;
-++   package Binder is
-++     for Default_Switches ("Ada") use ("-E");
-++   end Binder;
-++   package Linker is
-++      for Default_Switches ("Ada") use ("-Wl,-no_pie");
-++   end Linker;
-++end Test;
-+diff -r 21fb1a7fc020 -r 5477bb2b475a tools/xia/test_xpath.adb
-+--- a/tools/xia/test_xpath.adb	Tue Jan 24 11:55:36 2012 +0000
-++++ /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+@@ -1,166 +0,0 @@
-+-------------------------------------------------------------------------
-+---                                                                    --
-+---                     McKae Software Utilities                       --
-+---                                                                    --
-+---           Copyright (C) 2004 McKae Technologies                    --
-+---                                                                    --
-+--- The  McKae   software  utilities   are  free  software;   you  can --
-+--- redistribute it  and/or modify it  under terms of the  GNU General --
-+--- Public  License  as published  by  the  Free Software  Foundation; --
-+--- either version  2, or (at  your option) any later  version.  McKae --
-+--- Software Utilities are  distributed in the hope that  they will be --
-+--- useful,  but  WITHOUT  ANY  WARRANTY;  without  even  the  implied --
-+--- warranty of  MERCHANTABILITY or FITNESS FOR  A PARTICULAR PURPOSE. --
-+--- See the GNU  General Public License for more  details.  You should --
-+--- have received a copy of the GNU General Public License distributed --
-+--- with DTraq; see file COPYING.   If not, write to the Free Software --
-+--- Foundation, 59  Temple Place -  Suite 330, Boston,  MA 02111-1307, --
-+--- USA.                                                               --
-+---                                                                    --
-+--- As a  special exception, if other files  instantiate generics from --
-+--- this unit,  or you link this  unit with other files  to produce an --
-+--- executable,  this unit  does  not by  itself  cause the  resulting --
-+--- executable to be covered by  the GNU General Public License.  This --
-+--- exception does  not however invalidate  any other reasons  why the --
-+--- executable file might be covered by the GNU Public License.        --
-+---                                                                    --
-+--- The McKae Software Utilities  are maintained by McKae Technologies --
-+--- (http://www.mckae.com).                                            --
-+-------------------------------------------------------------------------
-+-
-+-with Ada.Strings.Fixed;
-+-with Ada.Strings.Maps;
-+-with Dom.Core.Nodes;
-+-with Mckae.XML.XPath.XIA;
-+-with Dom.Readers;
-+-with Unicode.CES;
-+-
-+---  with Dtraq.Client_Transport;
-+---  use  Dtraq.Client_Transport;
-+-
-+-with Mckae.Xml.Xpath.Locations;
-+-
-+-with Input_Sources.File;
-+-
-+-with Text_IO; use Text_IO;
-+-
-+-procedure Test_Xpath is
-+-
-+-   use Dom;
-+-   use Dom.Core;
-+-   use Input_Sources;
-+-   use Mckae.Xml.XPath.Locations;
-+-   use Mckae.Xml.XPath.XIA;
-+-   use Ada.Strings.Fixed;
-+-   use Ada.Strings.Maps;
-+-
-+-
-+-   XML_Source_Reader : Dom.Readers.Tree_Reader;
-+-   Queried_Nodes : Node_List;
-+-   N             : Node;
-+-   Child         : Node;
-+-   Children      : Node_List;
-+-
-+-   Children_Printed : Boolean := False;
-+-
-+-   File_Source : File.File_Input;
-+-
-+-   S : String(1..255);
-+-   L : Natural;
-+-
-+-   procedure Print_Text_Node (T      : Text;
-+-                              Indent : Boolean := False) is
-+-      White_Space     : constant Xpath_String := ' ' & Ascii.LF & Ascii.CR & ASCII.HT;
-+-      White_Space_Set : constant Character_Set := To_Set(White_Space);
-+-
-+-      S : Unicode.CES.Byte_Sequence := Trim(Nodes.Node_Value(T),
-+-                                            White_Space_Set,
-+-                                            White_Space_Set);
-+-
-+-   begin
-+-      if S'Length > 0 then
-+-         if Indent then
-+-            Put("  ");
-+-         end if;
-+-         Put_Line(S);
-+-      end if;
-+-   end Print_Text_Node;
-+-
-+-begin
-+-   Put("Enter XML file name: ");
-+-   Get_Line(S, L);
-+-
-+-   File.Open(S(1..L), File_Source);
-+-
-+-   Readers.Parse(XML_Source_Reader, File_Source);
-+-   File.Close(File_Source);
-+-
-+--- Connect_To_Server;
-+-
-+-   loop
-+-      Put("Enter XPath query: ");
-+-      Get_Line(S, L);
-+-      if S(1) /= '#' then -- Skip comment
-+-         exit when L = 0;
-+-         New_Line(2);
-+-         Put_Line("Evaluating: " & S(1..L));
-+-         New_Line;
-+-         begin
-+-            Queried_Nodes := Xpath_Query(Readers.Get_Tree(XML_Source_Reader), S(1..L));
-+-            Put_Line("Number of nodes:" & Natural'Image(Dom.Core.Nodes.Length(Queried_Nodes)));
-+-
-+-            for I in 0 .. Nodes.Length(Queried_Nodes) - 1 loop
-+-               N := Dom.Core.Nodes.Item(Queried_Nodes, I);
-+-
-+-               if N.Node_Type = Element_Node then
-+-                  Put("<");
-+-                  Put(Nodes.Node_Name(N));
-+-                  Put(">");
-+-
-+-                  Children := Nodes.Child_Nodes(N);
-+-                  Children_Printed := False;
-+-                  for J in 0 .. Nodes.Length(Children) - 1 loop
-+-                     Child := Nodes.Item(Children, J);
-+-                     if Child.Node_Type = Element_Node then
-+-                        if not Children_Printed then
-+-                           New_Line;
-+-                           Children_Printed := True;
-+-                        end if;
-+-                        Put("  <");
-+-                        Put(Nodes.Node_Name(Child));
-+-                        Put_Line(">");
-+-                     elsif Child.Node_Type = Text_Node then
-+-                        if not Children_Printed then
-+-                           New_Line;
-+-                           Children_Printed := True;
-+-                        end if;
-+-                        Print_Text_Node(Child, Indent => True);
-+-                     end if;
-+-                  end loop;
-+-
-+-                  Put("</");
-+-                  Put(Nodes.Node_Name(N));
-+-                  Put_Line(">");
-+-
-+-               elsif N.Node_Type = Attribute_Node then
-+-                  Put(Nodes.Node_Name(N) & "=""");
-+-                  Put(Nodes.Node_Value (N));
-+-                  Put_Line("""");
-+-
-+-               elsif N.Node_Type = Text_Node then
-+-                  Print_Text_Node(N);
-+-               else
-+-                  Put(Nodes.Node_Value(N));
-+-               end if;
-+-            end loop;
-+-
-+-         exception
-+-            when Malformed_XPath =>
-+-               Put_Line("Malformed query");
-+-         end;
-+-      end if;
-+-   end loop;
-+-
-+--- Disconnect_From_Server;
-+-
-+-end Test_Xpath;
++-      Queried_Nodes := Xpa
+\ No newline at end of file
 diff -r 21fb1a7fc020 tools/xia/mckae-space-unbounded_string_expandable.adb
 --- a/tools/xia/mckae-space-unbounded_string_expandable.adb	Tue Jan 24 11:55:36 2012 +0000
 +++ /dev/null	Thu Jan 01 00:00:00 1970 +0000
@@ -1477,7 +950,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-space.ads
 -end McKae.Space;
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-expressions.ads
 --- a/tools/xia/mckae-xml-xpath-expressions.ads	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-expressions.ads	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/mckae-xml-xpath-expressions.ads	Wed May 22 09:58:11 2013 +0100
 @@ -32,7 +32,7 @@
  use  Ada.Strings.Unbounded;
  with Dom.Core;
@@ -1495,7 +968,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-expressions.ads
 +end McKae.XML.XPath.Expressions;
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-locations.ads
 --- a/tools/xia/mckae-xml-xpath-locations.ads	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-locations.ads	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/mckae-xml-xpath-locations.ads	Wed May 22 09:58:11 2013 +0100
 @@ -29,10 +29,10 @@
  ------------------------------------------------------------------------
  
@@ -1526,32 +999,42 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-locations.ads
 +end McKae.XML.XPath.Locations;
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.adb
 --- a/tools/xia/mckae-xml-xpath-node_sets.adb	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-node_sets.adb	Wed May 15 17:57:19 2013 +0100
-@@ -28,100 +28,49 @@
++++ b/tools/xia/mckae-xml-xpath-node_sets.adb	Wed May 22 09:58:11 2013 +0100
+@@ -28,100 +28,113 @@
  -- (http://www.mckae.com).                                            --
  ------------------------------------------------------------------------
  
 -with Bc.Support.Standard_Storage;
-+package body McKae.XML.XPath.Node_Sets is
++with System;
  
 -with System.Address_To_Access_Conversions;
 -with System.Storage_Elements;
++package body McKae.XML.XPath.Node_Sets is
  
 -package body Mckae.XML.XPath.Node_Sets is
-+   function "=" (L, R : Current_Matchings) return Boolean is
++   not overriding
++   function Length (Container : Set) return Ada.Containers.Count_Type
++   is
 +   begin
-+      return L.Matching_Node = R.Matching_Node;
-+   end "=";
++      return Container.Elements.Length;
++   end Length;
  
 +   -------------------------------------------------------------------
  
 -   ---------------------------------------------------------------------
--
++   not overriding
++   function Is_Empty (Container : Set) return Boolean
++   is
++   begin
++      return Container.Elements.Is_Empty;
++   end Is_Empty;
+ 
 -   function Null_Container return Set is
 -      Empty: Set;
++   -------------------------------------------------------------------
++
 +   not overriding
-+   procedure Insert (Container : in out Set;
-+                     New_Item : Current_Matchings)
++   procedure Clear (Container : in out Set)
 +   is
     begin
 -      return Empty;
@@ -1567,12 +1050,9 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.adb
 -      Match_Nodes.Add(C.Presence, Elem.Matching_Node, Not_Present);
 -      if Not_Present then
 -         Matchings_Sets.Insert(Matchings_Sets.Collection(C), Item);
-+      if not Container.Contains (New_Item) then
-+         Container.Insert (New_Item => New_Item,
-+                           Before => Container.First_Index);
-       end if;
-    end Insert;
- 
+-      end if;
+-   end Insert;
+-
 -   ---------------------------------------------------------------------
 -
 -   procedure Append (C : in out Set; Elem : Current_Matchings) is
@@ -1581,21 +1061,13 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.adb
 -
 -      Not_Present : Boolean := False;
 -      Item    : Current_Matchings := Elem;
-+   -------------------------------------------------------------------
-+   overriding
-+   procedure Append (Container : in out Set;
-+                     New_Item : Current_Matchings;
-+                     Count : Ada.Containers.Count_Type := 1)
-+   is
-    begin
+-   begin
 -      Match_Nodes.Add(C.Presence, Elem.Matching_Node, Not_Present);
 -      if Not_Present then
 -         Matchings_Sets.Append(Matchings_Sets.Collection(C), Item);
-+      if not Container.Contains (New_Item) then
-+         Matchings_Sets.Vector (Container).Append (New_Item);
-       end if;
-    end Append;
- 
+-      end if;
+-   end Append;
+-
 -   ---------------------------------------------------------------------
 -
 -   procedure Clear (C : in out Set)
@@ -1604,26 +1076,24 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.adb
 -   begin
 -      Matchings_Sets.Clear(Matchings_Sets.Collection(C));
 -      Match_Nodes.Clear(C.Presence);
--   end Clear;
--
++      Container.Elements.Clear;
++      Container.Presence.Clear;
+    end Clear;
+ 
     -------------------------------------------------------------------
  
 -   procedure Union (S : in out Set; O : Set) is
 -      Iter : Matchings_Containers.Iterator'Class := New_Iterator(O);
 +   not overriding
-+   procedure Union (Target : in out Set; Source : Set) is
-+      procedure Append (Position : Matchings_Sets.Cursor) is
-+      begin
-+         Target.Append (New_Item => Matchings_Sets.Element (Position));
-+      end Append;
++   function First (Container : Set) return Cursor
++   is
     begin
 -      while not Matchings_Containers.Is_Done(Iter) loop
 -         Append(S, Matchings_Containers.Current_Item(Iter));
 -         Matchings_Containers.Next(Iter);
 -      end loop;
-+      Source.Iterate (Append'Access);
-    end Union;
- 
+-   end Union;
+-
 -   ---------------------------------------------------------------------
 -
 -   function "<"(L, R : Sortable_Matches) return Boolean is
@@ -1652,14 +1122,84 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.adb
 -   begin
 -      return Natural(Node_Addr mod Natural_Bit_Factor) / 4;
 -   end Generate_Hash;
--
--   -------------------------------------------------------------------
--
++      return Cursor'(Elements_Cursor => Container.Elements.First);
++   end First;
+ 
+    -------------------------------------------------------------------
+ 
++   function Element (Position : Cursor) return Current_Matchings
++   is
++   begin
++      return Matchings_Vectors.Element (Position.Elements_Cursor);
++   end Element;
++
++   -------------------------------------------------------------------
++
++   procedure Next (Position : in out Cursor)
++   is
++   begin
++      Matchings_Vectors.Next (Position.Elements_Cursor);
++   end Next;
++
++   -------------------------------------------------------------------
++
++   not overriding
++   procedure Insert (Container : in out Set;
++                     New_Item : Current_Matchings)
++   is
++   begin
++      if not Container.Presence.Contains (New_Item) then
++         Container.Presence.Insert (New_Item);
++         Container.Elements.Insert (New_Item => New_Item,
++                                    Before => Container.Elements.First_Index);
++      end if;
++   end Insert;
++
++   -------------------------------------------------------------------
++
++   not overriding
++   procedure Append (Container : in out Set;
++                     New_Item : Current_Matchings)
++   is
++   begin
++      if not Container.Presence.Contains (New_Item) then
++         Container.Presence.Insert (New_Item);
++         Container.Elements.Append (New_Item);
++      end if;
++   end Append;
++
++   -------------------------------------------------------------------
++
++   not overriding
++   procedure Union (Target : in out Set; Source : Set) is
++      procedure Append (Position : Matchings_Vectors.Cursor) is
++      begin
++         Target.Append (New_Item => Matchings_Vectors.Element (Position));
++      end Append;
++   begin
++      Source.Elements.Iterate (Append'Access);
++   end Union;
++
++   -------------------------------------------------------------------
++
++   function "=" (L, R : Current_Matchings) return Boolean is
++   begin
++      return L.Matching_Node = R.Matching_Node;
++   end "=";
++
++   -------------------------------------------------------------------
++
++   function "<" (L, R : Current_Matchings) return Boolean is
++      use System;
++   begin
++      return L.Matching_Node.all'Address < R.Matching_Node.all'Address;
++   end "<";
++
  end Mckae.XML.XPath.Node_Sets;
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.ads
 --- a/tools/xia/mckae-xml-xpath-node_sets.ads	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-node_sets.ads	Wed May 15 17:57:19 2013 +0100
-@@ -28,18 +28,13 @@
++++ b/tools/xia/mckae-xml-xpath-node_sets.ads	Wed May 22 09:58:11 2013 +0100
+@@ -28,18 +28,16 @@
  -- (http://www.mckae.com).                                            --
  ------------------------------------------------------------------------
  
@@ -1667,7 +1207,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.ads
 -with Bc.Containers.Sets.Unbounded;
 -with Bc.Containers.Trees.Avl;
 -with Bc.Support.Standard_Storage;
-+with Ada.Containers.Vectors;
++with Ada.Containers;
  
  with Dom.Core;
  use  Dom.Core;
@@ -1676,54 +1216,73 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.ads
  use  Mckae.XML.XPath.Locations;
 -with Mckae.Space.Unbounded_String_Expandable;
 -use  Mckae.Space.Unbounded_String_Expandable;
++
++private with Ada.Containers.Ordered_Sets;
++private with Ada.Containers.Vectors;
  
  package Mckae.XML.XPath.Node_Sets is
  
-@@ -64,69 +59,36 @@
+@@ -52,7 +50,7 @@
+          when Attribute_Axis =>
+             Owner_Node  : Node;    -- Work around bug in XMLAda wherein the
+                                    -- parent node of an attribute is always
+-                                   -- set to Null, making it impossible to
++                                   -- set to null, making it impossible to
+                                    -- get the owner element
+             Attr_Index  : Natural;
+ 
+@@ -64,69 +62,78 @@
        end case;
     end record;
  
 -   -------------------------------------------------------------------
-+   function "=" (L, R : Current_Matchings) return Boolean;
++   ------------------------------------------------------------------
++   --  We need a container which has both vector-like properties (to
++   --  keep nodes in document order or, in the case of ancestor- or
++   --  previous- axes, reverse document order) as well as set-like
++   --  properties (so that each node is only entered once).
++   --
++   --  Clearly there might be some confusion if a node is entered
++   --  through two routes (for example, a union (node-set |
++   --  node-set). However, the document ordering is only important at
++   --  a single step, so this isn't an issue.
++   --
++   --  This code is written in the style of Ada.Containers, but with
++   --  only the interfaces required to support this application.
++   ------------------------------------------------------------------
  
 -   package Matchings_Containers is new BC.Containers (Item => Current_Matchings);
 -   package Matchings_Collections is new Matchings_Containers.Collections;
 -   package Matchings_Sets is new Matchings_Collections.Unbounded
 -     (Storage => BC.Support.Standard_Storage.Pool);
-+   package Matchings_Sets
-+   is new Ada.Containers.Vectors (Index_Type => Natural,
-+                                  Element_Type => Current_Matchings);
++   type Set is tagged private;
++   type Cursor is private;
++   No_Element : constant Cursor;
  
 -   type Set is new Matchings_Sets.Collection with private;
-+   type Set is new Matchings_Sets.Vector with private;
++   not overriding
++   function Length (Container : Set) return Ada.Containers.Count_Type;
  
 -   function Null_Container return Set;
 +   not overriding
-+   procedure Insert (Container : in out Set;
-+                     New_Item : Current_Matchings);
-+   --  Inserts New_Item (at the beginning) unless it's already present.
++   function Is_Empty (Container : Set) return Boolean;
  
 -   procedure Insert (C : in out Set; Elem : Current_Matchings);
 -   --  Add the item to the front of the collection, if it is not
 -   --  already in the set
-+   overriding
-+   procedure Append (Container : in out Set;
-+                     New_Item : Current_Matchings;
-+                     Count : Ada.Containers.Count_Type := 1);
-+   --  Appends New_Item unless it's already present.
-+   --
-+   --  This subprogram can't sensibly be written as 'not overriding',
-+   --  leaving out the Count parameter. If we did, users would have no
-+   --  way of distinguishing a call to this subprogram from one to the
-+   --  inherited subprgram with Count defaulted.
++   not overriding
++   procedure Clear (Container : in out Set);
  
 -   procedure Append (C : in out Set; Elem : Current_Matchings);
 -   --  Add the item to the collection, starting at the end, if it is
 -   --  not already in the set
--
++   not overriding
++   function First (Container : Set) return Cursor;
+ 
 -   procedure Clear (C : in out Set);
 -   --  Empty the collection of all items.
--
++   function Element (Position : Cursor) return Current_Matchings;
+ 
 -   procedure Union (S : in out Set; O : Set);
 -   --  Perform a logical set union; at the completion of this
 -   --  operation, the set S contains the items found in its original
@@ -1731,14 +1290,48 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.ads
 -   --  each item in the set O, if the item is not already a distinct
 -   --  member of the set S, copy the item and add it to the set S. If
 -   --  the item already is a member, do nothing.
--
++   procedure Next (Position : in out Cursor);
+ 
 -   -------------------------------------------------------------------
--
++   not overriding
++   procedure Insert (Container : in out Set;
++                     New_Item : Current_Matchings);
++   --  Inserts New_Item (at the beginning) unless it's already present.
+ 
 -   type Sortable_Matches is record
 -      Key          : Expandable_String;
 -      Matched_Node : Node;
--   end record;
--
++   not overriding
++   procedure Append (Container : in out Set;
++                     New_Item : Current_Matchings);
++   --  Appends New_Item (at the end) unless it's already present.
++
++   not overriding
++   procedure Union (Target : in out Set; Source : Set);
++   --  Union inserts into Target the elements of Source that are not
++   --  equivalent to some element already in Target.
++
++private
++   function "=" (L, R : Current_Matchings) return Boolean;
++   function "<" (L, R : Current_Matchings) return Boolean;
++
++   package Matchings_Vectors
++   is new Ada.Containers.Vectors (Index_Type => Positive,
++                                  Element_Type => Current_Matchings);
++
++   package Matchings_Sets
++   is new Ada.Containers.Ordered_Sets (Element_Type => Current_Matchings);
++
++   type Set is tagged record
++      Elements : Matchings_Vectors.Vector;
++      Presence : Matchings_Sets.Set;
++   end record;
++   --  Doesn't need to be controlled, since both the components are.
++
++   type Cursor is record
++      Elements_Cursor : Matchings_Vectors.Cursor;
+    end record;
+ 
 -   function "<"(L, R : Sortable_Matches) return Boolean;
 -
 -   package Sorting_Containers is new BC.Containers (Item => Sortable_Matches);
@@ -1747,12 +1340,8 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.ads
 -
 -   package Sortable_Matching_Tree is new Match_Trees.Avl
 -     (Storage => BC.Support.Standard_Storage.Pool);
-+   not overriding
-+   procedure Union (Target : in out Set; Source : Set);
-+   --  Union inserts into Target the elements of Source that are not
-+   --  equivalent to some element already in Target.
- 
- private
+-
+-private
 -   -- Use some of the lower bits of the address of the "Node" pointer
 -   --  to be the hash value.
 -   function Generate_Hash(N : Node) return Natural;
@@ -1770,19 +1359,20 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-node_sets.ads
 -      record
 -         Presence : Match_Nodes.Set;
 -      end record;
-+   type Set is new Matchings_Sets.Vector with null record;
++   No_Element : constant Cursor
++     := Cursor'(Elements_Cursor => Matchings_Vectors.No_Element);
  
  end Mckae.XML.XPath.Node_Sets;
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates-evaluation.adb
 --- a/tools/xia/mckae-xml-xpath-predicates-evaluation.adb	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-predicates-evaluation.adb	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/mckae-xml-xpath-predicates-evaluation.adb	Wed May 22 09:58:11 2013 +0100
 @@ -43,26 +43,28 @@
  
        use Mckae.XML.XPath;
  
 -      Iter : Node_Sets.Matchings_Containers.Iterator'Class := Node_Sets.New_Iterator(Nodes);
 -      Node_Set_Size      : Natural := Node_Sets.Length(Nodes);
-+      Cursor             : Node_Sets.Matchings_Sets.Cursor;
++      Cursor             : Node_Sets.Cursor;
 +      Node_Set_Size      : Natural := Natural (Nodes.Length);
        Node_Item_Index    : Natural := 0;
        Node_Item_Position : Natural := 0;
@@ -1795,7 +1385,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates-evaluation.adb
  
        Filtered_Nodes : Node_Sets.Set;
  
-+      use type Node_Sets.Matchings_Sets.Cursor;
++      use type Node_Sets.Cursor;
 +
     begin
        if Predicate_Count >= 1 then
@@ -1807,11 +1397,11 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates-evaluation.adb
 +            Cursor := Nodes.First;
  
 -            while not Node_Sets.Matchings_Containers.Is_Done(Iter) loop
-+            while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
++            while Cursor /= Node_Sets.No_Element loop
                 if Locations.Forward_Axis(Originating_Axis) then
                    Node_Item_Position := Node_Item_Index;
                 else
-@@ -70,25 +72,26 @@
+@@ -70,25 +72,25 @@
                    Node_Item_Position := (Node_Set_Size - Node_Item_Index) + 1;
                 end if;
  
@@ -1822,7 +1412,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates-evaluation.adb
 -               Xia_Parser_Model.Evaluate(Predicate_Handle_Pkg.Item_At(Handle.Predicate_List, P).all,
 +               Node_Item :=
 +                 (N             =>
-+                    Node_Sets.Matchings_Sets.Element (Cursor).Matching_Node,
++                    Node_Sets.Element (Cursor).Matching_Node,
 +                  Node_Position => Node_Item_Position,
 +                  Node_Set_Size => Node_Set_Size);
 +               Xia_Parser_Model.Evaluate(Handle.Predicate_List.Element (P).all,
@@ -1832,12 +1422,11 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates-evaluation.adb
  
                 if Expression.B then
 -                  Node_Sets.Append(Filtered_Nodes, Node_Sets.Matchings_Containers.Current_Item(Iter));
-+                  Filtered_Nodes.Append
-+                    (Node_Sets.Matchings_Sets.Element (Cursor));
++                  Filtered_Nodes.Append (Node_Sets.Element (Cursor));
                 end if;
  
 -               Node_Sets.Matchings_Containers.Next(Iter);
-+               Node_Sets.Matchings_Sets.Next (Cursor);
++               Node_Sets.Next (Cursor);
                 Node_Item_Index := Node_Item_Index + 1;
              end loop;
 -            Node_Sets.Clear(Nodes);
@@ -1847,14 +1436,14 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates-evaluation.adb
           end loop;
        end if;
  
-@@ -101,4 +104,3 @@
+@@ -101,4 +103,3 @@
     ----------------------------------------------------------------------
  
  end McKae.XML.XPath.Predicates.Evaluation;
 -
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates.adb
 --- a/tools/xia/mckae-xml-xpath-predicates.adb	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-predicates.adb	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/mckae-xml-xpath-predicates.adb	Wed May 22 09:58:11 2013 +0100
 @@ -42,16 +42,6 @@
  
     ------------------------------------------------------------------------
@@ -1874,18 +1463,21 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates.adb
        T      : in     Xia_Parser_Model.Parseable_Ptr)
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates.ads
 --- a/tools/xia/mckae-xml-xpath-predicates.ads	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-predicates.ads	Wed May 15 17:57:19 2013 +0100
-@@ -28,8 +28,7 @@
++++ b/tools/xia/mckae-xml-xpath-predicates.ads	Wed May 22 09:58:11 2013 +0100
+@@ -28,10 +28,10 @@
  -- (http://www.mckae.com).                                            --
  ------------------------------------------------------------------------
  
 -with BC.Containers.Collections.Ordered.Unbounded;
 -with Bc.Support.Standard_Storage;
-+with Ada.Containers.Vectors;
  with XIA_Parser_Model;
  
++private with Ada.Containers.Vectors;
++
  package McKae.XML.XPath.Predicates is
-@@ -46,8 +45,8 @@
+ 
+    -- Handle to the predicate content
+@@ -46,8 +46,8 @@
     -- Null instances of a predicate definition
     Null_Predicate : constant Predicate_Handles;
  
@@ -1896,7 +1488,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates.ads
     --  this does _not_ release the associated parse subtree associated
     --  with each predicate instance.
     procedure Release(Handle : in out Predicate_Handles);
-@@ -60,27 +59,15 @@
+@@ -60,27 +60,15 @@
     function "="(L, R : Xia_Parser_Model.Parseable_Ptr) return Boolean
       renames Xia_Parser_Model."=";
  
@@ -1931,7 +1523,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-predicates.ads
  end McKae.XML.XPath.Predicates;
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-query_handling.adb
 --- a/tools/xia/mckae-xml-xpath-query_handling.adb	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-query_handling.adb	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/mckae-xml-xpath-query_handling.adb	Wed May 22 09:58:11 2013 +0100
 @@ -55,7 +55,7 @@
  
        Path := Locations.Get_Path;
@@ -1943,7 +1535,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-query_handling.adb
        return Path;
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
 --- a/tools/xia/mckae-xml-xpath-xia.adb	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-xia.adb	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/mckae-xml-xpath-xia.adb	Wed May 22 09:58:11 2013 +0100
 @@ -28,6 +28,7 @@
  -- (http://www.mckae.com).                                            --
  ------------------------------------------------------------------------
@@ -2054,9 +1646,9 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
        New_Matchings : Node_Sets.Set;
 -      Iter          : Node_Sets.Matchings_Containers.Iterator'Class
 -        := Node_Sets.New_Iterator(Matchings);
-+      Cursor        : Node_Sets.Matchings_Sets.Cursor := Matchings.First;
++      Cursor        : Node_Sets.Cursor := Matchings.First;
  
-+      use type Node_Sets.Matchings_Sets.Cursor;
++      use type Node_Sets.Cursor;
        use type Predicates.Predicate_Handles;
  
     begin
@@ -2064,8 +1656,8 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
        --  against the path step
 -      while not Node_Sets.Matchings_Containers.Is_Done(Iter) loop
 -         Match := Node_Sets.Matchings_Containers.Current_Item(Iter);
-+      while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
-+         Match := Node_Sets.Matchings_Sets.Element (Cursor);
++      while Cursor /= Node_Sets.No_Element loop
++         Match := Node_Sets.Element (Cursor);
  
           -- Check whether this is a direct node check, or a deferred traversal
           if Match.Axis = Self_Axis then
@@ -2085,7 +1677,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
           end if;
  
 -         Node_Sets.Matchings_Containers.Next(Iter);
-+         Node_Sets.Matchings_Sets.Next (Cursor);
++         Node_Sets.Next (Cursor);
        end loop;
  
        -- Now check the predicate criteria
@@ -2188,7 +1780,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
 -      Matching_Node : Node;
 -      Iter          : Node_Sets.Matchings_Containers.Iterator'Class
 -        := Node_Sets.New_Iterator(Matchings);
-+      Cursor        : Node_Sets.Matchings_Sets.Cursor := Matchings.First;
++      Cursor        : Node_Sets.Cursor := Matchings.First;
  
        Current       : Node_Sets.Current_Matchings;
 -      Node_Sorter   : Node_Sets.Sortable_Matches;
@@ -2199,17 +1791,17 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
 -      Empty_Node_List : Node_List;
 +      Sorted_Results  : Node_List;
  
-+      use type Node_Sets.Matchings_Sets.Cursor;
++      use type Node_Sets.Cursor;
     begin
 -      Sorted_Results := Empty_Node_List;
 -
        -- Perform a tree insertion sort of all the nodes
 -      while not Node_Sets.Matchings_Containers.Is_Done(Iter) loop
-+      while Cursor /= Node_Sets.Matchings_Sets.No_Element loop
++      while Cursor /= Node_Sets.No_Element loop
  
           -- Get the matching info for the node
 -         Current := Node_Sets.Matchings_Containers.Current_Item(Iter);
-+         Current := Node_Sets.Matchings_Sets.Element (Cursor);
++         Current := Node_Sets.Element (Cursor);
  
 -         pragma Assert((Current.Axis = Self_Axis) or (Current.Axis = Attribute_Axis));
 +         pragma Assert((Current.Axis = Self_Axis)
@@ -2264,7 +1856,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
 -         pragma Assert(Not_Found);
 -
 -         Node_Sets.Matchings_Containers.Next(Iter);
-+         Node_Sets.Matchings_Sets.Next (Cursor);
++         Node_Sets.Next (Cursor);
        end loop;
  
        -- All the nodes are now inserted, do an in-order traversal to
@@ -2319,7 +1911,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.adb
     -------------------------------------------------------------------
 diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.ads
 --- a/tools/xia/mckae-xml-xpath-xia.ads	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/mckae-xml-xpath-xia.ads	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/mckae-xml-xpath-xia.ads	Wed May 22 09:58:11 2013 +0100
 @@ -39,7 +39,7 @@
  
  with Dom.Core;
@@ -2337,7 +1929,7 @@ diff -r 21fb1a7fc020 tools/xia/mckae-xml-xpath-xia.ads
 +end McKae.XML.XPath.XIA;
 diff -r 21fb1a7fc020 tools/xia/test/bench_xpath.adb
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/tools/xia/test/bench_xpath.adb	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/test/bench_xpath.adb	Wed May 22 09:58:11 2013 +0100
 @@ -0,0 +1,234 @@
 +------------------------------------------------------------------------
 +--                                                                    --
@@ -2575,7 +2167,7 @@ diff -r 21fb1a7fc020 tools/xia/test/bench_xpath.adb
 +end Bench_Xpath;
 diff -r 21fb1a7fc020 tools/xia/test/test.gpr
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/tools/xia/test/test.gpr	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/test/test.gpr	Wed May 22 09:58:11 2013 +0100
 @@ -0,0 +1,15 @@
 +with "../XIA";
 +project Test is
@@ -2594,7 +2186,7 @@ diff -r 21fb1a7fc020 tools/xia/test/test.gpr
 +end Test;
 diff -r 21fb1a7fc020 tools/xia/test/txia
 --- a/tools/xia/test/txia	Tue Jan 24 11:55:36 2012 +0000
-+++ b/tools/xia/test/txia	Wed May 15 17:57:19 2013 +0100
++++ b/tools/xia/test/txia	Wed May 22 09:58:11 2013 +0100
 @@ -1,3 +1,3 @@
 -#!/bin/csh
 -test_xpath < txia_tests.txt
