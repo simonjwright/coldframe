@@ -127,7 +127,8 @@ DEVELOPMENT_DOMAINS =				\
 
 # Others (more regression-specific) in the Regressions model.
 REGRESSION_DOMAINS =				\
-  SF_2991721
+  SF_2991721					\
+  SF_Bug_79
 
 DEVELOPMENT_NORMS = $(addsuffix .norm,$(DEVELOPMENT_DOMAINS))
 $(DEVELOPMENT_NORMS): ColdFrame_Development.norm-stamp ;

@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 96a801ba7910 $
+--  $Date: 2013/06/02 07:18:39 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
+with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Parameters;
 
@@ -64,7 +65,8 @@ package body Normalize_XMI.Model.Operations is
       begin
          if DOM.Core.Nodes.Length (Nodes) /= 0 then
             O.Return_Type :=
-              +DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0));
+              +Identifiers.Normalize
+              (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0)));
          end if;
       end;
 
