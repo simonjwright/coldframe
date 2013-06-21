@@ -5,7 +5,26 @@
 Modelling
 =========
 
+Included the package stereotype <<ignore>> (the package, and any child
+packages, are to be completely ignored) in response to support request
+5 (Domain Subpackage <<hand-coded>> Stereotype).
+
+Generation
+==========
+
 Added extra checks for <<access>> and <<constraint>>.
+
+Fixed bug 75 (Mac OS X Mountain Lion problem).
+
+Fixed bug 79 (a function's result type wasn't normalized).
+
+Fixed bug 80 (Interrupt Handling Example doesn't compile on
+Windows/Cygwin).
+
+Testing
+=======
+
+The Interrupt_Handling example uses SIGINT (crtl-C), not SIGHUP.
 
 ************
 * 20130420 *
