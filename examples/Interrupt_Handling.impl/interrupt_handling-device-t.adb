@@ -6,6 +6,9 @@ with ColdFrame.Interrupts;
 with ColdFrame.Exceptions.Message;
 with GNAT.IO; use GNAT.IO;
 
+pragma Unreserve_All_Interrupts;
+--  so we can use SIGINT on Linux, Mac OS X (Windows doesn't care).
+
 separate (Interrupt_Handling.Device)
 task body T is
 
@@ -13,11 +16,12 @@ task body T is
 
 begin
 
+   delay 0.1;  -- bodge to avoid mingled output.
    Put_Line ("Interrupt_Handling.Device.T running");
 
    accept Start;
 
-   ColdFrame.Interrupts.Attach (H, Ada.Interrupts.Names.SIGHUP);
+   ColdFrame.Interrupts.Attach (H, Ada.Interrupts.Names.SIGINT);
 
    Put_Line ("Interrupt_Handling.Device.T started");
 

@@ -31,28 +31,35 @@ include ../Makefile.inc
 
 # Assume that tash.gpr is on the existing ADA_PROJECT_PATH (or
 # installed).
-app = ADA_PROJECT_PATH=$$ADA_PROJECT_PATH:$(COLDFRAME)
+ifeq (, $(ADA_PROJECT_PATH))
+  export ADA_PROJECT_PATH := ..
+else
+  ADA_PROJECT_PATH := $(ADA_PROJECT_PATH):..
+  ifneq (, $(CYGWIN))
+    ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
+  endif
+endif
 
 EXECUTABLES += house_management-harness$(exe)
 house_management-harness$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
-	$(app) gnatmake -p -PHouse_Management_Test
+	$(GNATMAKE) -p -PHouse_Management_Test
 
 EXECUTABLES += interrupt_handling-harness$(exe)
 interrupt_handling-harness$(exe): Interrupt_Handling.gen force
-	$(app) gnatmake -p -PInterrupt_Handling
+	$(GNATMAKE) -p -PInterrupt_Handling
 
 EXECUTABLES += library_test_harness$(exe)
 library_test_harness$(exe): Library.gen force
-	$(app) gnatmake -p -PLibrary
+	$(GNATMAKE) -p -PLibrary
 
 EXECUTABLES += performance-harness$(exe)
 performance-harness$(exe): Performance.gen force
-	$(app) gnatmake -p -PPerformance
+	$(GNATMAKE) -p -PPerformance
 
 #EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
-	$(app) gnatmake -p -PProblem_Reporting
+	$(GNATMAKE) -p -PProblem_Reporting
 
 #EXECUTABLES += serialization_client$(exe)
 serialization_client$(exe): serialization_server$(exe)
@@ -62,19 +69,19 @@ serialization_server: Serialization.gen \
  Serialization_Demo.gen \
  Serialization_Demo_Other.gen \
  force
-	$(app) gnatmake -p -PSerialization
+	$(GNATMAKE) -p -PSerialization
 
 EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
-	$(app) gnatmake -p -PStates
+	$(GNATMAKE) -p -PStates
 
 EXECUTABLES += stairwell_demo$(exe)
 stairwell_demo$(exe): House_Management.gen Digital_IO.gen force
-	$(app) gnatmake -p -Pstairwell_demo
+	$(GNATMAKE) -p -Pstairwell_demo
 
 EXECUTABLES += van_fleet-demo$(exe)
 van_fleet-demo$(exe): Van_Fleet.gen
-	$(app) gnatmake -p -PVan_Fleet
+	$(GNATMAKE) -p -PVan_Fleet
 
 all:: $(EXECUTABLES)
 

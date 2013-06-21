@@ -26,7 +26,14 @@ all::
 
 include ../Makefile.inc
 
-app = ADA_PROJECT_PATH=$$ADA_PROJECT_PATH:$(COLDFRAME)
+ifeq (, $(ADA_PROJECT_PATH))
+  export ADA_PROJECT_PATH := ..
+else
+  ADA_PROJECT_PATH := $(ADA_PROJECT_PATH):..
+  ifneq (, $(CYGWIN))
+    ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
+  endif
+endif
 
 all:: runs fails
 
@@ -57,42 +64,42 @@ xfails:: Bad_Model_Regressions.stamp-regardless
 xfails:: Bad_Code_Regressions.stamp-regardless
 
 event_test-harness$(exe): Event_Test.stamp force
-	$(app) gnatmake -p -PEvent_Test 2>&1 | tee -a Event_Test.log
+	gnatmake -p -PEvent_Test 2>&1 | tee -a Event_Test.log
 exes:: event_test-harness$(exe)
 clean::
-	-$(app) gnatclean -PEvent_Test
+	-gnatclean -PEvent_Test
 
 hierarchies-harness$(exe): Hierarchies.stamp force
-	$(app) gnatmake -p -PHierarchies 2>&1 | tee -a Hierarchies.log
+	gnatmake -p -PHierarchies 2>&1 | tee -a Hierarchies.log
 exes:: hierarchies-harness$(exe)
 clean::
-	-$(app) gnatclean -PHierarchies
+	-gnatclean -PHierarchies
 
 initialization-harness$(exe): Initialization.stamp force
-	$(app) gnatmake -p -PInitialization 2>&1 | tee -a Initialization.log
+	gnatmake -p -PInitialization 2>&1 | tee -a Initialization.log
 exes:: initialization-harness$(exe)
 clean::
-	-$(app) gnatclean -PInitialization
+	-gnatclean -PInitialization
 
 stub_test_harness$(exe): Stub_Test_Interface.stamp force
-	$(app) gnatmake -p -PStub_Test 2>&1 | tee -a Stub_Test.log
+	gnatmake -p -PStub_Test 2>&1 | tee -a Stub_Test.log
 Stub_Test_Interface.stamp: Stub_Test_Interface.norm
 	$(MAKE) $(basename $@).gen GENERATE_STUBS=yes 2>&1 \
 	  | tee $(basename $@).log
 	touch $@
 exes:: stub_test_harness$(exe)
 clean::
-	-$(app) gnatclean -PStub_Test
+	-gnatclean -PStub_Test
 
 unit_testing-harness$(exe): Unit_Testing.stamp force
-	$(app) gnatmake -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
+	gnatmake -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
 Unit_Testing.stamp: Unit_Testing.norm
 	$(MAKE) $(basename $@).gen UNIT_TEST_SUPPORT=yes 2>&1 \
 	  | tee $(basename $@).log
 	touch $@
 exes:: unit_testing-harness$(exe)
 clean::
-	-$(app) gnatclean -PUnit_Testing
+	-gnatclean -PUnit_Testing
 
 %.stamp: %.norm
 	$(MAKE) $(basename $@).gen 2>&1 | tee $(basename $@).log
@@ -140,10 +147,10 @@ REGRESSION_STAMPS = $(addsuffix .stamp,$(REGRESSION_DOMAINS))
 
 # Has to come after definition of DEVELOPMENT_STAMPS, REGRESSION_STAMPS
 regression_tests$(exe): $(DEVELOPMENT_STAMPS) $(REGRESSION_STAMPS) force
-	$(app) gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
+	gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
 exes:: regression_tests$(exe)
 clean::
-	-$(app) gnatclean -PRegressions
+	-gnatclean -PRegressions
 
 
 clean::

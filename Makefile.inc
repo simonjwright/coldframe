@@ -20,6 +20,9 @@
 # Cygwin not detected).
 sys = $(shell uname)
 ifneq (, $(findstring CYGWIN, $(sys)))
+  # Java and GNAT code need to see /cygwin in front of paths (not sure
+  # what happens if Cygwin is installed elsewhere ...)
+  CYGWIN = /cygwin
   SYSTEM = winnt
   EXE = .exe
 else
@@ -64,7 +67,8 @@ else
   CHOP_VERBOSE = -q
 endif
 
-# Work out the location of this file (the top level of ColdFrame).
+# Work out the location of this file (the top level of ColdFrame),
+# without the trailing /.
 COLDFRAME := $(shell echo $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) \
 	| sed -e "s;/$$;;")
 
@@ -90,6 +94,7 @@ ECHO ?= echo
 EXIT ?= exit
 FIND ?= find
 GNATCHOP ?= gnatchop -gnat95
+GNATMAKE ?= gnatmake
 GREP ?= grep
 JAVA ?= java
 MKDIR ?= mkdir
@@ -105,16 +110,17 @@ UNZIP ?= unzip
 ZIP ?= zip
 
 # Non-standard commands
-SAXON_CLASSPATH ?= /usr/local/lib/saxon/saxon.jar
+SAXON_CLASSPATH ?= $(CYGWIN)/usr/local/lib/saxon/saxon.jar
 SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) com.icl.saxon.StyleSheet
 
 # Control depth of .impl directory search
 MAXIMPLDEPTH ?= 1
 
 # Scripts
-CODEGEN_SCRIPT ?= $(SCRIPTS)/generate-ada.xsl
-DIAGRAM_SCRIPT = $(SCRIPTS)/generate-diagrams.xsl
-HTMLGEN_SCRIPT = $(SCRIPTS)/generate-html.xsl
+CODEGEN_SCRIPT   ?= $(SCRIPTS)/generate-ada.xsl
+C_CODEGEN_SCRIPT ?= $(SCRIPTS)/generate-c.xsl
+DIAGRAM_SCRIPT    = $(SCRIPTS)/generate-diagrams.xsl
+HTMLGEN_SCRIPT    = $(SCRIPTS)/generate-html.xsl
 
 # All code generation scripts, for development use
 CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
@@ -145,9 +151,9 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 	  <$<								\
 	  >$@~1
 	$(SAXON)							  \
-	  $@~1								  \
-	  $(COLDFRAME)/scripts/resolve-references.xsl			  \
-	  library_path=$(COLDFRAME)/lib/				  \
+	  $(CYGWIN)$@~1							  \
+	  $(CYGWIN)$(COLDFRAME)/scripts/resolve-references.xsl		  \
+	  library_path=$(CYGWIN)$(COLDFRAME)/lib/			  \
 	  >$@~2								  \
 	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
 	$(SED)								\
@@ -161,9 +167,9 @@ $(COLDFRAMEOUT)/%.rr: LANG=C
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	$(UNZIP) -p $< $(*F).xmi >$@~1
 	$(SAXON)							  \
-	  $@~1								  \
-	  $(COLDFRAME)/scripts/resolve-references.xsl			  \
-	  library_path=$(COLDFRAME)/lib/				  \
+	  $(CYGWIN)$@~1							  \
+	  $(CYGWIN)$(COLDFRAME)/scripts/resolve-references.xsl		  \
+	  library_path=$(CYGWIN)$(COLDFRAME)/lib/			  \
 	  >$@~2								  \
 	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
 	$(SED)								\
@@ -176,9 +182,9 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 # because a .rr file can contain any number of domains.
 %.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
 	$(COLDFRAME)/tools/normalize_xmi	\
-	  -c $(CASE_EXCEPTIONS)			\
+	  -c $(CYGWIN)$(CASE_EXCEPTIONS)			\
 	  $(NORM_VERBOSE)			\
-	  $<
+	  $(CYGWIN)$<
 	touch $@
 
 # Generate .html (and image) files.
@@ -190,19 +196,19 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	  $(RM) -rf `basename $@ .html`.images;		\
 	  $(MKDIR) `basename $@ .html`.images;		\
 	  $(ECHO) generating diagrams for $@ ...;	\
-	  $(SAXON) $< $(DIAGRAM_SCRIPT)			\
+	  $(SAXON) $< $(CYGWIN)$(DIAGRAM_SCRIPT)	\
 	    >`basename $@ .html`.images/$@.sh;		\
 	  $(SH) -v `basename $@ .html`.images/$@.sh;	\
 	fi
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT)				\
+	@$(SAXON) $< $(CYGWIN)$(HTMLGEN_SCRIPT)			\
 	  cwd=$(shell pwd) diagrams=$(GENERATE_DIAGRAMS) >$@ ||	\
 	  ($(RM) -f $@; $(EXIT) 1)
 
 # Generate .ada files.
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(CODEGEN_SCRIPT)					  \
+	@$(SAXON) $< $(CYGWIN)/$(CODEGEN_SCRIPT)			  \
 	  add-blank-lines=$(BLANK_LINES)				  \
 	  checking-policy=$(CHECKING)					  \
 	  generate-accessors=$(GENERATE_ACCESSORS)			  \
@@ -219,7 +225,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 # Generate .h files.
 %.h: %.norm $(C_CODEGEN_SCRIPTS)
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(C_CODEGEN_SCRIPT)				\
+	@$(SAXON) $< $(CYGWIN)$(C_CODEGEN_SCRIPT)			\
 	  add-blank-lines=$(BLANK_LINES)				\
 	  generate-accessors=$(GENERATE_ACCESSORS)			\
 	  verbose=$(VERBOSE)						\
