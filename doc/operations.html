@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: operations.html,v 28f010f797e0 2013/07/14 17:12:36 simonjwright $ -->
 <head>
 <title>ColdFrame: Operations</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -50,10 +50,8 @@ access-to-subprogram types</a>,
 
 </ul>
 
-<!--
 <p>You can specify the <a href="#convention">programming language
 convention</a> to be used.
--->
 
 <p><a href="#renaming">Renamings</a> are provided to allow a form of
 overloading.
@@ -83,9 +81,8 @@ operation will be implemented in a child class.
 <h3><a name="accessor">Accessors</a></h3>
 
 <p>Instance and class variables are private, regardless of what you
-say in the model. You can create accessor operations (see below) and
-you can mark them <em>&#171;accessor&#187;</em> as a documentation
-aid.
+say in the model. You can create accessor operations and
+you can mark them <em>&#171;accessor&#187;</em>.
 
 <p>For an attribute <tt><i>Attr</i></tt>, an operation is a "set"
 accessor if it is a procedure named <tt>Set_<i>Attr</i></tt> with a
@@ -156,14 +153,11 @@ href="http://www.adaic.org/standards/95lrm/html/RM-9-4.html">protected
 type</a> is that your implementation specifies a guard condition;
 callers of the entry block until the guard becomes open.
 
-<!--
 <h3><a name="convention"></a>Convention</h3>
 
-<p>You can use the <i>convention</i> tag to specify the calling
-convention to be supported by the operation.
-
-<p>The form is <tt>{convention = <i>language</i>}</tt>.
--->
+<p>You can use the <em>&#171;convention&#187;</em> stereotype with
+the <tt>{language = <i>language</i>}</tt> tag to specify the
+programming language to be used..
 
 <h3><a name="renaming">Renaming</a></h3>
 
@@ -177,13 +171,11 @@ parameter defaults).
 
 <h3>General</h3>
 
-<!--
-<p>Operations tagged with a <a href="#convention">convention</a>
-(<i>C</i>, probably) will have
+<p>Operations stereotyped <em>&#171;convention&#187;</em> and tagged
+with a language (<i>C</i>, probably) will have
 <pre>
    pragma Convention (<i>operation</i>, <i>language</i>);
 </pre>
--->
 
 <p><a href="#task-entry">Task entries</a> map to <tt>entry</tt>
 specifications in the class's task specification.
@@ -194,7 +186,11 @@ specification (in the domain package specification) and in the type's
 separate proper body.
 
 <p><a href="#accessor">Accessors</a> map to declarations in the class
-package specification and proper bodies in the class package body.
+package specification. If marked <em>&#171;accessor&#187;</em>, proper
+bodies are generated in the class package body; if not, body stubs are
+generated in the package body with <tt>separate</tt> proper bodies,
+like other operations except that you have the opportunity to provide
+your own implementation if desired.
 
 <p>Other operations are generated as
 
@@ -208,7 +204,10 @@ package specification and proper bodies in the class package body.
 operations of all but protected types, and all the operations of a
 class bar entries, must have distinct names;
 see <a href="http://www.adaic.com/standards/95lrm/html/RM-10-1-3.html">ARM
-10.1.3</a> (14))</i>.
+10.1.3</a> (14))</i>.<br>
+
+The bodies are compilable, but raise a <tt>Not_Yet_Implemented</tt>
+exception if called.
 
 </ul>
 

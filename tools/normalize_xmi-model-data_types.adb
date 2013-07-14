@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: 7790302b4adb $
---  $Date: 2013/04/22 15:37:22 $
+--  $Revision: 28f010f797e0 $
+--  $Date: 2013/07/14 17:12:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -203,6 +203,12 @@ package body Normalize_XMI.Model.Data_Types is
                  & (+T.Name)
                  & " has <<constraint>> but neither {lower} nor {upper}.");
          end if;
+      end if;
+      if T.Has_Stereotype ("convention") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " is not allowed to have <<convention>>.");
       end if;
       if T.Has_Stereotype ("fixed-string")
         and not T.Has_Tag ("length") then

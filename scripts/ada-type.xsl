@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 45ea517722e2 2012/02/02 18:04:10 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 28f010f797e0 2013/07/14 17:12:36 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -793,19 +793,29 @@
 
     </xsl:choose>
 
+    <!-- pragma Convention, if required. -->
+    <xsl:if test="@convention">
+      <xsl:value-of select="$I"/>
+      <xsl:text>pragma Convention (</xsl:text>
+      <xsl:value-of select="@convention"/>
+      <xsl:text>, </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:if>
+
     <!-- Generate access types (if required) immediately after the type
          they access. -->
     <xsl:if test="@access">
-        <xsl:value-of select="$I"/>
-        <xsl:text>type </xsl:text>
-        <xsl:value-of select="@access"/>
-        <xsl:text> is access all </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>;&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>for </xsl:text>
-        <xsl:value-of select="@access"/>
-        <xsl:text>'Storage_Size use 0;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>type </xsl:text>
+      <xsl:value-of select="@access"/>
+      <xsl:text> is access all </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>for </xsl:text>
+      <xsl:value-of select="@access"/>
+      <xsl:text>'Storage_Size use 0;&#10;</xsl:text>
     </xsl:if>
 
   </xsl:template>

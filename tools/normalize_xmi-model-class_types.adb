@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 28f010f797e0 $
+--  $Date: 2013/07/14 17:12:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -114,6 +114,13 @@ package body Normalize_XMI.Model.Class_Types is
                  & " has no attributes, assumed null.");
          end if;
       end if;
+      if T.Has_Stereotype ("convention")
+        and not T.Has_Tag ("language") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has <<convention>> but not {language}.");
+      end if;
       T.Attributes.Iterate (Resolve'Access);
       T.Operations.Iterate (Resolve'Access);
    end Resolve;
@@ -136,6 +143,9 @@ package body Normalize_XMI.Model.Class_Types is
       end if;
       if T.Has_Stereotype ("callback") then
          Put (To, " callback='true'");
+      end if;
+      if T.Has_Stereotype ("convention") then
+         Put (To, " convention='" & T.Tag_As_Name ("language") & "'");
       end if;
       if T.Has_Stereotype ("discriminated") then
          Put (To, " discriminated='true'");

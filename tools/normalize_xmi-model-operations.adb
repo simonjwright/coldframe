@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 96a801ba7910 $
---  $Date: 2013/06/02 07:18:39 $
+--  $Revision: 28f010f797e0 $
+--  $Date: 2013/07/14 17:12:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -85,6 +85,13 @@ package body Normalize_XMI.Model.Operations is
       end Resolve;
    begin
       Messages.Trace ("...... checking operation " & (+O.Name));
+      if O.Has_Stereotype ("convention")
+        and not O.Has_Tag ("language") then
+         Messages.Error
+           ("Operation "
+              & (+O.Name)
+              & " has <<convention>> but not {language}.");
+      end if;
       if O.Has_Stereotype ("entry")
         and Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Messages.Error
@@ -131,6 +138,9 @@ package body Normalize_XMI.Model.Operations is
             Put (To, " class='true'");
          end if;
       end;
+      if O.Has_Stereotype ("convention") then
+         Put (To, " convention='" & O.Tag_As_Name ("language") & "'");
+      end if;
       if O.Has_Stereotype ("entry") then
          Put (To, " entry='true'");
       end if;

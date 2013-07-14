@@ -24,7 +24,8 @@ with SF_3086637_Suite;
 pragma Warnings (Off);
 --  with Compilation_Regressions.Subunits;
 with Ignored_Child_Packages;
-with SF_Bug_79;  -- should be .Tear_Down to include all generated classes.
+with SF_Bug_79.Tear_Down;  -- .Tear_Down to include all generated classes.
+with Types;
 pragma Warnings (On);
 
 package body Regressions_Suite is

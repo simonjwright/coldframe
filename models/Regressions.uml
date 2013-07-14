@@ -43,11 +43,11 @@
               diagramclass="org.argouml.uml.diagram.use_case.ui.UMLUseCaseDiagram"
               diagramname="Use Case Diagram" />
       <member type="pgml"
-              name="Regressions_ClassDiagram.pgml"
+              name="Regressions_SF2991721ClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="SF 2991721 Class Diagram" />
       <member type="pgml"
-              name="Regressions_ClassDiagram3.pgml"
+              name="Regressions_SFBug79ClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="SF Bug 79 Class Diagram" />
       <member type="todo"
@@ -56,25 +56,16 @@
     <historyfile name="" />
   </argo>
 <profile>
-		<plugin>
-			UML 1.4
-		</plugin>
-		<plugin>
-			GoodPractices
-		</plugin>
-		<plugin>
-			CodeGeneration
-		</plugin>
 		<userDefined>
 			<filename>ColdFrameProfile.xmi</filename>
 			<model>
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Jun 02 07:59:25 BST 2013'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Jul 14 17:38:21 BST 2013'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2013/06/02 07:18:39 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2013/07/14 17:12:36 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -200,7 +191,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
                     <UML:Parameter xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D6C'
                       name = 'return' isSpecification = 'false' kind = 'return'>
                       <UML:Parameter.type>
-                        <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D65'/>
+                        <UML:DataType xmi.idref = '-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D1'/>
                       </UML:Parameter.type>
                     </UML:Parameter>
                   </UML:BehavioralFeature.parameter>
@@ -231,13 +222,31 @@ The generated code in Instance_Hash for an Integer identifier component fails if
                     <UML:Parameter xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D70'
                       name = 'return' isSpecification = 'false' kind = 'return'>
                       <UML:Parameter.type>
-                        <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D66'/>
+                        <UML:DataType xmi.idref = '-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D1'/>
                       </UML:Parameter.type>
                     </UML:Parameter>
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
               </UML:Classifier.feature>
             </UML:Class>
+            <UML:Generalization xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D6D'
+              name = 'G1' isSpecification = 'false' discriminator = 'G1'>
+              <UML:Generalization.child>
+                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D66'/>
+              </UML:Generalization.child>
+              <UML:Generalization.parent>
+                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D65'/>
+              </UML:Generalization.parent>
+            </UML:Generalization>
+            <UML:Generalization xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D6E'
+              name = '' isSpecification = 'false' discriminator = 'G1'>
+              <UML:Generalization.child>
+                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D67'/>
+              </UML:Generalization.child>
+              <UML:Generalization.parent>
+                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D65'/>
+              </UML:Generalization.parent>
+            </UML:Generalization>
             <UML:Class xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D67'
               name = 'Name Question' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
@@ -262,31 +271,29 @@ The generated code in Instance_Hash for an Integer identifier component fails if
                     <UML:Parameter xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D72'
                       name = 'return' isSpecification = 'false' kind = 'return'>
                       <UML:Parameter.type>
-                        <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D65'/>
+                        <UML:DataType xmi.idref = '-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D1'/>
                       </UML:Parameter.type>
                     </UML:Parameter>
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
               </UML:Classifier.feature>
             </UML:Class>
-            <UML:Generalization xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D6D'
-              name = 'G1' isSpecification = 'false' discriminator = 'G1'>
-              <UML:Generalization.child>
-                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D66'/>
-              </UML:Generalization.child>
-              <UML:Generalization.parent>
-                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D65'/>
-              </UML:Generalization.parent>
-            </UML:Generalization>
-            <UML:Generalization xmi.id = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D6E'
-              isSpecification = 'false' discriminator = 'G1'>
-              <UML:Generalization.child>
-                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D67'/>
-              </UML:Generalization.child>
-              <UML:Generalization.parent>
-                <UML:Class xmi.idref = '-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D65'/>
-              </UML:Generalization.parent>
-            </UML:Generalization>
+            <UML:DataType xmi.id = '-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D1'
+              name = 'C I H' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:ModelElement.stereotype>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming'/>
+              </UML:ModelElement.stereotype>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D2'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>ColdFrame.Instances.Handle</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-renaming-td-renames'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
+            </UML:DataType>
           </UML:Namespace.ownedElement>
         </UML:Package>
       </UML:Namespace.ownedElement>
@@ -731,7 +738,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       justification="Center"
     >+ Question</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[361, 65, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[361, 65, 151, 0]"
          href="-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D65"
          fill="0"
          fillcolor="white"
@@ -745,7 +752,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       <rectangle name="Fig0.2.0"
         x="361"
         y="65"
-        width="64"
+        width="151"
         height="0"
         fill="0"
         fillcolor="white"
@@ -847,7 +854,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
         bold="false"
         textsize="13"
         justification="Left"
-      >-Get Next() : Question</text>
+      >-Get Next() : C I H</text>
     </group>
   </group>
   <group name="Fig1"
@@ -888,7 +895,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       justification="Center"
     >+ Attribute Question</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[225, 233, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[225, 233, 208, 0]"
          href="-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D66"
          fill="0"
          fillcolor="white"
@@ -902,7 +909,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       <rectangle name="Fig1.2.0"
         x="225"
         y="233"
-        width="64"
+        width="208"
         height="0"
         fill="0"
         fillcolor="white"
@@ -976,7 +983,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       <text name="Fig1.6.1"
         x="225"
         y="278"
-        width="209"
+        width="208"
         height="23"
         fill="0"
         fillcolor="white"
@@ -988,7 +995,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
         bold="false"
         textsize="13"
         justification="Left"
-      >+Get Next() : Attribute Question</text>
+      >+Get Next() : C I H</text>
     </group>
   </group>
   <group name="Fig2"
@@ -1029,7 +1036,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       justification="Center"
     >+ Name Question</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[489, 233, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[489, 233, 188, 0]"
          href="-64--88-1-74-d990d14:13effb2ae51:-8000:0000000000000D67"
          fill="0"
          fillcolor="white"
@@ -1043,7 +1050,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       <rectangle name="Fig2.2.0"
         x="489"
         y="233"
-        width="64"
+        width="188"
         height="0"
         fill="0"
         fillcolor="white"
@@ -1129,7 +1136,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
         bold="false"
         textsize="13"
         justification="Left"
-      >+Get Next() : Question</text>
+      >+Get Next() : C I H</text>
     </group>
   </group>
   <group name="Fig3"
@@ -1151,7 +1158,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
                         offset="3" />
     </private>
     <path name="Fig3.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -1182,7 +1189,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
                         offset="38" />
     </private>
     <path name="Fig4.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -1193,6 +1200,130 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       <lineto x="496"
               y="138" />
     </path>
+  </group>
+  <group name="Fig5"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[712, 56, 98, 84]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       href="-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D1"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig5.0"
+      x="712"
+      y="56"
+      width="98"
+      height="84"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig5.1"
+      x="713"
+      y="57"
+      width="96"
+      height="61"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >C I H</text>
+    <group name="Fig5.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[713, 57, 96, 38]"
+         href="-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D1"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig5.2.0"
+        x="713"
+        y="57"
+        width="96"
+        height="38"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig5.2.1"
+        x="713"
+        y="57"
+        width="96"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«datatype»</text>
+      <text name="Fig5.2.2"
+        x="713"
+        y="75"
+        width="96"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«renaming»</text>
+    </group>
+    <rectangle name="Fig5.3"
+      x="712"
+      y="118"
+      width="98"
+      height="1"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+    <group name="Fig5.4"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[713, 119, 96, 21]"
+         href="-84-16--65-1--18171c7a:13fddebec73:-8000:00000000000012D1"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig5.4.0"
+        x="713"
+        y="119"
+        width="96"
+        height="21"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
   </group>
 </pgml>
 <todo>

@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 3674cc18ad0f 2013/04/20 16:09:38 simonjwright $ -->
+<!-- $Id: types.html,v 28f010f797e0 2013/07/14 17:12:36 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -97,6 +97,10 @@ this stereotype. ColdFrame then requires you to provide a single
 operation, whose name doesn't matter (though you will be warned if
 it's not the same as the name of the data type).
 
+<dt><em>&#171;bounded-string&#187;</em>
+<dd>is used with the associated <tt>{length}</tt> tag to specify a
+string of up to the maximum length specified.
+
 <dt><em>&#171;constraint&#187;</em>
 <dd>is used to define a constrained version of a parent scalar
 type. The type to be constrained is specified using
@@ -111,6 +115,10 @@ parent type is used.
 <dt><em>&#171;counterpart&#187;</em>
 <dd>is used for references to instances in other domains.
 
+<dt><em>&#171;fixed-string&#187;</em>
+<dd>is used with the associated <tt>{length}</tt> tag to specify a
+string of the length specified.
+
 <dt><em>&#171;imported&#187;</em>
 <dd>specifies that the given type is to be found at the external
 reference specified in the associated <tt>{imported}</tt> tag.
@@ -122,6 +130,10 @@ data associated.
 <dt><em>&#171;renaming&#187;</em>
 <dd>specifies that the given type or exception renames the external
 reference specified in the associated <tt>{renames}</tt> tag.
+
+<dt><em>&#171;unsigned&#187;</em>
+<dd>specifies that the given type is to hold unsigned numbers with
+modulus as specified in the associated <tt>{mod}</tt> tag.
 
 </dl>
 
@@ -148,6 +160,14 @@ here is that a (lower-level) Domain may need to support Observers from
 higher-level Domains, and the higher-level Domains can register to be
 notified when something has changed in the lower-level Domain.
 
+<h3>Others</h3>
+
+<dt><a name="convention"><em>&#171;convention&#187;</em></a>
+<dd>specifies that the conventions of the programming language
+specified in the associated <tt>{language}</tt> tag (typically C) are
+to be used.
+<p>Can be applied to enumerations and <i>&#171;datatype&#187; Classes</i>.
+
 </dl>
 
 <!--
@@ -159,10 +179,6 @@ notified when something has changed in the lower-level Domain.
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
 and optionally <tt>, unconstrained</tt>.
 <br>Please <em>don't</em> use arrays to implement associations!
-
-<li><tt>convention = <i>language</i></tt> specifies that the type is
-to be laid out using the conventions of the specified programming
-language (typically C).
 
 <li><tt>extends = <i>external-type</i></tt> specifies that the
 given type extends (inherits) the specified  external reference.
@@ -187,12 +203,6 @@ generation optimization directive.
 <a href="#field-image"><tt>field-image</tt></a>, retained for
 compatibility..
 
-<li><tt>integer = lower <i>low-bound</i> | upper
-<i>upper-bound</i></tt>
-
-<li><tt>real = digits <i>num-digits</i> | lower
-<i>low-bound</i> | upper <i>upper-bound</i></tt>
-
 <li><tt>serializable</tt> specifies support for outputting values of
 the type to an external medium. See
 <a href="serialization-page.html">separate information</a>.
@@ -205,9 +215,6 @@ See <a href="serialization-page.html">separate information</a>.
 <li><tt>type-image = <i>image-operation</i></tt> specifies the
 operation to be used to print values of the type when it has been
 serialized. See <a href="serialization-page.html">separate information</a>.
-
-<li><tt>unsigned = mod <i>modulus</i></tt> specifies an unsigned
-(modular) type capable of storing 0 .. <i>modulus</i> - 1.
 
 </ul>
 -->
@@ -261,6 +268,26 @@ stereotyped <i>DataType</i>), generates
      (<i>parameters</i>);
 </pre>
 
+<dt>&#171;bounded-string&#187; and <tt>{length=79}</tt>
+<dd>gives an instantiation of
+<tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
+example (see <a href="#discriminated-record-pic">below</a>),
+<pre>
+   with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+   package <i>Domain</i> is
+
+      package Information_Package is
+        new Generic_Bounded_Length (Max => 79);
+      subtype Information is Information_Package.Bounded_String;
+      use type Information;
+</pre>
+and a library-level hash function
+<pre>
+   with ColdFrame.Hash.Strings.Bounded;
+   function <i>Domain</i>.Information_Hash
+   is new ColdFrame.Hash.Strings.Bounded (Information_Package);
+</pre>
+
 <dt>&#171;callback&#187; <i>Foo</i>
 <dd>the
 generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
@@ -277,6 +304,12 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
    with ColdFrame.Instances;
    ..
    subtype Foo_Handle is ColdFrame.Instances.Handle;
+</pre>
+
+<dt>&#171;convention&#187; <i>T</i> and <tt>{language=<i>lang</i>}</tt>
+<dd>gives
+<pre>
+   pragma Convention (<i>T</i>, <i>lang</i>);
 </pre>
 
 <dt>&#171;discriminated&#187;
@@ -300,6 +333,13 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
             Level : Alert_Level;
       end case;
    end record;
+</pre>
+
+<dt>&#171;fixed-string&#187; <i>T</i> and <tt>{length=<i>length</i>}</tt>
+<dd>gives a subtype of the
+standard <tt>String</tt> of the specified length:
+<pre>
+   subtype <i>T</i> is String (1 .. <i>length</i>);
 </pre>
 
 <dt>&#171;imported&#187; <i>T</i> and <tt>{imported=<i>external-reference</i>}</tt>
@@ -333,6 +373,12 @@ the operations raise <tt>Unimplemented</tt> if called.
    use type T;
 </pre>
 
+<dt>&#171;unsigned&#187; <i>T</i> and <tt>{mod=<i>modulus</i>}</tt>
+<dl>gives
+<pre>
+   type T is mod <i>modulus</i>;
+</pre>
+
 </dl>
 
 <!--
@@ -358,23 +404,6 @@ unconstrained]</tt>
      of <i>element-type</i>;
 </pre>
 
-<li><tt>constrains = <i>parent</i> | lower <i>low-bound</i> |
-upper <i>upper-bound</i></tt>
-
-<p>For a type <tt>Typ</tt>, generates
-<pre>
-   subtype <i>Typ</i>
-     is <i>Parent</i>
-     range <i>low-bound</i> .. <i>upper-bound</i>;
-</pre>
-
-<li><tt>convention = <i>language</i></tt>
-
-<p>For a type <tt>Typ</tt>, generates
-<pre>
-   pragma Convention (<i>Typ</i>, <i>Language</i>);
-</pre>
-
 <li><tt>extends = <i>external-type</i></tt>: for a type named
 <tt>Derived</tt>, extending <tt><i>Other_Domain</i>.Base</tt>, gives
 <pre>
@@ -387,31 +416,6 @@ upper <i>upper-bound</i></tt>
 
 <li><tt>image = <i>image-operation</i></tt>: see
 <a href="serialization-page.html">separate information</a>.
-
-<p>
-
-<li><tt>integer = lower <i>low-bound</i> | upper <i>upper-bound</i>
-</tt> gives
-<pre>
-   type T is range <i>low-bound</i> .. <i>upper-bound</i>;
-</pre>
-
-<li><tt>real = digits <i>num-digits</i> | lower <i>low-bound</i> |
-upper <i>upper-bound</i></tt>: gives a floating-point type. If the
-<i>digits</i> section is omitted, or <i>num-digits</i> is not more
-than 6, it's a subtype of <tt>Float</tt>, otherwise it's a subtype of
-<tt>Long_Float</tt>. If the lower and upper bounds are given, they
-translate to a constraint.
-
-<p><tt>{ real = digits 5 }</tt> gives
-<pre>
-   subtype T is Float;
-</pre>
-
-<p><tt>{ real = digits 9 | lower 0.0 | upper 1_000_000.0 }</tt> gives
-<pre>
-   subtype T is Long_Float range 0.0 .. 1_000_000.0;
-</pre>
 
 <li><tt>serializable</tt> has no effect on the type to which it's
 attached, but causes a corresponding declaration in the domain's
@@ -445,37 +449,6 @@ components whose type it does know about and then invoke the
 containing timestamp, serial number etc) from the original record.
 
 <p>
-
-<li><tt>string = fixed <i>fixed-length</i></tt> gives a subtype of the
-standard <tt>String</tt> of the specified length:
-<pre>
-   subtype <i>T</i> is String (1 .. <i>fixed-length</i>);
-</pre>
-
-<li><tt>string = max <i>max-length</i></tt> gives an instantiation of
-<tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
-example (see <a href="#discriminated-record-pic">above</a>),
-<pre>
-   with Ada.Strings.Bounded; use Ada.Strings.Bounded;
-   package <i>Domain</i> is
-
-      package Information_Package is
-        new Generic_Bounded_Length (Max => 79);
-      subtype Information is Information_Package.Bounded_String;
-      use type Information;
-</pre>
-
-<p>and a library-level hash function
-<pre>
-   with ColdFrame.Hash.Strings.Bounded;
-   function <i>Domain</i>.Information_Hash
-   is new ColdFrame.Hash.Strings.Bounded (Information_Package);
-</pre>
-
-<li><tt>unsigned = mod <i>modulus</i></tt> gives
-<pre>
-   type T is mod <i>modulus</i>;
-</pre>
 
 </ul>
 -->

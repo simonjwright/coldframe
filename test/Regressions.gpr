@@ -30,6 +30,8 @@ project Regressions is
      "Ignored_Child_Packages.gen",
      "SF_2991721.gen",
      "SF_Bug_79.gen",
+     "Types.gen",
+     "Types.impl",
      "Regressions.test"
     );
 

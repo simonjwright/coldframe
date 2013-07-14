@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 28f010f797e0 $
+--  $Date: 2013/07/14 17:12:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -83,6 +83,13 @@ package body Normalize_XMI.Model.Enumerations is
       end Resolve;
    begin
       Messages.Trace ("... checking enumeration " & (+E.Name));
+      if E.Has_Stereotype ("convention")
+        and not E.Has_Tag ("language") then
+         Messages.Error
+           ("Type "
+              & (+E.Name)
+              & " has <<convention>> but not {language}.");
+      end if;
       E.Operations.Iterate (Resolve'Access);
    end Resolve;
 
@@ -112,6 +119,12 @@ package body Normalize_XMI.Model.Enumerations is
       Put (To, "<type");
       if E.Accessor /= null then
          Put (To, " access='" & (+E.Accessor.Name) & "'");
+      end if;
+      if E.Has_Stereotype ("callback") then
+         Put (To, " callback='true'");
+      end if;
+      if E.Has_Stereotype ("convention") then
+         Put (To, " convention='" & E.Tag_As_Name ("language") & "'");
       end if;
       declare
          Visibility : constant String
