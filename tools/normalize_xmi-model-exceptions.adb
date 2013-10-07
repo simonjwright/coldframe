@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -29,9 +29,9 @@ package body Normalize_XMI.Model.Exceptions is
       E : Exception_Element renames Exception_Element (N.all);
    begin
       E.Parent := Parent;
-      E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
       Messages.Trace ("... reading exception " & (+E.Name));
+      E.Populate (From => From);
       return N;
    end Read_Exception;
 

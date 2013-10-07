@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 055cb66c10cc $
---  $Date: 2012/03/17 18:20:48 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -32,9 +32,9 @@ package body Normalize_XMI.Model.Attributes is
       A : Attribute_Element renames Attribute_Element (N.all);
    begin
       A.Parent := Parent;
-      A.Populate (From => From);
       A.Name := +Read_Name (From_Element => From);
       Messages.Trace ("...... reading attribute " & (+A.Name));
+      A.Populate (From => From);
 
       --  Type
       declare

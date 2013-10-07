@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: 1c18bd87bab7 $
---  $Date: 2013/04/14 16:49:28 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -150,9 +150,9 @@ package body Normalize_XMI.Model.State_Machines is
       T : Transition_Element renames Transition_Element (N.all);
    begin
       T.Parent := Parent;
-      T.Populate (From => From);
       T.Name := +Read_Name (From_Element => From);
       Messages.Trace ("......... reading transition " & (+T.Name));
+      T.Populate (From => From);
 
       --  Trigger
       declare
@@ -282,9 +282,9 @@ package body Normalize_XMI.Model.State_Machines is
       Node_Name : constant String := DOM.Core.Nodes.Node_Name (From);
    begin
       S.Parent := Parent;
-      S.Populate (From => From);
       S.Name := +Read_Name (From_Element => From);
       Messages.Trace ("............ reading state " & (+S.Name));
+      S.Populate (From => From);
 
       if Node_Name = "UML:Pseudostate" then
          S.Kind := Initial;
@@ -383,7 +383,6 @@ package body Normalize_XMI.Model.State_Machines is
       E : Event_Element renames Event_Element (N.all);
    begin
       E.Parent := Parent;
-      E.Populate (From => From);
 
       --  Special Name handling.
       --
@@ -405,6 +404,8 @@ package body Normalize_XMI.Model.State_Machines is
             E.Name := +Name (Dot + 1 .. Name'Last);
          end if;
       end;
+
+      E.Populate (From => From);
 
       --  Parameter Type. We aren't interested in the parameter name,
       --  because ColdFrame only supports a single Event parameter,

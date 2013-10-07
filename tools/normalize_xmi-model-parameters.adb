@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: 055cb66c10cc $
---  $Date: 2012/03/17 18:20:48 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -32,9 +32,9 @@ package body Normalize_XMI.Model.Parameters is
       P : Parameter_Element renames Parameter_Element (N.all);
    begin
       P.Parent := Parent;
-      P.Populate (From => From);
       P.Name := +Read_Name (From_Element => From);
       Messages.Trace ("......... reading parameter " & (+P.Name));
+      P.Populate (From => From);
 
       --  Type
       declare

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -43,9 +43,9 @@ package body Normalize_XMI.Model.Associations is
       A : Association_Element renames Association_Element (Of_Element.all);
    begin
       A.Parent := Parent;
-      A.Populate (From => From);
       A.Name := +Read_Name (From_Element => From);
       Messages.Trace ("... reading association " & (+A.Name));
+      A.Populate (From => From);
 
       --  Ends
       declare

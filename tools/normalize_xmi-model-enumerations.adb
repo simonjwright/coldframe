@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: 28f010f797e0 $
---  $Date: 2013/07/14 17:12:36 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -32,9 +32,9 @@ package body Normalize_XMI.Model.Enumerations is
       E : Enumeration_Element renames Enumeration_Element (N.all);
    begin
       E.Parent := Parent;
-      E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
       Messages.Trace ("... reading enumeration " & (+E.Name));
+      E.Populate (From => From);
 
       --  Literals
       declare

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.adb,v $
---  $Revision: 6d3131ae7241 $
---  $Date: 2012/03/19 16:38:37 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -80,8 +80,8 @@ package body Normalize_XMI.Model.Generalizations is
          N := new Generalization_Element;
          Accumulating_In.Insert (Key => +Name, New_Item => N);
          N.Parent := Parent;
-         N.Populate (From);
          N.Name := Name;
+         N.Populate (From);
          Generalization_Element (N.all).Parent_Class
            := N.Find_Class (Parent_Name);
       end if;

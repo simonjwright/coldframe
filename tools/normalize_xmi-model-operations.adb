@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 28f010f797e0 $
---  $Date: 2013/07/14 17:12:36 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -33,9 +33,9 @@ package body Normalize_XMI.Model.Operations is
       O : Operation_Element renames Operation_Element (N.all);
    begin
       O.Parent := Parent;
-      O.Populate (From => From);
       O.Name := +Read_Name (From_Element => From);
       Messages.Trace ("...... reading operation " & (+O.Name));
+      O.Populate (From => From);
 
       --  Parameters
       declare

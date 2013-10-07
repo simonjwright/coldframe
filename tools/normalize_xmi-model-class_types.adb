@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: 28f010f797e0 $
---  $Date: 2013/07/14 17:12:36 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -33,9 +33,9 @@ package body Normalize_XMI.Model.Class_Types is
       T : Class_Type_Element renames Class_Type_Element (N.all);
    begin
       T.Parent := Parent;
-      T.Populate (From => From);
       T.Name := +Read_Name (From_Element => From);
       Messages.Trace ("... reading class type " & (+T.Name));
+      T.Populate (From => From);
 
       --  Attributes
       declare

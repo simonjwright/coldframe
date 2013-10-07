@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 7790302b4adb $
---  $Date: 2013/04/22 15:37:22 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -45,9 +45,9 @@ package body Normalize_XMI.Model.Domains is
 
       --  Domain items
       --  Parent is, naturally, left null.
-      D.Populate (From);
       D.Name := +Read_Name (From_Element => From);
       Messages.Information (" reading domain " & (+D.Name));
+      D.Populate (From);
 
       --  Standard Types.
       Add_Standard_Types (To => D.Types);

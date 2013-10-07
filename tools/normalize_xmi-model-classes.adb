@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: 409637e0f865 $
+--  $Date: 2013/10/07 17:03:35 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -35,9 +35,9 @@ package body Normalize_XMI.Model.Classes is
       C : Class_Element renames Class_Element (N.all);
    begin
       C.Parent := Parent;
-      C.Populate (From => From);
       C.Name := +Read_Name (From_Element => From);
       Messages.Trace ("... reading class " & (+C.Name));
+      C.Populate (From => From);
 
       --  Attributes
       declare
@@ -247,11 +247,36 @@ package body Normalize_XMI.Model.Classes is
             Put (To, " stack='" & C.Tag_As_Value ("stack") & "'");
          end if;
       end if;
+      if C.Has_Stereotype ("cardinality") then
+         if C.Has_Tag ("max") then
+            Put (To, " max='" & C.Tag_As_Value ("max") & "'");
+         else
+            Messages.Error
+              ("Class "
+                 & (+C.Name)
+                 & " has <<cardinality>> but not {max}");
+         end if;
+      end if;
       if C.Has_Stereotype ("public") then
          Put (To, " public='true'");
       end if;
       if C.Has_Stereotype ("singleton") then
          Put (To, " singleton='true'");
+      end if;
+      if C.Has_Stereotype ("utility") then
+         declare
+            use type Ada.Containers.Count_Type;
+         begin
+            if C.Attributes.Length > 0 then
+               Messages.Error
+                 ("Utility class " & (+C.Name) & " has attributes");
+            end if;
+            if C.Operations.Length = 0 then
+               Messages.Warning
+                 ("Utility class " & (+C.Name) & " has no operations");
+            end if;
+         end;
+         Put (To, " utility='true'");
       end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+C.Name) & "</name>");
