@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 409637e0f865 $
---  $Date: 2013/10/07 17:03:35 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -90,7 +90,7 @@ package body Normalize_XMI.Model.Operations is
          Messages.Error
            ("Operation "
               & (+O.Name)
-              & " has <<convention>> but not {language}.");
+              & " has <<convention>> but not {language}");
       end if;
       if O.Has_Stereotype ("entry")
         and Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
@@ -99,7 +99,7 @@ package body Normalize_XMI.Model.Operations is
               & (+O.Parent.Name)
               & "."
               & (+O.Name)
-              & " can't be a function.");
+              & " can't be a function");
       end if;
       O.Parameters.Iterate (Resolve'Access);
    end Resolve;

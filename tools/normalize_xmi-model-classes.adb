@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 409637e0f865 $
---  $Date: 2013/10/07 17:03:35 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -155,7 +155,7 @@ package body Normalize_XMI.Model.Classes is
             Messages.Information
               ("Association "
                  & (+For_Relationship.Name)
-                 & " already formalized.");
+                 & " already formalized");
             Already_Formalized := True;
          end if;
       end Handle_If_Already_Formalized;

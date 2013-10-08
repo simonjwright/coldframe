@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 409637e0f865 $
---  $Date: 2013/10/07 17:03:35 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -70,7 +70,7 @@ package body Normalize_XMI.Model.Associations is
          Messages.Error
            ("Association "
               & (+A.Name)
-              & "'s ends have the same role name.");
+              & "'s ends have the same role name");
       end if;
    end Populate_Association_Aspects;
 
@@ -102,14 +102,14 @@ package body Normalize_XMI.Model.Associations is
          Messages.Error
            ("Both ends of association "
               & (+A.Name)
-              & " are marked <<source>>.");
+              & " are marked <<source>>");
       elsif E1.Lower = E2.Lower
         and E1.Upper = E2.Upper
         and not E1.Source and not E2.Source then
          Messages.Error
            ("Neither end of symmetric association "
               & (+A.Name)
-              & " is marked <<source>>.");
+              & " is marked <<source>>");
       else
          case E1.Upper is
             when One =>
@@ -152,7 +152,7 @@ package body Normalize_XMI.Model.Associations is
                                          & "."
                                          & (+E1.Name)
                                          & " is marked <<source>>,"
-                                         & " ignored.");
+                                         & " ignored");
                                  end if;
                                  E2.Source := True;
                                  C1C.Create_Referential_Attribute
@@ -175,7 +175,7 @@ package body Normalize_XMI.Model.Associations is
                                          & "."
                                          & (+E2.Name)
                                          & " is marked <<source>>,"
-                                         & " ignored.");
+                                         & " ignored");
                                  end if;
                                  E1.Source := True;
                                  C2C.Create_Referential_Attribute
@@ -218,7 +218,7 @@ package body Normalize_XMI.Model.Associations is
                              & "."
                              & (+E2.Name)
                              & " is marked <<source>>,"
-                             & " ignored.");
+                             & " ignored");
                      end if;
                      E1.Source := True;
                      C2C.Create_Referential_Attribute
@@ -240,7 +240,7 @@ package body Normalize_XMI.Model.Associations is
                              & "."
                              & (+E1.Name)
                              & " is marked <<source>>,"
-                             & " ignored.");
+                             & " ignored");
                      end if;
                      E2.Source := True;
                      C1C.Create_Referential_Attribute
@@ -252,7 +252,7 @@ package body Normalize_XMI.Model.Associations is
                      Messages.Error
                        ("Both ends of plain association "
                           & (+A.Name)
-                          & " are multiple; need association class.");
+                          & " are multiple; need association class");
                end case;
          end case;
       end if;

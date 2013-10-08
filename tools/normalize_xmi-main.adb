@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-main.adb,v $
---  $Revision: 90bbed8d5ab0 $
---  $Date: 2013/04/26 14:44:30 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with Ada.Command_Line;
@@ -84,7 +84,7 @@ begin
             exit;
          end if;
 
-         Messages.Information ("processing " & Arg);
+         Messages.Information ("Processing " & Arg);
 
          begin
             Input_Sources.File.Open (Arg, File_Source);

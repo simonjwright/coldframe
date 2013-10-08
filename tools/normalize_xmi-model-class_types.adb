@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: 409637e0f865 $
---  $Date: 2013/10/07 17:03:35 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -101,17 +101,17 @@ package body Normalize_XMI.Model.Class_Types is
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " is <<discriminated>> but has no attributes.");
+                 & " is <<discriminated>> but has no attributes");
          elsif T.Has_Stereotype ("protected") then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " is <<protected>> but has no attributes.");
+                 & " is <<protected>> but has no attributes");
          else
             Messages.Warning
               ("Type "
                  & (+T.Name)
-                 & " has no attributes, assumed null.");
+                 & " has no attributes, assumed null");
          end if;
       end if;
       if T.Has_Stereotype ("convention")
@@ -119,7 +119,7 @@ package body Normalize_XMI.Model.Class_Types is
          Messages.Error
            ("Type "
               & (+T.Name)
-              & " has <<convention>> but not {language}.");
+              & " has <<convention>> but not {language}");
       end if;
       T.Attributes.Iterate (Resolve'Access);
       T.Operations.Iterate (Resolve'Access);

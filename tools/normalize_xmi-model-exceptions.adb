@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: 409637e0f865 $
---  $Date: 2013/10/07 17:03:35 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -45,7 +45,7 @@ package body Normalize_XMI.Model.Exceptions is
          Messages.Error
            ("Exception "
               & (+E.Name)
-              & " has both {imported} and {renames} specified.");
+              & " has both {imported} and {renames} specified");
       end if;
    end Resolve;
 

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 82b96c9fec61 $
---  $Date: 2012/03/18 11:49:21 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -95,14 +95,14 @@ package body Normalize_XMI.Model.Association_Classes is
             Messages.Error
               ("Both ends of association "
                  & (+AC.Name)
-                 & " are marked <<source>>.");
+                 & " are marked <<source>>");
          elsif E1.Lower = E2.Lower
            and E1.Upper = One and E2.Upper = One
            and not E1.Source and not E2.Source then
             Messages.Error
               ("Neither end of symmetric 1-(1:1) association "
                  & (+AC.Name)
-                 & " is marked <<source>>.");
+                 & " is marked <<source>>");
          else
             case E1.Upper is
                when One =>
@@ -160,7 +160,7 @@ package body Normalize_XMI.Model.Association_Classes is
                                             & "."
                                             & (+E1.Name)
                                             & " is marked <<source>>,"
-                                            & " ignored.");
+                                            & " ignored");
                                     end if;
                                     E2.Source := True;
                                     Assoc.Create_Referential_Attribute
@@ -189,7 +189,7 @@ package body Normalize_XMI.Model.Association_Classes is
                                             & "."
                                             & (+E2.Name)
                                             & " is marked <<source>>,"
-                                            & " ignored.");
+                                            & " ignored");
                                     end if;
                                     E1.Source := True;
                                     Assoc.Create_Referential_Attribute

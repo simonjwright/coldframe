@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: 28f010f797e0 $
---  $Date: 2013/07/14 17:12:36 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -45,7 +45,7 @@ package body Normalize_XMI.Model.Data_Types is
             Messages.Error
               ("DataType "
                  & (+T.Name)
-                 & " is not permitted to have attributes.");
+                 & " is not permitted to have attributes");
          end if;
       end;
 
@@ -92,7 +92,7 @@ package body Normalize_XMI.Model.Data_Types is
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has <<access>> but not {access-to-type}.");
+                 & " has <<access>> but not {access-to-type}");
          else
             declare
                Target_Type_Name : constant String
@@ -106,14 +106,14 @@ package body Normalize_XMI.Model.Data_Types is
                        & Target_Type_Name
                        & "' designated by <<access>> type "
                        & (+T.Name)
-                       & " not found.");
+                       & " not found");
                elsif not (Target_Type.all in Data_Type_Element'Class) then
                   Messages.Error
                     ("Type '"
                        & Target_Type_Name
                        & "' designated by <<access>> type "
                        & (+T.Name)
-                       & " is not a data type.");
+                       & " is not a data type");
                else
                   Types.Type_Element (Target_Type.all).Accessor
                     := T'Unchecked_Access;
@@ -128,7 +128,7 @@ package body Normalize_XMI.Model.Data_Types is
                  & (+T.Name)
                  & " is marked <<access-to-operation>> but has"
                  & T.Operations.Length'Img
-                 & " operations.");
+                 & " operations");
          else
             declare
                --  Workround for gcc-4.4 limitation in Debian 6.
@@ -142,8 +142,7 @@ package body Normalize_XMI.Model.Data_Types is
                        & "."
                        & Operation_Name
                        & " renamed to "
-                       & (+T.Name)
-                       & ".");
+                       & (+T.Name));
                   Operation.Name := T.Name;
                end if;
             end;
@@ -155,14 +154,14 @@ package body Normalize_XMI.Model.Data_Types is
          Messages.Error
            ("Type "
               & (+T.Name)
-              & " has both {imported} and {renames} specified.");
+              & " has both {imported} and {renames} specified");
       end if;
       if T.Has_Stereotype ("bounded-string")
         and not T.Has_Tag ("length") then
          Messages.Error
            ("Type "
               & (+T.Name)
-              & " has <<bounded-string>> but not {length}.");
+              & " has <<bounded-string>> but not {length}");
       end if;
       if T.Has_Stereotype ("constraint") then
          if T.Has_Tag ("constrains") then
@@ -178,7 +177,7 @@ package body Normalize_XMI.Model.Data_Types is
                        & Constrained_Type_Name
                        & "', to be constrained by "
                        & (+T.Name)
-                       & ", not found.");
+                       & ", not found");
                elsif
                  not (Constrained_Type.all in Data_Type_Element'Class)
                  and not (Constrained_Type.all in Standard_Type_Element'Class)
@@ -188,40 +187,40 @@ package body Normalize_XMI.Model.Data_Types is
                        & Constrained_Type_Name
                        & "', to be constrained by "
                        & (+T.Name)
-                       & ", is not a data type.");
+                       & ", is not a data type");
                end if;
             end;
          else
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has <<constraint>> but not {constrains}.");
+                 & " has <<constraint>> but not {constrains}");
          end if;
          if not (T.Has_Tag ("lower") or T.Has_Tag ("upper")) then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " has <<constraint>> but neither {lower} nor {upper}.");
+                 & " has <<constraint>> but neither {lower} nor {upper}");
          end if;
       end if;
       if T.Has_Stereotype ("convention") then
          Messages.Error
            ("Type "
               & (+T.Name)
-              & " is not allowed to have <<convention>>.");
+              & " is not allowed to have <<convention>>");
       end if;
       if T.Has_Stereotype ("fixed-string")
         and not T.Has_Tag ("length") then
          Messages.Error
            ("Type "
               & (+T.Name)
-              & " has <<fixed-string>> but not {length}.");
+              & " has <<fixed-string>> but not {length}");
       end if;
       if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
          Messages.Error
            ("Type "
               & (+T.Name)
-              & " has <<imported>> but not {imported}.");
+              & " has <<imported>> but not {imported}");
       end if;
       if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
          Messages.Error

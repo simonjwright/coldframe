@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
+--  $Revision: a64d2fe72b0e $
+--  $Date: 2013/10/08 16:26:51 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -126,7 +126,7 @@ package body Normalize_XMI.Identifiers is
             Exceptions : File_Type;
          begin
             Messages.Information
-              ("reading case exceptions from '" & Name & "'");
+              ("Reading case exceptions from '" & Name & "'");
             Open (Exceptions, Mode => In_File, Name => Name);
             while not End_Of_File (Exceptions) loop
                Add_Exception (Get_Line (Exceptions));
@@ -163,7 +163,7 @@ package body Normalize_XMI.Identifiers is
       begin
          if Reserved.Contains (S) then
             Messages.Error
-              ("Reserved word """ & S & """ not allowed.");
+              ("Reserved word """ & S & """ not allowed");
          end if;
          for W in Words'Range loop
             Process_Word (S (Words (W).L .. Words (W).U));
