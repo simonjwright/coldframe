@@ -100,19 +100,20 @@ INITIALIZATION +=							   \
   Initialization.impl/initialization-suite.ads				   \
   Initialization.impl/initialization-suite-check_domain_initialization.adb
 
-REGRESSIONS +=						\
-  Regressions.gpr					\
-  Regressions.test/association_classes-test.adb		\
-  Regressions.test/association_classes-test.ads		\
-  Regressions.test/associations-test.adb		\
-  Regressions.test/associations-test.ads		\
-  Regressions.test/regression_tests.adb			\
-  Regressions.test/regressions_suite.adb		\
-  Regressions.test/regressions_suite.ads		\
-  Regressions.test/sf_2991721-test.adb			\
-  Regressions.test/sf_2991721-test.ads			\
-  Regressions.test/sf_3086637_suite.adb			\
-  Regressions.test/sf_3086637_suite.ads
+REGRESSIONS +=					\
+  Regressions.gpr				\
+  Regressions.test/association_classes-test.adb	\
+  Regressions.test/association_classes-test.ads	\
+  Regressions.test/associations-test.adb	\
+  Regressions.test/associations-test.ads	\
+  Regressions.test/regression_tests.adb		\
+  Regressions.test/regressions_suite.adb	\
+  Regressions.test/regressions_suite.ads	\
+  Regressions.test/sf_2991721-test.adb		\
+  Regressions.test/sf_2991721-test.ads		\
+  Regressions.test/sf_3086637_suite.adb		\
+  Regressions.test/sf_3086637_suite.ads		\
+  Types.impl/types_source.ads
 
 STUB_TEST +=					\
   Stub_Test.gpr					\
