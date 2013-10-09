@@ -8,7 +8,8 @@ General
 Modelling
 =========
 
-<<convention>> is supported for types and operations.
+<<convention>> is supported for types and operations, in response to
+bug 81.
 
 <<cardinality>> and <<utility>> are supported for classes.
 
