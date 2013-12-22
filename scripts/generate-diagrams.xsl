@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: generate-diagrams.xsl,v a035894b6696 2013/12/22 08:25:58 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -161,7 +161,7 @@
           <xsl:value-of select="."/>
           <xsl:text> [label="</xsl:text>
           <xsl:value-of select="../name"/>
-          <xsl:text>", arrowhead=none, arrowtail=onormal, URL="#</xsl:text>
+          <xsl:text>", dir=back, arrowhead=none, arrowtail=onormal, URL="#</xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>"]&#10;</xsl:text>
         </xsl:for-each>
@@ -307,7 +307,7 @@
         </xsl:if>
       </xsl:for-each>
       <!-- Output relationships as in overall diagram. -->
-      <xsl:for-each select="../association[role/classname=$n 
+      <xsl:for-each select="../association[role/classname=$n
                             or associative=$n]">
         <xsl:choose>
           <xsl:when test="associative">
@@ -359,14 +359,12 @@
         <!-- All the children of (each) inheritance relationship in
              which this class is the parent. -->
         <xsl:for-each select="child">
-          <!-- Output in reverse order with the arrow on the "wrong"
-               end, so parents appear at the top. -->
-          <xsl:value-of select="../parent"/>
-          <xsl:text> -> </xsl:text>
           <xsl:value-of select="."/>
+          <xsl:text> -> </xsl:text>
+          <xsl:value-of select="../parent"/>
           <xsl:text> [label="</xsl:text>
           <xsl:value-of select="../name"/>
-          <xsl:text>", arrowhead=none, arrowtail=onormal, URL="#</xsl:text>
+          <xsl:text>", arrowhead=onormal, URL="#</xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>"]&#10;</xsl:text>
         </xsl:for-each>
@@ -381,7 +379,7 @@
         <xsl:value-of select="$n"/>
         <xsl:text> [label="</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text>", arrowhead=none, arrowtail=onormal, URL="#</xsl:text>
+        <xsl:text>", dir=back, arrowhead=none, arrowtail=onormal, URL="#</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>"]&#10;</xsl:text>
       </xsl:for-each>
