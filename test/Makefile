@@ -59,7 +59,7 @@ runs:: stub_test_harness$(exe)
 runs:: unit_testing-harness$(exe)
 	./$< -v 2>&1 | tee -a unit_testing.log
 
-xfails:: Bad_Model_Regressions.stamp-regardless
+fails:: Bad_Model_Regressions.stamp-regardless
 
 xfails:: Bad_Code_Regressions.stamp-regardless
 
@@ -105,7 +105,7 @@ clean::
 	$(MAKE) $(basename $@).gen 2>&1 | tee $(basename $@).log
 	touch $@
 
-%.stamp-regardless: $(COLDFRAMEOUT)/%.raw
+%.stamp-regardless: %.norm-stamp
 	-$(MAKE) $(basename $@).gen 2>&1 | tee $(basename $@).log
 	touch $@
 
@@ -137,6 +137,10 @@ REGRESSION_DOMAINS =				\
   SF_2991721					\
   SF_Bug_79
 
+# Bad models
+BAD_MODEL_DOMAINS =				\
+  Identifiers
+
 DEVELOPMENT_NORMS = $(addsuffix .norm,$(DEVELOPMENT_DOMAINS))
 $(DEVELOPMENT_NORMS): ColdFrame_Development.norm-stamp ;
 DEVELOPMENT_STAMPS = $(addsuffix .stamp,$(DEVELOPMENT_DOMAINS))
@@ -144,6 +148,10 @@ DEVELOPMENT_STAMPS = $(addsuffix .stamp,$(DEVELOPMENT_DOMAINS))
 REGRESSION_NORMS = $(addsuffix .norm,$(REGRESSION_DOMAINS))
 $(REGRESSION_NORMS): Regressions.norm-stamp ;
 REGRESSION_STAMPS = $(addsuffix .stamp,$(REGRESSION_DOMAINS))
+
+BAD_MODEL_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_MODEL_REGRESSION_DOMAINS))
+$(BAD_MODEL_REGRESSION_NORMS): Bad_Model_Regressions.norm-stamp ;
+BAD_MODEL_REGRESSION_STAMPS = $(addsuffix .stamp,$(BAD_MODEL_REGRESSION_DOMAINS))
 
 # Has to come after definition of DEVELOPMENT_STAMPS, REGRESSION_STAMPS
 regression_tests$(exe): $(DEVELOPMENT_STAMPS) $(REGRESSION_STAMPS) force

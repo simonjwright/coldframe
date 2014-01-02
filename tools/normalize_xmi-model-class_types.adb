@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,12 +29,9 @@ package body Normalize_XMI.Model.Class_Types is
    function Read_Class_Type (From   : not null DOM.Core.Node;
                              Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Class_Type_Element;
+      N : constant Element_P := new Class_Type_Element (Parent);
       T : Class_Type_Element renames Class_Type_Element (N.all);
    begin
-      T.Parent := Parent;
-      T.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("... reading class type " & (+T.Name));
       T.Populate (From => From);
 
       --  Attributes
@@ -145,7 +142,7 @@ package body Normalize_XMI.Model.Class_Types is
          Put (To, " callback='true'");
       end if;
       if T.Has_Stereotype ("convention") then
-         Put (To, " convention='" & T.Tag_As_Name ("language") & "'");
+         Put (To, " convention='" & T.Tag_Value ("language") & "'");
       end if;
       if T.Has_Stereotype ("discriminated") then
          Put (To, " discriminated='true'");

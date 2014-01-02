@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -28,12 +28,9 @@ package body Normalize_XMI.Model.Data_Types is
    function Read_Data_Type (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Data_Type_Element;
+      N : constant Element_P := new Data_Type_Element (Parent);
       T : Data_Type_Element renames Data_Type_Element (N.all);
    begin
-      T.Parent := Parent;
-      T.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("... reading data type " & (+T.Name));
       T.Populate (From => From);
 
       --  Attributes
@@ -96,7 +93,7 @@ package body Normalize_XMI.Model.Data_Types is
          else
             declare
                Target_Type_Name : constant String
-                 := T.Tag_As_Name ("access-to-type");
+                 := T.Tag_Value ("access-to-type");
                Target_Type : constant Element_P
                  := T.Find_Type (Target_Type_Name);
             begin
@@ -167,7 +164,7 @@ package body Normalize_XMI.Model.Data_Types is
          if T.Has_Tag ("constrains") then
             declare
                Constrained_Type_Name : constant String
-                 := T.Tag_As_Name ("constrains");
+                 := T.Tag_Value ("constrains");
                Constrained_Type : constant Element_P
                  := T.Find_Type (Constrained_Type_Name);
             begin
@@ -226,7 +223,7 @@ package body Normalize_XMI.Model.Data_Types is
          Messages.Error
            ("Type "
               & (+T.Name)
-              & " has <<renaming>> but not {renames}.");
+              & " has <<renaming>> but not {renames}");
       end if;
       T.Operations.Iterate (Resolve'Access);
    end Resolve;
@@ -281,35 +278,35 @@ package body Normalize_XMI.Model.Data_Types is
       if T.Has_Stereotype ("bounded-string") then
          Put_Line (To,
                    "<string><max>"
-                     & T.Tag_As_Value ("length")
+                     & T.Tag_Value ("length")
                      & "</max></string>");
       end if;
       if T.Has_Stereotype ("constraint") then
          Put (To,
               "<subtype constrains="""
-                & T.Tag_As_Value ("constrains")
+                & T.Tag_Value ("constrains")
                 & """>");
          if T.Has_Tag ("lower") then
-            Put (To, "<lower>" & T.Tag_As_Value ("lower") & "</lower>");
+            Put (To, "<lower>" & T.Tag_Value ("lower") & "</lower>");
          end if;
          if T.Has_Tag ("upper") then
-            Put (To, "<upper>" & T.Tag_As_Value ("upper") & "</upper>");
+            Put (To, "<upper>" & T.Tag_Value ("upper") & "</upper>");
          end if;
          Put_Line (To, "</subtype>");
       end if;
       if T.Has_Stereotype ("fixed-string") then
          Put_Line (To,
                    "<string><fixed>"
-                     & T.Tag_As_Value ("length")
+                     & T.Tag_Value ("length")
                      & "</fixed></string>");
       end if;
       if T.Has_Tag ("imported") then
          Put_Line (To,
-                   "<imported>" & T.Tag_As_Name ("imported") & "</imported>");
+                   "<imported>" & T.Tag_Value ("imported") & "</imported>");
       end if;
       if T.Has_Tag ("renames") then
          Put_Line (To,
-                   "<renames>" & T.Tag_As_Name ("renames") & "</renames>");
+                   "<renames>" & T.Tag_Value ("renames") & "</renames>");
       end if;
       T.Operations.Iterate (Output'Access);
       Put_Line (To, "</type>");

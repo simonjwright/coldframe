@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -143,6 +143,21 @@ package body Normalize_XMI.Identifiers is
    end Read_Case_Exceptions;
 
 
+   function Is_Valid (Str : String) return Boolean
+   is
+   begin
+      declare
+         N : constant String := Normalize (Str);
+         pragma Unreferenced (N);
+      begin
+         return True;
+      end;
+   exception
+      when Invalid_Name =>
+         return False;
+   end Is_Valid;
+
+
    function Normalize (Id : String) return String
    is
       use Ada.Strings;
@@ -162,8 +177,8 @@ package body Normalize_XMI.Identifiers is
          Words : constant Spans := Find_Spans (S, ' ');
       begin
          if Reserved.Contains (S) then
-            Messages.Error
-              ("Reserved word """ & S & """ not allowed");
+            raise Invalid_Name
+              with "reserved word """ & S & """ not allowed";
          end if;
          for W in Words'Range loop
             Process_Word (S (Words (W).L .. Words (W).U));

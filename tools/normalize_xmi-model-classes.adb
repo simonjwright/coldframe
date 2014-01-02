@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -31,12 +31,9 @@ package body Normalize_XMI.Model.Classes is
    function Read_Class (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Class_Element;
+      N : constant Element_P := new Class_Element (Parent);
       C : Class_Element renames Class_Element (N.all);
    begin
-      C.Parent := Parent;
-      C.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("... reading class " & (+C.Name));
       C.Populate (From => From);
 
       --  Attributes
@@ -149,7 +146,7 @@ package body Normalize_XMI.Model.Classes is
       procedure Handle_If_Already_Formalized (Pos : Element_Maps.Cursor)
       is
          Formalizes : constant String
-           := Element_Maps.Element (Pos).Tag_As_Name ("formalizes");
+           := Element_Maps.Element (Pos).Tag_Value ("formalizes");
       begin
          if Formalizes = +For_Relationship.Name then
             Messages.Information
@@ -163,12 +160,12 @@ package body Normalize_XMI.Model.Classes is
       In_Class.Attributes.Iterate (Handle_If_Already_Formalized'Access);
       if not Already_Formalized then
          declare
-            N : constant Element_P := new Referential_Attribute_Element;
+            N : constant Element_P := new Referential_Attribute_Element
+              (Parent => In_Class'Unchecked_Access);
             R : Referential_Attribute_Element
               renames Referential_Attribute_Element (N.all);
             use type Ada.Strings.Unbounded.Unbounded_String;
          begin
-            R.Parent := In_Class'Unchecked_Access;
             R.Name :=
               For_Relationship.Name
               & (+".")
@@ -241,15 +238,15 @@ package body Normalize_XMI.Model.Classes is
       then
          Put (To, " active='true'");
          if C.Has_Tag ("priority") then
-            Put (To, " priority='" & C.Tag_As_Value ("priority") & "'");
+            Put (To, " priority='" & C.Tag_Value ("priority") & "'");
          end if;
          if C.Has_Tag ("stack") then
-            Put (To, " stack='" & C.Tag_As_Value ("stack") & "'");
+            Put (To, " stack='" & C.Tag_Value ("stack") & "'");
          end if;
       end if;
       if C.Has_Stereotype ("cardinality") then
          if C.Has_Tag ("max") then
-            Put (To, " max='" & C.Tag_As_Value ("max") & "'");
+            Put (To, " max='" & C.Tag_Value ("max") & "'");
          else
             Messages.Error
               ("Class "
@@ -282,7 +279,7 @@ package body Normalize_XMI.Model.Classes is
       Put_Line (To, "<name>" & (+C.Name) & "</name>");
       Put (To, "<abbreviation>");
       if C.Has_Tag ("abbreviation") then
-         Put (To, C.Tag_As_Name ("abbreviation"));
+         Put (To, C.Tag_Value ("abbreviation"));
       else
          Put (To, Identifiers.Abbreviate (+C.Name));
       end if;

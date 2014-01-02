@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -25,12 +25,9 @@ package body Normalize_XMI.Model.Exceptions is
    function Read_Exception (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Exception_Element;
+      N : constant Element_P := new Exception_Element (Parent);
       E : Exception_Element renames Exception_Element (N.all);
    begin
-      E.Parent := Parent;
-      E.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("... reading exception " & (+E.Name));
       E.Populate (From => From);
       return N;
    end Read_Exception;
@@ -57,10 +54,10 @@ package body Normalize_XMI.Model.Exceptions is
    begin
       Put (To, "<exception");
       if E.Has_Tag ("imported") then
-         Put (To, " imported=""" & E.Tag_As_Name ("imported") & """");
+         Put (To, " imported=""" & E.Tag_Value ("imported") & """");
       end if;
       if E.Has_Tag ("renames") then
-         Put (To, " renames=""" & E.Tag_As_Name ("renames") & """");
+         Put (To, " renames=""" & E.Tag_Value ("renames") & """");
       end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+E.Name) & "</name>");

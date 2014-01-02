@@ -12,20 +12,20 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: normalize_xmi-model-type_references.adb,v $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
+--  $Author: simonjwright $
 
 package body Normalize_XMI.Model.Type_References is
 
    function Read_Type_Reference (From   : not null DOM.Core.Node;
                                  Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Type_Reference_Element;
+      N : constant Element_P := new Type_Reference_Element (Parent);
    begin
-      N.Parent := Parent;
-      N.Name := +Read_Name (From_Element => From);
+      --  N.Name := +Read_Name (From_Element => From);
+      N.Populate (From => From);
       return N;
    end Read_Type_Reference;
 

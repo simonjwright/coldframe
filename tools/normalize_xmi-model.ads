@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 7790302b4adb $
---  $Date: 2013/04/22 15:37:22 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -54,17 +54,27 @@ private
    --  generate the ColdFrame normalized XML.
    --
    --  It's made limited because we need to preserve its identity.
-   type Element is abstract tagged limited record
+   type Element (Parent : Element_P) is abstract tagged limited record
       Node : DOM.Core.Node;
+      Name : Ada.Strings.Unbounded.Unbounded_String;
       Stereotypes : Uncased_String_Sets.Set;
       Tagged_Values : Uncased_String_Maps.Map;
-      Parent : Element_P;
-      Name : Ada.Strings.Unbounded.Unbounded_String;
    end record;
 
-   --  Fill in the Node, Stereotypes, and Tagged_Values fields.
+   --  Fill in the Node, Name, Stereotypes, and Tagged_Values fields.
    not overriding
    procedure Populate (E : in out Element; From : DOM.Core.Node);
+
+   --  Determine the full name of the element: for example,
+   --  {domain}.{class}.{operation}.{parameter}. Used for error
+   --  reporting.
+   not overriding
+   function Fully_Qualified_Name (E : Element) return String;
+
+   --  Determine the kind of the element (for example, "class",
+   --  "operation"). Used for error reporting.
+   not overriding
+   function Kind (E : Element) return String;
 
    --  Search up the Parent tree to find a Class which is named
    --  'With_Model_Name' in the model. The point of this is, of
@@ -91,14 +101,9 @@ private
    not overriding
    function Has_Tag (E : Element; Tag : String) return Boolean;
 
-   --  Read the named tagged value and normalize it (or empty string
-   --  if not found).
-   not overriding
-   function Tag_As_Name (E : Element; Tag : String) return String;
-
    --  Read the named tagged value (or empty string if not found).
    not overriding
-   function Tag_As_Value (E : Element; Tag : String) return String;
+   function Tag_Value (E : Element; Tag : String) return String;
 
    --  Complete any aspects of the Element that can't be determined by
    --  a simple top-down scan.
@@ -158,9 +163,6 @@ private
    --  string if not found).
    function Read_Attribute (Named : String;
                             From_Element : DOM.Core.Node) return String;
-
-   --  Reads the "name" attribute from the element and normalizes it.
-   function Read_Name (From_Element : DOM.Core.Node) return String;
 
    --  Reads and concatenates the child Text_Nodes of From_Element.
    function Read_Text (From_Element : DOM.Core.Node) return String;

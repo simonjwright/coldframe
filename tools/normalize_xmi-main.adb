@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-main.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with Ada.Command_Line;
@@ -137,7 +137,7 @@ begin
                           & DOM.Core.Nodes.Node_Value
                           (DOM.Core.Nodes.Item (Name, 0)));
                   else
-                     Messages.Trace ("discarding <<ignore>>d unnamed package");
+                     Messages.Trace ("discarding unnamed <<ignore>>d package");
                   end if;
                   Pruned_Node :=
                     DOM.Core.Nodes.Remove_Child (Parent,

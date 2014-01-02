@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -31,21 +31,23 @@ package body Normalize_XMI.Model.Generalizations is
       Parent          :        not null Element_P;
       Accumulating_In : in out Element_Maps.Map)
    is
-      Model_Name : constant String := Read_Name (From_Element => From);
+      Model_Name : constant String :=
+        Read_Attribute ("name", From_Element => From);
       Discriminator : constant String :=
-        Identifiers.Normalize
-        (Read_Attribute ("discriminator", From_Element => From));
+        Read_Attribute ("discriminator", From_Element => From);
       Name : Ada.Strings.Unbounded.Unbounded_String;
       Parent_Nodes : constant DOM.Core.Node_List
         := McKae.XML.XPath.XIA.XPath_Query (From,
                                             "UML:Generalization.parent/*");
       Parent_Name : constant String
-        := Read_Name (From_Element => DOM.Core.Nodes.Item (Parent_Nodes, 0));
+        := Read_Attribute
+          ("name", From_Element => DOM.Core.Nodes.Item (Parent_Nodes, 0));
       Child_Nodes : constant DOM.Core.Node_List
         := McKae.XML.XPath.XIA.XPath_Query (From,
                                             "UML:Generalization.child/*");
       Child_Name : constant String
-        := Read_Name (From_Element => DOM.Core.Nodes.Item (Child_Nodes, 0));
+        := Read_Attribute
+          ("name", From_Element => DOM.Core.Nodes.Item (Child_Nodes, 0));
       N : Element_P;
    begin
       if Model_Name'Length = 0 then
@@ -56,11 +58,31 @@ package body Normalize_XMI.Model.Generalizations is
                               & Parent_Name);
             return;
          else
-            Name := +Discriminator;
+            if Identifiers.Is_Valid (Discriminator) then
+               Name := +Identifiers.Normalize (Discriminator);
+            else
+               Messages.Error ("Invalid discriminator """
+                                 & Discriminator
+                                 & """ in generalization from "
+                                 & Child_Name
+                                 & " to "
+                                 & Parent_Name);
+               Name := +Discriminator;
+            end if;
          end if;
       else
          if Discriminator'Length = 0 or else Discriminator = Model_Name then
-            Name := +Model_Name;
+            if Identifiers.Is_Valid (Model_Name) then
+               Name := +Identifiers.Normalize (Model_Name);
+            else
+               Name := +Model_Name;
+               Messages.Error ("Invalid name """
+                                 & Model_Name
+                                 & """ in generalization from "
+                                 & Child_Name
+                                 & " to "
+                                 & Parent_Name);
+            end if;
          else
             Messages.Error ("Mismatch between generalization name ("
                               & Model_Name
@@ -73,17 +95,23 @@ package body Normalize_XMI.Model.Generalizations is
             return;
          end if;
       end if;
-      Messages.Trace ("... reading generalization " & (+Name));
       if Accumulating_In.Contains (+Name) then
          N := Accumulating_In.Element (+Name);
       else
-         N := new Generalization_Element;
+         N := new Generalization_Element (Parent);
          Accumulating_In.Insert (Key => +Name, New_Item => N);
-         N.Parent := Parent;
-         N.Name := Name;
-         N.Populate (From);
-         Generalization_Element (N.all).Parent_Class
-           := N.Find_Class (Parent_Name);
+         N.Populate (From); -- An invalid model name will be reported again
+         N.Name := Name;    -- Override the default chosen by Populate
+         if Identifiers.Is_Valid (Parent_Name) then
+            Generalization_Element (N.all).Parent_Class
+              := N.Find_Class (Parent_Name);
+         else
+            --  Unless the .uml is badly broken, the invalidity will
+            --  be reported when the parent class is
+            --  processed. However, we can't go any further, because
+            --  the declare block below would raise CE.
+            return;
+         end if;
       end if;
       declare
          G : Generalization_Element renames Generalization_Element (N.all);
@@ -98,7 +126,15 @@ package body Normalize_XMI.Model.Generalizations is
                               & ") from previously found");
             return;
          end if;
-         G.Child_Classes.Append (G.Find_Class (Child_Name));
+         if Identifiers.Is_Valid (Child_Name) then
+            G.Child_Classes.Append
+              (G.Find_Class (Identifiers.Normalize (Child_Name)));
+         else
+            --  Unless the .uml is badly broken, the invalidity will
+            --  be reported when the child class is
+            --  processed.
+            return;
+         end if;
       end;
    end Read_Generalization;
 

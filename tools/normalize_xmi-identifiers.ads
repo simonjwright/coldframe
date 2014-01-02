@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.ads,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Identifiers is
@@ -24,7 +24,16 @@ private package Normalize_XMI.Identifiers is
    --  'From'.  'From' may be a list of files, separated by ':' on
    --  Unix, ';' on Windows.
 
+   function Is_Valid (Str : String) return Boolean;
+   --  Returns True if Str is (or can be normalized to) a valid Ada
+   --  name.
+
    function Normalize (Id : String) return String;
+   --  Convert Id to a valid, properly cased Ada name.
+   --
+   --  Raises Invalid_Name if Id is invalid (for example, contains a
+   --  reserved word).
+   Invalid_Name : exception;
 
    --  Form an abbreviation for the (Class) name.
    --

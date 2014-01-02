@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -28,9 +28,10 @@ package body Normalize_XMI.Model.Association_Classes is
      (From   : not null DOM.Core.Node;
       Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Association_Class_Element;
+      N : constant Element_P
+        := new Association_Class_Element (Parent => Parent);
    begin
-      Associations.Populate_Association_Aspects (N, From, Parent);
+      Associations.Populate_Association_Aspects (N, From);
       return N;
    end Read_Association_Class;
 
@@ -62,20 +63,20 @@ package body Normalize_XMI.Model.Association_Classes is
                when False =>
                   if AC.Class.Has_Tag ("association-class-name") then
                      AC.Class.Name :=
-                       +(AC.Class.Tag_As_Name ("association-class-name"));
+                       +(AC.Class.Tag_Value ("association-class-name"));
                   else
                      AC.Class.Name := +(Class_Name & "_Class");
                   end if;
                when True =>
-                  AC.Class.Name := +(AC.Class.Tag_As_Name ("class-name"));
+                  AC.Class.Name := +(AC.Class.Tag_Value ("class-name"));
             end case;
          when True =>
-            AC.Name := +(AC.Tag_As_Name ("association-name"));
+            AC.Name := +(AC.Tag_Value ("association-name"));
             case AC.Class.Has_Tag ("class-name") is
                when False =>
                   null;
                when True =>
-                  AC.Class.Name := +(AC.Class.Tag_As_Name ("class-name"));
+                  AC.Class.Name := +(AC.Class.Tag_Value ("class-name"));
             end case;
       end case;
       Messages.Trace ("... checking association " & (+AC.Name));

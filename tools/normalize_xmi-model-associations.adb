@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,22 +29,19 @@ package body Normalize_XMI.Model.Associations is
    function Read_Association (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Association_Element;
+      N : constant Element_P := new Association_Element (Parent);
    begin
-      Populate_Association_Aspects (N, From, Parent);
+      Populate_Association_Aspects (N, From);
       return N;
    end Read_Association;
 
 
-   procedure Populate_Association_Aspects (Of_Element : not null Element_P;
-                                           From       : not null DOM.Core.Node;
-                                           Parent     : not null Element_P)
+   procedure Populate_Association_Aspects
+     (Of_Element : not null Element_P;
+      From       : not null DOM.Core.Node)
    is
       A : Association_Element renames Association_Element (Of_Element.all);
    begin
-      A.Parent := Parent;
-      A.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("... reading association " & (+A.Name));
       A.Populate (From => From);
 
       --  Ends

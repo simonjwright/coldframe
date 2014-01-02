@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 7790302b4adb $
---  $Date: 2013/04/22 15:37:22 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
+with Ada.Tags;
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
@@ -27,6 +28,23 @@ with Normalize_XMI.Model.Domains;
 with Unicode.CES;
 
 package body Normalize_XMI.Model is
+
+
+   --------------------
+   --  Tag checking  --
+   --------------------
+
+   type Tag_Properties is record
+      Must_Be_Name : Boolean;
+   end record;
+
+   package Uncased_Tag_Properties_Maps
+     is new Ada.Containers.Indefinite_Ordered_Maps
+     (Key_Type => String,
+      "<" => Uncased_Less_Than,
+      Element_Type => Tag_Properties);
+
+   Tags : Uncased_Tag_Properties_Maps.Map;
 
 
    procedure Process_Domain (From : not null DOM.Core.Node; In_File : String)
@@ -62,8 +80,19 @@ package body Normalize_XMI.Model is
    not overriding
    procedure Populate (E : in out Element; From : DOM.Core.Node)
    is
+      Name : constant String := Read_Attribute ("name", From_Element => From);
    begin
       E.Node := From;
+
+      if Identifiers.Is_Valid (Name) then
+         E.Name := +Identifiers.Normalize (Name);
+      else
+         E.Name := +Name;
+         Messages.Error ("Invalid "
+                           & E.Kind
+                           & " name "
+                           & Fully_Qualified_Name (Element'Class (E)));
+      end if;
 
       declare
          S : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
@@ -83,17 +112,39 @@ package body Normalize_XMI.Model is
             declare
                Tag : constant DOM.Core.Node_List
                  := McKae.XML.XPath.XIA.XPath_Query
-                 (DOM.Core.Nodes.Item (T, J),
-                  "UML:TaggedValue.type/UML:TagDefinition/@name");
+                   (DOM.Core.Nodes.Item (T, J),
+                    "UML:TaggedValue.type/UML:TagDefinition/@name");
                Value : constant DOM.Core.Node_List
                  := McKae.XML.XPath.XIA.XPath_Query
-                 (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
+                   (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
             begin
                if DOM.Core.Nodes.Length (Tag) = 1
                  and DOM.Core.Nodes.Length (Value) = 1 then
-                  E.Tagged_Values.Insert
-                    (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Tag, 0)),
-                     Read_Text (DOM.Core.Nodes.Item (Value, 0)));
+                  declare
+                     T : constant String
+                       := DOM.Core.Nodes.Node_Value
+                         (DOM.Core.Nodes.Item (Tag, 0));
+                     V : constant String
+                       := Read_Text (DOM.Core.Nodes.Item (Value, 0));
+                  begin
+                     if Tags.Contains (T)
+                       and then Tags.Element (T).Must_Be_Name then
+                        if Identifiers.Is_Valid (V) then
+                           E.Tagged_Values.Insert (T,
+                                                   Identifiers.Normalize (V));
+                        else
+                           E.Tagged_Values.Insert (T, V);
+                           Messages.Error
+                             ("Invalid value in {"
+                                & T & "="
+                                & V
+                                & "} on "
+                                & Fully_Qualified_Name (Element'Class (E)));
+                        end if;
+                     else
+                        E.Tagged_Values.Insert (T, V);
+                     end if;
+                  end;
                else
                   if DOM.Core.Nodes.Length (Tag) /= 1 then
                      Messages.Error ("Bad tag name in " & (+E.Name));
@@ -106,6 +157,56 @@ package body Normalize_XMI.Model is
          end loop;
       end;
    end Populate;
+
+
+   not overriding
+   function Fully_Qualified_Name (E : Element) return String
+   is
+      use type Ada.Strings.Unbounded.Unbounded_String;
+   begin
+      if E.Parent /= null then
+         if E.Name = "" then
+            return Fully_Qualified_Name (E.Parent.all) & ".{" & E.Kind & "}";
+         else
+            return Fully_Qualified_Name (E.Parent.all) & "." & (+E.Name);
+         end if;
+      else
+         return +E.Name;
+      end if;
+   end Fully_Qualified_Name;
+
+
+   not overriding
+   function Kind (E : Element) return String
+   is
+      use Ada.Strings.Fixed;
+      use Ada.Strings.Maps.Constants;
+      Full_Name : constant String
+        := Translate (Ada.Tags.Expanded_Name (Element'Class (E)'Tag),
+                      Lower_Case_Map);
+      Last_Dot : constant Natural
+        := Ada.Strings.Fixed.Index (Source => Full_Name,
+                                    Pattern => ".",
+                                    From => Full_Name'Last,
+                                    Going => Ada.Strings.Backward);
+      Last_Component : constant String
+        := Full_Name (Positive'Max (Last_Dot + 1, Full_Name'First)
+                        .. Full_Name'Last);
+      --  This code expects all Element types to have names ending in
+      --  "_Element". It won't fail if they don't, it just may not
+      --  make sense.
+      Last_Underscore : constant Natural
+        := Ada.Strings.Fixed.Index (Source => Last_Component,
+                                    Pattern => "_",
+                                    From => Last_Component'Last,
+                                    Going => Ada.Strings.Backward);
+   begin
+      if Last_Underscore = 0 then
+         return Last_Component;
+      else
+         return Last_Component (Last_Component'First .. Last_Underscore - 1);
+      end if;
+   end Kind;
 
 
    not overriding
@@ -147,19 +248,7 @@ package body Normalize_XMI.Model is
 
 
    not overriding
-   function Tag_As_Name (E : Element; Tag : String) return String
-   is
-   begin
-      if E.Tagged_Values.Contains (Tag) then
-         return Identifiers.Normalize (E.Tagged_Values.Element (Tag));
-      else
-         return "";
-      end if;
-   end Tag_As_Name;
-
-
-   not overriding
-   function Tag_As_Value (E : Element; Tag : String) return String
+   function Tag_Value (E : Element; Tag : String) return String
    is
    begin
       if E.Tagged_Values.Contains (Tag) then
@@ -167,7 +256,7 @@ package body Normalize_XMI.Model is
       else
          return "";
       end if;
-   end Tag_As_Value;
+   end Tag_Value;
 
 
    not overriding
@@ -177,7 +266,7 @@ package body Normalize_XMI.Model is
       use Ada.Strings.Fixed;
       use Ada.Strings.Maps;
       use Ada.Text_IO;
-      Doc : constant String := E.Tag_As_Value ("documentation");
+      Doc : constant String := E.Tag_Value ("documentation");
       CRLF : constant Character_Set := To_Set (ASCII.CR & ASCII.LF);
       First : Positive := Doc'First;
       Last : Natural;
@@ -251,13 +340,6 @@ package body Normalize_XMI.Model is
          return DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (P, 0));
       end if;
    end Read_Attribute;
-
-
-   function Read_Name (From_Element : DOM.Core.Node) return String
-   is
-   begin
-      return Identifiers.Normalize (Read_Attribute ("name", From_Element));
-   end Read_Name;
 
 
    function Read_Text (From_Element : DOM.Core.Node) return String
@@ -351,5 +433,29 @@ package body Normalize_XMI.Model is
       end if;
    end Print_Node;
 
+
+begin
+
+   --  Initialize Tags (for checking tag values as they are read)
+   Tags.Insert ("abbreviation", (Must_Be_Name => True));
+   Tags.Insert ("access-to-type", (Must_Be_Name => True));
+   Tags.Insert ("association-name", (Must_Be_Name => True));
+   Tags.Insert ("class-name", (Must_Be_Name => True));
+   Tags.Insert ("constrains", (Must_Be_Name => True));
+   Tags.Insert ("documentation", (Must_Be_Name => False));
+   Tags.Insert ("formalizes", (Must_Be_Name => True));
+   Tags.Insert ("imported", (Must_Be_Name => True));
+   Tags.Insert ("init", (Must_Be_Name => True));
+   Tags.Insert ("language", (Must_Be_Name => False));
+   Tags.Insert ("length", (Must_Be_Name => False));
+   Tags.Insert ("lower", (Must_Be_Name => False));
+   Tags.Insert ("max", (Must_Be_Name => False));
+   Tags.Insert ("mod", (Must_Be_Name => False));
+   Tags.Insert ("name", (Must_Be_Name => True));
+   Tags.Insert ("priority", (Must_Be_Name => False));
+   Tags.Insert ("renames", (Must_Be_Name => True));
+   Tags.Insert ("revision", (Must_Be_Name => False));
+   Tags.Insert ("stack", (Must_Be_Name => False));
+   Tags.Insert ("upper", (Must_Be_Name => False));
 
 end Normalize_XMI.Model;

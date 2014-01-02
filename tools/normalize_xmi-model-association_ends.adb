@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.adb,v $
---  $Revision: 409637e0f865 $
---  $Date: 2013/10/07 17:03:35 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,12 +29,9 @@ package body Normalize_XMI.Model.Association_Ends is
      (From : DOM.Core.Node;
       Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Association_End_Element;
+      N : constant Element_P := new Association_End_Element (Parent);
       E : Association_End_Element renames Association_End_Element (N.all);
    begin
-      E.Parent := Parent;
-      E.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("...... reading association_end " & (+E.Name));
       E.Populate (From => From);
 
       --  Lower
@@ -108,10 +105,15 @@ package body Normalize_XMI.Model.Association_Ends is
             "should be 1 'UML:AssociationEnd.participant/*/@name' child"
               & " of an Association_End");
          Name : constant String :=
-           Identifiers.Normalize
-           (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0)));
+           DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0));
       begin
-         E.Participant := E.Find_Class (Name);
+         if Identifiers.Is_Valid (Name) then
+            E.Participant := E.Find_Class (Identifiers.Normalize (Name));
+         else
+            --  The invalid participant class name will be reported
+            --  elsewhere.
+            E.Participant := E.Find_Class (Name);
+         end if;
          if E.Participant = null then
             Messages.Error
               ("Couldn't find participant "

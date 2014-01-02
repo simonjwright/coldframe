@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 409637e0f865 $
---  $Date: 2013/10/07 17:03:35 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -33,24 +33,23 @@ with Normalize_XMI.Model.Generalizations;
 
 package body Normalize_XMI.Model.Domains is
 
-   procedure Add_Standard_Types (To : in out Element_Maps.Map);
+   procedure Add_Standard_Types (To : in out Element_Maps.Map;
+                                 In_Domain : Element_P);
 
    procedure Process_Domain (From    : not null DOM.Core.Node;
                              In_File : String)
    is
-      D : aliased Domain;
+      D : aliased Domain (Parent => null);
    begin
 
       D.File_Time := GNAT.OS_Lib.File_Time_Stamp (In_File);
 
       --  Domain items
       --  Parent is, naturally, left null.
-      D.Name := +Read_Name (From_Element => From);
-      Messages.Information (" reading domain " & (+D.Name));
       D.Populate (From);
 
       --  Standard Types.
-      Add_Standard_Types (To => D.Types);
+      Add_Standard_Types (To => D.Types, In_Domain => D'Unchecked_Access);
 
       --  Classes, and the Class aspect of AssociationClasses
       declare
@@ -193,6 +192,13 @@ package body Normalize_XMI.Model.Domains is
          end loop;
       end;
 
+      if Messages.Number_Of_Errors /= 0 then
+         --  Don't attempt to resolve the domain. This avoids nasty
+         --  effects caused by incomplete population following errors
+         --  during the read.
+         return;
+      end if;
+
       D.Resolve;
 
       if Messages.Number_Of_Errors = 0 then
@@ -299,7 +305,7 @@ package body Normalize_XMI.Model.Domains is
    begin
       Put_Line (To, "<domain>");
       if D.Has_Tag ("name") then
-         Put_Line (To, "<name>" & D.Tag_As_Name ("name") & "</name>");
+         Put_Line (To, "<name>" & D.Tag_Value ("name") & "</name>");
       else
          Put_Line (To, "<name>" & (+D.Name) & "</name>");
       end if;
@@ -309,7 +315,7 @@ package body Normalize_XMI.Model.Domains is
       D.Output_Documentation (To);
       if D.Has_Tag ("revision") then
          Put_Line (To,
-                   "<revision>" & D.Tag_As_Value ("revision") & "</revision>");
+                   "<revision>" & D.Tag_Value ("revision") & "</revision>");
       end if;
 
       D.Classes.Iterate (Output'Access);
@@ -322,12 +328,13 @@ package body Normalize_XMI.Model.Domains is
    end Output;
 
 
-   procedure Add_Standard_Types (To : in out Element_Maps.Map)
+   procedure Add_Standard_Types (To : in out Element_Maps.Map;
+                                 In_Domain : Element_P)
    is
       procedure Add_Standard_Type (Named : String);
       procedure Add_Standard_Type (Named : String)
       is
-         N : constant Element_P := new Standard_Type_Element;
+         N : constant Element_P := new Standard_Type_Element (In_Domain);
          ST : Standard_Type_Element renames Standard_Type_Element (N.all);
       begin
          ST.Name := +Named;

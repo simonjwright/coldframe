@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,7 +29,11 @@ package body Normalize_XMI.Model.State_Machines is
    --  semicolon-separated list of operation names. Split_Effect
    --  splits at the semicolons and normalizes the resulting
    --  identifiers.
-   function Split_Effect (Effect : String) return String_Vectors.Vector;
+   --
+   --  For_Element is required to make useful error messages in case
+   --  of invalid identifiers.
+   function Split_Effect (For_Element : Element'Class;
+                          Effect : String) return String_Vectors.Vector;
 
    --  Output the elements of Effect to To as <action/> elements.
    procedure Put_Actions (To     : Ada.Text_IO.File_Type;
@@ -146,12 +150,9 @@ package body Normalize_XMI.Model.State_Machines is
          end if;
       end Read_State;
 
-      N : constant Element_P := new Transition_Element;
+      N : constant Element_P := new Transition_Element (Parent);
       T : Transition_Element renames Transition_Element (N.all);
    begin
-      T.Parent := Parent;
-      T.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("......... reading transition " & (+T.Name));
       T.Populate (From => From);
 
       --  Trigger
@@ -220,7 +221,8 @@ package body Normalize_XMI.Model.State_Machines is
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then
             T.Effect := Split_Effect
-              (Read_Attribute
+              (Element'Class (T),
+               Read_Attribute
                  ("body",
                   From_Element => DOM.Core.Nodes.Item (Nodes, 0)));
          end if;
@@ -277,13 +279,10 @@ package body Normalize_XMI.Model.State_Machines is
    function Read_State (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new State_Element;
+      N : constant Element_P := new State_Element (Parent);
       S : State_Element renames State_Element (N.all);
       Node_Name : constant String := DOM.Core.Nodes.Node_Name (From);
    begin
-      S.Parent := Parent;
-      S.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("............ reading state " & (+S.Name));
       S.Populate (From => From);
 
       if Node_Name = "UML:Pseudostate" then
@@ -315,7 +314,8 @@ package body Normalize_XMI.Model.State_Machines is
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then
             S.Entry_Effect := Split_Effect
-              (Read_Attribute
+              (Element'Class (S),
+               Read_Attribute
                  ("body",
                   From_Element => DOM.Core.Nodes.Item (Nodes, 0)));
          end if;
@@ -379,33 +379,27 @@ package body Normalize_XMI.Model.State_Machines is
    function Read_Event (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Event_Element;
+      N : constant Element_P := new Event_Element (Parent);
       E : Event_Element renames Event_Element (N.all);
    begin
-      E.Parent := Parent;
+      E.Populate (From => From);
 
-      --  Special Name handling.
+      --  Override the standard Name handling.
       --
       --  We don't use any qualifiers present in the element's name,
       --  because they're only there to disambiguate events with the
       --  same name but directed to different classes.
       declare
-         Name : constant String := Read_Name (From_Element => From);
+         Name : constant String :=
+           Read_Attribute ("name", From_Element => From);
          Dot : constant Natural
            := Ada.Strings.Fixed.Index (Source => Name,
                                        Pattern => ".",
                                        From => Name'Last,
                                        Going => Ada.Strings.Backward);
       begin
-         Messages.Trace ("............ reading event " & Name);
-         if Dot = 0 then
-            E.Name := +Name;
-         else
-            E.Name := +Name (Dot + 1 .. Name'Last);
-         end if;
+         E.Name := +Name (Positive'Max (Dot + 1, Name'First) .. Name'Last);
       end;
-
-      E.Populate (From => From);
 
       --  Parameter Type. We aren't interested in the parameter name,
       --  because ColdFrame only supports a single Event parameter,
@@ -418,10 +412,24 @@ package body Normalize_XMI.Model.State_Machines is
          if DOM.Core.Nodes.Length (Nodes) > 1 then
             Messages.Error
               ("Event "
-              & (+E.Name)
+                 & (+E.Name)
                  & " is not permitted to have more than one parameter");
          elsif DOM.Core.Nodes.Length (Nodes) = 1 then
-            E.Parameter_Type := +Read_Name (DOM.Core.Nodes.Item (Nodes, 0));
+            declare
+               Name : constant String :=
+                 Read_Attribute ("name", DOM.Core.Nodes.Item (Nodes, 0));
+            begin
+               if Identifiers.Is_Valid (Name) then
+                  E.Parameter_Type := +Identifiers.Normalize (Name);
+               else
+                  Messages.Error
+                    ("Event "
+                       & (+E.Name)
+                       & " has invalid parameter type """
+                       & Name
+                       & """");
+               end if;
+            end;
          end if;
       end;
 
@@ -489,13 +497,10 @@ package body Normalize_XMI.Model.State_Machines is
    function Read_State_Machine (From   : not null DOM.Core.Node;
                                 Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new State_Machine_Element;
+      N : constant Element_P := new State_Machine_Element (Parent);
       S : State_Machine_Element renames State_Machine_Element (N.all);
    begin
-      S.Parent := Parent;
       S.Populate (From => From);
-      S.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("...... reading state_machine " & (+S.Name));
 
       --  We only want Events for Transitions between States in this
       --  StateMachine, so we start at the top and work down.
@@ -522,7 +527,8 @@ package body Normalize_XMI.Model.State_Machines is
 
    ------------------------------------------------------------------------
 
-   function Split_Effect (Effect : String) return String_Vectors.Vector
+   function Split_Effect (For_Element : Element'Class;
+                          Effect : String) return String_Vectors.Vector
    is
       Spans : constant Identifiers.Spans
         := Identifiers.Find_Spans (Effect, Splitting_At => ';');
@@ -530,11 +536,22 @@ package body Normalize_XMI.Model.State_Machines is
       return Result : String_Vectors.Vector do
          for J in Spans'Range loop
             if Spans (J).U >= Spans (J).L then
-               Result.Append
-                  (Identifiers.Normalize
-                    (Ada.Strings.Fixed.Trim
-                       (Effect (Spans (J).L .. Spans (J).U),
-                        Ada.Strings.Both)));
+               declare
+                  Action : constant String :=
+                    Ada.Strings.Fixed.Trim
+                      (Effect (Spans (J).L .. Spans (J).U),
+                       Ada.Strings.Both);
+               begin
+                  if Identifiers.Is_Valid (Action) then
+                     Result.Append (Identifiers.Normalize (Action));
+                  else
+                     Messages.Error
+                       ("Invalid action """
+                          & Action
+                          & """ in "
+                          & Fully_Qualified_Name (For_Element));
+                  end if;
+               end;
             end if;
          end loop;
       end return;

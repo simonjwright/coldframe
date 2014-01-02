@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,12 +29,9 @@ package body Normalize_XMI.Model.Operations is
    function Read_Operation (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Operation_Element;
+      N : constant Element_P := new Operation_Element (Parent);
       O : Operation_Element renames Operation_Element (N.all);
    begin
-      O.Parent := Parent;
-      O.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("...... reading operation " & (+O.Name));
       O.Populate (From => From);
 
       --  Parameters
@@ -139,7 +136,7 @@ package body Normalize_XMI.Model.Operations is
          end if;
       end;
       if O.Has_Stereotype ("convention") then
-         Put (To, " convention='" & O.Tag_As_Name ("language") & "'");
+         Put (To, " convention='" & O.Tag_Value ("language") & "'");
       end if;
       if O.Has_Stereotype ("entry") then
          Put (To, " entry='true'");
@@ -151,7 +148,7 @@ package body Normalize_XMI.Model.Operations is
          Put (To, " initialize='true'");
       end if;
       if O.Has_Tag ("renames") then
-         Put (To, " renames='" & O.Tag_As_Name ("renames") & "'");
+         Put (To, " renames='" & O.Tag_Value ("renames") & "'");
       end if;
       if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Put (To, " return='" & (+O.Return_Type) & "'");

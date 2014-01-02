@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: a64d2fe72b0e $
---  $Date: 2013/10/08 16:26:51 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
+with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Operations;
 
@@ -28,12 +29,9 @@ package body Normalize_XMI.Model.Enumerations is
    function Read_Enumeration (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
-      N : constant Element_P := new Enumeration_Element;
+      N : constant Element_P := new Enumeration_Element (Parent);
       E : Enumeration_Element renames Enumeration_Element (N.all);
    begin
-      E.Parent := Parent;
-      E.Name := +Read_Name (From_Element => From);
-      Messages.Trace ("... reading enumeration " & (+E.Name));
       E.Populate (From => From);
 
       --  Literals
@@ -42,7 +40,22 @@ package body Normalize_XMI.Model.Enumerations is
            (From, "UML:Enumeration.literal/UML:EnumerationLiteral");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
-            E.Literals.Append (Read_Name (DOM.Core.Nodes.Item (Nodes, J)));
+            declare
+               Literal  : constant String :=
+                 Read_Attribute
+                   ("name",
+                    From_Element =>
+                      DOM.Core.Nodes.Item (Nodes, J));
+            begin
+               if Identifiers.Is_Valid (Literal) then
+                  E.Literals.Append (Identifiers.Normalize (Literal));
+               else
+                  Messages.Error ("Invalid literal """
+                                    & Literal
+                                    & """ in enumeration "
+                                    & Fully_Qualified_Name (E));
+               end if;
+            end;
          end loop;
       end;
 
@@ -124,7 +137,7 @@ package body Normalize_XMI.Model.Enumerations is
          Put (To, " callback='true'");
       end if;
       if E.Has_Stereotype ("convention") then
-         Put (To, " convention='" & E.Tag_As_Name ("language") & "'");
+         Put (To, " convention='" & E.Tag_Value ("language") & "'");
       end if;
       declare
          Visibility : constant String

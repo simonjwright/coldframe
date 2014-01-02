@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.ads,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: f9be220a35c7 $
+--  $Date: 2014/01/02 20:18:20 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Associations is
@@ -28,9 +28,9 @@ private package Normalize_XMI.Model.Associations is
    end record;
 
    --  This procedure is available for use by package Association_Classes.
-   procedure Populate_Association_Aspects (Of_Element : not null Element_P;
-                                           From       : not null DOM.Core.Node;
-                                           Parent     : not null Element_P);
+   procedure Populate_Association_Aspects
+     (Of_Element : not null Element_P;
+      From       : not null DOM.Core.Node);
 
 private
 
