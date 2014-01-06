@@ -26,12 +26,12 @@
 --  This package supports the style of callback/event processing in
 --  http://coldframe.sourceforge.net/coldframe/event-use.html#eventqueues.
 --
---  See ColdFrame.Project.Events.Standard.Callback_Manager for a
---  standard instantiation.
+--  See ColdFrame.Project.Events.Callback_Manager for a standard
+--  instantiation.
 --
 --  Each receiver domain instantiates the nested Callback_Manager_G
---  with the sender domain's called-back type and its callback
---  package.
+--  with the sender domain's called-back type and corresponding
+--  callback package.
 --
 --  During initialization of the receiver domain, it registers its
 --  callback handler(s) with the instantiated <type>_Callback_Manager.
@@ -41,14 +41,10 @@
 --  handler with the sender domain.
 --
 --  Now, when the sender domain's callback is invoked,
---  <type>_Callback_Manager's internal handler checks whether the
---  current task (which will most likely be the dispatcher of the
---  sender domain) is the same as the receiver domain's dispatcher. If
---  so, the receiver domain's callback handlers can be called
---  directly. If not, a class event is created, carrying the payload;
---  when dispatched (and therefore in the receiver domain's event
---  queue context), its handler calls the receiver domain's callback
---  handlers.
+--  <type>_Callback_Manager's internal handler creates a class event,
+--  carrying the payload; when dispatched (and therefore in the
+--  receiver domain's event queue context), its handler calls the
+--  receiver domain's callback handlers.
 
 --  $RCSfile$
 --  $Revision$
@@ -58,7 +54,7 @@
 with ColdFrame.Callbacks;
 
 generic
-package ColdFrame.Events_G.Standard_G.Callback_Manager_G is
+package ColdFrame.Events_G.Callback_Manager_G is
 
    generic
 
@@ -74,8 +70,8 @@ package ColdFrame.Events_G.Standard_G.Callback_Manager_G is
       --  The callback procedure to be invoked with Value.
 
       procedure Register (In_The_Context_Of : Event_Queue_P);
-      --  Notes the Event Queue for this domain, so we can determine its
-      --  Dispatcher task context.
+      --  Notes the Event Queue for this domain, for posting the inner
+      --  clas events.
 
       procedure Register
         (The_Callback_Procedure : Callback.Callback);
@@ -85,6 +81,10 @@ package ColdFrame.Events_G.Standard_G.Callback_Manager_G is
       procedure Deregister
         (The_Callback_Procedure : Callback.Callback);
       --  No longer interested in this callback.
+
+      procedure Clear;
+      --  Clear the registered Event Queue and all registered
+      --  callbacks.
 
    private
 
@@ -96,4 +96,4 @@ package ColdFrame.Events_G.Standard_G.Callback_Manager_G is
 
    end Callback_Manager_G;
 
-end ColdFrame.Events_G.Standard_G.Callback_Manager_G;
+end ColdFrame.Events_G.Callback_Manager_G;

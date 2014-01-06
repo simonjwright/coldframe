@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: callback_manager_test_support.adb,v $
+--  $Revision: 727aa42ad076 $
+--  $Date: 2014/01/06 17:57:59 $
+--  $Author: simonjwright $
 
 with Ada.Text_IO; use Ada.Text_IO;
 
@@ -28,13 +28,6 @@ package body Callback_Manager_Test_Support is
       Put_Line ("Callback_Manager_Test_Support.Callback_Handler:"
                   & " value:" & Value'Img);
    end Callback_Handler;
-
-
-   procedure Handler (Ev : Class_Event)
-   is
-   begin
-      Integer_Callbacks.Call_Callbacks (Ev.Value);
-   end Handler;
 
 
 end Callback_Manager_Test_Support;

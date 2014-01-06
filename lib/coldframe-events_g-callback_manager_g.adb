@@ -24,9 +24,7 @@
 --  $Date$
 --  $Author$
 
-with Ada.Task_Identification;
-
-package body ColdFrame.Events_G.Standard_G.Callback_Manager_G is
+package body ColdFrame.Events_G.Callback_Manager_G is
 
    package body Callback_Manager_G is
 
@@ -40,12 +38,12 @@ package body ColdFrame.Events_G.Standard_G.Callback_Manager_G is
       procedure Register (In_The_Context_Of : Event_Queue_P)
       is
          pragma Assert (In_The_Context_Of /= null,
-                        "can't register null Dispatcher");
+                        "can't register null Event Queue");
          pragma Assert (Dispatcher = null,
                         "already registered");
       begin
          Dispatcher := In_The_Context_Of;
-         Callback.Register (Local_Callback_Handler'Unrestricted_Access);
+         Callback.Register (Local_Callback_Handler'Access);
       end Register;
 
 
@@ -67,6 +65,14 @@ package body ColdFrame.Events_G.Standard_G.Callback_Manager_G is
       end Deregister;
 
 
+      procedure Clear
+      is
+      begin
+         Dispatcher := null;
+         Inner_Callback.Clear;
+      end Clear;
+
+
       procedure Handler (Ev : Callback_Event)
       is
       begin
@@ -76,14 +82,8 @@ package body ColdFrame.Events_G.Standard_G.Callback_Manager_G is
 
       procedure Local_Callback_Handler (Value : T)
       is
-         Dispatcher_Task : Standard_G.Dispatcher
-           renames Standard_G.Event_Queue_Base (Dispatcher.all).The_Dispatcher;
-         use type Ada.Task_Identification.Task_Id;
       begin
-         if Ada.Task_Identification.Current_Task
-           = Dispatcher_Task'Identity then
-            Inner_Callback.Call_Callbacks (Value);
-         else
+         if Dispatcher /= null then
             declare
                Ev : constant Event_P := new Callback_Event;
             begin
@@ -96,4 +96,4 @@ package body ColdFrame.Events_G.Standard_G.Callback_Manager_G is
 
    end Callback_Manager_G;
 
-end ColdFrame.Events_G.Standard_G.Callback_Manager_G;
+end ColdFrame.Events_G.Callback_Manager_G;

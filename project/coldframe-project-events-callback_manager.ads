@@ -26,6 +26,6 @@
 --  $Date$
 --  $Author$
 
-with ColdFrame.Events_G.Standard_G.Callback_Manager_G;
-package ColdFrame.Project.Events.Standard.Callback_Manager
-is new ColdFrame.Project.Events.Standard.Callback_Manager_G;
+with ColdFrame.Events_G.Callback_Manager_G;
+package ColdFrame.Project.Events.Callback_Manager
+is new ColdFrame.Project.Events.Callback_Manager_G;

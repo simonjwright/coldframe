@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: callback_manager_test.adb,v $
+--  $Revision: 727aa42ad076 $
+--  $Date: 2014/01/06 17:57:59 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Text_IO; use Ada.Text_IO;
@@ -56,30 +56,15 @@ begin
                                              Ignoring_Timers => True);
    New_Line;
 
-   declare
-      Ev : CMTS.Class_Event;
-   begin
-      Ev.Value := 4;
-      Put_Line ("synchronously handling (4) => other context");
-      CMTS.Handler (Ev);
-      ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
-                                                Ignoring_Timers => True);
-   end;
-   New_Line;
-
-   declare
-      Ev : constant ColdFrame.Project.Events.Event_P := new CMTS.Class_Event;
-   begin
-      CMTS.Class_Event (Ev.all).Value := 5;
-      Put_Line ("asynchronously handling (5) => same context");
-      ColdFrame.Project.Events.Post (Ev, On => Dispatcher);
-      ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
-                                                Ignoring_Timers => True);
-   end;
-   New_Line;
-
    CMTSMIC.Deregister (CMTS.Callback_Handler'Access);
-   Put_Line ("callback deregistered: call_callbacks (99)");
+   Put_Line ("callback deregistered: call_callbacks (98)");
+   CMTSIC.Call_Callbacks (99);
+   ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
+                                             Ignoring_Timers => True);
+   New_Line;
+
+   CMTSMIC.Clear;
+   Put_Line ("callback cleared: call_callbacks (99)");
    CMTSIC.Call_Callbacks (99);
    ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
                                              Ignoring_Timers => True);
