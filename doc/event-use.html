@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: event-use.html,v d1e3c4b40e72 2014/01/06 17:41:37 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -73,10 +73,10 @@ queue (<em>Operation 1.1.2</em>):
 <p><em>Operation 2</em> represents the firing of the <tt>Button
 Event</tt> when it reaches the head of the House Management event
 queue, in the House Management context. The generated <tt>Handler</tt>
-calls the &#171;handler&#187; operation <tt>Button.Pushed</tt>
-(<em>Operation 2.1</em>), which, instead of posting another event,
-creates a <tt>Button Push</tt> event for the Lamp concerned
-(<em>Operation 2.1.1</em>) on the stack and then invokes its generated
+calls the operation <tt>Button.Pushed</tt> (<em>Operation 2.1</em>),
+which, instead of posting another event, creates a <tt>Button
+Push</tt> event for the Lamp concerned (<em>Operation 2.1.1</em>) on
+the stack and then invokes its generated
 <tt>Handler</tt> (<em>Operation 2.1.2</em>):
 <pre>
    <a name="synchronous">procedure Button_Pushed</a> (L : Lamp.Handle) is

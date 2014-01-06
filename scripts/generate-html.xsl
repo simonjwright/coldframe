@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v d4297151bff2 2012/09/26 17:50:15 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v d1e3c4b40e72 2014/01/06 17:41:37 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -678,9 +678,6 @@
       <xsl:if test="@abstract">
         <xsl:text>, abstract</xsl:text>
       </xsl:if>
-      <xsl:if test="@suppressed='framework'">
-        <xsl:text>, automatically-generated</xsl:text>
-      </xsl:if>
       <xsl:if test="@access">
         <xsl:text>, access-to-operation</xsl:text>
       </xsl:if>
@@ -700,15 +697,6 @@
       </xsl:if>
       <xsl:if test="@final">
         <xsl:text>, action deletes instance</xsl:text>
-      </xsl:if>
-      <xsl:if test="@suppressed='instantiation'">
-        <xsl:text>, instantiated</xsl:text>
-      </xsl:if>
-      <xsl:if test="@handler">
-        <xsl:text>, class event handler</xsl:text>
-      </xsl:if>
-      <xsl:if test="@suppressed='navigation'">
-        <xsl:text>, navigation</xsl:text>
       </xsl:if>
       <xsl:if test="@entry">
         <xsl:text>, entry</xsl:text>
