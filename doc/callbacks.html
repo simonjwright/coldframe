@@ -1,4 +1,4 @@
-<!-- $Id: callbacks.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: callbacks.html,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
 <head>
 <title>ColdFrame: Callbacks</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -44,25 +44,45 @@ that clients need notifying about.
 <p>Mark it as a callback type by applying
 the <em>&#171;callback&#187;</em> stereotype.
 
+<p>If the data you want to transmit is a basic type (such
+as <i>Boolean</i>), you'll still need to create a domain type to
+apply <em>&#171;callback&#187;</em> to. This could be via
+a <a href="types.html#renaming">renaming</a>.
+
 <h3>Client-side</h3>
 
-<p>If it's not a basic type (such as <i>Boolean</i>), import the
-callback type from the server domain (the
+<p>First, import the callback type from the server domain (the
 stereotype <em>&#171;imported&#187;</em> and the
-tag <tt>{imported=Server}</tt>).
+tag <tt>{imported=<i>Server</i>}</tt>).
 
-<p>In an appropriate class, create a class operation
-(<i>ownerScope</i> checked), taking a single (<tt>in</tt>) parameter
-of the callback type, to act as the receiver.
+<p>In an appropriate class, create an operation taking a single
+(<tt>in</tt>) parameter of the imported callback type, to act as the
+receiver.
+
+<p>ColdFrame provides automatic registration for such an operation
+with the server if you apply the
+stereotype <em>&#171;callback&#187;</em>; in that case the operation
+will be treated as a class operation. If you don't want this (that is,
+you'll register with the server callback "by hand"), you <em>must</em>
+model the operation as a class operation (by
+checking <i>ownerScope</i>).
 
 <h2>Translation</h2>
 
-For a callback type <i>CB</i>, ColdFrame generates an instantiation:
+<p>For a <em>&#171;callback&#187;</em> type <i>CB</i>, ColdFrame
+generates an instantiation:
 <pre>
    package <i>Domain</i>.CB_Callback
    is new ColdFrame.Callbacks
      (T => <i>Domain</i>.CB);
 </pre>
+
+<p>For a <em>&#171;callback&#187;</em> operation, ColdFrame generates
+the code necessary to move the callback message from the server
+domain's context to the client domain's context, using implicit class
+events. When the callback operation is invoked, it is in the client
+domain's context and can use synchronous event processing as
+appropriate.
 
 <h2>Use</h2>
 
@@ -72,8 +92,7 @@ events</a>.
 <p>If all you want to say is that something has happened, mark your
 &#171;callback&#187; datatype <em>&#171;null&#187;</em> . ColdFrame
 generates a <tt>null record</tt> declaration. To create an instance of
-a null record (to call the callbacks with), say <tt>(null
-record)</tt>.
+a null record (to call the callbacks with), say <tt>(null&nbsp;record)</tt>.
 
 <p>Don't bother to deregister for callbacks during AUnit test
 teardown; ColdFrame automatically does this for you.

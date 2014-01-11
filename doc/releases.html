@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v a035894b6696 2013/12/22 08:25:58 simonjwright $ -->
+<!-- $Id: releases.html,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -75,7 +75,7 @@ zipped release of 30 January 2001.
 </ul>
 -->
 
-<dt>2013mmdd
+<dt>2014mmdd
 
 <dd>
 <ul class="release">
@@ -93,11 +93,27 @@ bug <a href="https://sourceforge.net/p/coldframe/bugs/81/">81</a>.
 and <a href="ColdFrameProfile.html#st-utility">&#171;utility&#187;</a>
 are supported for classes.
 
+<li> &#171;callback&#187; can now be applied to (class) operations
+which are to receive callbacks from other, lower-level, domains.
+
 <li><b>Generation</b>
 
 <li>Inheritance arrowheads were missing on generated diagrams.
 
 <li><b>Code</b>
+
+<li> For &#171;callback&#187; operations, code is generated to
+
+<ul>
+
+<li> register with the callback provider at domain initialization,
+
+<li> create class events to transfer the data into the receiver
+domain's context, and
+
+<li> support teardown for unit test.
+
+</ul>
 
 <li><b>Testing</b>
 

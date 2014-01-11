@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-teardown.xsl,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -29,6 +29,7 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:cb="http://pushface.org/coldframe/callback"
   xmlns:td="http://pushface.org/coldframe/teardown"
   xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0">
@@ -166,9 +167,11 @@
       <xsl:when test="$max=0">
 
         <!--
+             with {Domain}.{Class}.{other-domain}_{other_type}_Manager;
              procedure {Domain}.{Class}.CF_Tear_Down is
              begin
-                null;
+                null; - in case other possibilities are empty
+                {other-domain}_{other-type}_Manager.Clear;   - callback managers
                 ColdFrame.Project.Events.Finalize ({timer}); - class timers
              end {Domain}.{Class}.CF_Tear_Down;
              -->
@@ -176,6 +179,8 @@
         <xsl:call-template name="ut:do-not-edit"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
         <xsl:call-template name="ut:identification-info"/>
+
+        <xsl:apply-templates mode="cb:manager-context"/>
 
         <xsl:text>procedure </xsl:text>
         <xsl:value-of select="../name"/>
@@ -187,6 +192,8 @@
 
         <xsl:value-of select="$I"/>
         <xsl:text>null;&#10;</xsl:text>
+
+        <xsl:apply-templates mode="cb:manager-teardown"/>
 
         <xsl:apply-templates mode="td:class-timer"/>
 
@@ -202,6 +209,7 @@
 
         <!--
              with Ada.Unchecked_Deallocation;
+             with {Domain}.{Class}.{other-domain}_{other_type}_Manager;
              procedure {Domain}.{Class}.CF_Tear_Down is
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
                 procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
@@ -218,6 +226,7 @@
                    Free (This.The_T);
                    Free (This);
                 end if;
+                {other-domain}_{other-type}_Manager.Clear;   - callback managers
                 ColdFrame.Project.Events.Finalize ({timer}); - class timers
              end {Domain}.{Class}.CF_Tear_Down;
              -->
@@ -227,6 +236,8 @@
         <xsl:call-template name="ut:identification-info"/>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+
+        <xsl:apply-templates mode="cb:manager-context"/>
 
         <xsl:text>procedure </xsl:text>
         <xsl:value-of select="../name"/>
@@ -285,6 +296,8 @@
         <xsl:value-of select="$I"/>
         <xsl:text>end if;&#10;</xsl:text>
 
+        <xsl:apply-templates mode="cb:manager-teardown"/>
+
         <xsl:apply-templates mode="td:class-timer"/>
 
         <xsl:text>end </xsl:text>
@@ -299,6 +312,7 @@
 
         <!--
              with Ada.Unchecked_Deallocation;
+             with {Domain}.{Class}.{other-domain}_{other_type}_Manager;
              procedure {Domain}.{Class}.CF_Tear_Down is
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
                 procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
@@ -317,6 +331,7 @@
                       Free (The_Container (I));
                    end if;
                 end loop;
+                {other-domain}_{other-type}_Manager.Clear;   - callback managers
                 ColdFrame.Project.Events.Finalize ({timer}); - class timers
              end {Domain}.{Class}.CF_Tear_Down;
              -->
@@ -326,6 +341,8 @@
         <xsl:call-template name="ut:identification-info"/>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+
+        <xsl:apply-templates mode="cb:manager-context"/>
 
         <xsl:text>procedure </xsl:text>
         <xsl:value-of select="../name"/>
@@ -390,6 +407,8 @@
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 
+        <xsl:apply-templates mode="cb:manager-teardown"/>
+
         <xsl:apply-templates mode="td:class-timer"/>
 
         <xsl:text>end </xsl:text>
@@ -404,6 +423,7 @@
 
         <!--
              with Ada.Unchecked_Deallocation;
+             with {Domain}.{Class}.{other-domain}_{other_type}_Manager;
              procedure {Domain}.{Class}.CF_Tear_Down is
                 package CIAC renames ColdFrame.Instances.Abstract_Containers;
                 It : CIAC.Iterator'Class := Maps.New_Iterator (The_Container);
@@ -427,6 +447,7 @@
                 end loop;
                 Maps.Clear (The_Container);
                 Next_Identifier := 0;                  -  for Autonumbering
+                {other-domain}_{other-type}_Manager.Clear;   - callback managers
                 ColdFrame.Project.Events.Finalize ({timer}); - class timers
              end {Domain}.{Class}.CF_Tear_Down;
              -->
@@ -436,6 +457,8 @@
         <xsl:call-template name="ut:identification-info"/>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+
+        <xsl:apply-templates mode="cb:manager-context"/>
 
         <xsl:text>procedure </xsl:text>
         <xsl:value-of select="../name"/>
@@ -513,6 +536,8 @@
           <xsl:value-of select="$I"/>
           <xsl:text>Next_Identifier := 0;&#10;</xsl:text>
         </xsl:if>
+
+        <xsl:apply-templates mode="cb:manager-teardown"/>
 
         <xsl:apply-templates mode="td:class-timer"/>
 

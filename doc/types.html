@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 28f010f797e0 2013/07/14 17:12:36 simonjwright $ -->
+<!-- $Id: types.html,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -127,7 +127,7 @@ reference specified in the associated <tt>{imported}</tt> tag.
 <dd>specifies an empty record; useful for a callback with no actual
 data associated.
 
-<dt><em>&#171;renaming&#187;</em>
+<dt><a name="renaming"><em>&#171;renaming&#187;</em></a>
 <dd>specifies that the given type or exception renames the external
 reference specified in the associated <tt>{renames}</tt> tag.
 
@@ -155,12 +155,16 @@ concurrent access by multiple threads of execution.
 <dl>
 
 <dt><em>&#171;callback&#187;</em>
-<dd>specifies that callback support code is to be generated. The idea
-here is that a (lower-level) Domain may need to support Observers from
-higher-level Domains, and the higher-level Domains can register to be
-notified when something has changed in the lower-level Domain.
+<dd>specifies that <a href="callbacks.html">callback</a> support code
+is to be generated. The idea here is that a (lower-level) Domain may
+need to support Observers from higher-level Domains, and the
+higher-level Domains can register to be notified when something has
+changed in the lower-level Domain.
+
+</dl>
 
 <h3>Others</h3>
+<dl>
 
 <dt><a name="convention"><em>&#171;convention&#187;</em></a>
 <dd>specifies that the conventions of the programming language

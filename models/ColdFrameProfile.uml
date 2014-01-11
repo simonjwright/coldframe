@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Oct 07 22:58:33 BST 2013'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Jan 07 11:43:59 GMT 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2013/10/08 16:23:14 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/01/11 14:11:13 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -639,8 +639,8 @@ The (generated) operation Delete is automatically «final».</UML:TaggedValue.da
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:0000000000001026'
           name = 'ignore' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Transition</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Transition</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--29007e96:1351af64880:-8000:0000000000000E97'
               isSpecification = 'false'>
@@ -727,12 +727,14 @@ To be applied to a Class stereotyped «datatype» and with attributes.</UML:Tagg
         <UML:Stereotype xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9'
           name = 'callback' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC2'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>Callback support code is to be generated. The idea here is that a (lower-level) Domain may need to support Observers from higher-level Domains, and the higher-level Domains can register to be notified when something has changed in the lower-level Domain.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>If applied to a type, callback support code is to be generated. The idea here is that a (lower-level) Domain may need to support Observers from higher-level Domains, and the higher-level Domains can register to be notified when something has changed in the lower-level Domain.
+If applied to an operation, the operation is to be an Observer of some change in a lower-level domain. This implies the stereotype «class». The operation must take a single parameter of the type concerned.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -768,8 +770,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAA'
           name = 'abbreviation' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAF'
               isSpecification = 'false'>
@@ -805,8 +807,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2'
           name = 'class' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>CallEvent</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>SignalEvent</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>CallEvent</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>StateMachine</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF3'

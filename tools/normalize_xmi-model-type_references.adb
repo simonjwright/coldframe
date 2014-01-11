@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-type_references.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: f3a9cc2c7d9c $
+--  $Date: 2014/01/11 14:11:13 $
 --  $Author: simonjwright $
 
 package body Normalize_XMI.Model.Type_References is
@@ -24,7 +24,6 @@ package body Normalize_XMI.Model.Type_References is
    is
       N : constant Element_P := new Type_Reference_Element (Parent);
    begin
-      --  N.Name := +Read_Name (From_Element => From);
       N.Populate (From => From);
       return N;
    end Read_Type_Reference;

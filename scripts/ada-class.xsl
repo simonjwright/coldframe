@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v e3150056b314 2013/04/20 12:59:49 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -29,6 +29,7 @@
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:at="http://pushface.org/coldframe/attribute"
+  xmlns:cb="http://pushface.org/coldframe/callback"
   xmlns:cl="http://pushface.org/coldframe/class"
   xmlns:op="http://pushface.org/coldframe/operation"
   xmlns:st="http://pushface.org/coldframe/state"
@@ -2113,7 +2114,8 @@
     mode="cl:class-initialization"
     match="class[attribute[@class and initial]
            or @singleton
-           or (@public and attribute)]">
+           or (@public and attribute)
+           or operation/@callback]">
 
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
@@ -2127,6 +2129,14 @@
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
+
+    <xsl:apply-templates mode="cb:manager-context"/>
+    <xsl:if test="operation/@callback">
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.Events;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -2157,7 +2167,9 @@
       <xsl:text>H := Create;&#10;</xsl:text>
     </xsl:if>
 
-   <xsl:text>end </xsl:text>
+    <xsl:apply-templates mode="cb:initialize-callback-manager"/>
+
+    <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>

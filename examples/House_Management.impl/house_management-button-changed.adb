@@ -13,16 +13,18 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-button-changed.adb,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: f3a9cc2c7d9c $
+--  $Date: 2014/01/11 14:11:13 $
 --  $Author: simonjwright $
 
 --  Acts as receiver of state changes from Digital IO, via Signal
---  State Callback. Posts a (class) Button Event (only if the button
---  has been pushed).
+--  State Callback. If a Button has been pushed, posts
+--  Button_Pushed events to the Lamps which are controlled by that
+--  Button. Button releases are ignored.
 
-with ColdFrame.Project.Events;
-with House_Management.Events;
+with House_Management.Lamp.Collections;
+with House_Management.Lamp.Iterate;
+with House_Management.A1;
 
 separate (House_Management.Button)
 procedure Changed
@@ -44,10 +46,20 @@ begin
       if S.S in Floors then
 
          declare
-            E : constant ColdFrame.Project.Events.Event_P := new Button_Pushed;
+            procedure Button_Pushed (L : Lamp.Handle);
+            pragma Inline (Button_Pushed);
+            procedure Process is new Lamp.Iterate (Button_Pushed);
+            procedure Button_Pushed (L : Lamp.Handle) is
+               Ev : Lamp.Button_Push (For_The_Instance => L);
+            begin
+               Lamp.Handler (Ev);
+            end Button_Pushed;
+
+            BH : constant Handle := Find ((Name => Buttons (S.S)));
+            LHS : constant Lamp.Collections.Collection
+              := A1.Is_Controlled_By (BH);
          begin
-            Button_Pushed (E.all).Payload := Buttons (S.S);
-            ColdFrame.Project.Events.Post (E, On => Events.Dispatcher);
+            Process (LHS);
          end;
 
       else

@@ -12,13 +12,16 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: normalize_xmi-model-type_references.ads,v $
+--  $Revision: f3a9cc2c7d9c $
+--  $Date: 2014/01/11 14:11:13 $
+--  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Type_References is
 
+   --  A Type_Reference_Element is used for parameter or attribute
+   --  types.
+   --
    --  A type in the model can be of several different kinds
    --  (enumerations, datatypes, classes).
    --
@@ -29,11 +32,15 @@ private package Normalize_XMI.Model.Type_References is
    --  name of the class.
    --
    --  The two objects have to have different names, and ColdFrame
-   --  adjusts the name of the associative class.
+   --  adjusts the name of one or other (or both!) of them depending
+   --  on <<association-class-naming>> and {class-name} and/or
+   --  {association-name}.
    --
    --  This means that the name in the model (after chasing the
    --  xmi.idref links) is the name of the association, but what we
-   --  want to output is the rename of the associative class.
+   --  want to output is the name of the associative class
+   --  (associations can't correspond to types).
+
    function Read_Type_Reference (From   : not null DOM.Core.Node;
                                  Parent : not null Element_P) return Element_P;
 

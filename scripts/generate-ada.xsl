@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 270787ddb376 2011/12/01 22:39:06 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -514,11 +514,16 @@
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
 
-     <xsl:variable
+    <xsl:variable
       name="class-initializations"
       select="class[attribute[@class and initial]
               or @singleton
-              or (@public and attribute)]"/>
+              or (@public and attribute)
+              or operation/@callback]"/>
+
+    <!-- XXX Why do I distinguish here? "instance-initialization"
+         implies that it's initialization after instance creation, but
+         I don't think so! -->
 
     <xsl:variable
       name="instance-initializations"
@@ -793,6 +798,18 @@
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
+    <!-- Class callback instantiations. -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. callback instantiations ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      mode="cb:create-callback-manager"
+      select="class/operation[@callback]"> <!-- XXX needs to be specific??? -->
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <!-- Class initialization procedures. -->
     <xsl:call-template name="ut:progress-message">
       <xsl:with-param
@@ -800,10 +817,11 @@
         select="'.. class initializations ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
+      mode="cl:class-initialization"
       select="class[attribute[@class and initial]
               or @singleton
-              or (@public and attribute)]"
-      mode="cl:class-initialization">
+              or (@public and attribute)
+              or operation/@callback]">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 

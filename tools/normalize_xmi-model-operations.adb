@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: f3a9cc2c7d9c $
+--  $Date: 2014/01/11 14:11:13 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -63,7 +63,7 @@ package body Normalize_XMI.Model.Operations is
          if DOM.Core.Nodes.Length (Nodes) /= 0 then
             O.Return_Type :=
               +Identifiers.Normalize
-              (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0)));
+                (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0)));
          end if;
       end;
 
@@ -80,25 +80,38 @@ package body Normalize_XMI.Model.Operations is
       begin
          Element_Vectors.Element (Pos).Resolve;
       end Resolve;
+      use type Ada.Containers.Count_Type;
    begin
       Messages.Trace ("...... checking operation " & (+O.Name));
       if O.Has_Stereotype ("convention")
         and not O.Has_Tag ("language") then
          Messages.Error
            ("Operation "
-              & (+O.Name)
+              & O.Fully_Qualified_Name
               & " has <<convention>> but not {language}");
       end if;
       if O.Has_Stereotype ("entry")
         and Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Messages.Error
            ("Entry "
-              & (+O.Parent.Name)
-              & "."
-              & (+O.Name)
+              & O.Fully_Qualified_Name
               & " can't be a function");
       end if;
       O.Parameters.Iterate (Resolve'Access);
+      if O.Has_Stereotype ("callback") then
+         if O.Parameters.Length /= 1 then
+            Messages.Error
+              ("<<callback>> operation "
+                 & O.Fully_Qualified_Name
+                 & " must have one and only one  parameter");
+         end if;
+         if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
+            Messages.Error
+              ("<<callback>> operation "
+                 & O.Fully_Qualified_Name
+                 & " can't be a function");
+         end if;
+      end if;
    end Resolve;
 
 
@@ -112,7 +125,12 @@ package body Normalize_XMI.Model.Operations is
       begin
          Element_Vectors.Element (Pos).Output (To);
       end Output;
+      Modelled_As_Class : constant Boolean
+        := Read_Attribute ("ownerScope", From_Element => O.Node)
+          = "classifier";
+      Forced_To_Class : Boolean := False;
    begin
+
       Put (To, "<operation");
       declare
          Is_Abstract : constant Boolean
@@ -126,15 +144,15 @@ package body Normalize_XMI.Model.Operations is
       if O.Parent.Has_Stereotype ("access-to-operation") then
          Put (To, " access='true'");
       end if;
-      declare
-         Owner_Scope : constant String
-           := Read_Attribute ("ownerScope", From_Element => O.Node);
-      begin
-         --  The other possibility is "instance".
-         if Owner_Scope = "classifier" then
-            Put (To, " class='true'");
+      if O.Has_Stereotype ("callback") then
+         if not Modelled_As_Class then
+            Forced_To_Class := True;
+            Messages.Warning ("<<callback>> operation "
+                                & O.Fully_Qualified_Name
+                                & " forced to be a class operation");
          end if;
-      end;
+         Put (To, " callback='true'");
+      end if;
       if O.Has_Stereotype ("convention") then
          Put (To, " convention='" & O.Tag_Value ("language") & "'");
       end if;
@@ -145,6 +163,12 @@ package body Normalize_XMI.Model.Operations is
          Put (To, " final='true'");
       end if;
       if O.Has_Stereotype ("init") then
+         if not Modelled_As_Class then
+            Forced_To_Class := True;
+            Messages.Warning ("<<init>> operation "
+                                & O.Fully_Qualified_Name
+                                & " forced to be a class operation");
+         end if;
          Put (To, " initialize='true'");
       end if;
       if O.Has_Tag ("renames") then
@@ -168,6 +192,9 @@ package body Normalize_XMI.Model.Operations is
             Put (To, " visibility='" & Visibility & "'");
          end if;
       end;
+      if Modelled_As_Class or Forced_To_Class then
+         Put (To, " class='true'");
+      end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+O.Name) & "</name>");
       O.Output_Documentation (To);
