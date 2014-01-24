@@ -81,6 +81,13 @@ SCRIPTS := $(COLDFRAME)/scripts
 # Where are the models?
 MODELS ?= $(COLDFRAME)/models
 
+# Where are non-standard Ada project files?
+ifeq ($(ADA_PROJECT_PATH),)
+  export ADA_PROJECT_PATH := $(COLDFRAME)
+else
+  export ADA_PROJECT_PATH := $(COLDFRAME):$(ADA_PROJECT_PATH)
+endif
+
 CASE_EXCEPTIONS ?= $(SCRIPTS)/emacs_case_exceptions
 COLDFRAMEOUT ?= $(COLDFRAME)/coldframeout
 
@@ -142,10 +149,10 @@ CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
 # Pattern rules
 
 # Generate .rr files (resolved references in ArgoUML files) from .uml.
-# XXX This contains a workround for ArgoUML Issue 6385.
-# XXX This contains a workround for an XML/Ada issue.
+# XXX This is a workround for a Mac OS X issue.
 $(COLDFRAMEOUT)/%.rr: LANG=C
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
+	# XXX This is a workround for ArgoUML Issue 6385.
 	$(SED)								\
 	  -e "s;<pgml ;<pgml xmlns:argouml='http://argouml.org' ;"	\
 	  <$<								\
@@ -156,13 +163,14 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 	  library_path=$(CYGWIN)$(COLDFRAME)/lib/			  \
 	  >$@~2								  \
 	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
+	# XXX This is a workround for an XML/Ada issue.
 	$(SED)								\
 	  -e "s;org.omg.xmi.namespace.UML;http://www.omg.org/spec/XMI;"	\
 	  <$@~2								\
 	  >$@
 
 # Generate .rr files (resolved references in ArgoUML files) from .zargo.
-# XXX This contains a workround for an XML/Ada issue.
+# XXX This is a workround for a Mac OS X issue.
 $(COLDFRAMEOUT)/%.rr: LANG=C
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	$(UNZIP) -p $< $(*F).xmi >$@~1
@@ -172,6 +180,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	  library_path=$(CYGWIN)$(COLDFRAME)/lib/			  \
 	  >$@~2								  \
 	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
+	# XXX This is a workround for an XML/Ada issue.
 	$(SED)								\
 	  -e "s;org.omg.xmi.namespace.UML;http://www.omg.org/spec/XMI;"	\
 	  <$@~2								\
