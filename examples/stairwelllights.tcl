@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: stairwelllights.tcl,v 4d8fd85e9bc4 2011/07/19 19:57:20 simonjwright $
+# $Id: stairwelllights.tcl,v 984b16715466 2014/01/24 11:49:28 simonjwright $
 # HCI for ColdFrame stairwell lights demo
 # the next line restarts using ./stairwell_demo \
 exec ./stairwell_demo "$0" "$@"
@@ -37,20 +37,22 @@ pack .c -side top -fill x
     [.c create rectangle 341 600 349 608 -width 1 -outline black -fill green] \
     <Button-1> {pushButton 3}
 
-after 100 checkLampProc
+# all lamps off to start with
+array set lampState {a 0 b 0 c 0 d 0}
 
-proc checkLampProc {} {
-    foreach l {a b c d} {
-	# getLampState is exported from Ada, the argument is the lamp letter.
-	set s [getLampState $l]
-	if {$s} {
-	    .c itemconfigure $l -fill yellow
-	} else {
-	    .c itemconfigure $l -fill gray
-	}
+# trace assignments to lampState; key should be a, b, c or d
+proc traceLampState {varName key op} {
+    global lampState
+    if {$varName != "lampState"} {return}
+    if {$lampState($key)} {
+        .c itemconfigure $key -fill yellow
+    } else {
+        .c itemconfigure $key -fill gray
     }
-    after 100 checkLampProc
 }
+
+# start the trace
+trace variable lampState w traceLampState
 
 # for emacs:
 # Local Variables:

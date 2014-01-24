@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-button-changed.adb,v $
---  $Revision: f3a9cc2c7d9c $
---  $Date: 2014/01/11 14:11:13 $
+--  $Revision: 984b16715466 $
+--  $Date: 2014/01/24 11:49:28 $
 --  $Author: simonjwright $
 
 --  Acts as receiver of state changes from Digital IO, via Signal
@@ -51,6 +51,7 @@ begin
             procedure Process is new Lamp.Iterate (Button_Pushed);
             procedure Button_Pushed (L : Lamp.Handle) is
                Ev : Lamp.Button_Push (For_The_Instance => L);
+               pragma Warnings (Off, Ev);
             begin
                Lamp.Handler (Ev);
             end Button_Pushed;

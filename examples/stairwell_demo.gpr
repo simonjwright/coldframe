@@ -1,5 +1,5 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v a260723c61ad 2011/11/06 15:28:21 simonjwright $
+--  $Id: stairwell_demo.gpr,v 984b16715466 2014/01/24 11:49:28 simonjwright $
 
 with "Options";
 with "ColdFrame";
@@ -22,5 +22,6 @@ project Stairwell_Demo is
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
 
 end Stairwell_Demo;

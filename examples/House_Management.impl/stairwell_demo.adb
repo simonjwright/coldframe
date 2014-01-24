@@ -12,13 +12,14 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
+--  $Id: stairwell_demo.adb,v 984b16715466 2014/01/24 11:49:28 simonjwright $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
 with CArgv;
 with Interfaces.C.Strings;
 with Tcl.Ada;
+with Tcl.Async;
 with Tcl.Tk;
 
 with Digital_IO.Initialize;
@@ -48,15 +49,6 @@ procedure Stairwell_Demo is
       Argc : in C.int;
       Argv : in CArgv.Chars_Ptr_Ptr) return C.int;
    pragma Convention (C, Push_Button_Command);
-
-   --  Find whether the lamp specified in argv (a, b etc) is set or
-   --  not.
-   function Get_Lamp_State_Command
-     (ClientData : in Integer;
-      Interp : in Tcl.Tcl_Interp;
-      Argc : in C.int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.int;
-   pragma Convention (C, Get_Lamp_State_Command);
 
    --  Handy wrapper for C.Strings.Free, so it can be used to free
    --  results.
@@ -99,45 +91,12 @@ procedure Stairwell_Demo is
          0,
          null);
 
-      Command := CreateCommands.Tcl_CreateCommand
-        (Interp,
-         "getLampState",
-         Get_Lamp_State_Command'Unrestricted_Access,
-         0,
-         null);
+      --  To trace assignments to lampState, for Digital_IO.Output
+      Tcl.Async.Register (Interp);
 
       return Tcl.TCL_OK;
 
    end Init;
-
-
-   function Get_Lamp_State_Command
-     (ClientData : in Integer;
-      Interp : in Tcl.Tcl_Interp;
-      Argc : in C.int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.int
-   is
-      Signal : Digital_IO.Signal_Name;
-      State : Boolean;
-      pragma Warnings (Off, ClientData);
-   begin
-      pragma Assert
-        (Argc = 2, "getLampState requires one argument (lamp letter)");
-      Signal := Digital_IO.Signal_Name'Value
-        ("lamp_" & C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
-      State := Digital_IO.HCI.Get_State (Of_Signal => Signal);
-      Tcl.Tcl_SetResult (Interp,
-                         C.Strings.New_String (State'Img),
-                         Freeproc'Unrestricted_Access);
-      return Tcl.TCL_OK;
-   exception
-      when E : others =>
-         Tcl.Tcl_SetResult
-           (Interp,
-            C.Strings.New_String (Ada.Exceptions.Exception_Information (E)),
-            Freeproc'Unrestricted_Access);
-         return Tcl.TCL_ERROR;
-   end Get_Lamp_State_Command;
 
 
    function Push_Button_Command

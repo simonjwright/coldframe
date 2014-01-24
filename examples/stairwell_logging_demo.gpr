@@ -1,9 +1,9 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_logging_demo.gpr,v a260723c61ad 2011/11/06 15:28:21 simonjwright $
+--  $Id: stairwell_logging_demo.gpr,v 984b16715466 2014/01/24 11:49:28 simonjwright $
 
 with "Options";
 with "ColdFrame";
-with "../../ews/src/EWS";
+with "ews";
 with "tash";
 
 project Stairwell_Logging_Demo is
