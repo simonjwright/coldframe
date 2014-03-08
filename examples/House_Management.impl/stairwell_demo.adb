@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_demo.adb,v 984b16715466 2014/01/24 11:49:28 simonjwright $
+--  $Id: stairwell_demo.adb,v 297981173790 2014/03/08 16:34:09 simonjwright $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -78,11 +78,6 @@ procedure Stairwell_Demo is
       if Tcl.Tk.Tk_Init (Interp) = Tcl.TCL_ERROR then
          return Tcl.TCL_ERROR;
       end if;
-
-      Tcl.Ada.Tcl_StaticPackage (Interp,
-                                 "Tk",
-                                 Tcl.Tk.Tk_Init'Access,
-                                 Tcl.Tk.Tk_SafeInit'Access);
 
       Command := CreateCommands.Tcl_CreateCommand
         (Interp,

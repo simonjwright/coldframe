@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stairwell_logging_demo.adb,v $
---  $Revision: 984b16715466 $
---  $Date: 2014/01/24 11:49:28 $
+--  $Revision: 297981173790 $
+--  $Date: 2014/03/08 16:34:09 $
 --  $Author: simonjwright $
 
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
@@ -95,11 +95,6 @@ procedure Stairwell_Logging_Demo is
       if Tcl.Tk.Tk_Init (Interp) = Tcl.TCL_ERROR then
          return Tcl.TCL_ERROR;
       end if;
-
-      Tcl.Ada.Tcl_StaticPackage (Interp,
-                                 "Tk",
-                                 Tcl.Tk.Tk_Init'Access,
-                                 Tcl.Tk.Tk_SafeInit'Access);
 
       Command := CreateCommands.Tcl_CreateCommand
         (Interp,
