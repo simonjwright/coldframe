@@ -29,6 +29,7 @@ ALL =								\
   coldframe-project-calendar.adb				\
   coldframe-project-calendar.ads				\
   coldframe-project-event_support.ads				\
+  coldframe-project-events-callback_manager.ads			\
   coldframe-project-events-creation.ads				\
   coldframe-project-events-monitoring.ads			\
   coldframe-project-events-monitoring-test.ads			\

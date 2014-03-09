@@ -34,6 +34,8 @@ coldframe-callbacks.adb							\
 coldframe-callbacks.ads							\
 coldframe-event_basis.adb						\
 coldframe-event_basis.ads						\
+coldframe-events_g-callback_manager_g.adb				\
+coldframe-events_g-callback_manager_g.ads				\
 coldframe-events_g-creation_g.adb					\
 coldframe-events_g-creation_g.ads					\
 coldframe-events_g-debug_g.adb						\
