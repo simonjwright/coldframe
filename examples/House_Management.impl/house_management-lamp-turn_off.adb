@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: house_management-lamp-turn_off.adb,v $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
+--  $Author: simonjwright $
 
 --  This state entry action turns off the associated signal via
 --  Digital IO.
@@ -24,7 +24,7 @@ with Digital_IO.Application;
 
 separate (House_Management.Lamp)
 procedure Turn_Off
-  (This : Handle) is
+  (This : not null Handle) is
 
    Signals : constant array (Lamp_Name) of Digital_IO.Signal_Name
      := (Second_Floor => Digital_IO.Lamp_A,

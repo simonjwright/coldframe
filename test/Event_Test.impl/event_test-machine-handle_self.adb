@@ -15,7 +15,7 @@
 with Event_Test.Events;
 
 separate (Event_Test.Machine)
-procedure Handle_Self (This : Handle; P : Content) is
+procedure Handle_Self (This : not null Handle; P : Content) is
    E : constant ColdFrame.Project.Events.Event_P := new Mark (This);
 begin
    This.Ordinal := P.Ordinal;

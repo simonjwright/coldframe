@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Digital IO Interface Class Diagram</activediagram>
+      <activediagram>Van Fleet Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -98,10 +98,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Jan 21 11:56:27 GMT 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Mar 11 17:30:02 GMT 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/01/24 11:49:28 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/03/11 18:27:45 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -126,7 +126,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -168,6 +168,9 @@ This package is free software; you can redistribute it and/or modify it under te
                     </UML:Parameter>
                     <UML:Parameter xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:00000000000019EC'
                       name = 'To' isSpecification = 'false' kind = 'in'>
+                      <UML:ModelElement.stereotype>
+                        <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-not-null'/>
+                      </UML:ModelElement.stereotype>
                       <UML:Parameter.type>
                         <UML:Class xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098E'/>
                       </UML:Parameter.type>
@@ -577,7 +580,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -816,7 +819,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1351,7 +1354,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015CB'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1374,7 +1377,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9B'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-revision'/>
                   </UML:TaggedValue.type>
@@ -1861,7 +1864,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0B'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -2069,7 +2072,7 @@ This demonstration shows how ColdFrame&apos;s support for messages and state mac
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E60'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -2863,7 +2866,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000F48'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 984b16715466 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: e08cb16c3dfb $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -4382,7 +4385,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     </group>
   </group>
   <group name="Fig2"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[328, 32, 417, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[328, 32, 418, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
        fill="1"
        fillcolor="white"
@@ -4395,7 +4398,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     <rectangle name="Fig2.0"
       x="328"
       y="32"
-      width="417"
+      width="418"
       height="126"
       fill="1"
       fillcolor="white"
@@ -4405,7 +4408,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     <text name="Fig2.1"
       x="329"
       y="33"
-      width="415"
+      width="416"
       height="23"
       fill="0"
       fillcolor="white"
@@ -4419,7 +4422,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     >+ Van</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[329, 33, 415, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[329, 33, 416, 0]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
          fill="0"
          fillcolor="white"
@@ -4433,7 +4436,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig2.2.0"
         x="329"
         y="33"
-        width="415"
+        width="416"
         height="0"
         fill="0"
         fillcolor="white"
@@ -4444,7 +4447,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     <rectangle name="Fig2.3"
       x="328"
       y="56"
-      width="417"
+      width="418"
       height="1"
       fill="1"
       fillcolor="black"
@@ -4452,7 +4455,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[329, 57, 415, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[329, 57, 416, 25]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
          fill="0"
          fillcolor="white"
@@ -4465,7 +4468,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig2.4.0"
         x="329"
         y="57"
-        width="415"
+        width="416"
         height="25"
         fill="0"
         fillcolor="white"
@@ -4475,7 +4478,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <text name="Fig2.4.1"
         x="329"
         y="57"
-        width="415"
+        width="416"
         height="23"
         fill="0"
         fillcolor="white"
@@ -4492,7 +4495,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     <rectangle name="Fig2.5"
       x="328"
       y="81"
-      width="417"
+      width="418"
       height="1"
       fill="1"
       fillcolor="black"
@@ -4500,7 +4503,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[329, 82, 415, 76]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[329, 82, 416, 76]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
          fill="0"
          fillcolor="white"
@@ -4513,7 +4516,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <rectangle name="Fig2.6.0"
         x="329"
         y="82"
-        width="415"
+        width="416"
         height="76"
         fill="0"
         fillcolor="white"
@@ -4523,7 +4526,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <text name="Fig2.6.1"
         x="329"
         y="82"
-        width="415"
+        width="421"
         height="17"
         fill="0"
         fillcolor="white"
@@ -4539,7 +4542,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <text name="Fig2.6.2"
         x="329"
         y="99"
-        width="415"
+        width="416"
         height="17"
         fill="0"
         fillcolor="white"
@@ -4555,7 +4558,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <text name="Fig2.6.3"
         x="329"
         y="116"
-        width="415"
+        width="416"
         height="17"
         fill="0"
         fillcolor="white"
@@ -4571,7 +4574,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       <text name="Fig2.6.4"
         x="329"
         y="133"
-        width="415"
+        width="416"
         height="23"
         fill="0"
         fillcolor="white"

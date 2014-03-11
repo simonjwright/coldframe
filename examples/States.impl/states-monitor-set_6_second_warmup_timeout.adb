@@ -15,7 +15,7 @@
 with States.Events;
 
 separate (States.Monitor)
-procedure Set_6_Second_Warmup_Timeout (This : Handle) is
+procedure Set_6_Second_Warmup_Timeout (This : not null Handle) is
 begin
    ColdFrame.Project.Events.Set (The_Timer => This.Warmup_Timer,
                                  On => Events.Dispatcher,

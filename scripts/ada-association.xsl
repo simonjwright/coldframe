@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 0e4361e85c1a 2012/06/06 17:26:34 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -344,16 +344,10 @@
 
         <!--
              function Link
-               ({role-a} : {a}.Handle;
-                {role-b} : {b}.Handle) return {role-c}.Handle is
+               ({role-a} : not null {a}.Handle;
+                {role-b} : not null {b}.Handle) return not null {role-c}.Handle is
                 Result : {c}.Handle;
                 use ColdFrame.Instances;
-                pragma Assert
-                  (Handle ({role-a}) /= null,
-                   "{domain}.{relation}.Link.{role-a} is null");
-                pragma Assert
-                  (Handle ({role-b}) /= null,
-                   "{domain}.{relation}.Link.{role-b} is null");
              begin
                 Result := {c}.Create
                   ((
@@ -368,36 +362,6 @@
         <xsl:text>.Handle;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(Handle (</xsl:text>
-        <xsl:value-of select="role[1]/name"/>
-        <xsl:text>) /= null,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> "</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Link.</xsl:text>
-        <xsl:value-of select="role[1]/name"/>
-        <xsl:text> is null");&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(Handle (</xsl:text>
-        <xsl:value-of select="role[2]/name"/>
-        <xsl:text>) /= null,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> "</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Link.</xsl:text>
-        <xsl:value-of select="role[2]/name"/>
-        <xsl:text> is null");&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
@@ -561,51 +525,15 @@
 
         <!--
              procedure Link
-               ({role-a} : {a}.Handle;
-                {role-b} : {b}.Handle) is
+               ({role-a} : not null {a}.Handle;
+                {role-b} : not null {b}.Handle) is
                 use ColdFrame.Instances;
-                pragma Assert
-                  (Handle ({role-a}) /= null,
-                   "{domain}.{association}.Link.{role-a} is null");
-                pragma Assert
-                  (Handle ({role-b}) /= null,
-                   "{domain}.{association}.Link.{role-b} is null");
              -->
 
         <xsl:call-template name="as:link-procedure-specification"/>
         <xsl:text> is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(Handle (</xsl:text>
-        <xsl:value-of select="role[1]/name"/>
-        <xsl:text>) /= null,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> "</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Link.</xsl:text>
-        <xsl:value-of select="role[1]/name"/>
-        <xsl:text> is null");&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(Handle (</xsl:text>
-        <xsl:value-of select="role[2]/name"/>
-        <xsl:text>) /= null,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> "</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Link.</xsl:text>
-        <xsl:value-of select="role[2]/name"/>
-        <xsl:text> is null");&#10;</xsl:text>
 
         <xsl:choose>
 
@@ -861,10 +789,7 @@
              attributes, since (presumably) the user's about to delete
              the associative class instance anyway.
 
-                use ColdFrame.Instances;
-                pragma Assert
-                  (Handle ({associative}_Handle) /= null,
-                   "{domain}.{relation}.Unlink.{associative}_Handle is null");
+                pragma Unreferenced ({associative}_Handle);
              begin
                 null;
              end Unlink;
@@ -875,19 +800,9 @@
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(Handle (</xsl:text>
+        <xsl:text>pragma Unreferenced (</xsl:text>
         <xsl:value-of select="associative"/>
-        <xsl:text>_Handle) /= null,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> "</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Unlink.</xsl:text>
-        <xsl:value-of select="associative"/>
-        <xsl:text>_Handle is null");&#10;</xsl:text>
+        <xsl:text>_Handle);&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
@@ -902,51 +817,15 @@
       <xsl:when test="not(associative)">
         <!--
              procedure Unlink
-               ({role-a} : {a}.Handle;
-                {role-b} : {b}.Handle) is
+               ({role-a} : not null {a}.Handle;
+                {role-b} : not null {b}.Handle) is
                 use ColdFrame.Instances;
-                pragma Assert
-                  (Handle ({role-a}) /= null,
-                   "{domain}.{association}.Unlink.{role-a} is null");
-                pragma Assert
-                  (Handle ({role-b}) /= null,
-                   "{domain}.{association}.Unlink.{role-b} is null");
              -->
 
         <xsl:call-template name="as:unlink-specification"/>
         <xsl:text> is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(Handle (</xsl:text>
-        <xsl:value-of select="role[1]/name"/>
-        <xsl:text>) /= null,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> "</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Unlink.</xsl:text>
-        <xsl:value-of select="role[1]/name"/>
-        <xsl:text> is null");&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(Handle (</xsl:text>
-        <xsl:value-of select="role[2]/name"/>
-        <xsl:text>) /= null,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> "</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Unlink.</xsl:text>
-        <xsl:value-of select="role[2]/name"/>
-        <xsl:text> is null");&#10;</xsl:text>
 
         <xsl:choose>
 
@@ -1811,8 +1690,8 @@
 
     <!--
          function Link
-           ({role-a} : {a}.Handle;
-            {role-b} : {b}.Handle) return {role-c}.Handle
+           ({role-a} : not null {a}.Handle;
+            {role-b} : not null {b}.Handle) return not null {role-c}.Handle
          -->
 
     <xsl:value-of select="$I"/>
@@ -1820,18 +1699,18 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
     <xsl:value-of select="role[1]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> </xsl:text>
     <xsl:value-of select="role[2]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Handle)&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
-    <xsl:text>return </xsl:text>
+    <xsl:text>return not null </xsl:text>
     <xsl:value-of select="associative"/>
     <xsl:text>.Handle</xsl:text>
 
@@ -1845,8 +1724,8 @@
 
     <!--
          procedure Link
-           ({role-a} : {a}.Handle;
-            {role-b} : {b}.Handle)
+           ({role-a} : not null {a}.Handle;
+            {role-b} : not null {b}.Handle)
          -->
 
     <xsl:value-of select="$I"/>
@@ -1854,14 +1733,14 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
     <xsl:value-of select="role[1]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> </xsl:text>
     <xsl:value-of select="role[2]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>)</xsl:text>
@@ -1876,8 +1755,8 @@
 
     <!--
          function Find
-           ({role-a} : {a}.Handle;
-            {role-b} : {b}.Handle) return {role-c}.Handle
+           ({role-a} : not null {a}.Handle;
+            {role-b} : not null {b}.Handle) return not null {role-c}.Handle
          -->
 
     <xsl:value-of select="$I"/>
@@ -1885,18 +1764,18 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
     <xsl:value-of select="role[1]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> </xsl:text>
     <xsl:value-of select="role[2]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Handle)&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
-    <xsl:text>return </xsl:text>
+    <xsl:text>return not null </xsl:text>
     <xsl:value-of select="associative"/>
     <xsl:text>.Handle</xsl:text>
 
@@ -1913,7 +1792,7 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
     <xsl:value-of select="associative"/>
-    <xsl:text>_Handle : </xsl:text>
+    <xsl:text>_Handle : not null </xsl:text>
     <xsl:value-of select="associative"/>
     <xsl:text>.Handle)</xsl:text>
 
@@ -1930,14 +1809,14 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
     <xsl:value-of select="role[1]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> </xsl:text>
     <xsl:value-of select="role[2]/name"/>
-    <xsl:text> : </xsl:text>
+    <xsl:text> : not null </xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>)</xsl:text>

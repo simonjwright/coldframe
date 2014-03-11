@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -605,7 +605,7 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle;&#10;</xsl:text>
+      <xsl:text>(This : not null Handle;&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
       <xsl:text> To_Be : </xsl:text>
       <xsl:value-of select="name"/>
@@ -626,7 +626,7 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle)&#10;</xsl:text>
+      <xsl:text>(This : not null Handle)&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
       <xsl:text>return </xsl:text>
       <xsl:value-of select="name"/>
@@ -650,7 +650,7 @@
 
       <!--
            procedure Set_{rel}_Child
-             (This : Handle;
+             (This : not null Handle;
               To_Be : {rel}_Child) is
            begin
            if To_Be.Current /= Null_T
@@ -666,7 +666,7 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle;&#10;</xsl:text>
+      <xsl:text>(This : not null Handle;&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
       <xsl:text> To_Be : </xsl:text>
       <xsl:value-of select="name"/>
@@ -695,7 +695,7 @@
 
       <!--
            function Get_{rel}_Child
-             (This : Handle)
+             (This : not null Handle)
              return {rel}_Child is
            begin
               return This.{rel}_Current_Child;
@@ -707,7 +707,7 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle)&#10;</xsl:text>
+      <xsl:text>(This : not null Handle)&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
       <xsl:text>return </xsl:text>
       <xsl:value-of select="name"/>

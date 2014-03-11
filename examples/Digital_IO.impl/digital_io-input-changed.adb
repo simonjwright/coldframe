@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: digital_io-input-changed.adb,v $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
+--  $Author: simonjwright $
 
 --  Called when the signal has changed state; notify any registered
 --  observers of Signal State.
@@ -24,7 +24,7 @@ with Digital_IO.Signal_State_Callback;
 
 separate (Digital_IO.Input)
 procedure Changed
-  (This : Handle) is
+  (This : not null Handle) is
 begin
 
    Signal_State_Callback.Call_Callbacks

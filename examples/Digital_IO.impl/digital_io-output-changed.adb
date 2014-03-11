@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: digital_io-output-changed.adb,v $
---  $Revision: 984b16715466 $
---  $Date: 2014/01/24 11:49:28 $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
 --  $Author: simonjwright $
 
 --  Called when the signal has changed; tell the HCI.
@@ -23,7 +23,7 @@ with Tcl.Async;
 
 separate (Digital_IO.Output)
 procedure Changed
-(This : Handle) is
+  (This : not null Handle) is
    subtype Output_Signal is Signal_Name range Lamp_A .. Lamp_D;
    Tcl_Keys : constant array (Output_Signal) of Character
      := (Lamp_A => 'a',

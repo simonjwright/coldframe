@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -74,6 +74,7 @@ package body Normalize_XMI.Model.Parameters is
    is
    begin
       Messages.Trace ("......... checking parameter " & (+P.Name));
+      --  XXX should check <<not-null>> validity.
    end Resolve;
 
 
@@ -98,6 +99,9 @@ package body Normalize_XMI.Model.Parameters is
                               & Kind
                               & "'"" in parameter "
                               & (+P.Name));
+         end if;
+         if P.Has_Stereotype ("not-null") then
+            Put (To, " not-null='true'");
          end if;
       end;
       Put_Line (To, ">");

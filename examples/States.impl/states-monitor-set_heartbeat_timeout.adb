@@ -15,7 +15,7 @@
 with States.Events;
 
 separate (States.Monitor)
-procedure Set_Heartbeat_Timeout (This : Handle) is
+procedure Set_Heartbeat_Timeout (This : not null Handle) is
 begin
    ColdFrame.Project.Events.Set (The_Timer => This.Heartbeat_Timer,
                                  On => Events.Dispatcher,

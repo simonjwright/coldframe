@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Jan 07 11:43:59 GMT 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 10 17:52:14 GMT 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/01/11 14:11:13 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/03/11 18:27:45 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -639,8 +639,8 @@ The (generated) operation Delete is automatically «final».</UML:TaggedValue.da
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:0000000000001026'
           name = 'ignore' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Transition</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--29007e96:1351af64880:-8000:0000000000000E97'
               isSpecification = 'false'>
@@ -770,8 +770,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAA'
           name = 'abbreviation' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAF'
               isSpecification = 'false'>
@@ -807,8 +807,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2'
           name = 'class' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>SignalEvent</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>CallEvent</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>SignalEvent</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>StateMachine</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF3'
@@ -1297,6 +1297,21 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
             <UML:TaggedValue xmi.id = '-64--88-1-75-7cc011c5:141926d824a:-8000:0000000000000E19'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>Specifies that the &quot;class&quot; has no instances, and is merely a wrapper for operations.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
+        </UML:Stereotype>
+        <UML:Stereotype xmi.id = '-64--88-1-74-fad836b:144ad12ec9f:-8000:000000000000121F'
+          name = 'not-null' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:Stereotype.baseClass>Parameter</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-74-fad836b:144ad12ec9f:-8000:0000000000001220'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>This stereotype is applied to an operation parameter which is not permitted to be null.
+It must only be applied to parameters of an access type (for example, a class in the domain).</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -3531,7 +3546,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig5"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 32, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 88, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011EA"
        fill="1"
        fillcolor="white"
@@ -3543,7 +3558,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig5.0"
       x="840"
-      y="32"
+      y="88"
       width="114"
       height="45"
       fill="1"
@@ -3553,7 +3568,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig5.1"
       x="841"
-      y="33"
+      y="89"
       width="112"
       height="43"
       fill="0"
@@ -3568,7 +3583,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >public</text>
     <group name="Fig5.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 33, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 89, 112, 20]"
          href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011EA"
          fill="0"
          fillcolor="white"
@@ -3580,7 +3595,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig5.2.0"
         x="841"
-        y="33"
+        y="89"
         width="112"
         height="20"
         fill="0"
@@ -3590,7 +3605,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig5.2.1"
         x="841"
-        y="33"
+        y="89"
         width="112"
         height="18"
         fill="0"
@@ -3683,7 +3698,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig7"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 88, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 144, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001015"
        fill="1"
        fillcolor="white"
@@ -3695,7 +3710,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig7.0"
       x="840"
-      y="88"
+      y="144"
       width="116"
       height="45"
       fill="1"
@@ -3705,7 +3720,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig7.1"
       x="841"
-      y="89"
+      y="145"
       width="114"
       height="43"
       fill="0"
@@ -3720,7 +3735,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >renaming</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 89, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 145, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001015"
          fill="0"
          fillcolor="white"
@@ -3732,7 +3747,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig7.2.0"
         x="841"
-        y="89"
+        y="145"
         width="114"
         height="20"
         fill="0"
@@ -3742,7 +3757,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig7.2.1"
         x="841"
-        y="89"
+        y="145"
         width="114"
         height="18"
         fill="0"
@@ -4291,7 +4306,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig15"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 368, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 32, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001028"
        fill="1"
        fillcolor="white"
@@ -4302,8 +4317,8 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </private>
     
     <rectangle name="Fig15.0"
-      x="656"
-      y="368"
+      x="840"
+      y="32"
       width="116"
       height="45"
       fill="1"
@@ -4312,8 +4327,8 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       strokecolor="black"
     />
     <text name="Fig15.1"
-      x="657"
-      y="369"
+      x="841"
+      y="33"
       width="114"
       height="43"
       fill="0"
@@ -4328,7 +4343,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >protected</text>
     <group name="Fig15.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 369, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 33, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001028"
          fill="0"
          fillcolor="white"
@@ -4339,8 +4354,8 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       </private>
       
       <rectangle name="Fig15.2.0"
-        x="657"
-        y="369"
+        x="841"
+        y="33"
         width="114"
         height="20"
         fill="0"
@@ -4349,8 +4364,8 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
         strokecolor="black"
       />
       <text name="Fig15.2.1"
-        x="657"
-        y="369"
+        x="841"
+        y="33"
         width="114"
         height="18"
         fill="0"
@@ -4367,7 +4382,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig16"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 144, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 200, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001029"
        fill="1"
        fillcolor="white"
@@ -4379,7 +4394,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig16.0"
       x="840"
-      y="144"
+      y="200"
       width="116"
       height="45"
       fill="1"
@@ -4389,7 +4404,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig16.1"
       x="841"
-      y="145"
+      y="201"
       width="114"
       height="43"
       fill="0"
@@ -4404,7 +4419,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >singleton</text>
     <group name="Fig16.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 145, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 201, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001029"
          fill="0"
          fillcolor="white"
@@ -4416,7 +4431,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig16.2.0"
         x="841"
-        y="145"
+        y="201"
         width="114"
         height="20"
         fill="0"
@@ -4426,7 +4441,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig16.2.1"
         x="841"
-        y="145"
+        y="201"
         width="114"
         height="18"
         fill="0"
@@ -4443,7 +4458,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig17"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 256, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 312, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000102A"
        fill="1"
        fillcolor="white"
@@ -4455,7 +4470,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig17.0"
       x="840"
-      y="256"
+      y="312"
       width="116"
       height="45"
       fill="1"
@@ -4465,7 +4480,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig17.1"
       x="841"
-      y="257"
+      y="313"
       width="114"
       height="43"
       fill="0"
@@ -4480,7 +4495,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >teardown</text>
     <group name="Fig17.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 257, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 313, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000102A"
          fill="0"
          fillcolor="white"
@@ -4492,7 +4507,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig17.2.0"
         x="841"
-        y="257"
+        y="313"
         width="114"
         height="20"
         fill="0"
@@ -4502,7 +4517,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig17.2.1"
         x="841"
-        y="257"
+        y="313"
         width="114"
         height="18"
         fill="0"
@@ -4519,7 +4534,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig18"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 312, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[656, 368, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB8"
        fill="1"
        fillcolor="white"
@@ -4531,7 +4546,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig18.0"
       x="656"
-      y="312"
+      y="368"
       width="116"
       height="45"
       fill="1"
@@ -4541,7 +4556,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig18.1"
       x="657"
-      y="313"
+      y="369"
       width="114"
       height="43"
       fill="0"
@@ -4556,7 +4571,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >null</text>
     <group name="Fig18.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 313, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[657, 369, 114, 20]"
          href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB8"
          fill="0"
          fillcolor="white"
@@ -4568,7 +4583,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig18.2.0"
         x="657"
-        y="313"
+        y="369"
         width="114"
         height="20"
         fill="0"
@@ -4578,7 +4593,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig18.2.1"
         x="657"
-        y="313"
+        y="369"
         width="114"
         height="18"
         fill="0"
@@ -4671,7 +4686,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig20"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 200, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[840, 256, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000001064"
        fill="1"
        fillcolor="white"
@@ -4683,7 +4698,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig20.0"
       x="840"
-      y="200"
+      y="256"
       width="116"
       height="45"
       fill="1"
@@ -4693,7 +4708,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig20.1"
       x="841"
-      y="201"
+      y="257"
       width="114"
       height="43"
       fill="0"
@@ -4708,7 +4723,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >source</text>
     <group name="Fig20.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 201, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[841, 257, 114, 20]"
          href="-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000001064"
          fill="0"
          fillcolor="white"
@@ -4720,7 +4735,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig20.2.0"
         x="841"
-        y="201"
+        y="257"
         width="114"
         height="20"
         fill="0"
@@ -4730,7 +4745,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig20.2.1"
         x="841"
-        y="201"
+        y="257"
         width="114"
         height="18"
         fill="0"
@@ -5203,7 +5218,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig27"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[1016, 32, 105, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[1016, 88, 105, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-41a92590:13525ed9d2d:-8000:0000000000000C4B"
        fill="1"
        fillcolor="white"
@@ -5215,7 +5230,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig27.0"
       x="1016"
-      y="32"
+      y="88"
       width="105"
       height="45"
       fill="1"
@@ -5225,7 +5240,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig27.1"
       x="1017"
-      y="33"
+      y="89"
       width="103"
       height="43"
       fill="0"
@@ -5240,7 +5255,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >volatile</text>
     <group name="Fig27.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1017, 33, 103, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1017, 89, 103, 20]"
          href="-64--88-1-3-41a92590:13525ed9d2d:-8000:0000000000000C4B"
          fill="0"
          fillcolor="white"
@@ -5252,7 +5267,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig27.2.0"
         x="1017"
-        y="33"
+        y="89"
         width="103"
         height="20"
         fill="0"
@@ -5262,7 +5277,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig27.2.1"
         x="1017"
-        y="33"
+        y="89"
         width="103"
         height="18"
         fill="0"
@@ -5659,7 +5674,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig33"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[848, 312, 105, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[848, 368, 105, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-74--4a05c5ce:13fd86d4961:-8000:0000000000000E12"
        fill="1"
        fillcolor="white"
@@ -5671,7 +5686,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     
     <rectangle name="Fig33.0"
       x="848"
-      y="312"
+      y="368"
       width="105"
       height="45"
       fill="1"
@@ -5681,7 +5696,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     />
     <text name="Fig33.1"
       x="849"
-      y="313"
+      y="369"
       width="103"
       height="43"
       fill="0"
@@ -5696,7 +5711,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >unsigned</text>
     <group name="Fig33.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[849, 313, 103, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[849, 369, 103, 20]"
          href="-64--88-1-74--4a05c5ce:13fd86d4961:-8000:0000000000000E12"
          fill="0"
          fillcolor="white"
@@ -5708,7 +5723,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       
       <rectangle name="Fig33.2.0"
         x="849"
-        y="313"
+        y="369"
         width="103"
         height="20"
         fill="0"
@@ -5718,7 +5733,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       />
       <text name="Fig33.2.1"
         x="849"
-        y="313"
+        y="369"
         width="103"
         height="18"
         fill="0"
@@ -5811,7 +5826,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </group>
   </group>
   <group name="Fig35"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[848, 368, 105, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[1016, 32, 105, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-75-7cc011c5:141926d824a:-8000:0000000000000E18"
        fill="1"
        fillcolor="white"
@@ -5822,8 +5837,8 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
     </private>
     
     <rectangle name="Fig35.0"
-      x="848"
-      y="368"
+      x="1016"
+      y="32"
       width="105"
       height="45"
       fill="1"
@@ -5832,8 +5847,8 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       strokecolor="black"
     />
     <text name="Fig35.1"
-      x="849"
-      y="369"
+      x="1017"
+      y="33"
       width="103"
       height="43"
       fill="0"
@@ -5848,7 +5863,7 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       justification="Center"
     >utility</text>
     <group name="Fig35.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[849, 369, 103, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1017, 33, 103, 20]"
          href="-64--88-1-75-7cc011c5:141926d824a:-8000:0000000000000E18"
          fill="0"
          fillcolor="white"
@@ -5859,8 +5874,8 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
       </private>
       
       <rectangle name="Fig35.2.0"
-        x="849"
-        y="369"
+        x="1017"
+        y="33"
         width="103"
         height="20"
         fill="0"
@@ -5869,8 +5884,84 @@ If specified on a class, the class must be stereotyped «datatype».</UML:Tagged
         strokecolor="black"
       />
       <text name="Fig35.2.1"
-        x="849"
-        y="369"
+        x="1017"
+        y="33"
+        width="103"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«stereotype»</text>
+    </group>
+  </group>
+  <group name="Fig36"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[664, 312, 105, 45]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-74-fad836b:144ad12ec9f:-8000:000000000000121F"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig36.0"
+      x="664"
+      y="312"
+      width="105"
+      height="45"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig36.1"
+      x="665"
+      y="313"
+      width="103"
+      height="43"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >not-null</text>
+    <group name="Fig36.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[665, 313, 103, 20]"
+         href="-64--88-1-74-fad836b:144ad12ec9f:-8000:000000000000121F"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig36.2.0"
+        x="665"
+        y="313"
+        width="103"
+        height="20"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig36.2.1"
+        x="665"
+        y="313"
         width="103"
         height="18"
         fill="0"

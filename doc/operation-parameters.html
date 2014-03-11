@@ -1,4 +1,4 @@
-<!-- $Id: operation-parameters.html,v 1467a39ef232 2014/01/02 18:01:30 simonjwright $ -->
+<!-- $Id: operation-parameters.html,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
 <head>
 <title>ColdFrame: Parameters</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -17,7 +17,12 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 <h2>Motivation</h2>
 
 <p>Operation parameters are modelled as just that, of course. The only
-thing to note is modelling the parameter's <i>mode</i>.
+things to note are
+
+<ul>
+<li> modelling the parameter's <i>mode</i>,
+<li> indicating whether a parameter of an access type can be null.
+</ul>
 
 <p>A parameter's mode may be
 <dl>
@@ -38,7 +43,7 @@ available to the operation, and the operation can update it.
 
 <h2>Modelling</h2>
 
-<p>The UML syntax is
+<p>The UML syntax for a parameter is
 <blockquote>
 [mode] name : type [= default-value]
 </blockquote>
@@ -47,6 +52,12 @@ available to the operation, and the operation can update it.
 
 <p>The <i>default-value</i> can be an expression; ColdFrame doesn't
 apply any formatting.
+
+<p>ColdFrame provides the stereotype <em>&#171;not-null&#187;</em> to
+indicate that a parameter of an access type can't be null. ArgoUML
+doesn't allow this stereotype to be entered on the class diagram, nor
+does it display it; you have to apply it through the properties
+window.
 
 <h2>Translation</h2>
 

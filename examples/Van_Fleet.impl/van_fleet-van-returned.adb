@@ -12,17 +12,17 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: van_fleet-van-returned.adb,v $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
+--  $Author: simonjwright $
 
 with Van_Fleet.Pool_Van.Inheritance;
 with Van_Fleet.Van.Inheritance;
 
 separate (Van_Fleet.Van)
 procedure Returned
-  (This : Handle) is
+  (This : not null Handle) is
    PVH : Pool_Van.Handle;
    pragma Warnings (Off, PVH);
 begin

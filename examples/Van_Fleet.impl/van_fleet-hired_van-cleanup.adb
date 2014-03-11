@@ -12,16 +12,16 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: van_fleet-hired_van-cleanup.adb,v $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
+--  $Author: simonjwright $
 
 with Van_Fleet.A2;
 
 separate (Van_Fleet.Hired_Van)
 procedure Cleanup
-  (This : Handle) is
+  (This : not null Handle) is
 begin
    A2.Unlink
      (Is_Borrowing => This,

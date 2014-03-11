@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: digital_io-signal-set_state.adb,v $
---  $Revision: bc58c45ca10d $
---  $Date: 2012/01/23 12:07:05 $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
 --  $Author: simonjwright $
 
 --  Set the signal's state as indicated; call Changed if it has
@@ -22,7 +22,7 @@
 
 separate (Digital_IO.Signal)
 procedure Set_State
-  (This : Handle;
+  (This : not null Handle;
    To : Boolean := True) is
 begin
 

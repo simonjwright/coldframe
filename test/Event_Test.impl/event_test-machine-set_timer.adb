@@ -16,7 +16,7 @@ with Event_Test.Events;
 
 separate (Event_Test.Machine)
 procedure Set_Timer
-  (This : Handle;
+  (This : not null Handle;
    To : Duration) is
    Ev : constant ColdFrame.Project.Events.Event_P
      := new Machine.Kill (This);

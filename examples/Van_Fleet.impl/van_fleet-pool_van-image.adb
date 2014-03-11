@@ -12,15 +12,15 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
+--  $RCSfile: van_fleet-pool_van-image.adb,v $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 separate (Van_Fleet.Pool_Van)
 function Image
-  (This : Handle)
+  (This : not null Handle)
   return String is
 begin
    return "pool  "

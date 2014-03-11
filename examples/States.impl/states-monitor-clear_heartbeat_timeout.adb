@@ -14,7 +14,7 @@
 
 with States.Events;
 separate (States.Monitor)
-procedure Clear_Heartbeat_Timeout (This : Handle) is
+procedure Clear_Heartbeat_Timeout (This : not null Handle) is
 begin
    ColdFrame.Project.Events.Unset (The_Timer => This.Heartbeat_Timer,
                                    On => Events.Dispatcher);

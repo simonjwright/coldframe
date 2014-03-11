@@ -15,7 +15,7 @@
 with Event_Test.Events;
 
 separate (Event_Test.Machine)
-procedure Send_Done (This : Handle) is
+procedure Send_Done (This : not null Handle) is
 begin
    This.Ordinal := 0;
    ColdFrame.Project.Events.Post_To_Self

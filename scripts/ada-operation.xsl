@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v bc58c45ca10d 2012/01/23 12:07:05 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -510,7 +510,7 @@
       <xsl:value-of select="$indent"/>
       <xsl:text>(</xsl:text>
       <xsl:if test="not($no-this)">
-        <xsl:text>This : Handle</xsl:text>
+        <xsl:text>This : not null Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10; </xsl:text>
           <xsl:value-of select="$indent"/>
@@ -543,6 +543,10 @@
         <xsl:text>out </xsl:text>
       </xsl:when>
     </xsl:choose>
+
+    <xsl:if test="@not-null">
+      <xsl:text>not null </xsl:text>
+    </xsl:if>
 
     <xsl:call-template name="ut:type-name">
       <xsl:with-param name="type" select="type"/>

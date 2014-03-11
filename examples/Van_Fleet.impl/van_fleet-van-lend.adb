@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: van_fleet-van-lend.adb,v $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
+--  $Author: simonjwright $
 
 with Van_Fleet.A2;
 with Van_Fleet.Customer;
@@ -26,7 +26,7 @@ with Van_Fleet.Pool_Van.Inheritance;
 
 separate (Van_Fleet.Van)
 function Lend
-  (To : ColdFrame.Instances.Handle;
+  (To : not null ColdFrame.Instances.Handle;
    Terminating_At : ColdFrame.Project.Calendar.Time)
   return Handle is
    PVC : constant Pool_Van.Collections.Collection := Pool_Van.All_Instances;
@@ -34,10 +34,10 @@ function Lend
    VH : Handle;
    HVH : Hired_Van.Handle;
 begin
-   if Pool_Van.Collections.Length (PVC) = 0 then
+   if PVC.Length = 0 then
       raise Not_Found;
    end if;
-   PVH := Pool_Van.Collections.First (PVC);
+   PVH := PVC.First;
    VH := Pool_Van.Inheritance.Find_Van_Parent (PVH);
    Pool_Van.Delete (PVH);
    HVH := Hired_Van.Inheritance.Create_Tree (ColdFrame.Instances.Handle (VH));

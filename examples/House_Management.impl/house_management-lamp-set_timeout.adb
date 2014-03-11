@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: house_management-lamp-set_timeout.adb,v $
+--  $Revision: e08cb16c3dfb $
+--  $Date: 2014/03/11 18:27:45 $
+--  $Author: simonjwright $
 
 --  This state entry action sets the instance Timeout to the required
 --  activation period.
@@ -25,7 +25,7 @@ with House_Management.Events;
 
 separate (House_Management.Lamp)
 procedure Set_Timeout
-  (This : Handle) is
+  (This : not null Handle) is
 begin
 
    ColdFrame.Project.Events.Set (The_Timer => This.Timeout,
