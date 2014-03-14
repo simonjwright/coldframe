@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-event_basis.ads,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 package ColdFrame.Event_Basis is
 
@@ -34,7 +34,7 @@ package ColdFrame.Event_Basis is
       Dispatching,
       Finishing);
 
-   procedure Log (The_Event : access Event_Base;
+   procedure Log (The_Event : not null access Event_Base;
                   At_Phase : Event_Processing_Phase);
 
 private

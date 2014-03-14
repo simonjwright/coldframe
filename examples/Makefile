@@ -106,9 +106,9 @@ NORM_FILES =					\
 $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 clean::
-	find $(BUILD_BASE) -type f -name \*.o -o -name \*.ali | xargs rm -f
-	rm -f $(EXECUTABLES)
-	rm -rf *.{raw,norm,ada,gen}
-	rm -f parser.out parsetab.py
+	for g in *.gpr; do			\
+	  gnatclean -P $$g;			\
+	done
+	rm -rf *.{norm-stamp,stamp,norm,ada,gen,html,images}
 
 .PHONY: force all clean

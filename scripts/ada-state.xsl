@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 12a6c3b1d22b 2012/01/22 19:05:53 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 6b2a0cfb80d0 2014/03/14 18:34:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -43,7 +43,7 @@
          -->
 
     <!-- non-class:
-         type {name} (For_The_Instance : access Instance)
+         type {name} (For_The_Instance : not null access Instance)
          is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
          with record
            Payload : {type};
@@ -72,7 +72,7 @@
           <xsl:value-of select="$I"/>
           <xsl:text>type </xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text> (For_The_Instance : access Instance)&#10;</xsl:text>
+          <xsl:text> (For_The_Instance : not null access Instance)&#10;</xsl:text>
           <xsl:value-of select="$I"/>
           <xsl:text>is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)&#10;</xsl:text>
           <xsl:value-of select="$I"/>

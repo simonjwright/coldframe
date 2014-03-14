@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
+<!-- $Id: ada-teardown.xsl,v 6b2a0cfb80d0 2014/03/14 18:34:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -83,13 +83,21 @@
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>use type ColdFrame.Project.Events.Event_Queue_P;&#10;</xsl:text>
+
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>if Domain_Initialized then&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
+    <xsl:text>if Events.Dispatcher /= null then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
     <xsl:text>ColdFrame.Project.Events.Stop (Events.Dispatcher);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <xsl:if test="class[@active]">
       <xsl:value-of select="$II"/>
@@ -114,7 +122,11 @@
     </xsl:for-each>
 
     <xsl:value-of select="$II"/>
+    <xsl:text>if Events.Dispatcher /= null then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
     <xsl:text>ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initializing := False;&#10;</xsl:text>

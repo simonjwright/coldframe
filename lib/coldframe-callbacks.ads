@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-callbacks.ads,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 generic
    type T (<>) is limited private;
@@ -31,7 +31,7 @@ package ColdFrame.Callbacks is
    pragma Elaborate_Body;
 
    --  The Callback Procedure type
-   type Callback is access procedure (The_T : T);
+   type Callback is not null access procedure (The_T : T);
 
    --  Called to register Proc to receive callbacks
    procedure Register (Proc : Callback);

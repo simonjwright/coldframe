@@ -14,6 +14,7 @@
 
 with AUnit.Assertions; use AUnit.Assertions;
 
+with Ada.Text_IO;
 with Ada.Unchecked_Deallocation;
 with ColdFrame.Project.Events;
 with Event_Test.Events;
@@ -66,7 +67,7 @@ package body Event_Test.Test_Engine is
 
 
    --  This event stores its Payload in Result.
-   type Store (For_The_Instance : access Instance)
+   type Store (For_The_Instance : not null access Instance)
       is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
    with record
       Payload : Integer;
@@ -334,6 +335,9 @@ package body Event_Test.Test_Engine is
       declare
          T : ColdFrame.Project.Events.Timer;
       begin
+         Ada.Text_IO.Put_Line
+           ("** expecting "
+              & """ColdFrame: ERROR: A Timer has been destroyed ...""");
          ColdFrame.Project.Events.Set (T,
                                        On => Events.Dispatcher,
                                        To_Fire => new Empty,
@@ -424,7 +428,9 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
-
+      Ada.Text_IO.Put_line
+        ("** expecting "
+           & """ColdFrame: INFO: Queue overrun ...""");
       for I in 1 .. 5 loop
          declare
             W : constant ColdFrame.Project.Events.Event_P

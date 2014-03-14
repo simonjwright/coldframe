@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-standard_g.ads,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 with Ada.Task_Identification;
 with BC.Containers.Queues.Unbounded;
@@ -50,22 +50,22 @@ package ColdFrame.Events_G.Standard_G is
       Priority => System.Default_Priority,
       Storage_Size => 20_000);
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base);
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base);
 
-   procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue_Base);
+   procedure Post_To_Self (The_Event : not null Event_P;
+                           On : not null access Event_Queue_Base);
 
    ----------------------
    --  Delayed events  --
    ----------------------
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_At : Time.Time);
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_After : Natural_Duration);
 
    --------------
@@ -73,13 +73,13 @@ package ColdFrame.Events_G.Standard_G is
    --------------
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   At_Time : Time.Time);
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   After : Natural_Duration);
 
    procedure Unset (The_Timer : in out Timer;
@@ -242,8 +242,8 @@ private
    procedure Start_Queue (The_Queue : access Event_Queue_Base);
 
    procedure Invalidate_Events
-     (On : access Event_Queue_Base;
-      For_The_Instance : access Instance_Base'Class);
+     (On : not null access Event_Queue_Base;
+      For_The_Instance : not null access Instance_Base'Class);
 
    procedure Stop (The_Queue : in out Event_Queue_Base);
 
@@ -251,8 +251,8 @@ private
 
    --  Locking.
 
-   procedure Locker (The_Queue : access Event_Queue_Base);
+   procedure Locker (The_Queue : not null access Event_Queue_Base);
 
-   procedure Unlocker (The_Queue : access Event_Queue_Base);
+   procedure Unlocker (The_Queue : not null access Event_Queue_Base);
 
 end ColdFrame.Events_G.Standard_G;

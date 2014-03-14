@@ -19,15 +19,15 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-creation_g.ads,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 generic
 package ColdFrame.Events_G.Creation_G is
 
-   type Event (For_The_Instance : access Instance_Base'Class)
+   type Event (For_The_Instance : not null access Instance_Base'Class)
    is new Instance_Event_Base with private;
    --  Used to pass to the Initial state's Entry procedure. For other
    --  states, there's always an Event of some sort; whether it's the
@@ -35,7 +35,7 @@ package ColdFrame.Events_G.Creation_G is
 
 private
 
-   type Event (For_The_Instance : access Instance_Base'Class)
+   type Event (For_The_Instance : not null access Instance_Base'Class)
    is new Instance_Event_Base (For_The_Instance) with null record;
 
    procedure Handler (This : Event);

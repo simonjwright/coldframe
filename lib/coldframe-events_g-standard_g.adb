@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-standard_g.adb,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Real_Time;
@@ -67,14 +67,9 @@ package body ColdFrame.Events_G.Standard_G is
    end Note;
 
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base) is
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base) is
    begin
-
-      if The_Event = null then
-         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
-                                         "posting null event");
-      end if;
 
       Log (The_Event, Event_Basis.Posting);
 
@@ -90,14 +85,9 @@ package body ColdFrame.Events_G.Standard_G is
    end Post;
 
 
-   procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue_Base) is
+   procedure Post_To_Self (The_Event : not null Event_P;
+                           On : not null access Event_Queue_Base) is
    begin
-
-      if The_Event = null then
-         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
-                                         "posting null event (self)");
-      end if;
 
       Log (The_Event, Event_Basis.Posting);
 
@@ -113,18 +103,13 @@ package body ColdFrame.Events_G.Standard_G is
    end Post_To_Self;
 
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
       TEP : constant Event_P := new Held_Event (Kind => To_Fire_At.Kind,
                                                 On_Timer => False);
       TE : Held_Event renames Held_Event (TEP.all);
    begin
-
-      if The_Event = null then
-         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
-                                         "posting null event (at)");
-      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -141,18 +126,13 @@ package body ColdFrame.Events_G.Standard_G is
    end Post;
 
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
       TEP : constant Event_P := new Held_Event (Kind => Time.Real_Time,
                                                 On_Timer => False);
       TE : Held_Event renames Held_Event (TEP.all);
    begin
-
-      if The_Event = null then
-         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
-                                         "posting null event (after)");
-      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -251,15 +231,10 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   At_Time : Time.Time) is
    begin
-
-      if To_Fire = null then
-         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
-                                         "setting null event (at)");
-      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => To_Fire);
@@ -295,15 +270,10 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   After : Natural_Duration) is
    begin
-
-      if To_Fire = null then
-         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
-                                         "setting null event (after)");
-      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => To_Fire);
@@ -731,8 +701,8 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Invalidate_Events
-     (On : access Event_Queue_Base;
-      For_The_Instance : access Instance_Base'Class) is
+     (On : not null access Event_Queue_Base;
+      For_The_Instance : not null access Instance_Base'Class) is
    begin
 
       --  Called to mark all events for For_The_Instance as
@@ -852,13 +822,13 @@ package body ColdFrame.Events_G.Standard_G is
    end Tear_Down;
 
 
-   procedure Locker (The_Queue : access Event_Queue_Base) is
+   procedure Locker (The_Queue : not null access Event_Queue_Base) is
    begin
       The_Queue.The_Excluder.Lock;
    end Locker;
 
 
-   procedure Unlocker (The_Queue : access Event_Queue_Base) is
+   procedure Unlocker (The_Queue : not null access Event_Queue_Base) is
    begin
       The_Queue.The_Excluder.Unlock;
    end Unlocker;

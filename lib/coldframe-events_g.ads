@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g.ads,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
@@ -52,17 +52,17 @@ package ColdFrame.Events_G is
    --  All Instances with state machines are derived from this type.
 
    --  Private use only
-   procedure Check_Deletable (The_Instance : access Instance_Base);
+   procedure Check_Deletable (The_Instance : not null access Instance_Base);
    --  Check that the instance isn't about to delete itself from an
    --  event action.
 
    --  Private use only
-   procedure Finalize (The_Instance : access Instance_Base'Class);
+   procedure Finalize (The_Instance : not null access Instance_Base'Class);
    --  Removes any outstanding events for the instance from the
    --  associated queue when the instance is deleted.
 
    --  Private use only
-   procedure Mark_Deletable (The_Instance : access Instance_Base);
+   procedure Mark_Deletable (The_Instance : not null access Instance_Base);
    --  Indicate, in an event handler, that it's OK for the action
    --  routine about to be called to delete the instance.
 
@@ -92,44 +92,45 @@ package ColdFrame.Events_G is
    --  processing.
 
    --  Private use only
-   procedure Invalidate (The_Event : access Event_Base;
-                         If_For_Instance : Instance_Base_P);
+   procedure Invalidate (The_Event : not null access Event_Base;
+                         If_For_Instance : not null Instance_Base_P);
 
    --  Private use only
-   procedure Start_Handling (The_Event : access Event_Base);
+   procedure Start_Handling (The_Event : not null access Event_Base);
    --  No action.
 
    --  Private use only
-   procedure Stop_Handling (The_Event : access Event_Base);
+   procedure Stop_Handling (The_Event : not null access Event_Base);
    --  No action.
 
    --  Private use only
-   procedure Tear_Down (The_Event : access Event_Base);
+   procedure Tear_Down (The_Event : not null access Event_Base);
    --  No action.
 
 
-   type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
+   type Instance_Event_Base
+     (For_The_Instance : not null access Instance_Base'Class)
    is abstract new Event_Base with private;
    --  All Instance Events are derived from this type. For_The_Instance
    --  is the instance to which the event is directed.
 
    --  Private use only
    procedure Instance_Is_Deleted
-     (For_The_Event : access Instance_Event_Base'Class);
+     (For_The_Event : not null access Instance_Event_Base'Class);
    --  Note that the Instance has been deleted (so as to avoid
    --  querying it in logging Queue variants).
 
    --  Private use only
-   procedure Invalidate (The_Event : access Instance_Event_Base;
-                         If_For_Instance : Instance_Base_P);
+   procedure Invalidate (The_Event : not null access Instance_Event_Base;
+                         If_For_Instance : not null Instance_Base_P);
 
    --  Private use only
-   procedure Start_Handling (The_Event : access Instance_Event_Base);
+   procedure Start_Handling (The_Event : not null access Instance_Event_Base);
    --  Tell the Instance it's handling an event, so not to let itself
    --  be accidentally deleted.
 
    --  Private use only
-   procedure Stop_Handling (The_Event : access Instance_Event_Base);
+   procedure Stop_Handling (The_Event : not null access Instance_Event_Base);
    --  Tell the Instance it's no longer handling an event.
 
 
@@ -166,30 +167,23 @@ package ColdFrame.Events_G is
    type Event_Queue_P is access all Event_Queue_Base'Class;
 
    --  Private use only
-   procedure Add_Reference (To : Event_Queue_P);
+   procedure Add_Reference (To : not null Event_Queue_P);
    --  Increments the usage count for an event queue so that teardown
    --  of queues shared by multiple domains can be properly managed.
 
-   function Copy
-     (The_Queue : Event_Queue_P) return Event_Queue_P;
-   --  Used to clone a reference to an event queue so that teardown of
-   --  queues shared by multiple domains could be properly managed.
-   --  No longer needed.
-   pragma Obsolescent;
-
-   procedure Start (The_Queue : access Event_Queue_Base);
+   procedure Start (The_Queue : not null access Event_Queue_Base);
    --  Raises Use_Error if the Queue is already started.
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base) is abstract;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
    --
    --  Will raise Exceptions.Use_Error if the Event is an
    --  Instance_Event and Instance_Events for this Instance have
    --  previously been posted to a different Queue.
 
-   procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue_Base) is abstract;
+   procedure Post_To_Self (The_Event : not null Event_P;
+                           On : not null access Event_Queue_Base) is abstract;
    --  Events to self take precedence over externally- or
    --  timer-generated events and Locks, and are used to complete an
    --  action where the completion is conditional: an action procedure
@@ -207,7 +201,7 @@ package ColdFrame.Events_G is
    --  condition is obeyed.
 
    --  Private use only
-   procedure Stop (The_Queue : in out Event_Queue_P);
+   procedure Stop (The_Queue : not null Event_Queue_P);
    --  Stops processing on The_Queue, pending Tear_Down (the queue
    --  can't be restarted)..
 
@@ -230,12 +224,12 @@ package ColdFrame.Events_G is
 
    subtype Natural_Duration is Duration range 0.0 .. Duration'Last;
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_At : Time.Time) is abstract;
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is abstract;
 
 
@@ -255,19 +249,19 @@ package ColdFrame.Events_G is
    --  deleted.
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   At_Time : Time.Time) is abstract;
    --  May raise Exceptions.Use_Error (if the Timer is already set)
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   After : Natural_Duration) is abstract;
    --  May raise Exceptions.Use_Error (if the Timer is already set)
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue_Base) is abstract;
+                    On : not null access Event_Queue_Base) is abstract;
    --  May raise Exceptions.Use_Error (if the Timer is already unset)
 
 
@@ -286,7 +280,8 @@ package ColdFrame.Events_G is
    --     begin
    --        ... the Dispatcher is released when the procedure exits
 
-   type Lock (The_Queue : access Event_Queue_Base'Class) is limited private;
+   type Lock (The_Queue : not null access Event_Queue_Base'Class)
+   is limited private;
 
 
    -------------------------
@@ -297,10 +292,11 @@ package ColdFrame.Events_G is
    --  be used with an instantiation of Events_G.Test_G.
 
    function Is_Set (The_Timer : Timer;
-                    On : access Event_Queue_Base) return Boolean;
+                    On : not null access Event_Queue_Base) return Boolean;
 
-   function Expires_At (The_Timer : Timer;
-                        On : access Event_Queue_Base) return Time.Time;
+   function Expires_At
+     (The_Timer : Timer;
+     On : not null access Event_Queue_Base) return Time.Time;
    --  Raises ColdFrame.Exceptions.Use_Error if the Timer isn't set.
 
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
@@ -385,8 +381,8 @@ private
    --  instances. The implementation here raises Program_Error if
    --  called.
    procedure Invalidate_Events
-     (On : access Event_Queue_Base;
-      For_The_Instance : access Instance_Base'Class);
+     (On : not null access Event_Queue_Base;
+      For_The_Instance : not null access Instance_Base'Class);
 
    --  Default private interface to stop an event queue.  The
    --  implementation here raises Exceptions.Use_Error if called.
@@ -400,42 +396,48 @@ private
 
    --  Operations to support starting.
 
-   procedure Start_Queue (The_Queue : access Event_Queue_Base);
+   procedure Start_Queue (The_Queue : not null access Event_Queue_Base);
    --  Raises Program_Error.
 
    --  Operations to support Wait_Until_Idle. The implementations here
    --  are null.
 
-   procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Posted_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Posted_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Held_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Held_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Timer_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Timer_Event
+     (On : not null access Event_Queue_Base);
 
    --  Operations to support debug/logging. The implementations here
    --  are null.
 
-   procedure Log_Retraction (The_Event : Event_P;
-                             On : access Event_Queue_Base);
+   procedure Log_Retraction (The_Event : not null Event_P;
+                             On : not null access Event_Queue_Base);
 
-   procedure Log_Pre_Dispatch (The_Event : Event_P;
-                               On : access Event_Queue_Base);
+   procedure Log_Pre_Dispatch (The_Event : not null Event_P;
+                               On : not null access Event_Queue_Base);
 
-   procedure Log_Post_Dispatch (The_Event : Event_P;
-                                On : access Event_Queue_Base);
+   procedure Log_Post_Dispatch (The_Event : not null Event_P;
+                                On : not null access Event_Queue_Base);
 
    --  Operations to support Locking. The implementations here raise
    --  Program_Error if called.
 
-   procedure Locker (The_Queue : access Event_Queue_Base);
+   procedure Locker (The_Queue : not null access Event_Queue_Base);
 
-   procedure Unlocker (The_Queue : access Event_Queue_Base);
+   procedure Unlocker (The_Queue : not null access Event_Queue_Base);
 
 
    type Timer_P is access all Timer;
@@ -458,15 +460,15 @@ private
 
    procedure Handler (This : Held_Event);
 
-   procedure Invalidate (The_Event : access Held_Event;
-                         If_For_Instance : Instance_Base_P);
+   procedure Invalidate (The_Event : not null access Held_Event;
+                         If_For_Instance : not null Instance_Base_P);
 
-   procedure Tear_Down (The_Event : access Held_Event);
+   procedure Tear_Down (The_Event : not null access Held_Event);
    --  This ensures that the Timer_Checker test isn't falsely
    --  triggered by timer events left behind during teardown.
 
 
-   type Timer_Checker (For_The_Timer : access Timer)
+   type Timer_Checker (For_The_Timer : not null access Timer)
       is new Ada.Finalization.Limited_Controlled with null record;
    --  We could have implemented Timer as a new Limited_Controlled,
    --  but that is a tagged type; so Timer would have been a tagged
@@ -487,7 +489,7 @@ private
    end record;
 
 
-   type Lock (The_Queue : access Event_Queue_Base'Class)
+   type Lock (The_Queue : not null access Event_Queue_Base'Class)
       is new Ada.Finalization.Limited_Controlled with record
         Finalized : Boolean := False;
       end record;

@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 6b2a0cfb80d0 2014/03/14 18:34:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -492,7 +492,9 @@
                else
                   Events.Initialize;
                end if;
-               ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
+               if Events.Dispatcher /= null then
+                  ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
+               end if;
                {domain-init-proc};
                {class}.CF_Class_Initialize:
                {class}.{init-operation};
@@ -604,7 +606,11 @@
     <xsl:value-of select="$II"/>
     <xsl:text>end if;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
+    <xsl:text>if Events.Dispatcher /= null then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
     <xsl:text>ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <!-- .. any domain initialization .. -->
     <xsl:if test="initialize">

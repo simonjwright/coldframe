@@ -55,7 +55,7 @@ package body Event_Test.Test_Inspection is
    --  Test events  --
    -------------------
 
-   type Self_Event (For_The_Instance : access Instance)
+   type Self_Event (For_The_Instance : not null access Instance)
       is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
    with record
       Payload : Integer;
@@ -63,7 +63,7 @@ package body Event_Test.Test_Inspection is
 
    procedure Handler (For_The_Event : Self_Event);
 
-   type Event (For_The_Instance : access Instance)
+   type Event (For_The_Instance : not null access Instance)
       is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
    with record
       Payload : Integer;
@@ -71,7 +71,7 @@ package body Event_Test.Test_Inspection is
 
    procedure Handler (For_The_Event : Event);
 
-   type Timer_Event (For_The_Instance : access Instance)
+   type Timer_Event (For_The_Instance : not null access Instance)
       is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
    with record
       Payload : Integer;

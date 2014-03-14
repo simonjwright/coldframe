@@ -162,6 +162,6 @@ clean::
 
 
 clean::
-	-rm -rf *.{ada,gen,log,norm,norm-stamp,stamp*}
+	rm -rf *.{norm-stamp,stamp,norm,ada,gen,html,images}
 
 .PHONY: all exes force clean runs fails

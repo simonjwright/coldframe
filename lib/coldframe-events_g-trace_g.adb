@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-trace_g.adb,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Tags;
@@ -32,8 +32,8 @@ with ColdFrame.Project.Log_Info;
 package body ColdFrame.Events_G.Trace_G is
 
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base) is
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base) is
    begin
       Project.Log_Info ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
       Post (The_Event => The_Event,
@@ -41,8 +41,8 @@ package body ColdFrame.Events_G.Trace_G is
    end Post;
 
 
-   procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue_Base) is
+   procedure Post_To_Self (The_Event : not null Event_P;
+                           On : not null access Event_Queue_Base) is
    begin
       Project.Log_Info
         ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag) & " to self");
@@ -51,8 +51,8 @@ package body ColdFrame.Events_G.Trace_G is
    end Post_To_Self;
 
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
    begin
       Project.Log_Info ("posting a " &
@@ -65,8 +65,8 @@ package body ColdFrame.Events_G.Trace_G is
    end Post;
 
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
    begin
       Project.Log_Info ("posting a " &
@@ -80,8 +80,8 @@ package body ColdFrame.Events_G.Trace_G is
 
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   At_Time : Time.Time) is
    begin
       Project.Log_Info ("setting a Timer for a " &
@@ -96,8 +96,8 @@ package body ColdFrame.Events_G.Trace_G is
 
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   After : Natural_Duration) is
    begin
       Project.Log_Info ("setting a Timer for a " &
@@ -112,7 +112,7 @@ package body ColdFrame.Events_G.Trace_G is
 
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue_Base) is
+                    On : not null access Event_Queue_Base) is
 
    begin
       if The_Timer.The_Entry = null then
@@ -134,8 +134,8 @@ package body ColdFrame.Events_G.Trace_G is
    end Unset;
 
 
-   procedure Log_Retraction (The_Event : Event_P;
-                             On : access Event_Queue_Base) is
+   procedure Log_Retraction (The_Event : not null Event_P;
+                             On : not null access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       Project.Log_Info ("retracting a "
@@ -143,8 +143,8 @@ package body ColdFrame.Events_G.Trace_G is
    end Log_Retraction;
 
 
-   procedure Log_Pre_Dispatch (The_Event : Event_P;
-                               On : access Event_Queue_Base) is
+   procedure Log_Pre_Dispatch (The_Event : not null Event_P;
+                               On : not null access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       if The_Event.all in Instance_Event_Base'Class then
@@ -162,8 +162,8 @@ package body ColdFrame.Events_G.Trace_G is
    end Log_Pre_Dispatch;
 
 
-   procedure Log_Post_Dispatch (The_Event : Event_P;
-                                On : access Event_Queue_Base) is
+   procedure Log_Post_Dispatch (The_Event : not null Event_P;
+                                On : not null access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       if The_Event.all in Instance_Event_Base'Class then

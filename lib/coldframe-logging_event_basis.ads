@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-logging_event_basis.ads,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
@@ -38,7 +38,7 @@ package ColdFrame.Logging_Event_Basis is
 
    type Event_Base is abstract new Event_Basis.Event_Base with private;
 
-   procedure Log (The_Event : access Event_Base;
+   procedure Log (The_Event : not null access Event_Base;
                   At_Phase : Event_Basis.Event_Processing_Phase);
 
 

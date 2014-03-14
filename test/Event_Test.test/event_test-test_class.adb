@@ -14,6 +14,8 @@
 
 with AUnit.Assertions; use AUnit.Assertions;
 
+with Ada.Text_IO;
+
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
@@ -244,6 +246,9 @@ package body Event_Test.Test_Class is
       T : ColdFrame.Project.Events.Timer;
       use type ColdFrame.Project.Calendar.Time;
    begin
+      Ada.Text_IO.Put_Line
+        ("** expecting "
+           & """ColdFrame: INFO: Queue overrun ...""");
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       --  Ev1 will fire after 2.2 seconds.
       Inf1.Payload := (Ordinal => 1008,

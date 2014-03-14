@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-trace_g.ads,v $
+--  $Revision: 6b2a0cfb80d0 $
+--  $Date: 2014/03/14 18:34:45 $
+--  $Author: simonjwright $
 
 generic
 
@@ -46,22 +46,22 @@ package ColdFrame.Events_G.Trace_G is
       Priority => System.Default_Priority,
       Storage_Size => 20_000);
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base);
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base);
 
-   procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue_Base);
+   procedure Post_To_Self (The_Event : not null Event_P;
+                           On : not null access Event_Queue_Base);
 
    ----------------------
    --  Delayed events  --
    ----------------------
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_At : Time.Time);
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue_Base;
+   procedure Post (The_Event : not null Event_P;
+                   On : not null access Event_Queue_Base;
                    To_Fire_After : Natural_Duration);
 
    --------------
@@ -69,17 +69,17 @@ package ColdFrame.Events_G.Trace_G is
    --------------
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   At_Time : Time.Time);
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue_Base;
-                  To_Fire : Event_P;
+                  On : not null access Event_Queue_Base;
+                  To_Fire : not null Event_P;
                   After : Natural_Duration);
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue_Base);
+                    On : not null access Event_Queue_Base);
 
 private
 
@@ -90,13 +90,13 @@ private
                           Priority => Priority,
                           Storage_Size => Storage_Size) with null record;
 
-   procedure Log_Retraction (The_Event : Event_P;
-                             On : access Event_Queue_Base);
+   procedure Log_Retraction (The_Event : not null Event_P;
+                             On : not null access Event_Queue_Base);
 
-   procedure Log_Pre_Dispatch (The_Event : Event_P;
-                               On : access Event_Queue_Base);
+   procedure Log_Pre_Dispatch (The_Event : not null Event_P;
+                               On : not null access Event_Queue_Base);
 
-   procedure Log_Post_Dispatch (The_Event : Event_P;
-                                On : access Event_Queue_Base);
+   procedure Log_Post_Dispatch (The_Event : not null Event_P;
+                                On : not null access Event_Queue_Base);
 
 end ColdFrame.Events_G.Trace_G;
