@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
+<!-- $Id: types.html,v 6075d0cd3fe0 2014/03/21 13:28:51 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -63,6 +63,7 @@ dialog.
 <!--
 <p>The previous (Rational Rose) version of ColdFrame offered several
 other facilities, which may appear in future releases of this version:
+(see below)
 -->
 
 <h3>Stereotypes that apply to <i>DataTypes</i> only</h3>
@@ -121,7 +122,17 @@ string of the length specified.
 
 <dt><em>&#171;imported&#187;</em>
 <dd>specifies that the given type is to be found at the external
-reference specified in the associated <tt>{imported}</tt> tag.
+reference specified in the associated <tt>{imported}</tt> tag.<br/>
+
+The <a name="hash"><tt>{hash=<i>style</i>}</tt></a> tag specifies
+how an imported or renamed type is to be hashed. Currently the only
+supported <i>styles</i> are
+<ul>
+<li><tt>discrete</tt>, which will work for imported enumerations or
+integer ranges but not for private or access types, and
+<li><tt>enumeration</tt>, which is similar but acts as a code
+generation optimization directive.
+</ul>
 
 <dt><a name="null-record"><em>&#171;null&#187;</em></a>
 <dd>specifies an empty record; useful for a callback with no actual
@@ -129,7 +140,10 @@ data associated.
 
 <dt><a name="renaming"><em>&#171;renaming&#187;</em></a>
 <dd>specifies that the given type or exception renames the external
-reference specified in the associated <tt>{renames}</tt> tag.
+reference specified in the associated <tt>{renames}</tt> tag.<br/>
+
+The <tt>{<a href="#hash">hash=<i>style</i></a>}</tt> tag is available
+as for <em>&#171;imported&#187;</em> above.
 
 <dt><em>&#171;unsigned&#187;</em>
 <dd>specifies that the given type is to hold unsigned numbers with
@@ -192,16 +206,6 @@ given type extends (inherits) the specified  external reference.
 print a record field containing a value of the type when it has been
 serialized as one or more XML elements. See
 <a href="serialization-page.html">separate information</a>.
-
-<li><a name="hash"><tt>hash = <i>style</i></tt></a> specifies how a
-type (presumably <tt><i>imported</i></tt> or <tt><i>renames</i></tt>)
-is to be hashed. Currently the only supported <i>styles</i> are
-<ul>
-<li><tt>discrete</tt>, which will work for imported enumerations or
-integer ranges but not for private or access types.
-<li><tt>enumeration</tt>, which is similar but acts as a code
-generation optimization directive.
-</ul>
 
 <li><tt>image = <i>image-operation</i></tt> is an alternate for
 <a href="#field-image"><tt>field-image</tt></a>, retained for

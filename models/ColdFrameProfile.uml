@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 10 17:52:14 GMT 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Mar 21 09:37:52 GMT 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/03/11 18:27:45 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/03/21 13:28:51 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -493,7 +493,7 @@ For Ada, translates to Ada.Strings.Unbounded.Unbounded_String.</UML:TaggedValue.
             <UML:TaggedValue xmi.id = '-64--88-1-3--10cc6e45:1353de29c97:-8000:0000000000000C55'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>A variable-length string.
-For Ada, translates to Ada.Strings.Unbounded.Unbounded_String.</UML:TaggedValue.dataValue>
+Corresponds directly to Ada.Strings.Unbounded.Unbounded_String.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -536,6 +536,28 @@ For Ada, translates to Ada.Strings.Unbounded.Unbounded_String.</UML:TaggedValue.
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
             </UML:TagDefinition>
+            <UML:TagDefinition xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E3A'
+              name = 'hash' isSpecification = 'false'>
+              <UML:TagDefinition.multiplicity>
+                <UML:Multiplicity xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E3C'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E3B'
+                      lower = '0' upper = '0'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:TagDefinition.multiplicity>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E3D'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>Specifies how a renamed type is to be hashed. Currently the only supported styles are:
+* &apos;discrete&apos;, which will work for imported enumerations or integer ranges but not for private or access types, and
+* &apos;enumeration&apos;, which is similar but acts as a code generation optimization directive.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
+            </UML:TagDefinition>
           </UML:Stereotype.definedTag>
         </UML:Stereotype>
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:000000000000101D'
@@ -567,6 +589,28 @@ For Ada, translates to Ada.Strings.Unbounded.Unbounded_String.</UML:TaggedValue.
                 <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DD0'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>Specifies the package where the element is actually declared.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
+            </UML:TagDefinition>
+            <UML:TagDefinition xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E2A'
+              name = 'hash' isSpecification = 'false'>
+              <UML:TagDefinition.multiplicity>
+                <UML:Multiplicity xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E30'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E2F'
+                      lower = '0' upper = '0'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:TagDefinition.multiplicity>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-74-372b0ead:144c4fe2f19:-8000:0000000000000E34'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>Specifies how an imported type is to be hashed. Currently the only supported styles are:
+* &apos;discrete&apos;, which will work for imported enumerations or integer ranges but not for private or access types, and
+* &apos;enumeration&apos;, which is similar but acts as a code generation optimization directive.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
                   </UML:TaggedValue.type>

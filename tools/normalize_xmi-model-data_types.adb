@@ -13,10 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: 6075d0cd3fe0 $
+--  $Date: 2014/03/21 13:28:51 $
 --  $Author: simonjwright $
 
+with Ada.Strings.Fixed;
+with Ada.Strings.Maps.Constants;
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
@@ -147,12 +149,6 @@ package body Normalize_XMI.Model.Data_Types is
       end if;
       --  There are all sorts of complicated illegal possibilities
       --  here!
-      if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
-         Messages.Error
-           ("Type "
-              & (+T.Name)
-              & " has both {imported} and {renames} specified");
-      end if;
       if T.Has_Stereotype ("bounded-string")
         and not T.Has_Tag ("length") then
          Messages.Error
@@ -269,6 +265,32 @@ package body Normalize_XMI.Model.Data_Types is
             Put (To, " visibility='" & Visibility & "'");
          end if;
       end;
+      if (T.Has_Stereotype ("imported")
+            or else T.Has_Stereotype ("renaming"))
+        and then T.Has_Tag ("hash") then
+         declare
+            use Ada.Strings.Fixed;
+            use Ada.Strings.Maps.Constants;
+            Value : constant String
+              := Translate (T.Tag_Value ("hash"), Lower_Case_Map);
+         begin
+            if Value = "discrete" or else  Value = "enumeration" then
+               Put (To, " hash='" & Value & "'");
+            elsif Value'Length = 0 then
+               Messages.Error
+                 ("Type "
+                    & (+T.Name)
+                    & " has tag {hash} with no value specified");
+            else
+               Messages.Error
+                 ("Type "
+                    & (+T.Name)
+                    & " has tag {hash} with bad value '"
+                    & Value
+                    & "'");
+            end if;
+         end;
+      end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+T.Name) & "</name>");
       T.Output_Documentation (To);

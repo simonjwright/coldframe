@@ -1,5 +1,5 @@
 ************
-* 2013mmdd *
+* 2014mmdd *
 ************
 
 General
@@ -13,8 +13,26 @@ bug 81.
 
 <<cardinality>> and <<utility>> are supported for classes.
 
+<<callback>> can now be applied to (class) operations which are to
+receive callbacks from other, lower-level, domains.
+
+Supports the tag {hash=style} for <<imported>> and <<renaming>> types.
+
 Generation
 ==========
+
+Inheritance arrowheads were missing on generated diagrams.
+
+Improved detection of the use of invalid names.
+
+Code
+====
+
+For <<callback>> operations, code is generated to
+* register with the callback provider at domain initialization,
+* create class events to transfer the data into the receiver domain's
+  context, and
+* support teardown for unit test.
 
 Testing
 =======

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: 6075d0cd3fe0 $
+--  $Date: 2014/03/21 13:28:51 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -444,6 +444,7 @@ begin
    Tags.Insert ("constrains", (Must_Be_Name => True));
    Tags.Insert ("documentation", (Must_Be_Name => False));
    Tags.Insert ("formalizes", (Must_Be_Name => True));
+   Tags.Insert ("hash", (Must_Be_Name => False));
    Tags.Insert ("imported", (Must_Be_Name => True));
    Tags.Insert ("init", (Must_Be_Name => True));
    Tags.Insert ("language", (Must_Be_Name => False));
