@@ -5,10 +5,10 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: House_Management_Test.gpr,v $
+--  $Revision: 4bb7d468563e $
+--  $Date: 2014/03/25 20:34:22 $
+--  $Author: simonjwright $
 
 with "Options";
 with "ColdFrame";
@@ -26,7 +26,7 @@ project House_Management_Test is
      "House_Management.test",
      "Digital_IO_Interface.gen"
     );
-  for Object_Dir use Options'Object_Dir & "/main";
+  for Object_Dir use ".build-house_management_test";
   package IDE renames Options.IDE;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;

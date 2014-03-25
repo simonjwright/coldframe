@@ -27,7 +27,7 @@ project Initialization is
     ("Initialization.impl",
      "Initialization.gen");
 
-  for Object_Dir use Options'Object_Dir & "/main";
+  for Object_Dir use ".build";
   package Ide renames Options.Ide;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;

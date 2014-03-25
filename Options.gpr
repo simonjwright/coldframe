@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Options.gpr,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $
+--  $Id: Options.gpr,v 4bb7d468563e 2014/03/25 20:34:22 simonjwright $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -20,15 +20,6 @@ project Options is
 
   --  This project has no associated sources.
   for Source_Files use ();
-
-  --  Determine the build directory using the BUILD_BASE environment
-  --  variable, if any.
-  --
-  --  Each Project that contains source must have its own build
-  --  directory. A useful set of build directories can be made by
-  --  calling the script 'create-build-directories'.
-  Build_Base := external ("BUILD_BASE", ".");
-  for Object_Dir use Build_Base;
 
   --  GLIDE/GPS configuration (these are the defaults).
   package IDE is

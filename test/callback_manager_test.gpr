@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: callback_manager_test.gpr,v $
+--  $Revision: 4bb7d468563e $
+--  $Date: 2014/03/25 20:34:22 $
+--  $Author: simonjwright $
 
 with "ColdFrame";
 with "Options";
@@ -28,24 +28,11 @@ project Callback_Manager_Test is
 
    for Exec_Dir use ".";
 
-   for Object_Dir use Options'Object_Dir & "/main";
-
-   package Builder is
-      for Default_Switches ("Ada") use ("-m", "-g");
-   end Builder;
-
-   package Compiler is
-      for Default_Switches ("Ada") use
-        (
-         "-gnatqQafoy",
-         "-gnatwaL",
-         "-gnat95",
-         "-O2"
-        );
-   end Compiler;
-
-   package Binder is
-      for Default_Switches ("Ada") use ("-E");
-   end Binder;
+   for Object_Dir use ".build";
+   package IDE renames Options.IDE;
+   package Builder renames Options.Builder;
+   package Compiler renames Options.Compiler;
+   package Binder renames Options.Binder;
+   package Linker renames Options.Linker;
 
 end Callback_Manager_Test;

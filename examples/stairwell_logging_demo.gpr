@@ -1,5 +1,5 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_logging_demo.gpr,v 984b16715466 2014/01/24 11:49:28 simonjwright $
+--  $Id: stairwell_logging_demo.gpr,v 4bb7d468563e 2014/03/25 20:34:22 simonjwright $
 
 with "Options";
 with "ColdFrame";
@@ -18,7 +18,7 @@ project Stairwell_Logging_Demo is
                        "Digital_IO.gen",
                        "../extras");
 
-  for Object_Dir use Options'Object_Dir & "/main";
+  for Object_Dir use ".build-stairwell_logging_demo";
 
   package IDE renames Options.IDE;
   package Builder renames Options.Builder;

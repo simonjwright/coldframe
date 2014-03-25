@@ -1,5 +1,5 @@
 --  Project file (GCC-3, GNAT-3.15) for ColdFrame performance tests.
---  $Id: Performance.gpr,v 8d10f2c82162 2011/07/19 19:56:33 simonjwright $
+--  $Id: Performance.gpr,v 4bb7d468563e 2014/03/25 20:34:22 simonjwright $
 
 with "Options";
 with "bc";
@@ -13,16 +13,11 @@ project Performance is
 
   for Source_Dirs use ("Performance.impl", "Performance.gen");
 
-  for Object_Dir use Options'Object_Dir & "/main";
-
+  for Object_Dir use ".build";
   package Ide renames Options.Ide;
-
   package Builder renames Options.Builder;
-
   package Compiler renames Options.Compiler;
-
   package Binder renames Options.Binder;
-
   package Linker renames Options.Linker;
 
 end Performance;

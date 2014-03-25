@@ -32,6 +32,11 @@ syntax: glob
 b~*.ad[bs]
 coldframeout
 
+# Libraries
+lib-static
+lib-relocatable
+include
+
 # Generated code/doc
 *.gen
 *.html

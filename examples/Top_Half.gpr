@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
+--  $Id: Top_Half.gpr,v 4bb7d468563e 2014/03/25 20:34:22 simonjwright $
 
 with "ColdFrame";
 with "Options";
@@ -33,7 +33,7 @@ project Top_Half is
       "Top_Half.test"
       );
 
-  for Object_Dir use Options'Object_Dir & "/main";
+  for Object_Dir use ".build";
   package IDE renames Options.IDE;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;

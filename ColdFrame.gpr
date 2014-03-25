@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: ColdFrame.gpr,v 6f3f2ff0d5f7 2011/11/08 15:45:44 simonjwright $
+--  $Id: ColdFrame.gpr,v 4bb7d468563e 2014/03/25 20:34:22 simonjwright $
 --
 --  This file controls compilation of the standard "library" and
 --  "project" source for ColdFrame.
@@ -21,6 +21,11 @@ with "Options";
 with "bc";
 
 project ColdFrame is
+
+  for Library_Name use "coldframe";
+  for Library_Kind use "static";
+  for Library_Dir use "lib-static";
+  for Library_Options use External_As_List ("LDFLAGS", " ");
 
   for Source_Dirs use ("lib", "project");
 
@@ -31,10 +36,6 @@ project ColdFrame is
   package Builder renames Options.Builder;
 
   package Compiler renames Options.Compiler;
-
-  package Binder renames Options.Binder;
-
-  package Linker renames Options.Linker;
 
   --  This package is for use with GNAT GPL 2011 and (probably) GNAT 4.7.
   --  It can be commented out otherwise.
