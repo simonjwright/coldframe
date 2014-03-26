@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 82e9c8ea4ad5 2012/03/24 17:31:13 simonjwright $ -->
+<!-- $Id: installation.html,v 78ff936b852c 2014/03/26 16:49:34 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -85,11 +85,6 @@ location to your setting.
 <tr><td>BLANK_LINES
 <td>Should the generated code have extra blank lines to improve legibility?
 <td>yes
-
-<tr><td>BUILD_BASE
-<td>The directory under which individual object libraries (such
-as <tt>coldframe</tt>, <tt>main</tt>) are located.
-<td>$COLDFRAME/.build
 
 <tr><td>CASE_EXCEPTIONS
 <td>The list of case exceptions to be used when generating code (for
@@ -229,14 +224,6 @@ with you can just generate the code:
 tell <tt>gnatmake</tt> or <tt>gprbuild</tt> to create any needed
 directories as required.
 
-<p>If not, assuming you have the environment
-variables <tt>COLDFRAME</tt> and <tt>BUILD_BASE</tt> set up, you can
-say
-
-<pre>
-   <i>$</i> $COLDFRAME/scripts/create-build-directories
-</pre>
-
 <h3>Creating
 a <a href="http://gcc.gnu.org/onlinedocs/gnat_ugn_unw/GNAT-Project-Manager.html">GNAT
 Project</a> file</h3>
@@ -262,7 +249,7 @@ source, your project file can be pretty simple: the supplied
         "<i>Event_Test.gen</i>",
         "<i>Event_Test.test</i>");
 
-     for Object_Dir use Options'Object_Dir & "/main";
+     for Object_Dir use ".build";
      package IDE renames Options.IDE;
      package Builder renames Options.Builder;
      package Compiler renames Options.Compiler;
@@ -317,7 +304,7 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 	Project_Base & "/inherited"
        );
 
-     for Object_Dir use Options'Object_Dir & "/main";
+     for Object_Dir use ".build";
      package IDE renames Options.IDE;
      package Builder renames Options.Builder;
      package Compiler renames Options.Compiler;

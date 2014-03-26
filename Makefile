@@ -18,9 +18,15 @@ all::
 # See Makefile.inc for overridable variable definitions.
 include Makefile.inc
 
-SETUP_SUBDIRS = lib tools
+# Set up the library
+setup:: setup.inner
+setup.inner: force
+	gprbuild -p -P ColdFrame
+.PHONY: setup.inner
 
-setup:
+# Set up subdirectories
+SETUP_SUBDIRS = lib tools
+setup::
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s setup;			\
 	done

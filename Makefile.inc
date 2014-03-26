@@ -72,9 +72,6 @@ endif
 COLDFRAME := $(shell echo $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) \
 	| sed -e "s;/$$;;")
 
-# Where's the base for the build directories?
-export BUILD_BASE ?= $(COLDFRAME)/.build
-
 # Where are the scripts?
 SCRIPTS := $(COLDFRAME)/scripts
 
