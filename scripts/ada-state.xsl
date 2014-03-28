@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 6b2a0cfb80d0 2014/03/14 18:34:45 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v c0ee3d3afbf8 2014/03/28 15:53:39 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -308,7 +308,7 @@
               := The_Event.For_The_Instance.all'Unchecked_Access;
          begin
             ColdFrame.Project.Log_Info
-              ("handling {domain}.{class}.{event} in {state}");
+              ("handling event {domain}.{class}.{event} in {state}");
             case That.State_Machine_State is
                when {source-state (normal transition)} =>
                   {perform-transition}
@@ -340,11 +340,11 @@
       <xsl:value-of select="$II"/>
       <xsl:text>ColdFrame.Project.Log_Info&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
-      <xsl:text>("</xsl:text>
+      <xsl:text>("handling event </xsl:text>
       <xsl:value-of select="../../../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="../../name"/>
-      <xsl:text> handling event </xsl:text>
+      <xsl:text>.</xsl:text>
       <xsl:value-of select="$e"/>
       <xsl:text> in "&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
@@ -420,7 +420,7 @@
          procedure Handler (The_Event : {event}) is
          begin
             ColdFrame.Project.Log_Info
-              ("handling {domain}.{class}.{event}");
+              ("handling class event {domain}.{class}.{event}");
             {action} (The_Event.Payload);
          end Handler;
          -->
@@ -438,12 +438,12 @@
       <xsl:value-of select="$II"/>
       <xsl:text>ColdFrame.Project.Log_Info&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
-      <xsl:text>("</xsl:text>
+      <xsl:text>("handling class event </xsl:text>
       <xsl:value-of select="../../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="../name"/>
-      <xsl:text> handling class event </xsl:text>
-      <xsl:value-of select="$e"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
       <xsl:text>");&#10;</xsl:text>
     </xsl:if>
 
