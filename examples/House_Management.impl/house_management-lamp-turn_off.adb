@@ -13,27 +13,18 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-lamp-turn_off.adb,v $
---  $Revision: e08cb16c3dfb $
---  $Date: 2014/03/11 18:27:45 $
+--  $Revision: 4ee79f54b785 $
+--  $Date: 2014/04/04 12:46:49 $
 --  $Author: simonjwright $
 
 --  This state entry action turns off the associated signal via
 --  Digital IO.
 
-with Digital_IO.Application;
+with Digital_IO;
 
 separate (House_Management.Lamp)
 procedure Turn_Off
   (This : not null Handle) is
-
-   Signals : constant array (Lamp_Name) of Digital_IO.Signal_Name
-     := (Second_Floor => Digital_IO.Lamp_A,
-         First_Floor => Digital_IO.Lamp_B,
-         Ground_Floor => Digital_IO.Lamp_C,
-         Basement => Digital_IO.Lamp_D);
-
 begin
-
-   Digital_IO.Application.Set_Output (Signals (This.Name), To_State => False);
-
+   Digital_IO.Set (This.Output, To_State => False);
 end Turn_Off;

@@ -1,5 +1,5 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v 4bb7d468563e 2014/03/25 20:34:22 simonjwright $
+--  $Id: stairwell_demo.gpr,v 4ee79f54b785 2014/04/04 12:46:49 simonjwright $
 
 with "Options";
 with "ColdFrame";
@@ -14,7 +14,9 @@ project Stairwell_Demo is
   for Source_Dirs use ("House_Management.impl",
                        "House_Management.gen",
                        "Digital_IO.impl",
-                       "Digital_IO.gen");
+                       "Digital_IO.gen",
+                       "Digital_IO.Tcl.impl",
+                       "Digital_IO.Tcl.gen");
 
   for Object_Dir use ".build";
 

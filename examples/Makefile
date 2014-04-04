@@ -76,7 +76,11 @@ states-t$(exe): States.gen force
 	$(GNATMAKE) -p -PStates
 
 EXECUTABLES += stairwell_demo$(exe)
-stairwell_demo$(exe): House_Management.gen Digital_IO.gen force
+stairwell_demo$(exe):				\
+  House_Management.gen				\
+  Digital_IO.gen				\
+  Digital_IO.Tcl.gen				\
+  force
 	$(GNATMAKE) -p -Pstairwell_demo
 
 EXECUTABLES += van_fleet-demo$(exe)
@@ -93,6 +97,7 @@ Digital_IO_Interface.gen: Digital_IO_Interface.norm
 
 NORM_FILES =					\
  Digital_IO.norm				\
+ Digital_IO.Tcl.norm				\
  Digital_IO_Interface.norm			\
  House_Management.norm				\
  Interrupt_Handling.norm			\

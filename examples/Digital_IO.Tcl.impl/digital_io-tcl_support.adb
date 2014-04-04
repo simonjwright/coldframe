@@ -1,5 +1,3 @@
---  Copyright (C) Simon Wright <simon@pushface.org>
-
 --  This package is free software; you can redistribute it and/or
 --  modify it under terms of the GNU General Public License as
 --  published by the Free Software Foundation; either version 2, or
@@ -12,19 +10,32 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: house_management-lamp-turn_on.adb,v $
+--  $RCSfile: digital_io-tcl_support.adb,v $
 --  $Revision: 4ee79f54b785 $
 --  $Date: 2014/04/04 12:46:49 $
 --  $Author: simonjwright $
 
---  This state entry action turns on the associated signal via Digital
---  IO.
+with Tcl.Async;
 
-with Digital_IO;
+package body Digital_IO.Tcl_Support is
 
-separate (House_Management.Lamp)
-procedure Turn_On
-  (This : not null Handle) is
-begin
-   Digital_IO.Set (This.Output, To_State => True);
-end Turn_On;
+   procedure Initialize
+   is
+   begin
+      Register (new Implementation);
+   end Initialize;
+
+   procedure Set (This : Implementation;
+                  For_Output : Digital_IO_Support.Output_Signal;
+                  To : Boolean)
+   is
+      pragma Unreferenced (This);  -- only used for dispatching
+      Tcl_Key : constant Character
+        := Character'Val (Character'Pos ('a') + Natural (For_Output));
+   begin
+      Tcl.Async.Set (Tcl_Array => "lampState",
+                     Index => String'(1 => Tcl_Key),
+                     Value => Integer'Image (Boolean'Pos (To)));
+   end Set;
+
+end Digital_IO.Tcl_Support;

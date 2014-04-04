@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 4ee79f54b785 2014/04/04 12:46:49 simonjwright $ -->
 
 <!--
 
@@ -40,9 +40,10 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
-        <xsd:element name="revision" minOccurs="0" maxOccurs="1"/>
         <xsd:element name="normalizer"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="revision" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="initialize" minOccurs="0" maxOccurs="1"/>
         <xsd:choice minOccurs="0" maxOccurs="unbounded">
           <xsd:element ref="class"/>
           <xsd:element ref="type"/>

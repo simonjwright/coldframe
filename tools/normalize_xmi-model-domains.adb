@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: 4ee79f54b785 $
+--  $Date: 2014/04/04 12:46:49 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -316,6 +316,10 @@ package body Normalize_XMI.Model.Domains is
       if D.Has_Tag ("revision") then
          Put_Line (To,
                    "<revision>" & D.Tag_Value ("revision") & "</revision>");
+      end if;
+      if D.Has_Tag ("init") then
+         Put_Line (To,
+                   "<initialize>" & D.Tag_Value ("init") & "</initialize>");
       end if;
 
       D.Classes.Iterate (Output'Access);

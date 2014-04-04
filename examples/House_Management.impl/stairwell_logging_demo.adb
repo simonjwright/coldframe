@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stairwell_logging_demo.adb,v $
---  $Revision: 297981173790 $
---  $Date: 2014/03/08 16:34:09 $
+--  $Revision: 4ee79f54b785 $
+--  $Date: 2014/04/04 12:46:49 $
 --  $Author: simonjwright $
 
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
@@ -27,7 +27,7 @@
 --  ColdFrame.Project.Events using
 --  ColdFrame.Logging_Event_Basis.Event_Base. This design is
 --  unsatisfactory to the extent that you have to rebuild the world
---  when you revert to the standard instntiation.
+--  when you revert to the standard instantiation.
 --
 --  View the events using a browser at http://localhost:8080/events.
 
@@ -36,8 +36,9 @@ with CArgv;
 with ColdFrame.Exceptions.Symbolic_Traceback;
 with ColdFrame.Logging_Event_Basis.EWS_Support;
 with ColdFrame.Project.Events.Standard;
-with Digital_IO.HCI;
 with Digital_IO.Initialize;
+with Digital_IO.Tcl.HCI;
+with Digital_IO.Tcl.Initialize;
 with EWS.Dynamic;
 with EWS.Server;
 with House_Management.Initialize;
@@ -75,14 +76,21 @@ procedure Stairwell_Logging_Demo is
    pragma Convention (C, Freeproc);
 
 
-   procedure Freeproc (BlockPtr : in C.Strings.chars_ptr) is
+   --  The ColdFrame event queue.
+   Dispatcher : constant ColdFrame.Project.Events.Event_Queue_P
+     := new ColdFrame.Project.Events.Standard.Trace.Event_Queue;
+
+
+   procedure Freeproc (BlockPtr : in C.Strings.chars_ptr)
+   is
       Tmp : C.Strings.chars_ptr := BlockPtr;
    begin
       C.Strings.Free (Tmp);
    end Freeproc;
 
 
-   function Init (Interp : in Tcl.Tcl_Interp) return C.int is
+   function Init (Interp : in Tcl.Tcl_Interp) return C.int
+   is
       package CreateCommands is new Tcl.Ada.Generic_Command (Integer);
       Command : Tcl.Tcl_Command;
       pragma Warnings (Off, Command);
@@ -103,8 +111,13 @@ procedure Stairwell_Logging_Demo is
          0,
          null);
 
-      --  To trace assignments to lampState, for Digital_IO.Output
+      --  To trace assignments to lampState, for Digital_IO.Tcl.Output
       Tcl.Async.Register (Interp);
+
+      --  Now OK to kick off the ColdFrame side of things
+      Digital_IO.Initialize (Dispatcher);
+      Digital_IO.Tcl.Initialize (Dispatcher);
+      House_Management.Initialize (Dispatcher);
 
       return Tcl.TCL_OK;
 
@@ -115,21 +128,22 @@ procedure Stairwell_Logging_Demo is
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
       Argc : in C.int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.int is
-      Signal : Digital_IO.Signal_Name;
+      Argv : in CArgv.Chars_Ptr_Ptr) return C.int
+   is
+      Signal : Digital_IO.Input_Signal;
       pragma Warnings (Off, ClientData);
    begin
       pragma Assert (Argc = 2, "pushButton requires one argument (button #)");
-      Signal := Digital_IO.Signal_Name'Value
-        ("floor_" & C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
-      Digital_IO.HCI.Set_Input (Of_Signal => Signal, To => True);
-      Digital_IO.HCI.Set_Input (Of_Signal => Signal, To => False);
+      Signal := Digital_IO.Input_Signal'Value
+        (C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
+      Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => True);
+      Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => False);
       return Tcl.TCL_OK;
    exception
       when E : others =>
          Tcl.Tcl_SetResult
            (Interp,
-            C.Strings.New_String (Ada.Exceptions.Exception_Name (E)),
+            C.Strings.New_String (Ada.Exceptions.Exception_Information (E)),
             Freeproc'Unrestricted_Access);
          return Tcl.TCL_ERROR;
    end Push_Button_Command;
@@ -139,18 +153,15 @@ procedure Stairwell_Logging_Demo is
    Argc : C.int;
    Argv : CArgv.Chars_Ptr_Ptr;
 
-   Dispatcher : constant ColdFrame.Project.Events.Event_Queue_P
-     := new ColdFrame.Project.Events.Standard.Event_Queue;
-
 begin
+
+   GNAT.Exception_Traces.Trace_On
+     (Kind => GNAT.Exception_Traces.Unhandled_Raise);
 
    EWS.Dynamic.Register
      (ColdFrame.Logging_Event_Basis.EWS_Support.Whole_Page'Access,
       "/events");
    EWS.Server.Serve (Using_Port => 8080);
-
-   Digital_IO.Initialize (Dispatcher);
-   House_Management.Initialize (Dispatcher);
 
    --  Get command-line arguments and put them into C-style "argv",
    --  as required by Tk_Main.

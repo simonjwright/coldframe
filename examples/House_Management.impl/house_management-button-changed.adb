@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-button-changed.adb,v $
---  $Revision: 984b16715466 $
---  $Date: 2014/01/24 11:49:28 $
+--  $Revision: 4ee79f54b785 $
+--  $Date: 2014/04/04 12:46:49 $
 --  $Author: simonjwright $
 
 --  Acts as receiver of state changes from Digital IO, via Signal
@@ -28,22 +28,22 @@ with House_Management.A1;
 
 separate (House_Management.Button)
 procedure Changed
-  (S : Signal_State) is
+  (S : Input_Signal_State) is
 
-   subtype Floors is Digital_IO.Signal_Name
-     range Digital_IO.Floor_0 .. Digital_IO.Floor_3;
+   subtype Valid_Input_Signal is Digital_IO.Input_Signal range 0 .. 3;
 
-   Buttons : constant array (Floors) of Button_Name
-     := (Digital_IO.Floor_0 => Second_Floor,
-         Digital_IO.Floor_1 => First_Floor,
-         Digital_IO.Floor_2 => Ground_Floor,
-         Digital_IO.Floor_3 => Basement);
+   --  For some reason, the input signals are mapped "upside down".
+   Buttons : constant array (Valid_Input_Signal) of Button_Name
+     := (0 => Second_Floor,
+         1 => First_Floor,
+         2 => Ground_Floor,
+         3 => Basement);
 
 begin
 
    if S.State then
 
-      if S.S in Floors then
+      if S.S in Valid_Input_Signal then
 
          declare
             procedure Button_Pushed (L : Lamp.Handle);

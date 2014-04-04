@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-lamp-initialize.adb,v $
---  $Revision: 2d8bf8c091b8 $
---  $Date: 2012/02/17 17:17:34 $
+--  $Revision: 4ee79f54b785 $
+--  $Date: 2014/04/04 12:46:49 $
 --  $Author: simonjwright $
 
 --  This operation initializes the Lamps and Buttons.
@@ -37,6 +37,14 @@ procedure Initialize is
       null;
    end Connect;
 
+   --  The Output_Signals used are in reverse order, because of a
+   --  foible of the electrician.
+   Lamp_Output_Signal : constant array (Lamp_Name) of Output_Signal
+     := (Basement     => 3,
+         Ground_Floor => 2,
+         First_Floor  => 1,
+         Second_Floor => 0);
+
 begin
 
    --  Create the lamps ..
@@ -45,7 +53,7 @@ begin
          LH : constant Lamp.Handle := Lamp.Create ((Name => L));
          pragma Warnings (Off, LH);
       begin
-         null;
+         LH.Output := Lamp_Output_Signal (L);
       end;
    end loop;
 

@@ -12,22 +12,21 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_demo.adb,v 297981173790 2014/03/08 16:34:09 simonjwright $
+--  $Id: stairwell_demo.adb,v 4ee79f54b785 2014/04/04 12:46:49 simonjwright $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
 with CArgv;
+with ColdFrame.Project.Events.Standard.Trace;
+with Digital_IO.Initialize;
+with Digital_IO.Tcl.HCI;
+with Digital_IO.Tcl.Initialize;
+with GNAT.Exception_Traces;
+with House_Management.Initialize;
 with Interfaces.C.Strings;
 with Tcl.Ada;
 with Tcl.Async;
 with Tcl.Tk;
-
-with Digital_IO.Initialize;
-with Digital_IO.HCI;
-with House_Management.Initialize;
-
-with ColdFrame.Project.Events.Standard.Trace;
-with GNAT.Exception_Traces;
 
 procedure Stairwell_Demo is
 
@@ -54,6 +53,11 @@ procedure Stairwell_Demo is
    --  results.
    procedure Freeproc (BlockPtr : in C.Strings.chars_ptr);
    pragma Convention (C, Freeproc);
+
+
+   --  The ColdFrame event queue.
+   Dispatcher : constant ColdFrame.Project.Events.Event_Queue_P
+     := new ColdFrame.Project.Events.Standard.Trace.Event_Queue;
 
 
    procedure Freeproc (BlockPtr : in C.Strings.chars_ptr)
@@ -86,8 +90,13 @@ procedure Stairwell_Demo is
          0,
          null);
 
-      --  To trace assignments to lampState, for Digital_IO.Output
+      --  To trace assignments to lampState, for Digital_IO.Tcl.Output
       Tcl.Async.Register (Interp);
+
+      --  Now OK to kick off the ColdFrame side of things
+      Digital_IO.Initialize (Dispatcher);
+      Digital_IO.Tcl.Initialize (Dispatcher);
+      House_Management.Initialize (Dispatcher);
 
       return Tcl.TCL_OK;
 
@@ -100,14 +109,14 @@ procedure Stairwell_Demo is
       Argc : in C.int;
       Argv : in CArgv.Chars_Ptr_Ptr) return C.int
    is
-      Signal : Digital_IO.Signal_Name;
+      Signal : Digital_IO.Input_Signal;
       pragma Warnings (Off, ClientData);
    begin
       pragma Assert (Argc = 2, "pushButton requires one argument (button #)");
-      Signal := Digital_IO.Signal_Name'Value
-        ("floor_" & C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
-      Digital_IO.HCI.Set_Input (Of_Signal => Signal, To => True);
-      Digital_IO.HCI.Set_Input (Of_Signal => Signal, To => False);
+      Signal := Digital_IO.Input_Signal'Value
+        (C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
+      Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => True);
+      Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => False);
       return Tcl.TCL_OK;
    exception
       when E : others =>
@@ -123,16 +132,10 @@ procedure Stairwell_Demo is
    Argc : C.int;
    Argv : CArgv.Chars_Ptr_Ptr;
 
-   Dispatcher : constant ColdFrame.Project.Events.Event_Queue_P
-     := new ColdFrame.Project.Events.Standard.Trace.Event_Queue;
-
 begin
 
    GNAT.Exception_Traces.Trace_On
      (Kind => GNAT.Exception_Traces.Unhandled_Raise);
-
-   Digital_IO.Initialize (Dispatcher);
-   House_Management.Initialize (Dispatcher);
 
    --  Get command-line arguments and put them into C-style "argv",
    --  as required by Tk_Main.

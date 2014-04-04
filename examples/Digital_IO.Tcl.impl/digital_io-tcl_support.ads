@@ -1,5 +1,3 @@
---  Copyright (C) Simon Wright <simon@pushface.org>
-
 --  This package is free software; you can redistribute it and/or
 --  modify it under terms of the GNU General Public License as
 --  published by the Free Software Foundation; either version 2, or
@@ -12,21 +10,24 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: digital_io-tcl_support.ads,v $
+--  $Revision: 4ee79f54b785 $
+--  $Date: 2014/04/04 12:46:49 $
+--  $Author: simonjwright $
 
---  Sets the specified output signal to the given state.
+with Digital_IO_Support;
 
-with Digital_IO.Signal;
+package Digital_IO.Tcl_Support is
 
-separate (Digital_IO.Application)
-procedure Set_Output
-  (S : Signal_Name;
-   To_State : Boolean) is
-begin
+   procedure Initialize;
 
-   Signal.Set_State (Signal.Find ((S => S)), To => To_State);
+private
 
-end Set_Output;
+   type Implementation
+     is new Digital_IO_Support.Implementation with null record;
+
+   procedure Set (This : Implementation;
+                  For_Output : Digital_IO_Support.Output_Signal;
+                  To : Boolean);
+
+end Digital_IO.Tcl_Support;
