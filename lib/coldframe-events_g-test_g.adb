@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-test_g.adb,v $
+--  $Revision: fde6fd75a1a0 $
+--  $Date: 2014/04/05 13:21:13 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with ColdFrame.Exceptions;
@@ -37,15 +37,16 @@ package body ColdFrame.Events_G.Test_G is
 
 
    function Is_Set (The_Timer : Timer;
-                    On : access Event_Queue_Base) return Boolean is
+                    On : not null access Event_Queue_Base) return Boolean is
       pragma Warnings (Off, On);
    begin
       return The_Timer.The_Entry /= null;
    end Is_Set;
 
 
-   function Expires_At (The_Timer : Timer;
-                        On : access Event_Queue_Base) return Time.Time is
+   function Expires_At
+     (The_Timer : Timer;
+      On : not null access Event_Queue_Base) return Time.Time is
       pragma Warnings (Off, On);
    begin
       if The_Timer.The_Entry = null then
@@ -57,7 +58,7 @@ package body ColdFrame.Events_G.Test_G is
    end Expires_At;
 
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
+   procedure Wait_Until_Idle (The_Queue : not null access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False) is
    begin
       --  This conversion shouldn't (IMO) be necessary. GNAT
@@ -75,37 +76,43 @@ package body ColdFrame.Events_G.Test_G is
    end Wait_Until_Idle;
 
 
-   procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Posted_Event
+     (On : not null access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Posted_Event;
    end Note_Addition_Of_Posted_Event;
 
 
-   procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base) is
+   procedure Note_Removal_Of_Posted_Event
+     (On : not null access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Posted_Event;
    end Note_Removal_Of_Posted_Event;
 
 
-   procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Held_Event
+     (On : not null access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Held_Event;
    end Note_Addition_Of_Held_Event;
 
 
-   procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base) is
+   procedure Note_Removal_Of_Held_Event
+     (On : not null access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Held_Event;
    end Note_Removal_Of_Held_Event;
 
 
-   procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Timer_Event
+     (On : not null access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Timer_Event;
    end Note_Addition_Of_Timer_Event;
 
 
-   procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base) is
+   procedure Note_Removal_Of_Timer_Event
+     (On : not null access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Timer_Event;
    end Note_Removal_Of_Timer_Event;

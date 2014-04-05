@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 6b2a0cfb80d0 $
---  $Date: 2014/03/14 18:34:45 $
+--  $Revision: fde6fd75a1a0 $
+--  $Date: 2014/04/05 13:21:13 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -311,7 +311,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue_Base) is
+                    On : not null access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
 
@@ -689,7 +689,7 @@ package body ColdFrame.Events_G.Standard_G is
    end Excluder;
 
 
-   procedure Start_Queue (The_Queue : access Event_Queue_Base) is
+   procedure Start_Queue (The_Queue : not null access Event_Queue_Base) is
    begin
       --  This will block indefinitely if called for a started Queue.
       --  But, the only way it's supposed to be called is via Start.

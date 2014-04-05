@@ -19,10 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-test_g.ads,v $
+--  $Revision: fde6fd75a1a0 $
+--  $Date: 2014/04/05 13:21:13 $
+--  $Author: simonjwright $
 
 generic
 
@@ -52,14 +52,15 @@ package ColdFrame.Events_G.Test_G is
    -------------------------
 
    function Is_Set (The_Timer : Timer;
-                    On : access Event_Queue_Base) return Boolean;
+                    On : not null access Event_Queue_Base) return Boolean;
 
-   function Expires_At (The_Timer : Timer;
-                        On : access Event_Queue_Base) return Time.Time;
+   function Expires_At
+     (The_Timer : Timer;
+      On : not null access Event_Queue_Base) return Time.Time;
    --  Raises ColdFrame.Exceptions.Use_Error if the Timer isn't set.
 
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
+   procedure Wait_Until_Idle (The_Queue : not null access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False);
    --  Blocks the caller until there are no more events awaiting
    --  processing.
@@ -109,17 +110,23 @@ private
    end record;
 
 
-   procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Posted_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Posted_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Held_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Held_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Timer_Event
+     (On : not null access Event_Queue_Base);
 
-   procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Timer_Event
+     (On : not null access Event_Queue_Base);
 
 
 end ColdFrame.Events_G.Test_G;

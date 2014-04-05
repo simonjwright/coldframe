@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 6b2a0cfb80d0 $
---  $Date: 2014/03/14 18:34:45 $
+--  $Revision: fde6fd75a1a0 $
+--  $Date: 2014/04/05 13:21:13 $
 --  $Author: simonjwright $
 
 with Ada.Finalization;
@@ -299,7 +299,7 @@ package ColdFrame.Events_G is
      On : not null access Event_Queue_Base) return Time.Time;
    --  Raises ColdFrame.Exceptions.Use_Error if the Timer isn't set.
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
+   procedure Wait_Until_Idle (The_Queue : not null access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False);
    --  Blocks the caller until there are no more events awaiting
    --  processing.

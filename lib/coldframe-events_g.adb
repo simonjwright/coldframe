@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 6b2a0cfb80d0 $
---  $Date: 2014/03/14 18:34:45 $
+--  $Revision: fde6fd75a1a0 $
+--  $Date: 2014/04/05 13:21:13 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -434,7 +434,7 @@ package body ColdFrame.Events_G is
    end Unlocker;
 
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
+   procedure Wait_Until_Idle (The_Queue : not null access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False) is
       pragma Unreferenced (The_Queue);
       pragma Unreferenced (Ignoring_Timers);

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 6b2a0cfb80d0 $
---  $Date: 2014/03/14 18:34:45 $
+--  $Revision: fde6fd75a1a0 $
+--  $Date: 2014/04/05 13:21:13 $
 --  $Author: simonjwright $
 
 with Ada.Task_Identification;
@@ -83,7 +83,7 @@ package ColdFrame.Events_G.Standard_G is
                   After : Natural_Duration);
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue_Base);
+                    On : not null access Event_Queue_Base);
 
 private
 
@@ -239,7 +239,7 @@ private
       The_Held_Event_Manager : Held_Event_Manager (Event_Queue_Base'Access);
    end record;
 
-   procedure Start_Queue (The_Queue : access Event_Queue_Base);
+   procedure Start_Queue (The_Queue : not null access Event_Queue_Base);
 
    procedure Invalidate_Events
      (On : not null access Event_Queue_Base;
