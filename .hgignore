@@ -63,6 +63,7 @@ examples/library_test_harness{.exe,}
 examples/performance-harness{.exe,}
 examples/stairwell_demo{.exe,}
 examples/stairwell_logging_demo{.exe,}
+examples/stairwell_raspi_demo
 examples/states-t{.exe,}
 examples/van_fleet-demo{.exe,}
 
