@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 6b2a0cfb80d0 2014/03/14 18:34:45 simonjwright $ -->
+<!-- $Id: ada-teardown.xsl,v 78dbf1995a0c 2014/04/06 15:08:55 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -52,7 +52,7 @@
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:if test="class[@active]">
-      <xsl:text>with ColdFrame.Project.Task_Deletion;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.Task_Deletion;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:text>with </xsl:text>
@@ -101,7 +101,7 @@
 
     <xsl:if test="class[@active]">
       <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Task_Deletion.Remove_Using_Domain;&#10;</xsl:text>
+      <xsl:text>ColdFrame.Task_Deletion.Remove_Using_Domain;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:for-each select="class">
