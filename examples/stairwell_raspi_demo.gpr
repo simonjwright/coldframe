@@ -1,9 +1,9 @@
 --  GNAT project file for the Stairwell demonstration in its RasPi form.
---  $Id: stairwell_raspi_demo.gpr,v 20df44fbc8c2 2014/04/05 16:25:38 simonjwright $
+--  $Id: stairwell_raspi_demo.gpr,v 06443f39bb05 2014/04/06 17:20:21 simonjwright $
 
 with "Options";
 with "ColdFrame";
-with "/home/simon/raspi-i2c-ada/raspi_i2c_ada";
+with "raspi_i2c_ada";
 
 project Stairwell_RasPi_Demo is
 

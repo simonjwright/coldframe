@@ -11,8 +11,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: digital_io-raspi_support.adb,v $
---  $Revision: 20df44fbc8c2 $
---  $Date: 2014/04/05 16:25:38 $
+--  $Revision: 06443f39bb05 $
+--  $Date: 2014/04/06 17:20:21 $
 --  $Author: simonjwright $
 
 with Ada.Text_IO; use Ada.Text_IO;
@@ -39,13 +39,13 @@ package body Digital_IO.RasPi_Support is
    is
       Pin_Map : constant array (Input_Pin) of Input_Signal
         := (I2C.MCP23017.B0 => 0,
-            I2C.MCP23017.B1 => 7,
-            I2C.MCP23017.B2 => 7,
-            I2C.MCP23017.B3 => 7,
-            I2C.MCP23017.B4 => 1,
-            I2C.MCP23017.B5 => 2,
-            I2C.MCP23017.B6 => 3,
-            I2C.MCP23017.B7 => 4);
+            I2C.MCP23017.B1 => 1,
+            I2C.MCP23017.B2 => 2,
+            I2C.MCP23017.B3 => 3,
+            I2C.MCP23017.B4 => 4,
+            I2C.MCP23017.B5 => 5,
+            I2C.MCP23017.B6 => 6,
+            I2C.MCP23017.B7 => 7);
    begin
       Put_Line ("Pin " & Pin_Changed'Img & " changed: " & To'Img);
       if Pin_Changed not in Input_Pin then
