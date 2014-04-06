@@ -24,10 +24,10 @@
 --  and their storage can be freed (GNAT silently ignores frees if the
 --  task isn't terminated).
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-task_deletion_g.ads,v $
+--  $Revision: 02d23e36c469 $
+--  $Date: 2014/04/06 11:46:07 $
+--  $Author: simonjwright $
 
 with BC.Containers.Queues.Unmanaged;
 
@@ -39,13 +39,13 @@ generic
    type Task_Type_P is access Task_Type;
    --  The class's pointer-to-task (T_P).
 
-   with function Is_Terminated (It : Task_Type_P) return Boolean;
+   with function Is_Terminated (It : not null Task_Type_P) return Boolean;
    --  We can't say that Task_Type is actually a task, so we can't use
    --  'Identity.
 
 package ColdFrame.Task_Deletion_G is
 
-   procedure Free (It : Task_Type_P);
+   procedure Free (It : not null Task_Type_P);
    --  Puts It on the queue of tasks to be freed.
 
 private

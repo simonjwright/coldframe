@@ -24,15 +24,15 @@
 --  and their storage can be freed (GNAT silently ignores frees if the
 --  task isn't terminated).
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-task_deletion_g.adb,v $
+--  $Revision: 02d23e36c469 $
+--  $Date: 2014/04/06 11:46:07 $
+--  $Author: simonjwright $
 
 --  with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Unchecked_Deallocation;
 with BC.Support.Synchronization;
-with ColdFrame.Project.Task_Deletion;
+with ColdFrame.Task_Deletion;
 
 package body ColdFrame.Task_Deletion_G is
 
@@ -48,7 +48,7 @@ package body ColdFrame.Task_Deletion_G is
    --  Locking for Q.
 
 
-   procedure Free (It : Task_Type_P)
+   procedure Free (It : not null Task_Type_P)
    is
       L : BC.Support.Synchronization.Lock (Semaphore'Access);
       pragma Unreferenced (L);
@@ -87,5 +87,5 @@ package body ColdFrame.Task_Deletion_G is
 
 begin
    --  Register with the deletion manager task.
-   Project.Task_Deletion.Register (Delete_Terminated'Unrestricted_Access);
+   Task_Deletion.Register (Delete_Terminated'Unrestricted_Access);
 end ColdFrame.Task_Deletion_G;

@@ -36,7 +36,7 @@
 with BC.Containers.Collections.Unmanaged;
 with BC.Support.Synchronization;
 
-package body ColdFrame.Project.Task_Deletion is
+package body ColdFrame.Task_Deletion is
 
 
    package Abstract_Containers is new BC.Containers (Deletion_Proc);
@@ -125,4 +125,4 @@ package body ColdFrame.Project.Task_Deletion is
    end T;
 
 
-end ColdFrame.Project.Task_Deletion;
+end ColdFrame.Task_Deletion;

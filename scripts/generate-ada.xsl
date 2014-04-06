@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 6b2a0cfb80d0 2014/03/14 18:34:45 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 02d23e36c469 2014/04/06 11:46:07 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -476,7 +476,7 @@
     <!--
          with Ada.Exceptions;
          with ColdFrame.Project.Log_Error;
-         with ColdFrame.Project.Task_Deletion;
+         with ColdFrame.Task_Deletion;
          with {domain-init-proc-package};
          with {domain}.Events;
          with {domain}.{class};
@@ -486,7 +486,7 @@
          begin
             if not Domain_Initialized then
                Domain_Initializing := True;
-               ColdFrame.Project.Task_Deletion.Add_Using_Domain;
+               ColdFrame.Task_Deletion.Add_Using_Domain;
                if Dispatcher /= null then
                   Events.Dispatcher := Dispatcher;
                else
@@ -535,7 +535,7 @@
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
     <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
     <xsl:if test="class[@active]">
-      <xsl:text>with ColdFrame.Project.Task_Deletion;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.Task_Deletion;&#10;</xsl:text>
     </xsl:if>
     <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
@@ -591,7 +591,7 @@
     <!-- .. task deletion registration .. -->
     <xsl:if test="class[@active]">
       <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Task_Deletion.Add_Using_Domain;&#10;</xsl:text>
+      <xsl:text>ColdFrame.Task_Deletion.Add_Using_Domain;&#10;</xsl:text>
     </xsl:if>
 
     <!-- .. the Events package initialization .. -->

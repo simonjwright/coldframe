@@ -35,12 +35,12 @@
 
 with System;
 
-package ColdFrame.Project.Task_Deletion is
+package ColdFrame.Task_Deletion is
 
    Deleting_Task_Priority : constant System.Priority
      := System.Default_Priority - 1;
 
-   type Deletion_Proc is access procedure;
+   type Deletion_Proc is not null access procedure;
    procedure Register (It : Deletion_Proc);
    --  'It' will be called regularly, at Deleting_Task_Priority, to
    --  delete terminated tasks.
@@ -51,4 +51,4 @@ package ColdFrame.Project.Task_Deletion is
    procedure Remove_Using_Domain;
    --  Called by domains during Tear_Down.
 
-end ColdFrame.Project.Task_Deletion;
+end ColdFrame.Task_Deletion;

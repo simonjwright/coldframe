@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 02d23e36c469 2014/04/06 11:46:07 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -845,7 +845,7 @@
 
       <!-- .. checking for termination .. -->
       <xsl:value-of select="$I"/>
-      <xsl:text>function CF_Is_Terminated (It : T_P) return Boolean is&#10;</xsl:text>
+      <xsl:text>function CF_Is_Terminated (It : not null T_P) return Boolean is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
@@ -2501,18 +2501,18 @@
   <!-- Called from domain/class to generate a task spec. -->
   <xsl:template name="cl:task-spec">
     <!--
-         task type T (This : access Instance) is
+         task type T (This : not null access Instance) is
            pragma Task_Name ("{domain}.{name}");
            pragma Priority (Standard.System.Default_Priority + ({priority}));
            pragma Storage_Size ({stack});
            entry {e} ({parameters});
          end T;
          type T_P is access T;
-         function CF_Is_Terminated (It : T_P) return Boolean;
+         function CF_Is_Terminated (It : not null T_P) return Boolean;
          package Task_Deletion is new ColdFrame.Task_Deletion_G (T, T_P, CF_Is_Terminated);
          -->
     <xsl:value-of select="$I"/>
-    <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
+    <xsl:text>task type T (This : not null access Instance) is&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>pragma Task_Name (&quot;</xsl:text>
     <xsl:value-of select="../name"/>
@@ -2539,7 +2539,7 @@
     <xsl:value-of select="$I"/>
     <xsl:text>type T_P is access T;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>function CF_Is_Terminated (It : T_P) return Boolean;&#10;</xsl:text>
+    <xsl:text>function CF_Is_Terminated (It : not null T_P) return Boolean;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>package Task_Deletion is new ColdFrame.Task_Deletion_G (T, T_P, CF_Is_Terminated);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
