@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-lamp-initialize.adb,v $
---  $Revision: 4ee79f54b785 $
---  $Date: 2014/04/04 12:46:49 $
+--  $Revision: 2e7b06437017 $
+--  $Date: 2014/04/07 10:23:42 $
 --  $Author: simonjwright $
 
 --  This operation initializes the Lamps and Buttons.
@@ -51,9 +51,10 @@ begin
    for L in Lamp_Name loop
       declare
          LH : constant Lamp.Handle := Lamp.Create ((Name => L));
-         pragma Warnings (Off, LH);
+         Ev : Set_Signal (LH);
       begin
-         LH.Output := Lamp_Output_Signal (L);
+         Ev.Payload := Lamp_Output_Signal (L);
+         Ev.Handler;
       end;
    end loop;
 
