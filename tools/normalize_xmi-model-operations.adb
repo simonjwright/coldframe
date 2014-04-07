@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: f3a9cc2c7d9c $
---  $Date: 2014/01/11 14:11:13 $
+--  $Revision: 5758d6cce296 $
+--  $Date: 2014/04/07 10:12:21 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -143,6 +143,9 @@ package body Normalize_XMI.Model.Operations is
       end;
       if O.Parent.Has_Stereotype ("access-to-operation") then
          Put (To, " access='true'");
+      end if;
+      if O.Has_Stereotype ("accessor") then
+         Put (To, " accessor='true'");
       end if;
       if O.Has_Stereotype ("callback") then
          if not Modelled_As_Class then
