@@ -19,14 +19,14 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-stubs.ads,v $
+--  $Revision: ae12a49c4b3a $
+--  $Date: 2014/04/13 13:27:09 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Streams;
-with BC.Support.Synchronization;
+with ColdFrame.Synchronization;
 
 package ColdFrame.Stubs is
 
@@ -259,8 +259,8 @@ package ColdFrame.Stubs is
    --     pragma Unreferenced (L);
    --     --  now locked
    --  begin
-   subtype Lock is BC.Support.Synchronization.Lock;
-   Mutex : aliased BC.Support.Synchronization.Semaphore;
+   subtype Lock is ColdFrame.Synchronization.Lock;
+   Mutex : aliased ColdFrame.Synchronization.Semaphore;
 
 
 end ColdFrame.Stubs;

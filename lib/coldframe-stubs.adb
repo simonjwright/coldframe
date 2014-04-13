@@ -20,21 +20,21 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: de1b76b31e12 $
---  $Date: 2012/02/24 12:15:24 $
+--  $Revision: ae12a49c4b3a $
+--  $Date: 2014/04/13 13:27:09 $
 --  $Author: simonjwright $
 
+with Ada.Containers.Indefinite_Hashed_Maps;
+with Ada.Containers.Indefinite_Hashed_Sets;
+with Ada.Containers.Ordered_Maps;
+with Ada.Containers.Vectors;
+with Ada.Strings.Fixed.Equal_Case_Insensitive;
+with Ada.Strings.Fixed.Hash_Case_Insensitive;
 with Ada.Strings.Fixed;
-with Ada.Strings.Unbounded;
 with Ada.Strings.Maps.Constants;
-with BC.Containers.Bags.Unmanaged;
-with BC.Containers.Collections.Unmanaged;
-with BC.Containers.Collections.Ordered.Unmanaged;
-with BC.Containers.Maps.Unmanaged;
-with BC.Containers.Sets.Unmanaged;
-with BC.Support.Memory_Streams;
-with BC.Support.Smart_Pointers;
-with ColdFrame.Hash.Strings.Unbounded;
+
+with ColdFrame.Memory_Streams;
+with ColdFrame.Smart_Pointers;
 
 package body ColdFrame.Stubs is
 
@@ -42,186 +42,133 @@ package body ColdFrame.Stubs is
    --  D a t a   s t r u c t u r e s  --
    -------------------------------------
 
-   --  We need to be case-insensitive when mapping from subprogram and
-   --  parameter names.
-   function Case_Insensitive_Equality
-     (L, R : Ada.Strings.Unbounded.Unbounded_String) return Boolean;
-   function Case_Insensitive_Hash
-     (S : Ada.Strings.Unbounded.Unbounded_String) return Natural;
-
-
    --  We need to count subprogram entries.
-   package Abstract_Unbounded_String_Containers
-   is new BC.Containers
-     (Item => Ada.Strings.Unbounded.Unbounded_String,
-      "=" => Case_Insensitive_Equality);
-   package Abstract_Unbounded_String_Bags
-   is new Abstract_Unbounded_String_Containers.Bags;
-   package Unbounded_String_Bags
-   is new Abstract_Unbounded_String_Bags.Unmanaged
-     (Hash => Case_Insensitive_Hash,
-      Buckets => 37);
+   package String_Bags is
+
+      type Element is record
+         Count : Natural := 0;  -- To ensure correct initialization
+      end record;
+
+      package String_To_Natural_Maps
+        is new Ada.Containers.Indefinite_Hashed_Maps
+          (Element_Type => Element,
+           Key_Type => String,
+           Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
+           Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive);
+
+      type Bag is new String_To_Natural_Maps.Map with null record;
+      --  Using A null record extension means we don't need to
+      --  override parent functions-returning-parent-type.
+
+      not overriding procedure Add
+        (B : in out Bag;
+         S : String);
+
+      not overriding function Count
+        (B : Bag;
+         S : String) return Natural;
+
+   end String_Bags;
 
 
    --  We need to check for the existence of subprograms and
    --  parameters/results.
-   package Abstract_Unbounded_String_Sets
-   is new Abstract_Unbounded_String_Containers.Sets;
-   package Unbounded_String_Sets
-   is new Abstract_Unbounded_String_Sets.Unmanaged
-     (Hash => Case_Insensitive_Hash,
-      Buckets => 37);
+   package String_Sets is new Ada.Containers.Indefinite_Hashed_Sets
+     (Element_Type => String,
+      Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
+      Equivalent_Elements => Ada.Strings.Fixed.Equal_Case_Insensitive,
+      "=" => Ada.Strings.Fixed.Equal_Case_Insensitive);
 
 
-   --  We need varying-capacity Memory Streams, so we need
-   --  pointers. Use smart pointers so that the Streams get
-   --  automatically freed when the Container they're in gets cleared.
+   --  We need Memory Streams to hold values, so we need pointers
+   --  because Streams are limited. This also covers the need for
+   --  varying-capacity Memory Streams. Use smart pointers so that the
+   --  Streams get automatically freed when the Container they're in
+   --  gets cleared.
    package Stream_Pointers
-   is new BC.Support.Smart_Pointers (T => Ada.Streams.Root_Stream_Type'Class,
-                                     P => Stream_Access);
+   is new ColdFrame.Smart_Pointers (T => Ada.Streams.Root_Stream_Type'Class,
+                                    P => Stream_Access);
 
 
    --  For Inputs, we need plain collections of Memory Streams (there
    --  will be an input for each call).
-   package Abstract_Stream_Pointer_Containers
-   is new BC.Containers (Item => Stream_Pointers.Pointer,
-                         "=" => Stream_Pointers."=");
-   package Abstract_Stream_Pointer_Collections
-   is new Abstract_Stream_Pointer_Containers.Collections;
-   package Stream_Pointer_Collections
-   is new Abstract_Stream_Pointer_Collections.Unmanaged;
-
-   --  We need to hold mutable instances in containers, so we need
-   --  pointers.
-   type Stream_Pointer_Collection_Access
-      is access Stream_Pointer_Collections.Collection;
-   package Stream_Pointer_Collection_Pointers
-   is new BC.Support.Smart_Pointers
-     (T => Stream_Pointer_Collections.Collection,
-      P => Stream_Pointer_Collection_Access);
+   package Stream_Pointer_Vectors is new Ada.Containers.Vectors
+     (Index_Type => Positive,
+      Element_Type => Stream_Pointers.Pointer,
+      "=" => Stream_Pointers."=");
 
    --  We need to map from subprogram.parameter names to collections
    --  of Memory Streams.
-   package Abstract_Stream_Pointer_Collection_Containers
-   is new BC.Containers (Item => Stream_Pointer_Collection_Pointers.Pointer,
-                         "=" => Stream_Pointer_Collection_Pointers."=");
-   package Abstract_Stream_Pointer_Collection_Maps
-   is new Abstract_Stream_Pointer_Collection_Containers.Maps
-     (Key => Ada.Strings.Unbounded.Unbounded_String,
-      "=" => Case_Insensitive_Equality);
-   package Stream_Pointer_Collection_Maps
-   is new Abstract_Stream_Pointer_Collection_Maps.Unmanaged
-     (Hash => Case_Insensitive_Hash,
-      Buckets => 37);
+   package Input_Maps is new Ada.Containers.Indefinite_Hashed_Maps
+     (Element_Type => Stream_Pointer_Vectors.Vector,
+      Key_Type => String,
+      Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
+      Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive,
+      "=" => Stream_Pointer_Vectors."=");
 
 
-   --  For Exceptions, we need collections of Exception_Ids, organized to
-   --  provide a sparse array. The collection is reverse-ordered, so
-   --  that we can find the appropriate entry for a particular entry
-   --  by iterating until we come to a cell whose Ordinal is less than
-   --  or equal to the one we require.
-   type Exception_Cell is record
-      Ordinal : Positive;
-      E : Ada.Exceptions.Exception_Id;
-   end record;
-
-   function "=" (L, R : Exception_Cell) return Boolean;
-   function ">" (L, R : Exception_Cell) return Boolean;
-
-   package Abstract_Sparse_Exception_Containers
-   is new  BC.Containers (Item => Exception_Cell);
-   package Abstract_Sparse_Exception_Collections
-   is new Abstract_Sparse_Exception_Containers.Collections;
-   package Abstract_Ordered_Sparse_Exception_Collections
-   is new Abstract_Sparse_Exception_Collections.Ordered ("<" => ">");
-   package Sparse_Exception_Collections
-   is new Abstract_Ordered_Sparse_Exception_Collections.Unmanaged;
-
-   --  We need to hold mutable instances in containers, so we need
-   --  pointers.
-   type Sparse_Exception_Collection_Access
-      is access Sparse_Exception_Collections.Collection;
-   package Sparse_Exception_Collection_Pointers
-   is new BC.Support.Smart_Pointers
-     (T => Sparse_Exception_Collections.Collection,
-      P => Sparse_Exception_Collection_Access);
-
-   package Abstract_Sparse_Exception_Collection_Containers
-   is new BC.Containers
-     (Item => Sparse_Exception_Collection_Pointers.Pointer,
-      "=" => Sparse_Exception_Collection_Pointers."=");
-   package Abstract_Sparse_Exception_Collection_Maps
-   is new Abstract_Sparse_Exception_Collection_Containers.Maps
-     (Key => Ada.Strings.Unbounded.Unbounded_String,
-      "=" => Case_Insensitive_Equality);
-   package Sparse_Exception_Collection_Maps
-   is new Abstract_Sparse_Exception_Collection_Maps.Unmanaged
-     (Hash => Case_Insensitive_Hash,
-      Buckets => 37);
-
-
-   --  For Outputs, we need collections of Memory Streams, organized to
-   --  provide a sparse array. The collection is reverse-ordered, so
-   --  that we can find the appropriate entry for a particular call
-   --  by iterating until we come to a cell whose Ordinal is less than
-   --  or equal to the one we require.
+   --  For Exceptions, we need sparse arrays of Exception_Ids. We can
+   --  find the appropriate entry for a particular Ordinal by reverse
+   --  iterating until we come to an entry whose Ordinal is less than
+   --  or equal to the one we require (or, of course, the beginning of
+   --  the array).
    --
+   --  We use a map ordered on Positive to emulate a sorted vector,
+   --  which isn't provided by Ada.Containers.
+   package Sparse_Exceptions is new Ada.Containers.Ordered_Maps
+     (Key_Type => Positive,
+      Element_Type => Ada.Exceptions.Exception_Id,
+      "=" => Ada.Exceptions."=");
+
+   package Sparse_Exception_Maps is new Ada.Containers.Indefinite_Hashed_Maps
+       (Key_Type => String,
+        Element_Type => Sparse_Exceptions.Map,
+        Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
+        Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive,
+        "=" => Sparse_Exceptions."=");
+
+
+   --  For Outputs, we need sparse arrays of Memory Streams. We can
+   --  find the appropriate entry for a particular Ordinal by reverse
+   --  iterating until we come to an entry whose Ordinal is less than
+   --  or equal to the one we require (or, of course, the beginning of
+   --  the array).
+
    --  We hold two Memory Streams; Stream is for the original data,
    --  Copy is refilled each time the data is to be read (so we don't
    --  get End_Error if it's read more than once).
+   --  XXX why not just reset it?
    type Output_Cell is record
-      Ordinal : Positive;
       Stream : Stream_Pointers.Pointer;
       Copy : Stream_Pointers.Pointer;
    end record;
 
-   function "=" (L, R : Output_Cell) return Boolean;
-   function ">" (L, R : Output_Cell) return Boolean;
+   --  We use a map ordered on Positive to emulate a sorted vector,
+   --  which isn't provided by Ada.Containers.
+   package Sparse_Outputs is new Ada.Containers.Ordered_Maps
+     (Key_Type => Positive,
+      Element_Type => Output_Cell);
 
-   package Abstract_Sparse_Stream_Pointer_Containers
-   is new  BC.Containers (Item => Output_Cell);
-   package Abstract_Sparse_Stream_Pointer_Collections
-   is new Abstract_Sparse_Stream_Pointer_Containers.Collections;
-   package Abstract_Ordered_Sparse_Stream_Pointer_Collections
-   is new Abstract_Sparse_Stream_Pointer_Collections.Ordered ("<" => ">");
-   package Sparse_Stream_Pointer_Collections
-   is new Abstract_Ordered_Sparse_Stream_Pointer_Collections.Unmanaged;
-
-   --  We need to hold mutable instances in containers, so we need
-   --  pointers.
-   type Sparse_Stream_Pointer_Collection_Access
-      is access Sparse_Stream_Pointer_Collections.Collection;
-   package Sparse_Stream_Pointer_Collection_Pointers
-   is new BC.Support.Smart_Pointers
-     (T => Sparse_Stream_Pointer_Collections.Collection,
-      P => Sparse_Stream_Pointer_Collection_Access);
-
-   package Abstract_Sparse_Stream_Pointer_Collection_Containers
-   is new BC.Containers
-     (Item => Sparse_Stream_Pointer_Collection_Pointers.Pointer,
-      "=" => Sparse_Stream_Pointer_Collection_Pointers."=");
-   package Abstract_Sparse_Stream_Pointer_Collection_Maps
-   is new Abstract_Sparse_Stream_Pointer_Collection_Containers.Maps
-     (Key => Ada.Strings.Unbounded.Unbounded_String,
-      "=" => Case_Insensitive_Equality);
-   package Sparse_Stream_Pointer_Collection_Maps
-   is new Abstract_Sparse_Stream_Pointer_Collection_Maps.Unmanaged
-     (Hash => Case_Insensitive_Hash,
-      Buckets => 37);
+   package Sparse_Output_Maps is new Ada.Containers.Indefinite_Hashed_Maps
+     (Element_Type => Sparse_Outputs.Map,
+      Key_Type => String,
+      Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
+      Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive,
+      "=" => Sparse_Outputs."=");
 
 
    --  Validity checking information, set up during elaboration of
    --  generated code.
-   Subprograms : Unbounded_String_Sets.Set;
-   Input_Parameters : Unbounded_String_Sets.Set;
-   Output_Parameters : Unbounded_String_Sets.Set;
+   Subprograms : String_Sets.Set;
+   Input_Parameters : String_Sets.Set;
+   Output_Parameters : String_Sets.Set;
 
 
    --  Test storage, managed by Set_Up and Tear_Down.
-   Entries : Unbounded_String_Bags.Bag;
-   Inputs : Stream_Pointer_Collection_Maps.Map;
-   Exceptions : Sparse_Exception_Collection_Maps.Map;
-   Outputs : Sparse_Stream_Pointer_Collection_Maps.Map;
+   Entries : String_Bags.Bag;
+   Inputs : Input_Maps.Map;
+   Exceptions : Sparse_Exception_Maps.Map;
+   Outputs : Sparse_Output_Maps.Map;
 
 
    -------------------------------
@@ -230,19 +177,19 @@ package body ColdFrame.Stubs is
 
    procedure Set_Up is
    begin
-      Unbounded_String_Bags.Clear (Entries);
-      Stream_Pointer_Collection_Maps.Clear (Inputs);
-      Sparse_Exception_Collection_Maps.Clear (Exceptions);
-      Sparse_Stream_Pointer_Collection_Maps.Clear (Outputs);
+      Entries.Clear;
+      Inputs.Clear;
+      Exceptions.Clear;
+      Outputs.Clear;
    end Set_Up;
 
 
    procedure Tear_Down is
    begin
-      Unbounded_String_Bags.Clear (Entries);
-      Stream_Pointer_Collection_Maps.Clear (Inputs);
-      Sparse_Exception_Collection_Maps.Clear (Exceptions);
-      Sparse_Stream_Pointer_Collection_Maps.Clear (Outputs);
+      Entries.Clear;
+      Inputs.Clear;
+      Exceptions.Clear;
+      Outputs.Clear;
    end Tear_Down;
 
 
@@ -256,76 +203,61 @@ package body ColdFrame.Stubs is
                                For_Call : Positive := 1;
                                Override : Boolean := False;
                                Overhead_Bytes : Natural := Storage_Overhead) is
-      SU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
-      SPU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
       subtype SEO is Ada.Streams.Stream_Element_Offset;
       Size : constant SEO := SEO ((To'Size + 7) / 8 + Overhead_Bytes);
       Lck : Lock (Mutex'Access);
       pragma Unreferenced (Lck);
-      Str : constant Stream_Pointers.Pointer
-        := Stream_Pointers.Create
-        (new BC.Support.Memory_Streams.Stream_Type (Size));
-      Coll : Sparse_Stream_Pointer_Collection_Pointers.Pointer;
    begin
-      if not Unbounded_String_Sets.Is_Member (Subprograms, SU) then
-         Ada.Exceptions.Raise_Exception
-           (No_Subprogram'Identity,
-            "subprogram " & For_Subprogram_Named & " not known");
+      if not Subprograms.Contains (For_Subprogram_Named) then
+         raise No_Subprogram
+           with "subprogram " & For_Subprogram_Named & " not known";
       end if;
-      if not Unbounded_String_Sets.Is_Member (Output_Parameters, SPU) then
+      if not Output_Parameters.Contains (SP) then
          if Ada.Strings.Fixed.Translate
            (For_Parameter_Named,
             Ada.Strings.Maps.Constants.Lower_Case_Map)
            = "return" then
-            Ada.Exceptions.Raise_Exception
-              (No_Parameter'Identity,
-               For_Subprogram_Named & " is not a function");
+            raise No_Parameter
+              with For_Subprogram_Named & " is not a function";
          else
-            Ada.Exceptions.Raise_Exception
-              (No_Parameter'Identity,
-               "parameter " & SP & " not known");
+            raise No_Parameter with "parameter " & SP & " not known";
          end if;
       end if;
-      if not Sparse_Stream_Pointer_Collection_Maps.Is_Bound (Outputs, SPU) then
-         Coll := Sparse_Stream_Pointer_Collection_Pointers.Create
-           (new Sparse_Stream_Pointer_Collections.Collection);
-         Sparse_Stream_Pointer_Collection_Maps.Bind (Outputs, SPU, Coll);
-      else
-         Coll := Sparse_Stream_Pointer_Collection_Maps.Item_Of (Outputs, SPU);
+      if not Outputs.Contains (SP) then
+         declare
+            Coll : Sparse_Outputs.Map;
+         begin
+            Outputs.Insert (SP, Coll);
+         end;
       end if;
       declare
-         It : Abstract_Sparse_Stream_Pointer_Containers.Iterator'Class
-           := Sparse_Stream_Pointer_Collections.New_Iterator
-           (Sparse_Stream_Pointer_Collection_Pointers.Value (Coll).all);
-         Overridden : Boolean := False;
-         use Abstract_Sparse_Stream_Pointer_Containers;
+         SOM_Cursor : constant Sparse_Output_Maps.Cursor := Outputs.Find (SP);
+         SO : Sparse_Outputs.Map := Sparse_Output_Maps.Element (SOM_Cursor);
+         SO_Cursor : constant Sparse_Outputs.Cursor := SO.Find (For_Call);
+         use type Sparse_Outputs.Cursor;
+         New_Cell : constant Output_Cell
+           := (Stream => Stream_Pointers.Create
+             (new ColdFrame.Memory_Streams.Stream_Type (Size)),
+               Copy => Stream_Pointers.Create
+                 (new ColdFrame.Memory_Streams.Stream_Type (Size)));
       begin
-         while not Is_Done (It) loop
-            if Current_Item (It).Ordinal = For_Call then
-               if Override then
-                  Overridden := True;
-                  Delete_Item_At (It);
-                  exit;
-               else
-                  raise Already_Set;
-               end if;
+         if SO_Cursor = Sparse_Outputs.No_Element then
+            if Override then
+               raise Not_Already_Set;
+            else
+               SO.Insert (For_Call, New_Cell);
             end if;
-            Next (It);
-         end loop;
-         if Override and not Overridden then
-            raise Not_Already_Set;
+         else
+            if not Override then
+               raise Already_Set;
+            else
+               SO.Replace_Element (SO_Cursor, New_Cell);
+            end if;
          end if;
+         T'Output (Stream_Pointers.Value (New_Cell.Stream), To);
+         Outputs.Replace_Element (SOM_Cursor, SO);
       end;
-      Sparse_Stream_Pointer_Collections.Append
-        (Sparse_Stream_Pointer_Collection_Pointers.Value (Coll).all,
-         Output_Cell'(Ordinal => For_Call,
-                      Stream => Str,
-                      Copy => Stream_Pointers.Create
-                        (new BC.Support.Memory_Streams.Stream_Type (Size))));
-      T'Output (Stream_Pointers.Value (Str), To);
    end Set_Output_Value;
 
 
@@ -333,138 +265,112 @@ package body ColdFrame.Stubs is
                             E : Ada.Exceptions.Exception_Id;
                             For_Call : Positive := 1;
                             Override : Boolean := False) is
-      SEU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
-      Coll : Sparse_Exception_Collection_Pointers.Pointer;
       Lck : Lock (Mutex'Access);
       pragma Unreferenced (Lck);
    begin
-      if not Unbounded_String_Sets.Is_Member (Subprograms, SEU) then
-         Ada.Exceptions.Raise_Exception
-           (No_Subprogram'Identity,
-            "subprogram " & For_Subprogram_Named & " not known");
+      if not Subprograms.Contains (For_Subprogram_Named) then
+         raise No_Subprogram
+           with "subprogram " & For_Subprogram_Named & " not known";
       end if;
-      if not Sparse_Exception_Collection_Maps.Is_Bound (Exceptions, SEU) then
-         Coll := Sparse_Exception_Collection_Pointers.Create
-           (new Sparse_Exception_Collections.Collection);
-         Sparse_Exception_Collection_Maps.Bind (Exceptions, SEU, Coll);
-      else
-         Coll := Sparse_Exception_Collection_Maps.Item_Of (Exceptions, SEU);
+      if not Exceptions.Contains (For_Subprogram_Named) then
+         declare
+            SE : Sparse_Exceptions.Map;
+         begin
+            SE.Insert (For_Call, E);
+            Exceptions.Insert (For_Subprogram_Named, SE);
+         end;
+         return;
       end if;
       declare
-         It : Abstract_Sparse_Exception_Containers.Iterator'Class
-           := Sparse_Exception_Collections.New_Iterator
-           (Sparse_Exception_Collection_Pointers.Value (Coll).all);
-         Overridden : Boolean := False;
-         use Abstract_Sparse_Exception_Containers;
+         SEM_Cursor : constant Sparse_Exception_Maps.Cursor
+           := Exceptions.Find (For_Subprogram_Named);
+         SE : Sparse_Exceptions.Map
+           := Sparse_Exception_Maps.Element (SEM_Cursor);
+         SE_Cursor : constant Sparse_Exceptions.Cursor := SE.Find (For_Call);
+         use type Sparse_Exceptions.Cursor;
       begin
-         while not Is_Done (It) loop
-            if Current_Item (It).Ordinal = For_Call then
-               if Override then
-                  Overridden := True;
-                  Delete_Item_At (It);
-                  exit;
-               else
-                  raise Already_Set;
-               end if;
+         if SE_Cursor = Sparse_Exceptions.No_Element then
+            if Override then
+               raise Not_Already_Set;
+            else
+               SE.Insert (For_Call, E);
             end if;
-            Next (It);
-         end loop;
-         if Override and not Overridden then
-            raise Not_Already_Set;
+         else
+            if not Override then
+               raise Already_Set;
+            else
+               SE.Replace_Element (SE_Cursor, E);
+            end if;
          end if;
+         Exceptions.Replace_Element (SEM_Cursor, SE);
       end;
-      Sparse_Exception_Collections.Append
-        (Sparse_Exception_Collection_Pointers.Value (Coll).all,
-         (Ordinal => For_Call,
-          E => E));
    end Set_Exception;
 
 
    function Number_Of_Calls (For_Subprogram_Named : String) return Natural is
-      S : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       Lck : Lock (Mutex'Access);
       pragma Unreferenced (Lck);
    begin
-      if not Unbounded_String_Sets.Is_Member (Subprograms, S) then
-         Ada.Exceptions.Raise_Exception
-           (No_Subprogram'Identity,
-            "subprogram " & For_Subprogram_Named & " not known");
+      if not Subprograms.Contains (For_Subprogram_Named) then
+         raise No_Subprogram
+           with "subprogram " & For_Subprogram_Named & " not known";
       end if;
-      return Unbounded_String_Bags.Count (Entries, S);
+      return Entries.Count (For_Subprogram_Named);
    end Number_Of_Calls;
 
 
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
                              For_Call : Integer := 0) return T is
-      SU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
-      SPU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
       Lck : Lock (Mutex'Access);
       pragma Unreferenced (Lck);
    begin
-      if not Unbounded_String_Sets.Is_Member (Subprograms, SU) then
-         Ada.Exceptions.Raise_Exception
-           (No_Subprogram'Identity,
-            "subprogram " & For_Subprogram_Named & " not known");
+      if not Subprograms.Contains (For_Subprogram_Named) then
+         raise No_Subprogram
+           with "subprogram " & For_Subprogram_Named & " not known";
       end if;
-      if not Unbounded_String_Sets.Is_Member (Input_Parameters, SPU) then
-         Ada.Exceptions.Raise_Exception
-           (No_Parameter'Identity,
-            "parameter " & SP & " not known");
+      if not Input_Parameters.Contains (SP) then
+         raise No_Parameter with "parameter " & SP & " not known";
       end if;
-      if not Stream_Pointer_Collection_Maps.Is_Bound (Inputs, SPU) then
-         Ada.Exceptions.Raise_Exception
-           (No_Value'Identity,
-            "input " & SP & " not found");
+      if not Inputs.Contains (SP) then
+         raise No_Value with "input " & SP & " not found";
       end if;
       declare
-         Pointers : Stream_Pointer_Collections.Collection
-           renames Stream_Pointer_Collection_Pointers.Value
-           (Stream_Pointer_Collection_Maps.Item_Of (Inputs, SPU)).all;
+         Pointers : Stream_Pointer_Vectors.Vector renames Inputs.Element (SP);
          function Result (From : Positive) return T;
          function Result (From : Positive) return T is
             --  We have to get the result from a copy of the memory
             --  stream, otherwise the user will get an End_Error if
-            --  she reads it more than once.
+            --  they read it more than once.
             package AS renames Ada.Streams;
-            package BSMS renames BC.Support.Memory_Streams;
-            Str : BSMS.Stream_Type renames
-              BSMS.Stream_Type (Stream_Pointers.Value
-                                  (Stream_Pointer_Collections.Item_At
-                                     (Pointers, From)).all);
-            Copy : aliased BSMS.Stream_Type
-              (Capacity => AS.Stream_Element_Offset (BSMS.Length (Str)));
+            package CMS renames ColdFrame.Memory_Streams;
+            Str : CMS.Stream_Type renames
+              CMS.Stream_Type (Stream_Pointers.Value
+                                  (Pointers.Element (From)).all);
+            Copy : aliased CMS.Stream_Type
+              (Capacity => AS.Stream_Element_Offset (CMS.Length (Str)));
          begin
-            BSMS.Set_Contents (BSMS.Contents (Str), Copy);
+            CMS.Set_Contents (CMS.Contents (Str), Copy);
             return T'Input (Copy'Access);
          end Result;
-         Len : constant Natural
-           := Stream_Pointer_Collections.Length (Pointers);
+         Len : constant Natural := Natural (Pointers.Length);
       begin
          if Len = 0 then
-            Ada.Exceptions.Raise_Exception
-              (No_Value'Identity,
-               For_Subprogram_Named & " never called");
+            raise No_Value with For_Subprogram_Named & " never called";
          elsif For_Call = 0 or For_Call = Last then
             return Result (Len);
          elsif For_Call > Len then
-            Ada.Exceptions.Raise_Exception
-              (No_Value'Identity,
-               For_Subprogram_Named & " only called" & Len'Img & " times");
+            raise No_Value
+              with For_Subprogram_Named & " only called" & Len'Img & " times";
          elsif For_Call in 1 .. Len then
             return Result (For_Call);
          elsif Len + For_Call in 1 .. Len  then
             --  For_Call must be negative.
             return Result (Len + For_Call);
          else
-            Ada.Exceptions.Raise_Exception
-              (No_Value'Identity,
-               For_Subprogram_Named & " only called" & Len'Img & " times");
+            raise No_Value
+              with For_Subprogram_Named & " only called" & Len'Img & " times";
          end if;
       end;
    end Get_Input_Value;
@@ -475,42 +381,29 @@ package body ColdFrame.Stubs is
    -----------------------------------------------------------------
 
    procedure Register_Subprogram (Named : String) is
-      SU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (Named);
    begin
-      Unbounded_String_Sets.Add (Subprograms, SU);
+      Subprograms.Insert (Named);
    end Register_Subprogram;
 
 
    procedure Register_Input_Parameter (Subprogram_Named : String;
                                        Parameter_Named : String) is
-      SP : constant String
-        := Subprogram_Named & "." & Parameter_Named;
-      SPU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
    begin
-      Unbounded_String_Sets.Add (Input_Parameters, SPU);
+      Input_Parameters.Insert (Subprogram_Named & "." & Parameter_Named);
    end Register_Input_Parameter;
 
 
    procedure Register_Output_Parameter (Subprogram_Named : String;
                                         Parameter_Named : String) is
-      SP : constant String
-        := Subprogram_Named & "." & Parameter_Named;
-      SPU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
    begin
-      Unbounded_String_Sets.Add (Output_Parameters, SPU);
+      Output_Parameters.Insert (Subprogram_Named & "." & Parameter_Named);
    end Register_Output_Parameter;
 
 
    function Note_Entry (For_Subprogram_Named : String) return Positive is
-      S : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
-      Added : Boolean;
    begin
-      Unbounded_String_Bags.Add (Entries, S, Added);
-      return Unbounded_String_Bags.Count (Entries, S);
+      Entries.Add (For_Subprogram_Named);
+      return Entries.Count (For_Subprogram_Named);
    end Note_Entry;
 
 
@@ -523,62 +416,64 @@ package body ColdFrame.Stubs is
      return Stream_Access is
       subtype SEO is Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
-      SPU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
       Size : constant SEO
         := SEO ((Size_In_Bits + 7) / 8 + Overhead_Bytes);
       Str : constant Stream_Pointers.Pointer
         := Stream_Pointers.Create
-        (new BC.Support.Memory_Streams.Stream_Type (Size));
-      Coll : Stream_Pointer_Collection_Pointers.Pointer;
+        (new ColdFrame.Memory_Streams.Stream_Type (Size));
    begin
-      if not Stream_Pointer_Collection_Maps.Is_Bound (Inputs, SPU) then
-         Coll := Stream_Pointer_Collection_Pointers.Create
-           (new Stream_Pointer_Collections.Collection);
-         Stream_Pointer_Collection_Maps.Bind (Inputs, SPU, Coll);
-      else
-         Coll := Stream_Pointer_Collection_Maps.Item_Of (Inputs, SPU);
+      if not Inputs.Contains (SP) then
+         declare
+            C : Stream_Pointer_Vectors.Vector;
+         begin
+            Inputs.Insert (SP, C);
+         end;
       end if;
-      pragma Assert
-        (For_Call =
-         Stream_Pointer_Collections.Length
-         (Stream_Pointer_Collection_Pointers.Value (Coll).all) + 1,
-         "mismatch in number of calls");
-      Stream_Pointer_Collections.Append
-        (Stream_Pointer_Collection_Pointers.Value (Coll).all, Str);
-      return Stream_Pointers.Value (Str);
+      declare
+         Position : constant Input_Maps.Cursor := Inputs.Find (SP);
+         Coll : Stream_Pointer_Vectors.Vector := Input_Maps.Element (Position);
+      begin
+         pragma Assert
+           (For_Call = Natural (Coll.Length) + 1,
+              "mismatch in number of calls");
+         Coll.Append (Str);
+         Inputs.Replace_Element (Position, Coll);
+         return Stream_Pointers.Value (Str);
+      end;
    end Get_Input_Value_Stream;
 
 
    procedure Check_For_Exception (For_Subprogram_Named : String;
                                   For_Call : Positive) is
-      SEU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
    begin
-      if not Sparse_Exception_Collection_Maps.Is_Bound (Exceptions, SEU) then
+      if not Exceptions.Contains (For_Subprogram_Named) then
          return;
       end if;
       declare
-         Pointers : Sparse_Exception_Collections.Collection
-           renames Sparse_Exception_Collection_Pointers.Value
-           (Sparse_Exception_Collection_Maps.Item_Of (Exceptions, SEU)).all;
-         It : Abstract_Sparse_Exception_Containers.Iterator'Class
-           := Sparse_Exception_Collections.New_Iterator (Pointers);
-         use Abstract_Sparse_Exception_Containers;
-         use type Ada.Exceptions.Exception_Id;
+         SE : constant Sparse_Exceptions.Map
+           := Exceptions.Element (For_Subprogram_Named);
+         SE_Cursor : Sparse_Exceptions.Cursor := SE.Last;
+         use type Sparse_Exceptions.Cursor;
       begin
-         while not Is_Done (It)
-         loop
-            if Current_Item (It).Ordinal <= For_Call then
-               if Current_Item (It).E /= Ada.Exceptions.Null_Id then
-                  Ada.Exceptions.Raise_Exception
-                    (Current_Item (It).E, "from stub");
-               else
-                  exit;  --  it was a null exception
-               end if;
+         while SE_Cursor /= Sparse_Exceptions.No_Element loop
+            if Sparse_Exceptions.Key (SE_Cursor) > For_Call then
+               Sparse_Exceptions.Previous (SE_Cursor);
+            else
+               declare
+                  E : constant Ada.Exceptions.Exception_Id
+                    := Sparse_Exceptions.Element (SE_Cursor);
+                  use type Ada.Exceptions.Exception_Id;
+               begin
+                  if E = Ada.Exceptions.Null_Id then
+                     exit;
+                  else
+                     Ada.Exceptions.Raise_Exception (E, "from stub");
+                  end if;
+               end;
             end if;
-            Next (It);
          end loop;
+         --  If we drop through, either there was no exception
+         --  specified or the specified exception was null.
       end;
    end Check_For_Exception;
 
@@ -589,48 +484,38 @@ package body ColdFrame.Stubs is
       For_Call : Positive)
      return Stream_Access is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
-      SPU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
    begin
-      if not Sparse_Stream_Pointer_Collection_Maps.Is_Bound (Outputs, SPU) then
-         Ada.Exceptions.Raise_Exception
-           (No_Value'Identity,
-            "for output " & SP);
+      if not Outputs.Contains (SP) then
+         raise No_Value with "for output " & SP;
       end if;
       declare
-         Pointers : Sparse_Stream_Pointer_Collections.Collection
-           renames Sparse_Stream_Pointer_Collection_Pointers.Value
-           (Sparse_Stream_Pointer_Collection_Maps.Item_Of (Outputs, SPU)).all;
-         It : Abstract_Sparse_Stream_Pointer_Containers.Iterator'Class
-           := Sparse_Stream_Pointer_Collections.New_Iterator (Pointers);
-         use Abstract_Sparse_Stream_Pointer_Containers;
+         SO : constant Sparse_Outputs.Map := Outputs.Element (SP);
+         SO_Cursor : Sparse_Outputs.Cursor := SO.Last;
+         use type Sparse_Outputs.Cursor;
       begin
-         while not Is_Done (It)
-         loop
-            if Current_Item (It).Ordinal <= For_Call then
-               --  We have to give the user a copy of the memory
-               --  stream to get the result from, otherwise she'll get
-               --  an End_Error if she reads it more than once.
+         while SO_Cursor /= Sparse_Outputs.No_Element loop
+            if Sparse_Outputs.Key (SO_Cursor) > For_Call then
+               Sparse_Outputs.Previous (SO_Cursor);
+            else
                declare
-                  package BSMS renames BC.Support.Memory_Streams;
-                  C : Output_Cell renames Current_Item (It);
-                  Stream : BSMS.Stream_Type
-                    renames BSMS.Stream_Type
-                    (Stream_Pointers.Value (C.Stream).all);
-                  Copy : BSMS.Stream_Type
-                    renames BSMS.Stream_Type
-                    (Stream_Pointers.Value (C.Copy).all);
+                  package CMS renames ColdFrame.Memory_Streams;
+                  C : constant Output_Cell
+                    := Sparse_Outputs.Element (SO_Cursor);
+                  Stream : CMS.Stream_Type
+                    renames CMS.Stream_Type
+                      (Stream_Pointers.Value (C.Stream).all);
+                  Copy : CMS.Stream_Type
+                    renames CMS.Stream_Type
+                      (Stream_Pointers.Value (C.Copy).all);
                begin
-                  BSMS.Set_Contents (BSMS.Contents (Stream), Copy);
+                  CMS.Set_Contents (CMS.Contents (Stream), Copy);
                   return Stream_Pointers.Value (C.Copy);
                end;
             end if;
-            Next (It);
          end loop;
+         --  If we drop through, no output was specified.
+         raise No_Value with "for output " & SP & " for call" & For_Call'Img;
       end;
-      Ada.Exceptions.Raise_Exception
-        (No_Value'Identity,
-         "for output " & SP & " for call" & For_Call'Img);
    end Get_Output_Value_Stream;
 
 
@@ -638,46 +523,42 @@ package body ColdFrame.Stubs is
    --  L o c a l   i m p l e m e n t a t i o n s  --
    -------------------------------------------------
 
-   function Case_Insensitive_Equality
-     (L, R : Ada.Strings.Unbounded.Unbounded_String) return Boolean is
-      use Ada.Strings.Unbounded;
-   begin
-      return Translate (L, Ada.Strings.Maps.Constants.Lower_Case_Map)
-        = Translate (R, Ada.Strings.Maps.Constants.Lower_Case_Map);
-   end Case_Insensitive_Equality;
+   package body String_Bags is
 
+      not overriding procedure Add
+        (B : in out Bag;
+         S : String)
+      is
+         C : constant String_To_Natural_Maps.Cursor
+           := B.Find (S);
+         use type String_To_Natural_Maps.Cursor;
+      begin
+         if C = String_To_Natural_Maps.No_Element then
+            B.Insert (S, (Count => 1));
+         else
+            B.Replace_Element
+              (Position => C,
+               New_Item =>
+                 (Count =>
+                    String_To_Natural_Maps.Element (C).Count + 1));
+         end if;
+      end Add;
 
-   function Case_Insensitive_Hash
-     (S : Ada.Strings.Unbounded.Unbounded_String) return Natural is
-      use Ada.Strings.Unbounded;
-   begin
-      return ColdFrame.Hash.Strings.Unbounded
-        (Translate (S, Ada.Strings.Maps.Constants.Lower_Case_Map));
-   end Case_Insensitive_Hash;
+      not overriding function Count
+        (B : Bag;
+         S : String) return Natural
+      is
+         C : constant String_To_Natural_Maps.Cursor
+           := B.Find (S);
+         use type String_To_Natural_Maps.Cursor;
+      begin
+         if C = String_To_Natural_Maps.No_Element then
+            return 0;
+         else
+            return String_To_Natural_Maps.Element (C).Count;
+         end if;
+      end Count;
 
-
-   function "=" (L, R : Exception_Cell) return Boolean is
-   begin
-      return L.Ordinal = R.Ordinal;
-   end "=";
-
-
-   function ">" (L, R : Exception_Cell) return Boolean is
-   begin
-      return L.Ordinal > R.Ordinal;
-   end ">";
-
-
-   function "=" (L, R : Output_Cell) return Boolean is
-   begin
-      return L.Ordinal = R.Ordinal;
-   end "=";
-
-
-   function ">" (L, R : Output_Cell) return Boolean is
-   begin
-      return L.Ordinal > R.Ordinal;
-   end ">";
-
+   end String_Bags;
 
 end ColdFrame.Stubs;
