@@ -22,9 +22,9 @@
 --  This unit has been copied from the Booch Components, where it was
 --  BC.Support.Memory_Streams.
 
---  SRCSfile$
---  $Revision: ae12a49c4b3a $
---  $Date: 2014/04/13 13:27:09 $
+--  $RCSfile: coldframe-memory_streams.ads,v $
+--  $Revision: d6d1e4fb9858 $
+--  $Date: 2014/04/13 13:31:16 $
 --  $Author: simonjwright $
 
 with Ada.Streams;
