@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 <html>
 <head>
-<title>ColdFrame: Use of Booch Components</title>
+<title>ColdFrame: Use of Ada Containers</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -13,7 +13,7 @@ src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
 width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 </div>
 
-<h1>ColdFrame: Use of Booch Components</h1>
+<h1>ColdFrame: Use of Ada Containers</h1>
 
 <ul>
 
@@ -23,11 +23,13 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <li><a href="#instantiations">Standard Container instantiations</a>
 
-<li><a href="#collections">Collections</a>
+<li><a href="#vectors">Vectors</a>
 
+<!--
 <li><a href="#sets">Sets</a>
 
 <li><a href="#navigation">Navigation</a>
+-->
 
 <li>Operations
 
@@ -35,7 +37,9 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <li><a href="#iteration">Iteration</a>
 
+<!--
 <li><a href="#copying">Copying</a>
+-->
 
 <li><a href="#filtering">Filtering</a>
 
@@ -47,9 +51,10 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h2><a name="introduction">Introduction</a></h2>
 
-<p>The current software architecture of ColdFrame uses Ada 95 <a
-href="resources.html#booch-components">Booch Components</a> (BCs),
-which provide various ways of handling groups of things in
+<p>The current software architecture of ColdFrame
+uses <a href="http://www.adaic.org/resources/add_content/standards/05rm/html/RM-A-18.html">Ada
+2005 Containers</a>, which provide various ways of handling groups of
+things in
 <i>containers</i>.
 
 <p>In ColdFrame, for each non-&#171;singleton&#187; Class, there's a
@@ -58,31 +63,33 @@ together with public interfaces allowing the creation, finding,
 accessing and eventual deletion of instances.
 
 <p>As well as this, there is public support for obtaining and handling
-collections of instances.
+vectors (collections) of instances.
 
 <h2><a name="containers">The Containers</a></h2>
 
 <p>The container types used by generated code are
 <dl>
 
-<dt>Map <dd>for the internal storage of all the instances of a class
-when it's not possible to use an array. The Key is the class's
+<dt>Hashed_Maps <dd>for the internal storage of all the instances of a
+class when it's not possible to use an array. The Key is the class's
 Identifier record.
 
-<dt>Collection <dd>for normal externally-visible aggregate
+<dt>Vectors <dd>for normal externally-visible aggregate
 manipulation.
 
-<dt>Set <dd>to support Association operations, but also available for
-general use where warranted.
+<!--
+<dt>Hashed_Sets <dd>to support Association operations, but also
+available for general use where warranted.
+-->
 
 </dl>
 
-<p>In all cases the actual things contained (the BC "Item") are
+<p>In all cases the actual things contained (the "Element_Type"s) are
 Handles, ie pointers to instances of the class concerned. Allocation
 of instances is handled within the class's <tt>Create</tt> function,
 and deallocation in <tt>Delete</tt>.
 
-<p><a href="testing.html#stubs">Stubs</a> use Ordered Collections.
+<p><a href="testing.html#stubs">Stubs</a> use Vectors and Sets.
 
 <h2><a name="instantiations">Standard Container instantiations</a></h2>
 
@@ -92,48 +99,32 @@ are the packages
 
 <dl>
 
-<dt><tt><i>Domain.Class</i>.Abstract_Containers</tt>
+<dt><tt><i>Domain.Class</i>.Vectors</tt>
 
-<dd>An instantiation of <tt>BC.Containers</tt> using
+<dd>An instantiation of <tt>Ada.Containers.Vectors</tt> using
 <tt><i>Domain.Class</i>.Handle</tt>
 
-<dt><tt><i>Domain.Class</i>.Abstract_Collections</tt>
+<!--
+<dt><tt><i>Domain.Class</i>.Sets</tt>
 
-<dd>An instantiation of <tt>BC.Containers.Collections</tt> as a child
-of <tt><i>Domain.Class</i>.Abstract_Containers</tt>
-
-<dt><tt><i>Domain.Class</i>.Collections</tt>
-
-<dd>An instantiation of either
-<tt>BC.Containers.Collections.Bounded</tt> or
-<tt>BC.Containers.Collections.Unbounded</tt> (depending on whether the
-cardinality <tt>{max}</tt> was specified for <i>Class</i>) as a
-child of <tt><i>Domain.Class</i>.Abstract_Collections</tt>
-
-<dt><tt><i>Domain.Class</i>.Abstract_Sets</tt>
-
-<dd>An instantiation of <tt>BC.Containers.Sets</tt> as a child
-of <tt><i>Domain.Class</i>.Abstract_Containers</tt>
-
-<dt><tt><i>Domain.Class</i>.Sets</tt><dd>
-
-<dd>An instantiation of either <tt>BC.Containers.Sets.Bounded</tt> or
-<tt>BC.Containers.Sets.Unbounded</tt> (depending on whether the
-cardinality <tt>{max}</tt> was specified for <i>Class</i>) as a
-child of <tt><i>Domain.Class</i>.Abstract_Sets</tt>. A suitable hash
-function is provided (it's an instantiation of
+<dd>An instantiation of <tt>Ada.Containers.Hashed_Sets</tt>. A
+suitable hash function is provided (it's an instantiation of
 <tt>ColdFrame.Access_Hash</tt> for
 <tt><i>Domain.Class</i>.Handle</tt>).
+-->
 
 </dl>
 
-<p>Because each of these is instantiated at Library level, they have to
-be <tt>with</tt>ed individually.
+<p>Because each of these is instantiated at Library level, they have
+to be <tt>with</tt>ed individually. ColdFrame generates a lot of code
+that <i>might</i> be useful; the intention of this design is that, as
+far as possible, only the code that is actually used ends up
+contributing to the final executable.
 
-<h2><a name="collections">Collections</a></h2>
+<h2><a name="vectors">Vectors</a></h2>
 
 <p>ColdFrame provides three utility functions for dealing with
-variables of type <tt><i>Domain.Class</i>.Collections.Collection</tt>,
+variables of type <tt><i>Domain.Class</i>.Vectors.Vector</tt>,
 as child subprograms of <tt><i>Domain.Class</i></tt> (note, this means
 they have to be <tt>with</tt>ed individually):
 
@@ -146,22 +137,22 @@ they have to be <tt>with</tt>ed individually):
 <pre>
 with <i>Domain.Class</i>.Collections;
 function <i>Domain.Class</i>.All_Instances
-   return <i>Domain.Class</i>.Collections.Collection;
+   return <i>Domain.Class</i>.Vectors.Vector;
 </pre>
 
 <dt><a name="filter-function">Filter_Function</a>
 
-<dd>given a <tt>Collection</tt>, returns a new <tt>Collection</tt>
+<dd>given a <tt>Vector</tt>, returns a new <tt>Vector</tt>
 containing just those instances for which <tt>Pass</tt> returns
 <tt>True</tt>:
 
 <pre>
-with <i>Domain.Class</i>.Collections;
+with <i>Domain.Class</i>.Vectors;
 generic
    with function Pass (This : Handle) return Boolean is <>;
 function <i>Domain.Class</i>.Filter_Function
-   (The_Collection : <i>Domain.Class</i>.Collections.Collection)
-   return <i>Domain.Class</i>.Collections.Collection;
+   (The_Vector : <i>Domain.Class</i>.Vectors.Vector)
+   return <i>Domain.Class</i>.Vectors.Vector;
 </pre>
 
 <dt><a name="selection-function">Selection_Function</a>
@@ -170,26 +161,28 @@ function <i>Domain.Class</i>.Filter_Function
 for which <tt>Pass</tt> returns <tt>True</tt>:
 
 <pre>
-with <i>Domain.Class</i>.Collections;
+with <i>Domain.Class</i>.Vectors;
 generic
    with function Pass (This : Handle) return Boolean is <>;
 function <i>Domain.Class</i>.Selection_Function
-   return <i>Domain.Class</i>.Collections.Collection;
+   return <i>Domain.Class</i>.Vectors.Vector;
 </pre>
 
 <dt>
 
+<!--
 <h2><a name="sets">Sets</a></h2>
 
 <p>In order to support some of the more complex <a
 href="#navigation">Navigations</a>, ColdFrame generates Set
 instantiations. These are of course available for other uses. The
 interesting operations provided are in
-<tt><i>Domain.Class</i>.Abstract_Sets</tt>.
+<tt><i>Domain.Class</i>.Sets</tt>.
 
 <p>Considering two Sets of Tracks (actually, Track.Handle), <tt>H</tt>
 containing all the <i>Hostile</i> tracks and <tt>C</tt> containing all
-the <i>Close</i> tracks, the operations are
+the <i>Close</i> tracks, the operations are as follows (note,
+functional versions are also available):
 
 <table border=1 cellpadding=2>
 
@@ -202,8 +195,8 @@ the <i>Close</i> tracks, the operations are
 <td>
 <pre>
 procedure Union
-  (S : in out Abstract_Set'Class;
-   O : Abstract_Set'Class);
+  (S : in out Set;
+   O : Set);
 </pre>
 
 <td><tt>Union (H, C)</tt>
@@ -215,8 +208,8 @@ procedure Union
 <td>
 <pre>
 procedure Intersection
-  (S : in out Abstract_Set'Class;
-   O : Abstract_Set'Class);
+  (S : in out Set;
+   O : Set);
 </pre>
 
 <td><tt>Intersection (H, C)</tt>
@@ -228,8 +221,8 @@ procedure Intersection
 <td>
 <pre>
 procedure Difference
-  (S : in out Abstract_Set'Class;
-   O : Abstract_Set'Class);
+  (S : in out Set;
+   O : Set);
 </pre>
 
 <td><tt>Difference (H, C)</tt>
@@ -241,7 +234,7 @@ procedure Difference
 
 <h2><a name="navigation">Navigation</a></h2>
 
-<p>Another way of getting hold of Collections is by use of navigation
+<p>Another way of getting hold of Vectors is by use of navigation
 functions related to associations.
 
 <p><img src="navigation.jpg">
@@ -280,10 +273,10 @@ procedure Unlink
 <pre>
 function Contributes_To
   (T : Track.Handle)
-  return Sensor_Track.Collections.Collection;
+  return Sensor_Track.Vectors.Vector;
 </pre>
 
-<td>Given a Track, returns the <i>Collection</i> of Sensor_Tracks that
+<td>Given a Track, returns the <i>Vector</i> of Sensor_Tracks that
 contribute to it.
 
 </tr>
@@ -292,11 +285,11 @@ contribute to it.
 <td>
 <pre>
 function Contributes_To
-  (T : Track.Collections.Collection)
-  return Sensor_Track.Collections.Collection;
+  (T : Track.Vectors.Vector)
+  return Sensor_Track.Vectors.Vector;
 </pre>
 
-<td>Given a <i>Collection</i> of Tracks, returns the <i>Collection</i>
+<td>Given a <i>Vector</i> of Tracks, returns the <i>Vector</i>
 of Sensor_Tracks that contribute to them.
 
 </tr>
@@ -318,69 +311,62 @@ it. Other Sensor Tracks may also be contributing.
 <td>
 <pre>
 function Is_Composed_Of
-  (ST : Sensor_Track.Collections.Collection)
-  return Track.Collections.Collection;
+  (ST : Sensor_Track.Vectors.Vector)
+  return Track.Vectors.Vector;
 </pre>
 
-<td>Given a <i>Collection</i> of Sensor Tracks, return a
-<i>Collection</i> of all the Tracks composed of these (and possibly
+<td>Given a <i>Vector</i> of Sensor Tracks, return a
+<i>Vector</i> of all the Tracks composed of these (and possibly
 other) Sensor Tracks.
 
 </tr>
 
 </table>
+-->
 
 <h2>Operations</h2>
 
 <h3><a name="iteration">Iteration</a></h3>
 
 <p>For each Class, ColdFrame generates a generic procedure
-<tt><i>Domain.Class</i>.Iterate</tt>; in most cases, it's easier to
-<a href="#coldframe-iteration">use this</a> than to use the BC
-iteration facilities directly. Also, direct use means that your code
-is more closely tied than it need be to the current ColdFrame
-implementation strategy.
+<tt><i>Domain.Class</i>.Iterate</tt>; it can be easier to
+<a href="#coldframe-iteration">use this</a> than to use the
+Containers' iteration facilities directly. Also, direct use means that
+your code is more closely tied than it need be to the current
+ColdFrame implementation strategy.
 
-<p>If you do need to use BC iteration, there are two forms: open and
-closed. Both require the creation of Iterators.
+<p>If you do need to use Container iteration, there are two forms:
+open and closed (Ada 2012 adds a third, much simpler, form).
 
-<p>With open iteration, you explicitly advance
-the iterator to the next element in the container it references,
-until it's done; with closed iteration, you supply a procedure which
-gets called for each element in the container.
+<p>With open iteration, you create an iterator or Cursor designating
+the first element of the container; while the cursor designates a
+valid element you process the element, then advance the cursor to the
+next element in the container it references. With closed iteration,
+you supply a procedure which gets called for each element in the
+container.
 
-<p>The operations on iterators are all defined in
-<tt><i>Domain.Class</i>.Abstract_Containers</tt>, while actual
-iterators can only be created by the concrete
-<tt><i>Domain.Class</i>.Collections</tt>.
+<p>The operations on Cursors are all defined in
+<tt><i>Domain.Class</i>.Vectors</tt>.
 
 <p>The examples below are in terms of a pre-existing container
-<tt>The_Collection</tt>. You may take exception to the overloading of
+<tt>The_Vector</tt>. You may take exception to the overloading of
 the name <tt>Process</tt>!
 
 <h4>Open iteration</h4>
 
 <pre>
    declare
-
-      It : <i>Class</i>.Abstract_Containers.Iterator'Class
-        := <i>Class</i>.Collections.New_Iterator (The_Collection);
-
+      It : <i>Class</i>.Vectors.Cursor := The_Vector.First;
+      use type <i>Class</i>.Vectors.Cursor;
    begin
-
-      while not <i>Class</i>.Abstract_Containers.Is_Done (It) loop
-
+      while It /= <i>Class</i>.Vectors.No_Element loop
          declare
-            H : <i>Class</i>.Handle
-              := <i>Class</i>.Abstract_Containers.Current_Item (It);
+            H : <i>Class</i>.Handle := <i>Class</i>.Vectors.Element (It);
          begin
             -- do something with H
          end;
-
-         <i>Class</i>.Abstract_Containers.Next (It);
-
+         <i>Class</i>.Vectors.Next (It);
       end loop;
-
    end;
 </pre>
 
@@ -388,24 +374,12 @@ the name <tt>Process</tt>!
 
 <pre>
    declare
-
-      procedure Process (H : <i>Class</i>.Handle; OK : out Boolean);
-      pragma Inline_Always (Process);
-
-      procedure Process
-        is new <i>Class</i>.Abstract_Containers.Visit (Process);
-
-      procedure Process (H : <i>Class</i>.Handle; OK : out Boolean) is
+      procedure Process (C : <i>Class</i>.Vectors.Cursor) is
       begin
-         OK := True; -- unless you want the iteration to stop early
-         -- do something with H
+         -- do something with <i>Class</i>.Vectors.Element (C)
       end Process;
-
-      It : <i>Class</i>.Abstract_Containers.Iterator'Class
-        := <i>Class</i>.Collections.New_Iterator (The_Collection);
-
    begin
-      Process (It);
+       The_Vector.Iterate (Print'Access);
    end;
 </pre>
 
@@ -414,7 +388,6 @@ the name <tt>Process</tt>!
 
 <pre>
    declare
-
       procedure Process (H : <i>Class</i>.Handle);
       pragma Inline_Always (Process);
 
@@ -425,24 +398,24 @@ the name <tt>Process</tt>!
       begin
          -- do something with H
       end Process;
-
    begin
-      Process (The_Collection);
+      Process (The_Vector);
    end;
 </pre>
 
+<!--
 <h3><a name="copying">Copying</a></h3>
 
 <p>If you're going to use the <a href="#sets">Set</a> operations,
 first catch your Set. The basic Containers used by ColdFrame (such as
 those produced by <a href="#navigation">navigations</a>) are
-Collections.
+Vectors.
 
-<p>The operation that supports conversion from Collection to Set, and
+<p>The operation that supports conversion from Vector to Set, and
 vice versa, is provided by the generic <tt>BC.Copy</tt>.
 
 <p>Assuming the existence of <tt>Engaged_Tracks</tt> of type
-<tt>Track.Collections.Collection</tt>, we could write
+<tt>Track.Vectors.Vector</tt>, we could write
 
 <pre>
    declare
@@ -450,7 +423,7 @@ vice versa, is provided by the generic <tt>BC.Copy</tt>.
       procedure Make_Set is new BC.Copy
         (Item => Track.Handle,
          Source => Track.Abstract_Containers,
-         From => Track.Collections.Collection,
+         From => Track.Vectors.Vector,
          Target => Track.Abstract_Containers,
          To => Track.Sets.Set,
          Clear => Track.Sets.Clear,
@@ -466,59 +439,47 @@ vice versa, is provided by the generic <tt>BC.Copy</tt>.
 
       -- operations with Engaged_Track_Set
 </pre>
+-->
 
 <h3><a name="filtering">Filtering</a></h3>
 
-<p>The Booch Components provide a filtering facility
-(<tt>BC.Filter</tt>). However, most filtering requirements should be
+<p>Most filtering requirements should be
 met by the generated <a
 href="#filter-function"><tt>Filter_Function</tt></a> and <a
 href="#selection-function"><tt>Selection_Function</tt></a> generics.
 
 <h3><a name="sorting">Sorting</a></h3>
 
-<p>The Booch Components provide a generic sorting facility in
-<tt>BC.Containers.Quicksort</tt> and <tt>BC.Containers.Shellsort</tt>.
-
-<p>These can be instantiated for any sort of Container, but they'll
-fail (with the run time exception <tt>BC.Container_Error</tt>) if you
-try to <em>use</em> them for Sets.
-
-<p>Quicksort is usually faster than Shellsort, but can take a lot more
-stack when the initial input Collection is inconveniently ordered.
+<p>The Ada Container Vectors provide a generic sorting facility in
+<tt><i>Domain.Class.</i>Vectors.Generic_Sorting</tt>.
 
 <p>The resulting ordering is in terms of the function that
-instantiates the parameter <tt>"<"</tt>; the Item that is "less than"
-all the other Items in the Collection will end up first. Neither sort
-method should be expected to be stable; that is, don't expect Items
+instantiates the parameter <tt>"<"</tt>; the Element that is "less
+than" all the other Elements in the Vector will end up first. The sort
+should not be expected to be stable; that is, don't expect Elements
 which compare <tt>"="</tt> to remain in the same order.
 
 <p>An example of sorting by threateningness, assuming the existence of
 <tt>Candidate_Tracks</tt> of type
-<tt>Track.Collections.Collection</tt>, is
+<tt>Track.Vectors.Vector</tt>, is
 
 <pre>
    declare
-
       function Is_More_Threatening (L, R : Track.Handle) return Boolean;
-      pragma Inline_Always (Is_More_Threatening);
 
-      procedure Sort is new Track.Abstract_Containers.Quicksort
-        ("<" => Is_More_Threatening,
-         Container => Track.Collections.Collection,
-         Length => Track.Collections.Length);
+      package Sorting is new Track.Vectors.Generic_Sort
+        ("<" => Is_More_Threatening);
 
       function Is_More_Threatening (L, R : Track.Handle) return Boolean is
       begin
          return L.Time_Of_CPA < R.Time_Of_CPA;
       end Is_More_Threatening;
-
    begin
-      Sort (Candidate_Tracks);
+      Sorting.Sort (Candidate_Tracks);
    end;
 </pre>
 
-after which <tt>Track.Collections.First (Candidate_Tracks)</tt> will
+after which <tt>Candidate_Tracks.First_Element</tt> will
 return the track with the earliest <tt>Time_Of_CPA</tt> (<i>CPA</i>
 means <i>Closest Point of Approach</i>).
 

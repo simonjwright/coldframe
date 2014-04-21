@@ -12,13 +12,13 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: ColdFrame.gpr,v b184b8396d5d 2014/03/26 16:41:12 simonjwright $
+--  $Id: ColdFrame.gpr,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $
 --
 --  This file controls compilation of the standard "library" and
 --  "project" source for ColdFrame.
 
 with "Options";
-with "bc";
+--  with "bc";
 
 library project ColdFrame is
 

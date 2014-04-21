@@ -15,7 +15,6 @@
 with "ColdFrame";
 with "Options";
 with "aunit";
-with "bc";
 
 project Regressions is
 
@@ -30,6 +29,7 @@ project Regressions is
      "Ignored_Child_Packages.gen",
      "SF_2991721.gen",
      "SF_Bug_79.gen",
+     "Strings.gen",
      "Types.gen",
      "Types.impl",
      "Regressions.test"

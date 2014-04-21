@@ -13,15 +13,16 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: van_fleet-van-lend.adb,v $
---  $Revision: e08cb16c3dfb $
---  $Date: 2014/03/11 18:27:45 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
+with Ada.Containers;
 with Van_Fleet.A2;
 with Van_Fleet.Customer;
 with Van_Fleet.Hired_Van.Inheritance;
 with Van_Fleet.Pool_Van.All_Instances;
-with Van_Fleet.Pool_Van.Collections;
+with Van_Fleet.Pool_Van.Vectors;
 with Van_Fleet.Pool_Van.Inheritance;
 
 separate (Van_Fleet.Van)
@@ -29,20 +30,30 @@ function Lend
   (To : not null ColdFrame.Instances.Handle;
    Terminating_At : ColdFrame.Project.Calendar.Time)
   return Handle is
-   PVC : constant Pool_Van.Collections.Collection := Pool_Van.All_Instances;
+
+   PVC : constant Pool_Van.Vectors.Vector := Pool_Van.All_Instances;
    PVH : Pool_Van.Handle;
    VH : Handle;
    HVH : Hired_Van.Handle;
+   use type Ada.Containers.Count_Type;
+
 begin
+
    if PVC.Length = 0 then
       raise Not_Found;
    end if;
-   PVH := PVC.First;
+
+   PVH := PVC.First_Element;
    VH := Pool_Van.Inheritance.Find_Van_Parent (PVH);
+
    Pool_Van.Delete (PVH);
+
    HVH := Hired_Van.Inheritance.Create_Tree (ColdFrame.Instances.Handle (VH));
    Hired_Van.Set_Expected_Termination (HVH, To => Terminating_At);
+
    A2.Link (Is_On_Loan_To => Customer.Handle (To),
             Is_Borrowing => HVH);
+
    return VH;
+
 end Lend;

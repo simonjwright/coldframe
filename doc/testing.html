@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v b67fea07c9b1 2012/02/26 12:46:18 simonjwright $ -->
+<!-- $Id: testing.html,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -298,11 +298,21 @@ instantiate <tt>ColdFrame.Stubs.Get_Input_Value</tt> with
    --
    --     Result := Get_Integer_Operation_Input_Value
    --       ("Domain.Class.Operation", "Input", 2);
+   --
+   --  To retrieve the result of the last call, say
+   --
+   --     Result := Get_Integer
+   --       ("Domain.Class.Operation", "Input", 0);
+   --
+   --  To retrieve the value passed at the last call but one, say
+   --
+   --     Result := Get_Integer
+   --       ("Domain.Class.Operation", "Input", -1);
    generic
       type T (<>) is private;
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
-                             For_Call : Positive := 1) return T;
+                             For_Call : Integer := 0) return T;
 </pre>
 
 <h4><a name="test-procedure-support">Test Procedure support</a></h4>
@@ -456,6 +466,7 @@ private subprograms of the class.
 
 <p><a name="aunit-withs">Standard AUnit withs</a>:
 <pre>
+   with AUnit.Assertions; use AUnit.Assertions;
    with AUnit.Test_Cases; use AUnit.Test_Cases;
 </pre>
 
@@ -479,7 +490,7 @@ private subprograms of the class.
       function Get_Boolean
       is new ColdFrame.Stubs.Get_Input_Value (Boolean);
       function Get_Signal_Name
-      is new ColdFrame.Stubs.Get_Input_Value (Digital_IO.Signal_Name);
+      is new ColdFrame.Stubs.Get_Input_Value (Digital_IO.Output_Signal);
 </pre>
 
 <p><a name="case-spec">A test case, for testing <i>Lamp</i> code</a>:
@@ -513,7 +524,7 @@ enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
 <pre>
          procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class) is
             pragma Unreferenced (R);
-            use type Digital_IO.Signal_Name;
+            use type Digital_IO.Output_Signal;
          begin
 
             <i>--  Initialization creates a number of lamps; each one turns
@@ -535,12 +546,12 @@ enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
                       ("Digital_IO.Application.Set_Output") = 5,
                     "wrong number of calls (a)");
             <i>--  The 5th call should have been for Lamp D ...</i>
-            Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
-                                     "S",
-                                     5) = Digital_IO.Lamp_D,
+            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                       "O",
+                                       5) = 3,
                     "wrong signal (a)");
             <i>--  ... and it should have been turned on.</i>
-            Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+            Assert (Get_Boolean ("Digital_IO.Application.Set",
                                  "To_State",
                                  5),
                     "should have been turned on (a)");
@@ -548,39 +559,39 @@ enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
             <i>--  Repeat for the remaining Lamps.</i>
             Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
             Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set_Output") = 6,
+                      ("Digital_IO.Application.Set") = 6,
                     "wrong number of calls (b)");
-            Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
+            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
                                      "S",
-                                     6) = Digital_IO.Lamp_C,
+                                     6) = 2
                     "wrong signal (b)");
-            Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+            Assert (Get_Boolean ("Digital_IO.Application.Set",
                                  "To_State",
                                  6),
                     "should have been turned on (b)");
 
             Lamp.Turn_On (Lamp.Find ((Name => First_Floor)));
             Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set_Output") = 7,
+                      ("Digital_IO.Application.Set") = 7,
                     "wrong number of calls (c)");
-            Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
+            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
                                      "S",
-                                     7) = Digital_IO.Lamp_B,
+                                     7) = 1,
                     "wrong signal (c)");
-            Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+            Assert (Get_Boolean ("Digital_IO.Application.Set",
                                  "To_State",
                                  7),
                     "should have been turned on (c)");
 
             Lamp.Turn_On (Lamp.Find ((Name => Second_Floor)));
             Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set_Output") = 8,
+                      ("Digital_IO.Application.Set") = 8,
                     "wrong number of calls (d)");
-            Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
+            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
                                      "S",
-                                     8) = Digital_IO.Lamp_A,
+                                     8) = 0,
                     "wrong signal (d)");
-            Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+            Assert (Get_Boolean ("Digital_IO.Application.Set",
                                  "To_State",
                                  8),
                     "should have been turned on (d)");

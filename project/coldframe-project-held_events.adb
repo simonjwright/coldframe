@@ -9,20 +9,46 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-project-held_events.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
 with Ada.Unchecked_Deallocation;
 
 package body ColdFrame.Project.Held_Events is
 
+   --  Local procedure to insert new element after all exisitng
+   --  elements with earlier or the same time. This preserves order of
+   --  submission.
+   procedure Append_In_Order (Container : in out Time_Vectors.Vector;
+                              New_Item : Time_Cell);
+   procedure Append_In_Order (Container : in out Time_Vectors.Vector;
+                              New_Item : Time_Cell)
+   is
+      package TV renames Time_Vectors;
+      It : TV.Cursor := Container.First;
+      use type TV.Cursor;
+      use type ColdFrame.Project.Times.Time;
+   begin
+      while It /= TV.No_Element
+        and then
+        (TV.Element (It).Time_To_Fire < New_Item.Time_To_Fire
+           or else TV.Element (It).Time_To_Fire = New_Item.Time_To_Fire) loop
+         TV.Next (It);
+      end loop;
+      if It = TV.No_Element then
+         Container.Append (New_Item => New_Item, Count => 1);
+      else
+         Container.Insert (Before => It, New_Item => New_Item);
+      end if;
+   end Append_In_Order;
+
 
    function Is_Empty (Q : Queue) return Boolean is
    begin
       for Kind in Q.Queues'Range loop
-         if not Time_Collections.Is_Empty (Q.Queues (Kind)) then
+         if not Q.Queues (Kind).Is_Empty then
             return False;
          end if;
       end loop;
@@ -32,15 +58,15 @@ package body ColdFrame.Project.Held_Events is
 
    function Next_Event_Time (Q : Queue) return Ada.Real_Time.Time is
       Result : Ada.Real_Time.Time := Ada.Real_Time.Time_Last;
-      use Time_Collections;
       use type Ada.Real_Time.Time;
    begin
       pragma Assert (not Is_Empty (Q));
       for Kind in Q.Queues'Range loop
-         if not Time_Collections.Is_Empty (Q.Queues (Kind)) then
+         if not Q.Queues (Kind).Is_Empty then
             declare
                T : constant Ada.Real_Time.Time
-                 := Times.Equivalent (First (Q.Queues (Kind)).Time_To_Fire);
+                 := Times.Equivalent
+                   (Q.Queues (Kind).First_Element.Time_To_Fire);
             begin
                if T < Result then
                   Result := T;
@@ -55,15 +81,15 @@ package body ColdFrame.Project.Held_Events is
    procedure Pop (Q : in out Queue; The_Head_Event : out Events.Event_P) is
       Earliest_Time : Ada.Real_Time.Time := Ada.Real_Time.Time_Last;
       Earliest_Kind : Times.Time_Kind;
-      use Time_Collections;
       use type Ada.Real_Time.Time;
    begin
       pragma Assert (not Is_Empty (Q));
       for Kind in Q.Queues'Range loop
-         if not Time_Collections.Is_Empty (Q.Queues (Kind)) then
+         if not Q.Queues (Kind).Is_Empty then
             declare
                T : constant Ada.Real_Time.Time
-                 := Times.Equivalent (First (Q.Queues (Kind)).Time_To_Fire);
+                 := Times.Equivalent
+                   (Q.Queues (Kind).First_Element.Time_To_Fire);
             begin
                if T < Earliest_Time then
                   Earliest_Time := T;
@@ -72,25 +98,25 @@ package body ColdFrame.Project.Held_Events is
             end;
          end if;
       end loop;
-      The_Head_Event := First (Q.Queues (Earliest_Kind)).Event;
-      Remove (Q.Queues (Earliest_Kind), 1);
+      The_Head_Event := Q.Queues (Earliest_Kind).First_Element.Event;
+      Q.Queues (Earliest_Kind).Delete_First;
    end Pop;
 
 
    procedure Add_At_Event (E : Events.Event_P;
                            To_Run_At : Times.Time;
                            On : in out Queue) is
-      use Time_Collections;
-      use Initial_Time_Collections;
    begin
       if On.Started then
-         Append (On.Queues (To_Run_At.Kind),
-                 Time_Cell'(Time_To_Fire => To_Run_At,
-                            Event => E));
+         Append_In_Order (On.Queues (To_Run_At.Kind),
+                          (Time_To_Fire => To_Run_At,
+                           Event => E));
       else
-         Append (On.Initial_Queue,
-                 Time_Cell'(Time_To_Fire => To_Run_At,
-                            Event => E));
+         --  We save in the order of adding, until the queue is
+         --  started, at which point all the events on the Initial
+         --  queue are Append[ed]_In_Order.
+         On.Initial_Queue.Append ((Time_To_Fire => To_Run_At,
+                                   Event => E));
       end if;
    end Add_At_Event;
 
@@ -98,7 +124,6 @@ package body ColdFrame.Project.Held_Events is
    procedure Add_After_Event (E : Events.Event_P;
                               To_Run_After : Duration;
                               On : in out Queue) is
-      use Duration_Collections;
       use type Ada.Real_Time.Time;
    begin
       if On.Started then
@@ -108,69 +133,75 @@ package body ColdFrame.Project.Held_Events is
                             + Ada.Real_Time.To_Time_Span (To_Run_After)),
             On);
       else
-         Append (On.Duration_Queue,
-                 Duration_Cell'(Delay_To_Fire => To_Run_After,
-                                Event => E));
+         On.Duration_Queue.Append ((Delay_To_Fire => To_Run_After,
+                                    Event => E));
       end if;
    end Add_After_Event;
 
 
    procedure Start_Processing_Events (On : in out Queue) is
-      DI : Abstract_Duration_Containers.Iterator'Class
-        := Duration_Collections.New_Iterator (On.Duration_Queue);
-      II : Abstract_Time_Containers.Iterator'Class
-        := Initial_Time_Collections.New_Iterator (On.Initial_Queue);
-      use Abstract_Duration_Containers;
-      use Abstract_Time_Containers;
+      DI : Duration_Vectors.Cursor := On.Duration_Queue.First;
+      II : Time_Vectors.Cursor := On.Initial_Queue.First;
+      Start_Time : constant Ada.Real_Time.Time := Ada.Real_Time.Clock;
+      use type Duration_Vectors.Cursor;
+      use type Time_Vectors.Cursor;
       use type Ada.Real_Time.Time;
    begin
       On.Started := True;
-      while not Is_Done (DI) loop
+
+      while DI /= Duration_Vectors.No_Element loop
          declare
-            D : Duration_Cell renames Current_Item (DI);
+            D : Duration_Cell renames Duration_Vectors.Element (DI);
          begin
             Add_At_Event
               (D.Event,
-               Times.Create (Ada.Real_Time.Clock
+               Times.Create (Start_Time
                                + Ada.Real_Time.To_Time_Span (D.Delay_To_Fire)),
                On);
          end;
-         Next (DI);
+         Duration_Vectors.Next (DI);
       end loop;
-      while not Is_Done (II) loop
+      On.Duration_Queue.Clear;
+
+      while II /= Time_Vectors.No_Element loop
          declare
-            T : Time_Cell renames Current_Item (II);
+            T : Time_Cell renames Time_Vectors.Element (II);
          begin
             Add_At_Event (T.Event, T.Time_To_Fire, On);
          end;
-         Next (II);
+         Time_Vectors.Next (II);
       end loop;
-      Duration_Collections.Clear (On.Duration_Queue);
-      Initial_Time_Collections.Clear (On.Initial_Queue);
+      On.Initial_Queue.Clear;
    end Start_Processing_Events;
 
 
    procedure Invalidate_Events (On : Queue;
                                 For_The_Instance : Events.Instance_Base_P) is
-      DI : Abstract_Duration_Containers.Iterator'Class
-        := Duration_Collections.New_Iterator (On.Duration_Queue);
-      use Abstract_Duration_Containers;
-      use Abstract_Time_Containers;
+      DI : Duration_Vectors.Cursor := On.Duration_Queue.First;
+      II : Time_Vectors.Cursor := On.Initial_Queue.First;
+      use type Duration_Vectors.Cursor;
+      use type Time_Vectors.Cursor;
    begin
-      while not Is_Done (DI) loop
-         Events.Invalidate (Current_Item (DI).Event,
+      while DI /= Duration_Vectors.No_Element loop
+         Events.Invalidate (Duration_Vectors.Element (DI).Event,
                             If_For_Instance => For_The_Instance);
-         Next (DI);
+         Duration_Vectors.Next (DI);
       end loop;
+
+      while II /= Time_Vectors.No_Element loop
+         Events.Invalidate (Time_Vectors.Element (II).Event,
+                            If_For_Instance => For_The_Instance);
+         Time_Vectors.Next (II);
+      end loop;
+
       for K in Times.Time_Kind loop
          declare
-            KI : Abstract_Time_Containers.Iterator'Class
-              := Time_Collections.New_Iterator (On.Queues (K));
+            KI : Time_Vectors.Cursor := On.Queues (K).First;
          begin
-            while not Is_Done (KI) loop
-               Events.Invalidate (Current_Item (KI).Event,
+            while KI /= Time_Vectors.No_Element loop
+               Events.Invalidate (Time_Vectors.Element (KI).Event,
                                   If_For_Instance => For_The_Instance);
-               Next (KI);
+               Time_Vectors.Next (KI);
             end loop;
          end;
       end loop;
@@ -178,49 +209,43 @@ package body ColdFrame.Project.Held_Events is
 
 
    procedure Tear_Down (Q : in out Queue) is
-      DI : Abstract_Duration_Containers.Iterator'Class
-        := Duration_Collections.New_Iterator (Q.Duration_Queue);
+      DI : Duration_Vectors.Cursor := Q.Duration_Queue.First;
       procedure Delete
       is new Ada.Unchecked_Deallocation (Events.Event_Base'Class,
                                          Events.Event_P);
-      use Abstract_Duration_Containers;
-      use Abstract_Time_Containers;
+      use type Duration_Vectors.Cursor;
    begin
       Q.Started := False;
-      while not Is_Done (DI) loop
+
+      while DI /= Duration_Vectors.No_Element loop
          declare
-            E : Events.Event_P := Current_Item (DI).Event;
+            E : Events.Event_P := Duration_Vectors.Element (DI).Event;
          begin
             Events.Tear_Down (E);
             Delete (E);
          end;
-         Next (DI);
+         Duration_Vectors.Next (DI);
       end loop;
-      Duration_Collections.Clear (Q.Duration_Queue);
+      Q.Duration_Queue.Clear;
+
       for K in Times.Time_Kind loop
          declare
-            KI : Abstract_Time_Containers.Iterator'Class
-              := Time_Collections.New_Iterator (Q.Queues (K));
+            KI : Time_Vectors.Cursor := Q.Queues (K).First;
+            use type Time_Vectors.Cursor;
          begin
-            while not Is_Done (KI) loop
+            while KI /= Time_Vectors.No_Element loop
                declare
-                  E : Events.Event_P := Current_Item (KI).Event;
+                  E : Events.Event_P := Time_Vectors.Element (KI).Event;
                begin
                   Events.Tear_Down (E);
                   Delete (E);
                end;
-               Next (KI);
+               Time_Vectors.Next (KI);
             end loop;
          end;
-         Time_Collections.Clear (Q.Queues (K));
+         Q.Queues (K).Clear;
       end loop;
    end Tear_Down;
-
-
-   function "<" (L, R : Time_Cell) return Boolean is
-   begin
-      return Times."<" (L.Time_To_Fire, R.Time_To_Fire);
-   end "<";
 
 
 end ColdFrame.Project.Held_Events;

@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v d4ae87fb45e1 2012/07/30 15:48:15 simonjwright $ -->
+<!-- $Id: support.html,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -51,15 +51,6 @@ allocator but fills allocated memory with improbable data
 (<tt>16#deadbeef#</tt> when viewed in the debugger).
 <br>Freed memory is refilled with <tt>16#deaddead#</tt>.
 
-<p><dt><tt>ColdFrame.Unbounded_Debug_Storage_Pools</tt>
-
-<dd>Like <tt>ColdFrame.Unbounded_Storage_Pools</tt> but keeps track of
-allocations and deallocations, keying on the call chain. A report can
-be produced at any time; the net total of allocated memory is
-monitored, and if a trigger point (specified
-via <tt>ColdFrame.Project.Limits</tt>) is passed a report is produced
-in the file <tt>debug_storage_pool.csv</tt>.
-
 <p><dt><tt>ColdFrame.Callbacks</tt>
 
 <dd>Provides callback (Observer) support.
@@ -99,9 +90,10 @@ application event to cause transition from the initial state.
 
 <ul>
 
-<li>inspection of Timers; is a time set, when would it expire?
+<li>inspection of Timers; is a timer set, when would it expire?
 
-<li>the event queue doesn't start until told.
+<li>the event queue doesn't start until told (provided that this
+decoration is added last).
 
 </ul>
 
@@ -126,8 +118,8 @@ concrete <tt>ColdFrame.Events_G.Event_Queue</tt>.
 
 <dd>Enables GNAT's exception traceback facility, which is set up to
 report unhandled exceptions both in the main program and in tasks. To
-use it (only in host-is-target environments; won't work in VxWorks),
-you must
+use it (only in Linux and Windows host-is-target environments; won't
+work in Mac OS X or VxWorks), you must
 
 <ol>
 <li><tt>with</tt> this package,
@@ -140,7 +132,8 @@ you must
 report unhandled exceptions both in the main program and in tasks.
 
 <br>This version produces the traceback in hexadecimal form; use
-<tt>addr2line</tt> to convert to a readable form.
+<tt>addr2line</tt> (or, on Mac OS X, <tt>atos</tt>) to convert to a
+readable form.
 
 <br>To use it, you must
 
@@ -154,8 +147,8 @@ report unhandled exceptions both in the main program and in tasks.
 <p><dt><tt>ColdFrame.Hash</tt>
 
 <dd>A family of hash functions, suitable for use as hashes (or part of
-hashes) for instantiating <a href="use-of-bcs.html">Booch Map
-containers</a>.
+hashes) for instantiating <a href="use-of-containers.html">Hashed Map
+or Set containers</a>.
 
 <p><dl>
 
@@ -230,7 +223,7 @@ translation for <i>Date</i>, <i>Time</i> attributes.
 
 <br>The provided default contains renamings of
 <tt>Ada.Calendar.Time</tt> and <tt>Ada.Calendar.Clock</tt>, and an
-<tt>Image</tt> function used in serialization support.
+<tt>Image</tt> function<!-- used in serialization support-->.
 
 <p><dt><tt>ColdFrame.Project.Events</tt>
 
@@ -253,7 +246,7 @@ from <tt>ColdFrame.Project.Times</tt>, logging from
 
 </ul>
 
-Six concrete instantiations are provided:
+Eight concrete instantiations are provided:
 
 <p><dl>
 
@@ -280,7 +273,7 @@ Six concrete instantiations are provided:
 <dd>A standard instantiation of
 <tt>ColdFrame.Events_G.Test_G</tt>, based on
 <tt>ColdFrame.Project.Events.Standard.Trace</tt> (ie, a Test queue,
-which prints what's going on)..
+which prints what's going on).
 
 <p><dt><tt>ColdFrame.Project.Events.Monitoring</tt>
 
@@ -293,6 +286,19 @@ which prints what's going on)..
 <dd>A monitoring instantiation of
 <tt>ColdFrame.Events_G.Test_G</tt>, based on
 <tt>ColdFrame.Project.Events.Monitoring</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Monitoring.Trace</tt>
+
+<dd>A monitoring instantiation of
+<tt>ColdFrame.Events_G.Trace_G</tt>, based on
+<tt>ColdFrame.Project.Events.Monitoring</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Monitoring.Test_Trace</tt>
+
+<dd>A monitoring instantiation of
+<tt>ColdFrame.Events_G.Test_G</tt>, based on
+<tt>ColdFrame.Project.Events.Monitoring.Trace</tt> (ie, a Test queue,
+which prints what's going on).
 
 </dl>
 
@@ -311,32 +317,33 @@ which prints what's going on)..
 <dd>Report error/informational messages, using
 <tt>ColdFrame.Project.Logging_Support</tt>.
 
+<!--
 <p><dt><tt>ColdFrame.Project.Serialization</tt>
 
 <dd>Provides support for <i><a
 href="serialization-page.html">serializable</a></i> types; an instantiation of
 <tt>ColdFrame.Serialization_Signature</tt>
 using <tt>ColdFrame.Serialization</tt>,
+-->
 
 <p><dt><tt>ColdFrame.Project.Storage_Pools</tt>
 
 <dd>Provides a Bounded_Pool type and an Unbounded_Pool type and
 instance. The Bounded type is used for allocating instances of classes
 whose maximum extent is known, while the Unbounded type is used for
-all other allocations.
+all other classes.
 
 <br>The supplied version accesses
 <tt>ColdFrame.Bounded_Storage_Pools</tt>,
 <tt>ColdFrame.Unbounded_Storage_Pools</tt>.
 
-<br>You may find <tt>GNAT.Debug_Pools</tt>
-and/or <tt>ColdFrame.Unbounded_Debug_Storage_Pools</tt>useful.
+<br>You may find <tt>GNAT.Debug_Pools</tt> useful.
 
 <p><dt><tt>ColdFrame.Project.Task_Deletion</tt>
 
 <dd>Generated instantiations of <tt>ColdFrame.Task_Deletion_G</tt> use
 ths for the actual task deletion. As supplied, this is done
-at <tt>System.Default_Priority - 1</tt>.
+at <tt>System.Default_Priority&nbsp;-&nbsp;1</tt>.
 
 </dl>
 
@@ -365,6 +372,7 @@ type.
 
 </dl>
 
+<!--
 <h2><a name="extras">Extras</a></h2>
 
 <p>Additional packages are provided in the hope they will prove
@@ -388,6 +396,7 @@ processing statistics, in an embedded web server based on <a
 href="http://sourceforge.net/projects/embed-web-srvr/">EWS</a>.
 
 </dl>
+-->
 
 <p><hr>
 <i>

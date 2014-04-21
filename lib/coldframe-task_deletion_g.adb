@@ -25,13 +25,14 @@
 --  task isn't terminated).
 
 --  $RCSfile: coldframe-task_deletion_g.adb,v $
---  $Revision: 02d23e36c469 $
---  $Date: 2014/04/06 11:46:07 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
 --  with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Containers.Vectors;
 with Ada.Unchecked_Deallocation;
-with BC.Support.Synchronization;
+with ColdFrame.Synchronization;
 with ColdFrame.Task_Deletion;
 
 package body ColdFrame.Task_Deletion_G is
@@ -41,16 +42,20 @@ package body ColdFrame.Task_Deletion_G is
    --  The procedure that actually does the deletion. To be called at
    --  suitable intervals.
 
-   Q : Queues.Queue;
+   package Queues is new Ada.Containers.Vectors
+     (Index_Type => Positive,
+      Element_Type => Task_Type_P);
+
+   Q : Queues.Vector;
    --  The queue of tasks to be deleted.
 
-   Semaphore : aliased BC.Support.Synchronization.Semaphore;
+   Semaphore : aliased ColdFrame.Synchronization.Semaphore;
    --  Locking for Q.
 
 
    procedure Free (It : not null Task_Type_P)
    is
-      L : BC.Support.Synchronization.Lock (Semaphore'Access);
+      L : ColdFrame.Synchronization.Lock (Semaphore'Access);
       pragma Unreferenced (L);
    begin
       Queues.Append (Q, It);
@@ -61,27 +66,23 @@ package body ColdFrame.Task_Deletion_G is
    is
       procedure Free is new Ada.Unchecked_Deallocation (Task_Type,
                                                         Task_Type_P);
-      L : BC.Support.Synchronization.Lock (Semaphore'Access);
+      L : ColdFrame.Synchronization.Lock (Semaphore'Access);
       pragma Unreferenced (L);
-      It : Abstract_Containers.Iterator'Class
-        := Queues.New_Iterator (Q);
---        Count : Natural := Queues.Length (Q);
-      use Abstract_Containers;
+      It : Queues.Cursor := Q.First;
+      use type Queues.Cursor;
    begin
-      while not Is_Done (It) loop
+      while It /= Queues.No_Element loop
          declare
-            P : Task_Type_P := Current_Item (It);
+            P : Task_Type_P := Queues.Element (It);
          begin
             if Is_Terminated (P) then
---                 Count := Count - 1;
                Free (P);
-               Delete_Item_At (It);
+               Q.Delete (It);  -- NB, sets It to No_Element
             else
-               Next (It);
+               Queues.Next (It);
             end if;
          end;
       end loop;
---        Put_Line ("remaining items:" & Count'Img);
    end Delete_Terminated;
 
 

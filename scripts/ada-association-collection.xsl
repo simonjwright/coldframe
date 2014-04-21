@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-association-collection.xsl,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -51,7 +51,7 @@
 
       <xsl:text>package </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text>.From_Collections is&#10;</xsl:text>
+      <xsl:text>.From_Vectors is&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
       <!-- .. navigations .. -->
@@ -60,7 +60,7 @@
       <!-- .. and close. -->
       <xsl:text>end </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text>.From_Collections;&#10;</xsl:text>
+      <xsl:text>.From_Vectors;&#10;</xsl:text>
 
     </xsl:if>
 
@@ -77,20 +77,20 @@
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[1]/classname"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>.Vectors;&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[2]/classname"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>.Vectors;&#10;</xsl:text>
 
     <xsl:if test="associative">
       <xsl:text>with </xsl:text>
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:text>.Collections;&#10;</xsl:text>
+      <xsl:text>.Vectors;&#10;</xsl:text>
     </xsl:if>
 
   </xsl:template>
@@ -107,12 +107,11 @@
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:call-template name="ut:identification-info"/>
 
-      <!-- Context clauses. -->
-      <xsl:call-template name="ac:association-collection-body-context"/>
+      <!-- No extra context clauses. -->
 
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text>.From_Collections is&#10;</xsl:text>
+      <xsl:text>.From_Vectors is&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
       <!-- .. navigations .. -->
@@ -121,54 +120,13 @@
       <!-- .. and close. -->
       <xsl:text>end </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text>.From_Collections;&#10;</xsl:text>
+      <xsl:text>.From_Vectors;&#10;</xsl:text>
 
     </xsl:if>
 
   </xsl:template>
 
   <xsl:template match="*" mode="ac:association-collection-body"/>
-
-
-  <!-- Called at domain/association to generate context clauses for the
-       body. -->
-  <xsl:template name="ac:association-collection-body-context">
-
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="role[1]/classname"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    <xsl:if test="role[2]/@multiple">
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="role[1]/classname"/>
-      <xsl:text>.Sets;&#10;</xsl:text>
-    </xsl:if>
-
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="role[2]/classname"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    <xsl:if test="role[1]/@multiple">
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="role[2]/classname"/>
-      <xsl:text>.Sets;&#10;</xsl:text>
-    </xsl:if>
-
-    <xsl:if test="associative">
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="associative"/>
-      <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    </xsl:if>
-
-  </xsl:template>
 
 
   <!-- Called at domain/association to generate the navigation function
@@ -390,7 +348,7 @@
       select="/domain/class[name=$associative]/abbreviation"/>
     <xsl:text> : constant </xsl:text>
     <xsl:value-of select="$c"/>
-    <xsl:text>.Collections.Collection&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector&#10;</xsl:text>
     <xsl:value-of select="$IIC"/>
     <xsl:text>:= </xsl:text>
     <xsl:value-of select="$role-a/name"/>
@@ -615,11 +573,11 @@
     <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
     <xsl:text> : </xsl:text>
     <xsl:value-of select="$role-a/classname"/>
-    <xsl:text>.Collections.Collection)&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector)&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$role-b/classname"/>
-    <xsl:text>.Collections.Collection</xsl:text>
+    <xsl:text>.Vectors.Vector</xsl:text>
 
   </xsl:template>
 
@@ -641,11 +599,11 @@
     <xsl:value-of select="/domain/class[name=$assoc]/abbreviation"/>
     <xsl:text> : </xsl:text>
     <xsl:value-of select="$assoc"/>
-    <xsl:text>.Collections.Collection)&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector)&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$role-b/classname"/>
-    <xsl:text>.Collections.Collection</xsl:text>
+    <xsl:text>.Vectors.Vector</xsl:text>
 
   </xsl:template>
 
@@ -667,11 +625,11 @@
     <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
     <xsl:text> : </xsl:text>
     <xsl:value-of select="$role-a/classname"/>
-    <xsl:text>.Collections.Collection)&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector)&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$assoc"/>
-    <xsl:text>.Collections.Collection</xsl:text>
+    <xsl:text>.Vectors.Vector</xsl:text>
 
   </xsl:template>
 
@@ -685,16 +643,14 @@
     <xsl:param name="role-a"/>  <!-- node for source role -->
 
     <!-- from one to one
-            In_It : {a}.Abstract_Containers.Iterator'Class
-              := {a}.Collections.New_Iterator ({a-abbrev});
+            In_It : {a}.Vectors.Cursor := {a-abbrev}.First;
             T : {b}.Handle;
-            Result : {b}.Collections.Collection;
-            use {a}.Abstract_Containers;
+            Result : {b}.Vectors.Vector;
+            use {a}.Vectors;
             use {b};
-            use {b}.Collections;
          begin
-            while not Is_Done (In_It) loop
-               T := {role-a} (Current_Item (In_It));
+            while In_It /= No_Element loop
+               T := {role-a} (Element (In_It));
                if T /= null then
                   Append (Result, T);
                end if;
@@ -707,14 +663,9 @@
     <xsl:value-of select="$II"/>
     <xsl:text>In_It : </xsl:text>
     <xsl:value-of select="$a"/>
-    <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
-
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= </xsl:text>
-    <xsl:value-of select="$a"/>
-    <xsl:text>.Collections.New_Iterator (</xsl:text>
+    <xsl:text>.Vectors.Cursor := </xsl:text>
     <xsl:value-of select="../class[name=$a]/abbreviation"/>
-    <xsl:text>);&#10;</xsl:text>
+    <xsl:text>.First;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>T : </xsl:text>
@@ -724,33 +675,28 @@
     <xsl:value-of select="$II"/>
     <xsl:text>Result : </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.Collection;&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$a"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>.Vectors;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$b"/>
     <xsl:text>;&#10;</xsl:text>
 
-    <xsl:value-of select="$II"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
-
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>while not Is_Done (In_It) loop&#10;</xsl:text>
+    <xsl:text>while In_It /= No_Element loop&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>T := </xsl:text>
     <xsl:value-of select="$role-a/name"/>
-    <xsl:text> (Current_Item (In_It));&#10;</xsl:text>
+    <xsl:text> (Element (In_It));&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>if T /= null then&#10;</xsl:text>
@@ -788,30 +734,18 @@
     <xsl:param name="role-a"/>  <!-- node for source role -->
 
     <!-- from many to one
-            In_It : {a}.Abstract_Containers.Iterator'Class
-              := {a}.Collections.New_Iterator ({a-abbrev});
+            In_It : {a}.Vectors.Cursor := {a-abbrev}.First;
             T : {b}.Handle;
-            Tmp : {b}.Sets.Set;
-            Tmp_It : {b}.Abstract_Containers.Iterator'Class
-              := {b}.Sets.New_Iterator (Tmp);
-            Result : {b}.Collections.Collection;
-            use {a}.Abstract_Containers;
+            Result : {b}.Vectors.Vector;
+            use {a}.Vectors;
             use {b};
-            use {b}.Abstract_Containers;
-            use {b}.Collections;
-            use {b}.Sets;
          begin
-            while not Is_Done (In_It) loop
-               T := {role-a} (Current_Item (In_It));
-               if T /= null then
-                   Add (Tmp, T);
+            while In_It /= No_Element loop
+               T := {role-a} (Element (In_It));
+               if T /= null and then not Result.Contains (T) then
+                   Result.Append ( T);
                end if;
                Next (In_It);
-            end loop;
-            Reset (Tmp_It);
-            while not Is_Done (Tmp_It) loop
-               Append (Result, Current_Item (Tmp_It));
-               Next (Tmp_It);
             end loop;
             return Result;
          end {role-a};
@@ -820,14 +754,9 @@
     <xsl:value-of select="$II"/>
     <xsl:text>In_It : </xsl:text>
     <xsl:value-of select="$a"/>
-    <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
-
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= </xsl:text>
-    <xsl:value-of select="$a"/>
-    <xsl:text>.Collections.New_Iterator (</xsl:text>
+    <xsl:text>.Vectors.Cursor := </xsl:text>
     <xsl:value-of select="../class[name=$a]/abbreviation"/>
-    <xsl:text>);&#10;</xsl:text>
+    <xsl:text>.First;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>T : </xsl:text>
@@ -835,87 +764,42 @@
     <xsl:text>.Handle;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>Tmp : </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Sets.Set;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>Tmp_It : </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
-
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Sets.New_Iterator (Tmp);&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
     <xsl:text>Result : </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.Collection;&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$a"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>.Vectors;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$b"/>
     <xsl:text>;&#10;</xsl:text>
 
-    <xsl:value-of select="$II"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Sets;&#10;</xsl:text>
-
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>while not Is_Done (In_It) loop&#10;</xsl:text>
+    <xsl:text>while In_It /= No_Element loop&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>T := </xsl:text>
     <xsl:value-of select="$role-a/name"/>
-    <xsl:text> (Current_Item (In_It));&#10;</xsl:text>
+    <xsl:text> (Element (In_It));&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
-    <xsl:text>if T /= null then&#10;</xsl:text>
+    <xsl:text>if T /= null and then not Result.Contains (T) then&#10;</xsl:text>
 
     <xsl:value-of select="$IIII"/>
-    <xsl:text>Add (Tmp, T);&#10;</xsl:text>
+    <xsl:text>Result.Append (T);&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>end if;&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>Next (In_It);&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>end loop;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>Reset (Tmp_It);&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>while not Is_Done (Tmp_It) loop&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
-    <xsl:text>Append (Result, Current_Item (Tmp_It));&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
-    <xsl:text>Next (Tmp_It);&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>end loop;&#10;</xsl:text>
@@ -940,24 +824,13 @@
     <xsl:param name="b"/>       <!-- name of target class -->
     <xsl:param name="role-a"/>  <!-- node for source role -->
 
-    <!-- from one to many
-            In_It : {a}.Abstract_Containers.Iterator'Class
-              := {a}.Collections.New_Iterator ({a-abbrev});
-            T : {b}.Collections.Collection;
-            T_It : {b}.Abstract_Containers.Iterator'Class
-              := {b}.Collections.New_Iterator (T);
-            Result : {b}.Collections.Collection;
-            use {a}.Abstract_Containers;
-            use {b}.Abstract_Containers;
-            use {b}.Collections;
+    <!-- from one to many (=> no need to check for multiple B's)
+            In_It : {a}.Vectors.Cursor := {a-abbrev}.First;
+            Result : {b}.Vectors.Vector;
+            use {a}.Vectors;
          begin
-            while not Is_Done (In_It) loop
-               T := {role-a} (Current_Item (In_It));
-               Reset (T_It);
-               while not Is_Done (T_It) loop
-                  Append (Result, Current_Item (T_It));
-                  Next (T_It);
-               end loop;
+            while In_It /= No_Element loop
+               Result.Append ({role-a} (Element (In_It));
                Next (In_It);
             end loop;
             return Result;
@@ -967,75 +840,30 @@
     <xsl:value-of select="$II"/>
     <xsl:text>In_It : </xsl:text>
     <xsl:value-of select="$a"/>
-    <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
-
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= </xsl:text>
-    <xsl:value-of select="$a"/>
-    <xsl:text>.Collections.New_Iterator (</xsl:text>
+    <xsl:text>.Vectors.Cursor := </xsl:text>
     <xsl:value-of select="../class[name=$a]/abbreviation"/>
-    <xsl:text>);&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>T : </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.Collection;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>T_It : </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
-
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.New_Iterator (T);&#10;</xsl:text>
+    <xsl:text>.First;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>Result : </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.Collection;&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$a"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>.Vectors;&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>while not Is_Done (In_It) loop&#10;</xsl:text>
+    <xsl:text>while In_It /= No_Element loop&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
-    <xsl:text>T := </xsl:text>
+    <xsl:text>Result.Append (</xsl:text>
     <xsl:value-of select="$role-a/name"/>
-    <xsl:text> (Current_Item (In_It));&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
-    <xsl:text>Reset (T_It);&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
-    <xsl:text>while not Is_Done (T_It) loop&#10;</xsl:text>
-
-    <xsl:value-of select="$IIII"/>
-    <xsl:text>Append (Result, Current_Item (T_It));&#10;</xsl:text>
-
-    <xsl:value-of select="$IIII"/>
-    <xsl:text>Next (T_It);&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
-    <xsl:text>end loop;&#10;</xsl:text>
+    <xsl:text> (Element (In_It)));&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>Next (In_It);&#10;</xsl:text>

@@ -428,7 +428,7 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
-      Ada.Text_IO.Put_line
+      Ada.Text_IO.Put_Line
         ("** expecting "
            & """ColdFrame: INFO: Queue overrun ...""");
       for I in 1 .. 5 loop

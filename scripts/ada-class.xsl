@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 02d23e36c469 2014/04/06 11:46:07 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -321,14 +321,9 @@
      <xsl:otherwise>
        <!-- Use a Map. -->
 
-       <!-- .. the Instance_Identifier_Equality function spec .. -->
-       <xsl:value-of select="$I"/>
-       <xsl:text>function Instance_Identifier_Equality (L, R : Instance) return Boolean;&#10;</xsl:text>
-       <xsl:value-of select="$blank-line"/>
-
        <!-- .. the Instance_Hash function spec .. -->
        <xsl:value-of select="$I"/>
-       <xsl:text>function Instance_Hash (I : Instance) return Natural;&#10;</xsl:text>
+       <xsl:text>function Instance_Hash (I : Identifier) return Ada.Containers.Hash_Type;&#10;</xsl:text>
        <xsl:value-of select="$blank-line"/>
 
        <xsl:choose>
@@ -372,42 +367,24 @@
        </xsl:choose>
 
        <!-- .. the instance container .. -->
-       <xsl:choose>
+       <xsl:value-of select="$I"/>
+       <xsl:text>package Containers is new Ada.Containers.Hashed_Maps&#10;</xsl:text>
 
-         <xsl:when test="$max &lt;= $max-bounded-container">
-           <!-- Wnen the size isn't too big, use the Bounded version -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>package Maps renames ColdFrame.Instances.Bounded_Maps;&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-           <xsl:value-of select="$I"/>
-           <xsl:text>The_Container : Maps.Unconstrained_Map&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text>(Number_Of_Buckets =&gt; </xsl:text>
-           <xsl:call-template name="cl:hash-buckets"/>
-           <xsl:text>,&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text> Maximum_Size =&gt; </xsl:text>
-           <xsl:value-of select="$max"/>
-           <xsl:text>);&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-         </xsl:when>
+       <xsl:value-of select="$IC"/>
+       <xsl:text>(Key_Type => Identifier,&#10;</xsl:text>
+       <xsl:value-of select="$IC"/>
+       <xsl:text> Element_Type => Handle,&#10;</xsl:text>
+       <xsl:value-of select="$IC"/>
+       <xsl:text> Hash => Instance_Hash,&#10;</xsl:text>
+       <xsl:value-of select="$IC"/>
+       <xsl:text> Equivalent_Keys => "=",&#10;</xsl:text>
+       <xsl:value-of select="$IC"/>
+       <xsl:text> "=" => "=");&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
 
-         <xsl:otherwise>
-           <!-- Use the Unbounded version -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>package Maps renames ColdFrame.Instances.Unbounded_Maps;&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-           <xsl:value-of select="$I"/>
-           <xsl:text>The_Container : Maps.Unconstrained_Map&#10;</xsl:text>
-
-           <xsl:value-of select="$IC"/>
-           <xsl:text>(Number_Of_Buckets =&gt; </xsl:text>
-           <xsl:call-template name="cl:hash-buckets"/>
-           <xsl:text>);&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-         </xsl:otherwise>
-
-       </xsl:choose>
+       <xsl:value-of select="$I"/>
+       <xsl:text>The_Container : Containers.Map;&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
 
      </xsl:otherwise>
 
@@ -512,6 +489,12 @@
 
         </xsl:if>
 
+        <!-- Need Maps if there's more than one instance and we aren't
+             using arrays. -->
+        <xsl:if test="$max &gt; 1 and $array = 'no'">
+          <xsl:text>with Ada.Containers.Hashed_Maps;&#10;</xsl:text>
+        </xsl:if>
+
         <!-- Check for Unbounded_Strings. -->
         <xsl:if test="attribute/type='Unbounded_String'
                       or $ancestors/operation/parameter/type='Unbounded_String'
@@ -554,8 +537,7 @@
           name="other-classes"
           select="$counterpart/name
                   | /domain/class[name != current()/name]/name"/>
-        <xsl:if test="($max &gt; 1 and $array = 'no')
-                      or ($max &gt; 0 and not(statemachine))
+        <xsl:if test="($max &gt; 0 and not(statemachine))
                       or attribute[type=$other-classes]
                       or attribute[@refers=$other-classes]
                       or operation/parameter[type=$other-classes]
@@ -820,17 +802,6 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
-    <!-- .. the key instance for Find, and its mutex, if we're using a
-         Map .. -->
-
-    <xsl:if test="$max &gt; 1 and $array = 'no'">
-      <xsl:value-of select="$I"/>
-      <xsl:text>Find_Key : aliased Instance;&#10;</xsl:text>
-      <xsl:value-of select="$I"/>
-      <xsl:text>Find_Key_Mutex : aliased BC.Support.Synchronization.Semaphore;&#10;</xsl:text>
-      <xsl:value-of select="$blank-line"/>
-    </xsl:if>
-
     <!-- .. for active classes, -->
     <xsl:if test="@active">
 
@@ -860,6 +831,7 @@
 
       <!-- .. the set-the-identifier operation .. -->
       <!-- XXX what's the logic here? -->
+      <!--
       <xsl:if test="not(@singleton or @public) and
                     ($max &gt; 1 or
                      count(attribute[@identifier]) &gt; 1 or
@@ -867,7 +839,7 @@
         <xsl:call-template name="cl:set-identifier-procedure"/>
         <xsl:value-of select="$blank-line"/>
       </xsl:if>
-
+      -->
       <!-- .. the creation and deletion operations .. -->
       <xsl:call-template name="cl:create-function-body"/>
       <xsl:value-of select="$blank-line"/>
@@ -908,14 +880,13 @@
 
       <xsl:if test="$max &gt; 1 and $array = 'no'">
 
-        <!-- .. the Instance_Identifier_Equality function body .. -->
-        <xsl:call-template name="cl:instance-identifier-equality-body"/>
-
         <!-- .. the hash function stub .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>function Instance_Hash (I : Instance) return Natural is separate;&#10;</xsl:text>
+        <xsl:text>function Instance_Hash (I : Identifier) return Ada.Containers.Hash_Type&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>is separate;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
@@ -1058,12 +1029,6 @@
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- We need BC exceptions and synchronisation if we're using
-             a Map. -->
-        <xsl:if test="$max &gt; 1 and $array = 'no'">
-          <xsl:text>with BC.Support.Synchronization;&#10;</xsl:text>
-        </xsl:if>
-
         <!-- We need ColdFrame exceptions if we have any instances. -->
         <xsl:if test="$max &gt; 0">
           <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
@@ -1148,33 +1113,6 @@
 
     </xsl:choose>
 
-  </xsl:template>
-
-
-  <!-- Called to generate the Set_Identifier procedure . -->
-  <xsl:template name="cl:set-identifier-procedure">
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Set_Identifier (H : Handle; With_Identifier : Identifier);&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>pragma Inline_Always (Set_Identifier);&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Set_Identifier (H : Handle; With_Identifier : Identifier) is&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:for-each select="attribute[@identifier]">
-      <xsl:value-of select="$II"/>
-      <xsl:text>H.</xsl:text>
-      <xsl:call-template name="at:attribute-name"/>
-      <xsl:text>&#10;</xsl:text>
-      <xsl:value-of select="$IIC"/>
-      <xsl:text>:= With_Identifier.</xsl:text>
-      <xsl:call-template name="at:attribute-name"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:for-each>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>end Set_Identifier;&#10;</xsl:text>
   </xsl:template>
 
 
@@ -1356,18 +1294,25 @@
 
       <xsl:when test="count(attribute[@identifier])=1
                       and attribute[@identifier]/type='Autonumber'">
-        <xsl:variable name="id" select="attribute[@identifier]/name"/>
         <xsl:value-of select="$II"/>
         <xsl:text>Result.</xsl:text>
-        <xsl:value-of select="$id"/>
+        <xsl:value-of select="attribute[@identifier]/name"/>
         <xsl:text> := Next_Identifier;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Next_Identifier := Next_Identifier + 1;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:value-of select="$II"/>
-        <xsl:text>Set_Identifier (Result, With_Identifier);&#10;</xsl:text>
+        <xsl:for-each select="attribute[@identifier]">
+          <xsl:value-of select="$II"/>
+          <xsl:text>Result.</xsl:text>
+          <xsl:call-template name="at:attribute-name"/>
+          <xsl:text>&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>:= With_Identifier.</xsl:text>
+          <xsl:call-template name="at:attribute-name"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:for-each>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -1404,15 +1349,20 @@
         <xsl:text>) := Result;&#10;</xsl:text>
       </xsl:when>
 
+      <xsl:when test="count(attribute[@identifier])=1
+                      and attribute[@identifier]/type='Autonumber'">
+        <xsl:variable name="id" select="attribute[@identifier]/name"/>
+        <xsl:value-of select="$II"/>
+        <xsl:text>The_Container.Insert ((</xsl:text>
+        <xsl:value-of select="$id"/>
+        <xsl:text> => Result.</xsl:text>
+        <xsl:value-of select="$id"/>
+        <xsl:text>), Result);&#10;</xsl:text>
+      </xsl:when>
+
       <xsl:otherwise>
         <xsl:value-of select="$II"/>
-        <xsl:text>Maps.Bind&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(The_Container,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> ColdFrame.Instances.Handle (Result),&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> ColdFrame.Instances.Handle (Result));&#10;</xsl:text>
+        <xsl:text>The_Container.Insert (With_Identifier, Result);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -1438,7 +1388,7 @@
       <xsl:value-of select="$I"/>
       <xsl:text>exception&#10;</xsl:text>
       <xsl:value-of select="$II"/>
-      <xsl:text>when BC.Duplicate =&gt; raise ColdFrame.Exceptions.Duplicate;&#10;</xsl:text>
+      <xsl:text>when Constraint_Error =&gt; raise ColdFrame.Exceptions.Duplicate;&#10;</xsl:text>
     </xsl:if>
 
 
@@ -1596,36 +1546,25 @@
       <xsl:otherwise>
 
         <!--
-                L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);
-                pragma Unreferenced (L);
              begin
-                Set_Identifier (Find_Key'Access, With_Identifier);
-                if not Maps.Is_Bound (The_Container, Find_Key'Access) then
+                if not The_Container.Contains (With_Identifier) then
                    raise ColdFrame.Exceptions.Not_Found;
                 end if;
-                This := Handle (Maps.Item_Of (The_Container, Find_Key'Unchecked_Access));
+                This := The_Container.Element (With_Identifier);
              -->
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Unreferenced (L);&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>Set_Identifier (Find_Key'Access, With_Identifier);&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>if not Maps.Is_Bound (The_Container, Find_Key'Unchecked_Access) then&#10;</xsl:text>
+        <xsl:text>if not The_Container.Contains (With_Identifier) then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>This := Handle (Maps.Item_Of (The_Container, Find_Key'Unchecked_Access));&#10;</xsl:text>
+        <xsl:text>This := The_Container.Element (With_Identifier);&#10;</xsl:text>
 
       </xsl:otherwise>
 
@@ -1783,13 +1722,28 @@
 
       <xsl:otherwise>
 
+        <!--
+             The_Container.Delete
+               (({attr} => This.{attr},
+                 {attr} => This.{attr}));
+             -->
         <!-- Remove from the container .. -->
         <xsl:value-of select="$II"/>
-        <xsl:text>Maps.Unbind&#10;</xsl:text>
+        <xsl:text>The_Container.Delete&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
-        <xsl:text>(The_Container,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> ColdFrame.Instances.Handle (This));&#10;</xsl:text>
+        <xsl:text>((</xsl:text>
+
+        <xsl:for-each select="attribute[@identifier]">
+          <xsl:call-template name="at:attribute-name"/>
+          <xsl:text> =&gt; This.</xsl:text>
+          <xsl:call-template name="at:attribute-name"/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,&#10;    </xsl:text>
+            <xsl:value-of select="$II"/>
+          </xsl:if>
+        </xsl:for-each>
+
+        <xsl:text>));&#10;</xsl:text>
 
         <!-- .. and free the instance. -->
         <xsl:value-of select="$II"/>
@@ -2040,32 +1994,21 @@
       <xsl:otherwise>
 
         <!--
-                L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);
-                pragma Unreferenced (L);
              begin
-                Set_Identifier (Find_Key'Access, With_Identifier);
-                if Maps.Is_Bound (The_Container, Find_Key'Access) then
-                   return Handle (Maps.Item_Of (The_Container, Find_Key'Access));
+                if The_Container.Contains (With_Identifier) then
+                   return The_Container.Element (With_Identifier);
                 else
                    return null;
                 end if;
              -->
 
-        <xsl:value-of select="$II"/>
-        <xsl:text>L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Unreferenced (L);&#10;</xsl:text>
-
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>Set_Identifier (Find_Key'Access, With_Identifier);&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>if Maps.Is_Bound (The_Container, Find_Key'Access) then&#10;</xsl:text>
+        <xsl:text>if The_Container.Contains (With_Identifier) then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
-        <xsl:text>return Handle (Maps.Item_Of (The_Container, Find_Key'Access));&#10;</xsl:text>
+        <xsl:text>return The_Container.Element (With_Identifier);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
         <xsl:value-of select="$III"/>
@@ -2232,50 +2175,6 @@
   <xsl:template mode="cl:initialization" match="*"/>
 
 
-  <!-- Called from domain/class to generate the instance identifier
-       equality function. -->
-  <xsl:template name="cl:instance-identifier-equality-body">
-
-    <!-- collect all the identifying attributes -->
-    <xsl:variable name="identifiers" select="attribute[@identifier]"/>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>function Instance_Identifier_Equality (L, R : Instance) return Boolean is&#10;</xsl:text>
-
-    <xsl:if test="$identifiers/@refers">
-      <xsl:value-of select="$II"/>
-      <xsl:text>use type ColdFrame.Instances.Handle;&#10;</xsl:text>
-    </xsl:if>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:for-each select="$identifiers">
-      <xsl:variable name="name">
-        <xsl:call-template name="at:attribute-name"/>
-      </xsl:variable>
-      <xsl:value-of select="$II"/>
-      <xsl:text>if L.</xsl:text>
-      <xsl:value-of select="$name"/>
-      <xsl:text> /= R.</xsl:text>
-      <xsl:value-of select="$name"/>
-      <xsl:text> then&#10;</xsl:text>
-      <xsl:value-of select="$III"/>
-      <xsl:text>return False;&#10;</xsl:text>
-      <xsl:value-of select="$II"/>
-      <xsl:text>end if;&#10;</xsl:text>
-    </xsl:for-each>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>return True;&#10;</xsl:text>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>end Instance_Identifier_Equality;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-
-  </xsl:template>
-
-
   <!-- Called from domain/class to generate the separate hash function. -->
   <xsl:template name="cl:hash-function-body">
 
@@ -2316,11 +2215,11 @@
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text>)&#10;</xsl:text>
-    <xsl:text>function Instance_Hash (I : Instance) return Natural is&#10;</xsl:text>
+    <xsl:text>function Instance_Hash (I : Identifier) return Ada.Containers.Hash_Type is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>type M is mod 2**31;&#10;</xsl:text>
+    <xsl:text>Result : Ada.Containers.Hash_Type := 0;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>Result : M := 0;&#10;</xsl:text>
+    <xsl:text>use Ada.Containers;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:for-each select="$identifiers">
@@ -2339,11 +2238,11 @@
         <xsl:when test="type='Autonumber'">
 
           <!-- Must be the only identifying attribute.
-               Result := Result xor M ({type-name}'Pos (I.{name}));
+               Result := Result xor Hash_Type ({type-name}'Pos (I.{name}));
                -->
 
           <xsl:value-of select="$I"/>
-          <xsl:text>Result := Result xor M (I.</xsl:text>
+          <xsl:text>Result := Result xor Hash_Type (I.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text> mod 2**31);&#10;</xsl:text>
 
@@ -2352,11 +2251,11 @@
         <xsl:when test="$type/integer or type='Integer'">
 
           <!--
-               Result := Result xor M ({type-name}'Pos (I.{name}) mod 2**30);
+               Result := Result xor Hash_Type ({type-name}'Pos (I.{name}) mod 2**30);
                -->
 
           <xsl:value-of select="$I"/>
-          <xsl:text>Result := Result xor M (</xsl:text>
+          <xsl:text>Result := Result xor Hash_Type (</xsl:text>
           <xsl:value-of select="$type-name"/>
           <xsl:text>'Pos (I.</xsl:text>
           <xsl:value-of select="name"/>
@@ -2387,19 +2286,18 @@
           <!-- A Bounded_String. We specify the domain name because GNAT
                wants it ..
                Result := Result xor
-                 M ({domain-name}.{type-name}_Hash (I.{name}));
+                 {domain-name}.{type-name}_Hash (I.{name});
                -->
 
           <xsl:value-of select="$I"/>
           <xsl:text>Result := Result xor&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
-          <xsl:text>M (</xsl:text>
           <xsl:value-of select="../../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="$type-name"/>
           <xsl:text>_Hash (I.</xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text>));&#10;</xsl:text>
+          <xsl:text>);&#10;</xsl:text>
 
         </xsl:when>
 
@@ -2407,15 +2305,15 @@
 
           <!-- A standard string ..
                Result := Result xor
-                 M (ColdFrame.Hash.Strings.Standard (I.{name}));
+                 ColdFrame.Hash.Strings.Standard (I.{name});
                -->
 
           <xsl:value-of select="$I"/>
           <xsl:text>Result := Result xor&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
-          <xsl:text>M (ColdFrame.Hash.Strings.Standard (I.</xsl:text>
+          <xsl:text>ColdFrame.Hash.Strings.Standard (I.</xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text>));&#10;</xsl:text>
+          <xsl:text>);&#10;</xsl:text>
 
         </xsl:when>
 
@@ -2423,36 +2321,33 @@
 
           <!--
                Result := Result
-                 xor M (ColdFrame.Hash.Strings.Unbounded (I.{name}));
+                 xor ColdFrame.Hash.Strings.Unbounded (I.{name});
                -->
 
           <xsl:value-of select="$I"/>
           <xsl:text>Result := Result xor&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
-          <xsl:text>M (ColdFrame.Hash.Strings.Unbounded (I.</xsl:text>
+          <xsl:text>ColdFrame.Hash.Strings.Unbounded (I.</xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text>));&#10;</xsl:text>
+          <xsl:text>);&#10;</xsl:text>
 
         </xsl:when>
 
         <xsl:when test="@refers">
 
           <!--
-               Result := Result xor M
-                 (ColdFrame.Hash.Instance_Access_Hash
-                  (I.{name}));
+               Result := Result xor ColdFrame.Hash.Instance_Access_Hash
+                  (I.{name});
                -->
 
           <xsl:value-of select="$I"/>
-          <xsl:text>Result := Result xor M&#10;</xsl:text>
-          <xsl:value-of select="$IC"/>
-          <xsl:text>(ColdFrame.Hash.Instance_Access_Hash&#10;</xsl:text>
+          <xsl:text>Result := Result xor ColdFrame.Hash.Instance_Access_Hash&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
           <xsl:text> (I.</xsl:text>
           <xsl:call-template name="at:attribute-name">
             <xsl:with-param name="a" select="."/>
           </xsl:call-template>
-          <xsl:text>));&#10;</xsl:text>
+          <xsl:text>);&#10;</xsl:text>
 
         </xsl:when>
 
@@ -2470,31 +2365,10 @@
     </xsl:for-each>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>return Natural (Result);&#10;</xsl:text>
+    <xsl:text>return Result;&#10;</xsl:text>
 
     <xsl:text>end Instance_Hash;&#10;</xsl:text>
 
-  </xsl:template>
-
-
-  <!-- Called from domain/class to compute the number of hash buckets. -->
-  <xsl:template name="cl:hash-buckets">
-
-    <xsl:variable name="max">
-      <xsl:call-template name="ut:number-of-instances"/>
-    </xsl:variable>
-
-    <xsl:choose>
-
-      <xsl:when test="$max &lt; $max-hash-buckets">
-        <xsl:value-of select="$max"/>
-      </xsl:when>
-
-      <xsl:otherwise>
-        <xsl:value-of select="$max-hash-buckets"/>
-      </xsl:otherwise>
-
-    </xsl:choose>
   </xsl:template>
 
 

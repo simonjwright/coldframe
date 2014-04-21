@@ -25,6 +25,7 @@ pragma Warnings (Off);
 --  with Compilation_Regressions.Subunits;
 with Ignored_Child_Packages;
 with SF_Bug_79.Tear_Down;  -- .Tear_Down to include all generated classes.
+with Strings.Tear_Down;    -- interested in Cls.Instance_Hash.
 with Types;
 pragma Warnings (On);
 

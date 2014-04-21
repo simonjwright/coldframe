@@ -15,14 +15,15 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-hash-strings-generate.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
 --  This program generates the Character_Hash table in the private
 --  part of ColdFrame.Hash.Strings (a one-off, included for reference).
 
+with Ada.Containers;
 with Ada.Numerics.Discrete_Random;
 with Ada.Text_IO; use Ada.Text_IO;
 
@@ -32,17 +33,21 @@ procedure ColdFrame.Hash.Strings.Generate is
    procedure Init (Seed : Integer := 10009);
 
 
-   CH : array (Character) of Special_Integer;
+   CH : array (Character) of Ada.Containers.Hash_Type;
+
+   use type Ada.Containers.Hash_Type;
+
 
    procedure Init (Seed : Integer := 10009) is
-      package Random_Integer is new
-        Ada.Numerics.Discrete_Random (Result_Subtype => Special_Integer);
-      Generator : Random_Integer.Generator;
+      package Random_Hash is new
+        Ada.Numerics.Discrete_Random
+          (Result_Subtype => Ada.Containers.Hash_Type);
+      Generator : Random_Hash.Generator;
    begin
-      Random_Integer.Reset (Gen => Generator, Initiator => Seed);
+      Random_Hash.Reset (Gen => Generator, Initiator => Seed);
       for K in CH'Range loop
          CH (K) :=
-           Random_Integer.Random (Gen => Generator);
+           Random_Hash.Random (Gen => Generator);
       end loop;
    end Init;
 

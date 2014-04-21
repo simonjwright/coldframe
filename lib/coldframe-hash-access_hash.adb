@@ -19,15 +19,15 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-hash-access_hash.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
 with System.Storage_Elements;
 
 function ColdFrame.Hash.Access_Hash
-  (The_Access_Value : Access_T) return Natural is
+  (The_Access_Value : Access_T) return Ada.Containers.Hash_Type is
 begin
    if The_Access_Value = null then
       return 0;
@@ -39,8 +39,8 @@ begin
                 (The_Access_Value.all'Address);
          use type System.Storage_Elements.Integer_Address;
       begin
-         return Natural (((Integer_Address / 8) * 43) mod 10019);
+         return Ada.Containers.Hash_Type
+           (((Integer_Address / 8) * 43) mod 10019);
       end;
    end if;
 end ColdFrame.Hash.Access_Hash;
-

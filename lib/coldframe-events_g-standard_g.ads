@@ -20,13 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: fde6fd75a1a0 $
---  $Date: 2014/04/05 13:21:13 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
-with Ada.Task_Identification;
-with BC.Containers.Queues.Unbounded;
 with ColdFrame.Events_G.Held_Event_Queue_Signature;
+
+private with Ada.Containers.Vectors;
+private with Ada.Task_Identification;
 
 generic
 
@@ -87,14 +88,9 @@ package ColdFrame.Events_G.Standard_G is
 
 private
 
-   package Abstract_Posted_Event_Containers
-   is new BC.Containers (Event_P);
-   package Abstract_Posted_Event_Queues
-   is new Abstract_Posted_Event_Containers.Queues;
-   package Unbounded_Posted_Event_Queues
-   is new Abstract_Posted_Event_Queues.Unbounded
-     (Storage => Event_Storage);
-
+   package Posted_Event_Queues is new Ada.Containers.Vectors
+     (Index_Type => Positive,
+      Element_Type => Event_P);
 
    task type Dispatcher (The_Queue : access Event_Queue_Base'Class;
                          Priority : System.Priority;
@@ -119,14 +115,15 @@ private
 
    task type Held_Event_Manager (The_Queue : access Event_Queue_Base'Class) is
 
-      pragma Task_Name ("aHeldEventManager");
+      --  We need to constrain by 'Class so that internal calls to
+      --  potentially dispatching operations (such as
+      --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
+
       --  No need to specify priority (because we only deal with timed
       --  events anyway) or stack size (if anything, we could reduce
       --  it, since there's no user code to call).
 
-      --  We need to constrain by 'Class so that internal calls to
-      --  potentially dispatching operations (such as
-      --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
+      pragma Task_Name ("aHeldEventManager");
 
       entry Add_At_Event (The_Entry : Event_P;
                           To_Run_At : Time.Time);
@@ -229,9 +226,9 @@ private
                                      Storage_Size => Storage_Size)
    with record
       The_Excluder : Excluder (Event_Queue_Base'Access);
-      The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
-      The_Instance_Events : Unbounded_Posted_Event_Queues.Queue;
-      The_Class_Events : Unbounded_Posted_Event_Queues.Queue;
+      The_Self_Events : Posted_Event_Queues.Vector;
+      The_Instance_Events : Posted_Event_Queues.Vector;
+      The_Class_Events : Posted_Event_Queues.Vector;
       The_Held_Events : aliased Held_Events.Queue;
       The_Dispatcher : Dispatcher (Event_Queue_Base'Access,
                                    Priority => Priority,

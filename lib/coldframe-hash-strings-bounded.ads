@@ -19,16 +19,17 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-hash-strings-bounded.ads,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
+with Ada.Containers;
 with Ada.Strings.Bounded;
 
 generic
    with package Bounded_Strings
    is new Ada.Strings.Bounded.Generic_Bounded_Length (<>);
 function ColdFrame.Hash.Strings.Bounded
-  (S : Bounded_Strings.Bounded_String) return Natural;
+  (S : Bounded_Strings.Bounded_String) return Ada.Containers.Hash_Type;
 pragma Preelaborate (ColdFrame.Hash.Strings.Bounded);

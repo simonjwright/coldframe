@@ -9,17 +9,16 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-project-held_events.ads,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
 with Ada.Real_Time;
-with BC.Containers.Collections.Ordered.Unbounded;
-with BC.Containers.Collections.Unbounded;
 with ColdFrame.Project.Events;
-with ColdFrame.Project.Storage_Pools;
 with ColdFrame.Project.Times;
+
+private with Ada.Containers.Vectors;
 
 package ColdFrame.Project.Held_Events is
 
@@ -63,40 +62,29 @@ private
       Event : Events.Event_P;
    end record;
 
-   package Abstract_Duration_Containers
-   is new BC.Containers (Duration_Cell);
-   package Abstract_Duration_Collections
-   is new Abstract_Duration_Containers.Collections;
-   package Duration_Collections
-   is new Abstract_Duration_Collections.Unbounded
-     (Storage => ColdFrame.Project.Storage_Pools.Pool);
+   package Duration_Vectors is new Ada.Containers.Vectors
+     (Index_Type   => Positive,
+      Element_Type => Duration_Cell);
 
+   --  Used afterwards (even for plain 'delay's).
    type Time_Cell is record
       Time_To_Fire : Times.Time;
       Event : Events.Event_P;
    end record;
 
-   function "<" (L, R : Time_Cell) return Boolean;
+   --  Note that whenever we insert a Time_Cell into a
+   --  Time_Vectors.Vector, we place it after all other elements that
+   --  are at the same time or earlier.
+   package Time_Vectors is new Ada.Containers.Vectors
+     (Index_Type   => Positive,
+      Element_Type => Time_Cell);
 
-   package Abstract_Time_Containers
-   is new BC.Containers (Time_Cell);
-   package Abstract_Time_Collections
-   is new Abstract_Time_Containers.Collections;
-   package Abstract_Ordered_Time_Collections
-   is new Abstract_Time_Collections.Ordered;
-   package Initial_Time_Collections
-   is new Abstract_Time_Collections.Unbounded
-     (Storage => ColdFrame.Project.Storage_Pools.Pool);
-   package Time_Collections
-   is new Abstract_Ordered_Time_Collections.Unbounded
-     (Storage => ColdFrame.Project.Storage_Pools.Pool);
-
-   type Time_Queues is array (Times.Time_Kind) of Time_Collections.Collection;
+   type Time_Queues is array (Times.Time_Kind) of Time_Vectors.Vector;
 
    type Queue is limited record
       Started : Boolean := False;
-      Duration_Queue : Duration_Collections.Collection;
-      Initial_Queue : Initial_Time_Collections.Collection;
+      Duration_Queue : Duration_Vectors.Vector;
+      Initial_Queue : Time_Vectors.Vector;
       Queues : Time_Queues;
    end record;
 

@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
+--  $Id: van_fleet-demo.adb,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $
 
 with Ada.Calendar;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
@@ -22,15 +22,14 @@ with Van_Fleet.Customer;
 with Van_Fleet.Initialize;
 with Van_Fleet.Pool_Van.Inheritance;
 with Van_Fleet.Van.All_Instances;
-with Van_Fleet.Van.Iterate;
+with Van_Fleet.Van.Vectors;
 
 procedure Van_Fleet.Demo is
 
-   procedure Print (V : Van.Handle);
-   procedure Print is new Van.Iterate (Print);
-   procedure Print (V : Van.Handle) is
+   procedure Print (V : Van.Vectors.Cursor);
+   procedure Print (V : Van.Vectors.Cursor) is
    begin
-      Put_Line (Van.Image (V));
+      Put_Line (Van.Image (Van.Vectors.Element (V)));
    end Print;
 
 begin
@@ -116,10 +115,30 @@ begin
       when Not_Found => null;
    end;
 
-   Print (Van.All_Instances);
+   Put_Line ("printing all instances");
+   Van.All_Instances.Iterate (Print'Access);
 
+   New_Line;
+   Put_Line ("returning PBL196R");
    Van.Returned (Van.Find ((Index => To_Unbounded_String ("PBL196R"))));
-   Print (Van.All_Instances);
+
+   New_Line;
+   Put_Line ("printing all instances");
+   Van.All_Instances.Iterate (Print'Access);
+
+   New_Line;
+   Put_Line ("printing all instances (sorted)");
+   declare
+      function "<" (L, R : Van.Handle) return Boolean;
+      package Sorting is new Van.Vectors.Generic_Sorting ("<" => "<");
+      function "<" (L, R : Van.Handle) return Boolean is
+      begin
+         return Van.Image (L) < Van.Image (R);
+      end "<";
+      Instances : Van.Vectors.Vector := Van.All_Instances;
+   begin
+      Sorting.Sort (Instances);
+      Instances.Iterate (Print'Access);
+   end;
 
 end Van_Fleet.Demo;
-

@@ -12,26 +12,25 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with Ada.Containers;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with AUnit.Assertions; use AUnit.Assertions;
 with ColdFrame.Exceptions;
 
 with Library.Initialize;
 with Library.Tear_Down;
-
 with Library.Book.All_Instances;
-with Library.Book.Collections;
+with Library.Book.Vectors;
 with Library.Borrower.All_Instances;
-with Library.Borrower.Collections;
+with Library.Borrower.Vectors;
 with Library.Current;
 with Library.Current_Loan;
 with Library.History;
 with Library.Loan_History;
 
-with Library.Authorship.From_Collections;
+with Library.Authorship.From_Vectors;
 
 package body Library.Tests is
-
 
    pragma Style_Checks (Off);
 
@@ -142,86 +141,93 @@ package body Library.Tests is
 
    procedure T3 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bks : Book.Collections.Collection;
+      Bks : Book.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
       use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (null);
-      Assert (Book.Collections.Length (Bks) = 0,
-              "Book.Collections.Length (Bks) = 0");
+      Assert (Book.Vectors.Length (Bks) = 0,
+              "Book.Vectors.Length (Bks) = 0");
    end T3;
 
    procedure T4 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bks : Book.Collections.Collection;
+      Bks : Book.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
       use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (Carol);
-      Assert (Book.Collections.Length (Bks) = 0,
-              "Book.Collections.Length (Bks) = 0");
+      Assert (Book.Vectors.Length (Bks) = 0,
+              "Book.Vectors.Length (Bks) = 0");
    end T4;
 
    procedure T5 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bks : Book.Collections.Collection;
+      Bks : Book.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
       use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (Alice);
-      Assert (Book.Collections.Length (Bks) = 3,
-              "Book.Collections.Length (Bks) = 3");
-      Assert (Book.Collections.Location (Bks, Glorious_Deeds) /= 0,
-              "Book.Collections.Location (Bks, Glorious_Deeds) /= 0");
-      Assert (Book.Collections.Location (Bks, Dark_Doings) /= 0,
-              "Book.Collections.Location (Bks, Dark_Doings) /= 0");
-      Assert (Book.Collections.Location (Bks, Fiendish_Frolics) /= 0,
-              "Book.Collections.Location (Bks, Fiendish_Frolics) /= 0");
-      Assert (Book.Collections.Location (Bks, Mysterious_Happenings) = 0,
-              "Book.Collections.Location (Bks, Mysterious_Happenings) = 0");
+      Assert (Book.Vectors.Length (Bks) = 3,
+              "Book.Vectors.Length (Bks) = 3");
+      Assert (Book.Vectors.Contains (Bks, Glorious_Deeds),
+              "Book.Vectors.Contains (Bks, Glorious_Deeds)");
+      Assert (Book.Vectors.Contains (Bks, Dark_Doings),
+              "Book.Vectors.Contains (Bks, Dark_Doings)");
+      Assert (Book.Vectors.Contains (Bks, Fiendish_Frolics),
+              "Book.Vectors.Contains (Bks, Fiendish_Frolics)");
+      Assert (not Book.Vectors.Contains (Bks, Mysterious_Happenings),
+              "not Book.Vectors.Contains (Bks, Mysterious_Happenings)");
    end T5;
 
    procedure T6 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bs : Borrower.Collections.Collection;
+      Bs : Borrower.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
    begin
-      Bs := Authorship.From_Collections.Wrote (Book.Collections.Null_Container);
-      Assert (Borrower.Collections.Length (Bs) = 0,
-              "Borrower.Collections.Length (Bs) = 0");
+      Bs := Authorship.From_Vectors.Wrote (Book.Vectors.Empty_Vector);
+      Assert (Borrower.Vectors.Length (Bs) = 0,
+              "Borrower.Vectors.Length (Bs) = 0");
    end T6;
 
    procedure T7 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bs : Borrower.Collections.Collection;
+      Bs : Borrower.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
    begin
-      Bs := Authorship.From_Collections.Wrote (Book.All_Instances);
-      Assert (Borrower.Collections.Length (Bs) = 2,
-              "Borrower.Collections.Length (Bs) = 2");
-      Assert (Borrower.Collections.Location (Bs, Alice) /= 0,
-              "Borrower.Collections.Location (Bs, Alice) /= 0");
-      Assert (Borrower.Collections.Location (Bs, Bob) /= 0,
-              "Borrower.Collections.Location (Bs, Bob) /= 0");
-      Assert (Borrower.Collections.Location (Bs, Carol) = 0,
-              "Borrower.Collections.Location (Bs, Carol) = 0");
-      Assert (Borrower.Collections.Location (Bs, Dave) = 0,
-              "Borrower.Collections.Location (Bs, Dave) = 0");
+      Bs := Authorship.From_Vectors.Wrote (Book.All_Instances);
+      Assert (Borrower.Vectors.Length (Bs) = 2,
+              "Borrower.Vectors.Length (Bs) = 2");
+      Assert (Borrower.Vectors.Contains (Bs, Alice),
+              "Borrower.Vectors.Contains (Bs, Alice)");
+      Assert (Borrower.Vectors.Contains (Bs, Bob),
+              "Borrower.Vectors.Contains (Bs, Bob)");
+      Assert (not Borrower.Vectors.Contains (Bs, Carol),
+              "Borrower.Vectors.Contains (Bs, Carol)");
+      Assert (not Borrower.Vectors.Contains (Bs, Dave),
+              "not Borrower.Vectors.Contains (Bs, Dave)");
    end T7;
 
    procedure T8 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bks : Book.Collections.Collection;
+      Bks : Book.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
    begin
-      Bks := Authorship.From_Collections.Was_Written_By
-        (Borrower.Collections.Null_Container);
-      Assert (Book.Collections.Length (Bks) = 0,
-              "Book.Collections.Length (Bks) = 0");
+      Bks := Authorship.From_Vectors.Was_Written_By
+        (Borrower.Vectors.Empty_Vector);
+      Assert (Book.Vectors.Length (Bks) = 0,
+              "Book.Vectors.Length (Bks) = 0");
    end T8;
 
    procedure T9 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bks : Book.Collections.Collection;
+      Bks : Book.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
    begin
-      Bks := Authorship.From_Collections.Was_Written_By
+      Bks := Authorship.From_Vectors.Was_Written_By
         (Borrower.All_Instances);
-      Assert (Book.Collections.Length (Bks) = 4,
-              "Book.Collections.Length (Bks) = 4");
+      Assert (Book.Vectors.Length (Bks) = 4,
+              "Book.Vectors.Length (Bks) = 4");
    end T9;
 
    procedure T10 (T : in out AUnit.Test_Cases.Test_Case'Class) is
@@ -264,11 +270,12 @@ package body Library.Tests is
 
    procedure T14 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Bks : Book.Collections.Collection;
+      Bks : Book.Vectors.Vector;
+      use type Ada.Containers.Count_Type;
    begin
       Bks := Current.Is_On_Loan_To (null);
-      Assert (Book.Collections.Length (Bks) = 0,
-              "Book.Collections.Length (Bks) = 0");
+      Assert (Book.Vectors.Length (Bks) = 0,
+              "Book.Vectors.Length (Bks) = 0");
    end T14;
 
    procedure Register_Tests (T : in out Test_Case) is
@@ -279,10 +286,10 @@ package body Library.Tests is
       Register_Routine (T, T3'Access, "1:mc, a->b, null input handle");
       Register_Routine (T, T4'Access, "1:mc, a->b, empty result");
       Register_Routine (T, T5'Access, "1:mc, a->b, multiple results");
-      Register_Routine (T, T6'Access, "1:mc, collection b->a, null input");
-      Register_Routine (T, T7'Access, "1:mc, collection b->a");
-      Register_Routine (T, T8'Access, "1:mc, collection a->b, null input");
-      Register_Routine (T, T9'Access, "1:mc, collection a->b");
+      Register_Routine (T, T6'Access, "1:mc, vector b->a, null input");
+      Register_Routine (T, T7'Access, "1:mc, vector b->a");
+      Register_Routine (T, T8'Access, "1:mc, vector a->b, null input");
+      Register_Routine (T, T9'Access, "1:mc, vector a->b");
       Register_Routine (T, T10'Access, "1-(1c:mc), create duplicate link");
       Register_Routine (T, T11'Access, "1-(1c:mc), b->a, null input handle");
       Register_Routine (T, T12'Access, "1-(1c:mc), b->a, null result");

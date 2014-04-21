@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-button-changed.adb,v $
---  $Revision: 4ee79f54b785 $
---  $Date: 2014/04/04 12:46:49 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
 --  Acts as receiver of state changes from Digital IO, via Signal
@@ -22,7 +22,7 @@
 --  Button_Pushed events to the Lamps which are controlled by that
 --  Button. Button releases are ignored.
 
-with House_Management.Lamp.Collections;
+with House_Management.Lamp.Vectors;
 with House_Management.Lamp.Iterate;
 with House_Management.A1;
 
@@ -57,7 +57,7 @@ begin
             end Button_Pushed;
 
             BH : constant Handle := Find ((Name => Buttons (S.S)));
-            LHS : constant Lamp.Collections.Collection
+            LHS : constant Lamp.Vectors.Vector
               := A1.Is_Controlled_By (BH);
          begin
             Process (LHS);

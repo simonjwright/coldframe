@@ -9,24 +9,24 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-project-logging_support.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
 with Ada.Text_IO;
-with BC.Support.Synchronization;
+with ColdFrame.Synchronization;
 
 package body ColdFrame.Project.Logging_Support is
 
 
    --  Used to protect access to the "output log message" "resource".
-   Sem : aliased BC.Support.Synchronization.Semaphore;
+   Sem : aliased ColdFrame.Synchronization.Semaphore;
 
 
    procedure Log (Severity : Severity_Code; Message : String) is
       --  Lock the resource ..
-      L : BC.Support.Synchronization.Lock (Sem'Access);
+      L : ColdFrame.Synchronization.Lock (Sem'Access);
       pragma Warnings (Off, L);
       --  .. resource now locked.
    begin

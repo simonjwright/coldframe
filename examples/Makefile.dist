@@ -32,16 +32,15 @@ DATE = $(subst cf-,,$(notdir $(DIST)))
 STAIRWELL_DEMO =						\
   stairwell_demo.gpr						\
   stairwelllights.tcl						\
-  Digital_IO.impl/digital_io-application-set_output.adb		\
-  Digital_IO.impl/digital_io-hci-get_state.adb			\
-  Digital_IO.impl/digital_io-hci-set_input.adb			\
-  Digital_IO.impl/digital_io-input-changed.adb			\
-  Digital_IO.impl/digital_io-output-changed.adb			\
-  Digital_IO.impl/digital_io-signal-initialize.adb		\
-  Digital_IO.impl/digital_io-signal-set_state.adb		\
+  Digital_IO.impl/digital_io-set.adb				\
+  Digital_IO.impl/digital_io_support.adb			\
+  Digital_IO.impl/digital_io_support.ads			\
+  Digital_IO.Tcl.impl/digital_io-tcl-hci-set_input.adb		\
+  Digital_IO.Tcl.impl/digital_io-tcl_support.adb		\
+  Digital_IO.Tcl.impl/digital_io-tcl_support.ads		\
+  Digital_IO.RasPi.impl/digital_io-raspi_support.adb		\
+  Digital_IO.RasPi.impl/digital_io-raspi_support.ads		\
   House_Management.impl/house_management-button-changed.adb	\
-  House_Management.impl/house_management-button-initialize.adb	\
-  House_Management.impl/house_management-button-pushed.adb	\
   House_Management.impl/house_management-events-initialize.adb	\
   House_Management.impl/house_management-lamp-clear_timeout.adb	\
   House_Management.impl/house_management-lamp-initialize.adb	\
@@ -133,7 +132,7 @@ VAN_FLEET =						\
   Van_Fleet.impl/van_fleet-van-lend.adb			\
   Van_Fleet.impl/van_fleet-van-returned.adb
 
-ALL = $(STAIRWELL_DEMO) $(HOUSE_MANAGEMENT_TEST) $(SERIALIZATION)	\
+ALL = $(STAIRWELL_DEMO) $(HOUSE_MANAGEMENT_TEST)			\
   $(INTERRUPT_HANDLING) $(LIBRARY) $(PERFORMANCE) $(PROBLEM_REPORTING)	\
   $(STATES) $(VAN_FLEET)
 

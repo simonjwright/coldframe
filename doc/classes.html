@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v e3150056b314 2013/04/20 12:59:49 simonjwright $ -->
+<!-- $Id: classes.html,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <head>
 <title>ColdFrame: Classes</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -210,98 +210,76 @@ following additional library units are generated:
 
 <dl>
 
-<dt><tt><i>Domain.Class</i>.Abstract_Containers</tt>
-<dd>A basic instantiation of the Booch Components for class
-<tt>Handle</tt>s. Supports iteration.
+<dt><tt><i>Domain.Class</i>.Vectors</tt>
+<dd>An instantiation of Ada.Containers.Vectors with <tt>Handle</tt>s.
 
 <pre>
-   with BC.Containers;
-   package <i>Domain.Class</i>.Abstract_Containers
-   is new BC.Containers (Handle);
-</pre>
-
-<dt><tt><i>Domain.Class</i>.Abstract_Collections</tt>
-<dd>An abstract instantiation of Booch Collections (like Lists) of
-<tt>Handle</tt>s. Probably not of much importance to the programmer.
-
-<pre>
-   with BC.Containers.Collections;
-   with <i>Domain.Class</i>.Abstract_Containers;
-   package <i>Domain.Class</i>.Abstract_Collections
-   is new Abstract_Containers.Collections;
-</pre>
-
-<dt><tt><i>Domain.Class</i>.Collections</tt>
-<dd>A concrete instantiation of Booch Collections of
-<tt>Handle</tt>s. If the maximum number of instances was specified,
-these will be the Bounded variety; otherwise, Unbounded. The interface
-is the same in either case.
-
-<pre>
-   with BC.Containers.Collections.Bounded;
-   with <i>Domain.Class</i>.Abstract_Collections;
-   package <i>Domain.Class</i>.Collections
-   is new Abstract_Collections.Bounded (Maximum_Size => 42);
+   package <i>Domain.Class</i>.Vectors
+   is new Ada.Containers.Vectors
+     (Index_Type => Positive,
+      Element_Type => Handle);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.All_Instances</tt>
-<dd>A function which returns a Collection containing the
+<dd>A function which returns a Vector containing the
 <tt>Handle</tt>s of all the current instances of the class.
 
 <pre>
-   with <i>Domain.Class</i>.Collections;
+   with <i>Domain.Class</i>.Vectors;
    function <i>Domain.Class</i>.All_Instances
-     return <i>Domain.Class</i>.Collections.Collection;
+     return <i>Domain.Class</i>.Vectors.Vector;
+   pragma Elaborate_Body (<i>Domain.Class</i>.All_Instances);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.Selection_Function</tt>
 <dd>A generic function which is instantiated with a <tt>Pass</tt>
 function that takes a <tt>Handle</tt> and returns <tt>True</tt> if the
-instance is required. It takes no parameters and returns a Collection
+instance is required. It takes no parameters and returns a Vector
 containing the <tt>Handle</tt>s of all the current instances of the
 class that pass the <tt>Pass</tt> function.
 
 <pre>
-   with <i>Domain.Class</i>.Collections;
+   with <i>Domain.Class</i>.Vectors;
    generic
       with function Pass (This : Handle) return Boolean is &lt;&gt;;
    function <i>Domain.Class</i>.Selection_Function
-     return <i>Domain.Class</i>.Collections.Collection;
+     return <i>Domain.Class</i>.Vectors.Vector;
    pragma Elaborate_Body (<i>Domain.Class</i>.Selection_Function);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.Filter_Function</tt>
 <dd>A generic function which is instantiated with a <tt>Pass</tt>
 function that takes a <tt>Handle</tt> and returns <tt>True</tt> if the
-instance is required. It takes a Collection parameter and returns
-another Collection containing the <tt>Handle</tt>s of all the
-instances in the input Collection that pass the <tt>Pass</tt>
+instance is required. It takes a Vector parameter and returns
+another Vector containing the <tt>Handle</tt>s of all the
+instances in the input Vector that pass the <tt>Pass</tt>
 function.
 
 <pre>
-   with <i>Domain.Class</i>.Collections;
+   with <i>Domain.Class</i>.Vectors;
    generic
       with function Pass (This : Handle) return Boolean is &lt;&gt;;
    function <i>Domain.Class</i>.Filter_Function
-     (The_Collection : <i>Domain.Class</i>.Collections.Collection)
-     return <i>Domain.Class</i>.Collections.Collection;
+     (The_Vector : <i>Domain.Class</i>.Vectors.Vector)
+     return <i>Domain.Class</i>.Vectors.Vector;
    pragma Elaborate_Body (<i>Domain.Class</i>.Filter_Function);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.Iterate</tt>
-<dd>A simple generic closed iterator over Collections; to be
+<dd>A simple generic closed iterator over Vectors; to be
 instantiated with the procedure to be called to process each
 <tt>Handle</tt>.
 
 <pre>
-   with <i>Domain.Class</i>.Collections;
+   with <i>Domain.Class</i>.Vectors;
    generic
       with procedure Process (H : Handle);
    procedure <i>Domain.Class</i>.Iterate
-     (Over : <i>Domain.Class</i>.Collections.Collection);
+     (Over : <i>Domain.Class</i>.Vectors.Vector);
    pragma Elaborate_Body (<i>Domain.Class</i>.Iterate);
 </pre>
 
+<!--
 <dt><tt><i>Domain.Class</i>.Abstract_Sets</tt>
 <dd>An abstract instantiation of Booch Sets of
 <tt>Handle</tt>s. Contains set <tt>Difference</tt>,
@@ -330,6 +308,7 @@ is the same in either case.
       Buckets => 11,
       Maximum_Size => 42);
 </pre>
+-->
 
 </dl>
 

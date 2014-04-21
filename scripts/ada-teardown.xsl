@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 78dbf1995a0c 2014/04/06 15:08:55 simonjwright $ -->
+<!-- $Id: ada-teardown.xsl,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -437,14 +437,14 @@
              with Ada.Unchecked_Deallocation;
              with {Domain}.{Class}.{other-domain}_{other_type}_Manager;
              procedure {Domain}.{Class}.CF_Tear_Down is
-                package CIAC renames ColdFrame.Instances.Abstract_Containers;
-                It : CIAC.Iterator'Class := Maps.New_Iterator (The_Container);
+                It : Containers.Cursor := The_Container.First;
                 H : Handle;
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
                 procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
+                use type Containers.Cursor;
              begin
-                while not CIAC.Is_Done (It) loop
-                   H := Handle (CIAC.Current_Item (It));
+                   while It /= Containers.No_Element loop
+                   H := Containers.Element (It);
                    ColdFrame.Project.Events.Finalize (H.{timer});
                    {teardown} (H);                     - if any
                    if not H.The_T'Terminated then      - if active
@@ -455,9 +455,9 @@
                    end if;
                    Free (H.The_T);
                    Free (H);
-                   CIAC.Next (It);
+                   Containers.Next (It);
                 end loop;
-                Maps.Clear (The_Container);
+                The_Container.Clear;
                 Next_Identifier := 0;                  -  for Autonumbering
                 {other-domain}_{other-type}_Manager.Clear;   - callback managers
                 ColdFrame.Project.Events.Finalize ({timer}); - class timers
@@ -479,9 +479,7 @@
         <xsl:text>.CF_Tear_Down is&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>package CIAC renames ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>It : CIAC.Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
+        <xsl:text>It : Containers.Cursor := The_Container.First;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>H : Handle;&#10;</xsl:text>
 
@@ -493,12 +491,14 @@
           <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (T, T_P);&#10;</xsl:text>
         </xsl:if>
 
+        <xsl:value-of select="$I"/>
+        <xsl:text>use type Containers.Cursor;&#10;</xsl:text>
         <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>while not CIAC.Is_Done (It) loop&#10;</xsl:text>
+        <xsl:text>while It /= Containers.No_Element loop&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>H := Handle (CIAC.Current_Item (It));&#10;</xsl:text>
+        <xsl:text>H := Containers.Element (It);&#10;</xsl:text>
 
         <xsl:for-each select="attribute[type='Timer' and not(@class)]">
           <xsl:call-template name="td:instance-timer">
@@ -535,12 +535,12 @@
         <xsl:value-of select="$II"/>
         <xsl:text>Free (H);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>CIAC.Next (It);&#10;</xsl:text>
+        <xsl:text>Containers.Next (It);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>Maps.Clear (The_Container);&#10;</xsl:text>
+        <xsl:text>The_Container.Clear;&#10;</xsl:text>
 
         <!-- .. Autonumber support .. -->
         <xsl:if test="count(attribute[@identifier])=1

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-monitoring_g.adb,v $
---  $Revision: fde6fd75a1a0 $
---  $Date: 2014/04/05 13:21:13 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -225,7 +225,7 @@ package body ColdFrame.Events_G.Monitoring_G is
             The_Queue.The_Excluder.Done;
 
             declare
-               Event_Records : Event_Record_Collections.Collection;
+               Event_Records : Event_Record_Vectors.Vector;
                Total : Duration;
             begin
                The_Queue.The_Excluder.Get_Event_Records
@@ -236,21 +236,20 @@ package body ColdFrame.Events_G.Monitoring_G is
                   Project.Log_Info
                     ("Queue overrun, total" & Total'Img);
                   declare
-                     use Abstract_Event_Record_Containers;
-                     It : Iterator'Class
-                       := Event_Record_Collections.New_Iterator
-                       (Event_Records);
+                     It : Event_Record_Vectors.Cursor
+                       := Event_Records.First;
                      ER : Event_Record;
+                     use type Event_Record_Vectors.Cursor;
                   begin
-                     while not Is_Done (It) loop
-                        ER := Current_Item (It);
+                     while It /= Event_Record_Vectors.No_Element loop
+                        ER := Event_Record_Vectors.Element (It);
                         Project.Log_Info
                           (Ada.Tags.Expanded_Name (ER.Tag)
                              & ", "
                              & ER.Was_Held'Img
                              & ","
                              & ER.Took'Img);
-                        Next (It);
+                        Event_Record_Vectors.Next (It);
                      end loop;
                   end;
                end if;
@@ -569,29 +568,23 @@ package body ColdFrame.Events_G.Monitoring_G is
 
    protected body Excluder is
 
-
       procedure Done is
          use type Ada.Task_Identification.Task_Id;
       begin
-         if Unbounded_Posted_Event_Queues.Is_Empty
-           (The_Queue.The_Self_Events) then
+         if The_Queue.The_Self_Events.Is_Empty then
             Locks := 0;
             Owner := Ada.Task_Identification.Null_Task_Id;
          end if;
-         if Unbounded_Posted_Event_Queues.Is_Empty
-           (The_Queue.The_Self_Events)
-           and then Unbounded_Posted_Event_Queues.Is_Empty
-           (The_Queue.The_Instance_Events)
-           and then Unbounded_Posted_Event_Queues.Is_Empty
-           (The_Queue.The_Class_Events) then
-            Event_Record_Collections.Clear (Event_Records);
+         if The_Queue.The_Self_Events.Is_Empty
+           and then The_Queue.The_Instance_Events.Is_Empty
+           and then The_Queue.The_Class_Events.Is_Empty then
+            Event_Records.Clear;
             Total_Event_Duration := 0.0;
          else
             Current_Event_Record.Took := Clock - Current_Event_Started;
             Total_Event_Duration :=
               Total_Event_Duration + Current_Event_Record.Took;
-            Event_Record_Collections.Append (Event_Records,
-                                             Current_Event_Record);
+            Event_Records.Append (Current_Event_Record);
          end if;
       end Done;
 
@@ -602,35 +595,27 @@ package body ColdFrame.Events_G.Monitoring_G is
       --  we don't want external entities to see the intermediate
       --  states).
       when Excluder.Stopping
-        or else not Unbounded_Posted_Event_Queues.Is_Empty
-                      (The_Queue.The_Self_Events)
+        or else not The_Queue.The_Self_Events.Is_Empty
         or else (Locks = 0 and then not
-                   (Unbounded_Posted_Event_Queues.Is_Empty
-                      (The_Queue.The_Instance_Events)
-                    and then Unbounded_Posted_Event_Queues.Is_Empty
-                      (The_Queue.The_Class_Events))) is
+                   (The_Queue.The_Instance_Events.Is_Empty
+                    and then The_Queue.The_Class_Events.Is_Empty)) is
       begin
+         The_Event := null;
          Stopping := Excluder.Stopping;
          if Stopping then
             return;
          end if;
          Locks := 1;
          Owner := Fetch'Caller;
-         if not Unbounded_Posted_Event_Queues.Is_Empty
-                  (The_Queue.The_Self_Events) then
-            The_Event :=
-              Unbounded_Posted_Event_Queues.Front (The_Queue.The_Self_Events);
-            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Self_Events);
-         elsif not Unbounded_Posted_Event_Queues.Is_Empty
-           (The_Queue.The_Instance_Events) then
-            The_Event :=
-              Unbounded_Posted_Event_Queues.Front
-              (The_Queue.The_Instance_Events);
-            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Instance_Events);
-         else
-            The_Event :=
-              Unbounded_Posted_Event_Queues.Front (The_Queue.The_Class_Events);
-            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Class_Events);
+         if not The_Queue.The_Self_Events.Is_Empty then
+            The_Event := The_Queue.The_Self_Events.First_Element;
+            The_Queue.The_Self_Events.Delete_First;
+         elsif not The_Queue.The_Instance_Events.Is_Empty then
+            The_Event := The_Queue.The_Instance_Events.First_Element;
+            The_Queue.The_Instance_Events.Delete_First;
+         elsif not The_Queue.The_Class_Events.Is_Empty then
+            The_Event := The_Queue.The_Class_Events.First_Element;
+            The_Queue.The_Class_Events.Delete_First;
          end if;
          pragma Assert (The_Event /= null,
                         "failed to fetch valid event");
@@ -647,17 +632,17 @@ package body ColdFrame.Events_G.Monitoring_G is
 
 
       procedure Get_Event_Records
-        (Event_Records : out Event_Record_Collections.Collection;
+        (Event_Records : out Event_Record_Vectors.Vector;
          If_Longer_Than : Duration;
          Total_Duration : out Duration) is
       begin
          if Total_Event_Duration > If_Longer_Than then
             Event_Records := Excluder.Event_Records;
-            Event_Record_Collections.Clear (Excluder.Event_Records);
+            Excluder.Event_Records.Clear;
             Total_Duration := Total_Event_Duration;
             Total_Event_Duration := 0.0;
          else
-            Event_Records := Event_Record_Collections.Null_Container;
+            Event_Records := Event_Record_Vectors.Empty_Vector;
             Total_Duration := 0.0;
          end if;
       end Get_Event_Records;
@@ -667,29 +652,33 @@ package body ColdFrame.Events_G.Monitoring_G is
         (For_The_Instance : access Instance_Base'Class) is
 
          procedure Invalidate_Events
-           (Using : in out Abstract_Posted_Event_Containers.Iterator'Class);
+           (Using : in out Posted_Event_Queues.Cursor);
          procedure Invalidate_Events
-           (Using : in out Abstract_Posted_Event_Containers.Iterator'Class) is
-            use Abstract_Posted_Event_Containers;
+           (Using : in out Posted_Event_Queues.Cursor) is
+            use type Posted_Event_Queues.Cursor;
          begin
-            while not Is_Done (Using) loop
-               Invalidate (Current_Item (Using),
+            while Using /= Posted_Event_Queues.No_Element loop
+               Invalidate (Posted_Event_Queues.Element (Using),
                            If_For_Instance =>
                              Instance_Base_P (For_The_Instance));
-               Next (Using);
+               Posted_Event_Queues.Next (Using);
             end loop;
          end Invalidate_Events;
 
-         Self_Iterator : Abstract_Posted_Event_Containers.Iterator'Class :=
-           Unbounded_Posted_Event_Queues.New_Iterator
-           (The_Queue.The_Self_Events);
-         Instance_Iterator : Abstract_Posted_Event_Containers.Iterator'Class :=
-           Unbounded_Posted_Event_Queues.New_Iterator
-           (The_Queue.The_Instance_Events);
+         Self_Iterator : Posted_Event_Queues.Cursor
+           := The_Queue.The_Self_Events.First;
+         Instance_Iterator : Posted_Event_Queues.Cursor
+           := The_Queue.The_Instance_Events.First;
+
+         --  We need to check held events, which will be on the class
+         --  queue (since they aren't instance events).
+         Class_Iterator : Posted_Event_Queues.Cursor
+           := The_Queue.The_Class_Events.First;
 
       begin
          Invalidate_Events (Self_Iterator);
          Invalidate_Events (Instance_Iterator);
+         Invalidate_Events (Class_Iterator);
       end Invalidate_Events;
 
 
@@ -707,11 +696,9 @@ package body ColdFrame.Events_G.Monitoring_G is
       entry Post (The_Event : Event_P) when not Stopping is
       begin
          if The_Event.all in Instance_Event_Base'Class then
-            Unbounded_Posted_Event_Queues.Append
-              (The_Queue.The_Instance_Events, The_Event);
+            The_Queue.The_Instance_Events.Append (The_Event);
          else
-            Unbounded_Posted_Event_Queues.Append
-              (The_Queue.The_Class_Events, The_Event);
+            The_Queue.The_Class_Events.Append (The_Event);
          end if;
       end Post;
 
@@ -732,8 +719,7 @@ package body ColdFrame.Events_G.Monitoring_G is
               (Exceptions.Use_Error'Identity,
                "posting class event to self");
          else
-            Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
-                                                  The_Event);
+            The_Queue.The_Self_Events.Append (The_Event);
          end if;
       end Post_To_Self;
 
@@ -797,7 +783,6 @@ package body ColdFrame.Events_G.Monitoring_G is
 
 
    procedure Stop (The_Queue : in out Event_Queue_Base) is
-      use Abstract_Posted_Event_Containers;
    begin
 
       --  Perhaps this could be neater, but at least doing it in this
@@ -827,54 +812,55 @@ package body ColdFrame.Events_G.Monitoring_G is
 
       --  Delete all the outstanding events-to-self ..
       declare
-         It : Abstract_Posted_Event_Containers.Iterator'Class
-           := Unbounded_Posted_Event_Queues.New_Iterator
-           (The_Queue.The_Self_Events);
+         It : Posted_Event_Queues.Cursor := The_Queue.The_Self_Events.First;
+         use type Posted_Event_Queues.Cursor;
       begin
-         while not Is_Done (It) loop
+         while It /= Posted_Event_Queues.No_Element loop
             declare
-               E : Event_P := Current_Item (It);
+               E : Event_P := Posted_Event_Queues.Element (It);
             begin
                Tear_Down (E);
                Delete (E);
             end;
-            Next (It);
+            Posted_Event_Queues.Next (It);
          end loop;
       end;
+      The_Queue.The_Self_Events.Clear;
 
       --  .. and all the outstanding instance events ..
       declare
-         It : Abstract_Posted_Event_Containers.Iterator'Class
-           := Unbounded_Posted_Event_Queues.New_Iterator
-           (The_Queue.The_Instance_Events);
+         It : Posted_Event_Queues.Cursor
+           := The_Queue.The_Instance_Events.First;
+         use type Posted_Event_Queues.Cursor;
       begin
-         while not Is_Done (It) loop
+         while It /= Posted_Event_Queues.No_Element loop
             declare
-               E : Event_P := Current_Item (It);
+               E : Event_P := Posted_Event_Queues.Element (It);
             begin
                Tear_Down (E);
                Delete (E);
             end;
-            Next (It);
+            Posted_Event_Queues.Next (It);
          end loop;
       end;
+      The_Queue.The_Instance_Events.Clear;
 
       --  .. and all the outstanding class events ..
       declare
-         It : Abstract_Posted_Event_Containers.Iterator'Class
-           := Unbounded_Posted_Event_Queues.New_Iterator
-           (The_Queue.The_Class_Events);
+         It : Posted_Event_Queues.Cursor := The_Queue.The_Class_Events.First;
+         use type Posted_Event_Queues.Cursor;
       begin
-         while not Is_Done (It) loop
+         while It /= Posted_Event_Queues.No_Element loop
             declare
-               E : Event_P := Current_Item (It);
+               E : Event_P := Posted_Event_Queues.Element (It);
             begin
                Tear_Down (E);
                Delete (E);
             end;
-            Next (It);
+            Posted_Event_Queues.Next (It);
          end loop;
       end;
+      The_Queue.The_Class_Events.Clear;
 
       --  .. and all the held events.
       Held_Events.Tear_Down (The_Queue.The_Held_Events);

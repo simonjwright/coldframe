@@ -19,33 +19,12 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
-
-   package UPEQ renames Unbounded_Posted_Event_Queues;
-
-   --  We need a way of obtaining the N'th Event_P in an unbounded
-   --  posted event queue, but Queues don't have an Item_At operation.
-
-   function Nth_Event
-     (Q : Unbounded_Posted_Event_Queues.Queue;
-      N : Positive) return Event_P;
-   function Nth_Event
-     (Q : Unbounded_Posted_Event_Queues.Queue;
-      N : Positive) return Event_P is
-      package APEC renames Abstract_Posted_Event_Containers;
-      It : APEC.Iterator'Class := UPEQ.New_Iterator (Q);
-   begin
-      for C in 1 .. N - 1 loop
-         APEC.Next (It);
-      end loop;
-      return APEC.Current_Item (It);
-   end Nth_Event;
-
 
    --------------------------------
    --  Events posted to "self".  --
@@ -59,7 +38,7 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      return UPEQ.Length (Q.The_Self_Events);
+      return Natural (Q.The_Self_Events.Length);
    end Number_Of_Self_Events;
 
 
@@ -72,10 +51,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      if At_Index > UPEQ.Length (Q.The_Self_Events) then
+      if At_Index > Natural (Q.The_Self_Events.Length) then
          raise Not_Found;
       end if;
-      return Nth_Event (Q.The_Self_Events, At_Index);
+      return Q.The_Self_Events (At_Index);
    end Self_Event;
 
 
@@ -91,8 +70,8 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      return UPEQ.Length (Q.The_Instance_Events)
-        + UPEQ.Length (Q.The_Class_Events);
+      return Natural (Q.The_Instance_Events.Length)
+        + Natural (Q.The_Class_Events.Length);
    end Number_Of_Now_Events;
 
 
@@ -106,12 +85,12 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      if N <= UPEQ.Length (Q.The_Instance_Events) then
-         return Nth_Event (Q.The_Instance_Events, N);
+      if N <= Natural (Q.The_Instance_Events.Length) then
+         return Q.The_Instance_Events.Element (N);
       end if;
-      N := N - UPEQ.Length (Q.The_Instance_Events);
-      if N <= UPEQ.Length (Q.The_Class_Events) then
-         return Nth_Event (Q.The_Class_Events, N);
+      N := N - Natural (Q.The_Instance_Events.Length);
+      if N <= Natural (Q.The_Class_Events.Length) then
+         return Q.The_Class_Events.Element (N);
       end if;
       raise Not_Found;
    end Now_Event;
@@ -126,7 +105,7 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      return UPEQ.Length (Q.The_Class_Events);
+      return Natural (Q.The_Class_Events.Length);
    end Number_Of_Immediate_Class_Events;
 
 
@@ -139,10 +118,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      if At_Index > UPEQ.Length (Q.The_Class_Events) then
+      if At_Index > Natural (Q.The_Class_Events.Length) then
          raise Not_Found;
       end if;
-      return Nth_Event (Q.The_Class_Events, At_Index);
+      return Q.The_Class_Events (At_Index);
    end Immediate_Class_Event;
 
 
@@ -155,7 +134,7 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      return UPEQ.Length (Q.The_Instance_Events);
+      return Natural (Q.The_Instance_Events.Length);
    end Number_Of_Immediate_Instance_Events;
 
 
@@ -168,10 +147,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      if At_Index > UPEQ.Length (Q.The_Instance_Events) then
+      if At_Index > Natural (Q.The_Instance_Events.Length) then
          raise Not_Found;
       end if;
-      return Nth_Event (Q.The_Instance_Events, At_Index);
+      return Q.The_Instance_Events (At_Index);
    end Immediate_Instance_Event;
 
 

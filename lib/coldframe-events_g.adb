@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: fde6fd75a1a0 $
---  $Date: 2014/04/05 13:21:13 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -196,7 +196,14 @@ package body ColdFrame.Events_G is
    procedure Invalidate (The_Event : not null access Held_Event;
                          If_For_Instance : not null Instance_Base_P) is
    begin
-      Invalidate (The_Event.The_Event, If_For_Instance);
+      --  We need to invalidate the Held_Event if the event that it's
+      --  holding is an instance event for For_The_Instance.
+      if The_Event.The_Event.all in Instance_Event_Base'Class
+        and then Instance_Base_P
+          (Instance_Event_Base (The_Event.The_Event.all).For_The_Instance)
+        = If_For_Instance then
+         The_Event.Invalidated := True;
+      end if;
    end Invalidate;
 
 

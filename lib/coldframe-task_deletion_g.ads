@@ -25,11 +25,9 @@
 --  task isn't terminated).
 
 --  $RCSfile: coldframe-task_deletion_g.ads,v $
---  $Revision: 02d23e36c469 $
---  $Date: 2014/04/06 11:46:07 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
-
-with BC.Containers.Queues.Unmanaged;
 
 generic
 
@@ -47,14 +45,5 @@ package ColdFrame.Task_Deletion_G is
 
    procedure Free (It : not null Task_Type_P);
    --  Puts It on the queue of tasks to be freed.
-
-private
-
-   --  The queue of tasks to be deleted has to be declared in the spec
-   --  (GCC 4.3.0).
-
-   package Abstract_Containers is new BC.Containers (Task_Type_P);
-   package Abstract_Queues is new Abstract_Containers.Queues;
-   package Queues is new Abstract_Queues.Unmanaged;
 
 end ColdFrame.Task_Deletion_G;

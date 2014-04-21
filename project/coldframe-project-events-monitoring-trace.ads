@@ -5,16 +5,18 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  ColdFrame's event queue performance logging, in
---  ColdFrame.Logging_Event_Basis, expects this package to exist to
---  support high resolution (sub-microsecond) timing. This version
---  just uses Ada.Calendar.Time, which is fine on Linux and Mac OS X.
+--  This package supports unit testing of code involving events, where
+--  the event code is monitored.
+--
+--  This is ColdFrame's default implementation.
 
---  $RCSfile: coldframe-project-high_resolution_time.ads,v $
+--  $RCSfile: coldframe-project-events-monitoring-trace.ads,v $
 --  $Revision: f6d9ce14c0aa $
 --  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
-with Ada.Calendar;
-package ColdFrame.Project.High_Resolution_Time
-  renames Ada.Calendar;
+with ColdFrame.Events_G.Trace_G;
+with ColdFrame.Project.Events.Monitoring;
+
+package ColdFrame.Project.Events.Monitoring.Trace
+is new Events.Trace_G (Standard_Queue => Monitoring.Event_Queue_Base);

@@ -1,24 +1,21 @@
---  $Id$
+--  $Id: performance-harness.adb,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $
 
 with Performance.Initialize;
 with Performance.Tear_Down;
 with Performance.Person.All_Instances;
-with Performance.Person.Collections;
+with Performance.Person.Vectors;
 with Performance.Owner.Inheritance;
-with Performance.Pet.Collections;
+with Performance.Pet.Vectors;
 with Performance.Cat.Inheritance;
 with Performance.A1;
 with Performance.A2;
 with Performance.House.All_Instances;
-with Performance.House.Collections;
+with Performance.House.Vectors;
 with Performance.Event_Timing;
 
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Containers;
 with Ada.Text_IO; use Ada.Text_IO;
-with BC.Support.Memory_Streams;
-with BC.Support.Statistics;
 with ColdFrame.Instances;
-with ColdFrame.Logging_Event_Basis;
 with ColdFrame.Project.Events;
 with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
@@ -30,6 +27,7 @@ procedure Performance.Harness is
    subtype CIH is ColdFrame.Instances.Handle;
    T : Time;
    D : Duration;
+   use type Ada.Containers.Count_Type;
 begin
 
    T := Clock;
@@ -97,7 +95,7 @@ begin
    declare
       Pr : Person.Handle;
       pragma Warnings (Off, Pr);
-      Prc : Person.Collections.Collection;
+      Prc : Person.Vectors.Vector;
    begin
 
       Performance.Initialize;
@@ -108,8 +106,9 @@ begin
       T := Clock;
       Prc := Person.All_Instances;
       D := Clock - T;
-      Put_Line ("obtain all instances (per instance):"
-                  & Duration'Image (D / Person.Collections.Length (Prc)));
+      Put_Line
+        ("obtain all instances (per instance):"
+           & Duration'Image (D / Natural (Person.Vectors.Length (Prc))));
 
       Performance.Tear_Down;
 
@@ -177,7 +176,7 @@ begin
                   & Duration'Image (D / (Pets'Pos (Pets'Last) + 1)));
 
       declare
-         Ptc : Pet.Collections.Collection;
+         Ptc : Pet.Vectors.Vector;
       begin
          T := Clock;
          for I in Os'Range loop
@@ -233,7 +232,7 @@ begin
                   & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
 
       declare
-         Hc : House.Collections.Collection;
+         Hc : House.Vectors.Vector;
       begin
          T := Clock;
          for I in Pts'Range loop
@@ -245,7 +244,7 @@ begin
       end;
 
       declare
-         Prc : Person.Collections.Collection;
+         Prc : Person.Vectors.Vector;
       begin
          T := Clock;
          for I in Pts'Range loop
@@ -258,12 +257,12 @@ begin
 
       declare
          type Houses is array (Positive range <>) of House.Handle;
-         Hc : constant House.Collections.Collection := House.All_Instances;
-         Hs : Houses (1 .. House.Collections.Length (Hc));
+         Hc : constant House.Vectors.Vector := House.All_Instances;
+         Hs : Houses (1 .. Natural (House.Vectors.Length (Hc)));
       begin
 
          for H in Hs'Range loop
-            Hs (H) := House.Collections.Item_At (Hc, H);
+            Hs (H) := House.Vectors.Element (Hc, H);
          end loop;
          T := Clock;
          for H in Hs'Range loop
@@ -396,7 +395,7 @@ begin
 --        package LE renames ColdFrame.Logging_Event_Basis;
 --        package DC
 --          renames ColdFrame.Logging_Event_Basis.Abstract_Datum_Containers;
---        package MS renames BC.Support.Memory_Streams;
+--        package MS renames ColdFrame.Memory_Streams;
 --        package ST renames BC.Support.Statistics;
 --        S : aliased MS.Stream_Type (10_000);
 --     begin

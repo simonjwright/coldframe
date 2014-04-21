@@ -74,7 +74,7 @@ DOCS =						\
   testing.html					\
   translation-rules.html			\
   types.html					\
-  use-of-bcs.html				\
+  use-of-containers.html			\
   ColdFrame-norm.xsd
 
 GIFS = States.gif States-Monitor.gif house-2.gif

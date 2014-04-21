@@ -63,46 +63,44 @@ fails:: Bad_Model_Regressions.stamp-regardless
 
 xfails:: Bad_Code_Regressions.stamp-regardless
 
-event_test-harness$(exe): Event_Test.stamp force
+event_test-harness$(exe): Event_Test.gen force
 	gnatmake -p -PEvent_Test 2>&1 | tee -a Event_Test.log
 exes:: event_test-harness$(exe)
 clean::
 	-gnatclean -PEvent_Test
 
-hierarchies-harness$(exe): Hierarchies.stamp force
+hierarchies-harness$(exe): Hierarchies.gen force
 	gnatmake -p -PHierarchies 2>&1 | tee -a Hierarchies.log
 exes:: hierarchies-harness$(exe)
 clean::
 	-gnatclean -PHierarchies
 
-initialization-harness$(exe): Initialization.stamp force
+initialization-harness$(exe): Initialization.gen force
 	gnatmake -p -PInitialization 2>&1 | tee -a Initialization.log
 exes:: initialization-harness$(exe)
 clean::
 	-gnatclean -PInitialization
 
-stub_test_harness$(exe): Stub_Test_Interface.stamp force
+stub_test_harness$(exe): Stub_Test_Interface.stub force
 	gnatmake -p -PStub_Test 2>&1 | tee -a Stub_Test.log
-Stub_Test_Interface.stamp: Stub_Test_Interface.norm
-	$(MAKE) $(basename $@).gen GENERATE_STUBS=yes 2>&1 \
-	  | tee $(basename $@).log
-	touch $@
 exes:: stub_test_harness$(exe)
 clean::
 	-gnatclean -PStub_Test
 
-unit_testing-harness$(exe): Unit_Testing.stamp force
+unit_testing-harness$(exe): Unit_Testing.unit force
 	gnatmake -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
-Unit_Testing.stamp: Unit_Testing.norm
-	$(MAKE) $(basename $@).gen UNIT_TEST_SUPPORT=yes 2>&1 \
-	  | tee $(basename $@).log
-	touch $@
 exes:: unit_testing-harness$(exe)
 clean::
 	-gnatclean -PUnit_Testing
 
-%.stamp: %.norm
-	$(MAKE) $(basename $@).gen 2>&1 | tee $(basename $@).log
+%.unit: %.norm
+	$(MAKE) $(basename $@).gen UNIT_TEST_SUPPORT=yes 2>&1 \
+	  | tee $(basename $@).log
+	touch $@
+
+%.stub: %.norm
+	$(MAKE) $(basename $@).gen GENERATE_STUBS=yes 2>&1 \
+	  | tee $(basename $@).log
 	touch $@
 
 %.stamp-regardless: %.norm-stamp
@@ -135,7 +133,8 @@ DEVELOPMENT_DOMAINS =				\
 # Others (more regression-specific) in the Regressions model.
 REGRESSION_DOMAINS =				\
   SF_2991721					\
-  SF_Bug_79
+  SF_Bug_79					\
+  Strings
 
 # Bad models
 BAD_MODEL_DOMAINS =				\
@@ -143,18 +142,18 @@ BAD_MODEL_DOMAINS =				\
 
 DEVELOPMENT_NORMS = $(addsuffix .norm,$(DEVELOPMENT_DOMAINS))
 $(DEVELOPMENT_NORMS): ColdFrame_Development.norm-stamp ;
-DEVELOPMENT_STAMPS = $(addsuffix .stamp,$(DEVELOPMENT_DOMAINS))
+DEVELOPMENT_GENS = $(addsuffix .gen,$(DEVELOPMENT_DOMAINS))
 
 REGRESSION_NORMS = $(addsuffix .norm,$(REGRESSION_DOMAINS))
 $(REGRESSION_NORMS): Regressions.norm-stamp ;
-REGRESSION_STAMPS = $(addsuffix .stamp,$(REGRESSION_DOMAINS))
+REGRESSION_GENS = $(addsuffix .gen,$(REGRESSION_DOMAINS))
 
 BAD_MODEL_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_MODEL_REGRESSION_DOMAINS))
 $(BAD_MODEL_REGRESSION_NORMS): Bad_Model_Regressions.norm-stamp ;
-BAD_MODEL_REGRESSION_STAMPS = $(addsuffix .stamp,$(BAD_MODEL_REGRESSION_DOMAINS))
+BAD_MODEL_REGRESSION_GENS = $(addsuffix .gen,$(BAD_MODEL_REGRESSION_DOMAINS))
 
-# Has to come after definition of DEVELOPMENT_STAMPS, REGRESSION_STAMPS
-regression_tests$(exe): $(DEVELOPMENT_STAMPS) $(REGRESSION_STAMPS) force
+# Has to come after definition of DEVELOPMENT_GENS, REGRESSION_GENS
+regression_tests$(exe): $(DEVELOPMENT_GENS) $(REGRESSION_GENS) force
 	gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
 exes:: regression_tests$(exe)
 clean::
@@ -162,6 +161,6 @@ clean::
 
 
 clean::
-	rm -rf *.{norm-stamp,stamp,norm,ada,gen,html,images}
+	rm -rf *.{norm-stamp,norm,stamp,stub,ada,gen,html,images}
 
 .PHONY: all exes force clean runs fails

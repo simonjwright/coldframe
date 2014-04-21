@@ -14,6 +14,7 @@
 
 with AUnit.Assertions; use AUnit.Assertions;
 
+with Ada.Containers;
 with ColdFrame.Exceptions;
 with ColdFrame.Instances;
 
@@ -22,28 +23,30 @@ with Hierarchies.Tear_Down;
 
 with Hierarchies.R_1;
 with Hierarchies.R_1.All_Instances;
-with Hierarchies.R_1.Collections;
+with Hierarchies.R_1.Vectors;
 with Hierarchies.R_2;
 with Hierarchies.R_2.All_Instances;
-with Hierarchies.R_2.Collections;
+with Hierarchies.R_2.Vectors;
 with Hierarchies.R_3.Inheritance;
 with Hierarchies.R_3.All_Instances;
-with Hierarchies.R_3.Collections;
+with Hierarchies.R_3.Vectors;
 with Hierarchies.S_1.Inheritance;
 with Hierarchies.S_2.Inheritance;
 with Hierarchies.S_2.All_Instances;
-with Hierarchies.S_2.Collections;
+with Hierarchies.S_2.Vectors;
 with Hierarchies.S_3.Inheritance;
 with Hierarchies.S_3.All_Instances;
-with Hierarchies.S_3.Collections;
+with Hierarchies.S_3.Vectors;
 with Hierarchies.T_2.Inheritance;
 with Hierarchies.T_2.All_Instances;
-with Hierarchies.T_2.Collections;
+with Hierarchies.T_2.Vectors;
 with Hierarchies.F_2.Inheritance;
 with Hierarchies.F_2.All_Instances;
-with Hierarchies.F_2.Collections;
+with Hierarchies.F_2.Vectors;
 
 package body Hierarchies.Test_Creations is
+
+   use type Ada.Containers.Count_Type;
 
    subtype CIH is ColdFrame.Instances.Handle;
    use type CIH;
@@ -72,19 +75,19 @@ package body Hierarchies.Test_Creations is
       pragma Unreferenced (R);
    begin
       R1_H := R_1.Create;
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 0,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 0,
               "R_2 present");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 0,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 0,
               "R_3 present");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 0,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 0,
               "S_2 present");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 0,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 0,
               "S_3 present");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 0,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 0,
               "T_2 present");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 0,
               "F_2 present");
    end Create_Root;
 
@@ -95,21 +98,21 @@ package body Hierarchies.Test_Creations is
       pragma Unreferenced (R);
    begin
       S2_H := S_2.Inheritance.Create_Tree (null);
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 0,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 0,
               "R_2 present");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 0,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 0,
               "R_3 present");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 0,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 0,
               "S_3 present");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 0,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 0,
               "T_2 present");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 0,
               "F_2 present");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
@@ -123,7 +126,7 @@ package body Hierarchies.Test_Creations is
       pragma Unreferenced (R);
    begin
       S2_H := S_2.Inheritance.Create_Tree (null);
-      R1_H := R_1.Collections.First (R_1.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
       S1_H := S_1.Inheritance.Create_Tree (CIH (R1_H));
       Assert (False, "Existing_Child exception expected");
    exception
@@ -137,22 +140,22 @@ package body Hierarchies.Test_Creations is
       pragma Unreferenced (R);
    begin
       T2_H := T_2.Inheritance.Create_Tree (null);
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 0,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 0,
               "R_2 present");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 0,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 0,
               "S_3 present");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 0,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 0,
               "S_3 present");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 0,
               "F_2 present");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
-      S2_H := S_2.Collections.First (S_2.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
+      S2_H := S_2.Vectors.First_Element (S_2.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
@@ -170,26 +173,26 @@ package body Hierarchies.Test_Creations is
       pragma Unreferenced (R);
    begin
       F2_H := F_2.Inheritance.Create_Tree (null, null, null);
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 1,
               "R_3 missing");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 1,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 1,
               "F_2 missing");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
-      R2_H := R_2.Collections.First (R_2.All_Instances);
-      R3_H := R_3.Collections.First (R_3.All_Instances);
-      S2_H := S_2.Collections.First (S_2.All_Instances);
-      S3_H := S_3.Collections.First (S_3.All_Instances);
-      T2_H := T_2.Collections.First (T_2.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
+      R2_H := R_2.Vectors.First_Element (R_2.All_Instances);
+      R3_H := R_3.Vectors.First_Element (R_3.All_Instances);
+      S2_H := S_2.Vectors.First_Element (S_2.All_Instances);
+      S3_H := S_3.Vectors.First_Element (S_3.All_Instances);
+      T2_H := T_2.Vectors.First_Element (T_2.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
@@ -228,26 +231,26 @@ package body Hierarchies.Test_Creations is
         (CIH (F2_H), CIH (F2_H), CIH (F2_H));
       Assert (F2_H = F2_H2,
               "different F_2 created");
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 1,
               "R_3 missing");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 1,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 1,
               "F_2 missing");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
-      R2_H := R_2.Collections.First (R_2.All_Instances);
-      R3_H := R_3.Collections.First (R_3.All_Instances);
-      S2_H := S_2.Collections.First (S_2.All_Instances);
-      S3_H := S_3.Collections.First (S_3.All_Instances);
-      T2_H := T_2.Collections.First (T_2.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
+      R2_H := R_2.Vectors.First_Element (R_2.All_Instances);
+      R3_H := R_3.Vectors.First_Element (R_3.All_Instances);
+      S2_H := S_2.Vectors.First_Element (S_2.All_Instances);
+      S3_H := S_3.Vectors.First_Element (S_3.All_Instances);
+      T2_H := T_2.Vectors.First_Element (T_2.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
@@ -282,19 +285,19 @@ package body Hierarchies.Test_Creations is
    begin
       R1_H := R_1.Create;
       S2_H := S_2.Inheritance.Create_Tree (CIH (R1_H));
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 0,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 0,
               "R_2 present");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 0,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 0,
               "S_3 present");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 0,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 0,
               "S_3 present");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 0,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 0,
               "T_2 present");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 0,
               "F_2 present");
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
@@ -310,21 +313,21 @@ package body Hierarchies.Test_Creations is
    begin
       S2_H := S_2.Inheritance.Create_Tree (null);
       T2_H := T_2.Inheritance.Create_Tree (CIH (S2_H));
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 0,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 0,
               "R_2 present");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 0,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 0,
               "S_3 present");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 0,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 0,
               "S_3 present");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 0,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 0,
               "F_2 present");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
@@ -343,25 +346,25 @@ package body Hierarchies.Test_Creations is
    begin
       S2_H := S_2.Inheritance.Create_Tree (null);
       F2_H := F_2.Inheritance.Create_Tree (CIH (S2_H), null, null);
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 1,
               "R_3 missing");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 1,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 1,
               "F_2 missing");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
-      R2_H := R_2.Collections.First (R_2.All_Instances);
-      R3_H := R_3.Collections.First (R_3.All_Instances);
-      S3_H := S_3.Collections.First (S_3.All_Instances);
-      T2_H := T_2.Collections.First (T_2.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
+      R2_H := R_2.Vectors.First_Element (R_2.All_Instances);
+      R3_H := R_3.Vectors.First_Element (R_3.All_Instances);
+      S3_H := S_3.Vectors.First_Element (S_3.All_Instances);
+      T2_H := T_2.Vectors.First_Element (T_2.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
@@ -396,25 +399,25 @@ package body Hierarchies.Test_Creations is
    begin
       R3_H := R_3.Inheritance.Create_Tree (null);
       F2_H := F_2.Inheritance.Create_Tree (null, null, CIH (R3_H));
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 1,
               "R_3 missing");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 1,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 1,
               "F_2 missing");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
-      R2_H := R_2.Collections.First (R_2.All_Instances);
-      S2_H := S_2.Collections.First (S_2.All_Instances);
-      S3_H := S_3.Collections.First (S_3.All_Instances);
-      T2_H := T_2.Collections.First (T_2.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
+      R2_H := R_2.Vectors.First_Element (R_2.All_Instances);
+      S2_H := S_2.Vectors.First_Element (S_2.All_Instances);
+      S3_H := S_3.Vectors.First_Element (S_3.All_Instances);
+      T2_H := T_2.Vectors.First_Element (T_2.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
@@ -449,26 +452,26 @@ package body Hierarchies.Test_Creations is
    begin
       S3_H := S_3.Inheritance.Create_Tree (null, null);
       F2_H := F_2.Inheritance.Create_Tree (null, CIH (S3_H), CIH (S3_H));
-      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+      Assert (R_1.Vectors.Length (R_1.All_Instances) = 1,
               "R_1 missing");
-      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
+      Assert (R_2.Vectors.Length (R_2.All_Instances) = 1,
               "R_2 missing");
-      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
+      Assert (R_3.Vectors.Length (R_3.All_Instances) = 1,
               "R_3 missing");
-      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+      Assert (S_2.Vectors.Length (S_2.All_Instances) = 1,
               "S_2 missing");
-      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
+      Assert (S_3.Vectors.Length (S_3.All_Instances) = 1,
               "S_3 missing");
-      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+      Assert (T_2.Vectors.Length (T_2.All_Instances) = 1,
               "T_2 missing");
-      Assert (F_2.Collections.Length (F_2.All_Instances) = 1,
+      Assert (F_2.Vectors.Length (F_2.All_Instances) = 1,
               "F_2 missing");
-      R1_H := R_1.Collections.First (R_1.All_Instances);
-      R2_H := R_2.Collections.First (R_2.All_Instances);
-      R3_H := R_3.Collections.First (R_3.All_Instances);
-      S2_H := S_2.Collections.First (S_2.All_Instances);
-      S3_H := S_3.Collections.First (S_3.All_Instances);
-      T2_H := T_2.Collections.First (T_2.All_Instances);
+      R1_H := R_1.Vectors.First_Element (R_1.All_Instances);
+      R2_H := R_2.Vectors.First_Element (R_2.All_Instances);
+      R3_H := R_3.Vectors.First_Element (R_3.All_Instances);
+      S2_H := S_2.Vectors.First_Element (S_2.All_Instances);
+      S3_H := S_3.Vectors.First_Element (S_3.All_Instances);
+      T2_H := T_2.Vectors.First_Element (T_2.All_Instances);
       Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
               "S_2 has wrong parent");
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,

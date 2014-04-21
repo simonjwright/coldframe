@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -127,7 +127,7 @@
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$a"/>
     <xsl:if test="$role-a/@multiple">  <!-- stupid to have a singleton! -->
-      <xsl:text>.Collections</xsl:text>
+      <xsl:text>.Vectors</xsl:text>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
 
@@ -136,7 +136,7 @@
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$b"/>
     <xsl:if test="$role-b/@multiple">
-      <xsl:text>.Collections</xsl:text>
+      <xsl:text>.Vectors</xsl:text>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
 
@@ -146,7 +146,7 @@
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
       <xsl:if test="role/@multiple">
-        <xsl:text>.Collections</xsl:text>
+        <xsl:text>.Vectors</xsl:text>
       </xsl:if>
       <xsl:text>;&#10;</xsl:text>
     </xsl:if>
@@ -272,7 +272,7 @@
         <xsl:if test="$role-b/@source and not($role-a/@multiple)">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$a"/>
-          <xsl:text>.Collections;&#10;</xsl:text>
+          <xsl:text>.Vectors;&#10;</xsl:text>
         </xsl:if>
 
         <xsl:if test="$role-b/@source">
@@ -289,7 +289,7 @@
         <xsl:if test="$role-a/@source and not($role-b/@multiple)">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$b"/>
-          <xsl:text>.Collections;&#10;</xsl:text>
+          <xsl:text>.Vectors;&#10;</xsl:text>
         </xsl:if>
 
         <xsl:if test="$role-a/@source">
@@ -304,22 +304,14 @@
 
     <xsl:if test="associative">
 
-      <xsl:if test="role/@multiple">
-        <xsl:text>with </xsl:text>
-        <xsl:value-of select="/domain/name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="associative"/>
-        <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-      </xsl:if>
-
-      <!-- {associative}.Collection already withed in spec if there's
+      <!-- {associative}.Vector already withed in spec if there's
            a multiple end. -->
       <xsl:if test="not(role/@multiple)">
         <xsl:text>with </xsl:text>
         <xsl:value-of select="/domain/name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="associative"/>
-        <xsl:text>.Collections;&#10;</xsl:text>
+        <xsl:text>.Vectors;&#10;</xsl:text>
       </xsl:if>
 
       <xsl:text>with </xsl:text>
@@ -1107,11 +1099,11 @@
       <xsl:when test="$role-b/@multiple">
 
         <!--
-             {assoc-abbrev} : constant {assoc}.Collections.Collection
+             {assoc-abbrev} : constant {assoc}.Vectors.Vector
                := {role-a} ({a-abbrev});
-             It : {assoc}.Abstract_Containers.Iterator'Class
-               := {assoc}.Collections.New_Iterator ({assoc-abbrev});
-             Result : {b}.Collections.Collection;
+             It : {assoc}.Vectors.Cursor := {assoc-abbrev}.First;
+             Result : {b}.Vectors.Vector;
+             use type {assoc}.Vectors.Cursor;
              -->
 
         <xsl:value-of select="$II"/>
@@ -1119,7 +1111,7 @@
           select="/domain/class[name=$associative]/abbreviation"/>
         <xsl:text> : constant </xsl:text>
         <xsl:value-of select="$assoc"/>
-        <xsl:text>.Collections.Collection&#10;</xsl:text>
+        <xsl:text>.Vectors.Vector&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
         <xsl:text>:= </xsl:text>
         <xsl:value-of select="$role-a/name"/>
@@ -1130,19 +1122,20 @@
         <xsl:value-of select="$II"/>
         <xsl:text>It : </xsl:text>
         <xsl:value-of select="$assoc"/>
-        <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
+        <xsl:text>.Vectors.Cursor&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
         <xsl:text> := </xsl:text>
-        <xsl:value-of select="$assoc"/>
-        <xsl:text>.Collections.New_Iterator (</xsl:text>
         <xsl:value-of
           select="/domain/class[name=$associative]/abbreviation"/>
-        <xsl:text>);&#10;</xsl:text>
+        <xsl:text>.First;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Result : </xsl:text>
         <xsl:value-of select="$b"/>
-        <xsl:text>.Collections.Collection;&#10;</xsl:text>
-
+        <xsl:text>.Vectors.Vector;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>use type </xsl:text>
+        <xsl:value-of select="$assoc"/>
+        <xsl:text>.Vectors.Cursor;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
@@ -1183,37 +1176,33 @@
       <xsl:when test="$role-b/@multiple">
 
         <!--
-             while not {associative}.Abstract_Containers.Is_Done (It) loop
-                {b}.Collections.Append
-                  (Result,
-                   {role-a}
-                     ({associative}.Abstract_Containers.Current_Item (It)));
-                {associative}.Abstract_Containers.Next (It);
+             while It /= {assoc}.Vectors.No_Element loop
+                Result.Append
+                  ({role-a}
+                     ({assoc}.Vectors.Element (It)));
+                {assoc}.Vectors.Next (It);
              end loop;
              return Result;
              -->
 
         <xsl:value-of select="$II"/>
-        <xsl:text>while not </xsl:text>
+        <xsl:text>while It /= </xsl:text>
         <xsl:value-of select="$assoc"/>
-        <xsl:text>.Abstract_Containers.Is_Done (It) loop&#10;</xsl:text>
+        <xsl:text>.Vectors.No_Element loop&#10;</xsl:text>
 
         <xsl:value-of select="$III"/>
-        <xsl:value-of select="$b"/>
-        <xsl:text>.Collections.Append&#10;</xsl:text>
+        <xsl:text>Result.Append&#10;</xsl:text>
         <xsl:value-of select="$IIIC"/>
-        <xsl:text>(Result,&#10;</xsl:text>
-        <xsl:value-of select="$IIIC"/>
-        <xsl:text> </xsl:text>
+        <xsl:text>(</xsl:text>
         <xsl:value-of select="$role-a/name"/>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="$IIIIC"/>
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$assoc"/>
-        <xsl:text>.Abstract_Containers.Current_Item (It)));&#10;</xsl:text>
+        <xsl:text>.Vectors.Element (It)));&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:value-of select="$assoc"/>
-        <xsl:text>.Abstract_Containers.Next (It);&#10;</xsl:text>
+        <xsl:text>.Vectors.Next (It);&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
         <xsl:text>end loop;&#10;</xsl:text>
@@ -1295,7 +1284,7 @@
            end Sel;
            function Find
            is new {b}.Selection_Function (Sel);
-           Result : constant {b}.Collections.Collection := Find;
+           Result : constant {b}.Vectors.Vector := Find;
            -->
 
       <xsl:value-of select="$II"/>
@@ -1345,7 +1334,7 @@
       <xsl:value-of select="$II"/>
       <xsl:text>Result : constant </xsl:text>
       <xsl:value-of select="$b"/>
-      <xsl:text>.Collections.Collection := Find;&#10;</xsl:text>
+      <xsl:text>.Vectors.Vector := Find;&#10;</xsl:text>
 
     </xsl:if>
 
@@ -1368,26 +1357,22 @@
       <xsl:when test="$role-a/@source">
 
         <!--
-             if {b}.Collections.Is_Empty (Result) then
+             if Result.Is_Empty then
                 return null;
              else
-                return {b}.Collections.First (Result);
+                return Result.First_Element;
              end if;
              -->
 
         <xsl:value-of select="$II"/>
-        <xsl:text>if </xsl:text>
-        <xsl:value-of select="$b"/>
-        <xsl:text>.Collections.Is_Empty (Result) then&#10;</xsl:text>
+        <xsl:text>if Result.Is_Empty then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:text>return null;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
         <!-- XXX case for checking there is only one! -->
         <xsl:value-of select="$III"/>
-        <xsl:text>return </xsl:text>
-        <xsl:value-of select="$b"/>
-        <xsl:text>.Collections.First (Result);&#10;</xsl:text>
+        <xsl:text>return Result.First_Element;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
@@ -1572,7 +1557,7 @@
          end Sel;
          function Find
          is new {c}.Selection_Function (Sel);
-         Result : constant {c}.Collections.Collection := Find;
+         Result : constant {c}.Vectors.Vector := Find;
          -->
 
     <xsl:value-of select="$II"/>
@@ -1623,7 +1608,7 @@
     <xsl:value-of select="$II"/>
     <xsl:text>Result : constant </xsl:text>
     <xsl:value-of select="$c"/>
-    <xsl:text>.Collections.Collection := Find;&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector := Find;&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
@@ -1644,26 +1629,22 @@
       <xsl:otherwise>
 
          <!--
-             if {c}.Collections.Is_Empty (Result) then
+             if Result.Is_Empty then
                 return null;
              else
-                return {c}.Collections.First (Result);
+                return Result.First_Element;
              end if;
              -->
 
        <xsl:value-of select="$II"/>
-        <xsl:text>if </xsl:text>
-        <xsl:value-of select="$c"/>
-        <xsl:text>.Collections.Is_Empty (Result) then&#10;</xsl:text>
+        <xsl:text>if Result.Is_Empty then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:text>return null;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
         <!-- XXX case for checking there is only one! -->
         <xsl:value-of select="$III"/>
-        <xsl:text>return </xsl:text>
-        <xsl:value-of select="$c"/>
-        <xsl:text>.Collections.First (Result);&#10;</xsl:text>
+        <xsl:text>return Result.First_Element;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
@@ -1846,7 +1827,7 @@
     <xsl:value-of select="$role-b/classname"/>
     <xsl:choose>
       <xsl:when test="$role-b/@multiple">
-        <xsl:text>.Collections.Collection</xsl:text>
+        <xsl:text>.Vectors.Vector</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>.Handle</xsl:text>
@@ -1905,7 +1886,7 @@
     <xsl:value-of select="$assoc"/>
     <xsl:choose>
       <xsl:when test="$role-b/@multiple">
-        <xsl:text>.Collections.Collection</xsl:text>
+        <xsl:text>.Vectors.Vector</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>.Handle</xsl:text>

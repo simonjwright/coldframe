@@ -19,10 +19,12 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-hash-strings-standard.ads,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
-function ColdFrame.Hash.Strings.Standard (S : String) return Natural;
+with Ada.Containers;
+function ColdFrame.Hash.Strings.Standard
+  (S : String) return Ada.Containers.Hash_Type;
 pragma Preelaborate (ColdFrame.Hash.Strings.Standard);

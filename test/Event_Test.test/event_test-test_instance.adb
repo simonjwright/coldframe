@@ -19,11 +19,13 @@ with Event_Test.Tear_Down;
 
 with Event_Test.Machine;
 with Event_Test.Machine.All_Instances;
-with Event_Test.Machine.Collections;
+with Event_Test.Machine.Vectors;
 with Event_Test.Events;
 
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Events;
+
+with ColdFrame.Project.Log_Info;
 
 package body Event_Test.Test_Instance is
 
@@ -62,8 +64,8 @@ package body Event_Test.Test_Instance is
       ColdFrame.Project.Events.Post (Ev2, On => Events.Dispatcher);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
-              Machine.Collections.Length (Machine.All_Instances)'Img &
+      Assert (Machine.Vectors.Is_Empty (Machine.All_Instances),
+              Machine.Vectors.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action;
 
@@ -81,8 +83,8 @@ package body Event_Test.Test_Instance is
       Machine.Set_Timer (H, 2.5);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
-              Machine.Collections.Length (Machine.All_Instances)'Img &
+      Assert (Machine.Vectors.Is_Empty (Machine.All_Instances),
+              Machine.Vectors.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action_With_Timer;
 
@@ -98,16 +100,23 @@ package body Event_Test.Test_Instance is
       Ev2 : constant ColdFrame.Project.Events.Event_P
         := new Machine.Kill (H);
    begin
-      ColdFrame.Project.Events.Post (Ev1,
+      ColdFrame.Project.Log_Info ("Delete_As_Action_With_Held");
+      ColdFrame.Project.Events.Post (new Machine.Kill (H),
                                      On => Events.Dispatcher,
                                      To_Fire_After => 0.1);
-      ColdFrame.Project.Events.Post (Ev2,
+      ColdFrame.Project.Events.Post (new Machine.Kill (H),
+                                     On => Events.Dispatcher,
+                                     To_Fire_After => 0.1);
+      ColdFrame.Project.Events.Post (new Machine.Kill (H),
                                      On => Events.Dispatcher,
                                      To_Fire_After => 0.2);
+      ColdFrame.Project.Log_Info ("Delete_As_Action_With_Held - starting");
       ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Log_Info ("Delete_As_Action_With_Held - waiting");
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
-              Machine.Collections.Length (Machine.All_Instances)'Img &
+      ColdFrame.Project.Log_Info ("Delete_As_Action_With_Held - done");
+      Assert (Machine.Vectors.Is_Empty (Machine.All_Instances),
+              Machine.Vectors.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action_With_Held;
 
@@ -165,7 +174,7 @@ package body Event_Test.Test_Instance is
       Registration.Register_Routine
         (T,
          Delete_As_Action_With_Held'Access,
-         "Delete as an action (held events)");
+         "Delete as an action (held event)");
       Registration.Register_Routine
         (T, Simple_Event'Access, "Simple event");
       Registration.Register_Routine

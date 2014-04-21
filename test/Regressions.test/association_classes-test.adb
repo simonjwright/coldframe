@@ -27,18 +27,18 @@ with Association_Classes.A2_Class;
 with Association_Classes.A3;
 with Association_Classes.A3_Class;
 with Association_Classes.A4;
-with Association_Classes.A4_Class.Collections;
-with Association_Classes.A5.Collections;
+with Association_Classes.A4_Class.Vectors;
+with Association_Classes.A5.Vectors;
 with Association_Classes.A5_Association;
 with Association_Classes.A6;
-with Association_Classes.A6_Associative.Collections;
+with Association_Classes.A6_Associative.Vectors;
 with Association_Classes.A7_Association;
-with Association_Classes.A7_Associative.Collections;
+with Association_Classes.A7_Associative.Vectors;
 with Association_Classes.A8;
-with Association_Classes.A8_Associative.Collections;
+with Association_Classes.A8_Associative.Vectors;
 
-with Association_Classes.L.Collections;
-with Association_Classes.R.Collections;
+with Association_Classes.L.Vectors;
+with Association_Classes.R.Vectors;
 with Association_Classes.Initialize;
 with Association_Classes.Tear_Down;
 
@@ -311,20 +311,20 @@ package body Association_Classes.Test is
    procedure Navigate_A4_From_Null_L_To_R (C : in out Test_Case'Class);
    procedure Navigate_A4_From_Null_L_To_R (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A4.A4L (A_L => null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A4_From_Null_L_To_R;
 
    procedure Navigate_A4_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A4_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A4_Class.Collections.Collection;
+      AC : A4_Class.Vectors.Vector;
    begin
       AC := A4.A4L (A_L => null);
-      Assert (A4_Class.Collections.Length (AC) = 0,
+      Assert (AC.Is_Empty,
               "expected empty A4_Class collection");
    end Navigate_A4_From_Null_L_To_A;
 
@@ -375,20 +375,20 @@ package body Association_Classes.Test is
    procedure Navigate_A5_From_Null_L_To_R (C : in out Test_Case'Class);
    procedure Navigate_A5_From_Null_L_To_R (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A5_Association.A5L (A_L => null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A5_From_Null_L_To_R;
 
    procedure Navigate_A5_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A5_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A5.Collections.Collection;
+      AC : A5.Vectors.Vector;
    begin
       AC := A5_Association.A5L (A_L => null);
-      Assert (A5.Collections.Length (AC) = 0,
+      Assert (AC.Is_Empty,
               "expected empty A5 collection");
    end Navigate_A5_From_Null_L_To_A;
 
@@ -439,20 +439,20 @@ package body Association_Classes.Test is
    procedure Navigate_A6_From_Null_L_To_R (C : in out Test_Case'Class);
    procedure Navigate_A6_From_Null_L_To_R (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A6.A6L (A_L => null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A6_From_Null_L_To_R;
 
    procedure Navigate_A6_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A6_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A6_Associative.Collections.Collection;
+      AC : A6_Associative.Vectors.Vector;
    begin
       AC := A6.A6L (A_L => null);
-      Assert (A6_Associative.Collections.Length (AC) = 0,
+      Assert (AC.Is_Empty,
               "expected empty A6_Associative collection");
    end Navigate_A6_From_Null_L_To_A;
 
@@ -503,20 +503,20 @@ package body Association_Classes.Test is
    procedure Navigate_A7_From_Null_L_To_R (C : in out Test_Case'Class);
    procedure Navigate_A7_From_Null_L_To_R (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A7_Association.A7L (A_L => null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A7_From_Null_L_To_R;
 
    procedure Navigate_A7_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A7_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A7_Associative.Collections.Collection;
+      AC : A7_Associative.Vectors.Vector;
    begin
       AC := A7_Association.A7L (A_L => null);
-      Assert (A7_Associative.Collections.Length (AC) = 0,
+      Assert (AC.Is_Empty,
               "expected empty A7_Associative collection");
    end Navigate_A7_From_Null_L_To_A;
 
@@ -567,20 +567,20 @@ package body Association_Classes.Test is
    procedure Navigate_A8_From_Null_L_To_R (C : in out Test_Case'Class);
    procedure Navigate_A8_From_Null_L_To_R (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A8.A8L (A_L => null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A8_From_Null_L_To_R;
 
    procedure Navigate_A8_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A8_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A8_Associative.Collections.Collection;
+      AC : A8_Associative.Vectors.Vector;
    begin
       AC := A8.A8L (A_L => null);
-      Assert (A8_Associative.Collections.Length (AC) = 0,
+      Assert (AC.Is_Empty,
               "expected empty A8_Associative collection");
    end Navigate_A8_From_Null_L_To_A;
 
@@ -598,20 +598,20 @@ package body Association_Classes.Test is
    procedure Navigate_A8_From_Null_R_To_L (C : in out Test_Case'Class);
    procedure Navigate_A8_From_Null_R_To_L (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      LC : L.Collections.Collection;
+      LC : L.Vectors.Vector;
    begin
       LC := A8.A8R (A_R => null);
-      Assert (L.Collections.Length (LC) = 0,
+      Assert (LC.Is_Empty,
               "expected empty L collection");
    end Navigate_A8_From_Null_R_To_L;
 
    procedure Navigate_A8_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A8_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A8_Associative.Collections.Collection;
+      AC : A8_Associative.Vectors.Vector;
    begin
       AC := A8.A8R (A_R => null);
-      Assert (A8_Associative.Collections.Length (AC) = 0,
+      Assert (AC.Is_Empty,
               "expected empty A8_Associative collection");
    end Navigate_A8_From_Null_R_To_A;
 

@@ -15,7 +15,6 @@
 with "Options";
 with "ColdFrame";
 with "aunit";
-with "bc";
 
 project Hierarchies is
 

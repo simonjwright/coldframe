@@ -26,7 +26,7 @@ with Associations.A6;
 with Associations.A7;
 
 with Associations.L;
-with Associations.R.Collections;
+with Associations.R.Vectors;
 with Associations.Initialize;
 with Associations.Tear_Down;
 
@@ -123,10 +123,10 @@ package body Associations.Test is
    procedure Navigate_A4_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A4_From_Null_L (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A4.A4L (null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A4_From_Null_L;
 
@@ -144,10 +144,10 @@ package body Associations.Test is
    procedure Navigate_A5_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A5_From_Null_L (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A5.A5L (null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A5_From_Null_L;
 
@@ -165,10 +165,10 @@ package body Associations.Test is
    procedure Navigate_A6_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A6_From_Null_L (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A6.A6L (null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A6_From_Null_L;
 
@@ -186,10 +186,10 @@ package body Associations.Test is
    procedure Navigate_A7_From_Null_L (C : in out Test_Case'Class);
    procedure Navigate_A7_From_Null_L (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      RC : R.Collections.Collection;
+      RC : R.Vectors.Vector;
    begin
       RC := A7.A7L (null);
-      Assert (R.Collections.Length (RC) = 0,
+      Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A7_From_Null_L;
 

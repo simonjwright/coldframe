@@ -5,16 +5,15 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  ColdFrame expects this procedure to exist to allow errors to be
---  reported (for example, exceptions during domain Initialize
---  procedures).
+--  ColdFrame expects this procedure to exist to allow informational
+--  messages to be reported (possibly for tracing).
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-project-log_info.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
 with ColdFrame.Project.Logging_Support;
 
@@ -24,4 +23,3 @@ begin
      (Severity => Logging_Support.Info,
       Message => Message);
 end ColdFrame.Project.Log_Info;
-

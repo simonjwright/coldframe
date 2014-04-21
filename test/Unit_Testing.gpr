@@ -15,7 +15,6 @@
 with "ColdFrame";
 with "Options";
 with "aunit";
-with "bc";
 
 project Unit_Testing is
 

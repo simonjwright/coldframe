@@ -353,11 +353,13 @@ package body Event_Test.Test_Inspection is
               "number of later events not 2");
       E := Inspection.Later_Event (Q, 1);
       Assert (Event (Inspection.Later_Event (Q, 1).all).Payload = 1,
-              "wrong payload in first event");
+              "wrong payload in first event:"
+                & Event (Inspection.Later_Event (Q, 1).all).Payload'Img);
       Assert (Inspection.When_Later (Q, 1) = T1,
               "wrong delay in first event");
       Assert (Event (Inspection.Later_Event (Q, 2).all).Payload = 2,
-              "wrong payload in second event");
+              "wrong payload in second event:"
+                & Event (Inspection.Later_Event (Q, 2).all).Payload'Img);
       Assert (Inspection.When_Later (Q, 2) = T2,
               "wrong delay in second event");
       begin

@@ -15,7 +15,6 @@
 with "ColdFrame";
 with "Options";
 with "aunit";
-with "bc";
 
 project Stub_Test is
 

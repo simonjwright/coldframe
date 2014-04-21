@@ -104,7 +104,7 @@ TOP_LEVEL_ITEMS =				\
   Options.gpr					\
   debian-6.diff
 
-SUBDIRS = doc examples extras lib models project scripts test tools
+SUBDIRS = doc examples lib models project scripts test tools
 
 cf-$(DATE): force
 	-$(RM) -rf $@

@@ -51,7 +51,6 @@ C_CODEGEN_SCRIPTS = generate-c.xsl c-utilities.xsl
 
 OTHER_SCRIPTS =					\
   case_exceptions.py				\
-  create-build-directories			\
   emacs_case_exceptions				\
   install-project				\
   resolve-references.xsl

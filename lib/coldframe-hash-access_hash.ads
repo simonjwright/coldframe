@@ -19,14 +19,16 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-hash-access_hash.ads,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
+
+with Ada.Containers;
 
 generic
    type T (<>) is limited private;
    type Access_T is access T;
 function ColdFrame.Hash.Access_Hash
-  (The_Access_Value : Access_T) return Natural;
+  (The_Access_Value : Access_T) return Ada.Containers.Hash_Type;
 pragma Preelaborate (ColdFrame.Hash.Access_Hash);

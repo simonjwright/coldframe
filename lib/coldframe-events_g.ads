@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: fde6fd75a1a0 $
---  $Date: 2014/04/05 13:21:13 $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
 --  $Author: simonjwright $
 
 with Ada.Finalization;
@@ -29,7 +29,7 @@ with Ada.Unchecked_Deallocation;
 with ColdFrame.Event_Basis;
 with ColdFrame.Instances;
 with ColdFrame.Time_Signature;
-with System.Storage_Pools;
+with System;
 
 generic
 
@@ -37,8 +37,6 @@ generic
       is abstract new ColdFrame.Event_Basis.Event_Base with private;
 
    with package Time is new Time_Signature (<>);
-
-   Event_Storage : in out System.Storage_Pools.Root_Storage_Pool'Class;
 
 package ColdFrame.Events_G is
 
@@ -85,7 +83,6 @@ package ColdFrame.Events_G is
    --  All Events are derived from this type.
 
    type Event_P is access all Event_Base'Class;
-   for Event_P'Storage_Pool use Event_Storage;
 
    procedure Handler (This : Event_Base) is abstract;
    --  Concrete Events implement this to perform the required

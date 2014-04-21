@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 28f010f797e0 2013/07/14 17:12:36 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -853,12 +853,14 @@
           <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
           <xsl:call-template name="ut:identification-info"/>
           <xsl:text>with ColdFrame.Hash.Strings.Bounded;&#10;</xsl:text>
-          <xsl:text>function </xsl:text>
+          <xsl:text>private function </xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Hash&#10;</xsl:text>
           <xsl:text>is new ColdFrame.Hash.Strings.Bounded (</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Package);&#10;</xsl:text>
         </xsl:when>

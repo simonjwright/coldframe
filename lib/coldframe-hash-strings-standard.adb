@@ -22,14 +22,16 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-hash-strings-standard.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
-function ColdFrame.Hash.Strings.Standard (S : String) return Natural is
-   K : Special_Integer := 0;
-   N : Special_Integer := 0;
+function ColdFrame.Hash.Strings.Standard
+  (S : String) return Ada.Containers.Hash_Type is
+   use Ada.Containers;
+   K : Hash_Type := 0;
+   N : Hash_Type := 0;
 begin
 
    if S = "" then
@@ -38,9 +40,9 @@ begin
 
    for M in S'Range loop
       N := Character_Hash (S (M));
-      K := K + Special_Integer (M) * N;
+      K := K + Hash_Type (M) * N;
    end loop;
 
-   return Natural (K);
+   return K;
 
 end ColdFrame.Hash.Strings.Standard;

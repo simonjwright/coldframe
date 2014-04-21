@@ -28,43 +28,47 @@
 --  Deletion_Proc will be called (at low priority) to delete any
 --  terminated tasks.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-task_deletion.adb,v $
+--  $Revision: f6d9ce14c0aa $
+--  $Date: 2014/04/21 15:48:31 $
+--  $Author: simonjwright $
 
-with BC.Containers.Collections.Unmanaged;
-with BC.Support.Synchronization;
+with Ada.Containers.Vectors;
+with ColdFrame.Synchronization;
 
 package body ColdFrame.Task_Deletion is
 
 
-   package Abstract_Containers is new BC.Containers (Deletion_Proc);
-   package Abstract_Collections is new Abstract_Containers.Collections;
-   package Collections is new Abstract_Collections.Unmanaged;
+   type Containable_Deletion_Proc is access procedure;
+   --  Can't be null-excluding, or Containers would raise CE.
 
-   Semaphore : aliased BC.Support.Synchronization.Semaphore;
-   C : Collections.Collection;
+   package Containers is new Ada.Containers.Vectors
+     (Index_Type => Positive,
+      Element_Type => Containable_Deletion_Proc);
 
 
-   task type T is
+   Semaphore : aliased ColdFrame.Synchronization.Semaphore;
+   Deletion_Procedures : Containers.Vector;
+
+
+   task type Deleting_Task is
       pragma Priority (Deleting_Task_Priority);
       entry Add_Using_Domain;
       entry Remove_Using_Domain;
-   end T;
-   type T_P is access T;
-   Task_Deleter : T_P;
+   end Deleting_Task;
+   type Deleting_Task_P is access Deleting_Task;
+   Task_Deleter : Deleting_Task_P;
 
 
    procedure Register (It : Deletion_Proc)
    is
-      L : BC.Support.Synchronization.Lock (Semaphore'Access);
+      L : ColdFrame.Synchronization.Lock (Semaphore'Access);
       pragma Unreferenced (L);
    begin
       if Task_Deleter = null then
-         Task_Deleter := new T;
+         Task_Deleter := new Deleting_Task;
       end if;
-      Collections.Append (C, It);
+      Deletion_Procedures.Append (Containable_Deletion_Proc (It));
    end Register;
 
 
@@ -84,7 +88,7 @@ package body ColdFrame.Task_Deletion is
    end Remove_Using_Domain;
 
 
-   task body T is
+   task body Deleting_Task is
       Users : Natural := 0;
    begin
       loop
@@ -108,21 +112,20 @@ package body ColdFrame.Task_Deletion is
             or
                delay 1.0;
                declare
-                  L : BC.Support.Synchronization.Lock (Semaphore'Access);
+                  L : ColdFrame.Synchronization.Lock (Semaphore'Access);
                   pragma Unreferenced (L);
-                  It : Abstract_Containers.Iterator'Class
-                    := Collections.New_Iterator (C);
-                  use Abstract_Containers;
+                  It : Containers.Cursor := Deletion_Procedures.First;
+                  use type Containers.Cursor;
                begin
-                  while not Is_Done (It) loop
-                     Current_Item (It).all;
-                     Next (It);
+                  while It /= Containers.No_Element loop
+                     Containers.Element (It).all;
+                     Containers.Next (It);
                   end loop;
                end;
             end select;
          end loop;
       end loop;
-   end T;
+   end Deleting_Task;
 
 
 end ColdFrame.Task_Deletion;
