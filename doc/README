@@ -1,9 +1,12 @@
 ************
-* 2014mmdd *
+* 20140422 *
 ************
 
 General
 =======
+
+This is a major release; ColdFrame is now targeted at Ada
+2005. It uses Ada.Containers instead of the Booch Components.
 
 Modelling
 =========
@@ -21,6 +24,8 @@ Supports the tag {hash=style} for <<imported>> and <<renaming>> types.
 Generation
 ==========
 
+Uses Ada.Containers. The most obvious effect of this is that Domain.Class.Collections.Collection has become Domain.Class.Vectors.Vector.
+
 Inheritance arrowheads were missing on generated diagrams.
 
 Improved detection of the use of invalid names.
@@ -28,17 +33,21 @@ Improved detection of the use of invalid names.
 Code
 ====
 
+Fixed bug 83 (Timed event not invalidated on instance deletion). This
+was a very obscure bug, which is present in all earlier releases of
+ColdFrame; to trigger it, you need two timed events for the same
+instance, where the first event's handler deletes the instance.
+
 For <<callback>> operations, code is generated to
 * register with the callback provider at domain initialization,
 * create class events to transfer the data into the receiver domain's
   context, and
 * support teardown for unit test.
 
-Testing
-=======
-
 Installation
 ============
+
+You no longer need to have the Booch Components available.
 
 Documentation
 =============

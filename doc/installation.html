@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 78ff936b852c 2014/03/26 16:49:34 simonjwright $ -->
+<!-- $Id: installation.html,v ee69de33e6d0 2014/04/22 14:42:27 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -28,9 +28,6 @@ compiler; must support Ada2005)
 
 <li><a href="http://sourceforge.net/projects/saxon/">Saxon</a> (an
 XSLT processor)
-
-<li>The <a href="http://booch95.sourceforge.net/index.html">Booch
-Components</a> (an Ada 95 container library, compatible with Ada2005)
 
 </ul>
 
@@ -236,7 +233,6 @@ source, your project file can be pretty simple: the supplied
    with "ColdFrame";
    with "Options";
    with "aunit";
-   with "bc";
 
    project Event_Test is
 
@@ -284,7 +280,6 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 <p><pre>
    with "Options";
    with "aunit";
-   with "bc";
 
    project Event_Test is
 

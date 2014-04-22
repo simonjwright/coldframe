@@ -75,8 +75,14 @@ coldframe-events_g-held_event_queue_signature.ads			\
 coldframe-instances.ads							\
 coldframe-interrupts.adb						\
 coldframe-interrupts.ads						\
+coldframe-memory_streams.adb						\
+coldframe-memory_streams.ads						\
+coldframe-smart_pointers.adb						\
+coldframe-smart_pointers.ads						\
 coldframe-stubs.adb							\
 coldframe-stubs.ads							\
+coldframe-synchronization.adb						\
+coldframe-synchronization.ads						\
 coldframe-task_deletion.adb						\
 coldframe-task_deletion.ads						\
 coldframe-task_deletion_g.adb						\

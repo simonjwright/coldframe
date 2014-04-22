@@ -57,7 +57,6 @@ ALL =								\
   coldframe-project-log_info.ads				\
   coldframe-project-logging_support.adb				\
   coldframe-project-logging_support.ads				\
-  coldframe-project-serialization.ads				\
   coldframe-project-storage_pools.ads				\
   coldframe-project-times.adb					\
   coldframe-project-times.ads					\

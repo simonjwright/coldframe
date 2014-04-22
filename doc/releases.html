@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 6075d0cd3fe0 2014/03/21 13:28:51 simonjwright $ -->
+<!-- $Id: releases.html,v ee69de33e6d0 2014/04/22 14:42:27 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -75,12 +75,15 @@ zipped release of 30 January 2001.
 </ul>
 -->
 
-<dt>2014mmdd
+<dt>20140422
 
 <dd>
 <ul class="release">
 
 <li><b>General</b>
+
+<li> This is a major release; ColdFrame is now targeted at Ada
+2005. It uses Ada.Containers instead of the Booch Components.
 
 <li><b>Modelling</b>
 
@@ -104,11 +107,20 @@ types.
 
 <li><b>Generation</b>
 
+<li> Uses Ada.Containers. The most obvious effect of this is that <tt><i>Domain.Class</i>.Collections.Collection</tt> has become <tt><i>Domain.Class</i>.Vectors.Vector</tt>.
+
 <li> Inheritance arrowheads were missing on generated diagrams.
 
 <li> Improved detection of the use of invalid names.
 
 <li><b>Code</b>
+
+<li> Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/83/">83</a>
+(Timed event not invalidated on instance deletion). This was a very
+obscure bug, which is present in all earlier releases of ColdFrame; to
+trigger it, you need two timed events for the same instance, where the
+first event's handler deletes the instance.
 
 <li> For &#171;callback&#187; operations, code is generated to
 
@@ -123,9 +135,9 @@ domain's context, and
 
 </ul>
 
-<li><b>Testing</b>
-
 <li><b>Installation</b>
+
+<li> You no longer need to have the Booch Components available.
 
 </ul>
 

@@ -10,14 +10,13 @@
 --
 --   o  classes whose multiplicity is specified (Bounded_Pool).
 --   o  classes whose multiplicity isn't specified (Unbounded_Pool).
---   o  event queues (Unbounded_Pool).
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-project-storage_pools.ads,v $
+--  $Revision: ee69de33e6d0 $
+--  $Date: 2014/04/22 14:42:27 $
+--  $Author: simonjwright $
 
 with ColdFrame.Bounded_Storage_Pools;
 with ColdFrame.Unbounded_Storage_Pools;
