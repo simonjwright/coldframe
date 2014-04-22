@@ -19,10 +19,8 @@ all::
 include Makefile.inc
 
 # Set up the library
-setup:: setup.inner
-setup.inner: force
+setup:: force
 	gprbuild -p -P ColdFrame
-.PHONY: setup.inner
 
 # Set up subdirectories
 SETUP_SUBDIRS = lib tools
