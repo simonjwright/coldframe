@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -53,7 +53,7 @@ package body Normalize_XMI.Model.Enumerations is
                   Messages.Error ("Invalid literal """
                                     & Literal
                                     & """ in enumeration "
-                                    & Fully_Qualified_Name (E));
+                                    & E.Fully_Qualified_Name);
                end if;
             end;
          end loop;
@@ -73,7 +73,10 @@ package body Normalize_XMI.Model.Enumerations is
             begin
                if E.Operations.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+E.Name) & " has duplicate operation " & Name);
+                    ("Type "
+                       & E.Fully_Qualified_Name
+                       & " has duplicate operation "
+                       & Name);
                else
                   E.Operations.Insert (Key => Name, New_Item => O);
                end if;
@@ -100,7 +103,7 @@ package body Normalize_XMI.Model.Enumerations is
         and not E.Has_Tag ("language") then
          Messages.Error
            ("Type "
-              & (+E.Name)
+              & E.Fully_Qualified_Name
               & " has <<convention>> but not {language}");
       end if;
       E.Operations.Iterate (Resolve'Access);

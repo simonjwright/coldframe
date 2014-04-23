@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -51,7 +51,7 @@ package body Normalize_XMI.Model.Classes is
                if C.Attributes.Contains (Name) then
                   Messages.Error
                     ("Class "
-                       & (+C.Name)
+                       & C.Fully_Qualified_Name
                        & " has duplicate attribute "
                        & Name);
                else
@@ -98,7 +98,7 @@ package body Normalize_XMI.Model.Classes is
             when others =>
                Messages.Error
                  ("Class "
-                    & (+C.Name)
+                    & C.Fully_Qualified_Name
                     & " has more than one <<class>> state machine");
          end case;
       end;
@@ -124,7 +124,7 @@ package body Normalize_XMI.Model.Classes is
             when others =>
                Messages.Error
                  ("Class "
-                    & (+C.Name)
+                    & C.Fully_Qualified_Name
                     & " has more than one instance state machine");
          end case;
       end;
@@ -250,7 +250,7 @@ package body Normalize_XMI.Model.Classes is
          else
             Messages.Error
               ("Class "
-                 & (+C.Name)
+                 & C.Fully_Qualified_Name
                  & " has <<cardinality>> but not {max}");
          end if;
       end if;
@@ -266,11 +266,15 @@ package body Normalize_XMI.Model.Classes is
          begin
             if C.Attributes.Length > 0 then
                Messages.Error
-                 ("Utility class " & (+C.Name) & " has attributes");
+                 ("Utility class "
+                    & C.Fully_Qualified_Name
+                    & " has attributes");
             end if;
             if C.Operations.Length = 0 then
                Messages.Warning
-                 ("Utility class " & (+C.Name) & " has no operations");
+                 ("Utility class "
+                    & C.Fully_Qualified_Name
+                    & " has no operations");
             end if;
          end;
          Put (To, " utility='true'");

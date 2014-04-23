@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -59,9 +59,7 @@ package body Normalize_XMI.Model.Association_Ends is
               ("Unsupported lower bound '"
                  & Lower
                  & "' in "
-                 & (+Parent.Name)
-                 & "."
-                 & (+E.Name));
+                 & E.Fully_Qualified_Name);
          end if;
       end;
 
@@ -90,9 +88,7 @@ package body Normalize_XMI.Model.Association_Ends is
               ("Unsupported upper bound '"
                  & Upper
                  & "' in "
-                 & (+Parent.Name)
-                 & "."
-                 & (+E.Name));
+                 & E.Fully_Qualified_Name);
          end if;
       end;
 
@@ -119,9 +115,7 @@ package body Normalize_XMI.Model.Association_Ends is
               ("Couldn't find participant "
                  & Name
                  & " for association end "
-                 & (+E.Parent.Name)
-                 & "."
-                 & (+E.Name));
+                 & E.Fully_Qualified_Name);
          end if;
       end;
 

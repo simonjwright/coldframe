@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: 6075d0cd3fe0 $
---  $Date: 2014/03/21 13:28:51 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -43,7 +43,7 @@ package body Normalize_XMI.Model.Data_Types is
          if DOM.Core.Nodes.Length (Nodes) > 0 then
             Messages.Error
               ("DataType "
-                 & (+T.Name)
+                 & T.Fully_Qualified_Name
                  & " is not permitted to have attributes");
          end if;
       end;
@@ -62,7 +62,10 @@ package body Normalize_XMI.Model.Data_Types is
             begin
                if T.Operations.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+T.Name) & " has duplicate operation " & Name);
+                    ("Type "
+                       & T.Fully_Qualified_Name
+                       & " has duplicate operation "
+                       & Name);
                else
                   T.Operations.Insert (Key => Name, New_Item => O);
                end if;
@@ -90,7 +93,7 @@ package body Normalize_XMI.Model.Data_Types is
          if not T.Has_Tag ("access-to-type") then
             Messages.Error
               ("Type "
-                 & (+T.Name)
+                 & T.Fully_Qualified_Name
                  & " has <<access>> but not {access-to-type}");
          else
             declare
@@ -104,14 +107,14 @@ package body Normalize_XMI.Model.Data_Types is
                     ("Type '"
                        & Target_Type_Name
                        & "' designated by <<access>> type "
-                       & (+T.Name)
+                       & T.Fully_Qualified_Name
                        & " not found");
                elsif not (Target_Type.all in Data_Type_Element'Class) then
                   Messages.Error
                     ("Type '"
                        & Target_Type_Name
                        & "' designated by <<access>> type "
-                       & (+T.Name)
+                       & T.Fully_Qualified_Name
                        & " is not a data type");
                else
                   Types.Type_Element (Target_Type.all).Accessor
@@ -124,7 +127,7 @@ package body Normalize_XMI.Model.Data_Types is
          if T.Operations.Length /= 1 then
             Messages.Error
               ("Type "
-                 & (+T.Name)
+                 & T.Fully_Qualified_Name
                  & " is marked <<access-to-operation>> but has"
                  & T.Operations.Length'Img
                  & " operations");
@@ -137,7 +140,7 @@ package body Normalize_XMI.Model.Data_Types is
                if Operation_Name /= +T.Name then
                   Messages.Warning
                     ("Operation "
-                       & (+T.Name)
+                       & T.Fully_Qualified_Name
                        & "."
                        & Operation_Name
                        & " renamed to "
@@ -153,7 +156,7 @@ package body Normalize_XMI.Model.Data_Types is
         and not T.Has_Tag ("length") then
          Messages.Error
            ("Type "
-              & (+T.Name)
+              & T.Fully_Qualified_Name
               & " has <<bounded-string>> but not {length}");
       end if;
       if T.Has_Stereotype ("constraint") then
@@ -169,7 +172,7 @@ package body Normalize_XMI.Model.Data_Types is
                     ("Type '"
                        & Constrained_Type_Name
                        & "', to be constrained by "
-                       & (+T.Name)
+                       & T.Fully_Qualified_Name
                        & ", not found");
                elsif
                  not (Constrained_Type.all in Data_Type_Element'Class)
@@ -179,46 +182,46 @@ package body Normalize_XMI.Model.Data_Types is
                     ("Type '"
                        & Constrained_Type_Name
                        & "', to be constrained by "
-                       & (+T.Name)
+                       & T.Fully_Qualified_Name
                        & ", is not a data type");
                end if;
             end;
          else
             Messages.Error
               ("Type "
-                 & (+T.Name)
+                 & T.Fully_Qualified_Name
                  & " has <<constraint>> but not {constrains}");
          end if;
          if not (T.Has_Tag ("lower") or T.Has_Tag ("upper")) then
             Messages.Error
               ("Type "
-                 & (+T.Name)
+                 & T.Fully_Qualified_Name
                  & " has <<constraint>> but neither {lower} nor {upper}");
          end if;
       end if;
       if T.Has_Stereotype ("convention") then
          Messages.Error
            ("Type "
-              & (+T.Name)
+              & T.Fully_Qualified_Name
               & " is not allowed to have <<convention>>");
       end if;
       if T.Has_Stereotype ("fixed-string")
         and not T.Has_Tag ("length") then
          Messages.Error
            ("Type "
-              & (+T.Name)
+              & T.Fully_Qualified_Name
               & " has <<fixed-string>> but not {length}");
       end if;
       if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
          Messages.Error
            ("Type "
-              & (+T.Name)
+              & T.Fully_Qualified_Name
               & " has <<imported>> but not {imported}");
       end if;
       if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
          Messages.Error
            ("Type "
-              & (+T.Name)
+              & T.Fully_Qualified_Name
               & " has <<renaming>> but not {renames}");
       end if;
       T.Operations.Iterate (Resolve'Access);
@@ -279,12 +282,12 @@ package body Normalize_XMI.Model.Data_Types is
             elsif Value'Length = 0 then
                Messages.Error
                  ("Type "
-                    & (+T.Name)
+                    & T.Fully_Qualified_Name
                     & " has tag {hash} with no value specified");
             else
                Messages.Error
                  ("Type "
-                    & (+T.Name)
+                    & T.Fully_Qualified_Name
                     & " has tag {hash} with bad value '"
                     & Value
                     & "'");

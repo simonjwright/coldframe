@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 6075d0cd3fe0 $
---  $Date: 2014/03/21 13:28:51 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -91,7 +91,7 @@ package body Normalize_XMI.Model is
          Messages.Error ("Invalid "
                            & E.Kind
                            & " name "
-                           & Fully_Qualified_Name (Element'Class (E)));
+                           & E.Fully_Qualified_Name);
       end if;
 
       declare
@@ -139,7 +139,7 @@ package body Normalize_XMI.Model is
                                 & T & "="
                                 & V
                                 & "} on "
-                                & Fully_Qualified_Name (Element'Class (E)));
+                                & E.Fully_Qualified_Name);
                         end if;
                      else
                         E.Tagged_Values.Insert (T, V);

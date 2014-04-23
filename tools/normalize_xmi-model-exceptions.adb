@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -41,7 +41,7 @@ package body Normalize_XMI.Model.Exceptions is
       if E.Has_Tag ("imported") and E.Has_Tag ("renames") then
          Messages.Error
            ("Exception "
-              & (+E.Name)
+              & E.Fully_Qualified_Name
               & " has both {imported} and {renames} specified");
       end if;
    end Resolve;

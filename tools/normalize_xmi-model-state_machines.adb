@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -243,9 +243,7 @@ package body Normalize_XMI.Model.State_Machines is
             when Initial =>
                Messages.Error
                  ("Initial state "
-                    & (+S.Parent.Name)
-                    & "."
-                    & (+S.Name)
+                    & S.Fully_Qualified_Name
                     & " is marked <<final>>");
             when Normal =>
                S.Kind := Final;
@@ -298,11 +296,7 @@ package body Normalize_XMI.Model.State_Machines is
       elsif Node_Name /= "UML:SimpleState" then
          Messages.Error
            ("Don't recognise "
-              & (+Parent.Parent.Name)
-              & "."
-              & (+Parent.Name)
-              & "."
-              & (+S.Name)
+              & S.Fully_Qualified_Name
               & "'s kind: "
               & Node_Name);
       end if;
@@ -412,7 +406,7 @@ package body Normalize_XMI.Model.State_Machines is
          if DOM.Core.Nodes.Length (Nodes) > 1 then
             Messages.Error
               ("Event "
-                 & (+E.Name)
+                 & E.Fully_Qualified_Name
                  & " is not permitted to have more than one parameter");
          elsif DOM.Core.Nodes.Length (Nodes) = 1 then
             declare
@@ -424,7 +418,7 @@ package body Normalize_XMI.Model.State_Machines is
                else
                   Messages.Error
                     ("Event "
-                       & (+E.Name)
+                       & E.Fully_Qualified_Name
                        & " has invalid parameter type """
                        & Name
                        & """");
@@ -453,11 +447,48 @@ package body Normalize_XMI.Model.State_Machines is
       begin
          Element_Vectors.Element (Pos).Resolve;
       end Resolve_V;
+
+      --  Checking that there's only one of each State
+      package State_Counters is new Ada.Containers.Indefinite_Ordered_Maps
+        (Element_Type => Positive,
+         Key_Type => String);
+      procedure Add_State (Pos : Element_Maps.Cursor);
+      State_Counter : State_Counters.Map;
+      procedure Add_State (Pos : Element_Maps.Cursor)
+      is
+         Inserted_At : State_Counters.Cursor;
+         Inserted : Boolean;
+      begin
+         State_Counter.Insert
+           (Key => +Element_Maps.Element (Pos).Name,
+            New_Item => 1,
+            Position => Inserted_At,
+            Inserted => Inserted);
+         if not Inserted then
+            State_Counter.Replace_Element
+              (Position => Inserted_At,
+               New_Item => State_Counters.Element (Inserted_At) + 1);
+         end if;
+      end Add_State;
+      procedure Check_State (Pos : State_Counters.Cursor);
+      procedure Check_State (Pos : State_Counters.Cursor) is
+      begin
+         if State_Counters.Element (Pos) > 1 then
+            Messages.Error (S.Parent.Fully_Qualified_Name
+                              & " has"
+                              & State_Counters.Element (Pos)'Img
+                              & " events named "
+                              & State_Counters.Key (Pos));
+         end if;
+      end Check_State;
    begin
       Messages.Trace ("...... checking state_machine " & (+S.Name));
-      S.Transitions.Iterate (Resolve_V'Access);
       S.States.Iterate (Resolve_M'Access);
       S.Events.Iterate (Resolve_M'Access);
+      S.Transitions.Iterate (Resolve_V'Access);
+
+      S.States.Iterate (Add_State'Access);
+      State_Counter.Iterate (Check_State'Access);
    end Resolve;
 
    overriding
@@ -549,7 +580,7 @@ package body Normalize_XMI.Model.State_Machines is
                        ("Invalid action """
                           & Action
                           & """ in "
-                          & Fully_Qualified_Name (For_Element));
+                          & For_Element.Fully_Qualified_Name);
                   end if;
                end;
             end if;

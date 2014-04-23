@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -66,7 +66,7 @@ package body Normalize_XMI.Model.Associations is
       if +A.Ends.Element (1).Name = +A.Ends.Element (2).Name then
          Messages.Error
            ("Association "
-              & (+A.Name)
+              & A.Fully_Qualified_Name
               & "'s ends have the same role name");
       end if;
    end Populate_Association_Aspects;
@@ -98,14 +98,14 @@ package body Normalize_XMI.Model.Associations is
       if E1.Source and E2.Source then
          Messages.Error
            ("Both ends of association "
-              & (+A.Name)
+              & A.Fully_Qualified_Name
               & " are marked <<source>>");
       elsif E1.Lower = E2.Lower
         and E1.Upper = E2.Upper
         and not E1.Source and not E2.Source then
          Messages.Error
            ("Neither end of symmetric association "
-              & (+A.Name)
+              & A.Fully_Qualified_Name
               & " is marked <<source>>");
       else
          case E1.Upper is
@@ -145,9 +145,7 @@ package body Normalize_XMI.Model.Associations is
                                  if E1.Source then
                                     E1.Source := False;
                                     Messages.Warning
-                                      (+A.Name
-                                         & "."
-                                         & (+E1.Name)
+                                      (E1.Fully_Qualified_Name
                                          & " is marked <<source>>,"
                                          & " ignored");
                                  end if;
@@ -168,9 +166,7 @@ package body Normalize_XMI.Model.Associations is
                                  if E2.Source then
                                     E2.Source := False;
                                     Messages.Warning
-                                      (+A.Name
-                                         & "."
-                                         & (+E2.Name)
+                                      (E2.Fully_Qualified_Name
                                          & " is marked <<source>>,"
                                          & " ignored");
                                  end if;
@@ -211,9 +207,7 @@ package body Normalize_XMI.Model.Associations is
                      if E2.Source then
                         E2.Source := False;
                         Messages.Warning
-                          (+A.Name
-                             & "."
-                             & (+E2.Name)
+                          (E2.Fully_Qualified_Name
                              & " is marked <<source>>,"
                              & " ignored");
                      end if;
@@ -233,9 +227,7 @@ package body Normalize_XMI.Model.Associations is
                      if E1.Source then
                         E1.Source := False;
                         Messages.Warning
-                          (+A.Name
-                             & "."
-                             & (+E1.Name)
+                          (E1.Fully_Qualified_Name
                              & " is marked <<source>>,"
                              & " ignored");
                      end if;
@@ -248,7 +240,7 @@ package body Normalize_XMI.Model.Associations is
                   when Many =>
                      Messages.Error
                        ("Both ends of plain association "
-                          & (+A.Name)
+                          & A.Fully_Qualified_Name
                           & " are multiple; need association class");
                end case;
          end case;

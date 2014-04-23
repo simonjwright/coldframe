@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -55,7 +55,7 @@ package body Normalize_XMI.Model.Association_Classes is
       if AC.Class.Has_Tag ("association-class-name") then
          Messages.Warning
            ("Deprecated <<association-class-name>> on "
-              & Class_Name);
+              & AC.Fully_Qualified_Name);
       end if;
       case AC.Class.Has_Tag ("association-name") is
          when False =>
@@ -95,14 +95,14 @@ package body Normalize_XMI.Model.Association_Classes is
          if E1.Source and E2.Source then
             Messages.Error
               ("Both ends of association "
-                 & (+AC.Name)
+                 & AC.Fully_Qualified_Name
                  & " are marked <<source>>");
          elsif E1.Lower = E2.Lower
            and E1.Upper = One and E2.Upper = One
            and not E1.Source and not E2.Source then
             Messages.Error
               ("Neither end of symmetric 1-(1:1) association "
-                 & (+AC.Name)
+                 & AC.Fully_Qualified_Name
                  & " is marked <<source>>");
          else
             case E1.Upper is
@@ -157,9 +157,7 @@ package body Normalize_XMI.Model.Association_Classes is
                                     if E1.Source then
                                        E1.Source := False;
                                        Messages.Warning
-                                         (+AC.Name
-                                            & "."
-                                            & (+E1.Name)
+                                         (E1.Fully_Qualified_Name
                                             & " is marked <<source>>,"
                                             & " ignored");
                                     end if;
@@ -186,9 +184,7 @@ package body Normalize_XMI.Model.Association_Classes is
                                     if E2.Source then
                                        E2.Source := False;
                                        Messages.Warning
-                                         (+AC.Name
-                                            & "."
-                                            & (+E2.Name)
+                                         (E2.Fully_Qualified_Name
                                             & " is marked <<source>>,"
                                             & " ignored");
                                     end if;

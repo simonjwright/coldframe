@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -48,7 +48,10 @@ package body Normalize_XMI.Model.Class_Types is
             begin
                if T.Attributes.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+T.Name) & " has duplicate attribute " & Name);
+                    ("Type "
+                       & T.Fully_Qualified_Name
+                       & " has duplicate attribute "
+                       & Name);
                else
                   T.Attributes.Insert (Key => Name, New_Item => A);
                end if;
@@ -70,7 +73,10 @@ package body Normalize_XMI.Model.Class_Types is
             begin
                if T.Operations.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+T.Name) & " has duplicate operation " & Name);
+                    ("Type "
+                       & T.Fully_Qualified_Name
+                       & " has duplicate operation "
+                       & Name);
                else
                   T.Operations.Insert (Key => Name, New_Item => O);
                end if;
@@ -97,17 +103,17 @@ package body Normalize_XMI.Model.Class_Types is
          if T.Has_Stereotype ("discriminated") then
             Messages.Error
               ("Type "
-                 & (+T.Name)
+                 & T.Fully_Qualified_Name
                  & " is <<discriminated>> but has no attributes");
          elsif T.Has_Stereotype ("protected") then
             Messages.Error
               ("Type "
-                 & (+T.Name)
+                 & T.Fully_Qualified_Name
                  & " is <<protected>> but has no attributes");
          else
             Messages.Warning
               ("Type "
-                 & (+T.Name)
+                 &  T.Fully_Qualified_Name
                  & " has no attributes, assumed null");
          end if;
       end if;
@@ -115,7 +121,7 @@ package body Normalize_XMI.Model.Class_Types is
         and not T.Has_Tag ("language") then
          Messages.Error
            ("Type "
-              & (+T.Name)
+              & T.Fully_Qualified_Name
               & " has <<convention>> but not {language}");
       end if;
       T.Attributes.Iterate (Resolve'Access);

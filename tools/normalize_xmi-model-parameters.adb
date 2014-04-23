@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: e08cb16c3dfb $
---  $Date: 2014/03/11 18:27:45 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -40,11 +40,7 @@ package body Normalize_XMI.Model.Parameters is
       begin
          if DOM.Core.Nodes.Length (Nodes) = 0 then
             Messages.Error ("No type specified for parameter "
-                              & (+P.Parent.Parent.Name)
-                              & "."
-                              & (+P.Parent.Name)
-                              & "."
-                              & (+P.Name));
+                              & P.Fully_Qualified_Name);
          else
             P.Parameter_Type :=
               Type_References.Read_Type_Reference
@@ -98,7 +94,7 @@ package body Normalize_XMI.Model.Parameters is
             Messages.Error ("unrecognised ""@kind='"
                               & Kind
                               & "'"" in parameter "
-                              & (+P.Name));
+                              & P.Fully_Qualified_Name);
          end if;
          if P.Has_Stereotype ("not-null") then
             Put (To, " not-null='true'");

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -118,7 +118,7 @@ package body Normalize_XMI.Model.Generalizations is
       begin
          if +G.Parent_Class.Name /= Parent_Name then
             Messages.Error ("Generalization "
-                              & (+Name)
+                              & G.Fully_Qualified_Name
                               & " from "
                               & Child_Name
                               & " has different parent ("

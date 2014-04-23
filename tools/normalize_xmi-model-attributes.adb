@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
+--  $Revision: eff210d5f78e $
+--  $Date: 2014/04/23 16:32:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -40,9 +40,7 @@ package body Normalize_XMI.Model.Attributes is
       begin
          if DOM.Core.Nodes.Length (Nodes) = 0 then
             Messages.Error ("No type specified for attribute "
-                              & (+A.Parent.Name)
-                              & "."
-                              & (+A.Name));
+                              & A.Fully_Qualified_Name);
          else
             A.Attribute_Type := Type_References.Read_Type_Reference
               (DOM.Core.Nodes.Item (Nodes, 0),
