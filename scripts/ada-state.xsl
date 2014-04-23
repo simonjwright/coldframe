@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v c0ee3d3afbf8 2014/03/28 15:53:39 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 661028a21547 2014/04/23 16:28:53 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -144,24 +144,17 @@
            this source. NB, needs to be sorted as it's constructed,
            because preceding-sibling:: is in document order, not
            sorted order.  -->
-      <!-- XXX why include action? -->
       <xsl:variable name="leaving-transitions">
         <xsl:for-each select="../../transition[source=current()]">
           <xsl:sort select="event"/>
-          <xsl:sort select="target"/>
-          <xsl:sort select="action"/>
           <xsl:element name="transition">
             <xsl:element name="event">
               <xsl:value-of select="event"/>
             </xsl:element>
             <xsl:element name="source">
+              <!-- Included because we won't find it so easy to access
+                   when processing this result set. -->
               <xsl:value-of select="source"/>
-            </xsl:element>
-            <xsl:element name="target">
-              <xsl:value-of select="target"/>
-            </xsl:element>
-            <xsl:element name="action">
-              <xsl:value-of select="action"/>
             </xsl:element>
             <xsl:element name="class">
               <!-- Included because we won't find it so easy to access
@@ -175,43 +168,22 @@
       <xsl:for-each select="$leaving-transitions/transition">
         <xsl:choose>
           <xsl:when test=".=preceding-sibling::transition">
-            <xsl:choose>
-              <xsl:when test="$checking-policy='strict'">
-                <xsl:call-template name="ut:log-error"/>
-                <xsl:message>
-                  <xsl:choose>
-                    <xsl:when test="event=''">
-                      <xsl:text>Error: more than one completion (drop-through) transition</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:text>Error: more than one transition triggered by </xsl:text>
-                      <xsl:value-of select="event"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                  <xsl:text> from state </xsl:text>
-                  <xsl:value-of select="class"/>
-                  <xsl:text>.</xsl:text>
-                  <xsl:value-of select="source"/>
-                </xsl:message>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:message>
-                  <xsl:choose>
-                    <xsl:when test="event=''">
-                      <xsl:text>Warning: more than one identical completion (drop-through) transition</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:text>Warning: more than one identical transition triggered by </xsl:text>
-                      <xsl:value-of select="event"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                  <xsl:text> from state </xsl:text>
-                  <xsl:value-of select="class"/>
-                  <xsl:text>.</xsl:text>
-                  <xsl:value-of select="source"/>
-                </xsl:message>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="ut:log-error"/>
+            <xsl:message>
+              <xsl:choose>
+                <xsl:when test="event=''">
+                  <xsl:text>Error: more than one completion (drop-through) transition</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:text>Error: more than one transition triggered by </xsl:text>
+                  <xsl:value-of select="event"/>
+                </xsl:otherwise>
+              </xsl:choose>
+              <xsl:text> from state </xsl:text>
+              <xsl:value-of select="class"/>
+              <xsl:text>.</xsl:text>
+              <xsl:value-of select="source"/>
+            </xsl:message>
           </xsl:when>
           <xsl:when test="event=preceding-sibling::transition/event">
             <xsl:call-template name="ut:log-error"/>
@@ -622,15 +594,26 @@
          operation is marked final.
          The operation may be inherited.-->
 
-    <!-- XXX doesn't work for inherited operations! -->
-    <!-- use st:class-of-operation-for-action(class, action-name) -->
+    <xsl:variable
+      name="final-actions-executed-in-target-state">
+      <xsl:for-each select="($tr | $target)/action">
+        <xsl:variable name="impl-class">
+          <xsl:call-template name="st:class-of-operation-for-action">
+            <xsl:with-param name="class" select="../../.."/>
+            <xsl:with-param name="action" select="."/>
+          </xsl:call-template>
+        </xsl:variable>
+        <xsl:if test="/domain/class[name=$impl-class]/operation[name=.]/@final">
+          <xsl:element name="action" select="."/>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
 
     <xsl:variable
       name="deleting"
       select="$tr/action='Delete'
-              or ../../operation[name=$tr/action]/@final
               or $target/action='Delete'
-              or ../../operation[name=$target/action]/@final"/>
+              or $final-actions-executed-in-target-state/action"/>
 
     <xsl:variable
       name="drop-through"
@@ -641,7 +624,9 @@
       <xsl:choose>
 
         <xsl:when test="$deleting
-                        and ../state[name=$drop-through/target]/@final"/>
+                        and ../state[name=$drop-through/target]/@final">
+          <!-- nothing to do -->
+        </xsl:when>
 
         <xsl:when test="$deleting">
 
