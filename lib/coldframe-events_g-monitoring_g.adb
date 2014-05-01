@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-monitoring_g.adb,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
+--  $Revision: 5925a701d6e4 $
+--  $Date: 2014/05/01 14:54:11 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -456,7 +456,8 @@ package body ColdFrame.Events_G.Monitoring_G is
                   end select;
 
                elsif Held_Events.Next_Event_Time (The_Events)
-                 <= Ada.Real_Time.Clock then
+                 <= Ada.Real_Time.Clock
+               then
 
                   loop
                      Process_First_Event;
@@ -577,7 +578,8 @@ package body ColdFrame.Events_G.Monitoring_G is
          end if;
          if The_Queue.The_Self_Events.Is_Empty
            and then The_Queue.The_Instance_Events.Is_Empty
-           and then The_Queue.The_Class_Events.Is_Empty then
+           and then The_Queue.The_Class_Events.Is_Empty
+         then
             Event_Records.Clear;
             Total_Event_Duration := 0.0;
          else

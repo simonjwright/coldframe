@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: ae12a49c4b3a $
---  $Date: 2014/04/13 13:27:09 $
+--  $Revision: 5925a701d6e4 $
+--  $Date: 2014/05/01 14:54:11 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Hashed_Maps;
@@ -217,7 +217,8 @@ package body ColdFrame.Stubs is
          if Ada.Strings.Fixed.Translate
            (For_Parameter_Named,
             Ada.Strings.Maps.Constants.Lower_Case_Map)
-           = "return" then
+           = "return"
+         then
             raise No_Parameter
               with For_Subprogram_Named & " is not a function";
          else

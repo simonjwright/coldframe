@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
+--  $Revision: 5925a701d6e4 $
+--  $Date: 2014/05/01 14:54:11 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -424,7 +424,8 @@ package body ColdFrame.Events_G.Standard_G is
                   end select;
 
                elsif Held_Events.Next_Event_Time (The_Events)
-                 <= Ada.Real_Time.Clock then
+                 <= Ada.Real_Time.Clock
+               then
 
                   loop
                      Process_First_Event;
