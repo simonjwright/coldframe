@@ -124,17 +124,17 @@ package body McKae.XML.XPath.Node_Sets is
 
    -------------------------------------------------------------------
 
-   function "=" (L, R : Current_Matchings) return Boolean is
+   function Equals (L, R : Current_Matchings) return Boolean is
    begin
       return L.Matching_Node = R.Matching_Node;
-   end "=";
+   end Equals;
 
    -------------------------------------------------------------------
 
-   function "<" (L, R : Current_Matchings) return Boolean is
+   function Less_Than (L, R : Current_Matchings) return Boolean is
       use System;
    begin
       return L.Matching_Node.all'Address < R.Matching_Node.all'Address;
-   end "<";
+   end Less_Than;
 
 end Mckae.XML.XPath.Node_Sets;

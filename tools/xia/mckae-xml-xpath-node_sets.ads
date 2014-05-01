@@ -113,15 +113,18 @@ package Mckae.XML.XPath.Node_Sets is
    --  equivalent to some element already in Target.
 
 private
-   function "=" (L, R : Current_Matchings) return Boolean;
-   function "<" (L, R : Current_Matchings) return Boolean;
+   function Equals (L, R : Current_Matchings) return Boolean;
+   function Less_Than (L, R : Current_Matchings) return Boolean;
 
    package Matchings_Vectors
    is new Ada.Containers.Vectors (Index_Type => Positive,
-                                  Element_Type => Current_Matchings);
+                                  Element_Type => Current_Matchings,
+                                  "=" => Equals);
 
    package Matchings_Sets
-   is new Ada.Containers.Ordered_Sets (Element_Type => Current_Matchings);
+   is new Ada.Containers.Ordered_Sets (Element_Type => Current_Matchings,
+                                      "=" => Equals,
+                                      "<" => Less_Than);
 
    type Set is tagged record
       Elements : Matchings_Vectors.Vector;
