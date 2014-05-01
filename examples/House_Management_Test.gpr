@@ -6,13 +6,12 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: House_Management_Test.gpr,v $
---  $Revision: 4bb7d468563e $
---  $Date: 2014/03/25 20:34:22 $
+--  $Revision: 2a9ac12fad7b $
+--  $Date: 2014/05/01 14:49:37 $
 --  $Author: simonjwright $
 
 with "Options";
 with "ColdFrame";
-with "bc";
 with "aunit";
 
 project House_Management_Test is
