@@ -59,10 +59,6 @@ runs:: stub_test_harness$(exe)
 runs:: unit_testing-harness$(exe)
 	./$< -v 2>&1 | tee -a unit_testing.log
 
-fails:: Bad_Model_Regressions.stamp-regardless
-
-xfails:: Bad_Code_Regressions.stamp-regardless
-
 event_test-harness$(exe): Event_Test.gen force
 	gnatmake -p -PEvent_Test 2>&1 | tee -a Event_Test.log
 exes:: event_test-harness$(exe)
@@ -103,10 +99,6 @@ clean::
 	  | tee $(basename $@).log
 	touch $@
 
-%.stamp-regardless: %.norm-stamp
-	-$(MAKE) $(basename $@).gen 2>&1 | tee $(basename $@).log
-	touch $@
-
 # ArgoUML support
 
 NORM_FILES =					\
@@ -136,10 +128,6 @@ REGRESSION_DOMAINS =				\
   SF_Bug_79					\
   Strings
 
-# Bad models
-BAD_MODEL_DOMAINS =				\
-  Identifiers
-
 DEVELOPMENT_NORMS = $(addsuffix .norm,$(DEVELOPMENT_DOMAINS))
 $(DEVELOPMENT_NORMS): ColdFrame_Development.norm-stamp ;
 DEVELOPMENT_GENS = $(addsuffix .gen,$(DEVELOPMENT_DOMAINS))
@@ -148,10 +136,6 @@ REGRESSION_NORMS = $(addsuffix .norm,$(REGRESSION_DOMAINS))
 $(REGRESSION_NORMS): Regressions.norm-stamp ;
 REGRESSION_GENS = $(addsuffix .gen,$(REGRESSION_DOMAINS))
 
-BAD_MODEL_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_MODEL_REGRESSION_DOMAINS))
-$(BAD_MODEL_REGRESSION_NORMS): Bad_Model_Regressions.norm-stamp ;
-BAD_MODEL_REGRESSION_GENS = $(addsuffix .gen,$(BAD_MODEL_REGRESSION_DOMAINS))
-
 # Has to come after definition of DEVELOPMENT_GENS, REGRESSION_GENS
 regression_tests$(exe): $(DEVELOPMENT_GENS) $(REGRESSION_GENS) force
 	gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
@@ -159,6 +143,30 @@ exes:: regression_tests$(exe)
 clean::
 	-gnatclean -PRegressions
 
+# Bad models
+BAD_MODEL_REGRESSION_DOMAINS =				\
+  Identifiers					\
+  Multiplicities
+
+BAD_MODEL_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_MODEL_REGRESSION_DOMAINS))
+$(BAD_MODEL_REGRESSION_NORMS): Bad_Model_Regressions.norm-stamp ;
+BAD_MODEL_REGRESSION_GENS = $(addsuffix .gen,$(BAD_MODEL_REGRESSION_DOMAINS))
+
+fails::
+	-$(MAKE) Bad_Model_Regressions.norm-stamp
+
+# Bad code
+BAD_CODE_REGRESSION_DOMAINS =				\
+  State_Machines
+
+BAD_CODE_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_CODE_REGRESSION_DOMAINS))
+$(BAD_CODE_REGRESSION_NORMS): Bad_Code_Regressions.norm-stamp ;
+BAD_CODE_REGRESSION_GENS = $(addsuffix .gen,$(BAD_CODE_REGRESSION_DOMAINS))
+
+fails::
+	-for g in $(BAD_CODE_REGRESSION_GENS); do	\
+	  $(MAKE) $$g 2>&1 | tee $(basename $@).log;	\
+	done
 
 clean::
 	rm -rf *.{norm-stamp,norm,stamp,stub,ada,gen,html,images}
