@@ -20,16 +20,16 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 5925a701d6e4 $
---  $Date: 2014/05/01 14:54:11 $
+--  $Revision: 26bc77c98b64 $
+--  $Date: 2014/05/07 15:21:07 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Hashed_Maps;
 with Ada.Containers.Indefinite_Hashed_Sets;
 with Ada.Containers.Ordered_Maps;
 with Ada.Containers.Vectors;
-with Ada.Strings.Fixed.Equal_Case_Insensitive;
-with Ada.Strings.Fixed.Hash_Case_Insensitive;
+with Ada.Strings.Equal_Case_Insensitive;
+with Ada.Strings.Hash_Case_Insensitive;
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
 
@@ -53,8 +53,8 @@ package body ColdFrame.Stubs is
         is new Ada.Containers.Indefinite_Hashed_Maps
           (Element_Type => Element,
            Key_Type => String,
-           Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
-           Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive);
+           Hash => Ada.Strings.Hash_Case_Insensitive,
+           Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive);
 
       type Bag is new String_To_Natural_Maps.Map with null record;
       --  Using A null record extension means we don't need to
@@ -75,9 +75,9 @@ package body ColdFrame.Stubs is
    --  parameters/results.
    package String_Sets is new Ada.Containers.Indefinite_Hashed_Sets
      (Element_Type => String,
-      Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
-      Equivalent_Elements => Ada.Strings.Fixed.Equal_Case_Insensitive,
-      "=" => Ada.Strings.Fixed.Equal_Case_Insensitive);
+      Hash => Ada.Strings.Hash_Case_Insensitive,
+      Equivalent_Elements => Ada.Strings.Equal_Case_Insensitive,
+      "=" => Ada.Strings.Equal_Case_Insensitive);
 
 
    --  We need Memory Streams to hold values, so we need pointers
@@ -102,8 +102,8 @@ package body ColdFrame.Stubs is
    package Input_Maps is new Ada.Containers.Indefinite_Hashed_Maps
      (Element_Type => Stream_Pointer_Vectors.Vector,
       Key_Type => String,
-      Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
-      Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive,
+      Hash => Ada.Strings.Hash_Case_Insensitive,
+      Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive,
       "=" => Stream_Pointer_Vectors."=");
 
 
@@ -123,8 +123,8 @@ package body ColdFrame.Stubs is
    package Sparse_Exception_Maps is new Ada.Containers.Indefinite_Hashed_Maps
        (Key_Type => String,
         Element_Type => Sparse_Exceptions.Map,
-        Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
-        Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive,
+        Hash => Ada.Strings.Hash_Case_Insensitive,
+        Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive,
         "=" => Sparse_Exceptions."=");
 
 
@@ -152,8 +152,8 @@ package body ColdFrame.Stubs is
    package Sparse_Output_Maps is new Ada.Containers.Indefinite_Hashed_Maps
      (Element_Type => Sparse_Outputs.Map,
       Key_Type => String,
-      Hash => Ada.Strings.Fixed.Hash_Case_Insensitive,
-      Equivalent_Keys => Ada.Strings.Fixed.Equal_Case_Insensitive,
+      Hash => Ada.Strings.Hash_Case_Insensitive,
+      Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive,
       "=" => Sparse_Outputs."=");
 
 

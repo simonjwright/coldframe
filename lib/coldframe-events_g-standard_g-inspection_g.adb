@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
+--  $Revision: 26bc77c98b64 $
+--  $Date: 2014/05/07 15:21:07 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
@@ -54,7 +54,7 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if At_Index > Natural (Q.The_Self_Events.Length) then
          raise Not_Found;
       end if;
-      return Q.The_Self_Events (At_Index);
+      return Q.The_Self_Events.Element (At_Index);
    end Self_Event;
 
 
@@ -121,7 +121,7 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if At_Index > Natural (Q.The_Class_Events.Length) then
          raise Not_Found;
       end if;
-      return Q.The_Class_Events (At_Index);
+      return Q.The_Class_Events.Element (At_Index);
    end Immediate_Class_Event;
 
 
@@ -150,7 +150,7 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if At_Index > Natural (Q.The_Instance_Events.Length) then
          raise Not_Found;
       end if;
-      return Q.The_Instance_Events (At_Index);
+      return Q.The_Instance_Events.Element (At_Index);
    end Immediate_Instance_Event;
 
 
