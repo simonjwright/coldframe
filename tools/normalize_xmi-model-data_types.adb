@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: eff210d5f78e $
---  $Date: 2014/04/23 16:32:36 $
+--  $Revision: 18fa6bac8467 $
+--  $Date: 2014/05/16 12:26:36 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -153,7 +153,8 @@ package body Normalize_XMI.Model.Data_Types is
       --  There are all sorts of complicated illegal possibilities
       --  here!
       if T.Has_Stereotype ("bounded-string")
-        and not T.Has_Tag ("length") then
+        and not T.Has_Tag ("length")
+      then
          Messages.Error
            ("Type "
               & T.Fully_Qualified_Name
@@ -206,7 +207,8 @@ package body Normalize_XMI.Model.Data_Types is
               & " is not allowed to have <<convention>>");
       end if;
       if T.Has_Stereotype ("fixed-string")
-        and not T.Has_Tag ("length") then
+        and not T.Has_Tag ("length")
+      then
          Messages.Error
            ("Type "
               & T.Fully_Qualified_Name
@@ -270,7 +272,8 @@ package body Normalize_XMI.Model.Data_Types is
       end;
       if (T.Has_Stereotype ("imported")
             or else T.Has_Stereotype ("renaming"))
-        and then T.Has_Tag ("hash") then
+        and then T.Has_Tag ("hash")
+      then
          declare
             use Ada.Strings.Fixed;
             use Ada.Strings.Maps.Constants;

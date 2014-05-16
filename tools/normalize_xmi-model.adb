@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: eff210d5f78e $
---  $Date: 2014/04/23 16:32:36 $
+--  $Revision: 18fa6bac8467 $
+--  $Date: 2014/05/16 12:26:36 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -119,7 +119,8 @@ package body Normalize_XMI.Model is
                    (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
             begin
                if DOM.Core.Nodes.Length (Tag) = 1
-                 and DOM.Core.Nodes.Length (Value) = 1 then
+                 and DOM.Core.Nodes.Length (Value) = 1
+               then
                   declare
                      T : constant String
                        := DOM.Core.Nodes.Node_Value
@@ -128,7 +129,8 @@ package body Normalize_XMI.Model is
                        := Read_Text (DOM.Core.Nodes.Item (Value, 0));
                   begin
                      if Tags.Contains (T)
-                       and then Tags.Element (T).Must_Be_Name then
+                       and then Tags.Element (T).Must_Be_Name
+                     then
                         if Identifiers.Is_Valid (V) then
                            E.Tagged_Values.Insert (T,
                                                    Identifiers.Normalize (V));

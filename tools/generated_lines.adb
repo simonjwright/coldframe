@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines.adb,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 18fa6bac8467 $
+--  $Date: 2014/05/16 12:26:36 $
 --  $Author: simonjwright $
 
 with GNAT.Command_Line;
@@ -48,7 +48,8 @@ procedure Generated_Lines is
             exit when Last = 0;
             if Str (1 .. Last) /= "." and Str (1 .. Last) /= ".." then
                if Is_Directory (Named & Str (1 .. Last))
-                 and then Recursively then
+                 and then Recursively
+               then
                   Scan_Directory
                     (Named & Str (1 .. Last) & Directory_Separator,
                      Verbosely => Verbosely,

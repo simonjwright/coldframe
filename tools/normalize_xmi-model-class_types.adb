@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: eff210d5f78e $
---  $Date: 2014/04/23 16:32:36 $
+--  $Revision: 18fa6bac8467 $
+--  $Date: 2014/05/16 12:26:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -118,7 +118,8 @@ package body Normalize_XMI.Model.Class_Types is
          end if;
       end if;
       if T.Has_Stereotype ("convention")
-        and not T.Has_Tag ("language") then
+        and not T.Has_Tag ("language")
+      then
          Messages.Error
            ("Type "
               & T.Fully_Qualified_Name

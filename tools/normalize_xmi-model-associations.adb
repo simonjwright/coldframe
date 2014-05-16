@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: eff210d5f78e $
---  $Date: 2014/04/23 16:32:36 $
+--  $Revision: 18fa6bac8467 $
+--  $Date: 2014/05/16 12:26:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -102,7 +102,8 @@ package body Normalize_XMI.Model.Associations is
               & " are marked <<source>>");
       elsif E1.Lower = E2.Lower
         and E1.Upper = E2.Upper
-        and not E1.Source and not E2.Source then
+        and not E1.Source and not E2.Source
+      then
          Messages.Error
            ("Neither end of symmetric association "
               & A.Fully_Qualified_Name
