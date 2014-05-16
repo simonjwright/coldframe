@@ -1,5 +1,4 @@
 \input texinfo    @c -*-texinfo-*-
-@c $Id$
 @c %**start of header
 @setfilename use-cases.info
 @settitle Use Cases for Code Generation
@@ -14,41 +13,41 @@
 @end ifnottex
 
 @menu
-* Introduction::                
-* General considerations::      
-* Instances::                   
-* Associations::                
-* Inheritance relationships::   
-* Glossary::                    
+* Introduction::
+* General considerations::
+* Instances::
+* Associations::
+* Inheritance relationships::
+* Glossary::
 
 @detailmenu
  --- The Detailed Node Listing ---
 
 Instances
 
-* Create an Instance::          
-* Delete an Instance::          
-* Access an Instance::          
-* Select a set of Instances::   
-* Operate on a set of Instances::  
+* Create an Instance::
+* Delete an Instance::
+* Access an Instance::
+* Select a set of Instances::
+* Operate on a set of Instances::
 
 Associations
 
-* Create an association::       
-* Delete an association::       
-* Navigate an association::     
+* Create an association::
+* Delete an association::
+* Navigate an association::
 
 Inheritance relationships
 
-* Create an inheritance::       
-* Delete an inheritance::       
-* Migrate an inheritance::      
-* Navigate an inheritance::     
+* Create an inheritance::
+* Delete an inheritance::
+* Migrate an inheritance::
+* Navigate an inheritance::
 
 Glossary
 
-* Identifier::                  
-* Software Architecture::       
+* Identifier::
+* Software Architecture::
 
 @end detailmenu
 @end menu
@@ -143,11 +142,11 @@ its data are held. One possibility is to have the Class be responsible
 for the existence of Instances.
 
 @menu
-* Create an Instance::          
-* Delete an Instance::          
-* Access an Instance::          
-* Select a set of Instances::   
-* Operate on a set of Instances::  
+* Create an Instance::
+* Delete an Instance::
+* Access an Instance::
+* Select a set of Instances::
+* Operate on a set of Instances::
 @end menu
 
 @node Create an Instance, Delete an Instance, Instances, Instances
@@ -282,9 +281,9 @@ visibility that would be necessary (Ada 95 doesn't permit this unless
 the ``with type'' feature is implemented).
 
 @menu
-* Create an association::       
-* Delete an association::       
-* Navigate an association::     
+* Create an association::
+* Delete an association::
+* Navigate an association::
 @end menu
 
 @node Create an association, Delete an association, Associations, Associations
@@ -342,10 +341,10 @@ parent class exists, there exists precisely one related instance of one
 of the child classes.
 
 @menu
-* Create an inheritance::       
-* Delete an inheritance::       
-* Migrate an inheritance::      
-* Navigate an inheritance::     
+* Create an inheritance::
+* Delete an inheritance::
+* Migrate an inheritance::
+* Navigate an inheritance::
 @end menu
 
 @node Create an inheritance, Delete an inheritance, Inheritance relationships, Inheritance relationships
@@ -402,8 +401,8 @@ controllable.
 @chapter Glossary
 
 @menu
-* Identifier::                  
-* Software Architecture::       
+* Identifier::
+* Software Architecture::
 @end menu
 
 @node Identifier, Software Architecture, Glossary, Glossary

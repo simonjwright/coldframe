@@ -9,11 +9,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Events_G.Standard_G.Inspection_G;
 with ColdFrame.Project.Events.Standard;
 with ColdFrame.Project.Held_Events.Inspection_Signature;

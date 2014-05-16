@@ -24,12 +24,6 @@
 --  and their storage can be freed (GNAT silently ignores frees if the
 --  task isn't terminated).
 
---  $RCSfile: coldframe-task_deletion_g.adb,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
---  with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Containers.Vectors;
 with Ada.Unchecked_Deallocation;
 with ColdFrame.Synchronization;

@@ -9,11 +9,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 package ColdFrame.Project.Logging_Support is
 
    type Severity_Code is (Info, Error);

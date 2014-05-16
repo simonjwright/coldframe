@@ -13,11 +13,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile: coldframe-project-storage_pools.ads,v $
---  $Revision: ee69de33e6d0 $
---  $Date: 2014/04/22 14:42:27 $
---  $Author: simonjwright $
-
 with ColdFrame.Bounded_Storage_Pools;
 with ColdFrame.Unbounded_Storage_Pools;
 with System.Storage_Pools;

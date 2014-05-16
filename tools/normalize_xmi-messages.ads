@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-messages.ads,v $
---  $Revision: ed50dbb2a776 $
---  $Date: 2012/03/16 19:52:36 $
---  $Author: simonjwright $
-
 private package Normalize_XMI.Messages is
 
    procedure Information (Message : String);

@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: house_management-button-changed.adb,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 --  Acts as receiver of state changes from Digital IO, via Signal
 --  State Callback. If a Button has been pushed, posts
 --  Button_Pushed events to the Lamps which are controlled by that

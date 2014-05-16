@@ -15,11 +15,6 @@
 --  Provides conversion from the XML output of ColdFrams's
 --  'serialization' facility to CSV files.
 
---  $RCSfile: serialized_to_csv.adb,v $
---  $Revision: 76f35906ecb5 $
---  $Date: 2013/05/15 16:17:11 $
---  $Author: simonjwright $
-
 with Ada.Text_IO;
 with Ada.Strings.Unbounded.Text_IO;
 with Serialized_To_Csv_Support;

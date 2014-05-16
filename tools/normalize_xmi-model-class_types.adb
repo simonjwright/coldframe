@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: 18fa6bac8467 $
---  $Date: 2014/05/16 12:26:36 $
---  $Author: simonjwright $
-
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;

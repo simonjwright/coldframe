@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-associations.ads,v $
---  $Revision: f9be220a35c7 $
---  $Date: 2014/01/02 20:18:20 $
---  $Author: simonjwright $
-
 private package Normalize_XMI.Model.Associations is
 
    function Read_Association (From   : not null DOM.Core.Node;

@@ -1,5 +1,3 @@
--- $Id$
-
 -- A TG test script to check ColdFrame's navigation of Associations.
 
 error_handling

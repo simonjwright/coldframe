@@ -28,11 +28,6 @@
 --  PR50934 (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=50934) is
 --  extant. This bug is also present in GNAT GPL 2011.
 
---  $RCSfile: coldframe-bounded_storage_pools.ads-sf3410667,v $
---  $Revision: 6ce18c52508e $
---  $Date: 2011/11/06 17:29:55 $
---  $Author: simonjwright $
-
 pragma Warnings (Off);
 with System.Pool_Size;
 pragma Warnings (On);

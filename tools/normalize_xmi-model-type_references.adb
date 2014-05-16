@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-type_references.adb,v $
---  $Revision: f3a9cc2c7d9c $
---  $Date: 2014/01/11 14:11:13 $
---  $Author: simonjwright $
-
 package body Normalize_XMI.Model.Type_References is
 
    function Read_Type_Reference (From   : not null DOM.Core.Node;

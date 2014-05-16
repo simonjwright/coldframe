@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-type_references.ads,v $
---  $Revision: f3a9cc2c7d9c $
---  $Date: 2014/01/11 14:11:13 $
---  $Author: simonjwright $
-
 private package Normalize_XMI.Model.Type_References is
 
    --  A Type_Reference_Element is used for parameter or attribute

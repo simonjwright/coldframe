@@ -46,11 +46,6 @@
 --  receiver domain's event queue context), its handler calls the
 --  receiver domain's callback handlers.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Callbacks;
 
 generic

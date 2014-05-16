@@ -14,8 +14,6 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id$
-
 # Installs ColdFrame's project source files in your directory.
 # Suppose your overriding source is in ~/Base/Build/ColdFrameProject/project,
 # change directory to ~/Base/Build/ColdFrameProject and say

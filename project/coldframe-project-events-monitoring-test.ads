@@ -10,11 +10,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Events_G.Test_G;
 with ColdFrame.Project.Events.Monitoring;
 

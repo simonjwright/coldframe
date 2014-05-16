@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi.ads,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
---  $Author: simonjwright $
-
 package Normalize_XMI is
 
    pragma Pure;

@@ -12,7 +12,5 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
-
 with AUnit.Test_Suites; use AUnit.Test_Suites;
 function Library.Test return Access_Test_Suite;

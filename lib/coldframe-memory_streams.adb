@@ -22,11 +22,6 @@
 --  This unit has been copied from the Booch Components, where it was
 --  BC.Support.Memory_Streams.
 
---  $RCSfile: coldframe-memory_streams.adb,v $
---  $Revision: d6d1e4fb9858 $
---  $Date: 2014/04/13 13:31:16 $
---  $Author: simonjwright $
-
 with Ada.IO_Exceptions;
 
 package body ColdFrame.Memory_Streams is

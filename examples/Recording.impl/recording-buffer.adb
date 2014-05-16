@@ -7,11 +7,6 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with Ada.Finalization;
 with Ada.Streams;
 with BC.Support.Memory_Streams;

@@ -22,11 +22,6 @@
 --  This unit has been copied from the Booch Components, where it was
 --  BC.Support.Smart_Pointers.
 
---  $RCSfile: coldframe-smart_pointers.adb,v $
---  $Revision: ae12a49c4b3a $
---  $Date: 2014/04/13 13:27:09 $
---  $Author: simonjwright $
-
 with Ada.Unchecked_Deallocation;
 
 package body ColdFrame.Smart_Pointers is

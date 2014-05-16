@@ -1,4 +1,3 @@
-<!-- $Id$ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -71,10 +70,10 @@
   </xsl:template>
 
 
-  <!-- called at domain/type to output a serializable type declaration 
+  <!-- called at domain/type to output a serializable type declaration
        & the spec of the Image function. -->
   <xsl:template name="se:type-dec-and-image-spec">
-    
+
     <!--
          type {name}
          is new ColdFrame.Project.Serialization.Base with record
@@ -82,7 +81,7 @@
          end record;
          function Image (S : {name}) return String;
          -->
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
@@ -97,14 +96,14 @@
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end record;&#10;</xsl:text>
-    
+
     <xsl:value-of select="$blank-line"/>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>function Image (S : </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>) return String;&#10;</xsl:text>
-    
+
     <xsl:value-of select="$blank-line"/>
 
   </xsl:template>
@@ -140,7 +139,7 @@
       <xsl:text> Side : in Ada.Strings.Trim_End := Ada.Strings.Both) return String&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
       <xsl:text>renames Ada.Strings.Fixed.Trim;&#10;</xsl:text>
-      
+
       <xsl:value-of select="$blank-line"/>
 
       <xsl:apply-templates

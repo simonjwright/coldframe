@@ -1,5 +1,3 @@
-<!-- $Id: generate-diagrams.xsl,v a035894b6696 2013/12/22 08:25:58 simonjwright $ -->
-
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 

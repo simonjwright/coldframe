@@ -19,13 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
-pragma Style_Checks (Off);
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-pragma Style_Checks (On);
-
 --  Specifies the properties required to inspect a Queue.
 
 with Ada.Real_Time;

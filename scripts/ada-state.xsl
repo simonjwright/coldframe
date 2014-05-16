@@ -1,4 +1,3 @@
-<!-- $Id: ada-state.xsl,v 661028a21547 2014/04/23 16:28:53 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 

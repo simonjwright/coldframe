@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-class_types.ads,v $
---  $Revision: c3a01e5d21e1 $
---  $Date: 2012/02/09 17:17:31 $
---  $Author: simonjwright $
-
 with Normalize_XMI.Model.Types;
 
 private package Normalize_XMI.Model.Class_Types is

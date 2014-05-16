@@ -21,11 +21,6 @@
 
 --  This package is ColdFrame's default instantiation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Events_G.Callback_Manager_G;
 package ColdFrame.Project.Events.Callback_Manager
 is new ColdFrame.Project.Events.Callback_Manager_G;

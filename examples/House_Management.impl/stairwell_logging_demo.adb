@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: stairwell_logging_demo.adb,v $
---  $Revision: 4ee79f54b785 $
---  $Date: 2014/04/04 12:46:49 $
---  $Author: simonjwright $
-
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 --  This version of the Stairwell Lights example is intended to show

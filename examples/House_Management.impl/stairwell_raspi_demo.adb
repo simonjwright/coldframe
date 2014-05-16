@@ -12,8 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_raspi_demo.adb,v 20df44fbc8c2 2014/04/05 16:25:38 simonjwright $
-
 with ColdFrame.Project.Events.Standard.Trace;
 with Digital_IO.Initialize;
 with Digital_IO.RasPi_Support;

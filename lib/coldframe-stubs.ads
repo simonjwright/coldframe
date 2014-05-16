@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: ae12a49c4b3a $
---  $Date: 2014/04/13 13:27:09 $
---  $Author: simonjwright $
-
 with Ada.Exceptions;
 with Ada.Streams;
 with ColdFrame.Synchronization;

@@ -126,10 +126,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Mar 22 16:07:28 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri May 16 14:13:23 BST 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/03/22 16:52:24 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/05/16 21:39:23 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -143,15 +143,6 @@
           <UML:ModelElement.stereotype>
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
-          <UML:ModelElement.taggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C2F'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de8c9279589f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
-          </UML:ModelElement.taggedValue>
           <UML:Namespace.ownedElement>
             <UML:Package xmi.id = '-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C30'
               name = 'Stub_Test_Interface' isSpecification = 'false' isRoot = 'false'
@@ -165,13 +156,6 @@
                   <UML:TaggedValue.dataValue>Stub_Test</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C32'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>$Revision: de8c9279589f $</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-revision'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
@@ -729,13 +713,6 @@
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
           <UML:ModelElement.taggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-3-4faf833a:135b4de5e2d:-8000:0000000000000DA5'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de8c9279589f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-4faf833a:135b4de5e2d:-8000:0000000000000DA6'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>Contains tests (mostly regression tests) appropriate to domain initialization.</UML:TaggedValue.dataValue>
@@ -893,13 +870,6 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
               <UML:TaggedValue.dataValue>This domain checks out the Unit Test facilities.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C7E'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-3-72a6388:135bf7005d1:-8000:0000000000000DA7'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de8c9279589f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
@@ -3081,13 +3051,6 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
                 <UML:TagDefinition xmi.idref = '-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C7E'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-2-b02594a:1363a9fe801:-8000:0000000000000F10'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: de8c9279589f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
           <UML:Namespace.ownedElement>
             <UML:Class xmi.id = '-64--88-1-2-b02594a:1363a9fe801:-8000:0000000000000F11'
@@ -3342,6 +3305,29 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
               </UML:Generalization.parent>
             </UML:Generalization>
           </UML:Namespace.ownedElement>
+        </UML:Package>
+        <UML:Package xmi.id = '-64--88-1-74-5e380777:146052402b6:-8000:00000000000013F1'
+          name = 'Revisions' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:ModelElement.stereotype>
+            <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
+          </UML:ModelElement.stereotype>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-74-5e380777:146052402b6:-8000:00000000000013F2'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>The puspose of ths domain is to check the handling of the {revision=&lt;cms_id&gt;} tag.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C7E'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-74-5e380777:146052402b6:-8000:00000000000013F3'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>Dummy revision id for checking.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
         </UML:Package>
       </UML:Namespace.ownedElement>
     </UML:Model>
@@ -3905,6 +3891,120 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
     </group>
     <text name="Fig4.4"
       x="112"
+      y="212"
+      width="141"
+      height="56"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    ></text>
+  </group>
+  <group name="Fig5"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[360, 168, 141, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       href="-64--88-1-74-5e380777:146052402b6:-8000:00000000000013F1"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig5.0"
+      x="360"
+      y="168"
+      width="141"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig5.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="360"
+              y="168" />
+      <lineto x="451"
+              y="168" />
+      <lineto x="451"
+              y="212" />
+      <lineto x="500"
+              y="212" />
+      <lineto x="500"
+              y="267" />
+      <lineto x="360"
+              y="267" />
+      <lineto x="360"
+              y="168" />
+    </path>
+    <text name="Fig5.2"
+      x="360"
+      y="168"
+      width="92"
+      height="45"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Left"
+    >Revisions</text>
+    <group name="Fig5.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[360, 168, 91, 21]"
+         href="-64--88-1-74-5e380777:146052402b6:-8000:00000000000013F1"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig5.3.0"
+        x="360"
+        y="168"
+        width="91"
+        height="21"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig5.3.1"
+        x="360"
+        y="168"
+        width="91"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«domain»</text>
+    </group>
+    <text name="Fig5.4"
+      x="360"
       y="212"
       width="141"
       height="56"

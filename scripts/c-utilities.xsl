@@ -1,5 +1,4 @@
 <!-- XSL stylesheet, utilities to help generate C code. -->
-<!-- $Id$ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
@@ -52,14 +51,14 @@
 
     <!--
     <xsl:for-each select="documentation/par">
-      
+
       <xsl:call-template name="comment-line">
         <xsl:with-param name="indent" select="$indent"/>
         <xsl:with-param name="line" select="normalize-space(.)"/>
       </xsl:call-template>
-      
+
       <xsl:value-of select="$separate-pars"/>
-    
+
     </xsl:for-each>
     -->
 
@@ -96,7 +95,7 @@
           <xsl:text>--  </xsl:text>
           <xsl:value-of select="$word"/>
         </xsl:variable>
-        
+
         <xsl:value-of select="$start"/>
 
         <xsl:call-template name="comment-line">
@@ -116,7 +115,7 @@
                       + string-length($word)&gt;$fill-column">
 
         <xsl:text>&#10;</xsl:text>
-        
+
         <xsl:call-template name="comment-line">
           <xsl:with-param name="indent" select="$indent"/>
           <xsl:with-param name="line" select="$line"/>
@@ -125,7 +124,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        
+
         <xsl:text> </xsl:text>
         <xsl:value-of select="$word"/>
 
@@ -137,7 +136,7 @@
         </xsl:call-template>
 
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
   </xsl:template>

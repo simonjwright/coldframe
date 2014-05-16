@@ -22,11 +22,6 @@
 --  This unit has been copied from the Booch Components, where it was
 --  BC.Support.Synchronization.
 
---  $RCSfile: coldframe-synchronization.ads,v $
---  $Revision: 022e59ccfb79 $
---  $Date: 2014/04/09 10:36:27 $
---  $Author: simonjwright $
-
 private with Ada.Finalization;
 private with Ada.Task_Identification;
 

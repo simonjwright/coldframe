@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: house_management-lamp-turn_off.adb,v $
---  $Revision: 4ee79f54b785 $
---  $Date: 2014/04/04 12:46:49 $
---  $Author: simonjwright $
-
 --  This state entry action turns off the associated signal via
 --  Digital IO.
 

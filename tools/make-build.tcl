@@ -2,8 +2,6 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id$
-
 proc readDomains {domainFile} {
     if [catch {open $domainFile r} f] {
         Error "can't open $domainFile"

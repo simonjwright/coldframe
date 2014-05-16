@@ -2,8 +2,6 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id$
-
 # Converts an XML document containing mixed serialization output from
 # ColdFrame to comma-separated-variable files, one file per record
 # name.

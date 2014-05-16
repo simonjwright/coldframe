@@ -1,5 +1,4 @@
 <!-- XSL stylesheet to generate C code. -->
-<!-- $Id$ -->
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -136,7 +135,7 @@
         <xsl:text> </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
-        
+
       </xsl:for-each>
 
       <xsl:value-of select="$I"/>
@@ -144,7 +143,7 @@
       <xsl:value-of select="$blank-line"/>
 
     </xsl:for-each>
-    
+
   </xsl:template>
 
 
@@ -153,7 +152,7 @@
     <xsl:text>/*  Domain revision: </xsl:text>
     <xsl:choose>
       <xsl:when test="revision">
-        <xsl:value-of select="revision"/>        
+        <xsl:value-of select="revision"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>unspecified</xsl:text>

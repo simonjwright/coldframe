@@ -24,11 +24,6 @@
 --  and their storage can be freed (GNAT silently ignores frees if the
 --  task isn't terminated).
 
---  $RCSfile: coldframe-task_deletion_g.ads,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 generic
 
    type Task_Type (<>) is limited private;

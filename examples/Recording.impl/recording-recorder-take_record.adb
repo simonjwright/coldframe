@@ -7,11 +7,6 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 --  Buffers a data value for recording.
 
 separate (Recording.Recorder)

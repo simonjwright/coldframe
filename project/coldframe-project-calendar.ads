@@ -10,11 +10,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with Ada.Calendar;
 
 package ColdFrame.Project.Calendar is

@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-events_g-monitoring_g.adb,v $
---  $Revision: 5925a701d6e4 $
---  $Date: 2014/05/01 14:54:11 $
---  $Author: simonjwright $
-
 with Ada.Exceptions;
 with Ada.Real_Time;
 with ColdFrame.Exceptions;

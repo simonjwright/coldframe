@@ -22,11 +22,6 @@
 --  This unit has been copied from the Booch Components, where it was
 --  BC.Support.Smart_Pointers.
 
---  $RCSfile: coldframe-smart_pointers.ads,v $
---  $Revision $
---  $Date: 2014/04/13 13:27:09 $
---  $Author: simonjwright $
-
 private with Ada.Finalization;
 
 generic

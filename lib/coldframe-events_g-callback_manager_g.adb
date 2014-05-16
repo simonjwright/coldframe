@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 package body ColdFrame.Events_G.Callback_Manager_G is
 
    package body Callback_Manager_G is

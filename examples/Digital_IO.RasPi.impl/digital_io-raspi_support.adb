@@ -10,11 +10,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: digital_io-raspi_support.adb,v $
---  $Revision: 06443f39bb05 $
---  $Date: 2014/04/06 17:20:21 $
---  $Author: simonjwright $
-
 with Ada.Text_IO; use Ada.Text_IO;
 with Digital_IO.Input_Signal_State_Callback;
 with I2C.MCP23017.Polling;

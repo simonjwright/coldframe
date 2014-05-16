@@ -22,11 +22,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-hash-strings-bounded.adb,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 function ColdFrame.Hash.Strings.Bounded
   (S : Bounded_Strings.Bounded_String) return Ada.Containers.Hash_Type is
    use Ada.Containers;

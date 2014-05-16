@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>House Management Class Diagram</activediagram>
+      <activediagram>Library Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -106,10 +106,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Apr 07 17:03:21 BST 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri May 16 14:16:14 BST 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/04/09 10:40:17 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/05/16 21:39:23 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -130,13 +130,6 @@
 This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b9424df544f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
@@ -586,13 +579,6 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
           <UML:ModelElement.taggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b9424df544f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-401716d3:134cd93f507:-8000:0000000000001224'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
@@ -823,13 +809,6 @@ This domain represents an electronic household control system.
 The first release only manages the stairwell lighting system.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b9424df544f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
@@ -1470,13 +1449,6 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015CB'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b9424df544f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F9F'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>Digital_IO.Tcl_Support.Initialize</UML:TaggedValue.dataValue>
@@ -1554,13 +1526,6 @@ This package is free software; you can redistribute it and/or modify it under te
 Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0B'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b9424df544f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
@@ -1762,13 +1727,6 @@ This package is free software; you can redistribute it and/or modify it under te
 This demonstration shows how ColdFrame&apos;s support for messages and state machines might be used for a protocol manager.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E60'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b9424df544f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
@@ -2558,13 +2516,6 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
           <UML:ModelElement.taggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000F48'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b9424df544f $</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000F49'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>Classes for ColdFrame performance tests.</UML:TaggedValue.dataValue>
@@ -7724,7 +7675,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
     <path name="Fig9.2"
       description="org.tigris.gef.presentation.FigPoly"
       fill="1"
-      fillcolor="178 178 178"
+      fillcolor="white"
       stroke="1"
       strokecolor="black"
     >
@@ -7744,6 +7695,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>

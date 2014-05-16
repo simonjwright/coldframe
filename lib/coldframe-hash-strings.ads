@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-hash-strings.ads,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 private with Ada.Containers;
 
 package ColdFrame.Hash.Strings is

@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-state_machines.ads,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
---  $Author: simonjwright $
-
 private package Normalize_XMI.Model.State_Machines is
 
    function Read_State_Machine (From   : not null DOM.Core.Node;

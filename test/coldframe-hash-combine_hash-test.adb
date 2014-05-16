@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with Ada.Text_IO; use Ada.Text_IO;
 
 procedure ColdFrame.Hash.Combine_Hash.Test is

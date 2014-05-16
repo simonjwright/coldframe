@@ -1,4 +1,3 @@
-<!-- $Id: ada-callback.xsl,v f3a9cc2c7d9c 2014/01/11 14:11:13 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Callbacks. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 

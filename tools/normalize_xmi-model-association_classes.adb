@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 18fa6bac8467 $
---  $Date: 2014/05/16 12:26:36 $
---  $Author: simonjwright $
-
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Association_Ends;
 with Normalize_XMI.Model.Classes;

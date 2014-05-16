@@ -1,4 +1,3 @@
-<!-- $Id$ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -42,7 +41,7 @@
     <!--
          package {domain}.{class}.Unit_Test is
             type Timer_P is access ColdFrame.Project.Events.Timer;
-            type {protected-type}_P is access {protected-type}; 
+            type {protected-type}_P is access {protected-type};
             type State is
               (..);
             function Get_{attr-name}
@@ -50,7 +49,7 @@
             procedure Set_{attr-name)
               (This : Handle; To : {attr-type});
             function Access_{protected-attr-name}
-              (This : Handle) return {protected-type}_P;         
+              (This : Handle) return {protected-type}_P;
             function Access_{timer-attr-name}
               (This : Handle) return Timer_P;
          end {domain}.{class}.Unit_Test;
@@ -72,7 +71,7 @@
 
     <!-- Special action needed for limited types. At the moment, these
          are just @protected and Timers -->
-    <xsl:variable 
+    <xsl:variable
       name="domain-limited-types"
       select="/domain/type[@protected]"/>
 
@@ -99,7 +98,7 @@
     </xsl:if>
 
     <xsl:if test="statemachine">
-      
+
       <!-- See ada-state.xsl. -->
 
       <xsl:value-of select="$I"/>
@@ -120,10 +119,10 @@
         </xsl:if>
 
       </xsl:for-each>
-      
+
       <xsl:text>);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
-      
+
     </xsl:if>
 
     <xsl:variable
@@ -151,7 +150,7 @@
       </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
-        <xsl:with-param name="class" select=".."/>        
+        <xsl:with-param name="class" select=".."/>
       </xsl:call-template>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -174,7 +173,7 @@
       </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
-        <xsl:with-param name="class" select=".."/>        
+        <xsl:with-param name="class" select=".."/>
       </xsl:call-template>
       <xsl:text>);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -187,7 +186,7 @@
           <xsl:value-of select="$I"/>
           <xsl:text>function Get_State_Machine_State (This : Handle) return State;&#10;</xsl:text>
           <xsl:value-of select="$blank-line"/>
-          
+
           <xsl:value-of select="$I"/>
           <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State);&#10;</xsl:text>
           <xsl:value-of select="$blank-line"/>
@@ -196,7 +195,7 @@
           <xsl:value-of select="$I"/>
           <xsl:text>function Get_State_Machine_State return State;&#10;</xsl:text>
           <xsl:value-of select="$blank-line"/>
-          
+
           <xsl:value-of select="$I"/>
           <xsl:text>procedure Set_State_Machine_State (To : State);&#10;</xsl:text>
           <xsl:value-of select="$blank-line"/>
@@ -205,7 +204,7 @@
 
     </xsl:if>
 
-    <xsl:for-each 
+    <xsl:for-each
       select="attribute[type='Timer' or type=$domain-limited-types/name]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
@@ -276,7 +275,7 @@
 
     <!-- Special action needed for limited types. At the moment, these
          are just @protected and Timers -->
-    <xsl:variable 
+    <xsl:variable
       name="domain-limited-types"
       select="/domain/type[@protected]"/>
 
@@ -305,7 +304,7 @@
       </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
-        <xsl:with-param name="class" select=".."/>        
+        <xsl:with-param name="class" select=".."/>
       </xsl:call-template>
       <xsl:text> is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -345,7 +344,7 @@
       </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
-        <xsl:with-param name="class" select=".."/>        
+        <xsl:with-param name="class" select=".."/>
       </xsl:call-template>
       <xsl:text>) is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -405,7 +404,7 @@
       <xsl:value-of select="$I"/>
       <xsl:text>end Get_State_Machine_State;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
-      
+
       <xsl:value-of select="$I"/>
       <xsl:choose>
         <xsl:when test="$instance-needs-this">

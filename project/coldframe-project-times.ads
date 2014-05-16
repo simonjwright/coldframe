@@ -9,11 +9,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with Ada.Calendar;
 with Ada.Real_Time;
 

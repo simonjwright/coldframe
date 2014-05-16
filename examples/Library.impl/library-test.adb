@@ -12,8 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
-
 with Library.Tests;
 function Library.Test return Access_Test_Suite is
    Result : constant Access_Test_Suite := new Test_Suite;

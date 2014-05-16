@@ -12,10 +12,5 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with AUnit.Test_Suites;
 function Hierarchies.Suite return AUnit.Test_Suites.Access_Test_Suite;

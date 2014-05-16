@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 --  Specifies the properties required of a Queue to contain Events
 --  that have to be dispatched at some time in the future.
 --

@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Project.Log_Error;
 
 procedure ColdFrame.Exceptions.Message
@@ -32,4 +27,3 @@ begin
    ColdFrame.Project.Log_Error
      (S & ": " & Ada.Exceptions.Exception_Information (E));
 end ColdFrame.Exceptions.Message;
-

@@ -27,11 +27,6 @@
 --
 --  * allocations are initialized to an improbable value (16#deadbeef#)
 
---  $RCSfile: coldframe-bounded_storage_pools.adb,v $
---  $Revision: 6b2fc8a29885 $
---  $Date: 2011/11/06 15:36:44 $
---  $Author: simonjwright $
-
 package body ColdFrame.Bounded_Storage_Pools is
 
 

@@ -11,11 +11,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Project.Logging_Support;
 
 procedure ColdFrame.Project.Log_Error (Message : String) is
@@ -24,4 +19,3 @@ begin
      (Severity => Logging_Support.Error,
       Message => Message);
 end ColdFrame.Project.Log_Error;
-

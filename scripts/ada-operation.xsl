@@ -1,4 +1,3 @@
-<!-- $Id: ada-operation.xsl,v e08cb16c3dfb 2014/03/11 18:27:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 

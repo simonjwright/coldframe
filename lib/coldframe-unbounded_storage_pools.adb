@@ -25,11 +25,6 @@
 --
 --  * allocations are initialized to an improbable value (16#deadbeef#)
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with System.Memory;
 
 package body ColdFrame.Unbounded_Storage_Pools is

@@ -9,11 +9,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Time_Signature;
 with ColdFrame.Project.Times;
 

@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-events_g-monitoring_g.ads,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 --  This kind of event queue provides the ability to monitor long
 --  event sequences, uninterrupted by a return to the idle state.
 --

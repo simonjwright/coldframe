@@ -1,4 +1,3 @@
-<!-- $Id$ -->
 <!-- XSL stylesheet to convert a document containing mixed serialization
      output from ColdFrame to comma-separated-variable files, one file per
      record name. -->

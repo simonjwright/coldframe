@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v 4ee79f54b785 2014/04/04 12:46:49 simonjwright $ -->
-
 <!--
 
      This schema describes the format of .norm files, used as input to

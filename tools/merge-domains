@@ -14,8 +14,6 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id$
-
 # This script merges one or more of ColdFrame's normalized domain
 # files.
 
@@ -32,12 +30,12 @@ import sys
 import xml.dom.minidom
 
 def usage():
-    sys.stderr.write(sys.argv[0] + 
+    sys.stderr.write(sys.argv[0] +
                      ': usage: merge file.norm' +
                      ' file.norm [file.norm ...]\n')
     sys.stderr.write('flags:\n')
     sys.stderr.write('-m overwrite the first file with the merged result\n')
-    
+
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'm')
@@ -82,7 +80,7 @@ def main():
     main.writexml(outfile)
     main.unlink()
     outfile.close()
-    
+
 if __name__ == "__main__":
     main()
 

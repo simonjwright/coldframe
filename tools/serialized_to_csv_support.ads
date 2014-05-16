@@ -14,11 +14,6 @@
 
 --  Provides maps from Unbounded_String to File_Access.
 
---  $RCSfile: serialized_to_csv_support.ads,v $
---  $Revision: 76f35906ecb5 $
---  $Date: 2013/05/15 16:17:11 $
---  $Author: simonjwright $
-
 with Ada.Containers.Ordered_Maps;
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;

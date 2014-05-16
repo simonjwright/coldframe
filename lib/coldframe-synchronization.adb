@@ -22,11 +22,6 @@
 --  This unit has been copied with minor modifications from the Booch
 --  Components, where it was BC.Support.Synchronization.
 
---  $RCSfile: coldframe-synchronization.adb,v $
---  $Revision: 022e59ccfb79 $
---  $Date: 2014/04/09 10:36:27 $
---  $Author: simonjwright $
-
 package body ColdFrame.Synchronization is
 
    --  Semaphore  --

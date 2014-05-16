@@ -51,7 +51,7 @@
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="SF Bug 79 Class Diagram" />
       <member type="pgml"
-              name="Regressions_ClassDiagram.pgml"
+              name="Regressions_StringsClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Strings Class Diagram" />
       <member type="todo"
@@ -66,10 +66,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Apr 19 20:14:40 BST 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri May 16 14:22:57 BST 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/04/21 15:48:31 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/05/16 21:39:23 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -1834,7 +1834,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       justification="Center"
     >+ Cls</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[161, 97, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[161, 97, 183, 0]"
          href="-64--88-1-74--36956b06:1457b11a65a:-8000:0000000000001187"
          fill="0"
          fillcolor="white"
@@ -1848,7 +1848,7 @@ The generated code in Instance_Hash for an Integer identifier component fails if
       <rectangle name="Fig2.2.0"
         x="161"
         y="97"
-        width="64"
+        width="183"
         height="0"
         fill="0"
         fillcolor="white"

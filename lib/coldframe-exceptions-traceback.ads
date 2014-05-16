@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 package ColdFrame.Exceptions.Traceback is
 
    --  This package enables GNAT's exception traceback facility, which

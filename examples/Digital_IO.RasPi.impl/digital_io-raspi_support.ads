@@ -10,11 +10,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: digital_io-raspi_support.ads,v $
---  $Revision: 20df44fbc8c2 $
---  $Date: 2014/04/05 16:25:38 $
---  $Author: simonjwright $
-
 with Digital_IO_Support;
 
 package Digital_IO.RasPi_Support is

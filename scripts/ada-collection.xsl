@@ -1,4 +1,3 @@
-<!-- $Id: ada-collection.xsl,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Collections, which are
      Ada.Containers.Vectors. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->

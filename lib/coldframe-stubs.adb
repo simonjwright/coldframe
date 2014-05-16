@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 26bc77c98b64 $
---  $Date: 2014/05/07 15:21:07 $
---  $Author: simonjwright $
-
 with Ada.Containers.Indefinite_Hashed_Maps;
 with Ada.Containers.Indefinite_Hashed_Sets;
 with Ada.Containers.Ordered_Maps;

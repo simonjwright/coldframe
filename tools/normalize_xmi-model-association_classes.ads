@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-association_classes.ads,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
---  $Author: simonjwright $
-
 with Normalize_XMI.Model.Associations;
 private package Normalize_XMI.Model.Association_Classes is
 

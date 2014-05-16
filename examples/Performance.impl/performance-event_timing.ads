@@ -1,5 +1,3 @@
---  $Id$
-
 with ColdFrame.Project.Events;
 with ColdFrame.Project.High_Resolution_Time;
 

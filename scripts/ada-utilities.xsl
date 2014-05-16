@@ -1,4 +1,3 @@
-<!-- $Id: ada-utilities.xsl,v 1a6cffdcff2c 2012/07/30 20:43:07 simonjwright $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 

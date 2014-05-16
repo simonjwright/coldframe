@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-events_g-debug_g.ads,v $
---  $Revision: 6b2a0cfb80d0 $
---  $Date: 2014/03/14 18:34:45 $
---  $Author: simonjwright $
-
 generic
 
    type Standard_Queue is new Events_G.Event_Queue_Base with private;

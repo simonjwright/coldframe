@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 with ColdFrame.Events_G.Held_Event_Queue_Signature;
 
 private with Ada.Containers.Vectors;

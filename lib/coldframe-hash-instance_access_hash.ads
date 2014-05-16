@@ -19,11 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Instances;
 with ColdFrame.Hash.Access_Hash;
 function ColdFrame.Hash.Instance_Access_Hash

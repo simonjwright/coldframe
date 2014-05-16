@@ -1,5 +1,3 @@
---  $Id$
-
 with ColdFrame.Project.Events.Standard;
 
 package body Performance.Event_Timing is

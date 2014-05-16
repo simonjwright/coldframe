@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: callback_manager_test_support.adb,v $
---  $Revision: 727aa42ad076 $
---  $Date: 2014/01/06 17:57:59 $
---  $Author: simonjwright $
-
 with Ada.Text_IO; use Ada.Text_IO;
 
 package body Callback_Manager_Test_Support is

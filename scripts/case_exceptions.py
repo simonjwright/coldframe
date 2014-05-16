@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-# $Id$
-
 # Converts a GLIDE or ColdFrame case exception file into GPS (XML) format.
 
 import re
@@ -10,7 +8,7 @@ import xml.dom.minidom
 
 
 def addElement(match, element, doc, top):
-    
+
     """Extract the 'casex' property from 'match' and add it to 'doc'
     under 'top' as the text component of an 'element' node. If there's
     a 'comment' property in 'match', add that as a child of the new
@@ -46,7 +44,7 @@ def parseCaseExceptionLines(f):
             addElement(w, "word", doc, top)
     return doc
 
-                
+
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         doc = parseCaseExceptionLines(sys.stdin)

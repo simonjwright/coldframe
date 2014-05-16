@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: serialization_server.adb,v $
---  $Revision: 0521d114696b $
---  $Date: 2011/07/19 17:48:15 $
---  $Author: simonjwright $
-
 --  This program receives and decodes TCP packets of type
 --  ColdFrame.Serialization.Base'Class, using port 40673.
 

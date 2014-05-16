@@ -5,11 +5,6 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  $RCSfile: house_management-lamp-test_suite.adb,v $
---  $Revision: 4ee79f54b785 $
---  $Date: 2014/04/04 12:46:49 $
---  $Author: simonjwright $
-
 with AUnit.Assertions; use AUnit.Assertions;
 with AUnit.Test_Cases; use AUnit.Test_Cases;
 

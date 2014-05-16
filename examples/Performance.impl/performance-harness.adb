@@ -1,5 +1,3 @@
---  $Id: performance-harness.adb,v f6d9ce14c0aa 2014/04/21 15:48:31 simonjwright $
-
 with Performance.Initialize;
 with Performance.Tear_Down;
 with Performance.Person.All_Instances;

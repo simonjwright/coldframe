@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-association_ends.ads,v $
---  $Revision: 4b73aa0c47e2 $
---  $Date: 2012/01/24 23:56:23 $
---  $Author: simonjwright $
-
 private package Normalize_XMI.Model.Association_Ends is
 
    function Read_Association_End

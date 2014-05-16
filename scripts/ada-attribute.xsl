@@ -1,4 +1,3 @@
-<!-- $Id: ada-attribute.xsl,v 8434c8cef9e5 2012/01/02 18:10:19 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 

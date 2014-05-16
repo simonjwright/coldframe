@@ -11,10 +11,5 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 procedure ColdFrame.Project.Log_Error (Message : String);
 pragma Elaborate_Body (ColdFrame.Project.Log_Error);

@@ -12,8 +12,6 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id$
-
 # Makefile for examples, use with Cygwin under Windows or Unix
 # (assumes a Unix system if Cygwin not detected).
 

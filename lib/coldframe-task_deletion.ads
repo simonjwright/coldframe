@@ -28,11 +28,6 @@
 --  Deletion_Proc will be called (at low priority, as determined by
 --  Deleting_Task_Priority) to delete any terminated tasks.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with System;
 
 package ColdFrame.Task_Deletion is

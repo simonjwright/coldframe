@@ -10,11 +10,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 package ColdFrame.Project.Held_Events.Inspection is
 
    --  Types and Operations to support

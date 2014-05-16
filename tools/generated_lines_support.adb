@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 76f35906ecb5 $
---  $Date: 2013/05/15 16:17:11 $
---  $Author: simonjwright $
-
 with Ada.Containers.Vectors;
 with Ada.Text_IO; use Ada.Text_IO;
 with GNAT.Regpat; use GNAT.Regpat;

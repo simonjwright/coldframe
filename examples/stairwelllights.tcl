@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id: stairwelllights.tcl,v 984b16715466 2014/01/24 11:49:28 simonjwright $
 # HCI for ColdFrame stairwell lights demo
 # the next line restarts using ./stairwell_demo \
 exec ./stairwell_demo "$0" "$@"

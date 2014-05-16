@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: house_management-lamp-clear_timeout.adb,v $
---  $Revision: e08cb16c3dfb $
---  $Date: 2014/03/11 18:27:45 $
---  $Author: simonjwright $
-
 --  This state entry action unsets the instance Timeout.
 
 with ColdFrame.Project.Events;

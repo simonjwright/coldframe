@@ -26,11 +26,6 @@
 --  * allocations are initialized to an improbable value (16#deadbeef#)
 --  * deallocations are filled to an improbable value (16#deaddead#)
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with System.Storage_Elements;
 with System.Storage_Pools;
 

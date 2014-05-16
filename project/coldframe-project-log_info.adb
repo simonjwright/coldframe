@@ -10,11 +10,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile: coldframe-project-log_info.adb,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 with ColdFrame.Project.Logging_Support;
 
 procedure ColdFrame.Project.Log_Info (Message : String) is

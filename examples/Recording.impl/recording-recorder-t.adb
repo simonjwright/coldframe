@@ -7,11 +7,6 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with Ada.Dynamic_Priorities;
 with Ada.Exceptions;
 with Ada.Text_IO; use Ada.Text_IO;

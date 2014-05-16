@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: house_management-lamp-initialize.adb,v $
---  $Revision: 2e7b06437017 $
---  $Date: 2014/04/07 10:23:42 $
---  $Author: simonjwright $
-
 --  This operation initializes the Lamps and Buttons.
 
 with House_Management.Button;

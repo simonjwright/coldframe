@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-parameters.ads,v $
---  $Revision: 7d1ad741f319 $
---  $Date: 2012/01/25 16:31:46 $
---  $Author: simonjwright $
-
 private package Normalize_XMI.Model.Parameters is
 
    function Read_Parameter (From   : not null DOM.Core.Node;

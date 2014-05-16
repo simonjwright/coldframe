@@ -10,11 +10,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 package body ColdFrame.Project.Calendar is
 
 

@@ -10,11 +10,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: digital_io_support.ads,v $
---  $Revision: fde6fd75a1a0 $
---  $Date: 2014/04/05 13:21:13 $
---  $Author: simonjwright $
-
 package Digital_IO_Support is
 
    type Input_Signal is mod 16;

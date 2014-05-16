@@ -11,11 +11,6 @@
 --  This is provided to retain the obsolete interface of Release
 --  20040319 and earlier.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with ColdFrame.Project.Events.Standard.Test_Trace;
 
 package ColdFrame.Project.Events.Standard.Test_Debug

@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: eff210d5f78e $
---  $Date: 2014/04/23 16:32:36 $
---  $Author: simonjwright $
-
 with Normalize_XMI.Messages;
 
 package body Normalize_XMI.Model.Exceptions is

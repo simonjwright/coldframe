@@ -1,5 +1,3 @@
---  $Id$
-
 with Ada.Exceptions;
 with ColdFrame.Callbacks;
 with GNAT.IO; use GNAT.IO;

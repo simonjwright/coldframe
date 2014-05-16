@@ -5,11 +5,6 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with AUnit.Test_Suites;
 
 package House_Management.Lamp.Test_Suite is

@@ -10,11 +10,6 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile: coldframe-project-events-monitoring-test_trace.ads,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 with ColdFrame.Events_G.Test_G;
 with ColdFrame.Project.Events.Monitoring.Trace;
 

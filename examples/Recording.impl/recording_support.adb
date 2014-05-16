@@ -7,11 +7,6 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 with Ada.Unchecked_Deallocation;
 
 package body Recording_Support is

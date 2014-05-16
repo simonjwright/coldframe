@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: serialization-server-create.adb,v $
---  $Revision: 0521d114696b $
---  $Date: 2011/07/19 17:48:15 $
---  $Author: simonjwright $
-
 --  Create an instance of Server, transmitting data to the remote
 --  server on host "Connecting To Host" using port "Using Port". On
 --  successful return, the TCP/IP connection has been made.

@@ -19,8 +19,6 @@ exec tclsh "$0" "$@"
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 # USA.
 
-# $Id$
-
 # Splits a CSV file containing a header line and data lines into
 # multiple CSV files, depending on the value in a particular column.
 #

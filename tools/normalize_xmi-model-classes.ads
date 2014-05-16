@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: 457fee341738 $
---  $Date: 2012/03/13 21:34:27 $
---  $Author: simonjwright $
-
 private package Normalize_XMI.Model.Classes is
 
    function Read_Class (From   : not null DOM.Core.Node;

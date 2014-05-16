@@ -10,10 +10,5 @@
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile: coldframe-project-log_info.ads,v $
---  $Revision: f6d9ce14c0aa $
---  $Date: 2014/04/21 15:48:31 $
---  $Author: simonjwright $
-
 procedure ColdFrame.Project.Log_Info (Message : String);
 pragma Elaborate_Body (ColdFrame.Project.Log_Info);

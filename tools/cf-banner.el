@@ -1,4 +1,3 @@
-;;; $Id$
 ;;; This GNU Emacs lisp file is part of ColdFrame.
 ;;;
 ;;; It removes banner comment at the top of Ada source files,
@@ -63,4 +62,3 @@ Uses the last two directory name components."
     (widen)))
 
 (provide 'cf-banner)
-

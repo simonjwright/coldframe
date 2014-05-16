@@ -7,11 +7,6 @@
 
 --  Part of the Recording demonstration.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
 --  Sets up the Socket and the Buffer.
 
 separate (Recording.Recorder)
