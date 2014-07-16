@@ -278,7 +278,6 @@
     <!-- full version ..
          function {dom}.{class}.All_Instances
            return {dom}.{class}.Vectors.Vector is
-            package CIAC renames ColdFrame.Instances.Abstract_Containers;
             It : Vectors.Cursor := The_Container.First;
             Result : Vectors.Vector;
             use type Vectors.Cursor;
@@ -476,23 +475,22 @@
 
     <!-- Generic filter function for collections of Instances -->
     <!--
-         with {dom}.{class}.Abstract_Containers;
          function {dom}.{class}.Filter_Function
            (The_Vector : {dom}.{class}.Vectors.Vector)
            return {dom}.{class}.Vectors.Vector is
-            use Abstract_Containers;
-            It : Iterator'Class := Vectors.New_Iterator (The_Vector);
+            It : Vectors.Cursor := The_Vector.First;
             Result : Vectors.Vector;
+            use type Vectors.Cursor;
          begin
-            while not Is_Done (It) loop
+            while It /= Vectors.No_Element loop
                declare
-                  H : constant Handle := Handle (Current_Item (It));
+                  H : constant Handle := Vectors.Element (It);
                begin
                   if Pass (H) then
-                     Vectors.Append (Result, H);
+                     Result.Append (H);
                   end if;
                end;
-               Next (It);
+               Vectors.Next (It);
             end loop;
             return Result;
          end {dom}.{class}.Filter_Function;
@@ -500,10 +498,6 @@
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
-
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -518,28 +512,27 @@
     <xsl:text>.Vectors.Vector is&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>use Abstract_Containers;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>It : Iterator'Class := Vectors.New_Iterator (The_Vector);&#10;</xsl:text>
-
+    <xsl:text>It : Vectors.Cursor := The_Vector.First;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>Result : Vectors.Vector;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>use type Vectors.Cursor;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+    <xsl:text>while It /= Vectors.No_Element loop&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>declare&#10;</xsl:text>
     <xsl:value-of select="$III"/>
-    <xsl:text>H : constant Handle := Current_Item (It);&#10;</xsl:text>
+    <xsl:text>H : constant Handle := Vectors.Element (It);&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>if Pass (H) then&#10;</xsl:text>
     <xsl:value-of select="$IIII"/>
-    <xsl:text>Vectors.Append (Result, H);&#10;</xsl:text>
+    <xsl:text>Result.Append (H);&#10;</xsl:text>
     <xsl:value-of select="$III"/>
     <xsl:text>end if;&#10;</xsl:text>
 
@@ -547,7 +540,7 @@
     <xsl:text>end;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>Next (It);&#10;</xsl:text>
+    <xsl:text>Vectors.Next (It);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end loop;&#10;</xsl:text>
 
