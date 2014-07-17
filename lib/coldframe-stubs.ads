@@ -90,8 +90,8 @@ package ColdFrame.Stubs is
    --  have the first 4 calls to Domain.Class.Operation to set Output
    --  to 4, and any later ones to set it to 42, you'd say
    --
-   --     Set_Integer ("Domain.Class.Operation", "Output", 4, 1);
-   --     Set_Integer ("Domain.Class.Operation", "Output", 42, 5);
+   --     Set_T ("Domain.Class.Operation", "Output", 4, 1);
+   --     Set_T ("Domain.Class.Operation", "Output", 42, 5);
    --
    --  A special parameter name is "return". For "return", the To
    --  value will be the function result.
@@ -103,12 +103,13 @@ package ColdFrame.Stubs is
    --  streamed representation.
    generic
       type T (<>) is private;
-   procedure Set_Output_Value (For_Subprogram_Named : String;
-                               For_Parameter_Named : String;
-                               To : T;
-                               For_Call : Positive := 1;
-                               Override : Boolean := False;
-                               Overhead_Bytes : Natural := Storage_Overhead);
+   procedure Set_Output_Value
+     (For_Subprogram_Named : String;
+      For_Parameter_Named  : String;
+      To                   : T;
+      For_Call             : Positive := 1;
+      Override             : Boolean  := False;
+      Overhead_Bytes       : Natural  := Storage_Overhead);
 
 
    --  Specify that a call to a stubbed operation is to raise an
@@ -123,10 +124,11 @@ package ColdFrame.Stubs is
    --
    --  A previously stored exception for a particular call can only be
    --  overridden if Override is True (when it must be).
-   procedure Set_Exception (For_Subprogram_Named : String;
-                            E : Ada.Exceptions.Exception_Id;
-                            For_Call : Positive := 1;
-                            Override : Boolean := False);
+   procedure Set_Exception
+     (For_Subprogram_Named : String;
+      E                    : Ada.Exceptions.Exception_Id;
+      For_Call             : Positive := 1;
+      Override             : Boolean  := False);
 
 
    --  Retrieve the number of calls made to the named subprogram.
@@ -143,30 +145,64 @@ package ColdFrame.Stubs is
    --  parameter. To retrieve the value passed at the second call,
    --  you'd say
    --
-   --     Result := Get_Integer
+   --     Result := Get_T
    --       ("Domain.Class.Operation", "Input", 2);
    --
    --  To retrieve the result of the last call, say
    --
-   --     Result := Get_Integer
+   --     Result := Get_T
    --       ("Domain.Class.Operation", "Input", 0);
    --
    --  To retrieve the value passed at the last call but one, say
    --
-   --     Result := Get_Integer
+   --     Result := Get_T
    --       ("Domain.Class.Operation", "Input", -1);
    generic
       type T (<>) is private;
-   function Get_Input_Value (For_Subprogram_Named : String;
-                             For_Parameter_Named : String;
-                             For_Call : Integer := 0) return T;
+   function Get_Input_Value
+     (For_Subprogram_Named : String;
+      For_Parameter_Named  : String;
+      For_Call             : Integer := 0)
+     return T;
 
-   --  A retained facility for retrieving the value passed at the last
-   --  call:
+
+   --  Retrieve values passed to stubbed operations in a parameter
+   --  (For_Parameter_Named) of type Result_Type in the last call in
+   --  which a value Had_Value was passed in another parameter
+   --  (When_Parameter_Named) of type Key_Type.
    --
-   --     Result := Get_Integer
-   --       ("Domain.Class.Operation", "Input", Last);
-   Last : constant Positive := Positive'Last;
+   --  For_Subprogram_Named is the case-insensitive fully-qualified
+   --  name of the subprogram (eg, if dealing with procedure
+   --  Domain.Class.Operation, "Domain.Class.Operation").
+   --
+   --  The named parameters will be "in" (perhaps "in out")
+   --  parameters.
+   --
+   --  This facility is intended for the case where a value is passed
+   --  with an index: for example,
+   --
+   --     Set_Colour (For_Lamp : Positive; To : Colour);
+   --
+   --  in which case the instantiation might be
+   --
+   --     function Get_Colour_For_Positive
+   --       is new Get_Keyed_Input_Value (Positive, Colour);
+   --
+   --  and to retrieve the Colour to which Lamp 4 was last set you'd
+   --  say
+   --
+   --   Result := Get_Colour_For_Positive
+   --     ("Domain.Class.Set_Colour", "To", "For_Lamp", 4);
+   generic
+      type Key_Type (<>) is private;
+      type Result_Type (<>) is private;
+      with function "=" (L, R : Key_Type) return Boolean is <>;
+   function Get_Keyed_Input_Value
+     (For_Subprogram_Named : String;
+      For_Parameter_Named  : String;
+      When_Parameter_Named : String;
+      Had_Value            : Key_Type)
+     return Result_Type;
 
 
    -----------------------------------------------------------------
@@ -181,13 +217,13 @@ package ColdFrame.Stubs is
    --  Called during elaboration (of generated code) to register the
    --  existence of a subprogram input parameter.
    procedure Register_Input_Parameter (Subprogram_Named : String;
-                                       Parameter_Named : String);
+                                       Parameter_Named  : String);
 
 
    --  Called during elaboration (of generated code) to register the
    --  existence of a subprogram output parameter (or function return).
    procedure Register_Output_Parameter (Subprogram_Named : String;
-                                        Parameter_Named : String);
+                                        Parameter_Named  : String);
 
 
    --  Local type for access to internal streams.
@@ -216,10 +252,10 @@ package ColdFrame.Stubs is
    --  streamed representation.
    function Get_Input_Value_Stream
      (For_Subprogram_Named : String;
-      For_Parameter_Named : String;
-      For_Call : Positive;
-      Size_In_Bits : Natural;
-      Overhead_Bytes : Natural := Storage_Overhead)
+      For_Parameter_Named  : String;
+      For_Call             : Positive;
+      Size_In_Bits         : Natural;
+      Overhead_Bytes       : Natural := Storage_Overhead)
      return Stream_Access;
 
 
@@ -229,7 +265,7 @@ package ColdFrame.Stubs is
    --  Exceptions are to be stored by using Set_Output_Value with an
    --  Exception_ID and the special parameter name "exception".
    procedure Check_For_Exception (For_Subprogram_Named : String;
-                                  For_Call : Positive);
+                                  For_Call             : Positive);
 
 
    --  Called (after all input values have been saved and exceptions
@@ -240,10 +276,11 @@ package ColdFrame.Stubs is
    --  For function return values, the values are to be stored by
    --  using Set_Output_Value with the special parameter name
    --  "return".
-   function Get_Output_Value_Stream (For_Subprogram_Named : String;
-                                     For_Parameter_Named : String;
-                                     For_Call : Positive)
-                                    return Stream_Access;
+   function Get_Output_Value_Stream
+     (For_Subprogram_Named : String;
+      For_Parameter_Named  : String;
+      For_Call             : Positive)
+     return Stream_Access;
 
 
    --  Used for mutual exclusion via the RAII (Resource Acquisition Is

@@ -46,9 +46,9 @@ package body ColdFrame.Stubs is
 
       package String_To_Natural_Maps
         is new Ada.Containers.Indefinite_Hashed_Maps
-          (Element_Type => Element,
-           Key_Type => String,
-           Hash => Ada.Strings.Hash_Case_Insensitive,
+          (Element_Type    => Element,
+           Key_Type        => String,
+           Hash            => Ada.Strings.Hash_Case_Insensitive,
            Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive);
 
       type Bag is new String_To_Natural_Maps.Map with null record;
@@ -57,7 +57,7 @@ package body ColdFrame.Stubs is
 
       not overriding procedure Add
         (B : in out Bag;
-         S : String);
+         S :        String);
 
       not overriding function Count
         (B : Bag;
@@ -69,10 +69,10 @@ package body ColdFrame.Stubs is
    --  We need to check for the existence of subprograms and
    --  parameters/results.
    package String_Sets is new Ada.Containers.Indefinite_Hashed_Sets
-     (Element_Type => String,
-      Hash => Ada.Strings.Hash_Case_Insensitive,
+     (Element_Type        => String,
+      Hash                => Ada.Strings.Hash_Case_Insensitive,
       Equivalent_Elements => Ada.Strings.Equal_Case_Insensitive,
-      "=" => Ada.Strings.Equal_Case_Insensitive);
+      "="                 => Ada.Strings.Equal_Case_Insensitive);
 
 
    --  We need Memory Streams to hold values, so we need pointers
@@ -88,18 +88,25 @@ package body ColdFrame.Stubs is
    --  For Inputs, we need plain collections of Memory Streams (there
    --  will be an input for each call).
    package Stream_Pointer_Vectors is new Ada.Containers.Vectors
-     (Index_Type => Positive,
+     (Index_Type   => Positive,
       Element_Type => Stream_Pointers.Pointer,
-      "=" => Stream_Pointers."=");
+      "="          => Stream_Pointers."=");
+
+   --  Support for retrieving values from vectors of streams
+   generic
+      type T (<>) is private;
+   function Streamed_Value (From     : Stream_Pointer_Vectors.Vector;
+                            At_Index : Positive) return T;
+
 
    --  We need to map from subprogram.parameter names to collections
    --  of Memory Streams.
    package Input_Maps is new Ada.Containers.Indefinite_Hashed_Maps
-     (Element_Type => Stream_Pointer_Vectors.Vector,
-      Key_Type => String,
-      Hash => Ada.Strings.Hash_Case_Insensitive,
+     (Element_Type    => Stream_Pointer_Vectors.Vector,
+      Key_Type        => String,
+      Hash            => Ada.Strings.Hash_Case_Insensitive,
       Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive,
-      "=" => Stream_Pointer_Vectors."=");
+      "="             => Stream_Pointer_Vectors."=");
 
 
    --  For Exceptions, we need sparse arrays of Exception_Ids. We can
@@ -111,16 +118,16 @@ package body ColdFrame.Stubs is
    --  We use a map ordered on Positive to emulate a sorted vector,
    --  which isn't provided by Ada.Containers.
    package Sparse_Exceptions is new Ada.Containers.Ordered_Maps
-     (Key_Type => Positive,
+     (Key_Type     => Positive,
       Element_Type => Ada.Exceptions.Exception_Id,
-      "=" => Ada.Exceptions."=");
+      "="          => Ada.Exceptions."=");
 
    package Sparse_Exception_Maps is new Ada.Containers.Indefinite_Hashed_Maps
-       (Key_Type => String,
-        Element_Type => Sparse_Exceptions.Map,
-        Hash => Ada.Strings.Hash_Case_Insensitive,
-        Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive,
-        "=" => Sparse_Exceptions."=");
+     (Key_Type        => String,
+      Element_Type    => Sparse_Exceptions.Map,
+      Hash            => Ada.Strings.Hash_Case_Insensitive,
+      Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive,
+      "="             => Sparse_Exceptions."=");
 
 
    --  For Outputs, we need sparse arrays of Memory Streams. We can
@@ -132,24 +139,23 @@ package body ColdFrame.Stubs is
    --  We hold two Memory Streams; Stream is for the original data,
    --  Copy is refilled each time the data is to be read (so we don't
    --  get End_Error if it's read more than once).
-   --  XXX why not just reset it?
    type Output_Cell is record
       Stream : Stream_Pointers.Pointer;
-      Copy : Stream_Pointers.Pointer;
+      Copy   : Stream_Pointers.Pointer;
    end record;
 
    --  We use a map ordered on Positive to emulate a sorted vector,
    --  which isn't provided by Ada.Containers.
    package Sparse_Outputs is new Ada.Containers.Ordered_Maps
-     (Key_Type => Positive,
+     (Key_Type     => Positive,
       Element_Type => Output_Cell);
 
    package Sparse_Output_Maps is new Ada.Containers.Indefinite_Hashed_Maps
-     (Element_Type => Sparse_Outputs.Map,
-      Key_Type => String,
-      Hash => Ada.Strings.Hash_Case_Insensitive,
+     (Element_Type    => Sparse_Outputs.Map,
+      Key_Type        => String,
+      Hash            => Ada.Strings.Hash_Case_Insensitive,
       Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive,
-      "=" => Sparse_Outputs."=");
+      "="             => Sparse_Outputs."=");
 
 
    --  Validity checking information, set up during elaboration of
@@ -192,12 +198,13 @@ package body ColdFrame.Stubs is
    --  O p e r a t i o n s   f o r   u s e r   s u p p o r t  --
    -------------------------------------------------------------
 
-   procedure Set_Output_Value (For_Subprogram_Named : String;
-                               For_Parameter_Named : String;
-                               To : T;
-                               For_Call : Positive := 1;
-                               Override : Boolean := False;
-                               Overhead_Bytes : Natural := Storage_Overhead) is
+   procedure Set_Output_Value
+     (For_Subprogram_Named : String;
+      For_Parameter_Named  : String;
+      To                   : T;
+      For_Call             : Positive := 1;
+      Override             : Boolean  := False;
+      Overhead_Bytes       : Natural  := Storage_Overhead) is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       subtype SEO is Ada.Streams.Stream_Element_Offset;
       Size : constant SEO := SEO ((To'Size + 7) / 8 + Overhead_Bytes);
@@ -232,11 +239,11 @@ package body ColdFrame.Stubs is
          SO : Sparse_Outputs.Map := Sparse_Output_Maps.Element (SOM_Cursor);
          SO_Cursor : constant Sparse_Outputs.Cursor := SO.Find (For_Call);
          use type Sparse_Outputs.Cursor;
-         New_Cell : constant Output_Cell
-           := (Stream => Stream_Pointers.Create
-             (new ColdFrame.Memory_Streams.Stream_Type (Size)),
-               Copy => Stream_Pointers.Create
-                 (new ColdFrame.Memory_Streams.Stream_Type (Size)));
+         New_Cell : constant Output_Cell :=
+           (Stream => Stream_Pointers.Create
+              (new ColdFrame.Memory_Streams.Stream_Type (Size)),
+            Copy => Stream_Pointers.Create
+              (new ColdFrame.Memory_Streams.Stream_Type (Size)));
       begin
          if SO_Cursor = Sparse_Outputs.No_Element then
             if Override then
@@ -257,10 +264,11 @@ package body ColdFrame.Stubs is
    end Set_Output_Value;
 
 
-   procedure Set_Exception (For_Subprogram_Named : String;
-                            E : Ada.Exceptions.Exception_Id;
-                            For_Call : Positive := 1;
-                            Override : Boolean := False) is
+   procedure Set_Exception
+     (For_Subprogram_Named : String;
+      E                    : Ada.Exceptions.Exception_Id;
+      For_Call             : Positive := 1;
+      Override             : Boolean  := False) is
       Lck : Lock (Mutex'Access);
       pragma Unreferenced (Lck);
    begin
@@ -315,9 +323,10 @@ package body ColdFrame.Stubs is
    end Number_Of_Calls;
 
 
-   function Get_Input_Value (For_Subprogram_Named : String;
-                             For_Parameter_Named : String;
-                             For_Call : Integer := 0) return T is
+   function Get_Input_Value
+     (For_Subprogram_Named : String;
+      For_Parameter_Named  : String;
+      For_Call             : Integer := 0) return T is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       Lck : Lock (Mutex'Access);
       pragma Unreferenced (Lck);
@@ -334,42 +343,80 @@ package body ColdFrame.Stubs is
       end if;
       declare
          Pointers : Stream_Pointer_Vectors.Vector renames Inputs.Element (SP);
-         function Result (From : Positive) return T;
-         function Result (From : Positive) return T is
-            --  We have to get the result from a copy of the memory
-            --  stream, otherwise the user will get an End_Error if
-            --  they read it more than once.
-            package AS renames Ada.Streams;
-            package CMS renames ColdFrame.Memory_Streams;
-            Str : CMS.Stream_Type renames
-              CMS.Stream_Type (Stream_Pointers.Value
-                                  (Pointers.Element (From)).all);
-            Copy : aliased CMS.Stream_Type
-              (Capacity => AS.Stream_Element_Offset (CMS.Length (Str)));
-         begin
-            CMS.Set_Contents (CMS.Contents (Str), Copy);
-            return T'Input (Copy'Access);
-         end Result;
+         function Result is new Streamed_Value (T);
          Len : constant Natural := Natural (Pointers.Length);
       begin
          if Len = 0 then
             raise No_Value with For_Subprogram_Named & " never called";
-         elsif For_Call = 0 or For_Call = Last then
-            return Result (Len);
+         elsif For_Call = 0 then
+            return Result (Pointers, Len);
          elsif For_Call > Len then
             raise No_Value
               with For_Subprogram_Named & " only called" & Len'Img & " times";
          elsif For_Call in 1 .. Len then
-            return Result (For_Call);
+            return Result (Pointers, For_Call);
          elsif Len + For_Call in 1 .. Len  then
             --  For_Call must be negative.
-            return Result (Len + For_Call);
+            return Result (Pointers, Len + For_Call);
          else
             raise No_Value
               with For_Subprogram_Named & " only called" & Len'Img & " times";
          end if;
       end;
    end Get_Input_Value;
+
+
+   function Get_Keyed_Input_Value
+     (For_Subprogram_Named : String;
+      For_Parameter_Named  : String;
+      When_Parameter_Named : String;
+      Had_Value            : Key_Type)
+     return Result_Type
+   is
+      NP : constant String
+        := For_Subprogram_Named & "." & When_Parameter_Named;
+      SP : constant String
+        := For_Subprogram_Named & "." & For_Parameter_Named;
+      Lck : Lock (Mutex'Access);
+      pragma Unreferenced (Lck);
+   begin
+      if not Subprograms.Contains (For_Subprogram_Named) then
+         raise No_Subprogram
+           with "subprogram " & For_Subprogram_Named & " not known";
+      end if;
+      if not Input_Parameters.Contains (NP) then
+         raise No_Parameter with "parameter " & NP & " not known";
+      end if;
+      if not Inputs.Contains (NP) then
+         raise No_Value with "input " & NP & " not found";
+      end if;
+      if not Input_Parameters.Contains (SP) then
+         raise No_Parameter with "parameter " & SP & " not known";
+      end if;
+      if not Inputs.Contains (SP) then
+         raise No_Value with "input " & SP & " not found";
+         --  actually, I think there has to be such an input
+      end if;
+      declare
+         function Get_Key is new Streamed_Value (Key_Type);
+         function Get_Result is new Streamed_Value (Result_Type);
+         NP_Pointers : Stream_Pointer_Vectors.Vector
+           renames Inputs.Element (NP);
+         SP_Pointers : Stream_Pointer_Vectors.Vector
+           renames Inputs.Element (SP);
+         Len : constant Natural := Natural (NP_Pointers.Length);
+      begin
+         if Len = 0 then
+            raise No_Value with For_Subprogram_Named & " never called";
+         end if;
+         for J in reverse 1 .. Len loop
+            if Get_Key (NP_Pointers, J) = Had_Value then
+               return Get_Result (SP_Pointers, J);
+            end if;
+         end loop;
+         raise No_Value with "no matching input for " & NP;
+      end;
+   end Get_Keyed_Input_Value;
 
 
    -----------------------------------------------------------------
@@ -383,14 +430,14 @@ package body ColdFrame.Stubs is
 
 
    procedure Register_Input_Parameter (Subprogram_Named : String;
-                                       Parameter_Named : String) is
+                                       Parameter_Named  : String) is
    begin
       Input_Parameters.Insert (Subprogram_Named & "." & Parameter_Named);
    end Register_Input_Parameter;
 
 
    procedure Register_Output_Parameter (Subprogram_Named : String;
-                                        Parameter_Named : String) is
+                                        Parameter_Named  : String) is
    begin
       Output_Parameters.Insert (Subprogram_Named & "." & Parameter_Named);
    end Register_Output_Parameter;
@@ -405,10 +452,10 @@ package body ColdFrame.Stubs is
 
    function Get_Input_Value_Stream
      (For_Subprogram_Named : String;
-      For_Parameter_Named : String;
-      For_Call : Positive;
-      Size_In_Bits : Natural;
-      Overhead_Bytes : Natural := Storage_Overhead)
+      For_Parameter_Named  : String;
+      For_Call             : Positive;
+      Size_In_Bits         : Natural;
+      Overhead_Bytes       : Natural := Storage_Overhead)
      return Stream_Access is
       subtype SEO is Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
@@ -440,7 +487,7 @@ package body ColdFrame.Stubs is
 
 
    procedure Check_For_Exception (For_Subprogram_Named : String;
-                                  For_Call : Positive) is
+                                  For_Call             : Positive) is
    begin
       if not Exceptions.Contains (For_Subprogram_Named) then
          return;
@@ -476,8 +523,8 @@ package body ColdFrame.Stubs is
 
    function Get_Output_Value_Stream
      (For_Subprogram_Named : String;
-      For_Parameter_Named : String;
-      For_Call : Positive)
+      For_Parameter_Named  : String;
+      For_Call             : Positive)
      return Stream_Access is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
    begin
@@ -519,11 +566,26 @@ package body ColdFrame.Stubs is
    --  L o c a l   i m p l e m e n t a t i o n s  --
    -------------------------------------------------
 
+   function Streamed_Value (From     : Stream_Pointer_Vectors.Vector;
+                            At_Index : Positive) return T is
+      package AS renames Ada.Streams;
+      package CMS renames ColdFrame.Memory_Streams;
+      Orig : CMS.Stream_Type renames
+        CMS.Stream_Type (Stream_Pointers.Value
+          (From.Element (At_Index)).all);
+      Copy :  aliased CMS.Stream_Type
+        (Capacity => AS.Stream_Element_Offset (CMS.Length (Orig)));
+   begin
+      CMS.Set_Contents (CMS.Contents (Orig), Copy);
+      return T'Input (Copy'Access);
+   end Streamed_Value;
+
+
    package body String_Bags is
 
       not overriding procedure Add
         (B : in out Bag;
-         S : String)
+         S :        String)
       is
          C : constant String_To_Natural_Maps.Cursor
            := B.Find (S);

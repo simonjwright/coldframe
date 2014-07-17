@@ -236,10 +236,6 @@ package body Stub_Test_Suite is
                  "wrong value " & Retrieved'Img & " for call " & I'Img);
       end loop;
       Retrieved :=
-        Get_Integer ("Stub_Test.Public.Set_Value", "I", ColdFrame.Stubs.Last);
-      Assert (Retrieved = 10,
-              "wrong value " & Retrieved'Img & " for call 'last'");
-      Retrieved :=
         Get_Integer ("Stub_Test.Public.Set_Value", "I", 0);
       Assert (Retrieved = 10,
               "wrong value " & Retrieved'Img & " for call 0");
@@ -367,8 +363,7 @@ package body Stub_Test_Suite is
               "wrong result (c)");
       Assert (not Get_Boolean
                 ("Stub_Test.Public.Get_Record_Type",
-                 "B",
-                 ColdFrame.Stubs.Last),
+                 "B"),
               "wrong input (c')");
       R := Stub_Test.Public.Get_Record_Type (True);
       Assert (Get_Boolean ("Stub_Test.Public.Get_Record_Type", "B", 4),
@@ -377,8 +372,7 @@ package body Stub_Test_Suite is
               "wrong value (d)");
       Assert (Get_Boolean
                 ("Stub_Test.Public.Get_Record_Type",
-                 "B",
-                 ColdFrame.Stubs.Last),
+                 "B"),
               "wrong input (d')");
    end Call_With_In_Parameter_And_Return;
 
@@ -500,6 +494,118 @@ package body Stub_Test_Suite is
    end Call_With_Variable_Message;
 
 
+   procedure Call_With_Keyed_Access
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Call_With_Keyed_Access
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (C);
+      function Get_Character_For_Integer
+        is new ColdFrame.Stubs.Get_Keyed_Input_Value
+          (Key_Type    => Integer,
+           Result_Type => Character);
+      Ch : Character;
+   begin
+
+      --  No subprogram
+      begin
+         Ch :=
+           Get_Character_For_Integer
+             (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_ValueX",
+              For_Parameter_Named => "Value",
+              When_Parameter_Named => "Key",
+              Had_Value => 42);
+         Assert (False, "should have raised No_Subprogram");
+      exception
+         when ColdFrame.Stubs.No_Subprogram => null;
+      end;
+
+      --  No calls
+      begin
+         Ch :=
+           Get_Character_For_Integer
+             (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_Value",
+              For_Parameter_Named => "Value",
+              When_Parameter_Named => "Key",
+              Had_Value => 42);
+         Assert (False, "should have raised No_Value (no calls)");
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+
+      --  Data
+      Stub_Test.Public.Set_Keyed_Value (Key => 42, Value => 'a');
+      Stub_Test.Public.Set_Keyed_Value (Key => 43, Value => 'b');
+      Stub_Test.Public.Set_Keyed_Value (Key => 42, Value => 'c');
+      Stub_Test.Public.Set_Keyed_Value (Key => 44, Value => 'd');
+
+      --  Invalid parameter name (for)
+      begin
+         Ch :=
+           Get_Character_For_Integer
+             (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_Value",
+              For_Parameter_Named => "ValueX",
+              When_Parameter_Named => "Key",
+              Had_Value => 42);
+         Assert (False, "should have raised No_Parameter (for)");
+      exception
+         when ColdFrame.Stubs.No_Parameter => null;
+      end;
+
+      --  Invalid parameter name (when)
+      begin
+         Ch :=
+           Get_Character_For_Integer
+             (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_Value",
+              For_Parameter_Named => "Value",
+              When_Parameter_Named => "KeyX",
+              Had_Value => 42);
+         Assert (False, "should have raised No_Parameter (when)");
+      exception
+         when ColdFrame.Stubs.No_Parameter => null;
+      end;
+
+      --  Valid calls
+      Ch :=
+        Get_Character_For_Integer
+          (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_Value",
+           For_Parameter_Named => "Value",
+           When_Parameter_Named => "Key",
+           Had_Value => 42);
+      Assert (Ch = 'c',
+              Ch & " returned, expecting c");
+      Ch :=
+        Get_Character_For_Integer
+          (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_Value",
+           For_Parameter_Named => "Value",
+           When_Parameter_Named => "Key",
+           Had_Value => 43);
+      Assert (Ch = 'b',
+              Ch & " returned, expecting b");
+      Ch :=
+        Get_Character_For_Integer
+          (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_Value",
+           For_Parameter_Named => "Value",
+           When_Parameter_Named => "Key",
+           Had_Value => 44);
+      Assert (Ch = 'd',
+              Ch & " returned, expecting d");
+
+      --  No key
+      begin
+         Ch :=
+           Get_Character_For_Integer
+             (For_Subprogram_Named => "Stub_Test.Public.Set_Keyed_Value",
+              For_Parameter_Named => "Value",
+              When_Parameter_Named => "Key",
+              Had_Value => 46);
+         Assert (False, "should have raised No_Value (key=46)");
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+
+   end Call_With_Keyed_Access;
+
+
    type Case_1 is new AUnit.Test_Cases.Test_Case with null record;
 
    procedure Register_Tests (C : in out Case_1);
@@ -560,6 +666,10 @@ package body Stub_Test_Suite is
         (C,
          Call_With_Variable_Message'Access,
          "variable strings");
+      Registration.Register_Routine
+        (C,
+         Call_With_Keyed_Access'Access,
+         "keyed access");
    end Register_Tests;
 
    function Name (C : Case_1) return AUnit.Message_String is

@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Domain Diagram</activediagram>
+      <activediagram>Stub Test Interface Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -126,10 +126,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri May 16 14:13:23 BST 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jul 14 13:35:29 BST 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/05/16 21:39:23 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/07/17 11:33:50 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -685,6 +685,27 @@
                           name = 'I' isSpecification = 'false' kind = 'in'>
                           <UML:Parameter.type>
                             <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Integer'/>
+                          </UML:Parameter.type>
+                        </UML:Parameter>
+                      </UML:BehavioralFeature.parameter>
+                    </UML:Operation>
+                    <UML:Operation xmi.id = '-64--88-1-74-3b6abd52:14734d4fdcd:-8000:0000000000000F67'
+                      name = 'Set_Keyed_Value' visibility = 'public' isSpecification = 'false'
+                      ownerScope = 'instance' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
+                      isLeaf = 'false' isAbstract = 'false'>
+                      <UML:BehavioralFeature.parameter>
+                        <UML:Parameter xmi.id = '-64--88-1-74-3b6abd52:14734d4fdcd:-8000:0000000000000F68'
+                          name = 'return' isSpecification = 'false' kind = 'return'/>
+                        <UML:Parameter xmi.id = '-64--88-1-74-3b6abd52:14734d4fdcd:-8000:0000000000000F69'
+                          name = 'Key' isSpecification = 'false' kind = 'in'>
+                          <UML:Parameter.type>
+                            <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Integer'/>
+                          </UML:Parameter.type>
+                        </UML:Parameter>
+                        <UML:Parameter xmi.id = '-64--88-1-74-3b6abd52:14734d4fdcd:-8000:0000000000000F6A'
+                          name = 'Value' isSpecification = 'false' kind = 'in'>
+                          <UML:Parameter.type>
+                            <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Character'/>
                           </UML:Parameter.type>
                         </UML:Parameter>
                       </UML:BehavioralFeature.parameter>
@@ -5233,7 +5254,7 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
     </group>
   </group>
   <group name="Fig6"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[8, 16, 452, 193]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[8, 16, 452, 210]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C83"
        fill="1"
        fillcolor="white"
@@ -5247,7 +5268,7 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
       x="8"
       y="16"
       width="452"
-      height="193"
+      height="210"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -5350,7 +5371,7 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
       strokecolor="black"
     />
     <group name="Fig6.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[9, 82, 450, 127]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[9, 82, 450, 144]"
          href="-64--88-1-2-5259cbaf:135af1aea67:-8000:0000000000000C83"
          fill="0"
          fillcolor="white"
@@ -5364,7 +5385,7 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
         x="9"
         y="82"
         width="450"
-        height="127"
+        height="144"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5470,7 +5491,7 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
         x="9"
         y="184"
         width="450"
-        height="23"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5482,6 +5503,22 @@ The task loops until Domain_Initialized is true, then copies the value of Initia
         textsize="13"
         justification="Left"
       >+Set_Value(I : Integer)</text>
+      <text name="Fig6.6.8"
+        x="9"
+        y="201"
+        width="450"
+        height="23"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >+Set_Keyed_Value(Key : Integer,Value : Character)</text>
     </group>
   </group>
 </pgml>
