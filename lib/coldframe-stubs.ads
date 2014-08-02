@@ -135,6 +135,15 @@ package ColdFrame.Stubs is
    function Number_Of_Calls (For_Subprogram_Named : String) return Natural;
 
 
+   --  Saves the count of calls made to the named subprogram.
+   procedure Save_Number_Of_Calls (For_Subprogram_Named : String);
+
+
+   --  Retrieve the number of calls made to the named subprogram since
+   --  saved (if saved!)
+   function Number_Of_New_Calls (For_Subprogram_Named : String) return Natural;
+
+
    --  Retrieve values passed to stubbed operations for the type T.
    --
    --  For_Subprogram_Named is the case-insensitive fully-qualified

@@ -356,11 +356,24 @@ has been called.
    function Number_Of_Calls (For_Subprogram_Named : String) return Natural;
 </pre>
 
+<p>In some cases, you may find it convenient to check the number of
+new calls since a certain point in the test
+suite; <tt>Save_Number_Of_Calls</tt> and <tt>Number_Of_New_Calls</tt>
+support this.
+
+<pre>
+   --  Saves the count of calls made to the named subprogram.
+   procedure Save_Number_Of_Calls (For_Subprogram_Named : String);
+</pre>
+<p>
+<pre>
+   --  Retrieve the number of calls made to the named subprogram since
+   --  saved (if saved!)
+   function Number_Of_New_Calls (For_Subprogram_Named : String) return Natural;
+</pre>
+
 <p>Call your instantiations of <tt>Get_Input_Value</tt> to retrieve
-any parameters input to stubbed subprograms. You can supply the
-value <tt>ColdFrame.Stubs.Last</tt> in the <tt>For_Call</tt> parameter
-to retrieve the last value (though usually you should know how many
-calls should have been made).
+any parameters input to stubbed subprograms.
 
 <h4><a name="example">Example</a></h4>
 

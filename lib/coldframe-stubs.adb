@@ -37,7 +37,8 @@ package body ColdFrame.Stubs is
    --  D a t a   s t r u c t u r e s  --
    -------------------------------------
 
-   --  We need to count subprogram entries.
+   --  We need to count subprogram entries ..
+
    package String_Bags is
 
       type Element is record
@@ -52,7 +53,7 @@ package body ColdFrame.Stubs is
            Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive);
 
       type Bag is new String_To_Natural_Maps.Map with null record;
-      --  Using A null record extension means we don't need to
+      --  Using a null record extension means we don't need to
       --  override parent functions-returning-parent-type.
 
       not overriding procedure Add
@@ -63,7 +64,19 @@ package body ColdFrame.Stubs is
         (B : Bag;
          S : String) return Natural;
 
+      not overriding procedure Reset
+        (B : in out Bag;
+         S :        String);
+
    end String_Bags;
+
+   --  .. and saved counts.
+   package String_To_Count_Maps
+     is new Ada.Containers.Indefinite_Hashed_Maps
+       (Element_Type    => Natural,
+        Key_Type        => String,
+        Hash            => Ada.Strings.Hash_Case_Insensitive,
+        Equivalent_Keys => Ada.Strings.Equal_Case_Insensitive);
 
 
    --  We need to check for the existence of subprograms and
@@ -167,6 +180,7 @@ package body ColdFrame.Stubs is
 
    --  Test storage, managed by Set_Up and Tear_Down.
    Entries : String_Bags.Bag;
+   Saved_Entries : String_To_Count_Maps.Map;
    Inputs : Input_Maps.Map;
    Exceptions : Sparse_Exception_Maps.Map;
    Outputs : Sparse_Output_Maps.Map;
@@ -179,6 +193,7 @@ package body ColdFrame.Stubs is
    procedure Set_Up is
    begin
       Entries.Clear;
+      Saved_Entries.Clear;
       Inputs.Clear;
       Exceptions.Clear;
       Outputs.Clear;
@@ -188,6 +203,7 @@ package body ColdFrame.Stubs is
    procedure Tear_Down is
    begin
       Entries.Clear;
+      Saved_Entries.Clear;
       Inputs.Clear;
       Exceptions.Clear;
       Outputs.Clear;
@@ -321,6 +337,56 @@ package body ColdFrame.Stubs is
       end if;
       return Entries.Count (For_Subprogram_Named);
    end Number_Of_Calls;
+
+
+   procedure Save_Number_Of_Calls (For_Subprogram_Named : String) is
+      Lck : Lock (Mutex'Access);
+      pragma Unreferenced (Lck);
+   begin
+      if not Subprograms.Contains (For_Subprogram_Named) then
+         raise No_Subprogram
+           with "subprogram " & For_Subprogram_Named & " not known";
+      end if;
+      declare
+         Count_So_Far : constant Natural :=
+           Entries.Count (For_Subprogram_Named);
+         C : constant String_To_Count_Maps.Cursor :=
+           Saved_Entries.Find (For_Subprogram_Named);
+         use type String_To_Count_Maps.Cursor;
+      begin
+         if C = String_To_Count_Maps.No_Element then
+            Saved_Entries.Insert (For_Subprogram_Named, Count_So_Far);
+         else
+            Saved_Entries.Replace_Element
+              (Position => C,
+               New_Item => Count_So_Far);
+         end if;
+      end;
+   end Save_Number_Of_Calls;
+
+
+   function Number_Of_New_Calls (For_Subprogram_Named : String) return Natural
+   is
+      Lck : Lock (Mutex'Access);
+      pragma Unreferenced (Lck);
+   begin
+      if not Subprograms.Contains (For_Subprogram_Named) then
+         raise No_Subprogram
+           with "subprogram " & For_Subprogram_Named & " not known";
+      end if;
+      declare
+         C : constant String_To_Count_Maps.Cursor :=
+           Saved_Entries.Find (For_Subprogram_Named);
+         use type String_To_Count_Maps.Cursor;
+      begin
+         if C = String_To_Count_Maps.No_Element then
+            return Entries.Count (For_Subprogram_Named);
+         else
+            return Entries.Count (For_Subprogram_Named)
+              - String_To_Count_Maps.Element (C);
+         end if;
+      end;
+   end Number_Of_New_Calls;
 
 
    function Get_Input_Value
@@ -587,8 +653,7 @@ package body ColdFrame.Stubs is
         (B : in out Bag;
          S :        String)
       is
-         C : constant String_To_Natural_Maps.Cursor
-           := B.Find (S);
+         C : constant String_To_Natural_Maps.Cursor := B.Find (S);
          use type String_To_Natural_Maps.Cursor;
       begin
          if C = String_To_Natural_Maps.No_Element then
@@ -606,8 +671,7 @@ package body ColdFrame.Stubs is
         (B : Bag;
          S : String) return Natural
       is
-         C : constant String_To_Natural_Maps.Cursor
-           := B.Find (S);
+         C : constant String_To_Natural_Maps.Cursor := B.Find (S);
          use type String_To_Natural_Maps.Cursor;
       begin
          if C = String_To_Natural_Maps.No_Element then
@@ -616,6 +680,20 @@ package body ColdFrame.Stubs is
             return String_To_Natural_Maps.Element (C).Count;
          end if;
       end Count;
+
+      not overriding procedure Reset
+        (B : in out Bag;
+         S :        String)
+      is
+         C : constant String_To_Natural_Maps.Cursor := B.Find (S);
+         use type String_To_Natural_Maps.Cursor;
+      begin
+         if C /= String_To_Natural_Maps.No_Element then
+            B.Replace_Element
+              (Position => C,
+               New_Item => (Count => 0));
+         end if;
+      end Reset;
 
    end String_Bags;
 
