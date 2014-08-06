@@ -16,7 +16,6 @@
 --  "project" source for ColdFrame.
 
 with "Options";
---  with "bc";
 
 library project ColdFrame is
 
