@@ -1,0 +1,30 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This unit is free software; you can redistribute it and/or modify
+--  it as you wish. This unit is distributed in the hope that it will
+--  be useful, but WITHOUT ANY WARRANTY; without even the implied
+--  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+with "Options";
+with "ColdFrame";
+with "../extras/ColdFrame_Scripting";
+
+project House_Management_Scripting is
+
+  for Main use ("house_management-scripting");
+  for Exec_Dir use ".";
+  for Source_Dirs use
+    (
+     "House_Management.gen",
+     "House_Management.impl",
+     "House_Management.test",
+     "Digital_IO_Interface.gen"
+    );
+  for Object_Dir use ".build-house_management_test";
+  package IDE renames Options.IDE;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
+
+end House_Management_Scripting;
