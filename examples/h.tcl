@@ -36,14 +36,14 @@ check_number_of_new_calls digital_io.set 2
 check-outputs true true false false
 
 echo "waiting until just before the timeout"
-wait_from_mark a 4.990
+wait_from_mark a 4.995
 echo "checking the lamps are still set"
 check_number_of_new_calls digital_io.set 2
 # this is tautological if there've been no calls, but ..
 check-outputs true true false false
 
 echo "waiting until just after the timeout"
-wait_from_mark a 5.010
+wait_from_mark a 5.005
 
 echo "checking the lamps are now clear"
 check_number_of_new_calls digital_io.set 4
