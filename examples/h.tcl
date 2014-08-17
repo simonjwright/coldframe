@@ -28,7 +28,7 @@ save_number_of_calls digital_io.set
 
 echo "pushing button 0"
 mark a
-digital_io.input_signal_state_callback 0 true
+callback-digital_io.input_signal_state {0 true}
 wait_until_idle
 
 echo "lamps 0 and 1 should be set"

@@ -409,6 +409,7 @@ package body ColdFrame.Stubs.Scripting is
       Initialize;
    end Check_Passed_Value;
 
+
    package body Check_Keyed_Value is
 
       type Check_Command

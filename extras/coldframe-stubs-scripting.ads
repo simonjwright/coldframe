@@ -18,6 +18,10 @@ package ColdFrame.Stubs.Scripting is
    --
    --  All names are case-insensitive.
 
+   -----------------------
+   --  S t a n d a r d  --
+   -----------------------
+
    --  check_number_of_calls <subprogram-name> <natural>
    --
    --  At execution time, checks the number of calls to the
@@ -32,8 +36,15 @@ package ColdFrame.Stubs.Scripting is
    --  At execution time, checks the number of calls to the
    --  subprogram since the last save_number_of_calls (if any).
 
+   ---------------------------------
+   --  T y p e - s p e c i f i c  --
+   ---------------------------------
 
    --  These generics support creating type-specific commands.
+   --
+   --  Note, values of types are always passed as one argument; if the
+   --  type has more than one component, it is to be passed as a list,
+   --  {component-1 component-2 ...}.
 
    generic
       type Checked_Type is private;

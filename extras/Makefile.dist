@@ -25,7 +25,9 @@ all:
 	@echo "Only meant to be called from the parent Makefile.dist."
 
 ALL =						\
-ColdFrame_Scripting.gpr				\
+      ColdFrame_Scripting.gpr			\
+      coldframe-callbacks-scripting.adb		\
+      coldframe-callbacks-scripting.ads		\
       coldframe-project-scripted_testing.ads	\
       coldframe-scripted_testing_g.adb		\
       coldframe-scripted_testing_g.ads		\

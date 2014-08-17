@@ -20,7 +20,7 @@
 --  executable file might be covered by the GNU Public License.
 
 generic
-   type T (<>) is limited private;
+   type T is private;
 package ColdFrame.Callbacks is
 
    pragma Elaborate_Body;
