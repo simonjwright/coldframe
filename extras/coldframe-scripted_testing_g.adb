@@ -37,10 +37,10 @@ package body ColdFrame.Scripted_Testing_G is
 
    overriding
    function Tcl_Command
-     (C      : access Start_Dispatcher_Command;
-      Interp :        Tcl.Tcl_Interp;
-      Argc   :        Interfaces.C.int;
-      Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+     (C      : not null access Start_Dispatcher_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
    type Start_Dispatcher_Event
      is new Scripted_Testing.Event with null record;
@@ -49,10 +49,10 @@ package body ColdFrame.Scripted_Testing_G is
    procedure Execute (E : Start_Dispatcher_Event);
 
    function Tcl_Command
-     (C      : access Start_Dispatcher_Command;
-      Interp :        Tcl.Tcl_Interp;
-      Argc   :        Interfaces.C.int;
-      Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+     (C      : not null access Start_Dispatcher_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
    is
       pragma Unreferenced (C);
       pragma Unreferenced (Argv);
@@ -90,10 +90,10 @@ package body ColdFrame.Scripted_Testing_G is
 
    overriding
    function Tcl_Command
-     (C      : access Wait_Until_Idle_Command;
-      Interp :        Tcl.Tcl_Interp;
-      Argc   :        Interfaces.C.int;
-      Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+     (C      : not null access Wait_Until_Idle_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
    type Wait_Until_Idle_Event
      is new Scripted_Testing.Event with null record;
@@ -102,10 +102,10 @@ package body ColdFrame.Scripted_Testing_G is
    procedure Execute (E : Wait_Until_Idle_Event);
 
    function Tcl_Command
-     (C      : access Wait_Until_Idle_Command;
-      Interp :        Tcl.Tcl_Interp;
-      Argc   :        Interfaces.C.int;
-      Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+     (C      : not null access Wait_Until_Idle_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
    is
       pragma Unreferenced (C);
       pragma Unreferenced (Argv);

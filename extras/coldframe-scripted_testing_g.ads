@@ -15,11 +15,12 @@
 with ColdFrame.Events_G;
 generic
    with package Events is new ColdFrame.Events_G (<>);
-   --  Needs to be an instantiation of Test_G, so that
-   --  Start_Dispatcher and Wait_Until_Idle work.
+   --  Instantiate with ColdFrame.Project.Events.
 package ColdFrame.Scripted_Testing_G is
 
    procedure Register (The_Dispatcher : not null Events.Event_Queue_P);
+   --  The_Dispatcher needs to be from an instantiation of Test_G, so
+   --  that Start_Dispatcher and Wait_Until_Idle work.
 
    --  The provided commands are:
    --

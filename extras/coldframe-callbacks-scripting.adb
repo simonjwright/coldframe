@@ -33,10 +33,10 @@ package body ColdFrame.Callbacks.Scripting is
 
    overriding
    function Tcl_Command
-     (C      : access Callback_Command;
-      Interp :        Tcl.Tcl_Interp;
-      Argc   :        Interfaces.C.int;
-      Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+     (C      : not null access Callback_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
    type Callback_Event
      is new Scripted_Testing.Event with record
@@ -47,10 +47,10 @@ package body ColdFrame.Callbacks.Scripting is
    procedure Execute (E : Callback_Event);
 
    function Tcl_Command
-     (C      : access Callback_Command;
-      Interp :        Tcl.Tcl_Interp;
-      Argc   :        Interfaces.C.int;
-      Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+     (C      : not null access Callback_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
    is
       pragma Unreferenced (C);
       use type Interfaces.C.int;

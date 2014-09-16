@@ -8,12 +8,20 @@
 # This is a demonstration of Tcl-based scripted testing, to be run by
 # house_management-scripting(.exe).
 
-# Check the settings of all 4 output signals.
+# Check the settings of all 4 output signals. This is probably more
+# verbose than you'd need.
 proc check-outputs {s0 s1 s2 s3} {
-    check-boolean-for-digital_io.output_signal digital_io.set o 0 to_state $s0
-    check-boolean-for-digital_io.output_signal digital_io.set o 1 to_state $s1
-    check-boolean-for-digital_io.output_signal digital_io.set o 2 to_state $s2
-    check-boolean-for-digital_io.output_signal digital_io.set o 3 to_state $s3
+    proc check-output {switch state} {
+        echo "checking output $switch is in state $state"
+        check-boolean-for-digital_io.output_signal \
+            digital_io.set \
+            o $switch \
+            to_state $state
+    }
+    check-output 0 $s0
+    check-output 1 $s1
+    check-output 2 $s2
+    check-output 3 $s3
 }
 
 puts "script starting."

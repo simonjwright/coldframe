@@ -56,10 +56,10 @@ package body ColdFrame.Stubs.Scripting is
 
       overriding
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
       type Check_Event
         is new Scripted_Testing.Event with record
@@ -71,10 +71,10 @@ package body ColdFrame.Stubs.Scripting is
       procedure Execute (E : Check_Event);
 
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
       is
          pragma Unreferenced (C);
          use type Interfaces.C.int;
@@ -146,10 +146,10 @@ package body ColdFrame.Stubs.Scripting is
 
       overriding
       function Tcl_Command
-        (C      : access Save_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+        (C      : not null access Save_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
       type Save_Event
         is new Scripted_Testing.Event with record
@@ -160,10 +160,10 @@ package body ColdFrame.Stubs.Scripting is
       procedure Execute (E : Save_Event);
 
       function Tcl_Command
-        (C      : access Save_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+        (C      : not null access Save_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
       is
          pragma Unreferenced (C);
          use type Interfaces.C.int;
@@ -221,10 +221,10 @@ package body ColdFrame.Stubs.Scripting is
 
       overriding
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
       type Check_Event
         is new Scripted_Testing.Event with record
@@ -236,10 +236,10 @@ package body ColdFrame.Stubs.Scripting is
       procedure Execute (E : Check_Event);
 
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
       is
          pragma Unreferenced (C);
          use type Interfaces.C.int;
@@ -315,10 +315,10 @@ package body ColdFrame.Stubs.Scripting is
 
       overriding
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
       type Check_Event
         is new Scripted_Testing.Event with record
@@ -332,10 +332,10 @@ package body ColdFrame.Stubs.Scripting is
       procedure Execute (E : Check_Event);
 
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
       is
          pragma Unreferenced (C);
          Call : Integer := 0;
@@ -427,28 +427,28 @@ package body ColdFrame.Stubs.Scripting is
 
       overriding
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
       type Check_Event
         is new Scripted_Testing.Event with record
-        Subprogram        : Ada.Strings.Unbounded.Unbounded_String;
-        Key_Parameter     : Ada.Strings.Unbounded.Unbounded_String;
-        Key_Value         : Key_Type;
-        Checked_Parameter : Ada.Strings.Unbounded.Unbounded_String;
-        Expected          : Checked_Type;
+           Subprogram        : Ada.Strings.Unbounded.Unbounded_String;
+           Key_Parameter     : Ada.Strings.Unbounded.Unbounded_String;
+           Key_Value         : Key_Type;
+           Checked_Parameter : Ada.Strings.Unbounded.Unbounded_String;
+           Expected          : Checked_Type;
         end record;
 
       overriding
       procedure Execute (E : Check_Event);
 
       function Tcl_Command
-        (C      : access Check_Command;
-         Interp :        Tcl.Tcl_Interp;
-         Argc   :        Interfaces.C.int;
-         Argv   :        CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+        (C      : not null access Check_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
       is
          pragma Unreferenced (C);
          use type Interfaces.C.int;
