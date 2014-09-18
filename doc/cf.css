@@ -46,10 +46,10 @@ p { margin : .1em 0 .25em 1em; }
 
 dl { margin-left : 1em; }
 
-ol { margin : .1em 0 .1em 2.7em; }  /* room for numbers */
-ul { margin : .1em 0 .1em 2.2em; }  /* room for bullets */
+ol { margin : .1em 0 .35em 2.7em; }  /* room for numbers */
+ul { margin : .1em 0 .35em 2.2em; }  /* room for bullets */
 
-ol ol, ul ul { margin : .1em 0 .1em 1.2em; }
+ol ol, ul ul, ol ul, ul ol { margin : .1em 0 .1em 1.2em; }
 
 pre { background : #d0d0d0; }
 
