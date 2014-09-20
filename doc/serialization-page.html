@@ -127,13 +127,13 @@ you can always <i>with</i> it in your analysis program). Otherwise,
 for each &#171;serializable&#187; type, a type and a subprogram are
 generated:
 <pre>
-   with ColdFrame.Project.Serialization;
-   package <i>Domain</i>.Serializable is
-      type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
-         Payload : <i>Domain</i>.<i>T</i>;
-      end record;
-      function Image (S : <i>T</i>) return String;
-   end <i>Domain</i>.Serializable;
+with ColdFrame.Project.Serialization;
+package <i>Domain</i>.Serializable is
+   type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
+      Payload : <i>Domain</i>.<i>T</i>;
+   end record;
+   function Image (S : <i>T</i>) return String;
+end <i>Domain</i>.Serializable;
 </pre>
 
 <p><tt>Image</tt> produces an XML rendition of the recorded value.
@@ -203,7 +203,7 @@ case, you can specify an image function for the type.
 &#171;type&#187; <i>T</i> you specify
 <tt>{type-image&nbsp;=&nbsp;f}</tt>, ColdFrame expects you to provide
 <pre>
-   function F (V : T) return String;
+function F (V : T) return String;
 </pre>
 
 <p>You can manage more complex imported types if required (for
@@ -215,9 +215,9 @@ case
 <tt>{field-image&nbsp;=&nbsp;<i>Other_Domain</i>.Image_Of_Exported}</tt>.
 ColdFrame then expects to be able to call
 <pre>
-   function <i>[Other_Domain.]</i>Image_Of_Exported
-     (Value : Exported;
-      Name : String) return String;
+function <i>[Other_Domain.]</i>Image_Of_Exported
+  (Value : Exported;
+   Name : String) return String;
 </pre>
 
 <p>where <tt>Name</tt> is the field name and <tt>Value</tt> is the
@@ -259,15 +259,15 @@ src="serialization-sequence-t.png" border=1></a>
 <p><i>Sample A</i> shows standard types, which can be translated "as
 is". The code generated in the domain package spec is
 <pre>
-   type Sample_A is record
-      I : Integer;
-      F : Float;
-      B : Boolean;
-      D : Duration;
-      T : ColdFrame.Project.Calendar.Time;
-      U : Unbounded_String;
-      N : Name_String;
-   end record;
+type Sample_A is record
+   I : Integer;
+   F : Float;
+   B : Boolean;
+   D : Duration;
+   T : ColdFrame.Project.Calendar.Time;
+   U : Unbounded_String;
+   N : Name_String;
+end record;
 </pre>
 
 <p>(<i>Name String</i> is a bounded string, <tt>{string = max 32}</tt>).
@@ -275,25 +275,25 @@ is". The code generated in the domain package spec is
 <p>The code generated in the <tt>Serializable</tt> child package spec
 is
 <pre>
-   type Sample_A
-   is new ColdFrame.Project.Serialization.Base with record
-      Payload : Serialization_Demo.Sample_A;
-   end record;
+type Sample_A
+is new ColdFrame.Project.Serialization.Base with record
+   Payload : Serialization_Demo.Sample_A;
+end record;
 
-   function Image (S : Sample_A) return String;
+function Image (S : Sample_A) return String;
 </pre>
 
 <p>A typical result of calling Image is
 <pre>
-   &lt;record name="Serialization_Demo.Sample_A"&gt;
-   &lt;field name="I"&gt; 42&lt;/field&gt;
-   &lt;field name="F"&gt; 1.23450E-01&lt;/field&gt;
-   &lt;field name="B"&gt;FALSE&lt;/field&gt;
-   &lt;field name="D"&gt; 1.234500000&lt;/field&gt;
-   &lt;field name="T"&gt; 1046534734.051916000&lt;/field&gt;
-   &lt;field name="U"&gt;unbounded&lt;/field&gt;
-   &lt;field name="N"&gt;bounded&lt;/field&gt;
-   &lt;/record&gt;
+&lt;record name="Serialization_Demo.Sample_A"&gt;
+&lt;field name="I"&gt; 42&lt;/field&gt;
+&lt;field name="F"&gt; 1.23450E-01&lt;/field&gt;
+&lt;field name="B"&gt;FALSE&lt;/field&gt;
+&lt;field name="D"&gt; 1.234500000&lt;/field&gt;
+&lt;field name="T"&gt; 1046534734.051916000&lt;/field&gt;
+&lt;field name="U"&gt;unbounded&lt;/field&gt;
+&lt;field name="N"&gt;bounded&lt;/field&gt;
+&lt;/record&gt;
 </pre>
 
 <p>(the <i>Time</i> is represented using
@@ -313,45 +313,45 @@ this is the image function by
 
 <p>The code generated in the domain package spec is
 <pre>
-   subtype Real_Time
-   is Ada.Real_Time.Time;
-   use type Real_Time;
+subtype Real_Time
+is Ada.Real_Time.Time;
+use type Real_Time;
 
-   function Real_Time_Image
-     (V : Real_Time;
-      N : String)
-     return String;
+function Real_Time_Image
+  (V : Real_Time;
+   N : String)
+  return String;
 </pre>
 
 <p>The code generated in the <tt>Serializable</tt> child package spec
 is
 <pre>
-   type Real_Time
-   is new ColdFrame.Project.Serialization.Base with record
-      Payload : Serialization_Demo.Real_Time;
-   end record;
+type Real_Time
+is new ColdFrame.Project.Serialization.Base with record
+   Payload : Serialization_Demo.Real_Time;
+end record;
 
-   function Image (S : Real_Time) return String;
+function Image (S : Real_Time) return String;
 </pre>
 
 <p>The handwritten proper body of <tt>Real_Time_Image</tt> is
 <pre>
-   separate (Serialization_Demo)
-   function Real_Time_Image
-     (V : Real_Time;
-      N : String)
-     return String is
-      use type Ada.Real_Time.Time;
-      use type Ada.Real_Time.Time_Span;
-      Img : constant String :=
-        Duration'Image (Ada.Real_Time.To_Duration (V - Ada.Real_Time.Time_First));
-   begin
-      if N'Length &gt; 0 then
-         return "&lt;field name=""" & N & """&gt;" & Img & "&lt;/field&gt;";
-      else
-         return "&lt;field name=""Payload""&gt;" & Img & "&lt;/field&gt;";
-      end if;
-   end Real_Time_Image;
+separate (Serialization_Demo)
+function Real_Time_Image
+  (V : Real_Time;
+   N : String)
+  return String is
+   use type Ada.Real_Time.Time;
+   use type Ada.Real_Time.Time_Span;
+   Img : constant String :=
+     Duration'Image (Ada.Real_Time.To_Duration (V - Ada.Real_Time.Time_First));
+begin
+   if N'Length &gt; 0 then
+      return "&lt;field name=""" & N & """&gt;" & Img & "&lt;/field&gt;";
+   else
+      return "&lt;field name=""Payload""&gt;" & Img & "&lt;/field&gt;";
+   end if;
+end Real_Time_Image;
 </pre>
 
 <p>If the "field name" parameter <tt>N</tt> is empty, we make up a
@@ -370,9 +370,9 @@ section),
 
 <p>A typical result of calling <tt>Serializable.Image </tt> is
 <pre>
-   &lt;record name="Serialization_Demo.Real_Time"&gt;
-   &lt;field name="Real_Time"&gt;-8176441673.395873810&lt;/field&gt;
-   &lt;/record&gt;
+&lt;record name="Serialization_Demo.Real_Time"&gt;
+&lt;field name="Real_Time"&gt;-8176441673.395873810&lt;/field&gt;
+&lt;/record&gt;
 </pre>
 
 <h4>Recordable Real Time</h4>
@@ -384,27 +384,27 @@ with an <tt>{image}</tt> function.
 
 <p>The code generated in the domain package spec is
 <pre>
-   type Recordable_Real_Time is record
-      T : Real_Time;
-   end record;
+type Recordable_Real_Time is record
+   T : Real_Time;
+end record;
 </pre>
 
 <p>The code generated in the <tt>Serializable</tt> child package spec
 is
 <pre>
-   type Recordable_Real_Time
-   is new ColdFrame.Project.Serialization.Base with record
-      Payload : Serialization_Demo.Recordable_Real_Time;
-   end record;
+type Recordable_Real_Time
+is new ColdFrame.Project.Serialization.Base with record
+   Payload : Serialization_Demo.Recordable_Real_Time;
+end record;
 
-   function Image (S : Recordable_Real_Time) return String;
+function Image (S : Recordable_Real_Time) return String;
 </pre>
 
 <p>A typical result of calling Image is
 <pre>
-   &lt;record name="Serialization_Demo.Recordable_Real_Time"&gt;
-   &lt;field name="T"&gt;-8176441673.905397810&lt;/field&gt;
-   &lt;/record&gt;
+&lt;record name="Serialization_Demo.Recordable_Real_Time"&gt;
+&lt;field name="T"&gt;-8176441673.905397810&lt;/field&gt;
+&lt;/record&gt;
 </pre>
 
 <p>Note that this time the <tt>Real_Time_Image</tt> was called with
@@ -415,18 +415,18 @@ the field name parameter set to <tt>"T"</tt>.
 <p>Sample code for taking a <tt>Sample_A</tt> record (from the
 <tt>Client</tt> program in the Serialization demonstration) is
 <pre>
-   Serialization.Interface.Output
-     (Serialization_Demo.Serializable.Sample_A'
-        (Serialization.Serializable_Base with
-           Payload =>
-           (I => 42,
-            F => 0.12345,
-            B => False,
-            D => 1.2345,
-            T => ColdFrame.Project.Calendar.Clock,
-            U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
-            N => Serialization_Demo.Name_String_Package.To_Bounded_String
-              ("bounded"))));
+Serialization.Interface.Output
+  (Serialization_Demo.Serializable.Sample_A'
+     (Serialization.Serializable_Base with
+        Payload =>
+        (I => 42,
+         F => 0.12345,
+         B => False,
+         D => 1.2345,
+         T => ColdFrame.Project.Calendar.Clock,
+         U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+         N => Serialization_Demo.Name_String_Package.To_Bounded_String
+           ("bounded"))));
 </pre>
 
 <p>This is rather more complex than, in general, it would need to
@@ -434,43 +434,43 @@ be. For a start, it would be normal to take this record from within
 the domain concerned (<tt>Serialization_Demo</tt>), so we could leave
 out the qualification:
 <pre>
-   Serialization.Interface.Output
-     (Serializable.Sample_A'
-        (Serialization.Serializable_Base with
-           Payload =>
-           (I => 42,
-            F => 0.12345,
-            B => False,
-            D => 1.2345,
-            T => ColdFrame.Project.Calendar.Clock,
-            U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
-            N => Name_String_Package.To_Bounded_String ("bounded"))));
+Serialization.Interface.Output
+  (Serializable.Sample_A'
+     (Serialization.Serializable_Base with
+        Payload =>
+        (I => 42,
+         F => 0.12345,
+         B => False,
+         D => 1.2345,
+         T => ColdFrame.Project.Calendar.Clock,
+         U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+         N => Name_String_Package.To_Bounded_String ("bounded"))));
 </pre>
 
 <p>Additionally, the demonstration is a tad confusing because of the
 similarity of the names. If instead of <i>Serialization</i> the
 facility had been called <i>Recording</i>, it would look like
 <pre>
-   Recording.Interface.Output
-     (Serializable.Sample_A'
-        (Recording.Serializable_Base with
-           Payload =>
-           (I => 42,
-            F => 0.12345,
-            B => False,
-            D => 1.2345,
-            T => ColdFrame.Project.Calendar.Clock,
-            U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
-            N => Name_String_Package.To_Bounded_String
-              ("bounded"))));
+Recording.Interface.Output
+  (Serializable.Sample_A'
+     (Recording.Serializable_Base with
+        Payload =>
+        (I => 42,
+         F => 0.12345,
+         B => False,
+         D => 1.2345,
+         T => ColdFrame.Project.Calendar.Clock,
+         U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+         N => Name_String_Package.To_Bounded_String
+           ("bounded"))));
 </pre>
 
 <p>As a final thought, if we already had a <i>Sample A</i> value (in
 say <tt>Value</tt>), it would be more like
 <pre>
-   Recording.Interface.Output
-     (Serializable.Sample_A'
-        (Recording.Serializable_Base with Payload => Value));
+Recording.Interface.Output
+  (Serializable.Sample_A'
+     (Recording.Serializable_Base with Payload => Value));
 </pre>
 
 <h3>Outputting the data</h3>
@@ -478,14 +478,14 @@ say <tt>Value</tt>), it would be more like
 <p>Sample code for outputting received data (from the
 <tt>Server</tt> program in the Serialization demonstration) is
 <pre>
-   declare
-      Rec : constant ColdFrame.Project.Serialization.Base'Class :=
-        ColdFrame.Project.Serialization.Base'Class'Input (Channel);
-   begin
-      Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
-                            ColdFrame.Project.Serialization.Image (Rec));
-      Ada.Text_IO.Flush;
-   end;
+declare
+   Rec : constant ColdFrame.Project.Serialization.Base'Class :=
+     ColdFrame.Project.Serialization.Base'Class'Input (Channel);
+begin
+   Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
+                         ColdFrame.Project.Serialization.Image (Rec));
+   Ada.Text_IO.Flush;
+end;
 </pre>
 
 <p>(this uses <tt>Ada.Text_IO</tt> rather than <tt>GNAT.IO</tt>

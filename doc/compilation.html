@@ -84,27 +84,27 @@ placed
 and lives in the <tt>Serialization.impl</tt> directory.
 
 <pre>
-   with "Options";
-   with "ColdFrame";
+with "Options";
+with "ColdFrame";
 
-   project Serialization is
+project Serialization is
 
-     for Source_Dirs use (".",
-			  "../Serialization.gen",
-			  "../Serialization_Demo.gen");
+  for Source_Dirs use (".",
+                       "../Serialization.gen",
+                       "../Serialization_Demo.gen");
 
-     for Main use ("client", "server");
+  for Main use ("client", "server");
 
-     for Exec_Dir use ".";
+  for Exec_Dir use ".";
 
-     for Object_Dir use Options'Object_Dir;
-     package Ide renames Options.Ide;
-     package Builder renames Options.Builder;
-     package Compiler renames Options.Compiler;
-     package Binder renames Options.Binder;
-     package Linker renames Options.Linker;
+  for Object_Dir use Options'Object_Dir;
+  package Ide renames Options.Ide;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
 
-   end Serialization;
+end Serialization;
 </pre>
 
 It would perhaps be more normal to put the project file one level up,

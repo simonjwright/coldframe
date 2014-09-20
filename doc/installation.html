@@ -40,12 +40,12 @@ example <tt>cf-20120218</tt>), and enter that directory.
 changes needed (<i>gnatmake</i> doesn't
 understand <tt>external_as_list()</tt> in a Project file): say
 <pre>
-   <i>$</i> patch -p1 &lt;debian-6.diff
+<i>$</i> patch -p1 &lt;debian-6.diff
 </pre>
 
 <p>In all cases, say
 <pre>
-   <i>$</i> make setup
+<i>$</i> make setup
 </pre>
 
 <p>This builds the tools supplied in source form in
@@ -177,13 +177,13 @@ implementation <tt><i>Domain</i>.impl/</tt> files).
 live, so as to override ColdFrame's default:
 
 <pre>
-   MODELS = <i>/where/ever</i>
+MODELS = <i>/where/ever</i>
 </pre>
 
 <p>and then include ColdFrame's standard Makefile:
 
 <pre>
-   include $(COLDFRAME)/Makefile.inc
+include $(COLDFRAME)/Makefile.inc
 </pre>
 
 <p>Next, define the domains: ColdFrame creates the
@@ -197,21 +197,21 @@ the tag <tt>{name=Digital IO}</tt>, see the section
 on <a href="testing.html#stubs">testing with stubs</a>):
 
 <pre>
-   DOMAINS = House_Management Digital_IO Digital_IO_Interface
+DOMAINS = House_Management Digital_IO Digital_IO_Interface
 </pre>
 
 <p>Tell ColdFrame about the relationship between <tt>Model.uml</tt>
 and the domains using the incantation
 
 <pre>
-   $(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.norm-stamp ;
+$(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.norm-stamp ;
 </pre>
 
 <p>Later on, you'll add rules to build the executables, but to start
 with you can just generate the code:
 
 <pre>
-   all:: $(addsuffix .gen,$(DOMAINS))
+all:: $(addsuffix .gen,$(DOMAINS))
 </pre>
 
 <h3>Creating your build directories</h3>
@@ -229,29 +229,29 @@ source, your project file can be pretty simple: the supplied
 <tt>Event_Test.gpr</tt> (in the <tt>test/</tt> subdirectory) is
 
 <pre>
-   with "ColdFrame";
-   with "Options";
-   with "aunit";
+with "ColdFrame";
+with "Options";
+with "aunit";
 
-   project Event_Test is
+project Event_Test is
 
-     for Main use ("event_test-harness");
+  for Main use ("event_test-harness");
 
-     for Exec_Dir use ".";
+  for Exec_Dir use ".";
 
-     for Source_Dirs use
-       ("<i>Event_Test.impl"</i>,
-        "<i>Event_Test.gen</i>",
-        "<i>Event_Test.test</i>");
+  for Source_Dirs use
+    ("<i>Event_Test.impl"</i>,
+     "<i>Event_Test.gen</i>",
+     "<i>Event_Test.test</i>");
 
-     for Object_Dir use ".build";
-     package IDE renames Options.IDE;
-     package Builder renames Options.Builder;
-     package Compiler renames Options.Compiler;
-     package Binder renames Options.Binder;
-     package Linker renames Options.Linker;
+  for Object_Dir use ".build";
+  package IDE renames Options.IDE;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
 
-   end Event_Test;
+end Event_Test;
 </pre>
 
 <p>Add further domains as required, of course.
@@ -268,7 +268,7 @@ of the same file; you can't use the supplied
 <tt>~/Base/Build/ColdFrameProject/project</tt>; change directory to
 <tt>~/Base/Build/ColdFrameProject</tt> and say
 <pre>
-   $ $COLDFRAME/scripts/install-project
+$ $COLDFRAME/scripts/install-project
 </pre>
 
 <p>This will place those of ColdFrame's files that you haven't
@@ -277,35 +277,35 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 <p>The project file now looks like
 
 <p><pre>
-   with "Options";
-   with "aunit";
+with "Options";
+with "aunit";
 
-   project Event_Test is
+project Event_Test is
 
-     for Main use ("event_test-harness");
+  for Main use ("event_test-harness");
 
-     for Exec_Dir use ".";
+  for Exec_Dir use ".";
 
-     Project_Base = external ("HOME") & "/Base/Build/ColdFrameProject";
+  Project_Base = external ("HOME") & "/Base/Build/ColdFrameProject";
 
-     for Source_Dirs use
-       (
-        "<i>Event_Test.impl"</i>,
-        "<i>Event_Test.gen</i>",
-        "<i>Event_Test.test</i>",
-	external ("COLDFRAME") & "/lib",
-	Project_Base & "/project",
-	Project_Base & "/inherited"
-       );
+  for Source_Dirs use
+    (
+     "<i>Event_Test.impl"</i>,
+     "<i>Event_Test.gen</i>",
+     "<i>Event_Test.test</i>",
+     external ("COLDFRAME") & "/lib",
+     Project_Base & "/project",
+     Project_Base & "/inherited"
+    );
 
-     for Object_Dir use ".build";
-     package IDE renames Options.IDE;
-     package Builder renames Options.Builder;
-     package Compiler renames Options.Compiler;
-     package Binder renames Options.Binder;
-     package Linker renames Options.Linker;
+  for Object_Dir use ".build";
+  package IDE renames Options.IDE;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
 
-   end Event_Test;
+end Event_Test;
 </pre>
 
 <hr>

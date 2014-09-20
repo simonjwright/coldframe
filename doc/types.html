@@ -18,7 +18,7 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 <p>Clearly a class corresponds, in a programming language sense, to a
 type. In Ada, you'll see statements like
 <pre>
-   type My_Class is ...
+type My_Class is ...
 </pre>
 
 <p>The distinction that ColdFrame makes between <i>type</i> and
@@ -260,8 +260,8 @@ no implicit <tt>This</tt> parameter.
 <dd>after the declaration of <tt>Bar</tt>,
 generates
 <pre>
-   type <i>Foo</i> is access all <i>Bar</i>;
-   for <i>Foo</i>'Storage_Size use 0;
+type <i>Foo</i> is access all <i>Bar</i>;
+for <i>Foo</i>'Storage_Size use 0;
 </pre>
 Any instances of <tt>Bar</tt> are declared <tt>aliased</tt>, to
 allow <tt>'Access</tt> to be used.
@@ -271,8 +271,8 @@ allow <tt>'Access</tt> to be used.
 of the domain package spec (depending on the visibility of the
 stereotyped <i>DataType</i>), generates
 <pre>
-   type Foo_P is access procedure
-     (<i>parameters</i>);
+type Foo_P is access procedure
+  (<i>parameters</i>);
 </pre>
 
 <dt>&#171;bounded-string&#187; and <tt>{length=79}</tt>
@@ -280,43 +280,43 @@ stereotyped <i>DataType</i>), generates
 <tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
 example (see <a href="#discriminated-record-pic">below</a>),
 <pre>
-   with Ada.Strings.Bounded; use Ada.Strings.Bounded;
-   package <i>Domain</i> is
+with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+package <i>Domain</i> is
 
-      package Information_Package is
-        new Generic_Bounded_Length (Max => 79);
-      subtype Information is Information_Package.Bounded_String;
-      use type Information;
+   package Information_Package is
+     new Generic_Bounded_Length (Max => 79);
+   subtype Information is Information_Package.Bounded_String;
+   use type Information;
 </pre>
 and a library-level hash function
 <pre>
-   with ColdFrame.Hash.Strings.Bounded;
-   function <i>Domain</i>.Information_Hash
-   is new ColdFrame.Hash.Strings.Bounded (Information_Package);
+with ColdFrame.Hash.Strings.Bounded;
+function <i>Domain</i>.Information_Hash
+is new ColdFrame.Hash.Strings.Bounded (Information_Package);
 </pre>
 
 <dt>&#171;callback&#187; <i>Foo</i>
 <dd>the
 generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
 <pre>
-   with ColdFrame.Callbacks;
-   package <i>Domain</i>.<i>Foo</i>_Callback
-   is new ColdFrame.Callbacks
-     (T => <i>Domain</i>.<i>Foo</i>);
+with ColdFrame.Callbacks;
+package <i>Domain</i>.<i>Foo</i>_Callback
+is new ColdFrame.Callbacks
+  (T => <i>Domain</i>.<i>Foo</i>);
 </pre>
 
 <dt>&#171;counterpart&#187; <i>Foo_Handle</i>
 <dd>gives
 <pre>
-   with ColdFrame.Instances;
-   ..
-   subtype Foo_Handle is ColdFrame.Instances.Handle;
+with ColdFrame.Instances;
+..
+subtype Foo_Handle is ColdFrame.Instances.Handle;
 </pre>
 
 <dt>&#171;convention&#187; <i>T</i> and <tt>{language=<i>lang</i>}</tt>
 <dd>gives
 <pre>
-   pragma Convention (<i>T</i>, <i>lang</i>);
+pragma Convention (<i>T</i>, <i>lang</i>);
 </pre>
 
 <dt>&#171;discriminated&#187;
@@ -326,36 +326,36 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
 
 <br>ColdFrame generates
 <pre>
-   type Message_Discriminant is
-     (Info_T,
-      Level_T);
-   type Message
-     (Discriminant : Message_Discriminant
-      := Message_Discriminant'First)
-   is record
-      case Discriminant is
-         when Info_T =>
-            Info : Information;
-         when Level_T =>
-            Level : Alert_Level;
-      end case;
-   end record;
+type Message_Discriminant is
+  (Info_T,
+   Level_T);
+type Message
+  (Discriminant : Message_Discriminant
+   := Message_Discriminant'First)
+is record
+   case Discriminant is
+      when Info_T =>
+         Info : Information;
+      when Level_T =>
+         Level : Alert_Level;
+   end case;
+end record;
 </pre>
 
 <dt>&#171;fixed-string&#187; <i>T</i> and <tt>{length=<i>length</i>}</tt>
 <dd>gives a subtype of the
 standard <tt>String</tt> of the specified length:
 <pre>
-   subtype <i>T</i> is String (1 .. <i>length</i>);
+subtype <i>T</i> is String (1 .. <i>length</i>);
 </pre>
 
 <dt>&#171;imported&#187; <i>T</i> and <tt>{imported=<i>external-reference</i>}</tt>
 <dd>gives
 <pre>
-   with <i>external-reference</i>;
-   ..
-   subtype T is <i>external-reference</i>.T;
-   use type T;
+with <i>external-reference</i>;
+..
+subtype T is <i>external-reference</i>.T;
+use type T;
 </pre>
 (clearly <tt><i>external-reference</i></tt> needs to correspond to a
 with-able package name).
@@ -374,16 +374,16 @@ the operations raise <tt>Unimplemented</tt> if called.
 <dt>&#171;renaming&#187; <i>T</i> and <tt>{renames=<i>external-type</i>}</tt>
 <dd>If the <i>external-type</i> is <tt>Ada.Real_Time.Time</tt>, gives
 <pre>
-   with Ada.Real_Time;
-   ..
-   subtype T is Ada.Real_Time.Time;
-   use type T;
+with Ada.Real_Time;
+..
+subtype T is Ada.Real_Time.Time;
+use type T;
 </pre>
 
 <dt>&#171;unsigned&#187; <i>T</i> and <tt>{mod=<i>modulus</i>}</tt>
 <dl>gives
 <pre>
-   type T is mod <i>modulus</i>;
+type T is mod <i>modulus</i>;
 </pre>
 
 </dl>
@@ -399,26 +399,26 @@ unconstrained]</tt>
 
 <p>Generates
 <pre>
-   type <i>Typ</i> is
-     array (<i>index-type</i>)
-     of <i>element-type</i>;
+type <i>Typ</i> is
+  array (<i>index-type</i>)
+  of <i>element-type</i>;
 </pre>
 
 <p>or, if the <tt>{unconstrained}</tt> tag is specified as well,
 <pre>
-   type <i>Typ</i> is
-     array (<i>index-type</i> range &lt;&gt;)
-     of <i>element-type</i>;
+type <i>Typ</i> is
+  array (<i>index-type</i> range &lt;&gt;)
+  of <i>element-type</i>;
 </pre>
 
 <li><tt>extends = <i>external-type</i></tt>: for a type named
 <tt>Derived</tt>, extending <tt><i>Other_Domain</i>.Base</tt>, gives
 <pre>
-   with <i>Other_Domain</i>;
+with <i>Other_Domain</i>;
+..
+type Base is new <i>Other_Domain</i>.Base with record
    ..
-   type Base is new <i>Other_Domain</i>.Base with record
-      ..
-   end record;
+end record;
 </pre>
 
 <li><tt>image = <i>image-operation</i></tt>: see
@@ -428,13 +428,13 @@ unconstrained]</tt>
 attached, but causes a corresponding declaration in the domain's
 <tt>Serializable</tt> child package: for a type T,
 <pre>
-   with ColdFrame.Project.Serialization;
-   package <i>Domain</i>.Serializable is
-      type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
-         Payload : <i>Domain</i>.<i>T</i>;
-      end record;
-      function Image (S : <i>T</i>) return String;
-   end <i>Domain</i>.Serializable;
+with ColdFrame.Project.Serialization;
+package <i>Domain</i>.Serializable is
+   type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
+      Payload : <i>Domain</i>.<i>T</i>;
+   end record;
+   function Image (S : <i>T</i>) return String;
+end <i>Domain</i>.Serializable;
 </pre>
 
 <p><tt>Image</tt> produces an XML rendition of the recorded value.

@@ -106,7 +106,7 @@ an alternative, generate the code with the <tt>UNIT_TEST_SUPPORT</tt>
 variable set to <tt>yes</tt>:
 
 <pre>
-   $ make <i>Domain</i>.gen UNIT_TEST_SUPPORT=yes
+$ make <i>Domain</i>.gen UNIT_TEST_SUPPORT=yes
 </pre>
 
 <p>This generates a child package for each
@@ -211,7 +211,7 @@ raise <tt>Unimplemented</tt>, and you get to fill in the real code.
 <p>If you generate with <tt>GENERATE_STUBS</tt> set to <tt>yes</tt>
 
 <pre>
-   $ make Digital_IO_Interface.gen GENERATE_STUBS=yes
+$ make Digital_IO_Interface.gen GENERATE_STUBS=yes
 </pre>
 
 <p>the separate bodies will contain stub code which
@@ -245,39 +245,39 @@ this should not be a problem.
 <tt>ColdFrame.Stubs.Set_Output_Value</tt> with <i><tt>T</tt></i>.
 
 <pre>
-   --  Specify an output from a call to a stubbed operation for the
-   --  type T.
-   --
-   --  For_Subprogram_Named is the case-insensitive fully-qualified
-   --  name of the subprogram (eg, if dealing with procedure
-   --  Domain.Class.Operation, "Domain.Class.Operation").
-   --
-   --  Normally the named parameter will be an "out" (perhaps "in
-   --  out") parameter. The specified "To" value will be returned on
-   --  the "For_Call"th call, and all subsequent calls until another
-   --  "Set_Output_Value" call for the same parameter; if you want to
-   --  have the first 4 calls to Domain.Class.Operation to set Output
-   --  to 4, and any later ones to set it to 42, you'd say
-   --
-   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 4, 1);
-   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 42, 5);
-   --
-   --  A special parameter name is "return". For "return", the To
-   --  value will be the function result.
-   --
-   --  A previously stored value for a particular call can only be
-   --  overridden if Override is True (when it must be).
-   --
-   --  Overhead_Bytes is the additional space reserved for the
-   --  streamed representation.
-   generic
-      type T (<>) is private;
-   procedure Set_Output_Value (For_Subprogram_Named : String;
-                               For_Parameter_Named : String;
-                               To : T;
-                               For_Call : Positive := 1;
-                               Override : Boolean := False;
-                               Overhead_Bytes : Natural := Storage_Overhead);
+--  Specify an output from a call to a stubbed operation for the
+--  type T.
+--
+--  For_Subprogram_Named is the case-insensitive fully-qualified
+--  name of the subprogram (eg, if dealing with procedure
+--  Domain.Class.Operation, "Domain.Class.Operation").
+--
+--  Normally the named parameter will be an "out" (perhaps "in
+--  out") parameter. The specified "To" value will be returned on
+--  the "For_Call"th call, and all subsequent calls until another
+--  "Set_Output_Value" call for the same parameter; if you want to
+--  have the first 4 calls to Domain.Class.Operation to set Output
+--  to 4, and any later ones to set it to 42, you'd say
+--
+--     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 4, 1);
+--     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 42, 5);
+--
+--  A special parameter name is "return". For "return", the To
+--  value will be the function result.
+--
+--  A previously stored value for a particular call can only be
+--  overridden if Override is True (when it must be).
+--
+--  Overhead_Bytes is the additional space reserved for the
+--  streamed representation.
+generic
+   type T (<>) is private;
+procedure Set_Output_Value (For_Subprogram_Named : String;
+                            For_Parameter_Named : String;
+                            To : T;
+                            For_Call : Positive := 1;
+                            Override : Boolean := False;
+                            Overhead_Bytes : Natural := Storage_Overhead);
 </pre>
 
 <p>If the stubbed code has input parameters of type <i><tt>T</tt></i>
@@ -286,32 +286,32 @@ instantiate <tt>ColdFrame.Stubs.Get_Input_Value</tt> with
 <i><tt>T</tt></i>.
 
 <pre>
-   --  Retrieve values passed to stubbed operations for the type T.
-   --
-   --  For_Subprogram_Named is the case-insensitive fully-qualified
-   --  name of the subprogram (eg, if dealing with procedure
-   --  Domain.Class.Operation, "Domain.Class.Operation").
-   --
-   --  The named parameter will be an "in" (perhaps "in out")
-   --  parameter. To retrieve the result of the second call, you'd say
-   --
-   --     Result := Get_Integer_Operation_Input_Value
-   --       ("Domain.Class.Operation", "Input", 2);
-   --
-   --  To retrieve the result of the last call, say
-   --
-   --     Result := Get_Integer
-   --       ("Domain.Class.Operation", "Input", 0);
-   --
-   --  To retrieve the value passed at the last call but one, say
-   --
-   --     Result := Get_Integer
-   --       ("Domain.Class.Operation", "Input", -1);
-   generic
-      type T (<>) is private;
-   function Get_Input_Value (For_Subprogram_Named : String;
-                             For_Parameter_Named : String;
-                             For_Call : Integer := 0) return T;
+--  Retrieve values passed to stubbed operations for the type T.
+--
+--  For_Subprogram_Named is the case-insensitive fully-qualified
+--  name of the subprogram (eg, if dealing with procedure
+--  Domain.Class.Operation, "Domain.Class.Operation").
+--
+--  The named parameter will be an "in" (perhaps "in out")
+--  parameter. To retrieve the result of the second call, you'd say
+--
+--     Result := Get_Integer_Operation_Input_Value
+--       ("Domain.Class.Operation", "Input", 2);
+--
+--  To retrieve the result of the last call, say
+--
+--     Result := Get_Integer
+--       ("Domain.Class.Operation", "Input", 0);
+--
+--  To retrieve the value passed at the last call but one, say
+--
+--     Result := Get_Integer
+--       ("Domain.Class.Operation", "Input", -1);
+generic
+   type T (<>) is private;
+function Get_Input_Value (For_Subprogram_Named : String;
+                          For_Parameter_Named : String;
+                          For_Call : Integer := 0) return T;
 </pre>
 
 <h4><a name="test-procedure-support">Test Procedure support</a></h4>
@@ -328,22 +328,22 @@ subprogram to raise an exception (to get an <tt>Exception_Id</tt>, use
 <tt><i>exception-name</i>'Identity</tt>).
 
 <pre>
-   --  Specify that a call to a stubbed operation is to raise an
-   --  exception.
-   --
-   --  For_Subprogram_Named is the case-insensitive fully-qualified
-   --  name of the subprogram (eg, if dealing with procedure
-   --  Domain.Class.Operation, "Domain.Class.Operation").
-   --
-   --  Normally the exception will be raised for the specified call
-   --  and all later calls; to stop this, use Ada.Exceptions.Null_Id.
-   --
-   --  A previously stored exception for a particular call can only be
-   --  overridden if Override is True (when it must be).
-   procedure Set_Exception (For_Subprogram_Named : String;
-                            E : Ada.Exceptions.Exception_Id;
-                            For_Call : Positive := 1;
-                            Override : Boolean := False);
+--  Specify that a call to a stubbed operation is to raise an
+--  exception.
+--
+--  For_Subprogram_Named is the case-insensitive fully-qualified
+--  name of the subprogram (eg, if dealing with procedure
+--  Domain.Class.Operation, "Domain.Class.Operation").
+--
+--  Normally the exception will be raised for the specified call
+--  and all later calls; to stop this, use Ada.Exceptions.Null_Id.
+--
+--  A previously stored exception for a particular call can only be
+--  overridden if Override is True (when it must be).
+procedure Set_Exception (For_Subprogram_Named : String;
+                         E : Ada.Exceptions.Exception_Id;
+                         For_Call : Positive := 1;
+                         Override : Boolean := False);
 </pre>
 
 <p>Call your code as required.
@@ -352,25 +352,27 @@ subprogram to raise an exception (to get an <tt>Exception_Id</tt>, use
 has been called.
 
 <pre>
-   --  Retrieve the number of calls made to the named subprogram.
-   function Number_Of_Calls (For_Subprogram_Named : String) return Natural;
+--  Retrieve the number of calls made to the named subprogram.
+function Number_Of_Calls (For_Subprogram_Named : String) return Natural;
 </pre>
 
+<blockquote>
 <p>In some cases, you may find it convenient to check the number of
 new calls since a certain point in the test
 suite; <tt>Save_Number_Of_Calls</tt> and <tt>Number_Of_New_Calls</tt>
 support this.
 
 <pre>
-   --  Saves the count of calls made to the named subprogram.
-   procedure Save_Number_Of_Calls (For_Subprogram_Named : String);
+--  Saves the count of calls made to the named subprogram.
+procedure Save_Number_Of_Calls (For_Subprogram_Named : String);
 </pre>
 <p>
 <pre>
-   --  Retrieve the number of calls made to the named subprogram since
-   --  saved (if saved!)
-   function Number_Of_New_Calls (For_Subprogram_Named : String) return Natural;
+--  Retrieve the number of calls made to the named subprogram since
+--  saved (if saved!)
+function Number_Of_New_Calls (For_Subprogram_Named : String) return Natural;
 </pre>
+</blockquote>
 
 <p>Call your instantiations of <tt>Get_Input_Value</tt> to retrieve
 any parameters input to stubbed subprograms.
@@ -442,238 +444,238 @@ private subprograms of the class.
 
 <p><a name="main">The main program</a>:
 <pre>
-   with AUnit.Reporter.Text;
-   with AUnit.Run;
-   with House_Management.Lamp.Test_Suite;
-   with GNAT.Exception_Traces;
+with AUnit.Reporter.Text;
+with AUnit.Run;
+with House_Management.Lamp.Test_Suite;
+with GNAT.Exception_Traces;
 
-   procedure House_Management.Harness is
+procedure House_Management.Harness is
 
-      procedure Run is new AUnit.Run.Test_Runner (Lamp.Test_Suite.Suite);
+   procedure Run is new AUnit.Run.Test_Runner (Lamp.Test_Suite.Suite);
 
-      Reporter : AUnit.Reporter.Text.Text_Reporter;
+   Reporter : AUnit.Reporter.Text.Text_Reporter;
 
-   begin
+begin
 
-      GNAT.Exception_Traces.Trace_On
-        (Kind => GNAT.Exception_Traces.Unhandled_Raise);
+   GNAT.Exception_Traces.Trace_On
+     (Kind => GNAT.Exception_Traces.Unhandled_Raise);
 
-      Run (Reporter);
+   Run (Reporter);
 
-   end House_Management.Harness;
+end House_Management.Harness;
 </pre>
 
 <p><a name="suite-spec">The test suite spec</a>:
 <pre>
-   with AUnit.Test_Suites;
+with AUnit.Test_Suites;
 
-   package House_Management.Lamp.Test_Suite is
+package House_Management.Lamp.Test_Suite is
 
-      function Suite return AUnit.Test_Suites.Access_Test_Suite;
+   function Suite return AUnit.Test_Suites.Access_Test_Suite;
 
-   end House_Management.Lamp.Test_Suite;
+end House_Management.Lamp.Test_Suite;
 </pre>
 
 <p>The test suite body:
 
 <p><a name="aunit-withs">Standard AUnit withs</a>:
 <pre>
-   with AUnit.Assertions; use AUnit.Assertions;
-   with AUnit.Test_Cases; use AUnit.Test_Cases;
+with AUnit.Assertions; use AUnit.Assertions;
+with AUnit.Test_Cases; use AUnit.Test_Cases;
 </pre>
 
 <p><a name="test-withs">Test-specific withs</a>:
 <pre>
-   with ColdFrame.Project.Events.Standard.Test;
-   with ColdFrame.Stubs;
-   with Digital_IO.Initialize;
-   with Digital_IO.Tear_Down;
-   with House_Management.Initialize;
-   with House_Management.Tear_Down;
+with ColdFrame.Project.Events.Standard.Test;
+with ColdFrame.Stubs;
+with Digital_IO.Initialize;
+with Digital_IO.Tear_Down;
+with House_Management.Initialize;
+with House_Management.Tear_Down;
 </pre>
 
 <p><a name="suite-body">The actual body</a>:
 <pre>
-   package body House_Management.Lamp.Test_Suite is
+package body House_Management.Lamp.Test_Suite is
 </pre>
 
 <p><a name="instantiations">Instantiations of <tt>ColdFrame.Stubs</tt> generics</a>:
 <pre>
-      function Get_Boolean
-      is new ColdFrame.Stubs.Get_Input_Value (Boolean);
-      function Get_Signal_Name
-      is new ColdFrame.Stubs.Get_Input_Value (Digital_IO.Output_Signal);
+   function Get_Boolean
+   is new ColdFrame.Stubs.Get_Input_Value (Boolean);
+   function Get_Signal_Name
+   is new ColdFrame.Stubs.Get_Input_Value (Digital_IO.Output_Signal);
 </pre>
 
 <p><a name="case-spec">A test case, for testing <i>Lamp</i> code</a>:
 <pre>
-      package Lamps is
-         type Case_1 is new Test_Case with private;
-      private
-         type Case_1 is new Test_Case with null record;
-         function Name (C : Case_1) return AUnit.Message_String;
-         procedure Register_Tests (C : in out Case_1);
-         procedure Set_Up (C : in out Case_1);
-         procedure Tear_Down (C : in out Case_1);
-      end Lamps;
+   package Lamps is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return AUnit.Message_String;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Lamps;
 </pre>
 
 <p><a name="case-body">The test case body</a>:
 <pre>
-      package body Lamps is
+   package body Lamps is
 </pre>
 
 <p><a name="proc-spec">A test procedure spec</a> (GNAT with style checks
 enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
 <pre>
-         <i>--  Check that each Lamp is connected to the correct Signal in
-         --  the Digital_IO domain, in the correct sense (ie, turning the
-         --  Lamp on sets the Signal to True).</i>
-         procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class);
+      <i>--  Check that each Lamp is connected to the correct Signal in
+      --  the Digital_IO domain, in the correct sense (ie, turning the
+      --  Lamp on sets the Signal to True).</i>
+      procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class);
 </pre>
 
 <p><a name="proc-body">The test procedure body</a>:
 <pre>
-         procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class) is
-            pragma Unreferenced (R);
-            use type Digital_IO.Output_Signal;
-         begin
+      procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class) is
+         pragma Unreferenced (R);
+         use type Digital_IO.Output_Signal;
+      begin
 
-            <i>--  Initialization creates a number of lamps; each one turns
-            --  itself off on creation (to be tested elsewhere). However,
-            --  we have to account for them; we can't just not initialize
-            --  the domain, because initialization creates all the
-            --  domain's singletons, initialises &#171;class&#187; attributes,
-            --  and calls user {init} operations to, amongst other
-            --  things, set up 'specification' instances and
-            --  associations.</i>
-            Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set_Output") = 4,
-                    "wrong number of calls");
+         <i>--  Initialization creates a number of lamps; each one turns
+         --  itself off on creation (to be tested elsewhere). However,
+         --  we have to account for them; we can't just not initialize
+         --  the domain, because initialization creates all the
+         --  domain's singletons, initialises &#171;class&#187; attributes,
+         --  and calls user {init} operations to, amongst other
+         --  things, set up 'specification' instances and
+         --  associations.</i>
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set_Output") = 4,
+                 "wrong number of calls");
 
-            <i>--  Turn on the Basement lamp.</i>
-            Lamp.Turn_On (Lamp.Find ((Name => Basement)));
-            --  There should have been 5 calls now.
-            Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set_Output") = 5,
-                    "wrong number of calls (a)");
-            <i>--  The 5th call should have been for Lamp D ...</i>
-            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
-                                       "O",
-                                       5) = 3,
-                    "wrong signal (a)");
-            <i>--  ... and it should have been turned on.</i>
-            Assert (Get_Boolean ("Digital_IO.Application.Set",
-                                 "To_State",
-                                 5),
-                    "should have been turned on (a)");
+         <i>--  Turn on the Basement lamp.</i>
+         Lamp.Turn_On (Lamp.Find ((Name => Basement)));
+         --  There should have been 5 calls now.
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set_Output") = 5,
+                 "wrong number of calls (a)");
+         <i>--  The 5th call should have been for Lamp D ...</i>
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                    "O",
+                                    5) = 3,
+                 "wrong signal (a)");
+         <i>--  ... and it should have been turned on.</i>
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              5),
+                 "should have been turned on (a)");
 
-            <i>--  Repeat for the remaining Lamps.</i>
-            Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
-            Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set") = 6,
-                    "wrong number of calls (b)");
-            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
-                                     "S",
-                                     6) = 2
-                    "wrong signal (b)");
-            Assert (Get_Boolean ("Digital_IO.Application.Set",
-                                 "To_State",
-                                 6),
-                    "should have been turned on (b)");
+         <i>--  Repeat for the remaining Lamps.</i>
+         Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set") = 6,
+                 "wrong number of calls (b)");
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                  "S",
+                                  6) = 2
+                 "wrong signal (b)");
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              6),
+                 "should have been turned on (b)");
 
-            Lamp.Turn_On (Lamp.Find ((Name => First_Floor)));
-            Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set") = 7,
-                    "wrong number of calls (c)");
-            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
-                                     "S",
-                                     7) = 1,
-                    "wrong signal (c)");
-            Assert (Get_Boolean ("Digital_IO.Application.Set",
-                                 "To_State",
-                                 7),
-                    "should have been turned on (c)");
+         Lamp.Turn_On (Lamp.Find ((Name => First_Floor)));
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set") = 7,
+                 "wrong number of calls (c)");
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                  "S",
+                                  7) = 1,
+                 "wrong signal (c)");
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              7),
+                 "should have been turned on (c)");
 
-            Lamp.Turn_On (Lamp.Find ((Name => Second_Floor)));
-            Assert (ColdFrame.Stubs.Number_Of_Calls
-                      ("Digital_IO.Application.Set") = 8,
-                    "wrong number of calls (d)");
-            Assert (Get_Output_Signal ("Digital_IO.Application.Set",
-                                     "S",
-                                     8) = 0,
-                    "wrong signal (d)");
-            Assert (Get_Boolean ("Digital_IO.Application.Set",
-                                 "To_State",
-                                 8),
-                    "should have been turned on (d)");
+         Lamp.Turn_On (Lamp.Find ((Name => Second_Floor)));
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set") = 8,
+                 "wrong number of calls (d)");
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                  "S",
+                                  8) = 0,
+                 "wrong signal (d)");
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              8),
+                 "should have been turned on (d)");
 
-         end Turn_On;
+      end Turn_On;
 </pre>
 
 <p><a name="case-name">The test case name</a>:
 <pre>
-         function Name (C : Case_1) return AUnit.Message_String  is
-            pragma Unreferenced (C);
-         begin
-            return new String'("Lamps.Case_1");
-         end Name;
+      function Name (C : Case_1) return AUnit.Message_String  is
+         pragma Unreferenced (C);
+      begin
+         return new String'("Lamps.Case_1");
+      end Name;
 </pre>
 
 <p><a name="registration">Test procedure registration</a> (only the one test procedure so far!):
 <pre>
-         procedure Register_Tests (C : in out Case_1) is
-         begin
-            Register_Routine
-              (C,
-               Turn_On'Access,
-               "turn on");
-         end Register_Tests;
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Turn_On'Access,
+            "turn on");
+      end Register_Tests;
 </pre>
 
 <p><a name="set-up">The test case set-up</a>:
 <pre>
-         procedure Set_Up (C : in out Case_1) is
-            pragma Unreferenced (C);
-            Q : constant ColdFrame.Project.Events.Event_Queue_P
-              := new ColdFrame.Project.Events.Standard.Test.Event_Queue;
-         begin
-            ColdFrame.Stubs.Set_Up;
-            Digital_IO.Initialize (Q);
-            House_Management.Initialize (Q);
-         end Set_Up;
+      procedure Set_Up (C : in out Case_1) is
+         pragma Unreferenced (C);
+         Q : constant ColdFrame.Project.Events.Event_Queue_P
+           := new ColdFrame.Project.Events.Standard.Test.Event_Queue;
+      begin
+         ColdFrame.Stubs.Set_Up;
+         Digital_IO.Initialize (Q);
+         House_Management.Initialize (Q);
+      end Set_Up;
 </pre>
 
 <p><a name="tear-down">The test case tear-down</a>:
 <pre>
-         procedure Tear_Down (C : in out Case_1) is
-            pragma Unreferenced (C);
-         begin
-            House_Management.Tear_Down;
-            Digital_IO.Tear_Down;
-            ColdFrame.Stubs.Tear_Down;
-         end Tear_Down;
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Unreferenced (C);
+      begin
+         House_Management.Tear_Down;
+         Digital_IO.Tear_Down;
+         ColdFrame.Stubs.Tear_Down;
+      end Tear_Down;
 </pre>
 
 <p><a name="end-case">End of test case</a>:
 <pre>
-      end Lamps;
+   end Lamps;
 </pre>
 
 <p><a name="suite-function">The test suite function</a>:
 <pre>
-      function Suite return AUnit.Test_Suites.Access_Test_Suite is
-         Result : constant AUnit.Test_Suites.Access_Test_Suite
-           := new AUnit.Test_Suites.Test_Suite;
-      begin
-         AUnit.Test_Suites.Add_Test (Result, new Lamps.Case_1);
-         return Result;
-      end Suite;
+   function Suite return AUnit.Test_Suites.Access_Test_Suite is
+      Result : constant AUnit.Test_Suites.Access_Test_Suite
+        := new AUnit.Test_Suites.Test_Suite;
+   begin
+      AUnit.Test_Suites.Add_Test (Result, new Lamps.Case_1);
+      return Result;
+   end Suite;
 </pre>
 
 <p><a name="end-suite">End of test suite</a>:
 <pre>
-   end House_Management.Lamp.Test_Suite;
+end House_Management.Lamp.Test_Suite;
 </pre>
 
 <h2><a name="inspecting-event-queues">Inspecting event queues</a></h2>
@@ -694,45 +696,45 @@ in <tt>ColdFrame.Project.Events.Standard.Inspection</tt>.
 <p>There's no need to use the <tt>Test</tt> variant, because the queue
 mustn't be started. To create an unstarted standard queue, say
 <pre>
-   Q := new ColdFrame.Project.Events.Standard.Event_Queue_Base
-     (Start_Started => False,
-      Priority => System.Default_Priority,
-      Storage_Size => 20_000);
+Q := new ColdFrame.Project.Events.Standard.Event_Queue_Base
+  (Start_Started => False,
+   Priority => System.Default_Priority,
+   Storage_Size => 20_000);
 </pre>
 
 <p>You can inspect the queue's self events using the functions
 <pre>
-   function Number_Of_Self_Events (On : Event_Queue_P) return Natural;
-   function Self_Event (On : Event_Queue_P;
-                        At_Index : Positive) return Event_P;
+function Number_Of_Self_Events (On : Event_Queue_P) return Natural;
+function Self_Event (On : Event_Queue_P;
+                     At_Index : Positive) return Event_P;
 </pre>
 
 <p>You can inspect the queue's standard events (posted to run 'now')
 using the functions
 <pre>
-   function Number_Of_Now_Events (On : Event_Queue_P) return Natural;
-   function Now_Event (On : Event_Queue_P;
-                       At_Index : Positive) return Event_P;
+function Number_Of_Now_Events (On : Event_Queue_P) return Natural;
+function Now_Event (On : Event_Queue_P;
+                    At_Index : Positive) return Event_P;
 </pre>
 
 <p>You can inspect the queue's events posted to run after a delay
 using the functions
 <pre>
-   function Number_Of_After_Events (On : Event_Queue_P) return Natural;
-   function After_Event (On : Event_Queue_P;
-                         At_Index : Positive) return Event_P;
-   function How_Long_After (On : Event_Queue_P;
-                            At_Index : Positive) return Duration;
+function Number_Of_After_Events (On : Event_Queue_P) return Natural;
+function After_Event (On : Event_Queue_P;
+                      At_Index : Positive) return Event_P;
+function How_Long_After (On : Event_Queue_P;
+                         At_Index : Positive) return Duration;
 </pre>
 
 <p>You can inspect the queue's events posted to run at a later time
 using the functions
 <pre>
-   function Number_Of_Later_Events (On : Event_Queue_P) return Natural;
-   function Later_Event (On : Event_Queue_P;
-                         At_Index : Positive) return Event_P;
-   function When_Later (On : Event_Queue_P;
-                        At_Index : Positive) return Time.Time;
+function Number_Of_Later_Events (On : Event_Queue_P) return Natural;
+function Later_Event (On : Event_Queue_P;
+                      At_Index : Positive) return Event_P;
+function When_Later (On : Event_Queue_P;
+                     At_Index : Positive) return Time.Time;
 </pre>
 <p>(<tt>Time</tt> is the time support package used in
 instantiating <tt>ColdFrame.Project.Events</tt>,
@@ -743,7 +745,7 @@ raise <tt>Not_Found</tt> if there is no such event.
 
 <p>Additionally, you can access the event held on a <i>Timer</i>:
 <pre>
-   function Event_Of (The_Timer : Timer) return Event_P;
+function Event_Of (The_Timer : Timer) return Event_P;
 </pre>
 <p>(returns <tt>null</tt> if there isn't one).
 

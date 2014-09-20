@@ -25,17 +25,17 @@ directed.
 
 <p>For a class event, this results in
 <pre>
-   type Button_Event
-   is new ColdFrame.Project.Events.Event_Base with record
-      Payload : Button_Name;
-   end record;
+type Button_Event
+is new ColdFrame.Project.Events.Event_Base with record
+   Payload : Button_Name;
+end record;
 </pre>
 
 <p>(all class events have payloads), and for an instance event, in
 <pre>
-   type Button_Push (For_The_Instance : access Instance)
-   is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
-   with null record;
+type Button_Push (For_The_Instance : access Instance)
+is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
+with null record;
 </pre>
 
 <h2>States</h2>
@@ -47,25 +47,25 @@ enumeration type, <tt>State_Machine_State_T</tt>. The initial state
 <p><a href="event-modelling.html#example-model">In the example</a>,
 the type would be
 <pre>
-   type State_Machine_State_T is
-     (Initial,
-      Idle,
-      Lit);
+type State_Machine_State_T is
+  (Initial,
+   Idle,
+   Lit);
 </pre>
 
 <p>The instance state is represented by a created instance variable
 <pre>
-   State_Machine_State : State_Machine_State_T := Initial;
+State_Machine_State : State_Machine_State_T := Initial;
 </pre>
 
 <p>This is not intended to be made directly visible outside the
 class. Instead, it's expected that you'll test it within operations
 and return an appropriate result:
 <pre>
-   function <a name="is_on">Is_On</a> (This : Handle) return Boolean is
-   begin
-      return This.State_Machine_State = Lit;
-   end Is_On;
+function <a name="is_on">Is_On</a> (This : Handle) return Boolean is
+begin
+   return This.State_Machine_State = Lit;
+end Is_On;
 </pre>
 
 <p>Another instance variable <tt>Old_State_Machine_State</tt> is

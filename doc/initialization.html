@@ -61,11 +61,11 @@ start until you've finished initialization.
 <p>You can create an unstarted standard event queue in your main
 program (or AUnit setup) by:
 <pre>
-   Q : constant ColdFrame.Project.Events.Event_Queue_P
-     := new ColdFrame.Project.Events.Standard.Event_Queue_Base
-        (Start_Started => <font color="blue">False</font>,
-         Priority => System.Default_Priority,
-         Storage_Size => 20_000);
+Q : constant ColdFrame.Project.Events.Event_Queue_P
+  := new ColdFrame.Project.Events.Standard.Event_Queue_Base
+     (Start_Started => <font color="blue">False</font>,
+      Priority => System.Default_Priority,
+      Storage_Size => 20_000);
 </pre>
 
 <p>(<tt>constant</tt> because you don't alter the access value; you
@@ -77,7 +77,7 @@ it may indicate a problem with your design if you need to).
 <p>After you've initialized all the domains with <tt>Q</tt>, start it
 by
 <pre>
-   ColdFrame.Project.Events.Start (Q);
+ColdFrame.Project.Events.Start (Q);
 </pre>
 
 <h2>Domain initialization operation</h2>
@@ -130,11 +130,11 @@ posted by class initialization).
 short delay, please!) until the variable <tt>Domain_Initialized</tt>
 becomes <tt>True</tt>:
 <pre>
-   begin
-      while not Domain_Initialized loop
-	 delay 0.01;
-      end loop;
-      ...
+begin
+   while not Domain_Initialized loop
+      delay 0.01;
+   end loop;
+   ...
 </pre>
 
 <h2>Class initialization</h2>

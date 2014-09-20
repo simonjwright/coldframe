@@ -90,11 +90,11 @@ call <tt>Connect_Socket</tt>.
 <p>Another example, from the <a
 href="serialization-page.html">serialization</a> demonstration, is
 <pre>
-   declare
-      Rec : constant ColdFrame.Project.Serialization.Base'Class :=
-        ColdFrame.Project.Serialization.Base'Class'Input (Channel);
-   begin
-      ...
+declare
+   Rec : constant ColdFrame.Project.Serialization.Base'Class :=
+     ColdFrame.Project.Serialization.Base'Class'Input (Channel);
+begin
+   ...
 </pre>
 
 <p>where the <tt>'Class'Input</tt> call blocks.
@@ -146,13 +146,13 @@ an ordinary operation.
 <p>You can specify the run-time priority of the task using the tag
 <i>priority</i>. The form is
 <pre>
-   {priority = <i>priority relative to system default</i>}
+{priority = <i>priority relative to system default</i>}
 </pre>
 
 <p>You can specify the stack size of the task using the tag
 <i>stack</i>. The form is
 <pre>
-   {stack = <i>stack size</i>}
+{stack = <i>stack size</i>}
 </pre>
 
 <p>You can also specify a class as active by setting
@@ -192,15 +192,15 @@ within the task you can quite often treat <tt>This</tt> as if it were
 a <tt>Handle</tt>. However, it isn't quite, so if the compiler
 complains use a view conversion:
 <pre>
-   Handle (This)
+Handle (This)
 </pre>
 
 <h3>Deleting the instance</h3>
 
-<p>The generated <tt>Delete</tt> operation of an &#171;active&#187; class aborts
-the task before freeing the task and instance memory. This means that
-if you call <tt>Delete</tt> from the task you are pulling the rug from
-under your feet!
+<p>The generated <tt>Delete</tt> operation of an &#171;active&#187;
+class aborts the task before freeing the task and instance
+memory. This means that if you call <tt>Delete</tt> from the task you
+are pulling the rug from under your feet!
 
 <p>What's needed is <i>another</i> task. The nearest candidate is the
 task in the <a href="event-use.html">event queue</a> for the domain; so

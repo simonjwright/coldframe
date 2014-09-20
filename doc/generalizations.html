@@ -149,24 +149,24 @@ appropriate type,
 <p><a href="#rentawreck">From the diagram</a>, we'd get
 
 <pre>
-   type R2_Child_Class is
-     (Hired_Van_T,
-      Pool_Van_T,
-      Null_T);
+type R2_Child_Class is
+  (Hired_Van_T,
+   Pool_Van_T,
+   Null_T);
 
-   type R2_Child (Current : R2_Child_Class := Null_T) is record
-      case Current is
-         when Hired_Van_T =>
-            HV : ColdFrame.Instances.Handle;
-         when Pool_Van_T =>
-            PV : ColdFrame.Instances.Handle;
-         when Null_T => null;
-      end case;
-   end record;
+type R2_Child (Current : R2_Child_Class := Null_T) is record
+   case Current is
+      when Hired_Van_T =>
+         HV : ColdFrame.Instances.Handle;
+      when Pool_Van_T =>
+         PV : ColdFrame.Instances.Handle;
+      when Null_T => null;
+   end case;
+end record;
 
-   procedure Set_R2_Child (This : Handle; To_Be : R2_Child);
+procedure Set_R2_Child (This : Handle; To_Be : R2_Child);
 
-   function Get_R2_Child (This : Handle) return R2_Child;
+function Get_R2_Child (This : Handle) return R2_Child;
 </pre>
 
 <p>In a child class, an inheritance relationship <i>G</i> is mapped onto
@@ -233,14 +233,14 @@ mapping</a>, the fact that the relationships are managed using
 conversions rather more often than is quite friendly.
 
 <pre>
-   Child_H := Child.Create
-      ((G_Parent =&gt; ColdFrame.Instances.Handle (Parent_H)));
+Child_H := Child.Create
+   ((G_Parent =&gt; ColdFrame.Instances.Handle (Parent_H)));
 </pre>
 
 <p>If you're doing this a lot you may find a type renaming convenient:
 
 <pre>
-   subtype CIH is ColdFrame.Instances.Handle;
+subtype CIH is ColdFrame.Instances.Handle;
 </pre>
 
 <p><hr>

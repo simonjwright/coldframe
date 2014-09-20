@@ -103,7 +103,7 @@ and also the issuing Licensing Office, since the various offices don't
 use disjoint licence number ranges. In this case, we'd specify the
 attribute as
 <pre>
-   &#171;id&#187; Issuing_Office : Licensing_Office
+&#171;id&#187; Issuing_Office : Licensing_Office
 </pre>
 
 <p>and include the tag <tt>{formalizes=R8}</tt>.
@@ -142,9 +142,9 @@ association, with its associative class).
 case of the Library example <a href="#simple-association">below</a>,
 this would be
 <pre>
-   procedure Link
-     (Is_On_Loan_To : Borrower.Handle;
-      Is_Borrowing : Book.Handle);
+procedure Link
+  (Is_On_Loan_To : Borrower.Handle;
+   Is_Borrowing : Book.Handle);
 </pre>
 
 <p>whereas if the association had had an association class <i>Current
@@ -152,10 +152,10 @@ Loan</i> (not a bad idea; where else would you put the date when the
 book is due for return?) the <tt>Link</tt> operation would be a
 function:
 <pre>
-   function Link
-     (Is_On_Loan_To : Borrower.Handle;
-      Is_Borrowing : Book.Handle)
-     return Current_Loan.Handle;
+function Link
+  (Is_On_Loan_To : Borrower.Handle;
+   Is_Borrowing : Book.Handle)
+  return Current_Loan.Handle;
 </pre>
 
 <h3>Unlinking</h3>
@@ -164,16 +164,16 @@ function:
 the case of the Library example <a
 href="#simple-association">below</a>, this would be
 <pre>
-   procedure Unlink
-     (Is_On_Loan_To : Borrower.Handle;
-      Is_Borrowing : Book.Handle);
+procedure Unlink
+  (Is_On_Loan_To : Borrower.Handle;
+   Is_Borrowing : Book.Handle);
 </pre>
 
 <p>whereas if the association had had an association class <i>Current
 Loan</i> the <tt>Unlink</tt> operation would be
 <pre>
-   procedure Unlink
-     (Current_Loan_Handle : Current_Loan.Handle);
+procedure Unlink
+  (Current_Loan_Handle : Current_Loan.Handle);
 </pre>
 
 <p>Note that in this case <tt>Unlink</tt> doesn't actually delete the
@@ -237,7 +237,7 @@ operation of <i>Borrower</i>.
 
 <p>It may help to ask yourself, as you write the assignment
 <pre>
-   Borrower_H := A2.<i>what goes here</i> (Book_H);
+Borrower_H := A2.<i>what goes here</i> (Book_H);
 </pre>
 
 <blockquote>

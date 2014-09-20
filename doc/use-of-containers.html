@@ -354,52 +354,52 @@ the name <tt>Process</tt>!
 <h4>Open iteration</h4>
 
 <pre>
-   declare
-      It : <i>Class</i>.Vectors.Cursor := The_Vector.First;
-      use type <i>Class</i>.Vectors.Cursor;
-   begin
-      while It /= <i>Class</i>.Vectors.No_Element loop
-         declare
-            H : <i>Class</i>.Handle := <i>Class</i>.Vectors.Element (It);
-         begin
-            -- do something with H
-         end;
-         <i>Class</i>.Vectors.Next (It);
-      end loop;
-   end;
+declare
+   It : <i>Class</i>.Vectors.Cursor := The_Vector.First;
+   use type <i>Class</i>.Vectors.Cursor;
+begin
+   while It /= <i>Class</i>.Vectors.No_Element loop
+      declare
+         H : <i>Class</i>.Handle := <i>Class</i>.Vectors.Element (It);
+      begin
+         -- do something with H
+      end;
+      <i>Class</i>.Vectors.Next (It);
+   end loop;
+end;
 </pre>
 
 <h4>Closed iteration</h4>
 
 <pre>
-   declare
-      procedure Process (C : <i>Class</i>.Vectors.Cursor) is
-      begin
-         -- do something with <i>Class</i>.Vectors.Element (C)
-      end Process;
+declare
+   procedure Process (C : <i>Class</i>.Vectors.Cursor) is
    begin
-       The_Vector.Iterate (Print'Access);
-   end;
+      -- do something with <i>Class</i>.Vectors.Element (C)
+   end Process;
+begin
+    The_Vector.Iterate (Print'Access);
+end;
 </pre>
 
 <h4><a name="coldframe-iteration">Iteration using ColdFrame's
 <tt><i>Domain.Class</i>.Iterate</tt></a></h4>
 
 <pre>
-   declare
-      procedure Process (H : <i>Class</i>.Handle);
-      pragma Inline_Always (Process);
+declare
+   procedure Process (H : <i>Class</i>.Handle);
+   pragma Inline_Always (Process);
 
-      procedure Process
-        is new <i>Class</i>.Iterate (Process);
+   procedure Process
+     is new <i>Class</i>.Iterate (Process);
 
-      procedure Process (H : <i>Class</i>.Handle) is
-      begin
-         -- do something with H
-      end Process;
+   procedure Process (H : <i>Class</i>.Handle) is
    begin
-      Process (The_Vector);
-   end;
+      -- do something with H
+   end Process;
+begin
+   Process (The_Vector);
+end;
 </pre>
 
 <!--
@@ -417,26 +417,26 @@ vice versa, is provided by the generic <tt>BC.Copy</tt>.
 <tt>Track.Vectors.Vector</tt>, we could write
 
 <pre>
-   declare
+declare
 
-      procedure Make_Set is new BC.Copy
-        (Item => Track.Handle,
-         Source => Track.Abstract_Containers,
-         From => Track.Vectors.Vector,
-         Target => Track.Abstract_Containers,
-         To => Track.Sets.Set,
-         Clear => Track.Sets.Clear,
-         Add => Track.Sets.Add);
+   procedure Make_Set is new BC.Copy
+     (Item => Track.Handle,
+      Source => Track.Abstract_Containers,
+      From => Track.Vectors.Vector,
+      Target => Track.Abstract_Containers,
+      To => Track.Sets.Set,
+      Clear => Track.Sets.Clear,
+      Add => Track.Sets.Add);
 
-      Engaged_Track_Set : Track.Sets.Set;
+   Engaged_Track_Set : Track.Sets.Set;
 
-   begin
+begin
 
-      Make_Set
-        (Input => Engaged_Tracks,
-         Output => Engaged_Track_Set);
+   Make_Set
+     (Input => Engaged_Tracks,
+      Output => Engaged_Track_Set);
 
-      -- operations with Engaged_Track_Set
+   -- operations with Engaged_Track_Set
 </pre>
 -->
 
@@ -463,19 +463,19 @@ which compare <tt>"="</tt> to remain in the same order.
 <tt>Track.Vectors.Vector</tt>, is
 
 <pre>
-   declare
-      function Is_More_Threatening (L, R : Track.Handle) return Boolean;
+declare
+   function Is_More_Threatening (L, R : Track.Handle) return Boolean;
 
-      package Sorting is new Track.Vectors.Generic_Sort
-        ("<" => Is_More_Threatening);
+   package Sorting is new Track.Vectors.Generic_Sort
+     ("<" => Is_More_Threatening);
 
-      function Is_More_Threatening (L, R : Track.Handle) return Boolean is
-      begin
-         return L.Time_Of_CPA < R.Time_Of_CPA;
-      end Is_More_Threatening;
+   function Is_More_Threatening (L, R : Track.Handle) return Boolean is
    begin
-      Sorting.Sort (Candidate_Tracks);
-   end;
+      return L.Time_Of_CPA < R.Time_Of_CPA;
+   end Is_More_Threatening;
+begin
+   Sorting.Sort (Candidate_Tracks);
+end;
 </pre>
 
 after which <tt>Candidate_Tracks.First_Element</tt> will

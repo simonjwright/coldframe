@@ -72,7 +72,7 @@ instances and just want to create the tree all the way to the root(s):
 so, say you wanted a new <i>F_2</i>, you'd write
 
 <pre>
-   F2_H := F_2.Inheritance.Create_Tree (null, null, null);
+F2_H := F_2.Inheritance.Create_Tree (null, null, null);
 </pre>
 
 <p>which results in new instances of <i>R_1</i>, <i>R_2</i>,
@@ -86,11 +86,11 @@ takes parameters, you'll need to do the root creation for this class
 yourself:
 
 <pre>
-   R1_H := R_1.Create ((Name => +"Foo"));
-   F2_H := F_2.Inheritance.Create_Tree
-     (R1 => ColdFrame.Instances.Handle (R1_H),
-      R2 => null,
-      R3 => null);
+R1_H := R_1.Create ((Name => +"Foo"));
+F2_H := F_2.Inheritance.Create_Tree
+  (R1 => ColdFrame.Instances.Handle (R1_H),
+   R2 => null,
+   R3 => null);
 </pre>
 
 <p>(if you don't, you'll get a
@@ -100,20 +100,20 @@ yourself:
 create a new <i>F_2</i> with a new right hand side, you'd say
 
 <pre>
-   F2_H := F_2.Inheritance.Create_Tree
-     (R1 => ColdFrame.Instances.Handle (T2_H),
-      R2 => null,
-      R3 => null);
+F2_H := F_2.Inheritance.Create_Tree
+  (R1 => ColdFrame.Instances.Handle (T2_H),
+   R2 => null,
+   R3 => null);
 </pre>
 
 <p>If you already have an <i>S_3</i> (in <tt>S3_H</tt>) and want to
 create a new <i>F_2</i> with a new left hand side, you'd say
 
 <pre>
-   F2_H := F_2.Inheritance.Create_Tree
-     (R1 => null,
-      R2 => ColdFrame.Instances.Handle (S3_H),
-      R3 => ColdFrame.Instances.Handle (S3_H));
+F2_H := F_2.Inheritance.Create_Tree
+  (R1 => null,
+   R2 => ColdFrame.Instances.Handle (S3_H),
+   R3 => ColdFrame.Instances.Handle (S3_H));
 </pre>
 
 <p>So, the rule is that you supply the handle of the existing parent

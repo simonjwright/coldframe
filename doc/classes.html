@@ -195,9 +195,9 @@ alternative.
 translated as first-level children of the domain package:
 
 <pre>
-   <i>private</i> package <i>Domain.Class</i> is
-      ...
-   end <i>Domain.Class</i>;
+<i>private</i> package <i>Domain.Class</i> is
+   ...
+end <i>Domain.Class</i>;
 </pre>
 
 <p>(<tt>private</tt> applies to all the classes bar those marked
@@ -213,10 +213,10 @@ following additional library units are generated:
 <dd>An instantiation of Ada.Containers.Vectors with <tt>Handle</tt>s.
 
 <pre>
-   package <i>Domain.Class</i>.Vectors
-   is new Ada.Containers.Vectors
-     (Index_Type => Positive,
-      Element_Type => Handle);
+package <i>Domain.Class</i>.Vectors
+is new Ada.Containers.Vectors
+  (Index_Type => Positive,
+   Element_Type => Handle);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.All_Instances</tt>
@@ -224,10 +224,10 @@ following additional library units are generated:
 <tt>Handle</tt>s of all the current instances of the class.
 
 <pre>
-   with <i>Domain.Class</i>.Vectors;
-   function <i>Domain.Class</i>.All_Instances
-     return <i>Domain.Class</i>.Vectors.Vector;
-   pragma Elaborate_Body (<i>Domain.Class</i>.All_Instances);
+with <i>Domain.Class</i>.Vectors;
+function <i>Domain.Class</i>.All_Instances
+  return <i>Domain.Class</i>.Vectors.Vector;
+pragma Elaborate_Body (<i>Domain.Class</i>.All_Instances);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.Selection_Function</tt>
@@ -238,12 +238,12 @@ containing the <tt>Handle</tt>s of all the current instances of the
 class that pass the <tt>Pass</tt> function.
 
 <pre>
-   with <i>Domain.Class</i>.Vectors;
-   generic
-      with function Pass (This : Handle) return Boolean is &lt;&gt;;
-   function <i>Domain.Class</i>.Selection_Function
-     return <i>Domain.Class</i>.Vectors.Vector;
-   pragma Elaborate_Body (<i>Domain.Class</i>.Selection_Function);
+with <i>Domain.Class</i>.Vectors;
+generic
+   with function Pass (This : Handle) return Boolean is &lt;&gt;;
+function <i>Domain.Class</i>.Selection_Function
+  return <i>Domain.Class</i>.Vectors.Vector;
+pragma Elaborate_Body (<i>Domain.Class</i>.Selection_Function);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.Filter_Function</tt>
@@ -255,13 +255,13 @@ instances in the input Vector that pass the <tt>Pass</tt>
 function.
 
 <pre>
-   with <i>Domain.Class</i>.Vectors;
-   generic
-      with function Pass (This : Handle) return Boolean is &lt;&gt;;
-   function <i>Domain.Class</i>.Filter_Function
-     (The_Vector : <i>Domain.Class</i>.Vectors.Vector)
-     return <i>Domain.Class</i>.Vectors.Vector;
-   pragma Elaborate_Body (<i>Domain.Class</i>.Filter_Function);
+with <i>Domain.Class</i>.Vectors;
+generic
+   with function Pass (This : Handle) return Boolean is &lt;&gt;;
+function <i>Domain.Class</i>.Filter_Function
+  (The_Vector : <i>Domain.Class</i>.Vectors.Vector)
+  return <i>Domain.Class</i>.Vectors.Vector;
+pragma Elaborate_Body (<i>Domain.Class</i>.Filter_Function);
 </pre>
 
 <dt><tt><i>Domain.Class</i>.Iterate</tt>
@@ -270,12 +270,12 @@ instantiated with the procedure to be called to process each
 <tt>Handle</tt>.
 
 <pre>
-   with <i>Domain.Class</i>.Vectors;
-   generic
-      with procedure Process (H : Handle);
-   procedure <i>Domain.Class</i>.Iterate
-     (Over : <i>Domain.Class</i>.Vectors.Vector);
-   pragma Elaborate_Body (<i>Domain.Class</i>.Iterate);
+with <i>Domain.Class</i>.Vectors;
+generic
+   with procedure Process (H : Handle);
+procedure <i>Domain.Class</i>.Iterate
+  (Over : <i>Domain.Class</i>.Vectors.Vector);
+pragma Elaborate_Body (<i>Domain.Class</i>.Iterate);
 </pre>
 
 <!--
@@ -285,10 +285,10 @@ instantiated with the procedure to be called to process each
 <tt>Intersection</tt> and <tt>Union</tt> operations.
 
 <pre>
-   with BC.Containers.Sets;
-   with <i>Domain.Class</i>.Abstract_Containers;
-   package <i>Domain.Class</i>.Abstract_Sets
-   is new Abstract_Containers.Sets;
+with BC.Containers.Sets;
+with <i>Domain.Class</i>.Abstract_Containers;
+package <i>Domain.Class</i>.Abstract_Sets
+is new Abstract_Containers.Sets;
 </pre>
 
 <dt><tt><i>Domain.Class</i>.Sets</tt>
@@ -298,14 +298,14 @@ these will be the Bounded variety; otherwise, Unbounded. The interface
 is the same in either case.
 
 <pre>
-   with <i>Domain.Class</i>.Handle_Hash;
-   with BC.Containers.Sets.Bounded;
-   with <i>Domain.Class</i>.Abstract_Sets;
-   package <i>Domain.Class</i>.Sets
-   is new Abstract_Sets.Bounded
-     (Hash => <i>Domain.Class</i>.Handle_Hash,
-      Buckets => 11,
-      Maximum_Size => 42);
+with <i>Domain.Class</i>.Handle_Hash;
+with BC.Containers.Sets.Bounded;
+with <i>Domain.Class</i>.Abstract_Sets;
+package <i>Domain.Class</i>.Sets
+is new Abstract_Sets.Bounded
+  (Hash => <i>Domain.Class</i>.Handle_Hash,
+   Buckets => 11,
+   Maximum_Size => 42);
 </pre>
 -->
 

@@ -27,63 +27,63 @@ ones).
 
 <p>The template for your extensions should take the form
 <pre>
-   &lt;xsl:stylesheet
-     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-     version="1.0"&gt;
+&lt;xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  version="1.0"&gt;
 
-     &lt;xsl:strip-space elements="*"/&gt;
+  &lt;xsl:strip-space elements="*"/&gt;
 
-     &lt;xsl:output method="text"/&gt;
+  &lt;xsl:output method="text"/&gt;
 
-     &lt;!-- The overridable main template. --&gt;
-     &lt;xsl:template match="domain"&gt;
-       &lt;xsl:apply-templates select="." mode="<font color="red">your-extension</font>"/&gt;
-     &lt;/xsl:template&gt;
+  &lt;!-- The overridable main template. --&gt;
+  &lt;xsl:template match="domain"&gt;
+    &lt;xsl:apply-templates select="." mode="<font color="red">your-extension</font>"/&gt;
+  &lt;/xsl:template&gt;
 
 
-     &lt;!-- Your extension. --&gt;
-     &lt;xsl:template match="domain" mode="<font color="red">your-extension</font>"&gt;
+  &lt;!-- Your extension. --&gt;
+  &lt;xsl:template match="domain" mode="<font color="red">your-extension</font>"&gt;
 
-       &lt;!-- ... --&gt;
+    &lt;!-- ... --&gt;
 
-     &lt;/xsl:template&gt;
+  &lt;/xsl:template&gt;
 
-   &lt;/xsl-stylesheet&gt;
+&lt;/xsl-stylesheet&gt;
 </pre>
 
 <p>which allows you to test it on its own by, for example,
 
 <pre>
-   $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">your-extension.xsl</font> <i>Domain</i>.ada
+$ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">your-extension.xsl</font> <i>Domain</i>.ada
 </pre>
 
 <p>In order to combine with ColdFrame's code generation, so that all
 the generated Ada ends up in the <tt>.gen</tt> subdirectory, you need
 a combining script:
 
-<pre style="margin : 0.2em 0 0.2em 0">
-   &lt;?xml version="1.0" encoding="utf-8"?&gt;
-   &lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                   version="1.0"&gt;
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                version="1.0"&gt;
 
-     &lt;xsl:import href="generate-ada.xsl"/&gt;
-     &lt;xsl:import href="<font color="red">your-extension.xsl</font>"/&gt;
+  &lt;xsl:import href="generate-ada.xsl"/&gt;
+  &lt;xsl:import href="<font color="red">your-extension.xsl</font>"/&gt;
 
-     &lt;xsl:strip-space elements="*"/&gt;
-     &lt;xsl:output method="text"/&gt;
+  &lt;xsl:strip-space elements="*"/&gt;
+  &lt;xsl:output method="text"/&gt;
 
-     &lt;xsl:template match="domain"&gt;
-       &lt;xsl:apply-templates select="." mode="coldframe"/&gt;
-       &lt;xsl:apply-templates select="." mode="<font color="red">your-extension</font>"/&gt;
-     &lt;/xsl:template&gt;
+  &lt;xsl:template match="domain"&gt;
+    &lt;xsl:apply-templates select="." mode="coldframe"/&gt;
+    &lt;xsl:apply-templates select="." mode="<font color="red">your-extension</font>"/&gt;
+  &lt;/xsl:template&gt;
 
-   &lt;/xsl:stylesheet&gt;
+&lt;/xsl:stylesheet&gt;
 </pre>
 
 <p>and then you can say
 
 <pre>
-   $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
+$ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
 </pre>
 
 <p>It's best to put your extensions after ColdFrame; if you generate a
@@ -107,7 +107,7 @@ one approach would be to copy all of ColdFrame's scripts and all of
 your extensions to the same place and specify that:
 
 <pre>
-   $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="blue">/my/script/dir/</font><font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
+$ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="blue">/my/script/dir/</font><font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
 </pre>
 
 <p>You can also specify <tt>CODEGEN_SCRIPT</tt> as an environment
