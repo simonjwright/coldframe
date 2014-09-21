@@ -26,24 +26,19 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 <ul>
 <li>Default settings
 <ul>
-<li>Linux and Windows
-<ul>
 <li><a href="#user">User tab</a>
 <li><a href="#profiles">Profiles tab</a>
 <li><a href="#notations">Notations tab</a>
 <li><a href="#diagram-appearance">Diagram Appearance tab</a>
-</ul>
-<li><a href="#mac-os-x-defaults">Mac OS X</a>
 </ul>
 <li><a href="#project-properties">Project Properties</a>
 </ul>
 
 <h2>Default settings</h2>
 
-<h3>Linux and Windows</h3>
-
 <p>On Linux and (probably) Windows, you can set up ColdFrame-specific
-and ColdFrame-recommended defaults in the <i>Edit/Settings</i> menu.
+and ColdFrame-recommended defaults in the <i>Edit/Settings</i>
+menu. On Mac OS X, use <i>Main > Preferences</i>.
 
 <h4><a name="user">User tab</a></h4>
 
@@ -89,35 +84,6 @@ names in a bold font.
    class="screenshot"
    src="Screenshot-Settings-Diagram_Appearance.png"
    alt="ArgoUML Edit/Settings/Diagram Appearance tab">
-
-<h3><a name="mac-os-x-defaults">Mac OS X</a></h3>
-
-<p>On Mac OS X Lion, with ArgoUML
-0.34, <a href="http://argouml.tigris.org/issues/show_bug.cgi?id=6400">the <i>Edit/Settings</i>
-menu is missing</a>. You can get the effect of the changes above by
-adding the following lines to
-your <tt>~/.argouml/argo.user.properties</tt>. You'll need to change
-the values in <font color="blue">blue</font> to match where you've
-installed ColdFrame, and those in <font color="green">green</font> to
-your own details.
-<pre>
-argo.notation.default=UML 1.4
-argo.notation.guillemots=true
-argo.notation.hide.bidirectional-arrows=true
-argo.notation.navigation.show.stereotypes=true
-argo.notation.show.associationnames=true
-argo.notation.show.bold.names=true
-argo.notation.show.initialvalue=true
-argo.notation.show.multiplicity=false
-argo.notation.show.properties=false
-argo.notation.show.singularmultiplicities=true
-argo.notation.show.types=true
-argo.notation.show.visibility=true
-argo.profiles.default=CUML 1.4*CGoodPractices*CCodeGeneration*Ufile\:<font color="blue">/Users/simon/coldframe</font>/lib/ColdFrameProfile.xmi*
-argo.profiles.directories=<font color="blue">/Users/simon/coldframe</font>/lib*
-argo.user.email=<font color="green">simon@pushface.org</font>
-argo.user.fullname=<font color="green">Simon Wright</font>
-</pre>
 
 <h2><a name="project-properties">Project Properties</a></h2>
 
