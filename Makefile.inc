@@ -150,6 +150,7 @@ CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
 $(COLDFRAMEOUT)/%.rr: LANG=C
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 	# XXX This is a workround for ArgoUML Issue 6385.
+	($(GREP) -q "xmlns:argouml" $< && $(CP) $< $@~1) || 		\
 	$(SED)								\
 	  -e "s;<pgml ;<pgml xmlns:argouml='http://argouml.org' ;"	\
 	  <$<								\
