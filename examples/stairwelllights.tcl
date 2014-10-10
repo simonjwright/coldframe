@@ -22,19 +22,21 @@ pack .c -side top -fill x
 .c create oval 330 588 338 596 -width 1 -outline black -fill gray -tags d
 
 # buttons; top floor downwards.
-# pushButton is exported from Ada, the argument is the button number.
-.c bind \
-    [.c create rectangle 339 322 347 330 -width 1 -outline black -fill green] \
-    <Button-1> {pushButton 0}
-.c bind \
-    [.c create rectangle 338 418 346 426 -width 1 -outline black -fill green] \
-    <Button-1> {pushButton 1}
-.c bind \
-    [.c create rectangle 338 525 346 533 -width 1 -outline black -fill green] \
-    <Button-1> {pushButton 2}
-.c bind \
-    [.c create rectangle 341 600 349 608 -width 1 -outline black -fill green] \
-    <Button-1> {pushButton 3}
+
+# pushButton is exported from Ada, the argument is the button number
+# and the second (optional) argument is the button state.
+.c create rectangle 339 322 347 330 -width 1 -outline black -fill green -tags w
+.c bind w <Button-1> {pushButton 0 1}
+.c bind w <ButtonRelease-1> {pushButton 0 0}
+.c create rectangle 338 418 346 426 -width 1 -outline black -fill green -tags x
+.c bind x <Button-1> {pushButton 1 1}
+.c bind x <ButtonRelease-1> {pushButton 1 0}
+.c create rectangle 338 525 346 533 -width 1 -outline black -fill green -tags y
+.c bind y <Button-1> {pushButton 2 1}
+.c bind y <ButtonRelease-1> {pushButton 2 0}
+.c create rectangle 341 600 349 608 -width 1 -outline black -fill green -tags z
+.c bind z <Button-1> {pushButton 3 1}
+.c bind z <ButtonRelease-1> {pushButton 3 0}
 
 # all lamps off to start with
 array set lampState {a 0 b 0 c 0 d 0}

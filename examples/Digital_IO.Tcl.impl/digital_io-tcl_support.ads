@@ -21,6 +21,9 @@ private
    type Implementation
      is new Digital_IO_Support.Implementation with null record;
 
+   function Get (This : Implementation;
+                 For_Input : Digital_IO_Support.Input_Signal) return Boolean;
+
    procedure Set (This : Implementation;
                   For_Output : Digital_IO_Support.Output_Signal;
                   To : Boolean);

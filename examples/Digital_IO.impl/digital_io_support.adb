@@ -28,10 +28,20 @@ package body Digital_IO_Support is
       Digital_IO_Support.Impl := Impl;
    end Register;
 
+   function Get (S : Input_Signal) return Boolean
+   is
+   begin
+      if Impl = null then
+         raise Program_Error
+           with "Digital_IO_Support: not registered";
+      end if;
+      return Impl.Get (S);
+   end Get;
+
    procedure Set (O : Output_Signal; To : Boolean)
    is
    begin
-      if Digital_IO_Support.Impl = null then
+      if Impl = null then
          raise Program_Error
            with "Digital_IO_Support: not registered";
       end if;

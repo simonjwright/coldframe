@@ -10,6 +10,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with Digital_IO.Tcl.Input_Cache;
 with Tcl.Async;
 
 package body Digital_IO.Tcl_Support is
@@ -20,6 +21,14 @@ package body Digital_IO.Tcl_Support is
       Register (new Implementation);
    end Initialize;
 
+   function Get (This : Implementation;
+                 For_Input : Digital_IO_Support.Input_Signal) return Boolean
+   is
+      pragma Unreferenced (This);  -- only used for dispatching
+   begin
+      return Digital_IO.Tcl.Input_Cache.Inputs (Input_Signal (For_Input));
+   end Get;
+
    procedure Set (This : Implementation;
                   For_Output : Digital_IO_Support.Output_Signal;
                   To : Boolean)
@@ -28,9 +37,9 @@ package body Digital_IO.Tcl_Support is
       Tcl_Key : constant Character
         := Character'Val (Character'Pos ('a') + Natural (For_Output));
    begin
-      Tcl.Async.Set (Tcl_Array => "lampState",
-                     Index => String'(1 => Tcl_Key),
-                     Value => Integer'Image (Boolean'Pos (To)));
+      Standard.Tcl.Async.Set (Tcl_Array => "lampState",
+                              Index => String'(1 => Tcl_Key),
+                              Value => Integer'Image (Boolean'Pos (To)));
    end Set;
 
 end Digital_IO.Tcl_Support;

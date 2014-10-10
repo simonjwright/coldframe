@@ -39,8 +39,10 @@ procedure Stairwell_Demo is
    function Init (Interp : in Tcl.Tcl_Interp) return C.int;
    pragma Convention (C, Init);
 
-   --  Tell the application we've pushed a button (argument is 0, 1
-   --  etc).
+   --  Tell the application when a button is pushed/released.  The
+   --  first argument is the button number and the optional second
+   --  argument is the button state; if only one argument is passed,
+   --  this procedure will simulate push then release.
    function Push_Button_Command
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
@@ -111,11 +113,22 @@ procedure Stairwell_Demo is
       Signal : Digital_IO.Input_Signal;
       pragma Warnings (Off, ClientData);
    begin
-      pragma Assert (Argc = 2, "pushButton requires one argument (button #)");
+      pragma Assert
+        (Argc = 2 or Argc = 3,
+           "pushButton requires one or two arguments (button # [state])");
       Signal := Digital_IO.Input_Signal'Value
         (C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
-      Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => True);
-      Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => False);
+      if Argc = 2 then
+         Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => True);
+         Digital_IO.Tcl.HCI.Set_Input (Of_Signal => Signal, To => False);
+      else
+         Digital_IO.Tcl.HCI.Set_Input
+           (Of_Signal => Signal,
+            To =>
+              C.int'Value
+                (C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (2)))
+              /= 0);
+      end if;
       return Tcl.TCL_OK;
    exception
       when E : others =>

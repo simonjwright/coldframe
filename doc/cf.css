@@ -51,7 +51,10 @@ ul { margin : .1em 0 .35em 2.2em; }  /* room for bullets */
 
 ol ol, ul ul, ol ul, ul ol { margin : .1em 0 .1em 1.2em; }
 
-/* pre { background : #d0d0d0; } */
+/*
+ * cunning <pre> settings from http://http://irreal.org/blog/?p=2533
+ * to use a box outline and pale blue background.
+*/
 pre {
     font-family: "Courier 10 Pitch", Courier, monospace;
     border: 1pt solid black;

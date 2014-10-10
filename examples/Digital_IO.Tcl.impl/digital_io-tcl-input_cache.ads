@@ -1,3 +1,5 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
 --  This package is free software; you can redistribute it and/or
 --  modify it under terms of the GNU General Public License as
 --  published by the Free Software Foundation; either version 2, or
@@ -10,13 +12,12 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  Sets the given output signal to the given state.
+--  Caches the state of each input signal, to support Get. This is
+--  reasonable as a substitute for reading from the HCI, because we
+--  know that all the inputs start off false.
 
-separate (Digital_IO)
-procedure Set
-  (O : Output_Signal;
-   To_State : Boolean) is
-begin
-   Digital_IO_Support.Set (Digital_IO_Support.Output_Signal (O),
-                           To => To_State);
-end Set;
+package Digital_IO.Tcl.Input_Cache is
+
+   Inputs : array (Input_Signal) of Boolean := (others => False);
+
+end Digital_IO.Tcl.Input_Cache;

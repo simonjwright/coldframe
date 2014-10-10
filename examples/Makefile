@@ -38,10 +38,13 @@ else
   endif
 endif
 
-EXECUTABLES += house_management-harness$(exe)
+EXECUTABLES += house_management-harness$(exe) house_management-scripting$(exe)
 house_management-harness$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
 	$(GNATMAKE) -p -PHouse_Management_Test
+house_management-scripting$(exe): \
+  House_Management.gen Digital_IO_Interface.gen force
+	$(GNATMAKE) -p -PHouse_Management_Scripting
 
 EXECUTABLES += interrupt_handling-harness$(exe)
 interrupt_handling-harness$(exe): Interrupt_Handling.gen force
@@ -101,6 +104,7 @@ NORM_FILES =					\
  Interrupt_Handling.norm			\
  Library.norm					\
  Performance.norm				\
+ Problem_Reporting.norm				\
  States.norm					\
  Van_Fleet.norm
 

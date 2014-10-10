@@ -4,7 +4,7 @@
     <documentation>
       <authorname>Simon Wright</authorname>
       <authoremail>simon@pushface.org</authoremail>
-      <version>0.34</version>
+      <version>0.35.1</version>
       <description>
         
       </description>
@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Library Class Diagram</activediagram>
+      <activediagram>Digital IO Class Diagram for stub documentation</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -94,6 +94,10 @@
               name="ColdFrame_Examples_Digital_IOImplementationStrategyClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Digital_IO Implementation Strategy Class Diagram" />
+      <member type="pgml"
+              name="ColdFrame_Examples_ClassDiagram.pgml"
+              diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
+              diagramname="Digital IO Class Diagram for stub documentation" />
       <member type="todo"
               name="ColdFrame_Examples.todo" />
     </members>
@@ -106,16 +110,27 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri May 16 14:16:14 BST 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Oct 08 13:29:09 BST 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/05/16 21:39:23 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2014/10/10 09:58:47 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
     <UML:Model xmi.id = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000985'
       name = 'ColdFrame Examples' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
       isAbstract = 'false'>
+      <UML:ModelElement.taggedValue>
+        <UML:TaggedValue xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F6B'
+          isSpecification = 'false'>
+          <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
+This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+Contains example domains for ColdFrame.</UML:TaggedValue.dataValue>
+          <UML:TaggedValue.type>
+            <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+          </UML:TaggedValue.type>
+        </UML:TaggedValue>
+      </UML:ModelElement.taggedValue>
       <UML:Namespace.ownedElement>
         <UML:Package xmi.id = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000986'
           name = 'Van Fleet' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
@@ -797,6 +812,9 @@ This package is free software; you can redistribute it and/or modify it under te
         <UML:Package xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B'
           name = 'House Management' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
+          <UML:ModelElement.clientDependency>
+            <UML:Dependency xmi.idref = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69'/>
+          </UML:ModelElement.clientDependency>
           <UML:ModelElement.stereotype>
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
@@ -1430,6 +1448,15 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                 <UML:AssociationClass xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30'/>
               </UML:Comment.annotatedElement>
             </UML:Comment>
+            <UML:Dependency xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69'
+              isSpecification = 'false'>
+              <UML:Dependency.client>
+                <UML:Package xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B'/>
+              </UML:Dependency.client>
+              <UML:Dependency.supplier>
+                <UML:Package xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F6F'/>
+              </UML:Dependency.supplier>
+            </UML:Dependency>
           </UML:Namespace.ownedElement>
         </UML:Package>
         <UML:Package xmi.id = '-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C98'
@@ -1444,7 +1471,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
               <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
 This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 This domain manages digital (discrete) input/output.
-It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.</UML:TaggedValue.dataValue>
+It is intended for Tcl/Tk-based simulations only, so there is no actual digital I/O, only support for an HCI.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
               </UML:TaggedValue.type>
@@ -2518,7 +2545,9 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000F49'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>Classes for ColdFrame performance tests.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
+This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+Classes for ColdFrame performance tests.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
               </UML:TaggedValue.type>
@@ -2934,9 +2963,20 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
           <UML:ModelElement.stereotype>
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F6A'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
+This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+Contains the input-output domain Digital_IO for ColdFrame&apos;s House Management demonstration.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
           <UML:Namespace.ownedElement>
             <UML:Package xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F76'
-              name = 'Digital_IO Interface' isSpecification = 'false' isRoot = 'false'
+              name = 'Digital_IO_Interface' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false'>
               <UML:ModelElement.stereotype>
                 <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface'/>
@@ -2947,6 +2987,14 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                   <UML:TaggedValue.dataValue>Digital_IO</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-name'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F6C'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
+This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
@@ -2987,6 +3035,36 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                       </UML:TaggedValue.type>
                     </UML:TaggedValue>
                   </UML:ModelElement.taggedValue>
+                  <UML:Classifier.feature>
+                    <UML:Operation xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F65'
+                      name = 'Get' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                      isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+                      isAbstract = 'false'>
+                      <UML:ModelElement.taggedValue>
+                        <UML:TaggedValue xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F68'
+                          isSpecification = 'false'>
+                          <UML:TaggedValue.dataValue>Returns the current state of the input signal for pin S.</UML:TaggedValue.dataValue>
+                          <UML:TaggedValue.type>
+                            <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+                          </UML:TaggedValue.type>
+                        </UML:TaggedValue>
+                      </UML:ModelElement.taggedValue>
+                      <UML:BehavioralFeature.parameter>
+                        <UML:Parameter xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F66'
+                          name = 'return' isSpecification = 'false' kind = 'return'>
+                          <UML:Parameter.type>
+                            <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Boolean'/>
+                          </UML:Parameter.type>
+                        </UML:Parameter>
+                        <UML:Parameter xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F67'
+                          name = 'S' isSpecification = 'false' kind = 'in'>
+                          <UML:Parameter.type>
+                            <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F70'/>
+                          </UML:Parameter.type>
+                        </UML:Parameter>
+                      </UML:BehavioralFeature.parameter>
+                    </UML:Operation>
+                  </UML:Classifier.feature>
                 </UML:DataType>
                 <UML:DataType xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F72'
                   name = 'Output_Signal' visibility = 'public' isSpecification = 'false' isRoot = 'false'
@@ -3191,10 +3269,19 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
               <UML:ModelElement.stereotype>
                 <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-ignore'/>
               </UML:ModelElement.stereotype>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-74--551828b2:148efa5a91c:-8000:0000000000000F73'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>Digital_IO presents a top-half domain, which provides an abstract interface to be implemented in any bottom-half domain (the datatype Implementation).</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
               <UML:Namespace.ownedElement>
                 <UML:DataType xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7B'
                   name = 'Implementation' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
+                  isAbstract = 'true'>
                   <UML:ModelElement.stereotype>
                     <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-imported'/>
                   </UML:ModelElement.stereotype>
@@ -3208,7 +3295,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                     </UML:TaggedValue>
                     <UML:TaggedValue xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F82'
                       isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>The abstract tagged type that is implemented by bottom halves. It&apos;s provided by Digital_IO_Support.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.dataValue>This imported datatype is declared in Digital_IO_Support, where it&apos;s an abstract tagged type.</UML:TaggedValue.dataValue>
                       <UML:TaggedValue.type>
                         <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
                       </UML:TaggedValue.type>
@@ -3218,7 +3305,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                     <UML:Operation xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F84'
                       name = 'Set' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
                       isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                      isAbstract = 'false'>
+                      isAbstract = 'true'>
                       <UML:ModelElement.taggedValue>
                         <UML:TaggedValue xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F89'
                           isSpecification = 'false'>
@@ -3251,10 +3338,48 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
                         </UML:Parameter>
                       </UML:BehavioralFeature.parameter>
                     </UML:Operation>
+                    <UML:Operation xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F70'
+                      name = 'Get' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                      isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+                      isAbstract = 'true'>
+                      <UML:ModelElement.taggedValue>
+                        <UML:TaggedValue xmi.id = '-64--88-1-74--551828b2:148efa5a91c:-8000:0000000000000F74'
+                          isSpecification = 'false'>
+                          <UML:TaggedValue.dataValue>Get dispatches to the actual (bottom-half) implementation.</UML:TaggedValue.dataValue>
+                          <UML:TaggedValue.type>
+                            <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+                          </UML:TaggedValue.type>
+                        </UML:TaggedValue>
+                      </UML:ModelElement.taggedValue>
+                      <UML:BehavioralFeature.parameter>
+                        <UML:Parameter xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F71'
+                          name = 'return' isSpecification = 'false' kind = 'return'>
+                          <UML:Parameter.type>
+                            <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Boolean'/>
+                          </UML:Parameter.type>
+                        </UML:Parameter>
+                        <UML:Parameter xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F72'
+                          name = 'This' isSpecification = 'false' kind = 'in'>
+                          <UML:Parameter.type>
+                            <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7B'/>
+                          </UML:Parameter.type>
+                        </UML:Parameter>
+                        <UML:Parameter xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F73'
+                          name = 'For_Input' isSpecification = 'false' kind = 'in'>
+                          <UML:Parameter.type>
+                            <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F70'/>
+                          </UML:Parameter.type>
+                        </UML:Parameter>
+                      </UML:BehavioralFeature.parameter>
+                    </UML:Operation>
                   </UML:Classifier.feature>
                 </UML:DataType>
               </UML:Namespace.ownedElement>
             </UML:Package>
+            <UML:Comment xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F77'
+              isSpecification = 'false' body = 'Note, Implementation is included on this diagram for information.&#10;It won&apos;t appear in the generated code, because it&apos;s declared in an «ignore»d domain.'/>
+            <UML:Comment xmi.id = '-64--88-1-74--551828b2:148efa5a91c:-8000:0000000000000F72'
+              isSpecification = 'false' body = 'Digital IO has no public classes or datatypes of its own.&#10;This is slightly unusual.'/>
           </UML:Namespace.ownedElement>
         </UML:Package>
       </UML:Namespace.ownedElement>
@@ -3262,6 +3387,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
   </XMI.content>
 </XMI>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000985"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Domain Diagram"
 >
   <group name="Fig0"
@@ -4176,8 +4302,40 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
       justification="Center"
     ></text>
   </group>
+  <group name="Fig8"
+       description="org.argouml.uml.diagram.ui.FigDependency"
+       href="-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig2.0"
+      destPortFig="Fig7"
+      sourceFigNode="Fig2"
+      destFigNode="Fig7"
+      <argouml:pathitem figname="Fig8.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
+                        ownerhref="-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69"
+                        angle="270.0"
+                        offset="25" />
+    </private>
+    <path name="Fig8.0"
+      description="org.argouml.gefext.ArgoFigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="88"
+              y="124" />
+      <lineto x="88"
+              y="176" />
+    </path>
+  </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000986"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Van Fleet Class Diagram"
 >
   <group name="Fig0"
@@ -5515,6 +5673,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B5"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Library Class Diagram"
 >
   <group name="Fig0"
@@ -6325,6 +6484,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="House Management Class Diagram"
 >
   <group name="Fig0"
@@ -7730,6 +7890,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7B"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Lamp Lifecycle"
 >
   <group name="Fig0"
@@ -8058,6 +8219,7 @@ If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</UM
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C98"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital_IO.Tcl Class Diagram"
 >
   <group name="Fig0"
@@ -8316,6 +8478,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEA"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Interrupt Handling Class Diagram"
 >
   <group name="Fig0"
@@ -8556,6 +8719,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFB"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Device Lifecycle"
 >
   <group name="Fig0"
@@ -8884,6 +9048,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E5E"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="States Class Diagram"
 >
   <group name="Fig0"
@@ -9345,6 +9510,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E89"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Monitor Lifecycle"
 >
   <group name="Fig0"
@@ -10622,6 +10788,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000EC4"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Monitor Class Events"
 >
   <group name="Fig0"
@@ -10739,6 +10906,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EE2"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Performance Class Diagram"
 >
   <group name="Fig0"
@@ -12996,10 +13164,11 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F6F"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital IO Class Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[88, 56, 191, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[88, 56, 194, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
        href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F76"
        fill="1"
        fillcolor="white"
@@ -13012,7 +13181,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     <rectangle name="Fig0.0"
       x="88"
       y="56"
-      width="191"
+      width="194"
       height="100"
       fill="0"
       fillcolor="white"
@@ -13028,13 +13197,13 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     >
       <moveto x="88"
               y="56" />
-      <lineto x="229"
+      <lineto x="232"
               y="56" />
-      <lineto x="229"
+      <lineto x="232"
               y="100" />
-      <lineto x="278"
+      <lineto x="281"
               y="100" />
-      <lineto x="278"
+      <lineto x="281"
               y="155" />
       <lineto x="88"
               y="155" />
@@ -13044,7 +13213,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     <text name="Fig0.2"
       x="88"
       y="56"
-      width="142"
+      width="145"
       height="45"
       fill="0"
       fillcolor="white"
@@ -13056,9 +13225,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       bold="true"
       textsize="13"
       justification="Left"
-    >Digital_IO Interface</text>
+    >Digital_IO_Interface</text>
     <group name="Fig0.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[88, 56, 141, 21]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[88, 56, 144, 21]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F76"
          fill="1"
          fillcolor="white"
@@ -13071,7 +13240,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       <rectangle name="Fig0.3.0"
         x="88"
         y="56"
-        width="141"
+        width="144"
         height="21"
         fill="1"
         fillcolor="white"
@@ -13081,7 +13250,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       <text name="Fig0.3.1"
         x="88"
         y="56"
-        width="141"
+        width="144"
         height="18"
         fill="0"
         fillcolor="white"
@@ -13098,7 +13267,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     <text name="Fig0.4"
       x="88"
       y="100"
-      width="191"
+      width="194"
       height="56"
       fill="0"
       fillcolor="white"
@@ -13113,7 +13282,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     ></text>
   </group>
   <group name="Fig1"
-       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[440, 184, 349, 88]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[432, 56, 349, 88]pathVisible=false;stereotypeView=0;operationsVisible=true;"
        href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7D"
        fill="1"
        fillcolor="white"
@@ -13124,8 +13293,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     </private>
     
     <rectangle name="Fig1.0"
-      x="440"
-      y="184"
+      x="432"
+      y="56"
       width="349"
       height="88"
       fill="1"
@@ -13134,8 +13303,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <text name="Fig1.1"
-      x="441"
-      y="185"
+      x="433"
+      y="57"
       width="347"
       height="61"
       fill="0"
@@ -13150,7 +13319,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       justification="Center"
     >Implementation_Class_P</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[441, 185, 347, 38]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[433, 57, 347, 38]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7D"
          fill="0"
          fillcolor="white"
@@ -13161,8 +13330,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       </private>
       
       <rectangle name="Fig1.2.0"
-        x="441"
-        y="185"
+        x="433"
+        y="57"
         width="347"
         height="38"
         fill="0"
@@ -13171,8 +13340,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         strokecolor="black"
       />
       <text name="Fig1.2.1"
-        x="441"
-        y="185"
+        x="433"
+        y="57"
         width="347"
         height="18"
         fill="0"
@@ -13187,8 +13356,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         justification="Center"
       >«datatype»</text>
       <text name="Fig1.2.2"
-        x="441"
-        y="203"
+        x="433"
+        y="75"
         width="347"
         height="18"
         fill="0"
@@ -13204,8 +13373,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       >«imported»</text>
     </group>
     <rectangle name="Fig1.3"
-      x="440"
-      y="246"
+      x="432"
+      y="118"
       width="349"
       height="1"
       fill="1"
@@ -13214,7 +13383,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[441, 247, 347, 25]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[433, 119, 347, 25]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7D"
          fill="0"
          fillcolor="white"
@@ -13225,8 +13394,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       </private>
       
       <rectangle name="Fig1.4.0"
-        x="441"
-        y="247"
+        x="433"
+        y="119"
         width="347"
         height="25"
         fill="0"
@@ -13235,8 +13404,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         strokecolor="black"
       />
       <text name="Fig1.4.1"
-        x="441"
-        y="247"
+        x="433"
+        y="119"
         width="347"
         height="23"
         fill="0"
@@ -13367,7 +13536,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     ></text>
   </group>
   <group name="Fig3"
-       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[400, 56, 440, 88]pathVisible=true;stereotypeView=0;operationsVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[392, 192, 440, 105]pathVisible=true;stereotypeView=0;operationsVisible=true;"
        href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7B"
        fill="1"
        fillcolor="white"
@@ -13378,18 +13547,18 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     </private>
     
     <rectangle name="Fig3.0"
-      x="400"
-      y="56"
+      x="392"
+      y="192"
       width="440"
-      height="88"
+      height="105"
       fill="1"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     />
     <text name="Fig3.1"
-      x="401"
-      y="57"
+      x="393"
+      y="193"
       width="438"
       height="61"
       fill="0"
@@ -13398,13 +13567,13 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
       textcolor="black"
       font="Lucida Grande"
-      italic="false"
+      italic="true"
       bold="true"
       textsize="13"
       justification="Center"
     >Digital_IO::Implementation Strategy::Implementation</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[401, 57, 438, 38]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[393, 193, 438, 38]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7B"
          fill="0"
          fillcolor="white"
@@ -13415,8 +13584,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       </private>
       
       <rectangle name="Fig3.2.0"
-        x="401"
-        y="57"
+        x="393"
+        y="193"
         width="438"
         height="38"
         fill="0"
@@ -13425,8 +13594,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         strokecolor="black"
       />
       <text name="Fig3.2.1"
-        x="401"
-        y="57"
+        x="393"
+        y="193"
         width="438"
         height="18"
         fill="0"
@@ -13441,8 +13610,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         justification="Center"
       >«datatype»</text>
       <text name="Fig3.2.2"
-        x="401"
-        y="75"
+        x="393"
+        y="211"
         width="438"
         height="18"
         fill="0"
@@ -13458,8 +13627,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       >«imported»</text>
     </group>
     <rectangle name="Fig3.3"
-      x="400"
-      y="118"
+      x="392"
+      y="254"
       width="440"
       height="1"
       fill="1"
@@ -13468,7 +13637,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[401, 119, 438, 25]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[393, 255, 438, 42]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7B"
          fill="0"
          fillcolor="white"
@@ -13479,18 +13648,34 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       </private>
       
       <rectangle name="Fig3.4.0"
-        x="401"
-        y="119"
+        x="393"
+        y="255"
         width="438"
-        height="25"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
       <text name="Fig3.4.1"
-        x="401"
-        y="119"
+        x="393"
+        y="255"
+        width="438"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="true"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >+Set(This : Implementation,For_Output : Output_Signal,To : Boolean)</text>
+      <text name="Fig3.4.2"
+        x="393"
+        y="272"
         width="438"
         height="23"
         fill="0"
@@ -13499,19 +13684,118 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         strokecolor="black"
         textcolor="black"
         font="Lucida Grande"
-        italic="false"
+        italic="true"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Set(This : Implementation,For_Output : Output_Signal,To : Boolean)</text>
+      >+Get(This : Implementation,For_Input : Input_Signal) : Boolean</text>
     </group>
+  </group>
+  <group name="Fig4"
+       description="org.argouml.uml.diagram.static_structure.ui.FigComment[312, 312, 544, 59]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F77"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig4.0"
+      x="312"
+      y="312"
+      width="544"
+      height="59"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig4.1"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="312"
+              y="312" />
+      <lineto x="845"
+              y="312" />
+      <lineto x="855"
+              y="322" />
+      <lineto x="855"
+              y="370" />
+      <lineto x="312"
+              y="370" />
+      <lineto x="312"
+              y="312" />
+    </path>
+    <path name="Fig4.2"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="845"
+              y="312" />
+      <lineto x="855"
+              y="322" />
+      <lineto x="845"
+              y="322" />
+      <lineto x="845"
+              y="312" />
+    </path>
+    <group name="Fig4.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[314, 314, 530, 0]"
+         href="-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F77"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+         visibility="0"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig4.3.0"
+        x="314"
+        y="314"
+        width="530"
+        height="0"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
+    <text name="Fig4.4"
+      x="314"
+      y="314"
+      width="530"
+      height="55"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Left"
+    >Note, Implementation is included on this diagram for information.
+It won&apos;t appear in the generated code, because it&apos;s declared in an «ignore»d domain.</text>
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F76"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital_IO Interface Class Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[64, 56, 108, 84]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[64, 56, 205, 88]pathVisible=false;stereotypeView=0;operationsVisible=true;"
        href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F70"
        fill="1"
        fillcolor="white"
@@ -13524,8 +13808,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     <rectangle name="Fig0.0"
       x="64"
       y="56"
-      width="108"
-      height="84"
+      width="205"
+      height="88"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -13534,7 +13818,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     <text name="Fig0.1"
       x="65"
       y="57"
-      width="106"
+      width="203"
       height="61"
       fill="0"
       fillcolor="white"
@@ -13548,7 +13832,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       justification="Center"
     >+ Input_Signal</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[65, 57, 106, 38]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[65, 57, 203, 38]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F70"
          fill="0"
          fillcolor="white"
@@ -13561,7 +13845,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       <rectangle name="Fig0.2.0"
         x="65"
         y="57"
-        width="106"
+        width="203"
         height="38"
         fill="0"
         fillcolor="white"
@@ -13571,7 +13855,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       <text name="Fig0.2.1"
         x="65"
         y="57"
-        width="106"
+        width="203"
         height="18"
         fill="0"
         fillcolor="white"
@@ -13587,7 +13871,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       <text name="Fig0.2.2"
         x="65"
         y="75"
-        width="106"
+        width="203"
         height="18"
         fill="0"
         fillcolor="white"
@@ -13604,7 +13888,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     <rectangle name="Fig0.3"
       x="64"
       y="118"
-      width="108"
+      width="205"
       height="1"
       fill="1"
       fillcolor="black"
@@ -13612,7 +13896,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[65, 119, 106, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[65, 119, 203, 25]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F70"
          fill="0"
          fillcolor="white"
@@ -13625,13 +13909,29 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       <rectangle name="Fig0.4.0"
         x="65"
         y="119"
-        width="106"
-        height="21"
+        width="203"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
+      <text name="Fig0.4.1"
+        x="65"
+        y="119"
+        width="203"
+        height="23"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >+Get(S : Input_Signal) : Boolean</text>
     </group>
   </group>
   <group name="Fig1"
@@ -13775,7 +14075,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     </group>
   </group>
   <group name="Fig2"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[224, 40, 153, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[312, 48, 153, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
        fill="1"
        fillcolor="white"
@@ -13786,8 +14086,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     </private>
     
     <rectangle name="Fig2.0"
-      x="224"
-      y="40"
+      x="312"
+      y="48"
       width="153"
       height="126"
       fill="1"
@@ -13796,8 +14096,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <text name="Fig2.1"
-      x="225"
-      y="41"
+      x="313"
+      y="49"
       width="151"
       height="61"
       fill="0"
@@ -13812,7 +14112,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       justification="Center"
     >+ Input_Signal_State</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[225, 41, 151, 38]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[313, 49, 151, 38]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -13823,8 +14123,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       </private>
       
       <rectangle name="Fig2.2.0"
-        x="225"
-        y="41"
+        x="313"
+        y="49"
         width="151"
         height="38"
         fill="0"
@@ -13833,8 +14133,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         strokecolor="black"
       />
       <text name="Fig2.2.1"
-        x="225"
-        y="41"
+        x="313"
+        y="49"
         width="151"
         height="18"
         fill="0"
@@ -13849,8 +14149,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         justification="Center"
       >«datatype»</text>
       <text name="Fig2.2.2"
-        x="225"
-        y="59"
+        x="313"
+        y="67"
         width="151"
         height="18"
         fill="0"
@@ -13866,8 +14166,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       >«callback»</text>
     </group>
     <rectangle name="Fig2.3"
-      x="224"
-      y="102"
+      x="312"
+      y="110"
       width="153"
       height="1"
       fill="1"
@@ -13876,7 +14176,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[225, 103, 151, 42]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[313, 111, 151, 42]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -13887,8 +14187,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       </private>
       
       <rectangle name="Fig2.4.0"
-        x="225"
-        y="103"
+        x="313"
+        y="111"
         width="151"
         height="42"
         fill="0"
@@ -13897,8 +14197,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         strokecolor="black"
       />
       <text name="Fig2.4.1"
-        x="225"
-        y="103"
+        x="313"
+        y="111"
         width="151"
         height="17"
         fill="0"
@@ -13913,8 +14213,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         justification="Left"
       >+S : Input_Signal</text>
       <text name="Fig2.4.2"
-        x="225"
-        y="120"
+        x="313"
+        y="128"
         width="151"
         height="23"
         fill="0"
@@ -13930,8 +14230,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       >+State : Boolean</text>
     </group>
     <rectangle name="Fig2.5"
-      x="224"
-      y="144"
+      x="312"
+      y="152"
       width="153"
       height="1"
       fill="1"
@@ -13940,7 +14240,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[225, 145, 151, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[313, 153, 151, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -13951,8 +14251,8 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       </private>
       
       <rectangle name="Fig2.6.0"
-        x="225"
-        y="145"
+        x="313"
+        y="153"
         width="151"
         height="21"
         fill="0"
@@ -13964,10 +14264,11 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F83"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital_IO Implementation Strategy Class Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[56, 64, 441, 88]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[56, 64, 441, 105]pathVisible=false;stereotypeView=0;operationsVisible=true;"
        href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7B"
        fill="1"
        fillcolor="white"
@@ -13981,7 +14282,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       x="56"
       y="64"
       width="441"
-      height="88"
+      height="105"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -13998,7 +14299,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
       textcolor="black"
       font="Lucida Grande"
-      italic="false"
+      italic="true"
       bold="true"
       textsize="13"
       justification="Center"
@@ -14068,7 +14369,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[57, 127, 439, 25]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[57, 127, 439, 42]"
          href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F7B"
          fill="0"
          fillcolor="white"
@@ -14082,7 +14383,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         x="57"
         y="127"
         width="439"
-        height="25"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -14092,7 +14393,127 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         x="57"
         y="127"
         width="439"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="true"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >+Set(This : Implementation,For_Output : Output_Signal,To : Boolean)</text>
+      <text name="Fig0.4.2"
+        x="57"
+        y="144"
+        width="439"
         height="23"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="true"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >+Get(This : Implementation,For_Input : Input_Signal) : Boolean</text>
+    </group>
+  </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F6F"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
+      name="Digital IO Class Diagram for stub documentation"
+>
+  <group name="Fig0"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[64, 96, 194, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F76"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig0.0"
+      x="64"
+      y="96"
+      width="194"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig0.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="64"
+              y="96" />
+      <lineto x="208"
+              y="96" />
+      <lineto x="208"
+              y="140" />
+      <lineto x="257"
+              y="140" />
+      <lineto x="257"
+              y="195" />
+      <lineto x="64"
+              y="195" />
+      <lineto x="64"
+              y="96" />
+    </path>
+    <text name="Fig0.2"
+      x="64"
+      y="96"
+      width="145"
+      height="45"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Left"
+    >Digital_IO_Interface</text>
+    <group name="Fig0.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[64, 96, 144, 21]"
+         href="-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F76"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+         visibility="0"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.3.0"
+        x="64"
+        y="96"
+        width="144"
+        height="21"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.3.1"
+        x="64"
+        y="96"
+        width="144"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -14102,9 +14523,122 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         italic="false"
         bold="false"
         textsize="13"
-        justification="Left"
-      >+Set(This : Implementation,For_Output : Output_Signal,To : Boolean)</text>
+        justification="Center"
+      >«domain-interface»</text>
     </group>
+    <text name="Fig0.4"
+      x="64"
+      y="140"
+      width="194"
+      height="56"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    ></text>
+  </group>
+  <group name="Fig1"
+       description="org.argouml.uml.diagram.static_structure.ui.FigComment[64, 24, 376, 48]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-74--551828b2:148efa5a91c:-8000:0000000000000F72"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig1.0"
+      x="64"
+      y="24"
+      width="376"
+      height="48"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig1.1"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="64"
+              y="24" />
+      <lineto x="429"
+              y="24" />
+      <lineto x="439"
+              y="34" />
+      <lineto x="439"
+              y="71" />
+      <lineto x="64"
+              y="71" />
+      <lineto x="64"
+              y="24" />
+    </path>
+    <path name="Fig1.2"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="178 178 178"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="429"
+              y="24" />
+      <lineto x="439"
+              y="34" />
+      <lineto x="429"
+              y="34" />
+      <lineto x="429"
+              y="24" />
+    </path>
+    <group name="Fig1.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[66, 26, 362, 0]"
+         href="-64--88-1-74--551828b2:148efa5a91c:-8000:0000000000000F72"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig1.3.0"
+        x="66"
+        y="26"
+        width="362"
+        height="0"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
+    <text name="Fig1.4"
+      x="66"
+      y="26"
+      width="362"
+      height="44"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Left"
+    >Digital IO has no public classes or datatypes of its own.
+This is slightly unusual.</text>
   </group>
 </pgml>
 <todo>

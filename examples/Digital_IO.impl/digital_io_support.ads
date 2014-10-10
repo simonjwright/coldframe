@@ -17,6 +17,10 @@ package Digital_IO_Support is
 
    type Implementation is abstract tagged null record;
 
+   function Get (This : Implementation;
+                 For_Input : Input_Signal) return Boolean
+     is abstract;
+
    procedure Set (This : Implementation;
                   For_Output : Output_Signal;
                   To : Boolean)
@@ -25,6 +29,8 @@ package Digital_IO_Support is
    type Implementation_Class_P is access all Implementation'Class;
 
    procedure Register (Impl : Implementation_Class_P);
+
+   function Get (S : Input_Signal) return Boolean;
 
    procedure Set (O : Output_Signal; To : Boolean);
 

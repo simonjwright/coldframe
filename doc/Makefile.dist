@@ -54,7 +54,7 @@ DOCS =						\
   event-use.html				\
   extending.html				\
   faq.html					\
-  generalizations.html 				\
+  generalizations.html				\
   generalizations-extended.html			\
   generation.html				\
   index.html					\
@@ -69,9 +69,12 @@ DOCS =						\
   resources.html				\
   serialization-page.html			\
   strategy.html					\
+  stubs.html					\
   support.html					\
   target.html					\
   testing.html					\
+  testing-class.html				\
+  testing-domain.html				\
   translation-rules.html			\
   types.html					\
   use-of-containers.html			\
@@ -141,10 +144,15 @@ GENERATED_FILES =				\
 
 GENERATED_DOCUMENTS =				\
   Digital_IO.html				\
-  House_Management.html				\
-  Serialization.html
+  House_Management.html
 
 GENERATED_IMAGES = $(subst .html,.images,$(GENERATED_DOCUMENTS))
+
+NORM_FILES = $(subst .html,.norm,$(GENERATED_DOCUMENTS))
+
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 # graphviz:
 %.png: %.dot
@@ -166,7 +174,7 @@ dist::
 	    ($(SED) -e "s;DATE;$(DATE);g" <$$f >$(DIST)/doc/$$f) \
 	done
 
-dist:: $(GENERATED_FILES) $(GENERATED_DOCUMENTS)
+dist:: $(GENERATED_FILES) $(GENERATED_DOCUMENTS) $(GENERATED_IMAGES)
 	$(TAR) cf -							  \
 	  $(GENERATED_FILES) $(GENERATED_DOCUMENTS) $(GENERATED_IMAGES) | \
 	  tar xf - -C $(DIST)/doc/

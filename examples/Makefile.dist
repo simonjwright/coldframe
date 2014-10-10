@@ -56,6 +56,13 @@ HOUSE_MANAGEMENT_TEST =						\
   House_Management.test/house_management-lamp-test_suite.adb	\
   House_Management.test/house_management-lamp-test_suite.ads
 
+HOUSE_MANAGEMENT_SCRIPTING =				\
+  h.tcl							\
+  House_Management_Scripting.gpr			\
+  House_Management.test/digital_io-scripting.adb	\
+  House_Management.test/digital_io-scripting.ads	\
+  House_Management.test/house_management-scripting.adb
+
 SERIALIZATION =								\
   Serialization.gpr							\
   Serialization.impl/serialization_client.adb				\

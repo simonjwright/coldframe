@@ -10,13 +10,12 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  Sets the given output signal to the given state.
+--  Returns the current state of the input signal for pin S.
 
 separate (Digital_IO)
-procedure Set
-  (O : Output_Signal;
-   To_State : Boolean) is
+function Get
+  (S : Input_Signal)
+  return Boolean is
 begin
-   Digital_IO_Support.Set (Digital_IO_Support.Output_Signal (O),
-                           To => To_State);
-end Set;
+   return Digital_IO_Support.Get (Digital_IO_Support.Input_Signal (S));
+end Get;

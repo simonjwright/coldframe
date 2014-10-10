@@ -15,11 +15,14 @@
 --  Sets the specified input signal to the given value.
 
 with Digital_IO.Input_Signal_State_Callback;
+with Digital_IO.Tcl.Input_Cache;
 
 separate (Digital_IO.Tcl.HCI)
 procedure Set_Input
   (Of_Signal : Input_Signal;
-   To : Boolean) is
+   To : Boolean)
+is
 begin
+   Input_Cache.Inputs (Of_Signal) := To;
    Input_Signal_State_Callback.Call_Callbacks ((S => Of_Signal, State => To));
 end Set_Input;
