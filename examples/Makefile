@@ -58,7 +58,7 @@ EXECUTABLES += performance-harness$(exe)
 performance-harness$(exe): Performance.gen force
 	$(GNATMAKE) -p -PPerformance
 
-#EXECUTABLES += problem_reporting_harness$(exe)
+EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
 	$(GNATMAKE) -p -PProblem_Reporting
 
