@@ -162,6 +162,9 @@ package body Normalize_XMI.Model.Operations is
       if O.Has_Stereotype ("final") then
          Put (To, " final='true'");
       end if;
+      if O.Has_Stereotype ("finalize") then
+         Put (To, " finalize='true'");
+      end if;
       if O.Has_Stereotype ("init") then
          if not Modelled_As_Class then
             Forced_To_Class := True;
