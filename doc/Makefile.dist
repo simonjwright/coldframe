@@ -161,9 +161,6 @@ $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 %.png: %.dot
 	$(DOT) -o $@ -Tpng $<
 
-use-cases.html: use-cases.texi
-	$(TEXI2HTML) -monolithic $<
-
 ColdFrameProfile.html: $(COLDFRAMEOUT)/ColdFrameProfile.rr
 	$(SAXON) $< $(COLDFRAME)/scripts/generate-profile-html.xsl >$@
 

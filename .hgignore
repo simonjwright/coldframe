@@ -3,6 +3,7 @@
 syntax: glob
 
 # General
+\#*\#
 *~
 *.ad?.metrix
 *.ada
@@ -39,7 +40,7 @@ include
 
 # Generated code/doc
 *.gen
-*.html
+[A-Z]*.html
 *.images
 
 # Distributions
@@ -50,7 +51,8 @@ coldframe-combine_hash-test{.exe,}
 coldframe-project-events.ads-standard
 
 # doc
-doc/Digital_IO.{html,images}
+doc/ColdFrameProfile.html
+doc/Digital_IO*.{html,images}
 doc/House_Management.{html,images}
 doc/Serialization.{html,images}
 doc/self-events.png
@@ -58,9 +60,11 @@ doc/use-cases.html
 
 # examples
 examples/house_management-harness{.exe,}
+examples/house_management-scripting{.exe,}
 examples/interrupt_handling-harness{.exe,}
 examples/library_test_harness{.exe,}
 examples/performance-harness{.exe,}
+examples/problem_reporting_harness{.exe,}
 examples/stairwell_demo{.exe,}
 examples/stairwell_logging_demo{.exe,}
 examples/stairwell_raspi_demo

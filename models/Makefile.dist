@@ -31,7 +31,10 @@ DATE = $(subst cf-,,$(notdir $(DIST)))
 
 EXAMPLES = ColdFrame_Examples.uml
 
-TESTS = ColdFrame_Tests.uml Regressions.uml Bad_Model_Regressions.uml
+TESTS = ColdFrame_Tests.uml			\
+  Regressions.uml 				\
+  Bad_Code_Regressions.uml 			\
+  Bad_Model_Regressions.uml
 
 MISC = ColdFrame_Development.uml
 

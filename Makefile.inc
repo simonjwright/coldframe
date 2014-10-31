@@ -90,8 +90,8 @@ COLDFRAMEOUT ?= $(COLDFRAME)/coldframeout
 
 # Environmental overrides for 'standard' commands
 
-CHMOD ?= chmod
 CD ?= cd
+CHMOD ?= chmod
 CP ?= cp
 DOT ?= dot
 ECHO ?= echo
@@ -101,6 +101,7 @@ GNATCHOP ?= gnatchop -gnat05
 GNATMAKE ?= gnatmake
 GREP ?= grep
 JAVA ?= java
+MAKEINFO ?= makeinfo
 MKDIR ?= mkdir
 MV ?= mv
 RM ?= rm
@@ -108,7 +109,6 @@ RSYNC ?= rsync
 SED ?= sed
 SH ?= sh
 TAR ?= tar
-TEXI2HTML ?= texi2html
 TRUE ?= true
 UNZIP ?= unzip
 ZIP ?= zip
@@ -279,3 +279,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	@$(CHMOD) u+w $@
 	@$(ECHO) "checking for unimplemented bodies ..."
 	@$(GREP) -rl 'edit this' $@ || $(ECHO) "... none."
+
+# Generate single-page HTML from texi.
+%.html: %.texi
+	$(MAKEINFO) --html --no-split $<

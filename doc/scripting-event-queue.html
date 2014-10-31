@@ -17,8 +17,16 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 <dl>
 <dt><tt>ColdFrame.Scripted_Testing_G</tt>
 <dd>Provides the procedure <tt>Register</tt> to tell the framework
-which Dispatcher (event queue) is in use, and the
-commands <tt>start_dispatcher</tt> and <tt>wait_until_idle</tt>.
+<ul>
+<li>which Dispatcher (event queue) is in use
+<li>and the <tt>Initialize</tt>
+procedure to call to initialize all the domains,
+</ul>
+and the
+commands <tt>initialize</tt>, <tt>start_dispatcher</tt>
+and <tt>wait_until_idle</tt>.
+<br>To use <tt>wait_until_idle</tt>, the event queue in use must be a
+Test or Test_Trace queue.
 
 <dt><tt>ColdFrame.Project.Scripted_Testing</tt>
 <dd>Instantiates <tt>ColdFrame.Scripted_Testing_G</tt> with the

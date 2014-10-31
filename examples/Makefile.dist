@@ -29,24 +29,26 @@ all:
 
 DATE = $(subst cf-,,$(notdir $(DIST)))
 
-STAIRWELL_DEMO =						\
-  stairwell_demo.gpr						\
-  stairwelllights.tcl						\
-  Digital_IO.impl/digital_io-set.adb				\
-  Digital_IO.impl/digital_io_support.adb			\
-  Digital_IO.impl/digital_io_support.ads			\
-  Digital_IO.Tcl.impl/digital_io-tcl-hci-set_input.adb		\
-  Digital_IO.Tcl.impl/digital_io-tcl_support.adb		\
-  Digital_IO.Tcl.impl/digital_io-tcl_support.ads		\
-  Digital_IO.RasPi.impl/digital_io-raspi_support.adb		\
-  Digital_IO.RasPi.impl/digital_io-raspi_support.ads		\
-  House_Management.impl/house_management-button-changed.adb	\
-  House_Management.impl/house_management-events-initialize.adb	\
-  House_Management.impl/house_management-lamp-clear_timeout.adb	\
-  House_Management.impl/house_management-lamp-initialize.adb	\
-  House_Management.impl/house_management-lamp-set_timeout.adb	\
-  House_Management.impl/house_management-lamp-turn_off.adb	\
-  House_Management.impl/house_management-lamp-turn_on.adb	\
+STAIRWELL_DEMO =							\
+  stairwell_demo.gpr							\
+  stairwelllights.tcl							\
+  Digital_IO.impl/digital_io-set.adb					\
+  Digital_IO.impl/digital_io_support.adb				\
+  Digital_IO.impl/digital_io_support.ads				\
+  Digital_IO.Tcl.impl/digital_io-tcl-input_cache.ads			\
+  Digital_IO.Tcl.impl/digital_io-tcl-hci-set_input.adb			\
+  Digital_IO.Tcl.impl/digital_io-tcl_support.adb			\
+  Digital_IO.Tcl.impl/digital_io-tcl_support.ads			\
+  Digital_IO.RasPi.impl/digital_io-raspi_support.adb			\
+  Digital_IO.RasPi.impl/digital_io-raspi_support.ads			\
+  House_Management.impl/house_management-button-changed.adb		\
+  House_Management.impl/house_management-button-read_initial_states.ads	\
+  House_Management.impl/house_management-events-initialize.adb		\
+  House_Management.impl/house_management-lamp-clear_timeout.adb		\
+  House_Management.impl/house_management-lamp-initialize.adb		\
+  House_Management.impl/house_management-lamp-set_timeout.adb		\
+  House_Management.impl/house_management-lamp-turn_off.adb		\
+  House_Management.impl/house_management-lamp-turn_on.adb		\
   House_Management.impl/stairwell_demo.adb
 
 HOUSE_MANAGEMENT_TEST =						\
