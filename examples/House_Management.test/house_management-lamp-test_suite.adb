@@ -17,10 +17,13 @@ with House_Management.Tear_Down;
 
 package body House_Management.Lamp.Test_Suite is
 
+   procedure Set_Boolean
+     is new ColdFrame.Stubs.Set_Output_Value (Boolean);
+
    function Get_Boolean
-   is new ColdFrame.Stubs.Get_Input_Value (Boolean);
+     is new ColdFrame.Stubs.Get_Input_Value (Boolean);
    function Get_Signal_Name
-   is new ColdFrame.Stubs.Get_Input_Value (Digital_IO.Output_Signal);
+     is new ColdFrame.Stubs.Get_Input_Value (Digital_IO.Output_Signal);
 
    package Lamps is
       type Case_1 is new Test_Case with private;
@@ -135,6 +138,11 @@ package body House_Management.Lamp.Test_Suite is
            := new ColdFrame.Project.Events.Standard.Test.Event_Queue;
       begin
          ColdFrame.Stubs.Set_Up;
+
+         --  House_Management only reads the input signal states at
+         --  initialization; all are initially False.
+         Set_Boolean ("Digital_IO.Get", "return", False);
+
          Digital_IO.Initialize (Q);
          House_Management.Initialize (Q);
       end Set_Up;

@@ -4,7 +4,7 @@
     <documentation>
       <authorname>Simon Wright</authorname>
       <authoremail>simon@pushface.org</authoremail>
-      <version>0.34</version>
+      <version>0.35.1</version>
       <description>
         
       </description>
@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Problem Domain Class Diagram</activediagram>
+      <activediagram>House Management Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -114,10 +114,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Oct 11 18:17:28 BST 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Oct 22 17:47:05 BST 2014'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/10/11 19:25:45 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2014/10/31 15:43:52 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -816,9 +816,6 @@ This package is free software; you can redistribute it and/or modify it under te
         <UML:Package xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B'
           name = 'House Management' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:ModelElement.clientDependency>
-            <UML:Dependency xmi.idref = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69'/>
-          </UML:ModelElement.clientDependency>
           <UML:ModelElement.stereotype>
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
@@ -1022,18 +1019,27 @@ If it is activated again while it is still on, the activation period is extended
                     <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F96'/>
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
-                <UML:Operation xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F68'
+                <UML:Operation xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF0'
                   name = 'Set_Output' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.stereotype>
                     <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-accessor'/>
                   </UML:ModelElement.stereotype>
+                  <UML:ModelElement.taggedValue>
+                    <UML:TaggedValue xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF3'
+                      isSpecification = 'false'>
+                      <UML:TaggedValue.dataValue>Used (during state machine initialization) to store the Digital_IO Output Signal which corresponds to this lamp.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.type>
+                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+                      </UML:TaggedValue.type>
+                    </UML:TaggedValue>
+                  </UML:ModelElement.taggedValue>
                   <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F69'
+                    <UML:Parameter xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF1'
                       name = 'return' isSpecification = 'false' kind = 'return'/>
-                    <UML:Parameter xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F6A'
-                      name = 'S' isSpecification = 'false' kind = 'in'>
+                    <UML:Parameter xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF2'
+                      name = 'To' isSpecification = 'false' kind = 'in'>
                       <UML:Parameter.type>
                         <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F96'/>
                       </UML:Parameter.type>
@@ -1107,6 +1113,78 @@ If it is activated again while it is still on, the activation period is extended
                         <UML:DataType xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5A'/>
                       </UML:Parameter.type>
                     </UML:Parameter>
+                  </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+                <UML:Attribute xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FE7'
+                  name = 'State' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  changeability = 'changeable' targetScope = 'instance'>
+                  <UML:StructuralFeature.multiplicity>
+                    <UML:Multiplicity xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FE8'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FE9'
+                          lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:StructuralFeature.multiplicity>
+                  <UML:Attribute.initialValue>
+                    <UML:Expression xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FEA'
+                      language = 'UML 1.4' body = 'False'/>
+                  </UML:Attribute.initialValue>
+                  <UML:ModelElement.taggedValue>
+                    <UML:TaggedValue xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FED'
+                      isSpecification = 'false'>
+                      <UML:TaggedValue.dataValue>The current state of the Button.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.type>
+                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+                      </UML:TaggedValue.type>
+                    </UML:TaggedValue>
+                  </UML:ModelElement.taggedValue>
+                  <UML:StructuralFeature.type>
+                    <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Boolean'/>
+                  </UML:StructuralFeature.type>
+                </UML:Attribute>
+                <UML:Operation xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FEB'
+                  name = 'Get_State' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false'>
+                  <UML:ModelElement.stereotype>
+                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-accessor'/>
+                  </UML:ModelElement.stereotype>
+                  <UML:ModelElement.taggedValue>
+                    <UML:TaggedValue xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FEE'
+                      isSpecification = 'false'>
+                      <UML:TaggedValue.dataValue>Returns the Button&apos;s State.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.type>
+                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+                      </UML:TaggedValue.type>
+                    </UML:TaggedValue>
+                  </UML:ModelElement.taggedValue>
+                  <UML:BehavioralFeature.parameter>
+                    <UML:Parameter xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FEC'
+                      name = 'return' isSpecification = 'false' kind = 'return'>
+                      <UML:Parameter.type>
+                        <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Boolean'/>
+                      </UML:Parameter.type>
+                    </UML:Parameter>
+                  </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+                <UML:Operation xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF4'
+                  name = 'Read_Initial_States' visibility = 'public' isSpecification = 'false'
+                  ownerScope = 'classifier' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
+                  isLeaf = 'false' isAbstract = 'false'>
+                  <UML:ModelElement.taggedValue>
+                    <UML:TaggedValue xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF6'
+                      isSpecification = 'false'>
+                      <UML:TaggedValue.dataValue>This operation is called at initialization and retrieves, for each Button,  the current state of the corresponding Digital IO&apos;s Input Signal.
+If the Input Signal is set, calls the Changed operation to simulate a callback.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.type>
+                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+                      </UML:TaggedValue.type>
+                    </UML:TaggedValue>
+                  </UML:ModelElement.taggedValue>
+                  <UML:BehavioralFeature.parameter>
+                    <UML:Parameter xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF5'
+                      name = 'return' isSpecification = 'false' kind = 'return'/>
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
               </UML:Classifier.feature>
@@ -1452,15 +1530,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                 <UML:AssociationClass xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30'/>
               </UML:Comment.annotatedElement>
             </UML:Comment>
-            <UML:Dependency xmi.id = '-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69'
-              isSpecification = 'false'>
-              <UML:Dependency.client>
-                <UML:Package xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B'/>
-              </UML:Dependency.client>
-              <UML:Dependency.supplier>
-                <UML:Package xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F6F'/>
-              </UML:Dependency.supplier>
-            </UML:Dependency>
           </UML:Namespace.ownedElement>
         </UML:Package>
         <UML:Package xmi.id = '-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C98'
@@ -4159,6 +4228,7 @@ It should address one logical error (which may correspond to several necessary c
   </XMI.content>
 </XMI>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000985"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Domain Diagram"
 >
   <group name="Fig0"
@@ -5074,37 +5144,6 @@ It should address one logical error (which may correspond to several necessary c
     ></text>
   </group>
   <group name="Fig8"
-       description="org.argouml.uml.diagram.ui.FigDependency"
-       href="-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-      sourcePortFig="Fig2.0"
-      destPortFig="Fig7"
-      sourceFigNode="Fig2"
-      destFigNode="Fig7"
-      <argouml:pathitem figname="Fig8.1"
-                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
-                        figclassname="org.argouml.uml.diagram.ui.FigTextGroup"
-                        ownerhref="-64--88-1-75--65b43d09:148abed0556:-8000:0000000000000F69"
-                        angle="270.0"
-                        offset="25" />
-    </private>
-    <path name="Fig8.0"
-      description="org.argouml.gefext.ArgoFigPoly"
-      fill="0"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="88"
-              y="124" />
-      <lineto x="88"
-              y="176" />
-    </path>
-  </group>
-  <group name="Fig9"
        description="org.argouml.uml.diagram.static_structure.ui.FigPackage[656, 16, 188, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
        href="-64--88-1-74-5ff477d0:148fab8b104:-8000:0000000000000F75"
        fill="1"
@@ -5115,7 +5154,7 @@ It should address one logical error (which may correspond to several necessary c
     <private>
     </private>
     
-    <rectangle name="Fig9.0"
+    <rectangle name="Fig8.0"
       x="656"
       y="16"
       width="188"
@@ -5125,7 +5164,7 @@ It should address one logical error (which may correspond to several necessary c
       stroke="0"
       strokecolor="black"
     />
-    <path name="Fig9.1"
+    <path name="Fig8.1"
       description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
       fill="1"
       fillcolor="white"
@@ -5147,7 +5186,7 @@ It should address one logical error (which may correspond to several necessary c
       <lineto x="656"
               y="16" />
     </path>
-    <text name="Fig9.2"
+    <text name="Fig8.2"
       x="656"
       y="16"
       width="139"
@@ -5163,7 +5202,7 @@ It should address one logical error (which may correspond to several necessary c
       textsize="13"
       justification="Left"
     >Problem Reporting</text>
-    <group name="Fig9.3"
+    <group name="Fig8.3"
          description="org.argouml.uml.diagram.ui.FigStereotypesGroup[656, 16, 138, 21]"
          href="-64--88-1-74-5ff477d0:148fab8b104:-8000:0000000000000F75"
          fill="1"
@@ -5174,7 +5213,7 @@ It should address one logical error (which may correspond to several necessary c
       <private>
       </private>
       
-      <rectangle name="Fig9.3.0"
+      <rectangle name="Fig8.3.0"
         x="656"
         y="16"
         width="138"
@@ -5184,7 +5223,7 @@ It should address one logical error (which may correspond to several necessary c
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig9.3.1"
+      <text name="Fig8.3.1"
         x="656"
         y="16"
         width="138"
@@ -5201,7 +5240,7 @@ It should address one logical error (which may correspond to several necessary c
         justification="Center"
       >«domain»</text>
     </group>
-    <text name="Fig9.4"
+    <text name="Fig8.4"
       x="656"
       y="60"
       width="188"
@@ -5220,6 +5259,7 @@ It should address one logical error (which may correspond to several necessary c
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000986"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Van Fleet Class Diagram"
 >
   <group name="Fig0"
@@ -6557,6 +6597,7 @@ It should address one logical error (which may correspond to several necessary c
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B5"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Library Class Diagram"
 >
   <group name="Fig0"
@@ -7367,10 +7408,11 @@ It should address one logical error (which may correspond to several necessary c
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="House Management Class Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[240, 24, 275, 194]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[168, 16, 286, 194]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
        fill="1"
        fillcolor="white"
@@ -7381,9 +7423,9 @@ It should address one logical error (which may correspond to several necessary c
     </private>
     
     <rectangle name="Fig0.0"
-      x="240"
-      y="24"
-      width="275"
+      x="168"
+      y="16"
+      width="286"
       height="194"
       fill="1"
       fillcolor="white"
@@ -7391,9 +7433,9 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <text name="Fig0.1"
-      x="241"
-      y="25"
-      width="273"
+      x="169"
+      y="17"
+      width="284"
       height="23"
       fill="0"
       fillcolor="white"
@@ -7407,7 +7449,7 @@ It should address one logical error (which may correspond to several necessary c
       justification="Center"
     >+ Lamp</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[241, 25, 273, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[169, 17, 273, 0]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -7419,8 +7461,8 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig0.2.0"
-        x="241"
-        y="25"
+        x="169"
+        y="17"
         width="273"
         height="0"
         fill="0"
@@ -7430,9 +7472,9 @@ It should address one logical error (which may correspond to several necessary c
       />
     </group>
     <rectangle name="Fig0.3"
-      x="240"
-      y="48"
-      width="275"
+      x="168"
+      y="40"
+      width="286"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7440,7 +7482,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[241, 49, 273, 59]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[169, 41, 284, 59]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -7451,9 +7493,9 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig0.4.0"
-        x="241"
-        y="49"
-        width="273"
+        x="169"
+        y="41"
+        width="284"
         height="59"
         fill="0"
         fillcolor="white"
@@ -7461,9 +7503,9 @@ It should address one logical error (which may correspond to several necessary c
         strokecolor="black"
       />
       <text name="Fig0.4.1"
-        x="241"
-        y="49"
-        width="273"
+        x="169"
+        y="41"
+        width="284"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7477,9 +7519,9 @@ It should address one logical error (which may correspond to several necessary c
         justification="Left"
       >«id» +Name : Lamp_Name</text>
       <text name="Fig0.4.2"
-        x="241"
-        y="66"
-        width="273"
+        x="169"
+        y="58"
+        width="284"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7493,9 +7535,9 @@ It should address one logical error (which may correspond to several necessary c
         justification="Left"
       >+Timeout : Timer</text>
       <text name="Fig0.4.3"
-        x="241"
-        y="83"
-        width="273"
+        x="169"
+        y="75"
+        width="284"
         height="23"
         fill="0"
         fillcolor="white"
@@ -7510,9 +7552,9 @@ It should address one logical error (which may correspond to several necessary c
       >+Output : Output_Signal  = 0</text>
     </group>
     <rectangle name="Fig0.5"
-      x="240"
-      y="107"
-      width="275"
+      x="168"
+      y="99"
+      width="286"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7520,7 +7562,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[241, 108, 273, 110]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[169, 100, 284, 110]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -7531,9 +7573,9 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig0.6.0"
-        x="241"
-        y="108"
-        width="273"
+        x="169"
+        y="100"
+        width="284"
         height="110"
         fill="0"
         fillcolor="white"
@@ -7541,9 +7583,9 @@ It should address one logical error (which may correspond to several necessary c
         strokecolor="black"
       />
       <text name="Fig0.6.1"
-        x="241"
-        y="108"
-        width="273"
+        x="169"
+        y="100"
+        width="284"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7557,9 +7599,9 @@ It should address one logical error (which may correspond to several necessary c
         justification="Left"
       >«init» -Initialize()</text>
       <text name="Fig0.6.2"
-        x="241"
-        y="125"
-        width="273"
+        x="169"
+        y="117"
+        width="284"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7573,9 +7615,9 @@ It should address one logical error (which may correspond to several necessary c
         justification="Left"
       >-Clear_Timeout()</text>
       <text name="Fig0.6.3"
-        x="241"
-        y="142"
-        width="273"
+        x="169"
+        y="134"
+        width="284"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7589,9 +7631,9 @@ It should address one logical error (which may correspond to several necessary c
         justification="Left"
       >-Set_Timeout()</text>
       <text name="Fig0.6.4"
-        x="241"
-        y="159"
-        width="273"
+        x="169"
+        y="151"
+        width="284"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7605,9 +7647,9 @@ It should address one logical error (which may correspond to several necessary c
         justification="Left"
       >-Turn_Off()</text>
       <text name="Fig0.6.5"
-        x="241"
-        y="176"
-        width="273"
+        x="169"
+        y="168"
+        width="284"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7621,9 +7663,9 @@ It should address one logical error (which may correspond to several necessary c
         justification="Left"
       >-Turn_On()</text>
       <text name="Fig0.6.6"
-        x="241"
-        y="193"
-        width="273"
+        x="169"
+        y="185"
+        width="284"
         height="23"
         fill="0"
         fillcolor="white"
@@ -7635,11 +7677,11 @@ It should address one logical error (which may correspond to several necessary c
         bold="false"
         textsize="13"
         justification="Left"
-      >«accessor» -Set_Output(S : Output_Signal)</text>
+      >«accessor» -Set_Output(To : Output_Signal)</text>
     </group>
   </group>
   <group name="Fig1"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[232, 373, 284, 75]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[160, 365, 284, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
        fill="1"
        fillcolor="white"
@@ -7650,18 +7692,18 @@ It should address one logical error (which may correspond to several necessary c
     </private>
     
     <rectangle name="Fig1.0"
-      x="232"
-      y="373"
+      x="160"
+      y="365"
       width="284"
-      height="75"
+      height="126"
       fill="1"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     />
     <text name="Fig1.1"
-      x="233"
-      y="374"
+      x="161"
+      y="366"
       width="282"
       height="23"
       fill="0"
@@ -7676,7 +7718,7 @@ It should address one logical error (which may correspond to several necessary c
       justification="Center"
     >+ Button</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[233, 374, 282, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[161, 366, 282, 0]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -7688,8 +7730,8 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig1.2.0"
-        x="233"
-        y="374"
+        x="161"
+        y="366"
         width="282"
         height="0"
         fill="0"
@@ -7699,8 +7741,8 @@ It should address one logical error (which may correspond to several necessary c
       />
     </group>
     <rectangle name="Fig1.3"
-      x="232"
-      y="397"
+      x="160"
+      y="389"
       width="284"
       height="1"
       fill="1"
@@ -7709,7 +7751,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[233, 398, 282, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[161, 390, 282, 42]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -7720,20 +7762,20 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig1.4.0"
-        x="233"
-        y="398"
+        x="161"
+        y="390"
         width="282"
-        height="25"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
       <text name="Fig1.4.1"
-        x="233"
-        y="398"
+        x="161"
+        y="390"
         width="282"
-        height="23"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7745,41 +7787,9 @@ It should address one logical error (which may correspond to several necessary c
         textsize="13"
         justification="Left"
       >«id» +Name : Button_Name</text>
-    </group>
-    <rectangle name="Fig1.5"
-      x="232"
-      y="422"
-      width="284"
-      height="1"
-      fill="1"
-      fillcolor="black"
-      stroke="1"
-      strokecolor="black"
-    />
-    <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[233, 423, 282, 25]"
-         href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
-         fill="0"
-         fillcolor="white"
-         stroke="0"
-         strokecolor="black"
-    >
-      <private>
-      </private>
-      
-      <rectangle name="Fig1.6.0"
-        x="233"
-        y="423"
-        width="282"
-        height="25"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-      />
-      <text name="Fig1.6.1"
-        x="233"
-        y="423"
+      <text name="Fig1.4.2"
+        x="161"
+        y="407"
         width="282"
         height="23"
         fill="0"
@@ -7792,7 +7802,87 @@ It should address one logical error (which may correspond to several necessary c
         bold="false"
         textsize="13"
         justification="Left"
+      >+State : Boolean  = False</text>
+    </group>
+    <rectangle name="Fig1.5"
+      x="160"
+      y="431"
+      width="284"
+      height="1"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+    <group name="Fig1.6"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[161, 432, 282, 59]"
+         href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig1.6.0"
+        x="161"
+        y="432"
+        width="282"
+        height="59"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig1.6.1"
+        x="161"
+        y="432"
+        width="282"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
       >«callback» -Changed(S : Input_Signal_State)</text>
+      <text name="Fig1.6.2"
+        x="161"
+        y="449"
+        width="282"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >«accessor» +Get_State() : Boolean</text>
+      <text name="Fig1.6.3"
+        x="161"
+        y="466"
+        width="282"
+        height="23"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >+Read_Initial_States()</text>
     </group>
   </group>
   <group name="Fig2"
@@ -7846,14 +7936,14 @@ It should address one logical error (which may correspond to several necessary c
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="272"
-              y="217" />
-      <lineto x="272"
-              y="373" />
+      <moveto x="200"
+              y="209" />
+      <lineto x="200"
+              y="365" />
     </path>
   </group>
   <group name="Fig3"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[368, 248, 203, 105]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[288, 240, 208, 87]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
        fill="1"
        fillcolor="white"
@@ -7864,19 +7954,19 @@ It should address one logical error (which may correspond to several necessary c
     </private>
     
     <rectangle name="Fig3.0"
-      x="368"
-      y="248"
-      width="203"
-      height="105"
+      x="288"
+      y="240"
+      width="208"
+      height="87"
       fill="1"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     />
     <text name="Fig3.1"
-      x="369"
-      y="249"
-      width="201"
+      x="289"
+      y="241"
+      width="206"
       height="43"
       fill="0"
       fillcolor="white"
@@ -7890,7 +7980,7 @@ It should address one logical error (which may correspond to several necessary c
       justification="Center"
     >+ A1</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[369, 249, 201, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[289, 241, 206, 20]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -7901,9 +7991,9 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig3.2.0"
-        x="369"
-        y="249"
-        width="201"
+        x="289"
+        y="241"
+        width="206"
         height="20"
         fill="0"
         fillcolor="white"
@@ -7911,9 +8001,9 @@ It should address one logical error (which may correspond to several necessary c
         strokecolor="black"
       />
       <text name="Fig3.2.1"
-        x="369"
-        y="249"
-        width="201"
+        x="289"
+        y="241"
+        width="206"
         height="18"
         fill="0"
         fillcolor="white"
@@ -7928,9 +8018,9 @@ It should address one logical error (which may correspond to several necessary c
       >«association-class-naming»</text>
     </group>
     <rectangle name="Fig3.3"
-      x="368"
-      y="292"
-      width="203"
+      x="288"
+      y="284"
+      width="208"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7938,7 +8028,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 293, 201, 29]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[289, 285, 206, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -7949,10 +8039,10 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig3.4.0"
-        x="369"
-        y="293"
-        width="201"
-        height="29"
+        x="289"
+        y="285"
+        width="206"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7960,9 +8050,9 @@ It should address one logical error (which may correspond to several necessary c
       />
     </group>
     <rectangle name="Fig3.5"
-      x="368"
-      y="322"
-      width="203"
+      x="288"
+      y="305"
+      width="208"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7970,7 +8060,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 323, 201, 29]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[289, 306, 206, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -7981,10 +8071,10 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig3.6.0"
-        x="369"
-        y="323"
-        width="201"
-        height="29"
+        x="289"
+        y="306"
+        width="206"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -8011,10 +8101,10 @@ It should address one logical error (which may correspond to several necessary c
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="274"
-              y="295" />
-      <lineto x="368"
-              y="295" />
+      <moveto x="202"
+              y="287" />
+      <lineto x="288"
+              y="287" />
     </path>
   </group>
   <group name="Fig5"
@@ -8674,7 +8764,7 @@ It should address one logical error (which may correspond to several necessary c
     </group>
   </group>
   <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigComment[544, 184, 213, 59]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigComment[504, 176, 213, 48]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C"
        fill="1"
        fillcolor="white"
@@ -8685,10 +8775,10 @@ It should address one logical error (which may correspond to several necessary c
     </private>
     
     <rectangle name="Fig9.0"
-      x="544"
-      y="184"
+      x="504"
+      y="176"
       width="213"
-      height="59"
+      height="48"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -8701,18 +8791,18 @@ It should address one logical error (which may correspond to several necessary c
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="544"
-              y="184" />
-      <lineto x="746"
-              y="184" />
-      <lineto x="756"
-              y="194" />
-      <lineto x="756"
-              y="242" />
-      <lineto x="544"
-              y="242" />
-      <lineto x="544"
-              y="184" />
+      <moveto x="504"
+              y="176" />
+      <lineto x="706"
+              y="176" />
+      <lineto x="716"
+              y="186" />
+      <lineto x="716"
+              y="223" />
+      <lineto x="504"
+              y="223" />
+      <lineto x="504"
+              y="176" />
     </path>
     <path name="Fig9.2"
       description="org.tigris.gef.presentation.FigPoly"
@@ -8721,17 +8811,17 @@ It should address one logical error (which may correspond to several necessary c
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="746"
-              y="184" />
-      <lineto x="756"
-              y="194" />
-      <lineto x="746"
-              y="194" />
-      <lineto x="746"
-              y="184" />
+      <moveto x="706"
+              y="176" />
+      <lineto x="716"
+              y="186" />
+      <lineto x="706"
+              y="186" />
+      <lineto x="706"
+              y="176" />
     </path>
     <group name="Fig9.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[546, 186, 199, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[506, 178, 199, 0]"
          href="-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C"
          fill="0"
          fillcolor="white"
@@ -8743,8 +8833,8 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig9.3.0"
-        x="546"
-        y="186"
+        x="506"
+        y="178"
         width="199"
         height="0"
         fill="0"
@@ -8754,10 +8844,10 @@ It should address one logical error (which may correspond to several necessary c
       />
     </group>
     <text name="Fig9.4"
-      x="546"
-      y="186"
+      x="506"
+      y="178"
       width="199"
-      height="55"
+      height="44"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -8770,8 +8860,33 @@ It should address one logical error (which may correspond to several necessary c
       justification="Left"
     >{class-name=Button_To_Lamp}</text>
   </group>
+  <group name="Fig10"
+       description="org.argouml.uml.diagram.static_structure.ui.FigEdgeNote"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig9.0"
+      destPortFig="Fig3.0"
+      sourceFigNode="Fig9"
+      destFigNode="Fig3"
+    </private>
+    <path name="Fig10.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="504"
+              y="223" />
+      <lineto x="495"
+              y="240" />
+    </path>
+  </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7B"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Lamp Lifecycle"
 >
   <group name="Fig0"
@@ -9100,6 +9215,7 @@ It should address one logical error (which may correspond to several necessary c
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C98"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital_IO.Tcl Class Diagram"
 >
   <group name="Fig0"
@@ -9358,6 +9474,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEA"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Interrupt Handling Class Diagram"
 >
   <group name="Fig0"
@@ -9598,6 +9715,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFB"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Device Lifecycle"
 >
   <group name="Fig0"
@@ -9926,6 +10044,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E5E"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="States Class Diagram"
 >
   <group name="Fig0"
@@ -10387,6 +10506,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E89"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Monitor Lifecycle"
 >
   <group name="Fig0"
@@ -11664,6 +11784,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000EC4"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Monitor Class Events"
 >
   <group name="Fig0"
@@ -11781,6 +11902,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EE2"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Performance Class Diagram"
 >
   <group name="Fig0"
@@ -14038,6 +14160,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F6F"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital IO Class Diagram"
 >
   <group name="Fig0"
@@ -14664,6 +14787,7 @@ It won&apos;t appear in the generated code, because it&apos;s declared in an «i
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F76"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital_IO Interface Class Diagram"
 >
   <group name="Fig0"
@@ -15136,6 +15260,7 @@ It won&apos;t appear in the generated code, because it&apos;s declared in an «i
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F83"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital_IO Implementation Strategy Class Diagram"
 >
   <group name="Fig0"
@@ -15296,6 +15421,7 @@ It won&apos;t appear in the generated code, because it&apos;s declared in an «i
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F6F"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Digital IO Class Diagram for stub documentation"
 >
   <group name="Fig0"
@@ -15512,6 +15638,7 @@ This is slightly unusual.</text>
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74-5ff477d0:148fab8b104:-8000:0000000000000F75"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Problem Domain Class Diagram"
 >
   <group name="Fig0"
@@ -16479,7 +16606,7 @@ This is slightly unusual.</text>
     <rectangle name="Fig9.3"
       x="200"
       y="324"
-      width="125"
+      width="102"
       height="1"
       fill="1"
       fillcolor="black"
@@ -16502,7 +16629,7 @@ This is slightly unusual.</text>
       <rectangle name="Fig9.4.0"
         x="201"
         y="325"
-        width="123"
+        width="100"
         height="25"
         fill="0"
         fillcolor="white"
@@ -16513,7 +16640,7 @@ This is slightly unusual.</text>
     </group>
     <rectangle name="Fig9.5"
       x="200"
-      y="324"
+      y="349"
       width="125"
       height="1"
       fill="1"
@@ -16536,7 +16663,7 @@ This is slightly unusual.</text>
       
       <rectangle name="Fig9.6.0"
         x="201"
-        y="325"
+        y="350"
         width="123"
         height="76"
         fill="0"

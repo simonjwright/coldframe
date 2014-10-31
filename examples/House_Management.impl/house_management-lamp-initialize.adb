@@ -87,4 +87,7 @@ begin
 
    Connect (The_Button => Basement, To => Basement);
 
+   --  Read the initial button states.
+   Button.Read_Initial_States;
+
 end Initialize;

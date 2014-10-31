@@ -46,6 +46,15 @@ package body Digital_IO.Scripting is
 
    ------------------------------------------------------------------------
 
+   package Set_Boolean
+   is new ColdFrame.Stubs.Scripting.Set_Returned_Value
+     (Returned_Type      => Boolean,
+      Returned_Type_Name => "boolean",
+      Value              => Boolean'Value);
+   pragma Unreferenced (Set_Boolean);
+
+   ------------------------------------------------------------------------
+
    package Check_Output_Signal
      is new ColdFrame.Stubs.Scripting.Check_Passed_Value
        (Checked_Type      => Output_Signal,

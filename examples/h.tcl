@@ -24,9 +24,13 @@ proc check-outputs {s0 s1 s2 s3} {
     check-output 3 $s3
 }
 
-puts "script starting."
+puts "script starting"
 
-# no setup required
+# setup required
+set-boolean digital_io.get return false
+
+#setup done
+initialize
 start_dispatcher
 wait_until_idle
 

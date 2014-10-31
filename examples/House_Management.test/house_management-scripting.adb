@@ -7,7 +7,6 @@
 
 with ColdFrame.Project.Events.Standard.Test_Trace;
 with ColdFrame.Project.Scripted_Testing;
-with ColdFrame.Stubs;
 with Digital_IO.Initialize;
 with Digital_IO.Scripting;
 with House_Management.Initialize;
@@ -15,16 +14,24 @@ with Scripted_Testing;
 
 procedure House_Management.Scripting is
 
+   procedure Initialize
+     (The_Dispatcher : not null ColdFrame.Project.Events.Event_Queue_P);
+   procedure Initialize
+     (The_Dispatcher : not null ColdFrame.Project.Events.Event_Queue_P)
+   is
+   begin
+      Digital_IO.Initialize (The_Dispatcher);
+      House_Management.Initialize (The_Dispatcher);
+   end Initialize;
+
    Q : constant ColdFrame.Project.Events.Event_Queue_P
      := new ColdFrame.Project.Events.Standard.Test_Trace.Event_Queue;
 
 begin
 
-   ColdFrame.Stubs.Set_Up;
-   Digital_IO.Initialize (Q);
-   House_Management.Initialize (Q);
-
-   ColdFrame.Project.Scripted_Testing.Register (Q);
+   ColdFrame.Project.Scripted_Testing.Register
+     (The_Dispatcher  => Q,
+      With_Initialize => Initialize'Unrestricted_Access);
 
    Scripted_Testing.Start;
 
