@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>ColdFrame: Scripting Callbacks</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Scripting Callbacks</h1>
+
+<p><tt>ColdFrame.Callbacks.Scripting</tt> provides the generic
+
+<pre>
+generic
+   Callback_Type_Name : String;
+   with function Value (S : String) return T is <>;
+package ColdFrame.Callbacks.Scripting
+</pre>
+
+<p>which creates a Tcl
+command <tt>callback-&lt;callback_type_name&gt;</tt> (lowercased)
+which takes one argument: the value to be provided.
+
+<p>The callback is made at execution time.
+
+<p>As an example,
+<pre>
+with ColdFrame.Callbacks.Scripting;
+with Digital_IO.Input_Signal_State_Callback;
+package body Digital_IO.Scripting is
+
+   function Input_Signal_State_Value (S : String) return Input_Signal_State;
+
+   package Input_Signal_State_Callback
+     is new Digital_IO.Input_Signal_State_Callback.Scripting
+       (Callback_Type_Name => "digital_io.input_signal_state",
+        Value              => Input_Signal_State_Value);
+</pre>
+<p>allows you to write
+<pre>
+callback-digital_io.input_signal_state {0 true}
+</pre>
+
+<p>The function <tt>Input_Signal_State_Value</tt> is interesting
+because <tt>Input_Signal_State</tt> is a 2-component record,
+<pre>
+type Input_Signal_State is record
+   S : Input_Signal;
+   State : Boolean;
+end record;
+</pre>
+
+<p><a name="parsing-lists">The</a> Tcl list <tt>{0 true}</tt> above is
+presented by the instantiation
+of <tt>ColdFrame.Callbacks.Scripting</tt> as the string <tt>"0
+true"</tt>, which can be parsed as in
+<pre>
+function Input_Signal_State_Value (S : String) return Input_Signal_State
+is
+   Tokens : GNAT.String_Split.Slice_Set;
+begin
+   GNAT.String_Split.Create (S          => Tokens,
+                             From       => S,
+                             Separators => " " & ASCII.HT,
+                             Mode       => GNAT.String_Split.Multiple);
+   if Natural (GNAT.String_Split.Slice_Count (Tokens)) /= 2 then
+      raise Constraint_Error
+        with "digital_io.input_signal_state requires 2 components";
+   end if;
+   return Result : Input_Signal_State do
+      Result.S :=
+        Input_Signal'Value (GNAT.String_Split.Slice
+                              (Tokens,
+                               GNAT.String_Split.Slice_Number (1)));
+      Result.State :=
+        Boolean'Value (GNAT.String_Split.Slice
+                         (Tokens,
+                          GNAT.String_Split.Slice_Number (2)));
+   end return;
+end Input_Signal_State_Value;
+</pre>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

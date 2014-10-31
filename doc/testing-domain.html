@@ -36,6 +36,10 @@ and <a href="stubs.html">stubbed versions</a> of the lower-level
 domains that it uses; the program adds commands to the scripting
 language to interact with the stubbed versions.
 
+<p>This scheme is related to the use
+of <a href="http://en.wikipedia.org/wiki/Mock_object">mock
+objects</a>.
+
 <p>The scripting language supported
 is <a href="http://www.tcl.tk">Tcl</a>, and specifically the Ada
 binding <a href="http://sourceforge.net/projects/tcladashell/">TclAdaShell</a>. The
@@ -48,230 +52,14 @@ directory of the distribution. They are
 
 <ul>
 
-<li><a href="#coldframe-stubs-scripting"><tt>ColdFrame.Stubs.Scripting</tt></a>
+<li><a href="scripting-stubs.html"><tt>ColdFrame.Stubs.Scripting</tt></a>
 
-<li><a href="#coldframe-callbacks-scripting"><tt>ColdFrame.Callbacks.Scripting</tt></a>
+<li><a href="scripting-callbacks.html"><tt>ColdFrame.Callbacks.Scripting</tt></a>
 
-<li><tt>ColdFrame.Scripted_Testing_G</tt>
-<p>Provides the procedure <tt>Register</tt> to tell the framework
-which Dispatcher (event queue) is in use, and the
-commands <tt>start_dispatcher</tt> and <tt>wait_until_idle</tt>.
-
-<li><tt>ColdFrame.Project.Scripted_Testing</tt>
-<p>Instantiates <tt>ColdFrame.Scripted_Testing_G</tt> with the
-project Event Queue.
+<li><a href="scripting-event-queue.html">Scripting the Event
+Queue</tt></a>
 
 </ul>
-
-<p><b><a name="coldframe-stubs-scripting"><tt>ColdFrame.Stubs.Scripting</tt></a></b>
-
-<p>Provides the commands
-
-<dl>
-
-<dt> <tt>check_number_of_calls <subprogram-name> <natural></tt>
-<dd> At execution time, checks the number of calls to the subprogram.
-
-<dt> <tt>save_number_of_calls <subprogram-name></tt>
-<dd> At execution time, saves the current number of calls.
-
-<dt> <tt>check_number_of_new_calls <subprogram-name> <natural></tt>
-<dd> At execution time, checks the number of calls to the subprogram
-     since the last save_number_of_calls (if any).
-
-</dl>
-
-<p>In addition, it provides generics to support type-specific commands
-(note, values of types are always passed as one argument; if the type
-has more than one component, it is to be passed as a
-list, <tt>{component-1 component-2 ...}</tt>.
-
-<dl>
-
-<dt><tt>Check_Passed_Value</tt>
-<dd>
-<pre>
-generic
-   type Checked_Type is private;
-   Checked_Type_Name : String;
-   with function "=" (L, R : Checked_Type) return Boolean is <>;
-   with function Value (S : String) return Checked_Type is <>;
-   with function Image (V : Checked_Type) return String is <>;
-package Check_Passed_Value
-</pre>
-
-<p>Creates a Tcl command <tt>check-&lt;checked_type_name&gt;</tt>
-(lowercased) which takes 3 or 4 arguments:
-
-<ol>
-<li>fully-qualified name of subprogram
-<li>name of in or in-out parameter
-<li>expected value
-<li>optionally, the call to check (default => latest, -1 =>
-last-but-one, 1 => first).
-</ol>
-
-<p>At execution time, the created event retrieves the actual value
-passed to the subprogram in the parameter and checks against the
-supplied expected value. If they aren't equal, it raises
-<tt>Execution_Failure</tt> with a suitable message.
-
-<p>As an example,
-<pre>
-package Check_Output_Signal
-  is new ColdFrame.Stubs.Scripting.Check_Passed_Value
-    (Checked_Type      => Output_Signal,
-     Checked_Type_Name => "Digital_IO.Output_Signal",
-     Value             => Digital_IO.Output_Signal'Value,
-     Image             => Digital_IO.Output_Signal'Image);
-</pre>
-<p>allows you to write
-<pre>
-check-digital_io.output_signal digital_io.set to_state true
-</pre>
-<p>to check that, at the last call to <tt>Digital_IO.Set</tt>, the
-parameter named <tt>To_State</tt> had the value <tt>True</tt>.
-
-<p>Note the (recommended) use of the fully-qualified type name, and
-the use of <tt>'Value</tt>, <tt>'Image</tt>.
-
-<dt><tt>Check_Keyed_Value</tt>
-<dd>
-This was motivated by a problem testing
-the <a href="House_Management.html">House Management</a> domain: a
-single <i>Button</i> press will light more than one <i>Lamp</i>, but
-the order in which the individual <i>Lamp</i>s are lit depends on the
-internal details of the domain and may well change.
-
-<pre>
-generic
-   type Checked_Type is private;
-   Checked_Type_Name : String;
-   with function "=" (L, R : Checked_Type) return Boolean is <>;
-   with function Checked_Value (S : String) return Checked_Type is <>;
-   with function Checked_Image (V : Checked_Type) return String is <>;
-   type Key_Type is private;
-   Key_Type_Name : String;
-   with function "=" (L, R : Key_Type) return Boolean is <>;
-   with function Key_Value (S : String) return Key_Type is <>;
-   with function Key_Image (V : Key_Type) return String is <>;
-package Check_Keyed_Value
-</pre>
-
-<p>Creates a Tcl
-command <tt>check-&lt;checked_type_name&gt;-for-&lt;key_type_name&gt;</tt>
-(all lowercased) which takes 5 arguments:
-
-<ol>
-<li>fully-qualified name of subprogram
-<li>name of in or in-out key parameter
-<li>key value
-<li>name of in or in-out parameter to be checked
-<li>expected value
-</ol>
-
-<p>At execution time, the created event finds the latest call of the
-subprogram at which the key parameter had the key value, retrieves the
-corresponding result parameter value and checks against the supplied
-expected value. If they aren't equal, it raises
-<tt>Execution_Failure</tt> with a suitable message.
-
-<p>As an example,
-
-<pre>
-package Check_Boolean_For_Output_Signal
-  is new ColdFrame.Stubs.Scripting.Check_Keyed_Value
-    (Checked_Type      => Boolean,
-     Checked_Type_Name => "boolean",
-     Checked_Value     => Boolean'Value,
-     Checked_Image     => Boolean'Image,
-     Key_Type          => Output_Signal,
-     Key_Type_Name     => "digital_io.output_signal",
-     Key_Value         => Output_Signal'Value,
-     Key_Image         => Output_Signal'Image);
-</pre>
-<p>allows you to write
-<pre>
-check-boolean-for-digital_io.output_signal \
-    digital_io.set \
-    o 1 \
-    to_state false
-</pre>
-<p>to check that at the last call to <tt>Digital_IO.Set</tt> at which
-the parameter <tt>O</tt> had the value <tt>1</tt>, the
-parameter <tt>To_State</tt> had the value <tt>False</tt>.
-
-</dl>
-
-<p><b><a name="coldframe-callbacks-scripting"></a><tt>ColdFrame.Callbacks.Scripting</tt></b>
-
-<pre>
-generic
-   Callback_Type_Name : String;
-   with function Value (S : String) return T is <>;
-package ColdFrame.Callbacks.Scripting
-</pre>
-
-<p>Creates a Tcl command <tt>callback-&lt;callback_type_name&gt;</tt>
-(lowercased) which takes one argument: the value to be provided.
-
-<p>The callback is made at execution time.
-
-<p>As an example,
-<pre>
-with ColdFrame.Callbacks.Scripting;
-with Digital_IO.Input_Signal_State_Callback;
-package body Digital_IO.Scripting is
-
-   function Input_Signal_State_Value (S : String) return Input_Signal_State;
-
-   package Input_Signal_State_Callback
-     is new Digital_IO.Input_Signal_State_Callback.Scripting
-       (Callback_Type_Name => "digital_io.input_signal_state",
-        Value              => Input_Signal_State_Value);
-</pre>
-<p>allows you to write
-<pre>
-callback-digital_io.input_signal_state {0 true}
-</pre>
-
-<p>The function <tt>Input_Signal_State_Value</tt> is interesting
-because <tt>Input_Signal_State</tt> is a 2-component record,
-<pre>
-type Input_Signal_State is record
-   S : Input_Signal;
-   State : Boolean;
-end record;
-</pre>
-
-<p>The Tcl list <tt>{0 true}</tt> above is presented by the
-instantiation of <tt>ColdFrame.Callbacks.Scripting</tt> as the
-string <tt>"0 true"</tt>, which can be parsed as in
-<pre>
-function Input_Signal_State_Value (S : String) return Input_Signal_State
-is
-   Tokens : GNAT.String_Split.Slice_Set;
-begin
-   GNAT.String_Split.Create (S => Tokens,
-                             From => S,
-                             Separators => " " & ASCII.HT,
-                             Mode => GNAT.String_Split.Multiple);
-   if Natural (GNAT.String_Split.Slice_Count (Tokens)) /= 2 then
-      raise Constraint_Error
-        with "digital_io.input_signal_state requires 2 components";
-   end if;
-   return Result : Input_Signal_State do
-      Result.S :=
-        Input_Signal'Value (GNAT.String_Split.Slice
-                              (Tokens,
-                               GNAT.String_Split.Slice_Number (1)));
-      Result.State :=
-        Boolean'Value (GNAT.String_Split.Slice
-                         (Tokens,
-                          GNAT.String_Split.Slice_Number (2)));
-   end return;
-end Input_Signal_State_Value;
-</pre>
 
 <p><hr>
 <i>

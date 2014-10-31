@@ -67,6 +67,9 @@ DOCS =						\
   releases.html					\
   reserved-names.html				\
   resources.html				\
+  scripting-callbacks.html			\
+  scripting-event-queue.html			\
+  scripting-stubs.html				\
   serialization-page.html			\
   strategy.html					\
   stubs.html					\
