@@ -18,11 +18,25 @@ generic
    --  Instantiate with ColdFrame.Project.Events.
 package ColdFrame.Scripted_Testing_G is
 
-   procedure Register (The_Dispatcher : not null Events.Event_Queue_P);
+   type Queue_Procedure_Access is
+     access procedure (The_Dispatcher : not null Events.Event_Queue_P);
+
+   procedure Register (The_Dispatcher  : not null Events.Event_Queue_P;
+                       With_Initialize : not null Queue_Procedure_Access);
    --  The_Dispatcher needs to be from an instantiation of Test_G, so
    --  that Start_Dispatcher and Wait_Until_Idle work.
+   --
+   --  With_Initialize should call Initialize for each domain in the
+   --  software under test, in an appropriate order.
 
    --  The provided commands are:
+   --
+   --    (First set any returns/[in]out parameters for operations
+   --     called by domain initialization)
+   --
+   --  initialize: call With_Initialize with the registered Event_Queue.
+   --
+   --    (now check any calls made by domain initialization)
    --
    --  start_dispatcher: start the registered Event_Queue.
    --

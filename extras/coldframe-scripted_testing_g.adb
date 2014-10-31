@@ -13,19 +13,76 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with CArgv;
+with ColdFrame.Stubs;
 with Interfaces.C;
 with Scripted_Testing;
 with Tcl.Ada;
 
 package body ColdFrame.Scripted_Testing_G is
 
-   Dispatcher : Events.Event_Queue_P;
+   Dispatcher   : Events.Event_Queue_P;
+   Initializing : Queue_Procedure_Access;
 
-   procedure Register (The_Dispatcher : not null Events.Event_Queue_P)
+   procedure Register (The_Dispatcher  : not null Events.Event_Queue_P;
+                       With_Initialize : not null Queue_Procedure_Access)
    is
    begin
-      Dispatcher := The_Dispatcher;
+      Dispatcher   := The_Dispatcher;
+      Initializing := With_Initialize;
    end Register;
+
+   ------------------------------------------------------------------------
+
+   type Initialize_Command
+     is new Scripted_Testing.Command with null record;
+
+   Initialize_Name : constant String
+     := "initialize";
+
+   overriding
+   function Tcl_Command
+     (C      : not null access Initialize_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+
+   type Initialize_Action
+     is new Scripted_Testing.Action with null record;
+
+   overriding
+   procedure Execute (A : Initialize_Action);
+
+   function Tcl_Command
+     (C      : not null access Initialize_Command;
+      Interp : not null        Tcl.Tcl_Interp;
+      Argc   :                 Interfaces.C.int;
+      Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+   is
+      pragma Unreferenced (C);
+      pragma Unreferenced (Argv);
+      use type Interfaces.C.int;
+   begin
+      if Argc /= 1 then
+         Tcl.Ada.Tcl_AddErrorInfo
+           (Interp,
+            Initialize_Name & " requires zero arguments");
+         return Tcl.TCL_ERROR;
+      end if;
+      Scripted_Testing.Post
+        (Initialize_Action'(Scripted_Testing.Action with null record),
+         Interp => Interp);
+      return Tcl.TCL_OK;
+   end Tcl_Command;
+
+   procedure Execute (A : Initialize_Action)
+   is
+      pragma Unreferenced (A);
+   begin
+      Initializing (Dispatcher);
+   end Execute;
+
+   The_Initialize_Command :
+     aliased Initialize_Command;
 
    ------------------------------------------------------------------------
 
@@ -42,11 +99,11 @@ package body ColdFrame.Scripted_Testing_G is
       Argc   :                 Interfaces.C.int;
       Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-   type Start_Dispatcher_Event
-     is new Scripted_Testing.Event with null record;
+   type Start_Dispatcher_Action
+     is new Scripted_Testing.Action with null record;
 
    overriding
-   procedure Execute (E : Start_Dispatcher_Event);
+   procedure Execute (A : Start_Dispatcher_Action);
 
    function Tcl_Command
      (C      : not null access Start_Dispatcher_Command;
@@ -65,14 +122,14 @@ package body ColdFrame.Scripted_Testing_G is
          return Tcl.TCL_ERROR;
       end if;
       Scripted_Testing.Post
-        (Start_Dispatcher_Event'(Scripted_Testing.Event with null record),
+        (Start_Dispatcher_Action'(Scripted_Testing.Action with null record),
          Interp => Interp);
       return Tcl.TCL_OK;
    end Tcl_Command;
 
-   procedure Execute (E : Start_Dispatcher_Event)
+   procedure Execute (A : Start_Dispatcher_Action)
    is
-      pragma Unreferenced (E);
+      pragma Unreferenced (A);
    begin
       Dispatcher.Start;
    end Execute;
@@ -95,11 +152,11 @@ package body ColdFrame.Scripted_Testing_G is
       Argc   :                 Interfaces.C.int;
       Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-   type Wait_Until_Idle_Event
-     is new Scripted_Testing.Event with null record;
+   type Wait_Until_Idle_Action
+     is new Scripted_Testing.Action with null record;
 
    overriding
-   procedure Execute (E : Wait_Until_Idle_Event);
+   procedure Execute (A : Wait_Until_Idle_Action);
 
    function Tcl_Command
      (C      : not null access Wait_Until_Idle_Command;
@@ -118,14 +175,14 @@ package body ColdFrame.Scripted_Testing_G is
          return Tcl.TCL_ERROR;
       end if;
       Scripted_Testing.Post
-        (Wait_Until_Idle_Event'(Scripted_Testing.Event with null record),
+        (Wait_Until_Idle_Action'(Scripted_Testing.Action with null record),
          Interp => Interp);
       return Tcl.TCL_OK;
    end Tcl_Command;
 
-   procedure Execute (E : Wait_Until_Idle_Event)
+   procedure Execute (A : Wait_Until_Idle_Action)
    is
-      pragma Unreferenced (E);
+      pragma Unreferenced (A);
    begin
       Dispatcher.Wait_Until_Idle (Ignoring_Timers => True);
    end Execute;
@@ -136,10 +193,16 @@ package body ColdFrame.Scripted_Testing_G is
    ------------------------------------------------------------------------
 
 begin
+
+   Scripted_Testing.Register
+     (The_Command => The_Initialize_Command'Access,
+      To_Be_Named => Initialize_Name);
    Scripted_Testing.Register
      (The_Command => The_Start_Dispatcher_Command'Access,
       To_Be_Named => Start_Dispatcher_Name);
    Scripted_Testing.Register
      (The_Command => The_Wait_Until_Idle_Command'Access,
       To_Be_Named => Wait_Until_Idle_Name);
+
+   ColdFrame.Stubs.Set_Up;
 end ColdFrame.Scripted_Testing_G;

@@ -61,14 +61,14 @@ package body ColdFrame.Stubs.Scripting is
          Argc   :                 Interfaces.C.int;
          Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-      type Check_Event
-        is new Scripted_Testing.Event with record
+      type Check_Action
+        is new Scripted_Testing.Action with record
            Subprogram : Ada.Strings.Unbounded.Unbounded_String;
            Expected   : Natural := 0;
         end record;
 
       overriding
-      procedure Execute (E : Check_Event);
+      procedure Execute (A : Check_Action);
 
       function Tcl_Command
         (C      : not null access Check_Command;
@@ -87,8 +87,8 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
          end if;
          Scripted_Testing.Post
-           (Check_Event'
-              (Scripted_Testing.Event with
+           (Check_Action'
+              (Scripted_Testing.Action with
                Subprogram => +CArgv.Arg (Argv, 1),
                Expected   => Natural'Value (CArgv.Arg (Argv, 2))),
             Interp => Interp);
@@ -101,21 +101,21 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
       end Tcl_Command;
 
-      procedure Execute (E : Check_Event)
+      procedure Execute (A : Check_Action)
       is
       begin
          declare
-            Subprogram : constant String := +E.Subprogram;
+            Subprogram : constant String := +A.Subprogram;
             Actual : constant Natural :=
               Stubs.Number_Of_Calls (Subprogram);
          begin
-            if Actual /= E.Expected then
+            if Actual /= A.Expected then
                raise Scripted_Testing.Execution_Failure with
                  Subprogram
                  & " called"
                  & Natural'Image (Actual)
                  & " times, expected "
-                 & Natural'Image (E.Expected);
+                 & Natural'Image (A.Expected);
             end if;
          end;
       exception
@@ -151,13 +151,13 @@ package body ColdFrame.Stubs.Scripting is
          Argc   :                 Interfaces.C.int;
          Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-      type Save_Event
-        is new Scripted_Testing.Event with record
+      type Save_Action
+        is new Scripted_Testing.Action with record
            Subprogram : Ada.Strings.Unbounded.Unbounded_String;
         end record;
 
       overriding
-      procedure Execute (E : Save_Event);
+      procedure Execute (A : Save_Action);
 
       function Tcl_Command
         (C      : not null access Save_Command;
@@ -176,8 +176,8 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
          end if;
          Scripted_Testing.Post
-           (Save_Event'
-              (Scripted_Testing.Event with
+           (Save_Action'
+              (Scripted_Testing.Action with
                Subprogram => +CArgv.Arg (Argv, 1)),
             Interp => Interp);
          return Tcl.TCL_OK;
@@ -189,10 +189,10 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
       end Tcl_Command;
 
-      procedure Execute (E : Save_Event)
+      procedure Execute (A : Save_Action)
       is
       begin
-         Stubs.Save_Number_Of_Calls (+E.Subprogram);
+         Stubs.Save_Number_Of_Calls (+A.Subprogram);
       exception
          when Ex : No_Subprogram | No_Parameter | No_Value =>
             raise Scripted_Testing.Execution_Failure with
@@ -226,14 +226,14 @@ package body ColdFrame.Stubs.Scripting is
          Argc   :                 Interfaces.C.int;
          Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-      type Check_Event
-        is new Scripted_Testing.Event with record
+      type Check_Action
+        is new Scripted_Testing.Action with record
            Subprogram : Ada.Strings.Unbounded.Unbounded_String;
            Expected   : Natural := 0;
         end record;
 
       overriding
-      procedure Execute (E : Check_Event);
+      procedure Execute (A : Check_Action);
 
       function Tcl_Command
         (C      : not null access Check_Command;
@@ -252,8 +252,8 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
          end if;
          Scripted_Testing.Post
-           (Check_Event'
-              (Scripted_Testing.Event with
+           (Check_Action'
+              (Scripted_Testing.Action with
                Subprogram => +CArgv.Arg (Argv, 1),
                Expected   => Natural'Value (CArgv.Arg (Argv, 2))),
             Interp => Interp);
@@ -266,21 +266,21 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
       end Tcl_Command;
 
-      procedure Execute (E : Check_Event)
+      procedure Execute (A : Check_Action)
       is
       begin
          declare
-            Subprogram : constant String := +E.Subprogram;
+            Subprogram : constant String := +A.Subprogram;
             Actual : constant Natural :=
               Stubs.Number_Of_New_Calls (Subprogram);
          begin
-            if Actual /= E.Expected then
+            if Actual /= A.Expected then
                raise Scripted_Testing.Execution_Failure with
                  Subprogram
                  & " called"
                  & Natural'Image (Actual)
                  & " times, expected "
-                 & Natural'Image (E.Expected);
+                 & Natural'Image (A.Expected);
             end if;
          end;
       exception
@@ -302,6 +302,107 @@ package body ColdFrame.Stubs.Scripting is
    end Check_Number_Of_New_Calls;
 
 
+   package body Set_Returned_Value is
+
+      type Returned_Command
+        is new Scripted_Testing.Command with null record;
+
+      Returned_Name : constant String
+        := "set-"
+          & Ada.Strings.Fixed.Translate
+            (Returned_Type_Name,
+             Ada.Strings.Maps.Constants.Lower_Case_Map);
+
+      overriding
+      function Tcl_Command
+        (C      : not null access Returned_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
+
+      type Returned_Action
+        is new Scripted_Testing.Action with record
+           Subprogram : Ada.Strings.Unbounded.Unbounded_String;
+           Parameter  : Ada.Strings.Unbounded.Unbounded_String;
+           Returned   : Returned_Type;
+           Call       : Integer := 0;
+        end record;
+
+      overriding
+      procedure Execute (A : Returned_Action);
+
+      function Tcl_Command
+        (C      : not null access Returned_Command;
+         Interp : not null        Tcl.Tcl_Interp;
+         Argc   :                 Interfaces.C.int;
+         Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int
+      is
+         pragma Unreferenced (C);
+         Call : Integer := 0;
+         use type Interfaces.C.int;
+      begin
+         --  The arguments are <subprogram> <param> <value> {call}
+         if not (Argc in 4 .. 5) then
+            Tcl.Ada.Tcl_AddErrorInfo
+              (Interp,
+               Returned_Name & " requires 3 or 4 arguments");
+            return Tcl.TCL_ERROR;
+         end if;
+         if Argc = 5 then
+            Call := Integer'Value (CArgv.Arg (Argv, 4));
+         end if;
+         Scripted_Testing.Post
+           (Returned_Action'(Scripted_Testing.Action with
+                             Subprogram => +CArgv.Arg (Argv, 1),
+                             Parameter  => +CArgv.Arg (Argv, 2),
+                             Returned   => Value (CArgv.Arg (Argv, 3)),
+                             Call       => Call),
+            Interp => Interp);
+         return Tcl.TCL_OK;
+      exception
+         when E : others =>
+            Tcl.Ada.Tcl_AddErrorInfo
+              (Interp,
+               Returned_Name & ": " & Ada.Exceptions.Exception_Message (E));
+            return Tcl.TCL_ERROR;
+      end Tcl_Command;
+
+      procedure Execute (A : Returned_Action)
+      is
+      begin
+         declare
+            procedure Set_Returned_Type
+              is new ColdFrame.Stubs.Set_Output_Value (Returned_Type);
+            Subprogram : constant String := +A.Subprogram;
+            Parameter : constant String := +A.Parameter;
+            Call : Natural := A.Call;
+         begin
+            if Call = 0 then
+               Call := Number_Of_Calls (Subprogram) + 1;
+            end if;
+            Set_Returned_Type (Subprogram, Parameter, A.Returned, Call);
+         end;
+      exception
+         when Ex : No_Subprogram | No_Parameter | Already_Set =>
+            raise Scripted_Testing.Execution_Failure with
+              Ada.Exceptions.Exception_Message (Ex);
+      end Execute;
+
+      The_Returned_Command :
+        aliased Returned_Command;
+
+      procedure Initialize is
+      begin
+         Scripted_Testing.Register
+           (The_Command => The_Returned_Command'Access,
+            To_Be_Named => Returned_Name);
+      end Initialize;
+
+   begin
+      Initialize;
+   end Set_Returned_Value;
+
+
    package body Check_Passed_Value is
 
       type Check_Command
@@ -320,8 +421,8 @@ package body ColdFrame.Stubs.Scripting is
          Argc   :                 Interfaces.C.int;
          Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-      type Check_Event
-        is new Scripted_Testing.Event with record
+      type Check_Action
+        is new Scripted_Testing.Action with record
            Subprogram : Ada.Strings.Unbounded.Unbounded_String;
            Parameter  : Ada.Strings.Unbounded.Unbounded_String;
            Expected   : Checked_Type;
@@ -329,7 +430,7 @@ package body ColdFrame.Stubs.Scripting is
         end record;
 
       overriding
-      procedure Execute (E : Check_Event);
+      procedure Execute (A : Check_Action);
 
       function Tcl_Command
         (C      : not null access Check_Command;
@@ -352,11 +453,11 @@ package body ColdFrame.Stubs.Scripting is
             Call := Integer'Value (CArgv.Arg (Argv, 4));
          end if;
          Scripted_Testing.Post
-           (Check_Event'(Scripted_Testing.Event with
-                         Subprogram => +CArgv.Arg (Argv, 1),
-                         Parameter  => +CArgv.Arg (Argv, 2),
-                         Expected   => Value (CArgv.Arg (Argv, 3)),
-                         Call       => Call),
+           (Check_Action'(Scripted_Testing.Action with
+                          Subprogram => +CArgv.Arg (Argv, 1),
+                          Parameter  => +CArgv.Arg (Argv, 2),
+                          Expected   => Value (CArgv.Arg (Argv, 3)),
+                          Call       => Call),
             Interp => Interp);
          return Tcl.TCL_OK;
       exception
@@ -367,24 +468,24 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
       end Tcl_Command;
 
-      procedure Execute (E : Check_Event)
+      procedure Execute (A : Check_Action)
       is
       begin
          declare
             function Get_Checked_Type
               is new ColdFrame.Stubs.Get_Input_Value (Checked_Type);
-            Subprogram : constant String := +E.Subprogram;
-            Parameter : constant String := +E.Parameter;
+            Subprogram : constant String := +A.Subprogram;
+            Parameter : constant String := +A.Parameter;
             V : constant Checked_Type :=
-              Get_Checked_Type (Subprogram, Parameter, E.Call);
+              Get_Checked_Type (Subprogram, Parameter, A.Call);
          begin
-            if V /= E.Expected then
+            if V /= A.Expected then
                raise Scripted_Testing.Execution_Failure with
                  Subprogram
                  & " ("
                  & Parameter
                  & ") expected "
-                 & Image (E.Expected)
+                 & Image (A.Expected)
                  & ", got "
                  & Image (V);
             end if;
@@ -432,8 +533,8 @@ package body ColdFrame.Stubs.Scripting is
          Argc   :                 Interfaces.C.int;
          Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-      type Check_Event
-        is new Scripted_Testing.Event with record
+      type Check_Action
+        is new Scripted_Testing.Action with record
            Subprogram        : Ada.Strings.Unbounded.Unbounded_String;
            Key_Parameter     : Ada.Strings.Unbounded.Unbounded_String;
            Key_Value         : Key_Type;
@@ -442,7 +543,7 @@ package body ColdFrame.Stubs.Scripting is
         end record;
 
       overriding
-      procedure Execute (E : Check_Event);
+      procedure Execute (A : Check_Action);
 
       function Tcl_Command
         (C      : not null access Check_Command;
@@ -462,8 +563,8 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
          end if;
          Scripted_Testing.Post
-           (Check_Event'
-              (Scripted_Testing.Event with
+           (Check_Action'
+              (Scripted_Testing.Action with
                Subprogram        => +CArgv.Arg (Argv, 1),
                Key_Parameter     => +CArgv.Arg (Argv, 2),
                Key_Value         => Key_Value (CArgv.Arg (Argv, 3)),
@@ -479,34 +580,34 @@ package body ColdFrame.Stubs.Scripting is
             return Tcl.TCL_ERROR;
       end Tcl_Command;
 
-      procedure Execute (E : Check_Event)
+      procedure Execute (A : Check_Action)
       is
       begin
          declare
             function Get_Checked_Type
               is new ColdFrame.Stubs.Get_Keyed_Input_Value
                 (Key_Type => Key_Type, Result_Type => Checked_Type);
-            Subprogram : constant String := +E.Subprogram;
-            Key_Parameter : constant String := +E.Key_Parameter;
-            Checked_Parameter  : constant String := +E.Checked_Parameter;
+            Subprogram : constant String := +A.Subprogram;
+            Key_Parameter : constant String := +A.Key_Parameter;
+            Checked_Parameter  : constant String := +A.Checked_Parameter;
             V : constant Checked_Type :=
               Get_Checked_Type (For_Subprogram_Named => Subprogram,
                                 For_Parameter_Named  => Checked_Parameter,
                                 When_Parameter_Named => Key_Parameter,
-                                Had_Value            => E.Key_Value);
+                                Had_Value            => A.Key_Value);
          begin
-            if V /= E.Expected then
+            if V /= A.Expected then
                raise Scripted_Testing.Execution_Failure with
                  Subprogram
                  & " ("
                  & Key_Parameter
                  & "=>"
-                 & Ada.Strings.Fixed.Trim (Key_Image (E.Key_Value),
+                 & Ada.Strings.Fixed.Trim (Key_Image (A.Key_Value),
                                            Ada.Strings.Both)
                  & ","
                  & Checked_Parameter
                  & ") expected "
-                 & Ada.Strings.Fixed.Trim (Checked_Image (E.Expected),
+                 & Ada.Strings.Fixed.Trim (Checked_Image (A.Expected),
                                            Ada.Strings.Both)
                  & ", got "
                  & Checked_Image (V);

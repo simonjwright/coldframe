@@ -38,13 +38,13 @@ package body ColdFrame.Callbacks.Scripting is
       Argc   :                 Interfaces.C.int;
       Argv   :                 CArgv.Chars_Ptr_Ptr) return Interfaces.C.int;
 
-   type Callback_Event
-     is new Scripted_Testing.Event with record
+   type Callback_Action
+     is new Scripted_Testing.Action with record
         Data : T;
      end record;
 
    overriding
-   procedure Execute (E : Callback_Event);
+   procedure Execute (A : Callback_Action);
 
    function Tcl_Command
      (C      : not null access Callback_Command;
@@ -63,8 +63,8 @@ package body ColdFrame.Callbacks.Scripting is
          return Tcl.TCL_ERROR;
       end if;
       Scripted_Testing.Post
-        (Callback_Event'(Scripted_Testing.Event with
-                         Data => Value (CArgv.Arg (Argv, 1))),
+        (Callback_Action'(Scripted_Testing.Action with
+                          Data => Value (CArgv.Arg (Argv, 1))),
          Interp => Interp);
       return Tcl.TCL_OK;
    exception
@@ -75,10 +75,10 @@ package body ColdFrame.Callbacks.Scripting is
          return Tcl.TCL_ERROR;
    end Tcl_Command;
 
-   procedure Execute (E : Callback_Event)
+   procedure Execute (A : Callback_Action)
    is
    begin
-      Callbacks.Call_Callbacks (E.Data);
+      Callbacks.Call_Callbacks (A.Data);
    exception
       when Ex : others =>
          raise Scripted_Testing.Execution_Failure with

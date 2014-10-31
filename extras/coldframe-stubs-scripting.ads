@@ -47,6 +47,29 @@ package ColdFrame.Stubs.Scripting is
    --  {component-1 component-2 ...}.
 
    generic
+      type Returned_Type is private;
+      Returned_Type_Name : String;
+      with function Value (S : String) return Returned_Type is <>;
+   package Set_Returned_Value is
+      --  Creates a Tcl command set-<returned_type_name> (lowercased)
+      --  which takes 3 or 4 arguments:
+      --
+      --  fully-qualified name of subprogram
+      --  name of in-out or out parameter ("return" for a function
+      --  return)
+      --  the required value
+      --  optionally, the call from which the value is to be returned
+      --  (default is 0, implies "from now on").
+      --
+      --  At execution time, the created event sets the value to be
+      --  returned by the stub.
+   private
+      procedure Initialize;
+      --  Placed here to allow the package to have a body.
+   end Set_Returned_Value;
+
+
+   generic
       type Checked_Type is private;
       Checked_Type_Name : String;
       with function "=" (L, R : Checked_Type) return Boolean is <>;
