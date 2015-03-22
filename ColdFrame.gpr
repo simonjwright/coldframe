@@ -22,16 +22,13 @@ library project ColdFrame is
   for Library_Name use "coldframe";
   for Library_Kind use "static";
   for Library_Dir use "lib-static";
-  for Library_Options use External_As_List ("LDFLAGS", " ");
+  for Library_Options use external_as_list ("LDFLAGS", " ");
 
   for Source_Dirs use ("lib", "project");
 
   for Object_Dir use ".build";
 
-  package Ide renames Options.Ide;
-
   package Builder renames Options.Builder;
-
   package Compiler renames Options.Compiler;
 
   --  This package is for use with GNAT GPL 2011 and (probably) GNAT 4.7.

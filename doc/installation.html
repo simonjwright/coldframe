@@ -30,6 +30,10 @@ XSLT processor)
 
 </ul>
 
+<p>The <tt>examples/</tt> also
+require <a href="http://sourceforge.net/projects/tcladashell/">TclAdaShell</a>
+to be installed on <tt>ADA_PROJECT_PATH</tt>.
+
 <h2>ColdFrame setup</h2>
 
 <p>First, unpack ColdFrame (it unpacks into a
@@ -245,7 +249,6 @@ project Event_Test is
      "<i>Event_Test.test</i>");
 
   for Object_Dir use ".build";
-  package IDE renames Options.IDE;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
@@ -299,7 +302,6 @@ project Event_Test is
     );
 
   for Object_Dir use ".build";
-  package IDE renames Options.IDE;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;

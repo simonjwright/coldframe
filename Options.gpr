@@ -19,13 +19,7 @@ project Options is
   --  This project has no associated sources.
   for Source_Files use ();
 
-  --  GLIDE/GPS configuration (these are the defaults).
-  package IDE is
-     for Compiler_Command ("ada") use "gnatmake";
-     for Gnatlist use "gnatls";
-  end IDE;
-
-  --  GNATMAKE configuration options.
+  --  Builder configuration options.
   package Builder is
      for Default_Switches ("ada") use
        (

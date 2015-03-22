@@ -23,7 +23,7 @@ project Callback_Manager_Test is
    for Exec_Dir use ".";
 
    for Object_Dir use ".build";
-   package IDE renames Options.IDE;
+
    package Builder renames Options.Builder;
    package Compiler renames Options.Compiler;
    package Binder renames Options.Binder;

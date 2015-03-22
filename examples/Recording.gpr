@@ -11,7 +11,6 @@ project Recording is
      "Recording.gen");
 
   for Object_Dir use ".build";
-  package Ide renames Options.Ide;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;

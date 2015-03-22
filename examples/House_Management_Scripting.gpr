@@ -21,7 +21,7 @@ project House_Management_Scripting is
      "Digital_IO_Interface.gen"
     );
   for Object_Dir use ".build-house_management_test";
-  package IDE renames Options.IDE;
+
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
