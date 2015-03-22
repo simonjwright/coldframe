@@ -1,5 +1,5 @@
 <!-- XSL stylesheet to generate Ada code for Collections, which are
-     Ada.Containers.Vectors. -->
+     Ada.Containers.[Bounded_]Vectors. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -53,15 +53,38 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     </xsl:variable>
 
+    <!-- Make the name of the Containers package -->
+    <xsl:variable name="max">
+      <xsl:call-template name="ut:number-of-instances"/>
+    </xsl:variable>
+    <xsl:variable name="containers-package">
+      <xsl:choose>
+        <xsl:when test="$max &lt;= $max-bounded-container">
+          Bounded_Vectors
+        </xsl:when>
+        <xsl:otherwise>
+          Ada.Containers.Vectors
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <!-- Concrete Vectors package -->
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
-    <xsl:text>with Ada.Containers.Vectors;&#10;</xsl:text>
+    <xsl:text>with Ada.Containers.</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text>Bounded_</xsl:text>
+    </xsl:if>
+    <xsl:text>Vectors;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Vectors&#10;</xsl:text>
-    <xsl:text>is new Ada.Containers.Vectors&#10;</xsl:text>
+    <xsl:text>is new Ada.Containers.</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text>Bounded_</xsl:text>
+    </xsl:if>
+    <xsl:text>Vectors&#10;</xsl:text>
     <xsl:value-of select="$C"/>
     <xsl:text>(Index_Type => Positive,&#10;</xsl:text>
     <xsl:value-of select="$C"/>

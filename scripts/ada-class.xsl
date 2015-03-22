@@ -366,8 +366,21 @@
        </xsl:choose>
 
        <!-- .. the instance container .. -->
-       <xsl:value-of select="$I"/>
-       <xsl:text>package Containers is new Ada.Containers.Hashed_Maps&#10;</xsl:text>
+       <xsl:choose>
+
+         <xsl:when test="$max &lt;= $max-bounded-container">
+           <!-- Wnen the size isn't too big, use the Bounded version -->
+           <xsl:value-of select="$I"/>
+           <xsl:text>package Containers is new Ada.Containers.Bounded_Hashed_Maps&#10;</xsl:text>
+         </xsl:when>
+
+         <xsl:otherwise>
+           <!-- Use the Unbounded version -->
+           <xsl:value-of select="$I"/>
+           <xsl:text>package Containers is new Ada.Containers.Hashed_Maps&#10;</xsl:text>
+         </xsl:otherwise>
+
+       </xsl:choose>
 
        <xsl:value-of select="$IC"/>
        <xsl:text>(Key_Type => Identifier,&#10;</xsl:text>
@@ -381,9 +394,26 @@
        <xsl:text> "=" => "=");&#10;</xsl:text>
        <xsl:value-of select="$blank-line"/>
 
-       <xsl:value-of select="$I"/>
-       <xsl:text>The_Container : Containers.Map;&#10;</xsl:text>
-       <xsl:value-of select="$blank-line"/>
+       <xsl:choose>
+         <xsl:when test="$max &lt;= $max-bounded-container">
+           <xsl:value-of select="$I"/>
+           <xsl:text>The_Container : Containers.Map&#10;</xsl:text>
+           <xsl:value-of select="$IC"/>
+           <xsl:text>(Capacity =&gt; </xsl:text>
+           <xsl:value-of select="$max"/>
+           <xsl:text>,&#10;</xsl:text>
+           <xsl:value-of select="$IC"/>
+           <xsl:text> Modulus =&gt; </xsl:text>
+           <xsl:value-of select="$max"/>
+           <xsl:text>);&#10;</xsl:text>
+           <xsl:value-of select="$blank-line"/>
+         </xsl:when>
+         <xsl:otherwise>
+           <xsl:value-of select="$I"/>
+           <xsl:text>The_Container : Containers.Map;&#10;</xsl:text>
+           <xsl:value-of select="$blank-line"/>
+         </xsl:otherwise>
+       </xsl:choose>
 
      </xsl:otherwise>
 
@@ -491,7 +521,14 @@
         <!-- Need Maps if there's more than one instance and we aren't
              using arrays. -->
         <xsl:if test="$max &gt; 1 and $array = 'no'">
-          <xsl:text>with Ada.Containers.Hashed_Maps;&#10;</xsl:text>
+          <xsl:choose>
+            <xsl:when test="$max &lt;= $max-bounded-container">
+              <xsl:text>with Ada.Containers.Bounded_Hashed_Maps;&#10;</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>with Ada.Containers.Hashed_Maps;&#10;</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:if>
 
         <!-- Check for Unbounded_Strings. -->
