@@ -1101,9 +1101,18 @@
              {assoc-abbrev} : constant {assoc}.Vectors.Vector
                := {role-a} ({a-abbrev});
              It : {assoc}.Vectors.Cursor := {assoc-abbrev}.First;
-             Result : {b}.Vectors.Vector;
+             Result : {b}.Vectors.Vector (Capacity => {b-max});
              use type {assoc}.Vectors.Cursor;
              -->
+
+        <!-- Calculate the maximum number of b (target) instances. -->
+        <xsl:variable name="b-max">
+          <xsl:call-template name="ut:number-of-instances">
+            <xsl:with-param
+              name="c"
+              select="/domain/class[name=$role-b/classname]"/>
+          </xsl:call-template>
+        </xsl:variable>
 
         <xsl:value-of select="$II"/>
         <xsl:value-of
@@ -1130,7 +1139,13 @@
         <xsl:value-of select="$II"/>
         <xsl:text>Result : </xsl:text>
         <xsl:value-of select="$b"/>
-        <xsl:text>.Vectors.Vector;&#10;</xsl:text>
+        <xsl:text>.Vectors.Vector</xsl:text>
+        <xsl:if test="$b-max &lt;= $max-bounded-container">
+          <xsl:text> (Capacity =&gt; </xsl:text>
+          <xsl:value-of select="$b-max"/>
+          <xsl:text>)</xsl:text>
+        </xsl:if>
+        <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use type </xsl:text>
         <xsl:value-of select="$assoc"/>

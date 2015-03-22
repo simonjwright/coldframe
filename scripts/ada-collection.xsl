@@ -302,7 +302,7 @@
          function {dom}.{class}.All_Instances
            return {dom}.{class}.Vectors.Vector is
             It : Vectors.Cursor := The_Container.First;
-            Result : Vectors.Vector;
+            Result : Vectors.Vector (Capacity => {max});
             use type Vectors.Cursor;
          begin
             while It /= No_Element loop
@@ -332,7 +332,13 @@
     </xsl:if>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>Result : Vectors.Vector;&#10;</xsl:text>
+    <xsl:text>Result : Vectors.Vector</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text> (Capacity =&gt; </xsl:text>
+      <xsl:value-of select="$max"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
@@ -391,7 +397,7 @@
            return {dom}.{class}.Vectors.Vector is
             It : Containers.Cursor := The_Container.First;
             use type Containers.Cursor;
-            Result : Vectors.Vector;
+            Result : Vectors.Vector (Capacity => {max});
          begin
             while It /= Containers.No_Element loop
                declare
@@ -426,7 +432,13 @@
     </xsl:if>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>Result : Vectors.Vector;&#10;</xsl:text>
+    <xsl:text>Result : Vectors.Vector</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text> (Capacity =&gt; </xsl:text>
+      <xsl:value-of select="$max"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
@@ -502,7 +514,7 @@
            (The_Vector : {dom}.{class}.Vectors.Vector)
            return {dom}.{class}.Vectors.Vector is
             It : Vectors.Cursor := The_Vector.First;
-            Result : Vectors.Vector;
+            Result : Vectors.Vector (Capacity => {max});
             use type Vectors.Cursor;
          begin
             while It /= Vectors.No_Element loop
@@ -537,7 +549,13 @@
     <xsl:value-of select="$I"/>
     <xsl:text>It : Vectors.Cursor := The_Vector.First;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>Result : Vectors.Vector;&#10;</xsl:text>
+    <xsl:text>Result : Vectors.Vector</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text> (Capacity =&gt; </xsl:text>
+      <xsl:value-of select="$max"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>use type Vectors.Cursor;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
