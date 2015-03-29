@@ -1,0 +1,35 @@
+--  GNAT project file for the Stairwell demonstration.
+
+with "../Options";
+with "../ColdFrame_Ravenscar";
+
+project Stairwell_STM32F4_Demo is
+
+  for Main use ("stairwell_stm32f4_demo");
+
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("House_Management.impl",
+                       "House_Management.gen",
+                       "Digital_IO.impl",
+                       "Digital_IO.gen")
+                       &
+                       "Digital_IO.STM32F4.impl";
+
+  for Target use ColdFrame_Ravenscar'Target;
+
+  for Object_Dir use ".build-house_management_stm32f4";
+
+  package Builder renames ColdFrame_Ravenscar.Builder;
+  package Compiler renames ColdFrame_Ravenscar.Compiler;
+
+  package Linker is
+    --  --create-map-file isn't supported in this configuration
+    for Default_Switches ("ada") use
+    (
+    "-Wl,-gc-sections",
+    "-Wl,-Map," & Project'Project_Dir & Project'Name & ".map"
+    );
+  end Linker;
+
+end Stairwell_STM32F4_Demo;

@@ -5,12 +5,14 @@ syntax: glob
 # General
 \#*\#
 *~
+*.orig
 *.ad?.metrix
 *.ada
 *.ali
 *.aux
 *.bb
 *.bbg
+*.bin
 *.cp
 *.da
 *.domains
@@ -20,11 +22,13 @@ syntax: glob
 *.gcov
 *.ky
 *.log
+*.map
 *.norm
 *.norm-stamp
 *.pdf
 *.pg
 *.raw
+*.stamp
 *.toc
 *.tp
 *.vr
@@ -35,6 +39,7 @@ coldframeout
 
 # Libraries
 lib-static
+lib-ravenscar-static
 lib-relocatable
 include
 
@@ -68,6 +73,7 @@ examples/problem_reporting_harness{.exe,}
 examples/stairwell_demo{.exe,}
 examples/stairwell_logging_demo{.exe,}
 examples/stairwell_raspi_demo
+examples/stairwell_stm32f4_demo
 examples/states-t{.exe,}
 examples/van_fleet-demo{.exe,}
 

@@ -24,7 +24,7 @@ library project ColdFrame is
   for Library_Dir use "lib-static";
   for Library_Options use external_as_list ("LDFLAGS", " ");
 
-  for Source_Dirs use ("lib", "project");
+  for Source_Dirs use ("lib", "lib/standard", "project", "project/standard");
 
   for Object_Dir use ".build";
 

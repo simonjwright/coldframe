@@ -41,10 +41,10 @@ begin
       if S.S in Valid_Input_Signal then
 
          declare
-            procedure Button_Pushed (L : Lamp.Handle);
+            procedure Button_Pushed (L : not null Lamp.Handle);
             pragma Inline (Button_Pushed);
             procedure Process is new Lamp.Iterate (Button_Pushed);
-            procedure Button_Pushed (L : Lamp.Handle) is
+            procedure Button_Pushed (L : not null Lamp.Handle) is
                Ev : Lamp.Button_Push (For_The_Instance => L);
                pragma Warnings (Off, Ev);
             begin

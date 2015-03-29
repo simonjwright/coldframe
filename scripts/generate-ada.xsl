@@ -92,6 +92,9 @@
   <!-- Control limit on number of hash buckets. -->
   <xsl:param name="max-hash-buckets" select="49"/>
 
+  <!-- Control profile. -->
+  <xsl:param name="profile" select="standard"/>
+
   <!-- Control indentation. -->
   <xsl:param name="standard-indent" select="'   '"/>
 
@@ -472,7 +475,9 @@
         select="'.. the domain Initialize procedure body ..'"/>
     </xsl:call-template>
 
-    <!--
+    <!-- This is the full version. For non-standard profiles, there is
+         no exception handling and no active classes.
+
          with Ada.Exceptions;
          with ColdFrame.Project.Log_Error;
          with ColdFrame.Task_Deletion;
@@ -508,8 +513,8 @@
          end {domain}.Initialize;
          -->
     <!-- Any exceptions are logged, in case the user forgot to include
-         logging of unhandled exceptions in her main program, and the
-         original exception re-riased. This may lead to double
+         logging of unhandled exceptions in their main program, and the
+         original exception re-raised. This may lead to double
          logging, better than none.  -->
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
@@ -531,10 +536,12 @@
       select="class[operation/@initialize]"/>
 
     <!-- .. withs, starting with exception handling .. -->
-    <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
-    <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
-    <xsl:if test="class[@active]">
-      <xsl:text>with ColdFrame.Task_Deletion;&#10;</xsl:text>
+    <xsl:if test="$profile = 'standard'">
+      <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
+      <xsl:if test="class[@active]">
+        <xsl:text>with ColdFrame.Task_Deletion;&#10;</xsl:text>
+      </xsl:if>
     </xsl:if>
     <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
@@ -587,10 +594,12 @@
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initializing := True;&#10;</xsl:text>
 
-    <!-- .. task deletion registration .. -->
-    <xsl:if test="class[@active]">
-      <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Task_Deletion.Add_Using_Domain;&#10;</xsl:text>
+    <xsl:if test="$profile = 'standard'">
+      <!-- .. task deletion registration .. -->
+      <xsl:if test="class[@active]">
+        <xsl:value-of select="$II"/>
+        <xsl:text>ColdFrame.Task_Deletion.Add_Using_Domain;&#10;</xsl:text>
+      </xsl:if>
     </xsl:if>
 
     <!-- .. the Events package initialization .. -->
@@ -605,11 +614,15 @@
     <xsl:value-of select="$II"/>
     <xsl:text>end if;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
-    <xsl:text>if Events.Dispatcher /= null then&#10;</xsl:text>
-    <xsl:value-of select="$III"/>
-    <xsl:text>ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>end if;&#10;</xsl:text>
+
+
+    <xsl:if test="$profile = 'standard'">
+      <xsl:text>if Events.Dispatcher /= null then&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
+      <xsl:text>ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>end if;&#10;</xsl:text>
+    </xsl:if>
 
     <!-- .. any domain initialization .. -->
     <xsl:if test="initialize">
@@ -644,15 +657,17 @@
     <xsl:value-of select="$I"/>
     <xsl:text>end if;&#10;</xsl:text>
 
-    <xsl:text>exception&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>when E : others =&gt;&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>ColdFrame.Project.Log_Error&#10;</xsl:text>
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>(Ada.Exceptions.Exception_Information (E));&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>raise;&#10;</xsl:text>
+    <xsl:if test="$profile = 'standard'">
+      <xsl:text>exception&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>when E : others =&gt;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>ColdFrame.Project.Log_Error&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(Ada.Exceptions.Exception_Information (E));&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>raise;&#10;</xsl:text>
+    </xsl:if>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
@@ -716,54 +731,58 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Cascade_Initialize;&#10;</xsl:text>
 
-    <!-- The domain Cascade_Tear_Down procedure .. -->
-    <xsl:call-template name="ut:progress-message">
-      <xsl:with-param
-        name="m"
-        select="'.. the domain Cascade_Tear_Down procedure ..'"/>
-    </xsl:call-template>
+    <xsl:if test="$profile = 'standard'">
 
-    <!--
-         procedure {domain}.Cascade_Tear_Down;
+      <!-- The domain Cascade_Tear_Down procedure .. -->
+      <xsl:call-template name="ut:progress-message">
+        <xsl:with-param
+          name="m"
+          select="'.. the domain Cascade_Tear_Down procedure ..'"/>
+      </xsl:call-template>
+
+      <!--
+           procedure {domain}.Cascade_Tear_Down;
+           -->
+
+      <xsl:call-template name="ut:do-not-edit"/>
+      <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+      <xsl:call-template name="ut:identification-info"/>
+      <xsl:text>procedure </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
+
+      <!-- .. the domain Cascade_Tear_Down procedure body .. -->
+      <xsl:call-template name="ut:progress-message">
+        <xsl:with-param
+          name="m"
+          select="'.. the domain Cascade_Tear_Down procedure body ..'"/>
+      </xsl:call-template>
+
+      <!--
+           with {domain}.Tear_Down;
+           procedure {domain}.Cascade_Tear_Down is
+           begin
+              Tear_Down;
+           end {domain}.Cascade_Tear_Down;
          -->
 
-    <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
-    <xsl:call-template name="ut:identification-info"/>
-    <xsl:text>procedure </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
+      <xsl:call-template name="ut:could-edit"/>
+      <xsl:call-template name="ut:identification-info"/>
 
-    <!-- .. the domain Cascade_Tear_Down procedure body .. -->
-    <xsl:call-template name="ut:progress-message">
-      <xsl:with-param
-        name="m"
-        select="'.. the domain Cascade_Tear_Down procedure body ..'"/>
-    </xsl:call-template>
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Tear_Down;&#10;</xsl:text>
+      <xsl:text>procedure </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Cascade_Tear_Down is&#10;</xsl:text>
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>Tear_Down;&#10;</xsl:text>
+      <xsl:text>end </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
 
-    <!--
-         with {domain}.Tear_Down;
-         procedure {domain}.Cascade_Tear_Down is
-         begin
-            Tear_Down;
-         end {domain}.Cascade_Tear_Down;
-         -->
-
-    <xsl:call-template name="ut:could-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
-
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Tear_Down;&#10;</xsl:text>
-    <xsl:text>procedure </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Cascade_Tear_Down is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>Tear_Down;&#10;</xsl:text>
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
+    </xsl:if>
 
     <!-- Any support packages for specially-declared types. -->
     <xsl:call-template name="ut:progress-message">
@@ -944,11 +963,15 @@
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
-    <!-- Teardown -->
-    <xsl:call-template name="ut:progress-message">
-      <xsl:with-param name="m" select="'.. Teardown procedures ..'"/>
-    </xsl:call-template>
-    <xsl:call-template name="td:domain-teardown"/>
+    <xsl:if test="$profile = 'standard'">
+
+      <!-- Teardown -->
+      <xsl:call-template name="ut:progress-message">
+        <xsl:with-param name="m" select="'.. Teardown procedures ..'"/>
+      </xsl:call-template>
+      <xsl:call-template name="td:domain-teardown"/>
+
+    </xsl:if>
 
     <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. done.'"/>

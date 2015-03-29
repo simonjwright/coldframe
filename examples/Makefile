@@ -84,6 +84,20 @@ stairwell_demo$(exe):				\
   force
 	$(GNATMAKE) -p -Pstairwell_demo
 
+stairwell_stm32f4_demo.bin: stairwell_stm32f4_demo
+stairwell_stm32f4_demo: stairwell_stm32f4_demo-domains.stamp
+	gprbuild -p -P stairwell_stm32f4_demo.gpr
+%.bin: %
+	arm-eabi-objcopy -O binary $< $@
+stairwell_stm32f4_demo-domains.stamp:
+	$(MAKE) -f $(COLDFRAME)/Makefile.inc	\
+	  House_Management.gen			\
+	  Digital_IO.gen			\
+	  PROFILE=ravenscar
+	touch $@
+
+.PHONY: stairwell_stm32f4_demo-domains.stamp
+
 EXECUTABLES += van_fleet-demo$(exe)
 van_fleet-demo$(exe): Van_Fleet.gen
 	$(GNATMAKE) -p -PVan_Fleet

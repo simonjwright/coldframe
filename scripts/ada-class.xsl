@@ -219,7 +219,7 @@
    </xsl:if>
 
    <!-- .. the State_Image function spec .. -->
-   <xsl:if test="statemachine">
+   <xsl:if test="statemachine and $profile='standard'">
      <xsl:call-template name="st:state-image-spec"/>
    </xsl:if>
 
@@ -233,28 +233,31 @@
      <xsl:when test="$max = 1">
        <!-- Only one possible instance .. -->
 
-       <!-- .. fix the storage pool for Handle .. -->
-       <!--
-            use type Standard.System.Storage_Elements.Storage_Offset;
-            Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-              (Pool_Size => Instance'Max_Size_In_Storage_Elements,
-               Elmt_Size => Instance'Max_Size_In_Storage_Elements,
-               Alignment => Instance'Alignment);
-            for Handle'Storage_Pool use Storage_Pool;
-            -->
-       <xsl:value-of select="$I"/>
-       <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
-       <xsl:value-of select="$I"/>
-       <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
-       <xsl:value-of select="$IC"/>
-       <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-       <xsl:value-of select="$IC"/>
-       <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-       <xsl:value-of select="$IC"/>
-       <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
-       <xsl:value-of select="$I"/>
-       <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
-       <xsl:value-of select="$blank-line"/>
+       <xsl:if test="$profile = 'standard'">
+
+         <!-- .. fix the storage pool for Handle .. -->
+         <!--
+              use type Standard.System.Storage_Elements.Storage_Offset;
+              Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
+                (Pool_Size => Instance'Max_Size_In_Storage_Elements,
+                 Elmt_Size => Instance'Max_Size_In_Storage_Elements,
+                 Alignment => Instance'Alignment);
+              for Handle'Storage_Pool use Storage_Pool;
+              -->
+         <xsl:value-of select="$I"/>
+         <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+         <xsl:value-of select="$I"/>
+         <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
+         <xsl:value-of select="$IC"/>
+         <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+         <xsl:value-of select="$IC"/>
+         <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+         <xsl:value-of select="$IC"/>
+         <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
+         <xsl:value-of select="$I"/>
+         <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
+         <xsl:value-of select="$blank-line"/>
+       </xsl:if>
 
        <!-- .. use a simple pointer .. -->
        <xsl:value-of select="$I"/>
@@ -265,46 +268,48 @@
      <xsl:when test="$array='yes'">
        <!-- Use an array. -->
 
-       <!-- Create the storage pool for Handle. -->
-       <xsl:choose>
+       <xsl:if test="$profile = 'standard'">
+         <!-- Create the storage pool for Handle. -->
+         <xsl:choose>
 
-         <xsl:when test="$max &lt;= $max-bounded-container">
-           <!--
-                use type Standard.System.Storage_Elements.Storage_Offset;
-                Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-                  (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
-                   Elmt_Size => Instance'Max_Size_In_Storage_Elements,
-                   Alignment => Instance'Alignment);
-                for Handle'Storage_Pool use Storage_Pool;
-                -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
-           <xsl:value-of select="$I"/>
-           <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
-           <xsl:value-of select="$max"/>
-           <xsl:text>,&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
-           <xsl:value-of select="$I"/>
-           <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-         </xsl:when>
+           <xsl:when test="$max &lt;= $max-bounded-container">
+             <!--
+                  use type Standard.System.Storage_Elements.Storage_Offset;
+                  Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
+                    (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
+                     Elmt_Size => Instance'Max_Size_In_Storage_Elements,
+                     Alignment => Instance'Alignment);
+                  for Handle'Storage_Pool use Storage_Pool;
+                  -->
+             <xsl:value-of select="$I"/>
+             <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+             <xsl:value-of select="$I"/>
+             <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
+             <xsl:value-of select="$IC"/>
+             <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
+             <xsl:value-of select="$max"/>
+             <xsl:text>,&#10;</xsl:text>
+             <xsl:value-of select="$IC"/>
+             <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+             <xsl:value-of select="$IC"/>
+             <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
+             <xsl:value-of select="$I"/>
+             <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
+             <xsl:value-of select="$blank-line"/>
+           </xsl:when>
 
-         <!-- .. or use the standard pool ..-->
-         <xsl:otherwise>
-           <!--
-                for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;
-                -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-         </xsl:otherwise>
+           <!-- .. or use the standard pool ..-->
+           <xsl:otherwise>
+             <!--
+                  for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;
+                  -->
+             <xsl:value-of select="$I"/>
+             <xsl:text>for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;&#10;</xsl:text>
+             <xsl:value-of select="$blank-line"/>
+           </xsl:otherwise>
 
-       </xsl:choose>
+         </xsl:choose>
+       </xsl:if>
 
        <!-- The instance container.
             The_Container : array ({identifying-attribute-type}) of Handle;
@@ -325,45 +330,47 @@
        <xsl:text>function Instance_Hash (I : Identifier) return Ada.Containers.Hash_Type;&#10;</xsl:text>
        <xsl:value-of select="$blank-line"/>
 
-       <xsl:choose>
+       <xsl:if test="$profile = 'standard'">
+         <xsl:choose>
 
-         <xsl:when test="$max &lt;= $max-bounded-container">
-           <!--
-                use type Standard.System.Storage_Elements.Storage_Offset;
-                Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-                  (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
-                   Elmt_Size => Instance'Max_Size_In_Storage_Elements,
-                   Alignment => Instance'Alignment);
-                for Handle'Storage_Pool use Storage_Pool;
-                -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
-           <xsl:value-of select="$I"/>
-           <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
-           <xsl:value-of select="$max"/>
-           <xsl:text>,&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-           <xsl:value-of select="$IC"/>
-           <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
-           <xsl:value-of select="$I"/>
-           <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-         </xsl:when>
+           <xsl:when test="$max &lt;= $max-bounded-container">
+             <!--
+                  use type Standard.System.Storage_Elements.Storage_Offset;
+                  Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
+                    (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
+                     Elmt_Size => Instance'Max_Size_In_Storage_Elements,
+                     Alignment => Instance'Alignment);
+                  for Handle'Storage_Pool use Storage_Pool;
+                  -->
+             <xsl:value-of select="$I"/>
+             <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+             <xsl:value-of select="$I"/>
+             <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
+             <xsl:value-of select="$IC"/>
+             <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
+             <xsl:value-of select="$max"/>
+             <xsl:text>,&#10;</xsl:text>
+             <xsl:value-of select="$IC"/>
+             <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+             <xsl:value-of select="$IC"/>
+             <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
+             <xsl:value-of select="$I"/>
+             <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
+             <xsl:value-of select="$blank-line"/>
+           </xsl:when>
 
-         <!-- .. or use the standard pool ..-->
-         <xsl:otherwise>
-           <!--
-                for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;
-                -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;&#10;</xsl:text>
-           <xsl:value-of select="$blank-line"/>
-         </xsl:otherwise>
+           <!-- .. or use the standard pool ..-->
+           <xsl:otherwise>
+             <!--
+                  for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;
+                  -->
+             <xsl:value-of select="$I"/>
+             <xsl:text>for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;&#10;</xsl:text>
+             <xsl:value-of select="$blank-line"/>
+           </xsl:otherwise>
 
-       </xsl:choose>
+         </xsl:choose>
+       </xsl:if>
 
        <!-- .. the instance container .. -->
        <xsl:choose>
@@ -509,11 +516,13 @@
         <!-- Need storage management if there are any instances. -->
         <xsl:if test="$max &gt; 0">
 
-          <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
+          <xsl:if test="$profile = 'standard'">
+            <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
 
-          <!-- Need storage offset arithmetic for bounded classes. -->
-          <xsl:if test="$max &lt;= $max-bounded-container">
-            <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
+            <!-- Need storage offset arithmetic for bounded classes. -->
+            <xsl:if test="$max &lt;= $max-bounded-container">
+              <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
+            </xsl:if>
           </xsl:if>
 
         </xsl:if>
@@ -584,19 +593,36 @@
 
         <xsl:if test="@active">
 
-          <!-- Need task deletion. -->
-          <xsl:text>with ColdFrame.Task_Deletion_G;&#10;</xsl:text>
+          <xsl:choose>
 
-          <!-- If the (active) class has a priority specified, need System. -->
-          <xsl:if test="@priority">
-            <xsl:text>with System;&#10;</xsl:text>
-          </xsl:if>
+            <xsl:when test="$profile = 'standard'">
+              <!-- Need task deletion. -->
+              <xsl:text>with ColdFrame.Task_Deletion_G;&#10;</xsl:text>
+
+              <!-- If the (active) class has a priority specified,
+                   need System. -->
+              <xsl:if test="@priority">
+                <xsl:text>with System;&#10;</xsl:text> </xsl:if>
+              </xsl:when>
+
+            <xsl:otherwise>
+              <!-- not a standard profile; no tasks. -->
+              <xsl:call-template name="ut:log-error"/>
+              <xsl:message>
+                <xsl:text>Error: active classes not supported in profile &quot;</xsl:text>
+                <xsl:value-of select="$profile"/>
+                <xsl:text>&quot;, class </xsl:text>
+                <xsl:value-of select="name"/>
+              </xsl:message>
+            </xsl:otherwise>
+
+          </xsl:choose>
 
         </xsl:if>
 
       </xsl:otherwise>
-
     </xsl:choose>
+
 
   </xsl:template>
 
@@ -935,7 +961,7 @@
     <xsl:call-template name="op:operation-body-parts"/>
 
     <!-- .. state image body .. -->
-    <xsl:if test="statemachine">
+    <xsl:if test="statemachine and $profile='standard'">
       <xsl:call-template name="st:state-image-body"/>
     </xsl:if>
 

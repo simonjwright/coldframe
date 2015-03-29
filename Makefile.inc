@@ -36,6 +36,7 @@ GENERATE_ACCESSORS ?= defined
 GENERATE_DIAGRAMS ?= yes
 GENERATE_EVENT_LOGGING ?= no
 GENERATE_STUBS ?= no
+PROFILE ?= standard
 STACK_DUMP ?= yes
 UNIT_TEST_SUPPORT ?= no
 VERBOSE ?= no
@@ -221,6 +222,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	  generate-accessors=$(GENERATE_ACCESSORS)			  \
 	  generate-event-logging=$(GENERATE_EVENT_LOGGING)		  \
 	  generate-stubs=$(GENERATE_STUBS)				  \
+	  profile=$(PROFILE)						  \
 	  unit-test-support=$(UNIT_TEST_SUPPORT)			  \
 	  verbose=$(VERBOSE)						  \
 	  >$@-t								  \

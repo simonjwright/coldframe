@@ -12,14 +12,24 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  Set up a tracing Event Queue.
+with ColdFrame.Events;
+with Digital_IO.Initialize;
+with House_Management.Initialize;
+with Digital_IO.STM32F4_Support;
+with Stairwell_STM32F4_Demo_Dispatcher;
+with Start_FreeRTOS_Scheduler;
 
-with ColdFrame.Project.Events.Standard.Trace;
+procedure Stairwell_STM32F4_Demo is
 
-separate (House_Management.Events)
-procedure Initialize is
+   Dispatcher : constant ColdFrame.Events.Event_Queue_P
+     := Stairwell_STM32F4_Demo_Dispatcher.Dispatcher'Unchecked_Access;
+
 begin
 
-   Dispatcher := new ColdFrame.Project.Events.Standard.Trace.Event_Queue;
+   Digital_IO.Initialize (Dispatcher);
+   Digital_IO.STM32F4_Support.Initialize;
+   House_Management.Initialize (Dispatcher);
 
-end Initialize;
+   Start_FreeRTOS_Scheduler;
+
+end Stairwell_STM32F4_Demo;

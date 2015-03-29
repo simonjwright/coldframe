@@ -22,7 +22,7 @@ with Ada.Containers;
 with Ada.Numerics.Discrete_Random;
 with Ada.Text_IO; use Ada.Text_IO;
 
-procedure ColdFrame.Hash.Strings.Generate is
+procedure ColdFrame_Hash_Strings_Generate is
 
 
    procedure Init (Seed : Integer := 10009);
@@ -60,4 +60,4 @@ begin
 
    New_Line;
 
-end ColdFrame.Hash.Strings.Generate;
+end ColdFrame_Hash_Strings_Generate;
