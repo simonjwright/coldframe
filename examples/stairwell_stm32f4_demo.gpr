@@ -1,7 +1,8 @@
 --  GNAT project file for the Stairwell demonstration.
 
-with "../Options";
+with "../Options_Ravenscar";
 with "../ColdFrame_Ravenscar";
+with "/Users/simon/stm32f4-gnat-rts/stm32f429i-disco-bsp/stm32f429i_disco_bsp";
 
 project Stairwell_STM32F4_Demo is
 

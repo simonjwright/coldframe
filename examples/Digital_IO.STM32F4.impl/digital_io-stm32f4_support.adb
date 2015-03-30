@@ -18,38 +18,15 @@ with stm32f429xx_h; use stm32f429xx_h;
 
 package body Digital_IO.STM32F4_Support is
 
-   --  procedure Callback (Pin_Changed : I2C.MCP23017.GPIO_Pin; To : Boolean);
-
-   --  procedure Callback (Pin_Changed : I2C.MCP23017.GPIO_Pin; To : Boolean)
-   --  is
-   --     Pin_Map : constant array (Input_Pin) of Input_Signal
-   --       := (I2C.MCP23017.B0 => 0,
-   --           I2C.MCP23017.B1 => 1,
-   --           I2C.MCP23017.B2 => 2,
-   --           I2C.MCP23017.B3 => 3,
-   --           I2C.MCP23017.B4 => 4,
-   --           I2C.MCP23017.B5 => 5,
-   --           I2C.MCP23017.B6 => 6,
-   --           I2C.MCP23017.B7 => 7);
-   --  begin
-   --     Put_Line ("Pin " & Pin_Changed'Img & " changed: " & To'Img);
-   --     if Pin_Changed not in Input_Pin then
-   --        raise Program_Error with "pin changed isn't an input pin";
-   --     end if;
-   --     if Pin_Map (Pin_Changed) in 0 .. 3 then
-   --        Input_Signal_State_Callback.Call_Callbacks
-   --          ((S => Pin_Map (Pin_Changed),
-   --            State => To));
-   --     end if;
-   --  end Callback;
-
    protected type EXTI15_10_IRQ_T
    with
      Interrupt_Priority => System.Interrupt_Priority'First
    is new IRQ_Handler with
+      pragma Warnings (Off, "*not referenced*");
       overriding
       entry Button_Pressed
         (B : out Digital_IO_Support.Input_Signal);
+      pragma Warnings (On, "*not referenced*");
    private
       Triggered : Boolean := False;
       Last_Button_Pressed : Digital_IO_Support.Input_Signal;
@@ -126,12 +103,13 @@ package body Digital_IO.STM32F4_Support is
       --  Don't need to configure OSPEEDR, because the pin is an input.
 
       --  Configure PUPDR for pull-up (AdaCore have no-pull?)
+      --  This means that the 'on' state is logic 0.
       declare
          Pull_Register : Interfaces.Unsigned_32;
       begin
          Pull_Register := GPIOC.PUPDR;
          Pull_Register := Pull_Register and not GPIO_PUPDR_PUPDR11;
-         Pull_Register := Pull_Register or Interfaces.Shift_Left (1, 11 * 2);
+         Pull_Register := Pull_Register or GPIO_PUPDR_PUPDR11_0;
          GPIOC.PUPDR := Pull_Register;
       end;
 
@@ -188,9 +166,10 @@ package body Digital_IO.STM32F4_Support is
                 return Boolean
    is
       pragma Unreferenced (This);  -- only used for dispatching
-      pragma Unreferenced (For_Input);
+      use type Interfaces.Unsigned_32;
    begin
-      return True;
+      --  The 'on' state is logic 0, because we're pulling up.
+      return (GPIOC.IDR and GPIO_IDR_IDR_11) = 0;
    end Get;
 
    procedure Set (This : Implementation;
