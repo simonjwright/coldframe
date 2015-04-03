@@ -36,8 +36,9 @@ package body Digital_IO.STM32F4_Support is
          --  4      => (True, 4),
          others => <>);
 
-      type Volatile_GPIO_TypeDef is new GPIO_TypeDef with Volatile;
-      type GPIO_Access is access all Volatile_GPIO_TypeDef;
+      --  type Volatile_GPIO_TypeDef is new GPIO_TypeDef with Volatile;
+      --  type GPIO_Access is access all Volatile_GPIO_TypeDef;
+      type GPIO_Access is access all GPIO_TypeDef;
 
       type GPIO_Index is (A, B, C, D, E, F, G, H, I, J, K)
       with
@@ -46,19 +47,17 @@ package body Digital_IO.STM32F4_Support is
       --  set in EXTICR to associate the Line with the GPIO.
 
       GPIOs : constant array (GPIO_Index) of GPIO_Access :=
-        (Volatile_GPIO_TypeDef (GPIOA)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOB)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOC)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOD)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOE)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOF)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOG)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOH)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOI)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOJ)'Unrestricted_Access,
-         Volatile_GPIO_TypeDef (GPIOK)'Unrestricted_Access);
-      --  Sorry about the Unrestricted_Access, only way I found to
-      --  work round the rules.
+        (GPIOA'Access,
+         GPIOB'Access,
+         GPIOC'Access,
+         GPIOD'Access,
+         GPIOE'Access,
+         GPIOF'Access,
+         GPIOG'Access,
+         GPIOH'Access,
+         GPIOI'Access,
+         GPIOJ'Access,
+         GPIOK'Access);
 
       type Used_Line (Valid : Boolean := False) is record
          case Valid is
@@ -241,7 +240,7 @@ package body Digital_IO.STM32F4_Support is
             end;
 
             declare
-               GPIO : Volatile_GPIO_TypeDef renames
+               GPIO : GPIO_TypeDef renames
                  GPIOs (Input_Signal_To_Line (J).GPIO).all;
                Line : constant Natural :=
                  Natural (Input_Signal_To_Line (J).Line);
@@ -316,7 +315,7 @@ package body Digital_IO.STM32F4_Support is
 
             --  Configure the line as an output.
             declare
-               GPIO : Volatile_GPIO_TypeDef renames
+               GPIO : GPIO_TypeDef renames
                  GPIOs (Output_Signal_To_Line (J).GPIO).all;
                Line : constant Natural :=
                  Natural (Output_Signal_To_Line (J).Line);
@@ -348,7 +347,7 @@ package body Digital_IO.STM32F4_Support is
       use type Interfaces.Unsigned_32;
       Line : constant Natural :=
         Natural (Input_Signal_To_Line (Input_Signal (For_Input)).Line);
-      GPIO : Volatile_GPIO_TypeDef renames
+      GPIO : GPIO_TypeDef renames
         GPIOs (Input_Signal_To_Line (Input_Signal (For_Input)).GPIO).all;
    begin
       --  The 'on' state is logic 0, because we're pulling up.
@@ -363,7 +362,7 @@ package body Digital_IO.STM32F4_Support is
       Line : constant Natural :=
         Natural (Output_Signal_To_Line (Output_Signal (For_Output)).Line);
       Bits : Bits_16x1 := (others => 0);
-      GPIO : Volatile_GPIO_TypeDef renames
+      GPIO : GPIO_TypeDef renames
         GPIOs (Output_Signal_To_Line (Output_Signal (For_Output)).GPIO).all;
    begin
       Bits (Line) := 1;
