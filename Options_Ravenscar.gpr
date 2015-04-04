@@ -15,45 +15,46 @@
 --  This file provides default compilation options for ColdFrame for a
 --  Ravenscar target on STM32F4.
 
-project Options_Ravenscar is
+abstract project Options_Ravenscar is
 
-  --  This project has no associated sources.
-  for Source_Files use ();
+   --  This project has no associated sources.
+   for Source_Files use ();
 
-  --  Builder configuration options.
-  package Builder is
-     for Default_Switches ("ada") use
-       (
-        "-g",
-        "-Og",
-        "-ffunction-sections",
-        "-fdata-sections",
-        "--RTS="
-          & external ("HOME")
-          & "/stm32f4-gnat-rts/stm32f429i-disco-rtos"
-       );
-  end Builder;
+   STM32F4_GNAT_RTS := external ("HOME") & "/stm32f4-gnat-rts";
 
-  --  GCC configuration options.
-  package Compiler is
-     for Default_Switches ("ada") use
-       (
-        "-gnatqQafoy",
-        --  keep .alis, assertions, full messages, hardware overflow
-        --  checks, style checks
+   --  Builder configuration options.
+   package Builder is
+      for Default_Switches ("ada") use
+        (
+         "-gnat12",
+         "-g",
+         "-Og",
+         "-ffunction-sections",
+         "-fdata-sections",
+         "--RTS=" & STM32F4_GNAT_RTS & "/stm32f429i-disco-rtos"
+        );
+   end Builder;
 
-        "-gnatwaL",
-        --  All standard warnings except elaboration problems
+   --  GCC configuration options.
+   package Compiler is
+      for Default_Switches ("ada") use
+        (
+         "-gnatqQafoy",
+         --  keep .alis, assertions, full messages, hardware overflow
+         --  checks, style checks
 
-        "-gnatw.X"
-        --  .. and non-local exceptions (exceptions invoking Last
-        --  Chance Handler: expected!)
-       );
-  end Compiler;
+         "-gnatwaL",
+         --  All standard warnings except elaboration problems
 
-  -- GNATBIND configuration options.
-  package Binder is
-     for Default_Switches ("ada") use ("-E");
-  end Binder;
+         "-gnatw.X"
+         --  .. and non-local exceptions (exceptions invoking Last
+         --  Chance Handler: expected!)
+        );
+   end Compiler;
+
+   -- GNATBIND configuration options.
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
 
 end Options_Ravenscar;

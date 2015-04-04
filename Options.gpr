@@ -14,7 +14,7 @@
 
 --  This file provides default compilation options for ColdFrame.
 
-project Options is
+abstract project Options is
 
   --  This project has no associated sources.
   for Source_Files use ();
@@ -23,7 +23,7 @@ project Options is
   package Builder is
      for Default_Switches ("ada") use
        (
-        "-gnat05",
+        "-gnat12",
         "-g",
         "-j2",
         "-m"
