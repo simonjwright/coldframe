@@ -26,7 +26,7 @@ setup:: force
 	gprbuild -p -P ColdFrame
 
 # Set up subdirectories
-SETUP_SUBDIRS = lib tools
+SETUP_SUBDIRS = lib tools examples
 setup::
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s setup;			\

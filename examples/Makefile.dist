@@ -27,8 +27,6 @@ DIST ?= ./dist
 all:
 	@echo "Only meant to be called from the parent Makefile.dist."
 
-DATE = $(subst cf-,,$(notdir $(DIST)))
-
 STAIRWELL_DEMO =							\
   stairwell_demo.gpr							\
   stairwelllights.tcl							\
@@ -42,7 +40,7 @@ STAIRWELL_DEMO =							\
   Digital_IO.RasPi.impl/digital_io-raspi_support.adb			\
   Digital_IO.RasPi.impl/digital_io-raspi_support.ads			\
   House_Management.impl/house_management-button-changed.adb		\
-  House_Management.impl/house_management-button-read_initial_states.ads	\
+  House_Management.impl/house_management-button-read_initial_states.adb	\
   House_Management.impl/house_management-events-initialize.adb		\
   House_Management.impl/house_management-lamp-clear_timeout.adb		\
   House_Management.impl/house_management-lamp-initialize.adb		\
@@ -147,9 +145,14 @@ ALL = $(STAIRWELL_DEMO) $(HOUSE_MANAGEMENT_TEST) $(HOUSE_MANAGEMENT_SCRIPTING) \
 
 ALL += Makefile
 
+SUBDIRS = stm32f4
+
 dist:
 	-$(RM) -rf $(DIST)/examples
 	$(MKDIR) -p $(DIST)/examples
 	$(TAR) cf - $(ALL) | tar xf - -C $(DIST)/examples/
+	for s in $(SUBDIRS); do						\
+	  make -C $$s -f Makefile.dist DIST=$(DIST)/examples/ dist;	\
+	done
 
 .PHONY: dist force

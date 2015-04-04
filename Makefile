@@ -23,7 +23,7 @@ setup:: force
 	gprbuild -p -P ColdFrame
 
 # Set up subdirectories
-SETUP_SUBDIRS = lib tools
+SETUP_SUBDIRS = lib tools examples
 setup::
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s setup;			\
@@ -100,6 +100,8 @@ TOP_LEVEL_ITEMS =				\
   Makefile.inc					\
   ColdFrame.gpr					\
   Options.gpr					\
+  ColdFrame_Ravenscar.gpr			\
+  Options_Ravenscar.gpr				\
   debian-6.diff
 
 SUBDIRS = doc examples extras lib models project scripts test tools
