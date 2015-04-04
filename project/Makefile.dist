@@ -25,46 +25,54 @@ include ../Makefile.inc
 all:
 	@echo "Only meant to be called from the parent Makefile.dist."
 
-ALL =								\
-  coldframe-project-calendar.adb				\
-  coldframe-project-calendar.ads				\
-  coldframe-project-event_support.ads				\
-  coldframe-project-events-callback_manager.ads			\
-  coldframe-project-events-creation.ads				\
-  coldframe-project-events-monitoring.ads			\
-  coldframe-project-events-monitoring-test.ads			\
-  coldframe-project-events-monitoring-test_trace.ads		\
-  coldframe-project-events-monitoring-trace.ads			\
-  coldframe-project-events-standard-inspection.ads		\
-  coldframe-project-events-standard-test.ads			\
-  coldframe-project-events-standard-test_debug.ads		\
-  coldframe-project-events-standard-test_trace.ads		\
-  coldframe-project-events-standard-trace.ads			\
-  coldframe-project-events-standard.ads				\
-  coldframe-project-events.ads					\
-  coldframe-project-held_events-inspection.adb			\
-  coldframe-project-held_events-inspection.ads			\
-  coldframe-project-held_events-inspection_signature.ads	\
-  coldframe-project-held_events-signature.ads			\
-  coldframe-project-held_events.adb				\
-  coldframe-project-held_events.ads				\
-  coldframe-project-high_resolution_time.ads			\
-  coldframe-project-limits.adb					\
-  coldframe-project-limits.ads					\
-  coldframe-project-log_error.adb				\
-  coldframe-project-log_error.ads				\
-  coldframe-project-log_info.adb				\
-  coldframe-project-log_info.ads				\
-  coldframe-project-logging_support.adb				\
-  coldframe-project-logging_support.ads				\
-  coldframe-project-storage_pools.ads				\
-  coldframe-project-times.adb					\
-  coldframe-project-times.ads					\
-  coldframe-project.ads
+COMMON =					\
+coldframe-project.ads
+
+STANDARD =							\
+standard/coldframe-project-calendar.adb				\
+standard/coldframe-project-calendar.ads				\
+standard/coldframe-project-event_support.ads			\
+standard/coldframe-project-events-callback_manager.ads		\
+standard/coldframe-project-events-creation.ads			\
+standard/coldframe-project-events-monitoring-test.ads		\
+standard/coldframe-project-events-monitoring-test_trace.ads	\
+standard/coldframe-project-events-monitoring-trace.ads		\
+standard/coldframe-project-events-monitoring.ads		\
+standard/coldframe-project-events-standard-inspection.ads	\
+standard/coldframe-project-events-standard-test.ads		\
+standard/coldframe-project-events-standard-test_debug.ads	\
+standard/coldframe-project-events-standard-test_trace.ads	\
+standard/coldframe-project-events-standard-trace.ads		\
+standard/coldframe-project-events-standard.ads			\
+standard/coldframe-project-events.ads				\
+standard/coldframe-project-held_events-inspection.adb		\
+standard/coldframe-project-held_events-inspection.ads		\
+standard/coldframe-project-held_events-inspection_signature.ads	\
+standard/coldframe-project-held_events-signature.ads		\
+standard/coldframe-project-held_events.adb			\
+standard/coldframe-project-held_events.ads			\
+standard/coldframe-project-high_resolution_time.ads		\
+standard/coldframe-project-limits.adb				\
+standard/coldframe-project-limits.ads				\
+standard/coldframe-project-log_error.adb			\
+standard/coldframe-project-log_error.ads			\
+standard/coldframe-project-log_info.adb				\
+standard/coldframe-project-log_info.ads				\
+standard/coldframe-project-logging_support.adb			\
+standard/coldframe-project-logging_support.ads			\
+standard/coldframe-project-storage_pools.ads			\
+standard/coldframe-project-times.adb				\
+standard/coldframe-project-times.ads
+
+RAVENSCAR =					\
+ravenscar/coldframe-project-events.ads		\
+ravenscar/coldframe-project-times.ads
+
+ALL = $(COMMON) $(STANDARD) $(RAVENSCAR)
 
 dist:
 	-$(RM) -rf $(DIST)/project
 	$(MKDIR) -p $(DIST)/project
-	$(CP) -p $(ALL) $(DIST)/project/
+	$(TAR) cf - $(ALL) | tar xf - -C $(DIST)/project/
 
 .PHONY: dist force
