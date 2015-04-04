@@ -16,16 +16,27 @@
 # (assumes a Unix system if Cygwin not detected).
 
 # It's assumed that no project-special settings are in place and that
-# the command 'gnatmake' will compile and generate an executable.
+# the command 'gprbuild' will compile and generate an executable.
 
 # It's assumed that this is still a subdirectory of the ColdFrame
 # install directory, and that we have write access (OK on Windows,
 # may require admin cooperation on Unix).
 
 all::
+setup::
 clean::
 
 include ../Makefile.inc
+
+# Setup
+# Nothing in this directory
+
+# Set up subdirectories
+SETUP_SUBDIRS = stm32f4
+setup::
+	for s in $(SETUP_SUBDIRS); do		\
+	  make -C $$s setup;			\
+	done
 
 # Assume that tash.gpr is on the existing ADA_PROJECT_PATH (or
 # installed).
@@ -41,26 +52,26 @@ endif
 EXECUTABLES += house_management-harness$(exe) house_management-scripting$(exe)
 house_management-harness$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
-	$(GNATMAKE) -p -PHouse_Management_Test
+	gprbuild -p -PHouse_Management_Test
 house_management-scripting$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
-	$(GNATMAKE) -p -PHouse_Management_Scripting
+	gprbuild -p -PHouse_Management_Scripting
 
 EXECUTABLES += interrupt_handling-harness$(exe)
 interrupt_handling-harness$(exe): Interrupt_Handling.gen force
-	$(GNATMAKE) -p -PInterrupt_Handling
+	gprbuild -p -PInterrupt_Handling
 
 EXECUTABLES += library_test_harness$(exe)
 library_test_harness$(exe): Library.gen force
-	$(GNATMAKE) -p -PLibrary
+	gprbuild -p -PLibrary
 
 EXECUTABLES += performance-harness$(exe)
 performance-harness$(exe): Performance.gen force
-	$(GNATMAKE) -p -PPerformance
+	gprbuild -p -PPerformance
 
 EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
-	$(GNATMAKE) -p -PProblem_Reporting
+	gprbuild -p -PProblem_Reporting
 
 #EXECUTABLES += serialization_client$(exe)
 serialization_client$(exe): serialization_server$(exe)
@@ -70,11 +81,11 @@ serialization_server: Serialization.gen \
  Serialization_Demo.gen \
  Serialization_Demo_Other.gen \
  force
-	$(GNATMAKE) -p -PSerialization
+	gprbuild -p -PSerialization
 
 EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
-	$(GNATMAKE) -p -PStates
+	gprbuild -p -PStates
 
 EXECUTABLES += stairwell_demo$(exe)
 stairwell_demo$(exe):				\
@@ -82,25 +93,11 @@ stairwell_demo$(exe):				\
   Digital_IO.gen				\
   Digital_IO.Tcl.gen				\
   force
-	$(GNATMAKE) -p -Pstairwell_demo
-
-stairwell_stm32f4_demo.bin: stairwell_stm32f4_demo
-stairwell_stm32f4_demo: stairwell_stm32f4_demo-domains.stamp
-	gprbuild -p -P stairwell_stm32f4_demo.gpr
-%.bin: %
-	arm-eabi-objcopy -O binary $< $@
-stairwell_stm32f4_demo-domains.stamp:
-	$(MAKE) -f $(COLDFRAME)/Makefile.inc	\
-	  House_Management.gen			\
-	  Digital_IO.gen			\
-	  PROFILE=ravenscar
-	touch $@
-
-.PHONY: stairwell_stm32f4_demo-domains.stamp
+	gprbuild -p -Pstairwell_demo
 
 EXECUTABLES += van_fleet-demo$(exe)
 van_fleet-demo$(exe): Van_Fleet.gen
-	$(GNATMAKE) -p -PVan_Fleet
+	gprbuild -p -PVan_Fleet
 
 all:: $(EXECUTABLES)
 
@@ -132,4 +129,4 @@ clean::
 	done
 	rm -rf *.{norm-stamp,stamp,norm,ada,gen,html,images}
 
-.PHONY: force all clean
+.PHONY: force all setup clean

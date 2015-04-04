@@ -80,11 +80,8 @@ SCRIPTS := $(COLDFRAME)/scripts
 MODELS ?= $(COLDFRAME)/models
 
 # Where are non-standard Ada project files?
-ifeq ($(ADA_PROJECT_PATH),)
-  export ADA_PROJECT_PATH := $(COLDFRAME)
-else
-  export ADA_PROJECT_PATH := $(COLDFRAME):$(ADA_PROJECT_PATH)
-endif
+export ADA_PROJECT_PATH := $(COLDFRAME):$(ADA_PROJECT_PATH)
+
 
 CASE_EXCEPTIONS ?= $(SCRIPTS)/emacs_case_exceptions
 COLDFRAMEOUT ?= $(COLDFRAME)/coldframeout
@@ -98,8 +95,9 @@ DOT ?= dot
 ECHO ?= echo
 EXIT ?= exit
 FIND ?= find
-GNATCHOP ?= gnatchop -gnat05
-GNATMAKE ?= gnatmake
+GNATCHOP ?= gnatchop -gnat12
+GNATMAKE ?= gprbuild
+GPRBUILD ?= gprbuild
 GREP ?= grep
 JAVA ?= java
 MAKEINFO ?= makeinfo

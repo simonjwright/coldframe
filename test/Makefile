@@ -16,7 +16,7 @@
 # Unix system if Cygwin not detected).
 
 # It's assumed that no project-special settings are in place and that
-# the command 'gnatmake' will compile and generate an executable.
+# the command 'gprbuild' will compile and generate an executable.
 
 # It's assumed that this is still a subdirectory of the ColdFrame
 # install directory, and that we have write access (OK on Windows,
@@ -60,31 +60,31 @@ runs:: unit_testing-harness$(exe)
 	./$< -v 2>&1 | tee -a unit_testing.log
 
 event_test-harness$(exe): Event_Test.gen force
-	gnatmake -p -PEvent_Test 2>&1 | tee -a Event_Test.log
+	gprbuild -p -PEvent_Test 2>&1 | tee -a Event_Test.log
 exes:: event_test-harness$(exe)
 clean::
 	-gnatclean -PEvent_Test
 
 hierarchies-harness$(exe): Hierarchies.gen force
-	gnatmake -p -PHierarchies 2>&1 | tee -a Hierarchies.log
+	gprbuild -p -PHierarchies 2>&1 | tee -a Hierarchies.log
 exes:: hierarchies-harness$(exe)
 clean::
 	-gnatclean -PHierarchies
 
 initialization-harness$(exe): Initialization.gen force
-	gnatmake -p -PInitialization 2>&1 | tee -a Initialization.log
+	gprbuild -p -PInitialization 2>&1 | tee -a Initialization.log
 exes:: initialization-harness$(exe)
 clean::
 	-gnatclean -PInitialization
 
 stub_test_harness$(exe): Stub_Test_Interface.stub force
-	gnatmake -p -PStub_Test 2>&1 | tee -a Stub_Test.log
+	gprbuild -p -PStub_Test 2>&1 | tee -a Stub_Test.log
 exes:: stub_test_harness$(exe)
 clean::
 	-gnatclean -PStub_Test
 
 unit_testing-harness$(exe): Unit_Testing.unit force
-	gnatmake -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
+	gprbuild -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
 exes:: unit_testing-harness$(exe)
 clean::
 	-gnatclean -PUnit_Testing
@@ -138,7 +138,7 @@ REGRESSION_GENS = $(addsuffix .gen,$(REGRESSION_DOMAINS))
 
 # Has to come after definition of DEVELOPMENT_GENS, REGRESSION_GENS
 regression_tests$(exe): $(DEVELOPMENT_GENS) $(REGRESSION_GENS) force
-	gnatmake -p -PRegressions 2>&1 | tee -a Regressions.log
+	gprbuild -p -PRegressions 2>&1 | tee -a Regressions.log
 exes:: regression_tests$(exe)
 clean::
 	-gnatclean -PRegressions
