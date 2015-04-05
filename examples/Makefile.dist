@@ -30,6 +30,7 @@ all:
 STAIRWELL_DEMO =							\
   stairwell_demo.gpr							\
   stairwelllights.tcl							\
+  Digital_IO.impl/digital_io-get.adb					\
   Digital_IO.impl/digital_io-set.adb					\
   Digital_IO.impl/digital_io_support.adb				\
   Digital_IO.impl/digital_io_support.ads				\

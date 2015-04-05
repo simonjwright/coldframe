@@ -258,7 +258,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@if [ -d $*.impl ]; then			\
 	  TODELETE="";					\
-	  IMPLFILES=`$(FIND) $*.impl			\
+	  IMPLFILES=`$(FIND) $*.impl/			\
 	    -maxdepth $(MAXIMPLDEPTH)			\
 	    -name \*.ad[bs]`;				\
 	  for f in $$IMPLFILES; do			\

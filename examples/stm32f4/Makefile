@@ -34,7 +34,7 @@ include ../../Makefile.inc
 EXECUTABLES += stairwell_stm32f4_demo.bin
 
 stairwell_stm32f4_demo.bin: stairwell_stm32f4_demo
-stairwell_stm32f4_demo: House_Management.gen Digital_IO.gen
+stairwell_stm32f4_demo: House_Management.gen Digital_IO.gen force
 	gprbuild -p -P stairwell_stm32f4_demo.gpr
 
 %.bin: %
