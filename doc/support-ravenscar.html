@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>ColdFrame: Specially written support components for Ravenscar</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Specially written support components for Ravenscar</h1>
+
+<blockquote style="background: lightgray;">
+<p>This page discusses the restricted Ravenscar version of ColdFrame,
+   which isn't intended to support testing directly. Instead, the idea
+   is that the model and code are tested on the desktop, and then the
+   model is regenerated for delivery on the target platform (with its
+   implementation unaltered).
+
+<p>The <a href="support.html">full profile</a> supports various
+   testing facilities as well as being customisable to user
+   requirements.
+
+</blockquote>
+
+<ul>
+
+<li><a href="#library">Library components</a>
+
+<li><a href="#project">Supplied <i>Project</i> components</a>
+
+</ul>
+
+<h2><a name="library">Library components</a></h2>
+
+<p>Specially written support components appear under the top-level
+package <tt>ColdFrame</tt>, in the directories <tt>lib/</tt>
+and <tt>lib/ravenscar/</tt>. The more user-interesting ones are
+
+<dl>
+
+<p><dt><tt>ColdFrame.Callbacks</tt>
+
+<dd>Provides callback (Observer) support.
+
+<p><dt><tt>ColdFrame.Events</tt>
+
+<dd>Support for <a href="events.html">Events</a>. This is a
+basic abstract event management specification.
+
+<br>Child packages are
+
+<p><dl>
+
+<dt><tt>ColdFrame.Events_G.Creation_G</tt>
+
+<dd>Provides a "creation" event type, for use where there's no
+application event to cause transition from the initial state.
+
+<p><dt><tt>ColdFrame.Events.Standard</tt>
+
+<dd>A straightforward event queueing and dispatching service.
+
+</dl>
+
+<p><dt><tt>ColdFrame.Exceptions</tt>
+
+<dd>Provides exceptions.
+
+<p><dt><tt>ColdFrame.Hash</tt>
+
+<dd>A family of hash functions, suitable for use as hashes (or part of
+hashes) for instantiating <a href="use-of-containers.html">Hashed Map
+or Set containers</a>.
+
+<p><dl>
+
+<dt><tt>ColdFrame.Hash.Access_Hash</tt>
+
+<dd>A hash function for access values (useful for associative classes).
+
+<p><dt><tt>ColdFrame.Hash.Instance_Access_Hash</tt>
+
+<dd>A hash function for access-to-instance values (useful for child
+classes).
+
+<p><dt><tt>ColdFrame.Hash.Strings</tt>
+
+<dd>A hash function for strings.
+
+</dl>
+
+<p><dt><tt>ColdFrame.Instances</tt>
+
+<dd>Provides a type from which all Instances are derived.
+
+<br>The purpose is to allow mutual visibility (to support associations
+and inheritance relationships).
+
+</dl>
+
+<h2><a name="project">Supplied <i>Project</i> components</a></h2>
+
+<p>For some purposes, standard ColdFrame generates code expecting
+certain services to be provided by specific packages
+(under <tt>ColdFrame.Project</tt>, directories <tt>project</tt>/
+and <tt>project/standard/</tt>), where you would probably prefer to be
+able to provide your own version.
+
+<p>The Ravenscar-restricted version of ColdFrame doesn't support this
+idea. However, in order to eliminate the need to write
+environment-specific application code, three packages are provided:
+
+  <dl>
+    <dt><tt>ColdFrame.Project</tt></dt>
+    <dd>The root of the Project tree</dd>
+
+    <dt><tt>ColdFrame.Project.Events</tt></dt>
+    <dd>A renaming of ColdFrame.Events.</dd>
+
+    <dt><tt>ColdFrame.Project.Times</tt></dt>
+    <dd>A renaming of ColdFrame.Times.</dd>
+  </dl>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

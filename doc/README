@@ -1,4 +1,57 @@
 ************
+* 20150407 *
+************
+
+General
+=======
+
+This is a major release; ColdFrame is targeted at Ada 2012. It uses
+Bounded containers when possible. Alternative Ravenscar-compatible
+code generation is provided.
+
+Modelling
+=========
+
+In Ravenscar mode, classes can't be <<active>>, and the maximum number
+of instances of each class must be bounded; either naturally (making
+the identifier be an enumerated type, for instance) or by use of
+<<cardinality>>. Strings in identifiers (bounded or unbounded) aren't
+supported.
+
+Generation
+==========
+
+If the environment/Makefile variable PROFILE is set to other than the
+default 'standard', the generated code is Ravenscar-compliant.
+
+Code
+====
+
+Provided a Ravenscar-compliant runtime.
+
+Fixed bug 24 (Doesn't detect state machine error).
+Fixed bug 85 (Incompatibility with ArgoUML 0.35.1).
+Fixed bug 86 (Finalize stereotype on operation ignored).
+
+Testing
+=======
+
+Included support for scripted testing
+(http://coldframe.sourceforge.net/scripted_testing/).
+
+Included a demonstration program of Ravenscar features for the
+STM32F429I Discovery board from STMicroelectronics.
+
+Installation
+============
+
+Although there is no reason why a Ravenscar-compliant build should not
+be run in any environment, the supplied configuration (see
+ColdFrame_Ravenscar.gpr and Options_Ravenscar.gpr) is targeted to the
+STM32F429I Discovery board from STMicroelectronics, using the runtime
+system at https://sourceforge.net/projects/stm32f4-gnat-rts/.
+
+************
 * 20140422 *
 ************
 
