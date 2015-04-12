@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>House Management Class Diagram</activediagram>
+      <activediagram>Lamp Lifecycle</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -114,10 +114,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Oct 22 17:47:05 BST 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Apr 11 14:33:39 BST 2015'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2014/10/31 15:43:52 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2015/04/12 10:29:20 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -962,7 +962,7 @@ If it is activated again while it is still on, the activation period is extended
                   <UML:ModelElement.taggedValue>
                     <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C79'
                       isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>This state entry action turns off the associated signal via Digital IO.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.dataValue>This state entry action turns off the associated signal using Output_For_Lamp.</UML:TaggedValue.dataValue>
                       <UML:TaggedValue.type>
                         <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
                       </UML:TaggedValue.type>
@@ -980,7 +980,7 @@ If it is activated again while it is still on, the activation period is extended
                   <UML:ModelElement.taggedValue>
                     <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7A'
                       isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>This state entry action turns on the associated signal via Digital IO.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.dataValue>This state entry action turns on the associated signal using Output_For_Lamp.</UML:TaggedValue.dataValue>
                       <UML:TaggedValue.type>
                         <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
                       </UML:TaggedValue.type>
@@ -991,55 +991,22 @@ If it is activated again while it is still on, the activation period is extended
                       name = 'return' isSpecification = 'false' kind = 'return'/>
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
-                <UML:Attribute xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F99'
-                  name = 'Output' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
-                  changeability = 'changeable' targetScope = 'instance'>
-                  <UML:StructuralFeature.multiplicity>
-                    <UML:Multiplicity xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F9A'>
-                      <UML:Multiplicity.range>
-                        <UML:MultiplicityRange xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F9B'
-                          lower = '1' upper = '1'/>
-                      </UML:Multiplicity.range>
-                    </UML:Multiplicity>
-                  </UML:StructuralFeature.multiplicity>
-                  <UML:Attribute.initialValue>
-                    <UML:Expression xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F67'
-                      language = 'UML 1.4' body = '0'/>
-                  </UML:Attribute.initialValue>
+                <UML:Operation xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF2'
+                  name = 'Output_For_Lamp' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
+                  isLeaf = 'false' isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
-                    <UML:TaggedValue xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F9C'
+                    <UML:TaggedValue xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF5'
                       isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>The output signal name used in Digital_IO to control this lamp.</UML:TaggedValue.dataValue>
-                      <UML:TaggedValue.type>
-                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-                      </UML:TaggedValue.type>
-                    </UML:TaggedValue>
-                  </UML:ModelElement.taggedValue>
-                  <UML:StructuralFeature.type>
-                    <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F96'/>
-                  </UML:StructuralFeature.type>
-                </UML:Attribute>
-                <UML:Operation xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF0'
-                  name = 'Set_Output' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
-                  <UML:ModelElement.stereotype>
-                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-accessor'/>
-                  </UML:ModelElement.stereotype>
-                  <UML:ModelElement.taggedValue>
-                    <UML:TaggedValue xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF3'
-                      isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>Used (during state machine initialization) to store the Digital_IO Output Signal which corresponds to this lamp.</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.dataValue>Maps the Lamp to the corresponding Digital_IO output pin.</UML:TaggedValue.dataValue>
                       <UML:TaggedValue.type>
                         <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
                       </UML:TaggedValue.type>
                     </UML:TaggedValue>
                   </UML:ModelElement.taggedValue>
                   <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF1'
-                      name = 'return' isSpecification = 'false' kind = 'return'/>
-                    <UML:Parameter xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF2'
-                      name = 'To' isSpecification = 'false' kind = 'in'>
+                    <UML:Parameter xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF3'
+                      name = 'return' isSpecification = 'false' kind = 'return'>
                       <UML:Parameter.type>
                         <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F96'/>
                       </UML:Parameter.type>
@@ -1166,25 +1133,6 @@ If it is activated again while it is still on, the activation period is extended
                         <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Boolean'/>
                       </UML:Parameter.type>
                     </UML:Parameter>
-                  </UML:BehavioralFeature.parameter>
-                </UML:Operation>
-                <UML:Operation xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF4'
-                  name = 'Read_Initial_States' visibility = 'public' isSpecification = 'false'
-                  ownerScope = 'classifier' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
-                  isLeaf = 'false' isAbstract = 'false'>
-                  <UML:ModelElement.taggedValue>
-                    <UML:TaggedValue xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF6'
-                      isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>This operation is called at initialization and retrieves, for each Button,  the current state of the corresponding Digital IO&apos;s Input Signal.
-If the Input Signal is set, calls the Changed operation to simulate a callback.</UML:TaggedValue.dataValue>
-                      <UML:TaggedValue.type>
-                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-                      </UML:TaggedValue.type>
-                    </UML:TaggedValue>
-                  </UML:ModelElement.taggedValue>
-                  <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-74--11dad7b9:1493850ba09:-8000:0000000000000FF5'
-                      name = 'return' isSpecification = 'false' kind = 'return'/>
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
               </UML:Classifier.feature>
@@ -1330,7 +1278,7 @@ A possible future enhancement such as having the &quot;on&quot; time of the lamp
                     <UML:Pseudostate xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7D'
                       name = 'Initial' isSpecification = 'false' kind = 'initial'>
                       <UML:StateVertex.outgoing>
-                        <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C86'/>
+                        <UML:Transition xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF9'/>
                       </UML:StateVertex.outgoing>
                     </UML:Pseudostate>
                     <UML:SimpleState xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7E'
@@ -1349,8 +1297,8 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                         <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C82'/>
                       </UML:StateVertex.outgoing>
                       <UML:StateVertex.incoming>
-                        <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C86'/>
                         <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C87'/>
+                        <UML:Transition xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFB'/>
                       </UML:StateVertex.incoming>
                       <UML:State.entry>
                         <UML:CallAction xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C84'
@@ -1391,6 +1339,24 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                         </UML:CallAction>
                       </UML:State.entry>
                     </UML:SimpleState>
+                    <UML:SimpleState xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF7'
+                      name = 'Dummy_1' isSpecification = 'false'>
+                      <UML:StateVertex.outgoing>
+                        <UML:Transition xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFA'/>
+                      </UML:StateVertex.outgoing>
+                      <UML:StateVertex.incoming>
+                        <UML:Transition xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF9'/>
+                      </UML:StateVertex.incoming>
+                    </UML:SimpleState>
+                    <UML:SimpleState xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF8'
+                      name = 'Dummy_2' isSpecification = 'false'>
+                      <UML:StateVertex.outgoing>
+                        <UML:Transition xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFB'/>
+                      </UML:StateVertex.outgoing>
+                      <UML:StateVertex.incoming>
+                        <UML:Transition xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFA'/>
+                      </UML:StateVertex.incoming>
+                    </UML:SimpleState>
                   </UML:CompositeState.subvertex>
                 </UML:CompositeState>
               </UML:StateMachine.top>
@@ -1405,27 +1371,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                   </UML:Transition.source>
                   <UML:Transition.target>
                     <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7F'/>
-                  </UML:Transition.target>
-                </UML:Transition>
-                <UML:Transition xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C86'
-                  isSpecification = 'false'>
-                  <UML:Transition.effect>
-                    <UML:CallAction xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F63'
-                      name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
-                      <UML:Action.script>
-                        <UML:ActionExpression xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F6B'
-                          language = '' body = 'Set_Output'/>
-                      </UML:Action.script>
-                    </UML:CallAction>
-                  </UML:Transition.effect>
-                  <UML:Transition.trigger>
-                    <UML:SignalEvent xmi.idref = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F62'/>
-                  </UML:Transition.trigger>
-                  <UML:Transition.source>
-                    <UML:Pseudostate xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7D'/>
-                  </UML:Transition.source>
-                  <UML:Transition.target>
-                    <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7E'/>
                   </UML:Transition.target>
                 </UML:Transition>
                 <UML:Transition xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C87'
@@ -1459,6 +1404,33 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                   </UML:Transition.source>
                   <UML:Transition.target>
                     <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7F'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+                <UML:Transition xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF9'
+                  isSpecification = 'false'>
+                  <UML:Transition.source>
+                    <UML:Pseudostate xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7D'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:SimpleState xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF7'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+                <UML:Transition xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFA'
+                  isSpecification = 'false'>
+                  <UML:Transition.source>
+                    <UML:SimpleState xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF7'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:SimpleState xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF8'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+                <UML:Transition xmi.id = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFB'
+                  isSpecification = 'false'>
+                  <UML:Transition.source>
+                    <UML:SimpleState xmi.idref = '-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF8'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7E'/>
                   </UML:Transition.target>
                 </UML:Transition>
               </UML:StateMachine.transitions>
@@ -1504,26 +1476,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
             </UML:DataType>
-            <UML:SignalEvent xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F62'
-              name = 'Lamp.Set_Signal' isSpecification = 'false'>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F66'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>This event is posted when the Lamp has been created to set the Output Signal to be used to control the Lamp.</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
-              <UML:Event.parameter>
-                <UML:Parameter xmi.id = '-64--88-1-75--543fefec:14538470dbd:-8000:0000000000000F65'
-                  name = 'Payload' isSpecification = 'false' kind = 'in'>
-                  <UML:Parameter.type>
-                    <UML:DataType xmi.idref = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F96'/>
-                  </UML:Parameter.type>
-                </UML:Parameter>
-              </UML:Event.parameter>
-            </UML:SignalEvent>
             <UML:Comment xmi.id = '-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C'
               isSpecification = 'false' body = '{class-name=Button_To_Lamp}'>
               <UML:Comment.annotatedElement>
@@ -7412,7 +7364,7 @@ It should address one logical error (which may correspond to several necessary c
       name="House Management Class Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[168, 16, 286, 194]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[168, 16, 335, 194]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
        fill="1"
        fillcolor="white"
@@ -7425,7 +7377,7 @@ It should address one logical error (which may correspond to several necessary c
     <rectangle name="Fig0.0"
       x="168"
       y="16"
-      width="286"
+      width="335"
       height="194"
       fill="1"
       fillcolor="white"
@@ -7435,7 +7387,7 @@ It should address one logical error (which may correspond to several necessary c
     <text name="Fig0.1"
       x="169"
       y="17"
-      width="284"
+      width="333"
       height="23"
       fill="0"
       fillcolor="white"
@@ -7449,7 +7401,7 @@ It should address one logical error (which may correspond to several necessary c
       justification="Center"
     >+ Lamp</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[169, 17, 273, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[169, 17, 284, 0]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -7463,7 +7415,7 @@ It should address one logical error (which may correspond to several necessary c
       <rectangle name="Fig0.2.0"
         x="169"
         y="17"
-        width="273"
+        width="284"
         height="0"
         fill="0"
         fillcolor="white"
@@ -7474,7 +7426,7 @@ It should address one logical error (which may correspond to several necessary c
     <rectangle name="Fig0.3"
       x="168"
       y="40"
-      width="286"
+      width="335"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7482,7 +7434,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[169, 41, 284, 59]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[169, 41, 333, 49]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -7495,8 +7447,8 @@ It should address one logical error (which may correspond to several necessary c
       <rectangle name="Fig0.4.0"
         x="169"
         y="41"
-        width="284"
-        height="59"
+        width="333"
+        height="49"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7505,7 +7457,7 @@ It should address one logical error (which may correspond to several necessary c
       <text name="Fig0.4.1"
         x="169"
         y="41"
-        width="284"
+        width="333"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7521,23 +7473,7 @@ It should address one logical error (which may correspond to several necessary c
       <text name="Fig0.4.2"
         x="169"
         y="58"
-        width="284"
-        height="17"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Left"
-      >+Timeout : Timer</text>
-      <text name="Fig0.4.3"
-        x="169"
-        y="75"
-        width="284"
+        width="333"
         height="23"
         fill="0"
         fillcolor="white"
@@ -7549,12 +7485,12 @@ It should address one logical error (which may correspond to several necessary c
         bold="false"
         textsize="13"
         justification="Left"
-      >+Output : Output_Signal  = 0</text>
+      >+Timeout : Timer</text>
     </group>
     <rectangle name="Fig0.5"
       x="168"
-      y="99"
-      width="286"
+      y="90"
+      width="335"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7562,7 +7498,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[169, 100, 284, 110]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[169, 91, 333, 117]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -7574,9 +7510,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig0.6.0"
         x="169"
-        y="100"
-        width="284"
-        height="110"
+        y="91"
+        width="333"
+        height="117"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7584,8 +7520,8 @@ It should address one logical error (which may correspond to several necessary c
       />
       <text name="Fig0.6.1"
         x="169"
-        y="100"
-        width="284"
+        y="91"
+        width="333"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7600,8 +7536,8 @@ It should address one logical error (which may correspond to several necessary c
       >«init» -Initialize()</text>
       <text name="Fig0.6.2"
         x="169"
-        y="117"
-        width="284"
+        y="108"
+        width="333"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7616,8 +7552,8 @@ It should address one logical error (which may correspond to several necessary c
       >-Clear_Timeout()</text>
       <text name="Fig0.6.3"
         x="169"
-        y="134"
-        width="284"
+        y="125"
+        width="333"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7632,8 +7568,8 @@ It should address one logical error (which may correspond to several necessary c
       >-Set_Timeout()</text>
       <text name="Fig0.6.4"
         x="169"
-        y="151"
-        width="284"
+        y="142"
+        width="333"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7648,8 +7584,8 @@ It should address one logical error (which may correspond to several necessary c
       >-Turn_Off()</text>
       <text name="Fig0.6.5"
         x="169"
-        y="168"
-        width="284"
+        y="159"
+        width="333"
         height="17"
         fill="0"
         fillcolor="white"
@@ -7664,8 +7600,8 @@ It should address one logical error (which may correspond to several necessary c
       >-Turn_On()</text>
       <text name="Fig0.6.6"
         x="169"
-        y="185"
-        width="284"
+        y="176"
+        width="333"
         height="23"
         fill="0"
         fillcolor="white"
@@ -7677,7 +7613,7 @@ It should address one logical error (which may correspond to several necessary c
         bold="false"
         textsize="13"
         justification="Left"
-      >«accessor» -Set_Output(To : Output_Signal)</text>
+      >-Output_For_Lamp() : Output_Signal</text>
     </group>
   </group>
   <group name="Fig1"
@@ -7751,7 +7687,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[161, 390, 282, 42]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[161, 390, 282, 49]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -7765,7 +7701,7 @@ It should address one logical error (which may correspond to several necessary c
         x="161"
         y="390"
         width="282"
-        height="42"
+        height="49"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7806,7 +7742,7 @@ It should address one logical error (which may correspond to several necessary c
     </group>
     <rectangle name="Fig1.5"
       x="160"
-      y="431"
+      y="439"
       width="284"
       height="1"
       fill="1"
@@ -7815,7 +7751,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[161, 432, 282, 59]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[161, 440, 282, 49]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -7827,9 +7763,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig1.6.0"
         x="161"
-        y="432"
+        y="440"
         width="282"
-        height="59"
+        height="49"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7837,7 +7773,7 @@ It should address one logical error (which may correspond to several necessary c
       />
       <text name="Fig1.6.1"
         x="161"
-        y="432"
+        y="440"
         width="282"
         height="17"
         fill="0"
@@ -7853,23 +7789,7 @@ It should address one logical error (which may correspond to several necessary c
       >«callback» -Changed(S : Input_Signal_State)</text>
       <text name="Fig1.6.2"
         x="161"
-        y="449"
-        width="282"
-        height="17"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Left"
-      >«accessor» +Get_State() : Boolean</text>
-      <text name="Fig1.6.3"
-        x="161"
-        y="466"
+        y="457"
         width="282"
         height="23"
         fill="0"
@@ -7882,7 +7802,7 @@ It should address one logical error (which may correspond to several necessary c
         bold="false"
         textsize="13"
         justification="Left"
-      >+Read_Initial_States()</text>
+      >«accessor» +Get_State() : Boolean</text>
     </group>
   </group>
   <group name="Fig2"
@@ -8764,7 +8684,7 @@ It should address one logical error (which may correspond to several necessary c
     </group>
   </group>
   <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigComment[504, 176, 213, 48]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigComment[512, 336, 213, 48]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C"
        fill="1"
        fillcolor="white"
@@ -8775,8 +8695,8 @@ It should address one logical error (which may correspond to several necessary c
     </private>
     
     <rectangle name="Fig9.0"
-      x="504"
-      y="176"
+      x="512"
+      y="336"
       width="213"
       height="48"
       fill="0"
@@ -8791,18 +8711,18 @@ It should address one logical error (which may correspond to several necessary c
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="504"
-              y="176" />
-      <lineto x="706"
-              y="176" />
-      <lineto x="716"
-              y="186" />
-      <lineto x="716"
-              y="223" />
-      <lineto x="504"
-              y="223" />
-      <lineto x="504"
-              y="176" />
+      <moveto x="512"
+              y="336" />
+      <lineto x="714"
+              y="336" />
+      <lineto x="724"
+              y="346" />
+      <lineto x="724"
+              y="383" />
+      <lineto x="512"
+              y="383" />
+      <lineto x="512"
+              y="336" />
     </path>
     <path name="Fig9.2"
       description="org.tigris.gef.presentation.FigPoly"
@@ -8811,17 +8731,17 @@ It should address one logical error (which may correspond to several necessary c
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="706"
-              y="176" />
-      <lineto x="716"
-              y="186" />
-      <lineto x="706"
-              y="186" />
-      <lineto x="706"
-              y="176" />
+      <moveto x="714"
+              y="336" />
+      <lineto x="724"
+              y="346" />
+      <lineto x="714"
+              y="346" />
+      <lineto x="714"
+              y="336" />
     </path>
     <group name="Fig9.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[506, 178, 199, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[514, 338, 199, 0]"
          href="-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C"
          fill="0"
          fillcolor="white"
@@ -8833,8 +8753,8 @@ It should address one logical error (which may correspond to several necessary c
       </private>
       
       <rectangle name="Fig9.3.0"
-        x="506"
-        y="178"
+        x="514"
+        y="338"
         width="199"
         height="0"
         fill="0"
@@ -8844,8 +8764,8 @@ It should address one logical error (which may correspond to several necessary c
       />
     </group>
     <text name="Fig9.4"
-      x="506"
-      y="178"
+      x="514"
+      y="338"
       width="199"
       height="44"
       fill="0"
@@ -8872,16 +8792,16 @@ It should address one logical error (which may correspond to several necessary c
       destFigNode="Fig3"
     </private>
     <path name="Fig10.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="504"
-              y="223" />
+      <moveto x="512"
+              y="336" />
       <lineto x="495"
-              y="240" />
+              y="326" />
     </path>
   </group>
 </pgml>
@@ -9114,37 +9034,6 @@ It should address one logical error (which may correspond to several necessary c
   </group>
   <group name="Fig4"
        description="org.argouml.uml.diagram.state.ui.FigTransition"
-       href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C86"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-      sourcePortFig="Fig0.0"
-      destPortFig="Fig1.0"
-      sourceFigNode="Fig0"
-      destFigNode="Fig1"
-      <argouml:pathitem figname="Fig4.1"
-                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
-                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
-                        ownerhref="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C86"
-                        angle="270.0"
-                        offset="10" />
-    </private>
-    <path name="Fig4.0"
-      description="org.argouml.gefext.ArgoFigPoly"
-      fill="0"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="79"
-              y="247" />
-      <lineto x="312"
-              y="247" />
-    </path>
-  </group>
-  <group name="Fig5"
-       description="org.argouml.uml.diagram.state.ui.FigTransition"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C87"
        stroke="1"
        strokecolor="black"
@@ -9154,14 +9043,14 @@ It should address one logical error (which may correspond to several necessary c
       destPortFig="Fig1.0"
       sourceFigNode="Fig2"
       destFigNode="Fig1"
-      <argouml:pathitem figname="Fig5.1"
+      <argouml:pathitem figname="Fig4.1"
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
                         ownerhref="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C87"
                         angle="270.0"
                         offset="10" />
     </private>
-    <path name="Fig5.0"
+    <path name="Fig4.0"
       description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
@@ -9178,7 +9067,7 @@ It should address one logical error (which may correspond to several necessary c
               y="269" />
     </path>
   </group>
-  <group name="Fig6"
+  <group name="Fig5"
        description="org.argouml.uml.diagram.state.ui.FigTransition"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C89"
        stroke="1"
@@ -9189,14 +9078,14 @@ It should address one logical error (which may correspond to several necessary c
       destPortFig="Fig2.0"
       sourceFigNode="Fig2"
       destFigNode="Fig2"
-      <argouml:pathitem figname="Fig6.1"
+      <argouml:pathitem figname="Fig5.1"
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
                         ownerhref="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C89"
                         angle="68.99999999999999"
                         offset="25" />
     </private>
-    <path name="Fig6.0"
+    <path name="Fig5.0"
       description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
@@ -9211,6 +9100,255 @@ It should address one logical error (which may correspond to several necessary c
               y="352" />
       <lineto x="800"
               y="269" />
+    </path>
+  </group>
+  <group name="Fig6"
+       description="org.argouml.uml.diagram.state.ui.FigSimpleState[56, 56, 81, 46]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF7"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig6.0"
+      x="56"
+      y="56"
+      width="81"
+      height="46"
+      fill="1"
+      fillcolor="255 0 255"
+      stroke="0"
+      strokecolor="255 0 255"
+      rounding="16"
+    />
+    <rectangle name="Fig6.1"
+      x="56"
+      y="56"
+      width="81"
+      height="46"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      rounding="16"
+    />
+    <text name="Fig6.2"
+      x="58"
+      y="56"
+      width="77"
+      height="24"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >Dummy_1</text>
+    <path name="Fig6.3"
+      description="org.tigris.gef.presentation.FigLine"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="56"
+              y="80" />
+      <lineto x="136"
+              y="80" />
+    </path>
+    <text name="Fig6.4"
+      x="58"
+      y="80"
+      width="77"
+      height="16"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Left"
+    ></text>
+  </group>
+  <group name="Fig7"
+       description="org.argouml.uml.diagram.state.ui.FigSimpleState[184, 56, 96, 46]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF8"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig7.0"
+      x="184"
+      y="56"
+      width="96"
+      height="46"
+      fill="1"
+      fillcolor="255 0 255"
+      stroke="0"
+      strokecolor="255 0 255"
+      rounding="16"
+    />
+    <rectangle name="Fig7.1"
+      x="184"
+      y="56"
+      width="96"
+      height="46"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      rounding="16"
+    />
+    <text name="Fig7.2"
+      x="186"
+      y="56"
+      width="92"
+      height="24"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >Dummy_2</text>
+    <path name="Fig7.3"
+      description="org.tigris.gef.presentation.FigLine"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="184"
+              y="80" />
+      <lineto x="279"
+              y="80" />
+    </path>
+    <text name="Fig7.4"
+      x="186"
+      y="80"
+      width="92"
+      height="16"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Left"
+    ></text>
+  </group>
+  <group name="Fig8"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF9"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig0.0"
+      destPortFig="Fig6.0"
+      sourceFigNode="Fig0"
+      destFigNode="Fig6"
+      <argouml:pathitem figname="Fig8.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FF9"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig8.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="72"
+              y="240" />
+      <lineto x="72"
+              y="101" />
+    </path>
+  </group>
+  <group name="Fig9"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFA"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig6.0"
+      destPortFig="Fig7.0"
+      sourceFigNode="Fig6"
+      destFigNode="Fig7"
+      <argouml:pathitem figname="Fig9.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFA"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig9.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="136"
+              y="72" />
+      <lineto x="184"
+              y="72" />
+    </path>
+  </group>
+  <group name="Fig10"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFB"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig7.0"
+      destPortFig="Fig1.0"
+      sourceFigNode="Fig7"
+      destFigNode="Fig1"
+      <argouml:pathitem figname="Fig10.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-74-724e15e9:14ca8977e4a:-8000:0000000000000FFB"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig10.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="279"
+              y="101" />
+      <lineto x="312"
+              y="224" />
     </path>
   </group>
 </pgml>

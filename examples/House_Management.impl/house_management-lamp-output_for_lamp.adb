@@ -12,14 +12,21 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  This state entry action turns on the associated signal using
---  Output_For_Lamp.
-
-with Digital_IO;
+--  Maps the Lamp to the corresponding Digital_IO output pin.
 
 separate (House_Management.Lamp)
-procedure Turn_On
-  (This : not null Handle) is
+function Output_For_Lamp
+  (This : not null Handle)
+  return Output_Signal is
+
+   --  The Output_Signals used are in reverse order, because of a
+   --  foible of the electrician.
+   Lamp_Output_Signal : constant array (Lamp_Name) of Output_Signal
+     := (Basement     => 3,
+         Ground_Floor => 2,
+         First_Floor  => 1,
+         Second_Floor => 0);
+
 begin
-   Digital_IO.Set (Output_For_Lamp (This), To_State => True);
-end Turn_On;
+   return Lamp_Output_Signal (This.Name);
+end Output_For_Lamp;

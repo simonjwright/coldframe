@@ -32,24 +32,15 @@ procedure Initialize is
       null;
    end Connect;
 
-   --  The Output_Signals used are in reverse order, because of a
-   --  foible of the electrician.
-   Lamp_Output_Signal : constant array (Lamp_Name) of Output_Signal
-     := (Basement     => 3,
-         Ground_Floor => 2,
-         First_Floor  => 1,
-         Second_Floor => 0);
-
 begin
 
    --  Create the lamps ..
    for L in Lamp_Name loop
       declare
-         LH : constant Lamp.Handle := Lamp.Create ((Name => L));
-         Ev : Set_Signal (LH);
+         LH : constant Lamp.Handle := Lamp.Create ((Name => L))
+           with Unreferenced;
       begin
-         Ev.Payload := Lamp_Output_Signal (L);
-         Ev.Handler;
+         null;
       end;
    end loop;
 
@@ -86,8 +77,5 @@ begin
    Connect (The_Button => Basement, To => Ground_Floor);
 
    Connect (The_Button => Basement, To => Basement);
-
-   --  Read the initial button states.
-   Button.Read_Initial_States;
 
 end Initialize;

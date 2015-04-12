@@ -12,8 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  This state entry action turns off the associated signal via
---  Digital IO.
+--  This state entry action turns off the associated signal using
+--  Output_For_Lamp.
 
 with Digital_IO;
 
@@ -21,5 +21,5 @@ separate (House_Management.Lamp)
 procedure Turn_Off
   (This : not null Handle) is
 begin
-   Digital_IO.Set (This.Output, To_State => False);
+   Digital_IO.Set (Output_For_Lamp (This), To_State => False);
 end Turn_Off;
