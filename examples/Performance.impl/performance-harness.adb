@@ -93,7 +93,8 @@ begin
    declare
       Pr : Person.Handle;
       pragma Warnings (Off, Pr);
-      Prc : Person.Vectors.Vector;
+      Prc : Person.Vectors.Vector
+        (Capacity => Owners'Pos (Owners'Last) + 1);
    begin
 
       Performance.Initialize;
@@ -242,7 +243,8 @@ begin
       end;
 
       declare
-         Prc : Person.Vectors.Vector;
+         Prc : Person.Vectors.Vector
+           (Capacity => Owners'Pos (Owners'Last) + 1);
       begin
          T := Clock;
          for I in Pts'Range loop

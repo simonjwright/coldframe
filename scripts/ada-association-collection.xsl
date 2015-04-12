@@ -641,10 +641,17 @@
     <xsl:param name="b"/>       <!-- name of target class -->
     <xsl:param name="role-a"/>  <!-- node for source role -->
 
+    <!-- How many target instances? -->
+    <xsl:variable name="max">
+      <xsl:call-template name="ut:number-of-instances">
+        <xsl:with-param name="c" select="/domain/class[name=$b]"/>
+      </xsl:call-template>
+    </xsl:variable>
+
     <!-- from one to one
             In_It : {a}.Vectors.Cursor := {a-abbrev}.First;
             T : {b}.Handle;
-            Result : {b}.Vectors.Vector;
+            Result : {b}.Vectors.Vector (Capacity => {max});
             use {a}.Vectors;
             use {b};
          begin
@@ -674,7 +681,13 @@
     <xsl:value-of select="$II"/>
     <xsl:text>Result : </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Vectors.Vector;&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text> (Capacity =&gt; </xsl:text>
+      <xsl:value-of select="$max"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
@@ -732,10 +745,17 @@
     <xsl:param name="b"/>       <!-- name of target class -->
     <xsl:param name="role-a"/>  <!-- node for source role -->
 
+    <!-- How many target instances? -->
+    <xsl:variable name="max">
+      <xsl:call-template name="ut:number-of-instances">
+        <xsl:with-param name="c" select="/domain/class[name=$b]"/>
+      </xsl:call-template>
+    </xsl:variable>
+
     <!-- from many to one
             In_It : {a}.Vectors.Cursor := {a-abbrev}.First;
             T : {b}.Handle;
-            Result : {b}.Vectors.Vector;
+            Result : {b}.Vectors.Vector (Capacity => {max});
             use {a}.Vectors;
             use {b};
          begin
@@ -765,7 +785,13 @@
     <xsl:value-of select="$II"/>
     <xsl:text>Result : </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Vectors.Vector;&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text> (Capacity =&gt; </xsl:text>
+      <xsl:value-of select="$max"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
@@ -823,9 +849,16 @@
     <xsl:param name="b"/>       <!-- name of target class -->
     <xsl:param name="role-a"/>  <!-- node for source role -->
 
+    <!-- How many target instances? -->
+    <xsl:variable name="max">
+      <xsl:call-template name="ut:number-of-instances">
+        <xsl:with-param name="c" select="/domain/class[name=$b]"/>
+      </xsl:call-template>
+    </xsl:variable>
+
     <!-- from one to many (=> no need to check for multiple B's)
             In_It : {a}.Vectors.Cursor := {a-abbrev}.First;
-            Result : {b}.Vectors.Vector;
+            Result : {b}.Vectors.Vector (Capacity => {max});
             use {a}.Vectors;
          begin
             while In_It /= No_Element loop
@@ -846,7 +879,13 @@
     <xsl:value-of select="$II"/>
     <xsl:text>Result : </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Vectors.Vector;&#10;</xsl:text>
+    <xsl:text>.Vectors.Vector</xsl:text>
+    <xsl:if test="$max &lt;= $max-bounded-container">
+      <xsl:text> (Capacity =&gt; </xsl:text>
+      <xsl:value-of select="$max"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>

@@ -53,7 +53,7 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     </xsl:variable>
 
-    <!-- Make the name of the Containers package -->
+    <!-- How many instances? -->
     <xsl:variable name="max">
       <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
@@ -72,7 +72,7 @@
         <xsl:text>with Ada.Containers.Bounded_Vectors;&#10;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>with Ada.Containers.Unbounded_Vectors;&#10;</xsl:text>
+        <xsl:text>with Ada.Containers.Vectors;&#10;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>package </xsl:text>
