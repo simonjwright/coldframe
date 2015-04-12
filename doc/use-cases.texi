@@ -80,10 +80,11 @@ class through an association to find the set of corresponding instances
 of another class) is automatically generated.
 
 Tools which use this approach include Software through Pictures from
-@uref{http://www.aonix.com/,Aonix}, Rhapsody from I-Logix, iUML from
-@uref{http://www.kc.com/,Kennedy-Carter}, BridgePoint from
-@uref{http://www.projtech.com/,Project Technology}, and the present
-project.
+@uref{http://www.aonix.com/,Aonix}, Rhapsody from I-Logix, xUML from
+@uref{http://www.abstractsolutions.co.uk/,Abstract Solutions} (was
+Kennedy-Carter), BridgePoint from
+@uref{http://www.mentor.com/products/sm/bridgepoint,Mentor Graphics}
+(was Project Technology; now open-sourced), and the present project.
 
 @end table
 
