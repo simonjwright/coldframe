@@ -41,10 +41,9 @@ STAIRWELL_DEMO =							\
   Digital_IO.RasPi.impl/digital_io-raspi_support.adb			\
   Digital_IO.RasPi.impl/digital_io-raspi_support.ads			\
   House_Management.impl/house_management-button-changed.adb		\
-  House_Management.impl/house_management-button-read_initial_states.adb	\
-  House_Management.impl/house_management-events-initialize.adb		\
   House_Management.impl/house_management-lamp-clear_timeout.adb		\
   House_Management.impl/house_management-lamp-initialize.adb		\
+  House_Management.impl/house_management-lamp-output_for_lamp.adb	\
   House_Management.impl/house_management-lamp-set_timeout.adb		\
   House_Management.impl/house_management-lamp-turn_off.adb		\
   House_Management.impl/house_management-lamp-turn_on.adb		\
