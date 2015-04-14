@@ -463,28 +463,6 @@
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
     <xsl:text>pragma Warnings (Off, Ada.Exceptions);&#10;</xsl:text>
 
-    <!-- The initial state automatically enters the next state if
-         there's an untriggered transition. If so, and if there are
-         actions with parameters in that state, we need a Creation
-         event. -->
-
-    <!-- XXX surely it's an error for such actions to have parameters? -->
-
-    <!-- the initial state .. -->
-    <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
-    <!-- .. the target state .. -->
-    <xsl:variable
-      name="next"
-      select="statemachine/transition[source=$init and not(event)]/target"/>
-    <!-- .. the actions of that state (none on the transition, I hope) .. -->
-    <xsl:variable
-      name="action"
-      select="statemachine/state[name=$next]/action"/>
-
-    <xsl:if test="operation[name=$action]/parameter">
-      <xsl:text>with ColdFrame.Project.Events.Creation;&#10;</xsl:text>
-    </xsl:if>
-
   </xsl:template>
 
 
@@ -641,8 +619,8 @@
 
         <xsl:otherwise>
 
-          <!-- Need to change context to call perform-transition from the
-               current target state. -->
+          <!-- for-each because we need to change context to call
+               perform-transition from the current target state. -->
 
           <xsl:for-each select="../state[name=$drop-through/source]">
             <xsl:call-template name="st:perform-transition">
@@ -667,7 +645,7 @@
     <!-- The class. -->
     <xsl:param name="class"/>
 
-    <!-- The triggering event's name. -->
+    <!-- The triggering event's name, if any. -->
     <xsl:param name="event"/>
 
     <!-- The action name. -->
@@ -745,29 +723,42 @@
              state machine. -->
         <xsl:if test="not($class/event[name=$event]/type=$params/type)">
           <xsl:call-template name="ut:log-error"/>
-          <xsl:message>
-            <xsl:text>Error: </xsl:text>
-            <xsl:value-of select="$class/name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="$event"/>
-            <xsl:text>'s payload is of the wrong type (</xsl:text>
-            <xsl:variable
-              name="payload"
-              select="$class/event[name=$event]/type"/>
-            <xsl:choose>
-              <xsl:when test="$payload">
-                <xsl:value-of select="$payload"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:text>null</xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-            <xsl:text>: </xsl:text>
-            <xsl:value-of select="$action"/>
-            <xsl:text> expects </xsl:text>
-            <xsl:value-of select="$params/type"/>
-            <xsl:text>)</xsl:text>
-          </xsl:message>
+          <xsl:choose>
+            <xsl:when test="$event">
+              <xsl:message>
+                <xsl:text>Error: </xsl:text>
+                <xsl:value-of select="$class/name"/>
+                <xsl:text>.</xsl:text>
+                <xsl:value-of select="$event"/>
+                <xsl:text>'s payload is of the wrong type (</xsl:text>
+                <xsl:variable
+                  name="payload"
+                  select="$class/event[name=$event]/type"/>
+                <xsl:choose>
+                  <xsl:when test="$payload">
+                    <xsl:value-of select="$payload"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:text>null</xsl:text>
+                  </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>: </xsl:text>
+                <xsl:value-of select="$action"/>
+                <xsl:text> expects </xsl:text>
+                <xsl:value-of select="$params/type"/>
+                <xsl:text>)</xsl:text>
+              </xsl:message>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>
+                <xsl:text>Error: </xsl:text>
+                <xsl:value-of select="$class/name"/>
+                <xsl:text>.</xsl:text>
+                <xsl:value-of select="$action"/>
+                <xsl:text> takes a parameter, can't be used in drop-through action</xsl:text>
+              </xsl:message>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:if>
       </xsl:when>
 
@@ -917,7 +908,6 @@
     <!-- if there is an unguarded transition from the initial state
          declare
             This : constant Handle renames Result;
-            The_Event : ColdFrame.Project.Events.Creation.Event (Result);
          begin
             {perform-transition}
          end;
@@ -932,26 +922,18 @@
 
       <xsl:value-of select="$II"/>
       <xsl:text>declare&#10;</xsl:text>
-      <!-- fudge with This to avoid extra parameters! -->
+      <!-- Existing code expects the operation's parameter to be This. -->
       <xsl:value-of select="$III"/>
       <xsl:text>This : Handle renames Result;&#10;</xsl:text>
 
-      <!-- the entry actions of the target state .. -->
-      <xsl:variable
-        name="action"
-        select="statemachine/state[name=$tr/target]/action"/>
-
-      <xsl:if test="operation[name=$action]/parameter">
-        <xsl:value-of select="$III"/>
-        <xsl:text>The_Event : ColdFrame.Project.Events.Creation.Event (This);&#10;</xsl:text>
-      </xsl:if>
-
+      <!-- Tried to detect use of action which requires a parameter,
+           failed. -->
 
       <xsl:value-of select="$II"/>
       <xsl:text>begin&#10;</xsl:text>
 
-      <!-- Need to change context to call perform-transition from the
-           target state. -->
+      <!-- for-each because we need to change context to call
+           perform-transition from the initial state. -->
 
       <xsl:for-each select="statemachine/state[name=$tr/source]">
         <xsl:call-template name="st:perform-transition">

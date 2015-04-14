@@ -51,8 +51,6 @@ standard/coldframe-event_basis.adb						\
 standard/coldframe-event_basis.ads						\
 standard/coldframe-events_g-callback_manager_g.adb				\
 standard/coldframe-events_g-callback_manager_g.ads				\
-standard/coldframe-events_g-creation_g.adb					\
-standard/coldframe-events_g-creation_g.ads					\
 standard/coldframe-events_g-debug_g.adb						\
 standard/coldframe-events_g-debug_g.ads						\
 standard/coldframe-events_g-held_event_queue_signature-inspection_signature.ads	\

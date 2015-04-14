@@ -33,7 +33,6 @@ standard/coldframe-project-calendar.adb				\
 standard/coldframe-project-calendar.ads				\
 standard/coldframe-project-event_support.ads			\
 standard/coldframe-project-events-callback_manager.ads		\
-standard/coldframe-project-events-creation.ads			\
 standard/coldframe-project-events-monitoring-test.ads		\
 standard/coldframe-project-events-monitoring-test_trace.ads	\
 standard/coldframe-project-events-monitoring-trace.ads		\

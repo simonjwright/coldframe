@@ -198,6 +198,8 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: <i>Class.Event</i>'s payload is of the wrong type (<i>Type</i>): <i>Operation</i> expects <i>Type</i> <dd>If an entry action has a parameter, it must be of the type of the associated event's payload.
 
+<dt>Error: <i>Class.Operation</i> takes a parameter, can't be used in drop-through action <dd>If an entry action has a parameter, there must be an associated event/payload to provide the parameter.
+
 <dt>Error: <i>Class.Operation</i> is wrongly stereotyped as an accessor <dd>The operation's name or profile don't match any parameter (name, type, class-ness).
 
 <dt>Error: <i>Class</i>.<i>State</i>, a singleton entry action may not delete the instance <dd>It's not permitted to delete a singleton.
