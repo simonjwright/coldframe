@@ -74,23 +74,57 @@ zipped release of 30 January 2001.
 </ul>
 -->
 
-<dt>DATE
+<dt>20150415
 
 <dd>
 <ul class="release">
 
 <li><b>General</b>
 
+<li>This is a major release; ColdFrame is targeted at Ada 2012. It uses
+Bounded containers when possible. Alternative Ravenscar-compatible
+code generation is provided.
+
 <li><b>Modelling</b>
 
+<li>In Ravenscar mode, classes can't be &#171;active&#187;, and the
+maximum number of instances of each class must be bounded; either
+naturally (making the identifier be an enumerated type, for instance)
+or by use of &#171;cardinality&#187;. Strings in identifiers (bounded
+or unbounded) aren't supported.
+
 <li><b>Generation</b>
+
+<li>If the environment/Makefile variable <tt>PROFILE</tt> is set to
+other than the default <tt>standard</tt>, the generated code is
+Ravenscar-compliant.
 
 <li> <i>Filter_Function</i> was still generated using the Booch
 Components.
 
 <li><b>Code</b>
 
+<li>Provided a Ravenscar-compliant runtime.
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/24/">24</a>
+(Doesn't detect state machine error).
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/85/">85</a>
+(Incompatibility with ArgoUML 0.35.1).
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/86/">86</a>
+(Finalize stereotype on operation ignored).
+
 <li><b>Testing</b>
+
+<li>Included support for
+<a href="http://coldframe.sourceforge.net/scripted_testing/">scripted testing</a>.
+
+<li>Included a demonstration program of Ravenscar features for the
+STM32F429I Discovery board from STMicroelectronics.
 
 <li> <tt>ColdFrame.Stubs</tt> supports retrieving the value passed in
 one parameter when another parameter last had a given value; useful
@@ -107,6 +141,14 @@ to <tt>ColdFrame.Stubs.Save_Number_Of_Calls</tt>.
 for <tt>Get_Input_Value</tt>'s <tt>For_Call</tt>, does just as well).
 
 <li><b>Installation</b>
+
+<li>Although there is no reason why a Ravenscar-compliant build should
+not be run in any environment, the supplied configuration (see
+<tt>ColdFrame_Ravenscar.gpr</tt> and <tt>Options_Ravenscar.gpr</tt>)
+is targeted to the STM32F429I Discovery board from STMicroelectronics,
+using the runtime system at
+the <a href="https://sourceforge.net/projects/stm32f4-gnat-rts/">STM32F4
+GNAT Run Time System</a>.
 
 </ul>
 
