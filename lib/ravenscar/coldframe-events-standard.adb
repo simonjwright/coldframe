@@ -200,8 +200,7 @@ package body ColdFrame.Events.Standard is
             TE.The_Event := To_Fire;
             TE.The_Timer := The_Timer'Unrestricted_Access;
          end;
-         On.The_Held_Events.Add_After_Event (The_Timer.The_Entry,
-                                                    After);
+         On.The_Held_Events.Add_After_Event (The_Timer.The_Entry, After);
 
       else
 
@@ -227,19 +226,23 @@ package body ColdFrame.Events.Standard is
       else
 
          declare
-            --  TE : Held_Event renames Held_Event (The_Timer.The_Entry.all);
+            Ev : constant Event_P := The_Timer.The_Entry;
+            HE : Held_Event renames Held_Event (Ev.all);
          begin
-
             --  Cancel the Event
-            Held_Event (The_Timer.The_Entry.all).The_Event.Invalidated := True;
+            HE.The_Event.Invalidated := True;
 
             --  Indicate the Timer's already unset
-            Held_Event (The_Timer.The_Entry.all).The_Timer := null;
+            HE.The_Timer := null;
 
+            --  Unset the Timer
+            The_Timer.The_Entry := null;
+
+            --  Remove the Event from the held event queue (if it
+            --  hasn't already made it to the Held Event Manager task
+            --  or to the Dispatcher)
+            On.The_Held_Events.Remove_Event (Ev);
          end;
-
-         --  Unset the Timer
-         The_Timer.The_Entry := null;
 
       end if;
 

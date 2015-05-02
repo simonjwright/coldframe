@@ -89,8 +89,6 @@ private
      (Index_Type   => Positive,
       Element_Type => Event_P);
 
-   Test : Event_Queues.Vector (Capacity => 64);
-
    package Dispatchable_Event_Management is
       --  Made a package to reduce the complexity of the main body.
 
@@ -159,11 +157,9 @@ private
          Event         : Event_P;
       end record;
 
-      pragma Warnings (Off, "*No_Exception_Propagation*");
       package Duration_Vectors is new Ada.Containers.Bounded_Vectors
         (Index_Type   => Positive,
          Element_Type => Duration_Cell);
-      pragma Warnings (On, "*No_Exception_Propagation*");
 
       --  Used afterwards (even for plain 'delay's).
       type Time_Cell is record
@@ -172,11 +168,9 @@ private
       end record;
 
       --  This is maintained sorted by increasing time to fire.
-      pragma Warnings (Off, "*No_Exception_Propagation*");
       package Time_Vectors is new Ada.Containers.Bounded_Vectors
         (Index_Type   => Positive,
          Element_Type => Time_Cell);
-      pragma Warnings (On, "*No_Exception_Propagation*");
 
       protected type Held_Events
         (The_Queue : not null access Event_Queue_Base'Class;
@@ -209,8 +203,16 @@ private
          procedure Invalidate_Events
            (For_The_Instance : not null Instance_Base_P);
          --  Marks all the events on the queue which are for
-         --  For_The_Instance as invalid, so they won't be actioned when
-         --  their time arrives.
+         --  For_The_Instance (which has been deleted) as invalid, so
+         --  they won't be actioned when their time arrives.
+         --
+         --  XXX is this actually safe? Couldn't an event be in the
+         --  Held Event Manager task at this point?
+
+         procedure Remove_Event (An_Event : not null Event_P);
+         --  Called when a Timer is Unset. Removes An_Event (a
+         --  Held_Event) from the queue, if found (it may have made it
+         --  to the Held Event Manager task or to the Dispatcher)
 
       private
 

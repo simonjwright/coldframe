@@ -113,6 +113,30 @@ package body Held_Event_Management is
          Invalidate_Time_Events (Time_Iterator);
       end Invalidate_Events;
 
+      procedure Remove_Event (An_Event : not null Event_P) is
+         procedure Free_Event (E : Event_P);
+         procedure Free_Event (E : Event_P) is
+            Deletable : Event_P := E;
+            Owned_Deletable : Event_P := Held_Event (Deletable.all).The_Event;
+         begin
+            Delete (Owned_Deletable);
+            Delete (Deletable);
+         end Free_Event;
+      begin
+         for J in reverse 1 .. Duration_Queue.Last_Index loop
+            if Duration_Queue.Element (J).Event = An_Event then
+               Free_Event (Duration_Queue.Element (J).Event);
+               Duration_Queue.Delete (J);
+            end if;
+         end loop;
+         for J in reverse 1 .. Held_Event_Queue.Last_Index loop
+            if Held_Event_Queue.Element (J).Event = An_Event then
+               Free_Event (Held_Event_Queue.Element (J).Event);
+               Held_Event_Queue.Delete (J);
+            end if;
+         end loop;
+      end Remove_Event;
+
    end Held_Events;
 
    task body Held_Event_Processing is
