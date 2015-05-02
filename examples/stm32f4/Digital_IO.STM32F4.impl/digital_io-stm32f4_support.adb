@@ -361,17 +361,13 @@ package body Digital_IO.STM32F4_Support is
       pragma Unreferenced (This);  -- only used for dispatching
       Line : constant Natural :=
         Natural (Output_Signal_To_Line (Output_Signal (For_Output)).Line);
-      Bits : Bits_16x1 := (others => 0);
+      Bits : Bits_32x1 := (others => 0);
       GPIO : GPIO_TypeDef renames
         GPIOs (Output_Signal_To_Line (Output_Signal (For_Output)).GPIO).all;
    begin
-      Bits (Line) := 1;
-      case To is
-         when False =>
-            GPIO.BSRRH := B1_To_U16 (Bits); -- off
-         when True =>
-            GPIO.BSRRL := B1_To_U16 (Bits); -- on
-      end case;
+      --  To set, use the low 16 bits; to clear, use the high 16 bits
+      Bits (Line + (if To then 0 else 16)) := 1;
+      GPIO.BSRR := B1_To_U32 (Bits);
    end Set;
 
 end Digital_IO.STM32F4_Support;
