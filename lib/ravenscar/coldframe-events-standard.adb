@@ -24,8 +24,7 @@ with ColdFrame.Times;
 
 package body ColdFrame.Events.Standard is
 
-   package body Dispatchable_Event_Management is separate;
-   package body Held_Event_Management is separate;
+   package body Event_Management is separate;
 
    --  Remember, in the instance to which this event is directed,
    --  which event queue was used. This is so that (when the instance
@@ -67,7 +66,7 @@ package body ColdFrame.Events.Standard is
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
 
-      On.The_Dispatchable_Events.Post (The_Event);
+      On.The_Events.Post (The_Event);
 
    end Post;
 
@@ -79,7 +78,7 @@ package body ColdFrame.Events.Standard is
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
 
-      On.The_Dispatchable_Events.Post_To_Self (The_Event);
+      On.The_Events.Post_To_Self (The_Event);
 
    end Post_To_Self;
 
@@ -97,7 +96,7 @@ package body ColdFrame.Events.Standard is
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
       TE.The_Event := The_Event;
-      On.The_Held_Events.Add_At_Event (TEP, To_Fire_At);
+      On.The_Events.Add_At_Event (TEP, To_Fire_At);
 
    end Post;
 
@@ -116,7 +115,7 @@ package body ColdFrame.Events.Standard is
       TE.Time_To_Fire := Times.From_Now (To_Fire_After);
       --  NB, this will be wrong if the queue isn't yet started.
       TE.The_Event := The_Event;
-      On.The_Held_Events.Add_After_Event (TEP, To_Fire_After);
+      On.The_Events.Add_After_Event (TEP, To_Fire_After);
 
    end Post;
 
@@ -129,7 +128,7 @@ package body ColdFrame.Events.Standard is
 
       loop
 
-         The_Queue.The_Dispatchable_Events.Fetch (E);
+         The_Queue.The_Events.Fetch (E);
 
          if not E.Invalidated then
             Start_Handling (E);
@@ -139,7 +138,7 @@ package body ColdFrame.Events.Standard is
 
          Delete (E);
 
-         The_Queue.The_Dispatchable_Events.Done;
+         The_Queue.The_Events.Done;
 
       end loop;
 
@@ -166,7 +165,7 @@ package body ColdFrame.Events.Standard is
             TE.The_Event := To_Fire;
             TE.The_Timer := The_Timer'Unrestricted_Access;
          end;
-         On.The_Held_Events.Add_At_Event (The_Timer.The_Entry, At_Time);
+         On.The_Events.Add_At_Event (The_Timer.The_Entry, At_Time);
 
       else
 
@@ -200,7 +199,7 @@ package body ColdFrame.Events.Standard is
             TE.The_Event := To_Fire;
             TE.The_Timer := The_Timer'Unrestricted_Access;
          end;
-         On.The_Held_Events.Add_After_Event (The_Timer.The_Entry, After);
+         On.The_Events.Add_After_Event (The_Timer.The_Entry, After);
 
       else
 
@@ -238,10 +237,8 @@ package body ColdFrame.Events.Standard is
             --  Unset the Timer
             The_Timer.The_Entry := null;
 
-            --  Remove the Event from the held event queue (if it
-            --  hasn't already made it to the Held Event Manager task
-            --  or to the Dispatcher)
-            On.The_Held_Events.Remove_Event (Ev);
+            --  Remove the Event from the held event queue
+            On.The_Events.Remove_Held_Event (Ev);
          end;
 
       end if;
@@ -253,21 +250,9 @@ package body ColdFrame.Events.Standard is
      (On               : not null access Event_Queue_Base;
       For_The_Instance : not null access Instance_Base'Class) is
    begin
-
-      --  Called to mark all events for For_The_Instance as
-      --  invalidated, so that they won't be dispatched.
-
-      --  First, tell Held_Event_Management to mark all its held
-      --  events that reference the departing instance;
-      On.The_Held_Events.Invalidate_Events
-        (Instance_Base_P (For_The_Instance));
-      --  after which there can't be any more left (even one that was
-      --  in the process of being posted must have gone, because it's
-      --  processed elsewhere in the Held_Event_Manager task). XXX
-
-      --  Next, tell Dispatchable_Event_Management the same.
-      On.The_Dispatchable_Events.Invalidate_Events (For_The_Instance);
-
+      --  Tell Event_Management to mark all its events that reference
+      --  the departing instance.
+      On.The_Events.Invalidate_Events (Instance_Base_P (For_The_Instance));
    end Invalidate_Events;
 
 

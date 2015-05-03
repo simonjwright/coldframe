@@ -37,11 +37,9 @@ package body ColdFrame.Events is
    begin
       if The_Instance.Events_Posted_On /= null then
          --  Some events have been posted on a Queue
-         pragma Warnings (Off, "*No_Exception_Propagation*");
          Invalidate_Events
            (On => The_Instance.Events_Posted_On,
             For_The_Instance => The_Instance);
-         pragma Warnings (On, "*No_Exception_Propagation*");
       end if;
    end Finalize;
 
@@ -60,18 +58,14 @@ package body ColdFrame.Events is
       if The_Timer.The_Entry /= null then
 
          declare
-            pragma Warnings (Off, "*No_Exception_Propagation*");
             H : Held_Event renames Held_Event (The_Timer.The_Entry.all);
-            pragma Warnings (On, "*No_Exception_Propagation*");
          begin
             --  The Timer is set. Tell the timer event that the timer has
             --  been deleted.
             H.The_Timer := null;
 
             --  Invalidate the held event.
-            pragma Warnings (Off, "*No_Exception_Propagation*");
             H.The_Event.Invalidated := True;
-            pragma Warnings (On, "*No_Exception_Propagation*");
          end;
 
          The_Timer.The_Entry := null;

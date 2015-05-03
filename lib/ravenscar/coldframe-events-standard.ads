@@ -19,7 +19,7 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
-pragma Profile (Ravenscar);
+pragma Profile (Ravenscar);  -- see ticket #11, I think
 
 with Ada.Containers;
 
@@ -89,65 +89,7 @@ private
      (Index_Type   => Positive,
       Element_Type => Event_P);
 
-   package Dispatchable_Event_Management is
-      --  Made a package to reduce the complexity of the main body.
-
-      --  Mutual exclusion between posters and the Dispatcher.
-      protected type Dispatchable_Events
-        (The_Queue : not null access Event_Queue_Base'Class;
-         Capacity  : Ada.Containers.Count_Type) is
-
-         --  We need to constrain by 'Class so that internal calls to
-         --  potentially dispatching operations (such as
-         --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
-
-         procedure Post (The_Event : not null Event_P);
-         --  Post an event.
-
-         procedure Post_To_Self (The_Event : not null Event_P);
-         --  Post an event-to-self.
-
-         entry Fetch (The_Event : out Event_P);
-         --  Blocks until the queue is unlocked and there is an event on
-         --  it; when one is found, notes that execution is in progress,
-         --  removes the event from the queue and stores it
-         --  in "The_Event".
-
-         procedure Invalidate_Events
-           (For_The_Instance : not null access Instance_Base'Class);
-         --  Marks all the events on the queue which are for
-         --  For_The_Instance as invalid, so they won't be actioned when
-         --  Fetched.
-
-         procedure Done;
-         --  Notes that execution is no longer in progress.
-
-      private
-
-         Fetchable_Event : Boolean := False;
-
-         procedure Check_Fetchable_Event;
-
-         Owner : Ada.Task_Identification.Task_Id :=
-           Ada.Task_Identification.Null_Task_Id;
-         --  Supports "recursive mutex" behaviour, and checks that
-         --  Post_To_Self is called during event processing, not by some
-         --  external task. XXX how to do this? is it needed?
-
-         The_Self_Events     : access Event_Queues.Vector :=
-           new Event_Queues.Vector (Capacity => Capacity);
-         The_Instance_Events : access Event_Queues.Vector :=
-           new Event_Queues.Vector (Capacity => Capacity);
-         The_Class_Events    : access Event_Queues.Vector :=
-           new Event_Queues.Vector (Capacity => Capacity);
-
-      end Dispatchable_Events;
-
-   end Dispatchable_Event_Management;
-   use Dispatchable_Event_Management;
-
-
-   package Held_Event_Management is
+   package Event_Management is
       --  Made a package to reduce the complexity of the main body.
 
       --  Used before the queue is started; we reckon the delay from
@@ -172,27 +114,46 @@ private
         (Index_Type   => Positive,
          Element_Type => Time_Cell);
 
-      protected type Held_Events
+      --  Holds both immediately-actionable and held events.
+      protected type All_Events
         (The_Queue : not null access Event_Queue_Base'Class;
          Capacity  : Ada.Containers.Count_Type) is
-
-         procedure Running;
-         --  The event queue has started; post all the events on the
-         --  duration queue onto the held event queue (since we now
-         --  know when the duration is from).
 
          --  We need to constrain by 'Class so that internal calls to
          --  potentially dispatching operations (such as
          --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
-         --  No need to specify priority (because we only deal with
-         --  timed events anyway) or stack size (if anything, we could
-         --  reduce it, since there's no user code to call).
+         --  Immediately-actionable events:
+         ----------------------------------
 
-         procedure Fetch (An_Event        : out Event_P;
-                          If_At_Or_Before :     Ada.Real_Time.Time);
-         --  Returns an event which has become due (null if
-         --  none). Running must have been called.
+         procedure Post (The_Event : not null Event_P);
+         --  Post an event.
+
+         procedure Post_To_Self (The_Event : not null Event_P);
+         --  Post an event-to-self.
+
+         entry Fetch (The_Event : out Event_P);
+         --  Blocks until the queue is unlocked and there is an event on
+         --  it; when one is found, notes that execution is in progress,
+         --  removes the event from the queue and stores it
+         --  in "The_Event".
+
+         procedure Invalidate_Events
+           (For_The_Instance : not null access Instance_Base'Class);
+         --  Marks all the events on the queue which are for
+         --  For_The_Instance as invalid, so they won't be actioned when
+         --  Fetched.
+
+         procedure Done;
+         --  Notes that execution is no longer in progress.
+
+         --  Held events:
+         ----------------
+
+         procedure Running;
+         --  The event queue has started; post all the events on the
+         --  duration queue onto the held event queue (since we now
+         --  know when the duration is from).
 
          procedure Add_At_Event (The_Entry : not null Event_P;
                                  To_Run_At : Ada.Real_Time.Time);
@@ -200,39 +161,53 @@ private
          procedure Add_After_Event (The_Entry    : not null Event_P;
                                     To_Run_After : Duration);
 
-         procedure Invalidate_Events
-           (For_The_Instance : not null Instance_Base_P);
-         --  Marks all the events on the queue which are for
-         --  For_The_Instance (which has been deleted) as invalid, so
-         --  they won't be actioned when their time arrives.
-         --
-         --  XXX is this actually safe? Couldn't an event be in the
-         --  Held Event Manager task at this point?
-
-         procedure Remove_Event (An_Event : not null Event_P);
+         procedure Remove_Held_Event (An_Event : not null Event_P);
          --  Called when a Timer is Unset. Removes An_Event (a
-         --  Held_Event) from the queue, if found (it may have made it
-         --  to the Held Event Manager task or to the Dispatcher)
+         --  Held_Event) from the queue.
+
+         procedure Make_Events_Actionable
+           (If_At_Or_Before : Ada.Real_Time.Time);
+         --  Called every tick to transfer held events whose time has
+         --  arrived to the immediately-actionable queue.
 
       private
 
-         Started : Boolean := False;
-         --  Set True by Running (at which point tasking must have
-         --  started).
+         Fetchable_Event : Boolean := False;
 
-         Duration_Queue   : access Duration_Vectors.Vector :=
+         procedure Check_Fetchable_Event;
+         --  Compute the new value of Fetchable_Event, so as to work
+         --  round the Ravenscar requirement for simple entry
+         --  conditions.
+
+         Owner : Ada.Task_Identification.Task_Id :=
+           Ada.Task_Identification.Null_Task_Id;
+         --  Supports "recursive mutex" behaviour, and checks that
+         --  Post_To_Self is called during event processing, not by some
+         --  external task. XXX how to do this? is it needed?
+
+         The_Self_Events     : access Event_Queues.Vector :=
+           new Event_Queues.Vector (Capacity => Capacity);
+         The_Instance_Events : access Event_Queues.Vector :=
+           new Event_Queues.Vector (Capacity => Capacity);
+         The_Class_Events    : access Event_Queues.Vector :=
+           new Event_Queues.Vector (Capacity => Capacity);
+
+         Started : Boolean := False;
+         --  Set True by Running (called by Ticker; at which point
+         --  tasking must have started).
+
+         The_Duration_Events   : access Duration_Vectors.Vector :=
            new Duration_Vectors.Vector (Capacity => Capacity);
-         Held_Event_Queue : access Time_Vectors.Vector :=
+         The_Held_Events : access Time_Vectors.Vector :=
            new Time_Vectors.Vector (Capacity => Capacity);
 
-      end Held_Events;
+      end All_Events;
 
-      task type Held_Event_Processing
-        (The_Queue : access Event_Queue_Base'Class) is
-      end Held_Event_Processing;
+      task type Ticker (The_Queue : access Event_Queue_Base'Class) is
+      end Ticker;
 
-   end Held_Event_Management;
-   use Held_Event_Management;
+   end Event_Management;
+   use Event_Management;
 
 
    task type Dispatcher (The_Queue    : access Event_Queue_Base'Class;
@@ -257,16 +232,10 @@ private
                                      Storage_Size  => Storage_Size)
       with record
 
-         The_Dispatchable_Events :
-           Dispatchable_Events (Event_Queue_Base'Access,
-                                Capacity => Capacity);
+         The_Events : All_Events (Event_Queue_Base'Access,
+                                  Capacity => Capacity);
 
-         The_Held_Events :
-           Held_Events (Event_Queue_Base'Access,
-                        Capacity => Capacity);
-
-         The_Held_Event_Processing :
-           Held_Event_Processing (Event_Queue_Base'Access);
+         The_Ticker : Ticker (Event_Queue_Base'Access);
 
          The_Dispatcher : Dispatcher (Event_Queue_Base'Access,
                                       Priority     => Priority,
@@ -276,5 +245,7 @@ private
    procedure Invalidate_Events
      (On               : not null access Event_Queue_Base;
       For_The_Instance : not null access Instance_Base'Class);
+   --  Called to mark all events for For_The_Instance as
+   --  invalidated, so that they won't be dispatched.
 
 end ColdFrame.Events.Standard;
