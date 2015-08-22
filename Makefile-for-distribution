@@ -18,12 +18,14 @@
 #
 # It ensures that ColdFrame is set up properly.
 
+GPRBUILD ?= gprbuild
+
 all:
 	@echo "Say 'make setup' if you wish to set ColdFrame up."
 
 # Set up the library
 setup:: force
-	gprbuild -p -P ColdFrame
+	$(GPRBUILD) -p -P ColdFrame
 
 # Set up subdirectories
 SETUP_SUBDIRS = lib tools examples

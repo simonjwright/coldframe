@@ -22,6 +22,8 @@
 # install directory, and that we have write access (OK on Windows,
 # may require admin cooperation on Unix).
 
+GPRBUILD ?= gprbuild
+
 all::
 setup::
 clean::
@@ -52,26 +54,26 @@ endif
 EXECUTABLES += house_management-harness$(exe) house_management-scripting$(exe)
 house_management-harness$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
-	gprbuild -p -PHouse_Management_Test
+	$(GPRBUILD) -p -PHouse_Management_Test
 house_management-scripting$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
-	gprbuild -p -PHouse_Management_Scripting
+	$(GPRBUILD) -p -PHouse_Management_Scripting
 
 EXECUTABLES += interrupt_handling-harness$(exe)
 interrupt_handling-harness$(exe): Interrupt_Handling.gen force
-	gprbuild -p -PInterrupt_Handling
+	$(GPRBUILD) -p -PInterrupt_Handling
 
 EXECUTABLES += library_test_harness$(exe)
 library_test_harness$(exe): Library.gen force
-	gprbuild -p -PLibrary
+	$(GPRBUILD) -p -PLibrary
 
 EXECUTABLES += performance-harness$(exe)
 performance-harness$(exe): Performance.gen force
-	gprbuild -p -PPerformance
+	$(GPRBUILD) -p -PPerformance
 
 EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
-	gprbuild -p -PProblem_Reporting
+	$(GPRBUILD) -p -PProblem_Reporting
 
 #EXECUTABLES += serialization_client$(exe)
 serialization_client$(exe): serialization_server$(exe)
@@ -81,11 +83,11 @@ serialization_server: Serialization.gen \
  Serialization_Demo.gen \
  Serialization_Demo_Other.gen \
  force
-	gprbuild -p -PSerialization
+	$(GPRBUILD) -p -PSerialization
 
 EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
-	gprbuild -p -PStates
+	$(GPRBUILD) -p -PStates
 
 EXECUTABLES += stairwell_demo$(exe)
 stairwell_demo$(exe):				\
@@ -93,11 +95,11 @@ stairwell_demo$(exe):				\
   Digital_IO.gen				\
   Digital_IO.Tcl.gen				\
   force
-	gprbuild -p -Pstairwell_demo
+	$(GPRBUILD) -p -Pstairwell_demo
 
 EXECUTABLES += van_fleet-demo$(exe)
 van_fleet-demo$(exe): Van_Fleet.gen
-	gprbuild -p -PVan_Fleet
+	$(GPRBUILD) -p -PVan_Fleet
 
 all:: $(EXECUTABLES)
 

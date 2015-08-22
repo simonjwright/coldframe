@@ -14,9 +14,11 @@
 
 # This Makefile is used to set up the tools and for tool development.
 
+GPRBUILD ?= gprbuild
+
 all::
 
 setup:
-	gnatmake -p -P tools.gpr
+	$(GPRBUILD) -p -P tools.gpr
 
 .PHONY: all setup

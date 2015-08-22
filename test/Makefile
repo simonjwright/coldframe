@@ -22,6 +22,8 @@
 # install directory, and that we have write access (OK on Windows,
 # may require admin cooperation on Unix).
 
+GPRBUILD ?= gprbuild
+
 all::
 
 include ../Makefile.inc
@@ -60,31 +62,31 @@ runs:: unit_testing-harness$(exe)
 	./$< -v 2>&1 | tee -a unit_testing.log
 
 event_test-harness$(exe): Event_Test.gen force
-	gprbuild -p -PEvent_Test 2>&1 | tee -a Event_Test.log
+	$(GPRBUILD) -p -PEvent_Test 2>&1 | tee -a Event_Test.log
 exes:: event_test-harness$(exe)
 clean::
 	-gnatclean -PEvent_Test
 
 hierarchies-harness$(exe): Hierarchies.gen force
-	gprbuild -p -PHierarchies 2>&1 | tee -a Hierarchies.log
+	$(GPRBUILD) -p -PHierarchies 2>&1 | tee -a Hierarchies.log
 exes:: hierarchies-harness$(exe)
 clean::
 	-gnatclean -PHierarchies
 
 initialization-harness$(exe): Initialization.gen force
-	gprbuild -p -PInitialization 2>&1 | tee -a Initialization.log
+	$(GPRBUILD) -p -PInitialization 2>&1 | tee -a Initialization.log
 exes:: initialization-harness$(exe)
 clean::
 	-gnatclean -PInitialization
 
 stub_test_harness$(exe): Stub_Test_Interface.stub force
-	gprbuild -p -PStub_Test 2>&1 | tee -a Stub_Test.log
+	$(GPRBUILD) -p -PStub_Test 2>&1 | tee -a Stub_Test.log
 exes:: stub_test_harness$(exe)
 clean::
 	-gnatclean -PStub_Test
 
 unit_testing-harness$(exe): Unit_Testing.unit force
-	gprbuild -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
+	$(GPRBUILD) -p -PUnit_Testing 2>&1 | tee -a Unit_Testing.log
 exes:: unit_testing-harness$(exe)
 clean::
 	-gnatclean -PUnit_Testing
@@ -138,13 +140,13 @@ REGRESSION_GENS = $(addsuffix .gen,$(REGRESSION_DOMAINS))
 
 # Has to come after definition of DEVELOPMENT_GENS, REGRESSION_GENS
 regression_tests$(exe): $(DEVELOPMENT_GENS) $(REGRESSION_GENS) force
-	gprbuild -p -PRegressions 2>&1 | tee -a Regressions.log
+	$(GPRBUILD) -p -PRegressions 2>&1 | tee -a Regressions.log
 exes:: regression_tests$(exe)
 clean::
 	-gnatclean -PRegressions
 
 # Bad models
-BAD_MODEL_REGRESSION_DOMAINS =				\
+BAD_MODEL_REGRESSION_DOMAINS =			\
   Identifiers					\
   Multiplicities
 
@@ -156,7 +158,7 @@ fails::
 	-$(MAKE) Bad_Model_Regressions.norm-stamp
 
 # Bad code
-BAD_CODE_REGRESSION_DOMAINS =				\
+BAD_CODE_REGRESSION_DOMAINS =			\
   State_Machines
 
 BAD_CODE_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_CODE_REGRESSION_DOMAINS))
