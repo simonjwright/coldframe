@@ -2,11 +2,11 @@
 
 with "Options_Ravenscar";
 with "ColdFrame_Ravenscar";
-with "stm32f429i_disco_bsp";
+with "arduino_due_bsp";
 
-project Stairwell_STM32F4_Demo is
+project Stairwell_Arduino_Demo is
 
-   for Main use ("stairwell_stm32f4_demo.adb");
+   for Main use ("stairwell_arduino_demo.adb");
 
    for Exec_Dir use ".";
 
@@ -16,12 +16,12 @@ project Stairwell_STM32F4_Demo is
       "House_Management.gen",
       "Digital_IO.impl",
       "Digital_IO.gen",
-      "Digital_IO.STM32F4.impl");
+      "Digital_IO.Arduino.impl");
 
    for Target use ColdFrame_Ravenscar'Target;
    for Runtime ("ada") use ColdFrame_Ravenscar'Runtime ("ada");
 
-   for Object_Dir use ".build-house_management_stm32f4";
+   for Object_Dir use ".build-house_management_arduino";
 
    package Builder is
       for Default_Switches ("ada") use
@@ -33,4 +33,4 @@ project Stairwell_STM32F4_Demo is
    package Binder renames ColdFrame_Ravenscar.Binder;
    package Linker renames ColdFrame_Ravenscar.Linker;
 
-end Stairwell_STM32F4_Demo;
+end Stairwell_Arduino_Demo;

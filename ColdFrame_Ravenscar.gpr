@@ -19,7 +19,8 @@ with "Options_Ravenscar";
 
 library project ColdFrame_Ravenscar is
 
-   for Target use "arm-eabi";
+   for Target use Options_Ravenscar'Target;
+   for Runtime ("ada") use Options_Ravenscar'Runtime ("ada");
 
    for Library_Name use "coldframe";
    for Library_Kind use "static";
@@ -32,5 +33,7 @@ library project ColdFrame_Ravenscar is
 
    package Builder renames Options_Ravenscar.Builder;
    package Compiler renames Options_Ravenscar.Compiler;
+   package Binder renames Options_Ravenscar.Binder;
+   package Linker renames Options_Ravenscar.Linker;
 
 end ColdFrame_Ravenscar;

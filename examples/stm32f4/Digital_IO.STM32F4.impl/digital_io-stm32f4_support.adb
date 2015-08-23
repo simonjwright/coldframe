@@ -36,8 +36,6 @@ package body Digital_IO.STM32F4_Support is
          --  4      => (True, 4),
          others => <>);
 
-      --  type Volatile_GPIO_TypeDef is new GPIO_TypeDef with Volatile;
-      --  type GPIO_Access is access all Volatile_GPIO_TypeDef;
       type GPIO_Access is access all GPIO_TypeDef;
 
       type GPIO_Index is (A, B, C, D, E, F, G, H, I, J, K)

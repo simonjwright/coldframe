@@ -27,15 +27,15 @@ setup::
 clean::
 
 PROFILE=ravenscar
-ADA_PROJECT_PATH=../..:$(HOME)/cortex-gnat-rts/stm32f429i-disco-bsp
+ADA_PROJECT_PATH=../..:$(HOME)/cortex-gnat-rts/arduino-due-bsp
 
 include ../../Makefile.inc
 
-EXECUTABLES += stairwell_stm32f4_demo.bin
+EXECUTABLES += stairwell_arduino_demo.bin
 
-stairwell_stm32f4_demo.bin: stairwell_stm32f4_demo
-stairwell_stm32f4_demo: House_Management.gen Digital_IO.gen force
-	gprbuild -p -P stairwell_stm32f4_demo.gpr -XRTS=stm32f4
+stairwell_arduino_demo.bin: stairwell_arduino_demo
+stairwell_arduino_demo: House_Management.gen Digital_IO.gen force
+	gprbuild -p -P stairwell_arduino_demo.gpr -XRTS=arduino
 
 %.bin: %
 	arm-eabi-objcopy -O binary $< $@
@@ -66,7 +66,7 @@ setup::
 
 clean::
 	-for g in *.gpr; do			\
-	  gnatclean -P $$g;			\
+	  gnatclean -P $$g -XRTS=arduino;			\
 	done
 	rm -f Digital_IO.impl House_Management.impl
 	rm -rf *.{bin,map,norm-stamp,stamp,norm,ada,gen,html,images}

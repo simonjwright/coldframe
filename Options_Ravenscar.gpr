@@ -13,26 +13,38 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  This file provides default compilation options for ColdFrame for a
---  Ravenscar target on STM32F4.
+--  Ravenscar target on Cortex.
 
 abstract project Options_Ravenscar is
 
    --  This project has no associated sources.
    for Source_Files use ();
 
-   STM32F4_GNAT_RTS := external ("HOME") & "/stm32f4-gnat-rts";
+   CORTEX_GNAT_RTS := external ("HOME") & "/cortex-gnat-rts";
+
+   type RTS_Type is ("stm32f4", "arduino", "native");
+
+   RTS : RTS_Type := external ("RTS", "stm32f4");
+
+   case RTS is
+      when "stm32f4" | "arduino" =>
+         for Target use "arm-eabi";
+      when "native" =>
+         null;
+   end case;
+
+   case RTS is
+      when "stm32f4" =>
+         for Runtime ("ada") use CORTEX_GNAT_RTS & "/stm32f429i-disco-rtos";
+      when "arduino" =>
+         for Runtime ("ada") use CORTEX_GNAT_RTS & "/arduino-due";
+      when "native" =>
+         null;
+   end case;
 
    --  Builder configuration options.
    package Builder is
-      for Default_Switches ("ada") use
-        (
-         "-gnat12",
-         "-g",
-         "-Og",
-         "-ffunction-sections",
-         "-fdata-sections",
-         "--RTS=" & STM32F4_GNAT_RTS & "/stm32f429i-disco-rtos"
-        );
+      for Default_Switches ("ada") use ("-gnat12", "-g", "-Og");
    end Builder;
 
    --  GCC configuration options.
@@ -43,18 +55,35 @@ abstract project Options_Ravenscar is
          --  keep .alis, assertions, full messages, hardware overflow
          --  checks, style checks
 
-         "-gnatwaL",
+         "-gnatwaL"
          --  All standard warnings except elaboration problems
-
-         "-gnatw.X"
-         --  .. and non-local exceptions (exceptions invoking Last
-         --  Chance Handler: expected!)
         );
+      case RTS is
+         when "stm32f4" | "arduino" =>
+            for Default_Switches ("ada") use
+              Compiler'Default_Switches ("ada") &
+              (
+               --  .. dead code elimination (with -fgc-sections at link)
+               "-ffunction-sections",
+               "-fdata-sections",
+
+               "-gnatw.X"
+               --  .. and non-local exceptions (exceptions invoking Last
+               --  Chance Handler: expected!)
+              );
+         when "native" =>
+            null;
+      end case;
    end Compiler;
 
    -- GNATBIND configuration options.
    package Binder is
       for Default_Switches ("ada") use ("-E");
    end Binder;
+
+   --  GNATLINK configuration options
+   package Linker is
+      for Default_Switches ("ada") use ("-Wl,-gc-sections");
+   end Linker;
 
 end Options_Ravenscar;
