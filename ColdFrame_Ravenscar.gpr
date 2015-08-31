@@ -33,7 +33,5 @@ library project ColdFrame_Ravenscar is
 
    package Builder renames Options_Ravenscar.Builder;
    package Compiler renames Options_Ravenscar.Compiler;
-   package Binder renames Options_Ravenscar.Binder;
-   package Linker renames Options_Ravenscar.Linker;
 
 end ColdFrame_Ravenscar;

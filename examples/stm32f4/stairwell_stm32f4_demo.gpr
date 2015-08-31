@@ -18,19 +18,19 @@ project Stairwell_STM32F4_Demo is
       "Digital_IO.gen",
       "Digital_IO.STM32F4.impl");
 
-   for Target use ColdFrame_Ravenscar'Target;
-   for Runtime ("ada") use ColdFrame_Ravenscar'Runtime ("ada");
+   for Target use Options_Ravenscar'Target;
+   for Runtime ("ada") use Options_Ravenscar'Runtime ("ada");
 
    for Object_Dir use ".build-house_management_stm32f4";
 
    package Builder is
       for Default_Switches ("ada") use
-        ColdFrame_Ravenscar.Builder'Default_Switches ("ada")
+        Options_Ravenscar.Builder'Default_Switches ("ada")
         & ("--create-map-file=" & project'Project_Dir & project'Name & ".map");
    end Builder;
 
-   package Compiler renames ColdFrame_Ravenscar.Compiler;
-   package Binder renames ColdFrame_Ravenscar.Binder;
-   package Linker renames ColdFrame_Ravenscar.Linker;
+   package Compiler renames Options_Ravenscar.Compiler;
+   package Binder renames Options_Ravenscar.Binder;
+   package Linker renames Options_Ravenscar.Linker;
 
 end Stairwell_STM32F4_Demo;
