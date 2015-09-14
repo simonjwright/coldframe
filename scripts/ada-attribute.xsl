@@ -218,7 +218,7 @@
       <xsl:choose>
         <xsl:when test="@refers or not(../@singleton)">
           <xsl:value-of select="$IC"/>
-          <xsl:text>(This : Handle) return </xsl:text>
+          <xsl:text>(This : not null Handle) return </xsl:text>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$IC"/>
@@ -298,7 +298,7 @@
     <!-- If the class isn't a singleton, or the attribute is
          referential, we need a handle parameter. -->
     <xsl:if test="@refers or not(../@singleton)">
-      <xsl:text>This : Handle;</xsl:text>
+      <xsl:text>This : not null Handle;</xsl:text>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
       <xsl:text> </xsl:text>
