@@ -11,6 +11,7 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with Ada.Interrupts.Names;
+with Ada.Real_Time;
 with Digital_IO.Input_Signal_State_Callback;
 with Interfaces;
 with System;
@@ -117,9 +118,12 @@ package body Digital_IO.Arduino_Support is
         Unreferenced;
    end Input_Handler;
 
-   task Receive_Button_Interrupt
-   is
+   task Receive_Button_Interrupt is
    end Receive_Button_Interrupt;
+
+   task Heartbeat is
+      --  Flash the LED
+   end Heartbeat;
 
    protected body Input_Handler is
       entry Button_Pressed (Inputs : out Inputs_Detected)
@@ -209,6 +213,37 @@ package body Digital_IO.Arduino_Support is
          end loop;
       end loop;
    end Receive_Button_Interrupt;
+
+   task body Heartbeat is
+      --  The on-board LED is pin PB27.
+      use Registers.ATSAM3X8.Peripheral_Identifiers;
+      use Registers.ATSAM3X8.PMC;
+      use Registers.ATSAM3X8.PIO;
+      use type Ada.Real_Time.Time;
+   begin
+      --  Enable PIOB
+      PMC.PCER0 := (PIOB_IRQ => 1, others => 0);
+      --  Enable PB27 ..
+      PIOB.PER := (27 => 1, others => 0);
+      --  .. as output.
+      PIOB.OER := (27 => 1, others => 0);
+
+      --  flash for 1 second at startup
+      for J in 1 .. 5 loop
+         PIOB.CODR := (27 => 1, others => 0);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
+         PIOB.SODR := (27 => 1, others => 0);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
+      end loop;
+
+      --  flash every second while running
+      loop
+         PIOB.CODR := (27 => 1, others => 0);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (900);
+         PIOB.SODR := (27 => 1, others => 0);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
+      end loop;
+   end Heartbeat;
 
    procedure Configure_Inputs;
    procedure Configure_Outputs;

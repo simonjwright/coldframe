@@ -11,8 +11,10 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with Ada.Interrupts.Names;
+with Ada.Real_Time;
 with Digital_IO.Input_Signal_State_Callback;
 with System;
+with STM32F429I_Discovery.LEDs;
 with stm32f429xx_h; use stm32f429xx_h;
 
 package body Digital_IO.STM32F4_Support is
@@ -120,6 +122,10 @@ package body Digital_IO.STM32F4_Support is
                                Ada.Interrupts.Names.EXTI15_10_IRQ);
    end EXTI_Handler;
 
+   task Heartbeat is
+      --  Flash the green LED
+   end Heartbeat;
+
    task Receive_Button_Interrupt
    is
    end Receive_Button_Interrupt;
@@ -213,6 +219,28 @@ package body Digital_IO.STM32F4_Support is
          end loop;
       end loop;
    end Receive_Button_Interrupt;
+
+   task body Heartbeat is
+      use type Ada.Real_Time.Time;
+   begin
+      STM32F429I_Discovery.LEDs.Initialize;
+
+      --  flash for 1 second at startup
+      for J in 1 .. 5 loop
+         STM32F429I_Discovery.LEDs.Clear (STM32F429I_Discovery.LEDs.Green);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
+         STM32F429I_Discovery.LEDs.Set (STM32F429I_Discovery.LEDs.Green);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
+      end loop;
+
+      --  flash every second while running
+      loop
+         STM32F429I_Discovery.LEDs.Clear (STM32F429I_Discovery.LEDs.Green);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (900);
+         STM32F429I_Discovery.LEDs.Set (STM32F429I_Discovery.LEDs.Green);
+         delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
+      end loop;
+   end Heartbeat;
 
    procedure Configure_Inputs;
    procedure Configure_Outputs;
