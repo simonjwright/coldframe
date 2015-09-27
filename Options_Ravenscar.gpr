@@ -22,15 +22,15 @@ abstract project Options_Ravenscar is
 
    CORTEX_GNAT_RTS := external ("HOME") & "/cortex-gnat-rts";
 
-   type RTS_Type is ("stm32f4", "arduino", "native");
+   type RTS_Type is ("stm32f4", "arduino", "full", "sfp", "native");
 
    RTS : RTS_Type := external ("RTS", "stm32f4");
 
    case RTS is
-      when "stm32f4" | "arduino" =>
-         for Target use "arm-eabi";
       when "native" =>
          null;
+      when others =>
+         for Target use "arm-eabi";
    end case;
 
    case RTS is
@@ -38,6 +38,10 @@ abstract project Options_Ravenscar is
          for Runtime ("ada") use CORTEX_GNAT_RTS & "/stm32f429i-disco-rtos";
       when "arduino" =>
          for Runtime ("ada") use CORTEX_GNAT_RTS & "/arduino-due";
+      when "full" =>
+         for Runtime ("ada") use "ravenscar-full-stm32f4";
+      when "sfp" =>
+         for Runtime ("ada") use "ravenscar-sfp-stm32f4";
       when "native" =>
          null;
    end case;
@@ -59,7 +63,9 @@ abstract project Options_Ravenscar is
          --  All standard warnings except elaboration problems
         );
       case RTS is
-         when "stm32f4" | "arduino" =>
+         when "native" =>
+            null;
+         when others =>
             for Default_Switches ("ada") use
               Compiler'Default_Switches ("ada") &
               (
@@ -71,8 +77,6 @@ abstract project Options_Ravenscar is
                --  .. and non-local exceptions (exceptions invoking Last
                --  Chance Handler: expected!)
               );
-         when "native" =>
-            null;
       end case;
    end Compiler;
 
@@ -83,7 +87,12 @@ abstract project Options_Ravenscar is
 
    --  GNATLINK configuration options
    package Linker is
-      for Default_Switches ("ada") use ("-Wl,-gc-sections");
+      case RTS is
+         when "native" =>
+            null;
+         when others =>
+            for Default_Switches ("ada") use ("-Wl,-gc-sections");
+      end case;
    end Linker;
 
 end Options_Ravenscar;
