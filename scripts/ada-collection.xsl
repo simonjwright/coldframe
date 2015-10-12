@@ -77,7 +77,7 @@
     </xsl:choose>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
-    <xsl:text>.Vectors&#10;</xsl:text>
+    <xsl:text>.Vectors_XXX&#10;</xsl:text>
     <xsl:text>is new Ada.Containers.</xsl:text>
     <xsl:if test="$max &lt;= $max-bounded-container">
       <xsl:text>Bounded_</xsl:text>
@@ -102,48 +102,8 @@
     <xsl:value-of select="$C"/>
     <xsl:text> Access_T =&gt; Handle);&#10;</xsl:text>
 
-    <!-- Concrete Sets package -->
-    <!-- These are no longer needed to do navigation 'From_Vectors'.
-         There's also the issue of how to create a set.
-         Could generate something like
-
-         with Van_Fleet.Van.Handle_Hash;
-         with Van_Fleet.Van.Vectors;
-         with Ada.Containers.Hashed_Sets;
-         package Van_Fleet.Van.Sets is
-
-            package Sets is new Ada.Containers.Hashed_Sets
-              (Element_Type => Handle,
-               Hash => Handle_Hash,
-               Equivalent_Elements => "=",
-               "=" => "=");
-
-            type Set is new Sets.Set with null record;
-
-            function Create (From : Vectors.Vector) return Set;
-
-         end Van_Fleet.Van.Sets;
-
-         package body Van_Fleet.Van.Sets is
-
-            function Create (From : Vectors.Vector) return Set is
-               C : Vectors.Cursor := Vectors.First (From);
-               Result : Set;
-               use type Vectors.Cursor;
-            begin
-               while C /= Vectors.No_Element loop
-                  Result.Insert (Vectors.Element (C));
-                  Vectors.Next (C);
-               end loop;
-               return Result;
-            end Create;
-
-         end Van_Fleet.Van.Sets;
-         -->
-
     <!-- Function to return a Collection of all the Instances -->
     <!--
-         with {domain}.{class}.Vectors;
          function {domain}.{class}.All_Instances
          return {domain}.{class}.Vectors.Vector;
          pragma Elaborate_Body
@@ -152,9 +112,6 @@
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Vectors;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.All_Instances&#10;</xsl:text>
@@ -171,7 +128,6 @@
     <!-- Generic filter function to return a Collection of selected
          Instances -->
     <!--
-         with {domain}.{class}.Vectors;
          generic
             with function Pass (This : Handle) return Boolean is <>;
          function {domain}.{class}.Selection_Function
@@ -182,9 +138,6 @@
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Vectors;&#10;</xsl:text>
     <xsl:text>generic&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
@@ -203,7 +156,6 @@
 
     <!-- Generic filter function for collections of Instances -->
     <!--
-         with {domain}.{class}.Vectors;
          generic
             with function Pass (This : Handle) return Boolean is <>;
          function {domain}.{class}.Filter_Function
@@ -215,9 +167,6 @@
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Vectors;&#10;</xsl:text>
     <xsl:text>generic&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
@@ -240,7 +189,6 @@
 
     <!-- Iteration support -->
     <!--
-         with {domain}.{class}.Vectors;
          generic
            with procedure Process (H : Handle);
          procedure {domain}.{class}.Iterate
@@ -251,9 +199,6 @@
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Vectors;&#10;</xsl:text>
     <xsl:text>generic&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>with procedure Process (H : Handle);&#10;</xsl:text>

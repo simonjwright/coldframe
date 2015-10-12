@@ -76,20 +76,20 @@
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[1]/classname"/>
-    <xsl:text>.Vectors;&#10;</xsl:text>
+    <xsl:text>;&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[2]/classname"/>
-    <xsl:text>.Vectors;&#10;</xsl:text>
+    <xsl:text>;&#10;</xsl:text>
 
     <xsl:if test="associative">
       <xsl:text>with </xsl:text>
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:text>.Vectors;&#10;</xsl:text>
+      <xsl:text>;&#10;</xsl:text>
     </xsl:if>
 
   </xsl:template>

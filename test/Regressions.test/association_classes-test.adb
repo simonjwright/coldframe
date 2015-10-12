@@ -27,18 +27,18 @@ with Association_Classes.A2_Class;
 with Association_Classes.A3;
 with Association_Classes.A3_Class;
 with Association_Classes.A4;
-with Association_Classes.A4_Class.Vectors;
-with Association_Classes.A5.Vectors;
+with Association_Classes.A4_Class;
+with Association_Classes.A5;
 with Association_Classes.A5_Association;
 with Association_Classes.A6;
-with Association_Classes.A6_Associative.Vectors;
+with Association_Classes.A6_Associative;
 with Association_Classes.A7_Association;
-with Association_Classes.A7_Associative.Vectors;
+with Association_Classes.A7_Associative;
 with Association_Classes.A8;
-with Association_Classes.A8_Associative.Vectors;
+with Association_Classes.A8_Associative;
 
-with Association_Classes.L.Vectors;
-with Association_Classes.R.Vectors;
+with Association_Classes.L;
+with Association_Classes.R;
 with Association_Classes.Initialize;
 with Association_Classes.Tear_Down;
 

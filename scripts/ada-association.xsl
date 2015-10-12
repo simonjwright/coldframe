@@ -125,18 +125,12 @@
     <xsl:value-of select="/domain/name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$a"/>
-    <xsl:if test="$role-a/@multiple">  <!-- stupid to have a singleton! -->
-      <xsl:text>.Vectors</xsl:text>
-    </xsl:if>
     <xsl:text>;&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="/domain/name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:if test="$role-b/@multiple">
-      <xsl:text>.Vectors</xsl:text>
-    </xsl:if>
     <xsl:text>;&#10;</xsl:text>
 
     <xsl:if test="associative">
@@ -144,9 +138,6 @@
       <xsl:value-of select="/domain/name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:if test="role/@multiple">
-        <xsl:text>.Vectors</xsl:text>
-      </xsl:if>
       <xsl:text>;&#10;</xsl:text>
     </xsl:if>
 
@@ -271,7 +262,7 @@
         <xsl:if test="$role-b/@source and not($role-a/@multiple)">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$a"/>
-          <xsl:text>.Vectors;&#10;</xsl:text>
+          <xsl:text>;&#10;</xsl:text>
         </xsl:if>
 
         <xsl:if test="$role-b/@source">
@@ -288,7 +279,7 @@
         <xsl:if test="$role-a/@source and not($role-b/@multiple)">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$b"/>
-          <xsl:text>.Vectors;&#10;</xsl:text>
+          <xsl:text>;&#10;</xsl:text>
         </xsl:if>
 
         <xsl:if test="$role-a/@source">
@@ -303,14 +294,14 @@
 
     <xsl:if test="associative">
 
-      <!-- {associative}.Vector already withed in spec if there's
+      <!-- {associative}.Vectors already withed in spec if there's
            a multiple end. -->
       <xsl:if test="not(role/@multiple)">
         <xsl:text>with </xsl:text>
         <xsl:value-of select="/domain/name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="associative"/>
-        <xsl:text>.Vectors;&#10;</xsl:text>
+        <xsl:text>;&#10;</xsl:text>
       </xsl:if>
 
       <xsl:text>with </xsl:text>

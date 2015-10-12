@@ -22,25 +22,18 @@ with Hierarchies.Tear_Down;
 
 with Hierarchies.R_1.Inheritance;
 with Hierarchies.R_1.All_Instances;
-with Hierarchies.R_1.Vectors;
 with Hierarchies.R_2;
 with Hierarchies.R_2.All_Instances;
-with Hierarchies.R_2.Vectors;
 with Hierarchies.R_3;
 with Hierarchies.R_3.All_Instances;
-with Hierarchies.R_3.Vectors;
 with Hierarchies.S_2.Inheritance;
 with Hierarchies.S_2.All_Instances;
-with Hierarchies.S_2.Vectors;
 with Hierarchies.S_3;
 with Hierarchies.S_3.All_Instances;
-with Hierarchies.S_3.Vectors;
 with Hierarchies.T_2.Inheritance;
 with Hierarchies.T_2.All_Instances;
-with Hierarchies.T_2.Vectors;
 with Hierarchies.F_2;
 with Hierarchies.F_2.All_Instances;
-with Hierarchies.F_2.Vectors;
 
 package body Hierarchies.Test_Deletions is
 
