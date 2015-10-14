@@ -10,6 +10,6 @@ procedure Delete_Component
 
 begin
 
-   Component.Delete ((Id => +Component_Name));
+   Component.Delete ((ID => +Component_Name));
 
 end Delete_Component;

@@ -14,6 +14,6 @@ procedure Add_Component
 begin
 
    --  Create the new Component
-   H := Component.Create ((Id => +Named));
+   H := Component.Create ((ID => +Named));
 
 end Add_Component;

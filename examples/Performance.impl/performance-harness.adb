@@ -1,14 +1,12 @@
 with Performance.Initialize;
 with Performance.Tear_Down;
 with Performance.Person.All_Instances;
-with Performance.Person.Vectors;
 with Performance.Owner.Inheritance;
-with Performance.Pet.Vectors;
+with Performance.Pet;
 with Performance.Cat.Inheritance;
 with Performance.A1;
 with Performance.A2;
 with Performance.House.All_Instances;
-with Performance.House.Vectors;
 with Performance.Event_Timing;
 
 with Ada.Containers;

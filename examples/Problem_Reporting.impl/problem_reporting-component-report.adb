@@ -1,6 +1,5 @@
 with GNAT.IO; use GNAT.IO;
 with Problem_Reporting.Defect.Iterate;
-with Problem_Reporting.Defect.Vectors;
 with Problem_Reporting.R100;
 
 separate (Problem_Reporting.Component)

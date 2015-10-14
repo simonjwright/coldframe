@@ -66,7 +66,7 @@ setup::
 
 clean::
 	-for g in *.gpr; do			\
-	  gnatclean -P $$g;			\
+	  gprclean -P $$g;			\
 	done
 	rm -f Digital_IO.impl House_Management.impl
 	rm -rf *.{bin,map,norm-stamp,stamp,norm,ada,gen,html,images}

@@ -23,6 +23,7 @@
 # may require admin cooperation on Unix).
 
 GPRBUILD ?= gprbuild
+GPRCLEAN ?= gprclean
 
 all::
 setup::
@@ -34,7 +35,7 @@ include ../Makefile.inc
 # Nothing in this directory
 
 # Set up subdirectories
-SETUP_SUBDIRS = stm32f4
+SETUP_SUBDIRS = arduino stm32f4
 setup::
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s setup;			\
@@ -127,7 +128,10 @@ $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 clean::
 	for g in *.gpr; do			\
-	  gnatclean -P $$g;			\
+	  $(GPRCLEAN) -P $$g;			\
+	done
+	for s in $(SETUP_SUBDIRS); do		\
+	  make -C $$s clean;			\
 	done
 	rm -rf *.{norm-stamp,stamp,norm,ada,gen,html,images}
 

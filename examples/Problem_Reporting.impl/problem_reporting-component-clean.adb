@@ -1,9 +1,7 @@
 with ColdFrame.Instances;
 with GNAT.IO;
 with Problem_Reporting.Defect.Iterate;
-with Problem_Reporting.Defect.Vectors;
 with Problem_Reporting.Diagnosed_Problem_Report.Iterate;
-with Problem_Reporting.Diagnosed_Problem_Report.Vectors;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.R100.From_Vectors;
 with Problem_Reporting.Unallocated_Problem_Report;
