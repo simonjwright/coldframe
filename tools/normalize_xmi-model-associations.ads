@@ -17,18 +17,11 @@ private package Normalize_XMI.Model.Associations is
    function Read_Association (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P;
 
-   --  Public because Association_Classes needs to know.
+private
+
    type Association_Element is new Element with record
       Ends : Element_Vectors.Vector;
    end record;
-
-   --  This procedure is available for use by package Association_Classes.
-   procedure Populate_Association_Aspects
-     (Of_Element : not null Element_P;
-      From       : not null DOM.Core.Node);
-
-private
-
    overriding
    procedure Resolve (A : in out Association_Element);
    overriding

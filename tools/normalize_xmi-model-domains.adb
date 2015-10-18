@@ -46,14 +46,13 @@ package body Normalize_XMI.Model.Domains is
       --  Standard Types.
       Add_Standard_Types (To => D.Types, In_Domain => D'Unchecked_Access);
 
-      --  Classes, and the Class aspect of AssociationClasses
+      --  Classes
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From,
             "descendant::UML:Class"
               & "[@xmi.id and not(UML:ModelElement.stereotype/UML:Stereotype/"
-              & " @name='datatype')]"
-              & " | descendant::UML:AssociationClass[@xmi.id]");
+              & " @name='datatype')]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -62,6 +61,23 @@ package body Normalize_XMI.Model.Domains is
                                      Parent => D'Unchecked_Access);
             begin
                D.Classes.Insert (Key => +C.Name, New_Item => C);
+            end;
+         end loop;
+      end;
+
+      --  AssociationClasses
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "descendant::UML:AssociationClass[@xmi.id]");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               AC : constant Element_P :=
+                 Association_Classes.Read_Association_Class
+                 (DOM.Core.Nodes.Item (Nodes, J),
+                  Parent => D'Unchecked_Access);
+            begin
+               D.Classes.Insert (Key => +AC.Name, New_Item => AC);
             end;
          end loop;
       end;
@@ -137,23 +153,6 @@ package body Normalize_XMI.Model.Domains is
                   Parent => D'Unchecked_Access);
             begin
                D.Associations.Insert (Key => +A.Name, New_Item => A);
-            end;
-         end loop;
-      end;
-
-      --  The Association aspect of AssociationClasses
-      declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "descendant::UML:AssociationClass[@xmi.id]");
-      begin
-         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
-            declare
-               AC : constant Element_P :=
-                 Association_Classes.Read_Association_Class
-                 (DOM.Core.Nodes.Item (Nodes, J),
-                  Parent => D'Unchecked_Access);
-            begin
-               D.Associations.Insert (Key => +AC.Name, New_Item => AC);
             end;
          end loop;
       end;

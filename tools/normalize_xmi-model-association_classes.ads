@@ -12,7 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-with Normalize_XMI.Model.Associations;
+with Normalize_XMI.Model.Classes;
+
 private package Normalize_XMI.Model.Association_Classes is
 
    function Read_Association_Class
@@ -21,9 +22,8 @@ private package Normalize_XMI.Model.Association_Classes is
 
 private
 
-   type Association_Class_Element
-   is new Associations.Association_Element with record
-      Class : Element_P;
+   type Association_Class_Element is new Classes.Class_Element with record
+      Ends  : Element_Vectors.Vector;
    end record;
    overriding
    procedure Resolve (AC : in out Association_Class_Element);

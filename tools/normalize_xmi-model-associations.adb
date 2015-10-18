@@ -20,22 +20,11 @@ with Normalize_XMI.Model.Classes;
 
 package body Normalize_XMI.Model.Associations is
 
-
    function Read_Association (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
       N : constant Element_P := new Association_Element (Parent);
-   begin
-      Populate_Association_Aspects (N, From);
-      return N;
-   end Read_Association;
-
-
-   procedure Populate_Association_Aspects
-     (Of_Element : not null Element_P;
-      From       : not null DOM.Core.Node)
-   is
-      A : Association_Element renames Association_Element (Of_Element.all);
+      A : Association_Element renames Association_Element (N.all);
    begin
       A.Populate (From => From);
 
@@ -51,7 +40,7 @@ package body Normalize_XMI.Model.Associations is
                E : constant Element_P :=
                  Association_Ends.Read_Association_End
                  (DOM.Core.Nodes.Item (Nodes, J),
-                  Parent => Of_Element);
+                  Parent => Parent);
             begin
                A.Ends.Append (New_Item => E);
             end;
@@ -64,7 +53,8 @@ package body Normalize_XMI.Model.Associations is
               & A.Fully_Qualified_Name
               & "'s ends have the same role name");
       end if;
-   end Populate_Association_Aspects;
+      return N;
+   end Read_Association;
 
 
    overriding
