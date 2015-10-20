@@ -27,6 +27,8 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:as="http://pushface.org/coldframe/association"
+  xmlns:asc="http://pushface.org/coldframe/association-class"
   xmlns:at="http://pushface.org/coldframe/attribute"
   xmlns:cb="http://pushface.org/coldframe/callback"
   xmlns:cl="http://pushface.org/coldframe/class"
@@ -184,6 +186,23 @@
      <xsl:value-of select="$IC"/>
      <xsl:text> Element_Type => Handle);&#10;</xsl:text>
      <xsl:value-of select="$blank-line"/>
+   </xsl:if>
+
+   <!-- .. association operations for associative class .. -->
+   <xsl:if test="associative">
+
+     <!-- Linking subprogram .. -->
+     <xsl:call-template name="asc:link-spec"/>
+
+     <!-- Finding function for associative classes .. -->
+     <xsl:call-template name="asc:find-spec"/>
+
+     <!-- .. unlinking procedure .. -->
+     <xsl:call-template name="asc:unlink-spec"/>
+
+     <!-- .. navigations .. -->
+     <xsl:call-template name="asc:navigation-specs"/>
+
    </xsl:if>
 
    <!-- .. the private part .. -->
@@ -419,6 +438,17 @@
              violated for Bounded_Vectors (which it isn't). -->
         <xsl:if test="not ($profile = 'standard')">
           <xsl:text>pragma Restrictions (No_Implicit_Heap_Allocations);&#10;</xsl:text>
+        </xsl:if>
+
+        <!-- If this is an associative class, need the other classes. -->
+        <xsl:if test="associative">
+          <xsl:for-each select="associative/role/classname">
+            <xsl:text>with </xsl:text>
+            <xsl:value-of select="../../../../name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>;&#10;</xsl:text>
+          </xsl:for-each>
         </xsl:if>
 
         <!-- Need Maps if there's more than one instance and we aren't
@@ -844,6 +874,23 @@
     <xsl:apply-templates mode="at:attribute-set-body"/>
     <xsl:apply-templates mode="at:attribute-get-body"/>
 
+    <!-- .. association operations for associative classes -->
+    <xsl:if test="associative">
+
+       <!-- Linking subprogram .. -->
+       <xsl:call-template name="asc:link-body"/>
+
+       <!-- Finding function for associative classes .. -->
+       <xsl:call-template name="asc:find-body"/>
+
+       <!-- .. unlinking procedure .. -->
+       <xsl:call-template name="asc:unlink-body"/>
+
+       <!-- .. navigations .. -->
+       <xsl:call-template name="asc:navigation-bodies"/>
+
+    </xsl:if>
+
     <xsl:if test="not(@singleton)">
 
       <xsl:if test="$max &gt; 1 and $array = 'no'">
@@ -1018,14 +1065,19 @@
         <xsl:variable name="name" select="name"/>
 
         <!-- We want to output only one "with" for each package.
-             The strategy is to sort the list pf packages and only
+             The strategy is to sort the list of packages and only
              output unique members. To do this, we need a nodeset. -->
 
         <xsl:variable name="withs">
 
-          <!-- Withs for referential attributes of the current class -->
+          <!-- Withs for referential attributes of the current class,
+          but not the current class (i.e. in reflexive associations)
+          or, in the case of an associative class, one of the classes
+          it associates (which are already with'd in the spec). -->
           <xsl:for-each
-            select="attribute[@refers and not(@refers=$name)]">
+            select="attribute[@refers
+                    and not(@refers=$name)
+                    and not(@refers=$current/associative/role/classname)]">
             <xsl:element name="with">
               <xsl:value-of select="@refers"/>
             </xsl:element>
@@ -1077,6 +1129,9 @@
           </xsl:if>
         </xsl:for-each>
 
+        <xsl:if test="associative">
+          <xsl:call-template name="asc:association-body-context"/>
+        </xsl:if>
       </xsl:otherwise>
 
     </xsl:choose>

@@ -58,36 +58,6 @@
       <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
-    <!-- Concrete Vectors package -->
-    <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
-    <xsl:call-template name="ut:identification-info"/>
-    <xsl:choose>
-      <xsl:when test="$max &lt;= $max-bounded-container">
-        <xsl:if test="not ($profile = 'standard')">
-          <!-- Workround for GCC 4.9.1 bug that reports this restriction
-               violated (which it isn't). -->
-          <xsl:text>pragma Restrictions (No_Implicit_Heap_Allocations);&#10;</xsl:text>
-        </xsl:if>
-        <xsl:text>with Ada.Containers.Bounded_Vectors;&#10;</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>with Ada.Containers.Vectors;&#10;</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>package </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Vectors_XXX&#10;</xsl:text>
-    <xsl:text>is new Ada.Containers.</xsl:text>
-    <xsl:if test="$max &lt;= $max-bounded-container">
-      <xsl:text>Bounded_</xsl:text>
-    </xsl:if>
-    <xsl:text>Vectors&#10;</xsl:text>
-    <xsl:value-of select="$C"/>
-    <xsl:text>(Index_Type => Positive,&#10;</xsl:text>
-    <xsl:value-of select="$C"/>
-    <xsl:text> Element_Type => Handle);&#10;</xsl:text>
-
     <!-- Hash function for Handles -->
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
