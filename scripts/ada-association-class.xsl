@@ -305,12 +305,21 @@
    <xsl:call-template name="asc:association-find-specification"/>
    <xsl:text> is&#10;</xsl:text>
 
-   <xsl:if test="associative/role[not(@multiple)]">
-     <xsl:value-of select="$II"/>
-     <xsl:text>pragma Unreferenced (</xsl:text>
-     <xsl:value-of select="associative/role[not(@multiple)]/name"/>
-     <xsl:text>);&#10;</xsl:text>
-   </xsl:if>
+   <!-- If there is a parameter that doesn't correspond to part of the
+        identifier, it won't be referenced.
+        -->
+   <xsl:for-each select="associative/role">
+     <xsl:variable
+       name="attribute"
+       select="../../attribute[@role=current()/name
+               and @refers=current()/classname]"/>
+     <xsl:if test="not($attribute/@identifier)">
+       <xsl:value-of select="$II"/>
+       <xsl:text>pragma Unreferenced (</xsl:text>
+       <xsl:value-of select="name"/>
+       <xsl:text>);&#10;</xsl:text>
+     </xsl:if>
+   </xsl:for-each>
 
    <xsl:value-of select="$I"/>
    <xsl:text>begin&#10;</xsl:text>
@@ -371,7 +380,7 @@
             by a plain attribute. -->
 
        <!--
-            {multiple-role-attr} => Handle ({multiple-role})));
+            {multiple-role-attr} => ColdFrame.Instances.Handle ({multiple-role})));
             -->
 
        <xsl:variable
@@ -402,7 +411,7 @@
        <!-- Neither end multiple -->
 
        <!--
-            {source-role-attr} => Handle ({source-role})));
+            {source-role-attr} => ColdFrame.Instances.Handle ({source-role})));
             -->
 
        <xsl:variable
