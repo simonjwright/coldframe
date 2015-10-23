@@ -18,7 +18,7 @@
 --  Button. Button releases are ignored.
 
 with House_Management.Lamp.Iterate;
-with House_Management.A1;
+with House_Management.Button_To_Lamp;
 
 separate (House_Management.Button)
 procedure Changed
@@ -52,7 +52,7 @@ begin
 
             BH : constant Handle := Find ((Name => Buttons (S.S)));
             LHS : constant Lamp.Vectors.Vector
-              := A1.Is_Controlled_By (BH);
+              := Button_To_Lamp.Is_Controlled_By (BH);
          begin
             Process (LHS);
          end;

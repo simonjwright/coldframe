@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Lamp Lifecycle</activediagram>
+      <activediagram>Problem Domain Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -114,10 +114,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Aug 27 14:27:34 BST 2015'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Oct 23 13:52:34 BST 2015'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2015/08/27 13:39:51 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2015/10/23 13:06:14 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -717,18 +717,6 @@ This package is free software; you can redistribute it and/or modify it under te
             <UML:AssociationClass xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6'
               name = 'Current' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-3-6ad088d1:134cd8c9bd0:-8000:0000000000000C30'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>Current Loan</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
               <UML:Association.connection>
                 <UML:AssociationEnd xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C7'
                   name = 'Is Borrowing' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -765,18 +753,6 @@ This package is free software; you can redistribute it and/or modify it under te
             <UML:AssociationClass xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD'
               name = 'History' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-3-6ad088d1:134cd8c9bd0:-8000:0000000000000C31'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>Loan History</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
               <UML:Association.connection>
                 <UML:AssociationEnd xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CE'
                   name = 'Has Borrowed' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -1138,14 +1114,8 @@ If it is activated again while it is still on, the activation period is extended
               </UML:Classifier.feature>
             </UML:Class>
             <UML:AssociationClass xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30'
-              name = 'A1' visibility = 'public' isSpecification = 'false' isRoot = 'false'
-              isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.comment>
-                <UML:Comment xmi.idref = '-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C'/>
-              </UML:ModelElement.comment>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
+              name = 'Button_To_Lamp' visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C33'
                   isSpecification = 'false'>
@@ -1156,8 +1126,8 @@ If it is activated again while it is still on, the activation period is extended
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C4E'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>This association class is required by ColdFrame to support the many-to-many association A1 but has no functionality in the present understanding of the problem domain.
-A possible future enhancement such as having the &quot;on&quot; time of the lamp depend on which button was used to switch it on might lead to a role for this class.</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>This association class is required by ColdFrame to support the many-to-many association A1 but has no other functionality in the present understanding of the problem domain.
+A possible future enhancement such as having the &quot;on&quot; time of the lamp depend on which button was used to switch it on might lead to a practical role for this class.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
                   </UML:TaggedValue.type>
@@ -1440,12 +1410,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
             </UML:DataType>
-            <UML:Comment xmi.id = '-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C'
-              isSpecification = 'false' body = '{class-name=Button_To_Lamp}'>
-              <UML:Comment.annotatedElement>
-                <UML:AssociationClass xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30'/>
-              </UML:Comment.annotatedElement>
-            </UML:Comment>
           </UML:Namespace.ownedElement>
         </UML:Package>
         <UML:Package xmi.id = '-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C98'
@@ -2729,19 +2693,9 @@ Classes for ColdFrame performance tests.</UML:TaggedValue.dataValue>
               </UML:Generalization.parent>
             </UML:Generalization>
             <UML:AssociationClass xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EF4'
-              name = 'House' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+              name = 'A2' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
               <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000F3B'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>A2</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-association-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000F4B'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>The purpose of this association is to time operations of associative associations.</UML:TaggedValue.dataValue>
@@ -4000,9 +3954,6 @@ Note that this will require deleting any of the associated Diagnosed Problem Rep
             <UML:AssociationClass xmi.id = '-64--88-1-74-5ff477d0:148fab8b104:-8000:0000000000000F82'
               name = 'Defect' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-74-5ff477d0:148fab8b104:-8000:0000000000000F8D'
                   isSpecification = 'false'>
@@ -4013,13 +3964,6 @@ The actual problem with the Component is held in the associated Defect.
 In the case that the diagnosis is that a new Component is needed (some additional documentation, for example) , the Component must be created before this relationship can be set up.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-74-5ff477d0:148fab8b104:-8000:0000000000000FC5'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>R100</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-association-name'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
@@ -6956,7 +6900,7 @@ It should address one logical error (which may correspond to several necessary c
       x="1"
       y="161"
       width="201"
-      height="43"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -6969,12 +6913,13 @@ It should address one logical error (which may correspond to several necessary c
       justification="Center"
     >+ Current</text>
     <group name="Fig4.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1, 161, 201, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1, 161, 201, 0]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -6983,32 +6928,16 @@ It should address one logical error (which may correspond to several necessary c
         x="1"
         y="161"
         width="201"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig4.2.1"
-        x="1"
-        y="161"
-        width="201"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig4.3"
       x="0"
-      y="204"
+      y="184"
       width="203"
       height="1"
       fill="1"
@@ -7017,7 +6946,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig4.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[1, 205, 201, 29]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[1, 185, 201, 39]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -7029,9 +6958,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig4.4.0"
         x="1"
-        y="205"
+        y="185"
         width="201"
-        height="29"
+        height="39"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7040,7 +6969,7 @@ It should address one logical error (which may correspond to several necessary c
     </group>
     <rectangle name="Fig4.5"
       x="0"
-      y="234"
+      y="224"
       width="203"
       height="1"
       fill="1"
@@ -7049,7 +6978,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig4.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[1, 235, 201, 29]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[1, 225, 201, 39]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -7061,9 +6990,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig4.6.0"
         x="1"
-        y="235"
+        y="225"
         width="201"
-        height="29"
+        height="39"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7182,7 +7111,7 @@ It should address one logical error (which may correspond to several necessary c
       x="697"
       y="169"
       width="201"
-      height="43"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -7195,12 +7124,13 @@ It should address one logical error (which may correspond to several necessary c
       justification="Center"
     >+ History</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[697, 169, 201, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[697, 169, 201, 0]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -7209,32 +7139,16 @@ It should address one logical error (which may correspond to several necessary c
         x="697"
         y="169"
         width="201"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig7.2.1"
-        x="697"
-        y="169"
-        width="201"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig7.3"
       x="696"
-      y="212"
+      y="192"
       width="203"
       height="1"
       fill="1"
@@ -7243,7 +7157,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig7.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[697, 213, 201, 29]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[697, 193, 201, 39]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -7255,9 +7169,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig7.4.0"
         x="697"
-        y="213"
+        y="193"
         width="201"
-        height="29"
+        height="39"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7266,7 +7180,7 @@ It should address one logical error (which may correspond to several necessary c
     </group>
     <rectangle name="Fig7.5"
       x="696"
-      y="242"
+      y="232"
       width="203"
       height="1"
       fill="1"
@@ -7275,7 +7189,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig7.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[697, 243, 201, 29]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[697, 233, 201, 39]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -7287,9 +7201,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig7.6.0"
         x="697"
-        y="243"
+        y="233"
         width="201"
-        height="29"
+        height="39"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7851,7 +7765,7 @@ It should address one logical error (which may correspond to several necessary c
       x="289"
       y="241"
       width="206"
-      height="43"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -7862,14 +7776,15 @@ It should address one logical error (which may correspond to several necessary c
       bold="true"
       textsize="13"
       justification="Center"
-    >+ A1</text>
+    >+ Button_To_Lamp</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[289, 241, 206, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[289, 241, 206, 0]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -7878,32 +7793,16 @@ It should address one logical error (which may correspond to several necessary c
         x="289"
         y="241"
         width="206"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig3.2.1"
-        x="289"
-        y="241"
-        width="206"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig3.3"
       x="288"
-      y="284"
+      y="264"
       width="208"
       height="1"
       fill="1"
@@ -7912,7 +7811,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[289, 285, 206, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[289, 265, 206, 30]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -7924,9 +7823,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig3.4.0"
         x="289"
-        y="285"
+        y="265"
         width="206"
-        height="21"
+        height="30"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7935,7 +7834,7 @@ It should address one logical error (which may correspond to several necessary c
     </group>
     <rectangle name="Fig3.5"
       x="288"
-      y="305"
+      y="295"
       width="208"
       height="1"
       fill="1"
@@ -7944,7 +7843,7 @@ It should address one logical error (which may correspond to several necessary c
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[289, 306, 206, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[289, 296, 206, 30]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -7956,9 +7855,9 @@ It should address one logical error (which may correspond to several necessary c
       
       <rectangle name="Fig3.6.0"
         x="289"
-        y="306"
+        y="296"
         width="206"
-        height="21"
+        height="30"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -8647,127 +8546,6 @@ It should address one logical error (which may correspond to several necessary c
       />
     </group>
   </group>
-  <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigComment[512, 336, 213, 48]pathVisible=false;stereotypeView=0;"
-       href="-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C"
-       fill="1"
-       fillcolor="white"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-    </private>
-    
-    <rectangle name="Fig9.0"
-      x="512"
-      y="336"
-      width="213"
-      height="48"
-      fill="0"
-      fillcolor="white"
-      stroke="0"
-      strokecolor="black"
-    />
-    <path name="Fig9.1"
-      description="org.tigris.gef.presentation.FigPoly"
-      fill="1"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="512"
-              y="336" />
-      <lineto x="714"
-              y="336" />
-      <lineto x="724"
-              y="346" />
-      <lineto x="724"
-              y="383" />
-      <lineto x="512"
-              y="383" />
-      <lineto x="512"
-              y="336" />
-    </path>
-    <path name="Fig9.2"
-      description="org.tigris.gef.presentation.FigPoly"
-      fill="1"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="714"
-              y="336" />
-      <lineto x="724"
-              y="346" />
-      <lineto x="714"
-              y="346" />
-      <lineto x="714"
-              y="336" />
-    </path>
-    <group name="Fig9.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[514, 338, 199, 0]"
-         href="-64--88-1-75--12cb7fc7:1453cc8019e:-8000:0000000000000F6C"
-         fill="0"
-         fillcolor="white"
-         stroke="0"
-         strokecolor="black"
-         visibility="0"
-    >
-      <private>
-      </private>
-      
-      <rectangle name="Fig9.3.0"
-        x="514"
-        y="338"
-        width="199"
-        height="0"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-      />
-    </group>
-    <text name="Fig9.4"
-      x="514"
-      y="338"
-      width="199"
-      height="44"
-      fill="0"
-      fillcolor="white"
-      stroke="0"
-      strokecolor="black"
-      textcolor="black"
-      font="Lucida Grande"
-      italic="false"
-      bold="false"
-      textsize="13"
-      justification="Left"
-    >{class-name=Button_To_Lamp}</text>
-  </group>
-  <group name="Fig10"
-       description="org.argouml.uml.diagram.static_structure.ui.FigEdgeNote"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-      sourcePortFig="Fig9.0"
-      destPortFig="Fig3.0"
-      sourceFigNode="Fig9"
-      destFigNode="Fig3"
-    </private>
-    <path name="Fig10.0"
-      description="org.argouml.gefext.ArgoFigPoly"
-      fill="0"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="512"
-              y="336" />
-      <lineto x="495"
-              y="326" />
-    </path>
-  </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7B"
       xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
@@ -9085,7 +8863,7 @@ It should address one logical error (which may correspond to several necessary c
                         offset="10" />
     </private>
     <path name="Fig6.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -12733,7 +12511,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       x="289"
       y="57"
       width="187"
-      height="43"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -12744,14 +12522,15 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       bold="true"
       textsize="13"
       justification="Center"
-    >+ House</text>
+    >+ A2</text>
     <group name="Fig9.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[289, 57, 187, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[289, 57, 187, 0]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EF4"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -12760,32 +12539,16 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         x="289"
         y="57"
         width="187"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig9.2.1"
-        x="289"
-        y="57"
-        width="187"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig9.3"
       x="288"
-      y="100"
+      y="80"
       width="189"
       height="1"
       fill="1"
@@ -12794,7 +12557,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig9.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[289, 101, 187, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[289, 81, 187, 30]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EF4"
          fill="0"
          fillcolor="white"
@@ -12806,9 +12569,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       
       <rectangle name="Fig9.4.0"
         x="289"
-        y="101"
+        y="81"
         width="187"
-        height="21"
+        height="30"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -12817,7 +12580,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     </group>
     <rectangle name="Fig9.5"
       x="288"
-      y="121"
+      y="111"
       width="189"
       height="1"
       fill="1"
@@ -12826,7 +12589,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig9.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[289, 122, 187, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[289, 112, 187, 30]"
          href="-64--88-1-66--fc66dc6:1373c224add:-8000:0000000000000EF4"
          fill="0"
          fillcolor="white"
@@ -12838,9 +12601,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       
       <rectangle name="Fig9.6.0"
         x="289"
-        y="122"
+        y="112"
         width="187"
-        height="21"
+        height="30"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -16640,7 +16403,7 @@ This is slightly unusual.</text>
       x="393"
       y="353"
       width="187"
-      height="43"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -16653,12 +16416,13 @@ This is slightly unusual.</text>
       justification="Center"
     >+ Defect</text>
     <group name="Fig11.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[393, 353, 187, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[393, 353, 187, 0]"
          href="-64--88-1-74-5ff477d0:148fab8b104:-8000:0000000000000F82"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -16667,33 +16431,17 @@ This is slightly unusual.</text>
         x="393"
         y="353"
         width="187"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig11.2.1"
-        x="393"
-        y="353"
-        width="187"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig11.3"
       x="392"
-      y="396"
-      width="189"
+      y="376"
+      width="109"
       height="1"
       fill="1"
       fillcolor="black"
@@ -16715,8 +16463,8 @@ This is slightly unusual.</text>
       
       <rectangle name="Fig11.4.0"
         x="393"
-        y="397"
-        width="187"
+        y="377"
+        width="107"
         height="25"
         fill="0"
         fillcolor="white"
@@ -16727,7 +16475,7 @@ This is slightly unusual.</text>
     </group>
     <rectangle name="Fig11.5"
       x="392"
-      y="421"
+      y="401"
       width="232"
       height="1"
       fill="1"
@@ -16750,7 +16498,7 @@ This is slightly unusual.</text>
       
       <rectangle name="Fig11.6.0"
         x="393"
-        y="422"
+        y="402"
         width="230"
         height="59"
         fill="0"

@@ -7,7 +7,6 @@ with Problem_Reporting.Defect;
 with Problem_Reporting.Diagnosed_Problem_Report;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
-with Problem_Reporting.R100;
 
 separate (Problem_Reporting.Public)
 procedure Note_Defect
@@ -66,8 +65,8 @@ begin
    C := Problem_Reporting.Component.Find ((ID => +Component_Name));
 
    --  Create a new Defect.
-   Def := R100.Link (Affects => C,
-                     Is_Affected_By => D);
+   Def := Defect.Link (Affects => C,
+                       Is_Affected_By => D);
 
    --  Store the diagnosed Problem in the new Defect.
    Defect.Set_Problem (Def, +Description);

@@ -5,8 +5,7 @@ with Performance.Owner.Inheritance;
 with Performance.Pet;
 with Performance.Cat.Inheritance;
 with Performance.A1;
-with Performance.A2;
-with Performance.House.All_Instances;
+with Performance.A2.All_Instances;
 with Performance.Event_Timing;
 
 with Ada.Containers;
@@ -200,7 +199,7 @@ begin
    declare
       Prs : array (Owners) of Person.Handle;
       Pts : array (Pets) of Pet.Handle;
-      H : House.Handle;
+      H : A2.Handle;
       pragma Warnings (Off, H);
    begin
 
@@ -229,7 +228,7 @@ begin
                   & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
 
       declare
-         Hc : House.Vectors.Vector;
+         Hc : A2.Vectors.Vector;
       begin
          T := Clock;
          for I in Pts'Range loop
@@ -254,17 +253,17 @@ begin
       end;
 
       declare
-         type Houses is array (Positive range <>) of House.Handle;
-         Hc : constant House.Vectors.Vector := House.All_Instances;
-         Hs : Houses (1 .. Natural (House.Vectors.Length (Hc)));
+         type Houses is array (Positive range <>) of A2.Handle;
+         Hc : constant A2.Vectors.Vector := A2.All_Instances;
+         Hs : Houses (1 .. Natural (A2.Vectors.Length (Hc)));
       begin
 
          for H in Hs'Range loop
-            Hs (H) := House.Vectors.Element (Hc, H);
+            Hs (H) := A2.Vectors.Element (Hc, H);
          end loop;
          T := Clock;
          for H in Hs'Range loop
-            A2.Unlink (House_Handle => Hs (H));
+            A2.Unlink (A2_Handle => Hs (H));
          end loop;
          D := Clock - T;
          Put_Line ("average unlink time (associative):"

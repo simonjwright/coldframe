@@ -16,7 +16,7 @@
 
 with House_Management.Button;
 with House_Management.Button_To_Lamp;
-with House_Management.A1;
+--  with House_Management.A1;
 
 separate (House_Management.Lamp)
 procedure Initialize is
@@ -26,7 +26,7 @@ procedure Initialize is
       BH : constant Button.Handle := Button.Find ((Name => The_Button));
       LH : constant Lamp.Handle := Lamp.Find ((Name => To));
       CH : constant Button_To_Lamp.Handle
-        := A1.Link (Controls => LH, Is_Controlled_By => BH);
+        := Button_To_Lamp.Link (Controls => LH, Is_Controlled_By => BH);
       pragma Warnings (Off, CH);
    begin
       null;
