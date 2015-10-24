@@ -31,7 +31,9 @@ DATE = $(subst cf-,,$(notdir $(DIST)))
 
 CODEGEN_SCRIPTS = generate-ada.xsl		\
   ada-association.xsl				\
+  ada-association-class.xsl			\
   ada-association-collection.xsl		\
+  ada-association-class-collection.xsl		\
   ada-attribute.xsl				\
   ada-callback.xsl				\
   ada-class.xsl					\

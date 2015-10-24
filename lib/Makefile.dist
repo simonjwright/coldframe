@@ -41,71 +41,73 @@ coldframe-memory_streams.ads			\
 coldframe-time_signature.ads			\
 coldframe.ads
 
-STANDARD =									\
-standard/coldframe-bounded_storage_pools.adb					\
-standard/coldframe-bounded_storage_pools.ads					\
-standard/coldframe-bounded_storage_pools.adb-sf3410667				\
-standard/coldframe-bounded_storage_pools.ads-sf3410667				\
-standard/coldframe-callbacks.adb						\
-standard/coldframe-event_basis.adb						\
-standard/coldframe-event_basis.ads						\
-standard/coldframe-events_g-callback_manager_g.adb				\
-standard/coldframe-events_g-callback_manager_g.ads				\
-standard/coldframe-events_g-debug_g.adb						\
-standard/coldframe-events_g-debug_g.ads						\
-standard/coldframe-events_g-held_event_queue_signature-inspection_signature.ads	\
-standard/coldframe-events_g-held_event_queue_signature.ads			\
-standard/coldframe-events_g-monitoring_g.adb					\
-standard/coldframe-events_g-monitoring_g.ads					\
-standard/coldframe-events_g-standard_g-inspection_g.adb				\
-standard/coldframe-events_g-standard_g-inspection_g.ads				\
-standard/coldframe-events_g-standard_g.adb					\
-standard/coldframe-events_g-standard_g.ads					\
-standard/coldframe-events_g-test_g.adb						\
-standard/coldframe-events_g-test_g.ads						\
-standard/coldframe-events_g-trace_g.adb						\
-standard/coldframe-events_g-trace_g.ads						\
-standard/coldframe-events_g.adb							\
-standard/coldframe-events_g.ads							\
-standard/coldframe-exceptions-message.adb					\
-standard/coldframe-exceptions-message.ads					\
-standard/coldframe-exceptions-symbolic_traceback.adb				\
-standard/coldframe-exceptions-symbolic_traceback.ads				\
-standard/coldframe-exceptions-traceback.adb					\
-standard/coldframe-exceptions-traceback.ads					\
-standard/coldframe-hash-strings-bounded.adb					\
-standard/coldframe-hash-strings-bounded.ads					\
-standard/coldframe-hash-strings-unbounded.adb					\
-standard/coldframe-hash-strings-unbounded.ads					\
-standard/coldframe-interrupts.adb						\
-standard/coldframe-interrupts.ads						\
-standard/coldframe-simulation_time.adb						\
-standard/coldframe-simulation_time.ads						\
-standard/coldframe-smart_pointers.adb						\
-standard/coldframe-smart_pointers.ads						\
-standard/coldframe-stubs.adb							\
-standard/coldframe-stubs.ads							\
-standard/coldframe-synchronization.adb						\
-standard/coldframe-synchronization.ads						\
-standard/coldframe-task_deletion.adb						\
-standard/coldframe-task_deletion.ads						\
-standard/coldframe-task_deletion_g.adb						\
-standard/coldframe-task_deletion_g.ads						\
-standard/coldframe-unbounded_storage_pools.adb					\
-standard/coldframe-unbounded_storage_pools.ads					\
-standard/coldframe-unbounded_strings.adb					\
+STANDARD =							\
+standard/coldframe-bounded_storage_pools.adb			\
+standard/coldframe-bounded_storage_pools.ads			\
+standard/coldframe-bounded_storage_pools.adb-sf3410667		\
+standard/coldframe-bounded_storage_pools.ads-sf3410667		\
+standard/coldframe-callbacks.adb				\
+standard/coldframe-event_basis.adb				\
+standard/coldframe-event_basis.ads				\
+standard/coldframe-events_g-callback_manager_g.adb		\
+standard/coldframe-events_g-callback_manager_g.ads		\
+standard/coldframe-events_g-debug_g.adb				\
+standard/coldframe-events_g-debug_g.ads				\
+standard/coldframe-events_g-held_event_queue_signature.ads	\
+standard/coldframe-events_g-monitoring_g.adb			\
+standard/coldframe-events_g-monitoring_g.ads			\
+standard/coldframe-events_g-standard_g-inspection_g.adb		\
+standard/coldframe-events_g-standard_g-inspection_g.ads		\
+standard/coldframe-events_g-standard_g.adb			\
+standard/coldframe-events_g-standard_g.ads			\
+standard/coldframe-events_g-test_g.adb				\
+standard/coldframe-events_g-test_g.ads				\
+standard/coldframe-events_g-trace_g.adb				\
+standard/coldframe-events_g-trace_g.ads				\
+standard/coldframe-events_g.adb					\
+standard/coldframe-events_g.ads					\
+standard/coldframe-exceptions-message.adb			\
+standard/coldframe-exceptions-message.ads			\
+standard/coldframe-exceptions-symbolic_traceback.adb		\
+standard/coldframe-exceptions-symbolic_traceback.ads		\
+standard/coldframe-exceptions-traceback.adb			\
+standard/coldframe-exceptions-traceback.ads			\
+standard/coldframe-hash-strings-bounded.adb			\
+standard/coldframe-hash-strings-bounded.ads			\
+standard/coldframe-hash-strings-unbounded.adb			\
+standard/coldframe-hash-strings-unbounded.ads			\
+standard/coldframe-interrupts.adb				\
+standard/coldframe-interrupts.ads				\
+standard/coldframe-simulation_time.adb				\
+standard/coldframe-simulation_time.ads				\
+standard/coldframe-smart_pointers.adb				\
+standard/coldframe-smart_pointers.ads				\
+standard/coldframe-stubs.adb					\
+standard/coldframe-stubs.ads					\
+standard/coldframe-synchronization.adb				\
+standard/coldframe-synchronization.ads				\
+standard/coldframe-task_deletion.adb				\
+standard/coldframe-task_deletion.ads				\
+standard/coldframe-task_deletion_g.adb				\
+standard/coldframe-task_deletion_g.ads				\
+standard/coldframe-unbounded_storage_pools.adb			\
+standard/coldframe-unbounded_storage_pools.ads			\
+standard/coldframe-unbounded_strings.adb			\
 standard/coldframe-unbounded_strings.ads
 
-RAVENSCAR =								\
-ravenscar/coldframe-callbacks.adb					\
-ravenscar/coldframe-events-callback_manager.adb				\
-ravenscar/coldframe-events-callback_manager.ads				\
-ravenscar/coldframe-events-standard-dispatchable_event_management.adb	\
-ravenscar/coldframe-events-standard-held_event_management.adb		\
-ravenscar/coldframe-events-standard.adb					\
-ravenscar/coldframe-events-standard.ads					\
-ravenscar/coldframe-events.adb						\
-ravenscar/coldframe-events.ads						\
+# Long!
+STANDARD += \
+standard/coldframe-events_g-held_event_queue_signature-inspection_signature.ads
+
+RAVENSCAR =							\
+ravenscar/coldframe-callbacks.adb				\
+ravenscar/coldframe-events-callback_manager.adb			\
+ravenscar/coldframe-events-callback_manager.ads			\
+ravenscar/coldframe-events-standard-event_management.adb	\
+ravenscar/coldframe-events-standard.adb				\
+ravenscar/coldframe-events-standard.ads				\
+ravenscar/coldframe-events.adb					\
+ravenscar/coldframe-events.ads					\
 ravenscar/coldframe-times.ads
 
 ALL = $(COMMON) $(STANDARD) $(RAVENSCAR)

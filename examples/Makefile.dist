@@ -145,7 +145,7 @@ ALL = $(STAIRWELL_DEMO) $(HOUSE_MANAGEMENT_TEST) $(HOUSE_MANAGEMENT_SCRIPTING) \
 
 ALL += Makefile
 
-SUBDIRS = stm32f4
+SUBDIRS = arduino stm32f4
 
 dist:
 	-$(RM) -rf $(DIST)/examples
