@@ -29,6 +29,8 @@
   <xsl:output method="text"/>
 
 
+  <!-- Called at domain to output the dot files and a shell script to
+       generate the images from the dot files. -->
   <xsl:template match="domain">
     <xsl:variable name="dir">
       <xsl:value-of select="name"/>
@@ -99,56 +101,41 @@
       <xsl:for-each select="class[not(@public)]">
         <xsl:sort select="name"/>
         <xsl:value-of select="name"/>
-        <xsl:text> [URL="#</xsl:text>
+        <xsl:text> [</xsl:text>
+        <xsl:if test="associative">
+          <xsl:text>fillcolor=lightsteelblue, </xsl:text>
+        </xsl:if>
+        <xsl:text>URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
+      </xsl:for-each>
+      <xsl:for-each select="class[associative]">
+        <xsl:value-of select="associative/role[1]/classname"/>
+        <xsl:text> -> </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> [label="</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>", arrowhead=none, URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
+        <xsl:value-of select="associative/role[2]/classname"/>
+        <xsl:text> -> </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> [label="</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>", arrowhead=none, URL="#</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>"]&#10;</xsl:text>
       </xsl:for-each>
       <xsl:for-each select="association">
-        <xsl:choose>
-          <xsl:when test="associative">
-            <xsl:value-of select="name"/>
-            <xsl:text> [shape=point, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-
-            <xsl:value-of select="role[1]/classname"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text> [label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-
-            <xsl:value-of select="role[2]/classname"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text> [label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-
-            <xsl:value-of select="name"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="associative"/>
-            <xsl:text> [color=blue, label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="role[1]/classname"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="role[2]/classname"/>
-            <xsl:text> [label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="role[1]/classname"/>
+        <xsl:text> -> </xsl:text>
+        <xsl:value-of select="role[2]/classname"/>
+        <xsl:text> [label="</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>", arrowhead=none, URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
       </xsl:for-each>
       <xsl:for-each select="inheritance">
         <xsl:for-each select="child">
@@ -172,6 +159,7 @@
   <!-- Called at class to output the class and its immediate
        neighbours as a dot file (for use with circo). -->
   <xsl:template name="class-diagram">
+    <xsl:variable name="d" select="/domain"/>
     <xsl:variable name="n" select="name"/>
     <xsl:document href="{../name}.images/{../name}.{$n}.class.dot">
       <xsl:text>digraph "</xsl:text>
@@ -189,6 +177,9 @@
       <xsl:choose>
         <xsl:when test="@public">
           <xsl:text>fillcolor=green, </xsl:text>
+        </xsl:when>
+        <xsl:when test="associative">
+          <xsl:text>fillcolor=lightsteelblue, </xsl:text>
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>fillcolor=moccasin, </xsl:text>
@@ -254,27 +245,22 @@
       <!-- Find & output related classes (once each). -->
       <xsl:variable name="related">
         <xsl:element name="related">
+          <xsl:for-each select="associative/role/classname">
+            <xsl:element name="name">
+              <xsl:value-of select="."/>
+            </xsl:element>
+          </xsl:for-each>
           <xsl:for-each select="../association[role/classname=$n]">
             <xsl:for-each select="current()/role/classname">
               <xsl:element name="name">
                 <xsl:value-of select="."/>
               </xsl:element>
             </xsl:for-each>
-            <xsl:for-each select="current()/associative">
-              <xsl:element name="name">
-                <xsl:value-of select="."/>
-              </xsl:element>
-            </xsl:for-each>
           </xsl:for-each>
-          <xsl:for-each select="../association[associative=$n]">
+          <xsl:for-each select="../class[associative/role/classname=$n]">
             <xsl:element name="name">
-              <xsl:value-of select="associative"/>
+              <xsl:value-of select="name"/>
             </xsl:element>
-            <xsl:for-each select="current()/role/classname">
-              <xsl:element name="name">
-                <xsl:value-of select="."/>
-              </xsl:element>
-            </xsl:for-each>
           </xsl:for-each>
           <xsl:for-each select="../inheritance[parent=$n]">
             <xsl:for-each select="child">
@@ -295,63 +281,50 @@
         <xsl:if test="not(.=$n) and not(.=preceding-sibling::node())">
           <xsl:value-of select="."/>
           <xsl:text> [</xsl:text>
-          <xsl:if test="/domain/class[name=current()]/@public">
-            <!-- relationships with public classes?! -->
-            <xsl:text>fillcolor=green, </xsl:text>
-          </xsl:if>
+          <xsl:choose>
+            <xsl:when test="$d/class[name=current()]/@public">
+              <!-- relationships with public classes?! -->
+              <xsl:text>fillcolor=green, </xsl:text>
+            </xsl:when>
+            <xsl:when test="$d/class[name=current()]/associative">
+              <xsl:text>fillcolor=lightsteelblue, </xsl:text>
+            </xsl:when>
+          </xsl:choose>
           <xsl:text>URL="#</xsl:text>
           <xsl:value-of select="."/>
           <xsl:text>"]&#10;</xsl:text>
         </xsl:if>
       </xsl:for-each>
       <!-- Output relationships as in overall diagram. -->
-      <xsl:for-each select="../association[role/classname=$n
-                            or associative=$n]">
-        <xsl:choose>
-          <xsl:when test="associative">
-            <xsl:value-of select="name"/>
-            <xsl:text> [shape=point, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-
-            <xsl:value-of select="role[1]/classname"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text> [label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-
-            <xsl:value-of select="role[2]/classname"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text> [label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-
-            <xsl:value-of select="name"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="associative"/>
-            <xsl:text> [color=blue, label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="role[1]/classname"/>
-            <xsl:text> -> </xsl:text>
-            <xsl:value-of select="role[2]/classname"/>
-            <xsl:text> [label="</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>", arrowhead=none, URL="#</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>"]&#10;</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+      <xsl:for-each select="../association[role/classname=$n]">
+        <xsl:value-of select="role[1]/classname"/>
+        <xsl:text> -> </xsl:text>
+        <xsl:value-of select="role[2]/classname"/>
+        <xsl:text> [label="</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>", arrowhead=none, URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
+      </xsl:for-each>
+      <xsl:for-each select="associative/role/classname">
+        <xsl:value-of select="$n"/>
+        <xsl:text> -> </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text> [label="</xsl:text>
+        <xsl:value-of select="$n"/>
+        <xsl:text>", arrowhead=none, URL="#</xsl:text>
+        <xsl:value-of select="$n"/>
+        <xsl:text>"]&#10;</xsl:text>
+      </xsl:for-each>
+      <xsl:for-each select="../class[associative/role/classname=$n]">
+        <xsl:value-of select="$n"/>
+        <xsl:text> -> </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> [label="</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>", arrowhead=none, URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
       </xsl:for-each>
       <xsl:for-each select="../inheritance[parent=$n]">
         <!-- All the children of (each) inheritance relationship in

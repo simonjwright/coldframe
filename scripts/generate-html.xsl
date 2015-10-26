@@ -288,12 +288,11 @@
 
     <xsl:apply-templates select="documentation"/>
 
-    <xsl:for-each select="../association[associative=$name]">
+    <xsl:if test="associative">
       <p>
-        <xsl:text>Associative in </xsl:text>
-        <a href="#{name}"><xsl:value-of select="name"/></a>.
+        <xsl:text>This is an Association Class.</xsl:text>
       </p>
-    </xsl:for-each>
+    </xsl:if>
 
     <xsl:variable
       name="super"
@@ -461,18 +460,23 @@
 
     <xsl:if
       test="../association[role/classname = $name]
-            or ../association[associative = $name]">
+            or ../class[associative/role/classname = $name]">
       <h3>Associations</h3>
       <ul>
         <xsl:for-each
           select="../association[role/classname = $name]
-                  | ../association[associative = $name]">
+                  | ../class[associative/role/classname = $name]">
           <xsl:sort select="."/>
           <li>
             <a href="#{name}"><xsl:value-of select="name"/></a>
           </li>
         </xsl:for-each>
       </ul>
+    </xsl:if>
+
+    <xsl:if test="associative">
+      <h3>Roles</h3>
+      <xsl:apply-templates select="associative/role"/>
     </xsl:if>
 
   </xsl:template>
@@ -752,7 +756,9 @@
 
 
   <!-- Output details of an Association. -->
-  <xsl:template match="domain/association" mode="index">
+  <xsl:template
+    match="domain/association"
+    mode="index">
     <li>
       <a href="#{name}"><xsl:value-of select="name"/></a>
     </li>
@@ -768,7 +774,7 @@
 
 
   <!-- Output details of a Role in an Association. -->
-  <xsl:template match="association/role">
+  <xsl:template match="role">
     <p>
       <xsl:variable name="other-role-position" select="3 - position()"/>
       <a href="#{../role[$other-role-position]/classname}">
@@ -792,7 +798,7 @@
 
 
   <!-- Output the multiplicity and conditionality of a Role. -->
-  <xsl:template mode="multiplicity" match="association/role">
+  <xsl:template mode="multiplicity" match="role">
     <xsl:choose>
       <xsl:when test="@multiple and @conditional">
         <xsl:text>0..n</xsl:text>
@@ -809,15 +815,6 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template mode="multiplicity" match="*"/>
-
-
-  <!-- Output an Association's associative class (if it has one). -->
-  <xsl:template match="association/associative">
-    <p>
-      <xsl:text>Associative class: </xsl:text>
-      <a href="#{.}"><xsl:value-of select="."/></a>
-    </p>
-  </xsl:template>
 
 
   <!-- Output details of an Inheritance relationship. -->
