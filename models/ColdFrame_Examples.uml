@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Problem Domain Class Diagram</activediagram>
+      <activediagram>House Management Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -114,10 +114,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Oct 23 13:52:34 BST 2015'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Oct 26 17:47:24 GMT 2015'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2015/10/23 13:06:14 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2015/10/26 18:18:37 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -1114,8 +1114,8 @@ If it is activated again while it is still on, the activation period is extended
               </UML:Classifier.feature>
             </UML:Class>
             <UML:AssociationClass xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30'
-              name = 'Button_To_Lamp' visibility = 'public' isSpecification = 'false'
-              isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+              name = 'A1' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+              isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C33'
                   isSpecification = 'false'>
@@ -1126,7 +1126,7 @@ If it is activated again while it is still on, the activation period is extended
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C4E'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>This association class is required by ColdFrame to support the many-to-many association A1 but has no other functionality in the present understanding of the problem domain.
+                  <UML:TaggedValue.dataValue>This association class is required by ColdFrame to support the many-to-many association between Button and Lamp but has no other functionality in the present understanding of the problem domain.
 A possible future enhancement such as having the &quot;on&quot; time of the lamp depend on which button was used to switch it on might lead to a practical role for this class.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
@@ -7776,7 +7776,7 @@ It should address one logical error (which may correspond to several necessary c
       bold="true"
       textsize="13"
       justification="Center"
-    >+ Button_To_Lamp</text>
+    >+ A1</text>
     <group name="Fig3.2"
          description="org.argouml.uml.diagram.ui.FigStereotypesGroup[289, 241, 206, 0]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
