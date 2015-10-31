@@ -93,19 +93,20 @@ two employees with the same name.
 </blockquote>
 
 <p>In another example, a Vehicle Excise Disk (the round paper
-certificate, to be displayed on the vehicle's windscreen, that shows
-you've paid the UK road tax for the year) might be identified by the
-combination of Vehicle Index Mark (the string of letters and digits on
-the numberplate) and Validity Start Date. Vehicle Index Mark and
-Validity Start Date then become "identifying attributes", whereas Date
-Of Issue and Period Of Validity are just common-or-garden attributes.
+certificate, to be displayed on the vehicle's windscreen, that (until
+October 2014) showed you'd paid the UK road tax for the year) might be
+identified by the combination of Vehicle Index Mark (the string of
+letters and digits on the numberplate) and Validity Start
+Date. Vehicle Index Mark and Validity Start Date then become
+"identifying attributes", whereas Date Of Issue and Period Of Validity
+are just common-or-garden attributes.
 
 <p>In ColdFrame, you <em>must not</em> specify identifiers for
 
 <ul>
 <li>child classes in <a href="generalizations.html">inheritance
 relationships</a>,
-<li>associative classes,
+<li>association classes,
 <li>public classes,
 <li>singletons,
 <li>types or
@@ -209,16 +210,6 @@ following additional library units are generated:
 
 <dl>
 
-<dt><tt><i>Domain.Class</i>.Vectors</tt>
-<dd>An instantiation of Ada.Containers.Vectors with <tt>Handle</tt>s.
-
-<pre>
-package <i>Domain.Class</i>.Vectors
-is new Ada.Containers.Vectors
-  (Index_Type => Positive,
-   Element_Type => Handle);
-</pre>
-
 <dt><tt><i>Domain.Class</i>.All_Instances</tt>
 <dd>A function which returns a Vector containing the
 <tt>Handle</tt>s of all the current instances of the class.
@@ -314,9 +305,9 @@ is new Abstract_Sets.Bounded
 <h3><a name="externals">Package externals</a></h3>
 
 <p>A class's identifying attribute or attributes map to a record type
-named <tt>Identifier</tt>. Note that 'utility',
-<em>&#171;public&#187;</em> and <em>&#171;singleton&#187;</em> classes
-don't have identifiers.
+named <tt>Identifier</tt>. Note
+that <em>&#171;public&#187;</em>, <em>&#171;singleton&#187;</em>
+and <em>&#171;utility&#187;</em> classes don't have identifiers.
 
 <p>A class's instance data maps to a private record type named
 <tt>Instance</tt>, with an access type <tt>Handle</tt>. In the case of
@@ -338,7 +329,8 @@ type <tt>Identifier</tt>.
 parameter <tt>This</tt> of type <tt>Handle</tt>, the other takes a
 single parameter of type <tt>Identifier</tt>.
 
-<p>Non-<em>&#171;public&#187;</em>, non-utility classes have a
+<p>Non-<em>&#171;public&#187;</em>, non-<em>&#171;utility&#187;</em>
+classes have a
 <tt>Find</tt> operation:
 <ul>
 
@@ -357,6 +349,15 @@ parameter of type <tt>Identifier</tt> and returning a <tt>Handle</tt>
 with that identifier).
 
 </ul>
+
+<p>Non-<em>&#171;public&#187;</em>, non-<em>&#171;utility&#187;</em>
+classes have a package <tt>Vectors</tt>, which is an instantiation
+of <tt>Ada.Containers.Vectors</tt> (or <tt>Bounded_Vectors</tt>, if
+the maximum number of instances is known) for <tt>Handle</tt>s.
+
+<!--
+<p>Association classes
+-->
 
 <h3><a name="internals">Package internals</a></h3>
 
@@ -382,9 +383,9 @@ involved in associations.
 
 <h2>Use</h2>
 
-<p>If you're implementing operations of a
-<em>&#171;singleton&#187;</em> class, use <tt>This</tt> instead of
-<tt>Find</tt>; it'll be quicker.
+<p>If you're implementing operations of
+a <em>&#171;singleton&#187;</em> or <i>0 .. 1</i> class,
+use <tt>This</tt> instead of <tt>Find</tt>; it'll be quicker.
 
 <p>The identifier is always a record type, even if there's only
 one attribute in it, so you'll need an aggregate; if there <em>is</em>
