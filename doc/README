@@ -1,4 +1,43 @@
 ************
+* 20151101 *
+************
+
+General
+=======
+
+This is a major release, which merges the Association and Class
+aspects of an AssociationClass into one package.
+
+Modelling
+=========
+
+The <<association-class-naming>> stereotype and the associated
+{association-name} and {class-name} tags are no longer interpreted,
+and will be removed from the profile at a later date.
+
+Generation
+==========
+
+An AssociationClass is coded as a package containing both class and
+association aspects.
+
+The Domain.Class.Vectors package is generated in the class package
+rather than as a child package.
+
+The default storage pool is used rather than ColdFrame-provided ones.
+
+Code
+====
+
+Fixed bug 87 (Invalidated events use queue space).
+
+Testing
+=======
+
+Included a demonstration program of Ravenscar features for the Arduino
+Due.
+
+************
 * 20150415 *
 ************
 
