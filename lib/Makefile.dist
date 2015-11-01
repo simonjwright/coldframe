@@ -42,10 +42,6 @@ coldframe-time_signature.ads			\
 coldframe.ads
 
 STANDARD =							\
-standard/coldframe-bounded_storage_pools.adb			\
-standard/coldframe-bounded_storage_pools.ads			\
-standard/coldframe-bounded_storage_pools.adb-sf3410667		\
-standard/coldframe-bounded_storage_pools.ads-sf3410667		\
 standard/coldframe-callbacks.adb				\
 standard/coldframe-event_basis.adb				\
 standard/coldframe-event_basis.ads				\
@@ -89,11 +85,7 @@ standard/coldframe-synchronization.ads				\
 standard/coldframe-task_deletion.adb				\
 standard/coldframe-task_deletion.ads				\
 standard/coldframe-task_deletion_g.adb				\
-standard/coldframe-task_deletion_g.ads				\
-standard/coldframe-unbounded_storage_pools.adb			\
-standard/coldframe-unbounded_storage_pools.ads			\
-standard/coldframe-unbounded_strings.adb			\
-standard/coldframe-unbounded_strings.ads
+standard/coldframe-task_deletion_g.ads
 
 # Long!
 STANDARD += \

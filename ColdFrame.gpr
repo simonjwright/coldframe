@@ -31,13 +31,4 @@ library project ColdFrame is
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
 
-  --  This package is for use with GNAT GPL 2011 and (probably) GNAT 4.7.
-  --  It can be commented out otherwise.
-  package Naming is
-     for Spec ("ColdFrame.Bounded_Storage_Pools")
-       use "coldframe-bounded_storage_pools.ads-sf3410667";
-     for Body ("ColdFrame.Bounded_Storage_Pools")
-       use "coldframe-bounded_storage_pools.adb-sf3410667";
-  end Naming;
-
 end ColdFrame;
