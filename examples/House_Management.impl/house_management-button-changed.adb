@@ -57,8 +57,6 @@ begin
             Process (LHS);
          end;
 
-      else
-         raise Constraint_Error;
       end if;
 
    end if;

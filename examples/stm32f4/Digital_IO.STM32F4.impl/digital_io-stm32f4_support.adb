@@ -35,7 +35,7 @@ package body Digital_IO.STM32F4_Support is
          11     => (True, 1),
          12     => (True, 2),
          2      => (True, 3),
-         --  4      => (True, 4),
+         4      => (True, 4),
          others => <>);
 
       type GPIO_Access is access all GPIO_TypeDef;
@@ -74,7 +74,7 @@ package body Digital_IO.STM32F4_Support is
          1      => (True, C, 11),
          2      => (True, C, 12),
          3      => (True, D, 2),
-         --  4      => (True, D, 4),
+         4      => (True, D, 4),
          others => <>);
 
       Output_Signal_To_Line : constant array (Output_Signal) of Used_Line :=
