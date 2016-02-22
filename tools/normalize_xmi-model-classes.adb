@@ -27,7 +27,16 @@ package body Normalize_XMI.Model.Classes is
                         Parent : not null Element_P) return Element_P
    is
       N : constant Element_P := new Class_Element (Parent);
-      C : Class_Element renames Class_Element (N.all);
+   begin
+      Populate_Class_Aspects (N, From);
+      return N;
+   end Read_Class;
+
+
+   procedure Populate_Class_Aspects
+     (Of_Element : not null Element_P;
+      From       : not null DOM.Core.Node) is
+      C : Class_Element renames Class_Element (Of_Element.all);
    begin
       C.Populate (From => From);
 
@@ -40,7 +49,7 @@ package body Normalize_XMI.Model.Classes is
             declare
                A : constant Element_P :=
                  Attributes.Read_Attribute (DOM.Core.Nodes.Item (Nodes, J),
-                                            Parent => N);
+                                            Parent => Of_Element);
                Name : constant String := +A.Name;
             begin
                if C.Attributes.Contains (Name) then
@@ -65,7 +74,7 @@ package body Normalize_XMI.Model.Classes is
             declare
                O : constant Element_P :=
                  Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J),
-                                            Parent => N);
+                                            Parent => Of_Element);
             begin
                C.Operations.Append (O);
             end;
@@ -89,7 +98,7 @@ package body Normalize_XMI.Model.Classes is
                C.State_Machines.Append
                  (State_Machines.Read_State_Machine
                     (DOM.Core.Nodes.Item (Nodes, 0),
-                     Parent => N));
+                     Parent => Of_Element));
             when others =>
                Messages.Error
                  ("Class "
@@ -115,7 +124,7 @@ package body Normalize_XMI.Model.Classes is
                C.State_Machines.Append
                  (State_Machines.Read_State_Machine
                     (DOM.Core.Nodes.Item (Nodes, 0),
-                     Parent => N));
+                     Parent => Of_Element));
             when others =>
                Messages.Error
                  ("Class "
@@ -123,10 +132,95 @@ package body Normalize_XMI.Model.Classes is
                     & " has more than one instance state machine");
          end case;
       end;
+   end Populate_Class_Aspects;
 
-      return N;
-   end Read_Class;
 
+   procedure Output_Class_Aspects (C  : Class_Element'Class;
+                                   To : Ada.Text_IO.File_Type) is
+      use Ada.Text_IO;
+      procedure Output_M (Pos : Element_Maps.Cursor);
+      procedure Output_V (Pos : Element_Vectors.Cursor);
+      procedure Output_M (Pos : Element_Maps.Cursor)
+      is
+      begin
+         Element_Maps.Element (Pos).Output (To);
+      end Output_M;
+      procedure Output_V (Pos : Element_Vectors.Cursor)
+      is
+      begin
+         Element_Vectors.Element (Pos).Output (To);
+      end Output_V;
+   begin
+      declare
+         Visibility : constant String
+           := Read_Attribute ("visibility", From_Element => C.Node);
+      begin
+         if Visibility = "" or Visibility = "package" then
+            Put (To, " visibility='private'");
+         else
+            Put (To, " visibility='" & Visibility & "'");
+         end if;
+      end;
+      if C.Has_Stereotype ("active")
+        or Boolean'Value (Read_Attribute ("isActive", From_Element => C.Node))
+      then
+         Put (To, " active='true'");
+         if C.Has_Tag ("priority") then
+            Put (To, " priority='" & C.Tag_Value ("priority") & "'");
+         end if;
+         if C.Has_Tag ("stack") then
+            Put (To, " stack='" & C.Tag_Value ("stack") & "'");
+         end if;
+      end if;
+      if C.Has_Stereotype ("cardinality") then
+         if C.Has_Tag ("max") then
+            Put (To, " max='" & C.Tag_Value ("max") & "'");
+         else
+            Messages.Error
+              ("Class "
+                 & C.Fully_Qualified_Name
+                 & " has <<cardinality>> but not {max}");
+         end if;
+      end if;
+      if C.Has_Stereotype ("public") then
+         Put (To, " public='true'");
+      end if;
+      if C.Has_Stereotype ("singleton") then
+         Put (To, " singleton='true'");
+      end if;
+      if C.Has_Stereotype ("utility") then
+         declare
+            use type Ada.Containers.Count_Type;
+         begin
+            if C.Attributes.Length > 0 then
+               Messages.Error
+                 ("Utility class "
+                    & C.Fully_Qualified_Name
+                    & " has attributes");
+            end if;
+            if C.Operations.Length = 0 then
+               Messages.Warning
+                 ("Utility class "
+                    & C.Fully_Qualified_Name
+                    & " has no operations");
+            end if;
+         end;
+         Put (To, " utility='true'");
+      end if;
+      Put_Line (To, ">");
+      Put_Line (To, "<name>" & (+C.Name) & "</name>");
+      Put (To, "<abbreviation>");
+      if C.Has_Tag ("abbreviation") then
+         Put (To, C.Tag_Value ("abbreviation"));
+      else
+         Put (To, Identifiers.Abbreviate (+C.Name));
+      end if;
+      Put_Line (To, "</abbreviation>");
+      C.Output_Documentation (To);
+      C.Attributes.Iterate (Output_M'Access);
+      C.Operations.Iterate (Output_V'Access);
+      C.State_Machines.Iterate (Output_V'Access);
+   end Output_Class_Aspects;
 
    not overriding
    procedure Create_Referential_Attribute
@@ -204,89 +298,9 @@ package body Normalize_XMI.Model.Classes is
    procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
-      procedure Output_M (Pos : Element_Maps.Cursor);
-      procedure Output_V (Pos : Element_Vectors.Cursor);
-      procedure Output_M (Pos : Element_Maps.Cursor)
-      is
-      begin
-         Element_Maps.Element (Pos).Output (To);
-      end Output_M;
-      procedure Output_V (Pos : Element_Vectors.Cursor)
-      is
-      begin
-         Element_Vectors.Element (Pos).Output (To);
-      end Output_V;
    begin
       Put (To, "<class");
-      declare
-         Visibility : constant String
-           := Read_Attribute ("visibility", From_Element => C.Node);
-      begin
-         if Visibility = "" or Visibility = "package" then
-            Put (To, " visibility='private'");
-         else
-            Put (To, " visibility='" & Visibility & "'");
-         end if;
-      end;
-      if C.Has_Stereotype ("active")
-        or Boolean'Value (Read_Attribute ("isActive", From_Element => C.Node))
-      then
-         Put (To, " active='true'");
-         if C.Has_Tag ("priority") then
-            Put (To, " priority='" & C.Tag_Value ("priority") & "'");
-         end if;
-         if C.Has_Tag ("stack") then
-            Put (To, " stack='" & C.Tag_Value ("stack") & "'");
-         end if;
-      end if;
-      if C.Has_Stereotype ("cardinality") then
-         if C.Has_Tag ("max") then
-            Put (To, " max='" & C.Tag_Value ("max") & "'");
-         else
-            Messages.Error
-              ("Class "
-                 & C.Fully_Qualified_Name
-                 & " has <<cardinality>> but not {max}");
-         end if;
-      end if;
-      if C.Has_Stereotype ("public") then
-         Put (To, " public='true'");
-      end if;
-      if C.Has_Stereotype ("singleton") then
-         Put (To, " singleton='true'");
-      end if;
-      if C.Has_Stereotype ("utility") then
-         declare
-            use type Ada.Containers.Count_Type;
-         begin
-            if C.Attributes.Length > 0 then
-               Messages.Error
-                 ("Utility class "
-                    & C.Fully_Qualified_Name
-                    & " has attributes");
-            end if;
-            if C.Operations.Length = 0 then
-               Messages.Warning
-                 ("Utility class "
-                    & C.Fully_Qualified_Name
-                    & " has no operations");
-            end if;
-         end;
-         Put (To, " utility='true'");
-      end if;
-      Put_Line (To, ">");
-      Put_Line (To, "<name>" & (+C.Name) & "</name>");
-      Put (To, "<abbreviation>");
-      if C.Has_Tag ("abbreviation") then
-         Put (To, C.Tag_Value ("abbreviation"));
-      else
-         Put (To, Identifiers.Abbreviate (+C.Name));
-      end if;
-      Put_Line (To, "</abbreviation>");
-      C.Output_Documentation (To);
-      C.Attributes.Iterate (Output_M'Access);
-      C.Operations.Iterate (Output_V'Access);
-      C.State_Machines.Iterate (Output_V'Access);
+      Output_Class_Aspects (C, To);
       Put_Line (To, "</class>");
    end Output;
 

@@ -27,8 +27,10 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:ac="http://pushface.org/coldframe/association-collection"
   xmlns:as="http://pushface.org/coldframe/association"
+  xmlns:asc="http://pushface.org/coldframe/association-class"
+  xmlns:ac="http://pushface.org/coldframe/association-collection"
+  xmlns:acsc="http://pushface.org/coldframe/association-class-collection"
   xmlns:at="http://pushface.org/coldframe/attribute"
   xmlns:cb="http://pushface.org/coldframe/callback"
   xmlns:cl="http://pushface.org/coldframe/class"
@@ -45,6 +47,8 @@
 
   <xsl:include href="ada-association-collection.xsl"/>
   <xsl:include href="ada-association.xsl"/>
+  <xsl:include href="ada-association-class.xsl"/>
+  <xsl:include href="ada-association-class-collection.xsl"/>
   <xsl:include href="ada-attribute.xsl"/>
   <xsl:include href="ada-callback.xsl"/>
   <xsl:include href="ada-class.xsl"/>
@@ -908,6 +912,30 @@
     <xsl:apply-templates
       select="association"
       mode="ac:association-collection-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package specs for Association Classes (navigation from collections) -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. package specs for Association Classes (collection navigation) ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[associative]"
+      mode="acsc:association-collection-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package bodies for Association Classes (navigation from collections) -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. package bodies for Association Classes (collection navigation) ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[associative]"
+      mode="acsc:association-collection-body">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 

@@ -15,7 +15,7 @@ procedure Reject_Problem
 begin
 
    --  Find the indicated Problem Report.
-   H := Problem_Report.Find ((Id => Number));
+   H := Problem_Report.Find ((ID => Number));
 
    --  Subtype migration to Rejected Problem Report.
 

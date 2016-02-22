@@ -27,6 +27,8 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:as="http://pushface.org/coldframe/association"
+  xmlns:asc="http://pushface.org/coldframe/association-class"
   xmlns:at="http://pushface.org/coldframe/attribute"
   xmlns:cb="http://pushface.org/coldframe/callback"
   xmlns:cl="http://pushface.org/coldframe/class"
@@ -171,6 +173,38 @@
      <xsl:sort select="name"/>
    </xsl:apply-templates>
 
+   <!-- .. Vectors package .. -->
+   <xsl:if test="not(@public or @utility)">
+     <xsl:value-of select="$I"/>
+     <xsl:text>package Vectors is new Ada.Containers.</xsl:text>
+     <xsl:if test="$max &lt;= $max-bounded-container">
+       <xsl:text>Bounded_</xsl:text>
+     </xsl:if>
+     <xsl:text>Vectors&#10;</xsl:text>
+     <xsl:value-of select="$IC"/>
+     <xsl:text>(Index_Type => Positive,&#10;</xsl:text>
+     <xsl:value-of select="$IC"/>
+     <xsl:text> Element_Type => Handle);&#10;</xsl:text>
+     <xsl:value-of select="$blank-line"/>
+   </xsl:if>
+
+   <!-- .. association operations for associative class .. -->
+   <xsl:if test="associative">
+
+     <!-- Linking subprogram .. -->
+     <xsl:call-template name="asc:link-spec"/>
+
+     <!-- Finding function for associative classes .. -->
+     <xsl:call-template name="asc:find-spec"/>
+
+     <!-- .. unlinking procedure .. -->
+     <xsl:call-template name="asc:unlink-spec"/>
+
+     <!-- .. navigations .. -->
+     <xsl:call-template name="asc:navigation-specs"/>
+
+   </xsl:if>
+
    <!-- .. the private part .. -->
    <xsl:text>private&#10;</xsl:text>
    <xsl:value-of select="$blank-line"/>
@@ -231,35 +265,7 @@
      </xsl:when>
 
      <xsl:when test="$max = 1">
-       <!-- Only one possible instance .. -->
-
-       <xsl:if test="$profile = 'standard'">
-
-         <!-- .. fix the storage pool for Handle .. -->
-         <!--
-              use type Standard.System.Storage_Elements.Storage_Offset;
-              Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-                (Pool_Size => Instance'Max_Size_In_Storage_Elements,
-                 Elmt_Size => Instance'Max_Size_In_Storage_Elements,
-                 Alignment => Instance'Alignment);
-              for Handle'Storage_Pool use Storage_Pool;
-              -->
-         <xsl:value-of select="$I"/>
-         <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
-         <xsl:value-of select="$I"/>
-         <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
-         <xsl:value-of select="$IC"/>
-         <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-         <xsl:value-of select="$IC"/>
-         <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-         <xsl:value-of select="$IC"/>
-         <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
-         <xsl:value-of select="$I"/>
-         <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
-         <xsl:value-of select="$blank-line"/>
-       </xsl:if>
-
-       <!-- .. use a simple pointer .. -->
+       <!-- Only one possible instance, use a simple pointer .. -->
        <xsl:value-of select="$I"/>
        <xsl:text>This : Handle;&#10;</xsl:text>
        <xsl:value-of select="$blank-line"/>
@@ -267,49 +273,6 @@
 
      <xsl:when test="$array='yes'">
        <!-- Use an array. -->
-
-       <xsl:if test="$profile = 'standard'">
-         <!-- Create the storage pool for Handle. -->
-         <xsl:choose>
-
-           <xsl:when test="$max &lt;= $max-bounded-container">
-             <!--
-                  use type Standard.System.Storage_Elements.Storage_Offset;
-                  Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-                    (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
-                     Elmt_Size => Instance'Max_Size_In_Storage_Elements,
-                     Alignment => Instance'Alignment);
-                  for Handle'Storage_Pool use Storage_Pool;
-                  -->
-             <xsl:value-of select="$I"/>
-             <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
-             <xsl:value-of select="$I"/>
-             <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
-             <xsl:value-of select="$IC"/>
-             <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
-             <xsl:value-of select="$max"/>
-             <xsl:text>,&#10;</xsl:text>
-             <xsl:value-of select="$IC"/>
-             <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-             <xsl:value-of select="$IC"/>
-             <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
-             <xsl:value-of select="$I"/>
-             <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
-             <xsl:value-of select="$blank-line"/>
-           </xsl:when>
-
-           <!-- .. or use the standard pool ..-->
-           <xsl:otherwise>
-             <!--
-                  for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;
-                  -->
-             <xsl:value-of select="$I"/>
-             <xsl:text>for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;&#10;</xsl:text>
-             <xsl:value-of select="$blank-line"/>
-           </xsl:otherwise>
-
-         </xsl:choose>
-       </xsl:if>
 
        <!-- The instance container.
             The_Container : array ({identifying-attribute-type}) of Handle;
@@ -329,48 +292,6 @@
        <xsl:value-of select="$I"/>
        <xsl:text>function Instance_Hash (I : Identifier) return Ada.Containers.Hash_Type;&#10;</xsl:text>
        <xsl:value-of select="$blank-line"/>
-
-       <xsl:if test="$profile = 'standard'">
-         <xsl:choose>
-
-           <xsl:when test="$max &lt;= $max-bounded-container">
-             <!--
-                  use type Standard.System.Storage_Elements.Storage_Offset;
-                  Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-                    (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
-                     Elmt_Size => Instance'Max_Size_In_Storage_Elements,
-                     Alignment => Instance'Alignment);
-                  for Handle'Storage_Pool use Storage_Pool;
-                  -->
-             <xsl:value-of select="$I"/>
-             <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
-             <xsl:value-of select="$I"/>
-             <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
-             <xsl:value-of select="$IC"/>
-             <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
-             <xsl:value-of select="$max"/>
-             <xsl:text>,&#10;</xsl:text>
-             <xsl:value-of select="$IC"/>
-             <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-             <xsl:value-of select="$IC"/>
-             <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
-             <xsl:value-of select="$I"/>
-             <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
-             <xsl:value-of select="$blank-line"/>
-           </xsl:when>
-
-           <!-- .. or use the standard pool ..-->
-           <xsl:otherwise>
-             <!--
-                  for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;
-                  -->
-             <xsl:value-of select="$I"/>
-             <xsl:text>for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;&#10;</xsl:text>
-             <xsl:value-of select="$blank-line"/>
-           </xsl:otherwise>
-
-         </xsl:choose>
-       </xsl:if>
 
        <!-- .. the instance container .. -->
        <xsl:choose>
@@ -513,18 +434,21 @@
           <xsl:call-template name="ut:can-use-array"/>
         </xsl:variable>
 
-        <!-- Need storage management if there are any instances. -->
-        <xsl:if test="$max &gt; 0">
+        <!-- Workround for GCC 4.9.1 bug that reports this restriction
+             violated for Bounded_Vectors (which it isn't). -->
+        <xsl:if test="not ($profile = 'standard')">
+          <xsl:text>pragma Restrictions (No_Implicit_Heap_Allocations);&#10;</xsl:text>
+        </xsl:if>
 
-          <xsl:if test="$profile = 'standard'">
-            <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
-
-            <!-- Need storage offset arithmetic for bounded classes. -->
-            <xsl:if test="$max &lt;= $max-bounded-container">
-              <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
-            </xsl:if>
-          </xsl:if>
-
+        <!-- If this is an associative class, need the other classes. -->
+        <xsl:if test="associative">
+          <xsl:for-each select="associative/role/classname">
+            <xsl:text>with </xsl:text>
+            <xsl:value-of select="../../../../name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>;&#10;</xsl:text>
+          </xsl:for-each>
         </xsl:if>
 
         <!-- Need Maps if there's more than one instance and we aren't
@@ -536,6 +460,18 @@
             </xsl:when>
             <xsl:otherwise>
               <xsl:text>with Ada.Containers.Hashed_Maps;&#10;</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:if>
+
+        <!-- Need Vectors if non-public, non-utility. -->
+        <xsl:if test="not(@public or @utility)">
+          <xsl:choose>
+            <xsl:when test="$max &lt;= $max-bounded-container">
+              <xsl:text>with Ada.Containers.Bounded_Vectors;&#10;</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>with Ada.Containers.Vectors;&#10;</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:if>
@@ -938,6 +874,23 @@
     <xsl:apply-templates mode="at:attribute-set-body"/>
     <xsl:apply-templates mode="at:attribute-get-body"/>
 
+    <!-- .. association operations for associative classes -->
+    <xsl:if test="associative">
+
+       <!-- Linking subprogram .. -->
+       <xsl:call-template name="asc:link-body"/>
+
+       <!-- Finding function for associative classes .. -->
+       <xsl:call-template name="asc:find-body"/>
+
+       <!-- .. unlinking procedure .. -->
+       <xsl:call-template name="asc:unlink-body"/>
+
+       <!-- .. navigations .. -->
+       <xsl:call-template name="asc:navigation-bodies"/>
+
+    </xsl:if>
+
     <xsl:if test="not(@singleton)">
 
       <xsl:if test="$max &gt; 1 and $array = 'no'">
@@ -1112,14 +1065,19 @@
         <xsl:variable name="name" select="name"/>
 
         <!-- We want to output only one "with" for each package.
-             The strategy is to sort the list pf packages and only
+             The strategy is to sort the list of packages and only
              output unique members. To do this, we need a nodeset. -->
 
         <xsl:variable name="withs">
 
-          <!-- Withs for referential attributes of the current class -->
+          <!-- Withs for referential attributes of the current class,
+          but not the current class (i.e. in reflexive associations)
+          or, in the case of an associative class, one of the classes
+          it associates (which are already with'd in the spec). -->
           <xsl:for-each
-            select="attribute[@refers and not(@refers=$name)]">
+            select="attribute[@refers
+                    and not(@refers=$name)
+                    and not(@refers=$current/associative/role/classname)]">
             <xsl:element name="with">
               <xsl:value-of select="@refers"/>
             </xsl:element>
@@ -1171,6 +1129,9 @@
           </xsl:if>
         </xsl:for-each>
 
+        <xsl:if test="associative">
+          <xsl:call-template name="asc:association-body-context"/>
+        </xsl:if>
       </xsl:otherwise>
 
     </xsl:choose>

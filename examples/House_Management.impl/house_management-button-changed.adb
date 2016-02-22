@@ -17,7 +17,6 @@
 --  Button_Pushed events to the Lamps which are controlled by that
 --  Button. Button releases are ignored.
 
-with House_Management.Lamp.Vectors;
 with House_Management.Lamp.Iterate;
 with House_Management.A1;
 
@@ -58,8 +57,6 @@ begin
             Process (LHS);
          end;
 
-      else
-         raise Constraint_Error;
       end if;
 
    end if;

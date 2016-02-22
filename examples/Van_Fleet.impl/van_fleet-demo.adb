@@ -20,7 +20,6 @@ with Van_Fleet.Customer;
 with Van_Fleet.Initialize;
 with Van_Fleet.Pool_Van.Inheritance;
 with Van_Fleet.Van.All_Instances;
-with Van_Fleet.Van.Vectors;
 
 procedure Van_Fleet.Demo is
 

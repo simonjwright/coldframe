@@ -4,7 +4,7 @@
     <documentation>
       <authorname></authorname>
       <authoremail></authoremail>
-      <version>0.34</version>
+      <version>0.35.1</version>
       <description>
         
       </description>
@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Types Class Diagram</activediagram>
+      <activediagram>Association Classes Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -94,10 +94,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri May 16 14:14:22 BST 2014'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Oct 23 13:32:01 BST 2015'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2014/05/16 21:39:23 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2015/10/23 13:06:14 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -1398,18 +1398,6 @@
             <UML:AssociationClass xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:000000000000113F'
               name = 'A5' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-3-380e0a4e:13621828c7a:-8000:0000000000000E5C'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>A5_Association</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-association-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
               <UML:Association.connection>
                 <UML:AssociationEnd xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001140'
                   name = 'A5L' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -1446,18 +1434,6 @@
             <UML:AssociationClass xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001146'
               name = 'A6' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-3-380e0a4e:13621828c7a:-8000:0000000000000E5D'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>A6_Associative</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
               <UML:Association.connection>
                 <UML:AssociationEnd xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001147'
                   name = 'A6L' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -1494,25 +1470,6 @@
             <UML:AssociationClass xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:000000000000114D'
               name = 'A7' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-3-380e0a4e:13621828c7a:-8000:0000000000000E5E'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>A7_Association</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-association-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-3-380e0a4e:13621828c7a:-8000:0000000000000E5F'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>A7_Associative</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
               <UML:Association.connection>
                 <UML:AssociationEnd xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:000000000000114E'
                   name = 'A7L' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -1549,18 +1506,6 @@
             <UML:AssociationClass xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001153'
               name = 'A8' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
-              <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming'/>
-              </UML:ModelElement.stereotype>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-84-16--65-1-3bc48308:13fd8b57e11:-8000:00000000000015D7'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>A8_Associative</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-naming-td-class-name'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
               <UML:Association.connection>
                 <UML:AssociationEnd xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001154'
                   name = 'A8L' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
@@ -2053,6 +1998,7 @@
   </XMI.content>
 </XMI>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--49ac10ca:13429c87e71:-8000:00000000000009BB"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Types Class Diagram"
 >
   <group name="Fig0"
@@ -4133,10 +4079,12 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.use_case.ui.UMLUseCaseDiagram|-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098A"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Use Case Diagram"
 >
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098A"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Domain Diagram "
 >
   <group name="Fig0"
@@ -4939,6 +4887,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3-76c974f0:13458675800:-8000:0000000000000BDC"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Associations Class Diagram"
 >
   <group name="Fig0"
@@ -5879,6 +5828,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-4--601afa77:1349f53754d:-8000:00000000000010FE"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Classes Class Diagram"
 >
   <group name="Fig0"
@@ -6492,6 +6442,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-4--601afa77:1349f53754d:-8000:000000000000110F"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Association Classes Class Diagram"
 >
   <group name="Fig0"
@@ -7899,7 +7850,7 @@
     </path>
   </group>
   <group name="Fig18"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[528, 288, 189, 45]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[528, 304, 66, 29]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:000000000000113F"
        fill="1"
        fillcolor="white"
@@ -7911,9 +7862,9 @@
     
     <rectangle name="Fig18.0"
       x="528"
-      y="288"
-      width="189"
-      height="45"
+      y="304"
+      width="66"
+      height="29"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -7921,9 +7872,9 @@
     />
     <text name="Fig18.1"
       x="529"
-      y="289"
-      width="187"
-      height="43"
+      y="305"
+      width="64"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -7936,12 +7887,13 @@
       justification="Center"
     >+ A5</text>
     <group name="Fig18.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[529, 289, 187, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[529, 289, 187, 0]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:000000000000113F"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -7950,28 +7902,12 @@
         x="529"
         y="289"
         width="187"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig18.2.1"
-        x="529"
-        y="289"
-        width="187"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig18.3"
       x="528"
@@ -8127,7 +8063,7 @@
     </path>
   </group>
   <group name="Fig21"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[528, 368, 189, 45]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[528, 384, 66, 29]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001146"
        fill="1"
        fillcolor="white"
@@ -8139,9 +8075,9 @@
     
     <rectangle name="Fig21.0"
       x="528"
-      y="368"
-      width="189"
-      height="45"
+      y="384"
+      width="66"
+      height="29"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -8149,9 +8085,9 @@
     />
     <text name="Fig21.1"
       x="529"
-      y="369"
-      width="187"
-      height="43"
+      y="385"
+      width="64"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -8164,12 +8100,13 @@
       justification="Center"
     >+ A6</text>
     <group name="Fig21.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[529, 369, 187, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[529, 369, 187, 0]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001146"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -8178,28 +8115,12 @@
         x="529"
         y="369"
         width="187"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig21.2.1"
-        x="529"
-        y="369"
-        width="187"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig21.3"
       x="528"
@@ -8355,7 +8276,7 @@
     </path>
   </group>
   <group name="Fig24"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[528, 448, 189, 45]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[528, 464, 66, 29]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:000000000000114D"
        fill="1"
        fillcolor="white"
@@ -8367,9 +8288,9 @@
     
     <rectangle name="Fig24.0"
       x="528"
-      y="448"
-      width="189"
-      height="45"
+      y="464"
+      width="66"
+      height="29"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -8377,9 +8298,9 @@
     />
     <text name="Fig24.1"
       x="529"
-      y="449"
-      width="187"
-      height="43"
+      y="465"
+      width="64"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -8392,12 +8313,13 @@
       justification="Center"
     >+ A7</text>
     <group name="Fig24.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[529, 449, 187, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[529, 449, 187, 0]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:000000000000114D"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -8406,28 +8328,12 @@
         x="529"
         y="449"
         width="187"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig24.2.1"
-        x="529"
-        y="449"
-        width="187"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig24.3"
       x="528"
@@ -8583,7 +8489,7 @@
     </path>
   </group>
   <group name="Fig27"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[448, 568, 189, 45]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[494, 576, 66, 32]pathVisible=false;stereotypeView=0;operationsVisible=false;attributesVisible=false;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001153"
        fill="1"
        fillcolor="white"
@@ -8594,20 +8500,20 @@
     </private>
     
     <rectangle name="Fig27.0"
-      x="448"
-      y="568"
-      width="189"
-      height="45"
+      x="494"
+      y="576"
+      width="66"
+      height="32"
       fill="1"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     />
     <text name="Fig27.1"
-      x="449"
-      y="569"
-      width="187"
-      height="43"
+      x="495"
+      y="577"
+      width="64"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -8620,12 +8526,13 @@
       justification="Center"
     >+ A8</text>
     <group name="Fig27.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[449, 569, 187, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[449, 569, 187, 0]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001153"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
+         visibility="0"
     >
       <private>
       </private>
@@ -8634,28 +8541,12 @@
         x="449"
         y="569"
         width="187"
-        height="20"
+        height="0"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
-      <text name="Fig27.2.1"
-        x="449"
-        y="569"
-        width="187"
-        height="18"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Center"
-      >«association-class-naming»</text>
     </group>
     <rectangle name="Fig27.3"
       x="448"
@@ -8750,7 +8641,7 @@
       <moveto x="531"
               y="550" />
       <lineto x="531"
-              y="568" />
+              y="576" />
     </path>
   </group>
   <group name="Fig29"
@@ -8948,11 +8839,12 @@
       <moveto x="536"
               y="696" />
       <lineto x="536"
-              y="612" />
+              y="607" />
     </path>
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-4--5731e010:134be108813:-8000:0000000000000C91"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Generalizations Class Diagram"
 >
   <group name="Fig0"
@@ -10178,6 +10070,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--49774652:135631bf1a5:-8000:000000000000187F"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Figures Class Diagram"
 >
   <group name="Fig0"
@@ -10621,6 +10514,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E83"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Ignored Child Packages Class Diagram"
 >
   <group name="Fig0"
@@ -10853,6 +10747,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E84"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="First Child Class Diagram"
 >
   <group name="Fig0"
@@ -11080,6 +10975,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8C"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="Grandchild Class Diagram"
 >
   <group name="Fig0"
@@ -11208,6 +11104,7 @@
   </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-74--93ed779:13e45f9892d:-8000:0000000000000E8B"
+      xmlns:argouml="http://argouml.tigris.org/pgml-extensions"
       name="main_Class Diagram"
 >
   <group name="Fig0"

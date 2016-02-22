@@ -12,9 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with DOM.Core.Nodes;
+with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Association_Ends;
-with Normalize_XMI.Model.Classes;
 
 package body Normalize_XMI.Model.Association_Classes is
 
@@ -24,9 +25,35 @@ package body Normalize_XMI.Model.Association_Classes is
       Parent : not null Element_P) return Element_P
    is
       N : constant Element_P
-        := new Association_Class_Element (Parent => Parent);
+        := new Association_Class_Element (Parent);
+      AC : Association_Class_Element renames Association_Class_Element (N.all);
    begin
-      Associations.Populate_Association_Aspects (N, From);
+      Classes.Populate_Class_Aspects (N, From);
+      --  Ends
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "UML:Association.connection/UML:AssociationEnd");
+      begin
+         pragma Assert (DOM.Core.Nodes.Length (Nodes) = 2,
+                          "should be 2 AssociationEnds to an Association");
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               E : constant Element_P :=
+                 Association_Ends.Read_Association_End
+                   (DOM.Core.Nodes.Item (Nodes, J),
+                    Parent => N);
+            begin
+               AC.Ends.Append (New_Item => E);
+            end;
+         end loop;
+      end;
+
+      if +AC.Ends.Element (1).Name = +AC.Ends.Element (2).Name then
+         Messages.Error
+           ("Association Class "
+              & AC.Fully_Qualified_Name
+              & "'s ends have the same role name");
+      end if;
       return N;
    end Read_Association_Class;
 
@@ -40,45 +67,10 @@ package body Normalize_XMI.Model.Association_Classes is
       begin
          Element_Vectors.Element (Pos).Resolve;
       end Resolve;
-      Class_Name : constant String := +AC.Name;
    begin
-      --  We could have adjusted the names while reading, because we
-      --  know (at the time of first coding!!) that Domains reads
-      --  Classes before AssociationClasses ... but not a good idea
-      --  for the long term.
-      AC.Class := AC.Find_Class (Class_Name);
-      if AC.Class.Has_Tag ("association-class-name") then
-         Messages.Warning
-           ("Deprecated <<association-class-name>> on "
-              & AC.Fully_Qualified_Name);
-      end if;
-      case AC.Class.Has_Tag ("association-name") is
-         when False =>
-            case AC.Class.Has_Tag ("class-name") is
-               when False =>
-                  if AC.Class.Has_Tag ("association-class-name") then
-                     AC.Class.Name :=
-                       +(AC.Class.Tag_Value ("association-class-name"));
-                  else
-                     AC.Class.Name := +(Class_Name & "_Class");
-                  end if;
-               when True =>
-                  AC.Class.Name := +(AC.Class.Tag_Value ("class-name"));
-            end case;
-         when True =>
-            AC.Name := +(AC.Tag_Value ("association-name"));
-            case AC.Class.Has_Tag ("class-name") is
-               when False =>
-                  null;
-               when True =>
-                  AC.Class.Name := +(AC.Class.Tag_Value ("class-name"));
-            end case;
-      end case;
-      Messages.Trace ("... checking association " & (+AC.Name));
+      Messages.Trace ("... checking association class " & (+AC.Name));
       AC.Ends.Iterate (Resolve'Access);
       declare
-         Assoc : Classes.Class_Element
-           renames Classes.Class_Element (AC.Class.all);
          E1 : Association_Ends.Association_End_Element
            renames Association_Ends.Association_End_Element
            (AC.Ends.Element (1).all);
@@ -114,13 +106,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  The identifying formalizing
                                        --  attribute is taken from end
                                        --  1.
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => True);
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
@@ -133,13 +125,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  identifying formalizing
                                        --  attribute is taken from end
                                        --  2.
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => False);
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
@@ -158,13 +150,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                             & " ignored");
                                     end if;
                                     E2.Source := True;
-                                    Assoc.Create_Referential_Attribute
+                                    AC.Create_Referential_Attribute
                                       (Referring_To => E1.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
                                        With_Source_Role_Name => +E1.Name,
                                        Forming_Identifier => False);
-                                    Assoc.Create_Referential_Attribute
+                                    AC.Create_Referential_Attribute
                                       (Referring_To => E2.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
@@ -185,13 +177,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                             & " ignored");
                                     end if;
                                     E1.Source := True;
-                                    Assoc.Create_Referential_Attribute
+                                    AC.Create_Referential_Attribute
                                       (Referring_To => E1.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
                                        With_Source_Role_Name => +E1.Name,
                                        Forming_Identifier => True);
-                                    Assoc.Create_Referential_Attribute
+                                    AC.Create_Referential_Attribute
                                       (Referring_To => E2.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
@@ -203,13 +195,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  The identifying formalizing
                                        --  attribute is taken from end
                                        --  1.
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => True);
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
@@ -222,13 +214,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  identifying formalizing
                                        --  attribute is taken from end
                                        --  2.
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => False);
-                                       Assoc.Create_Referential_Attribute
+                                       AC.Create_Referential_Attribute
                                          (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
@@ -241,13 +233,13 @@ package body Normalize_XMI.Model.Association_Classes is
                         --  1-(1:*) or 1-(1c:*)
                         --  The identifying formalizing attribute is
                         --  taken from the many end (2).
-                        Assoc.Create_Referential_Attribute
+                        AC.Create_Referential_Attribute
                           (Referring_To => E1.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E1.Name,
                            Forming_Identifier => False);
-                        Assoc.Create_Referential_Attribute
+                        AC.Create_Referential_Attribute
                           (Referring_To => E2.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
@@ -260,13 +252,13 @@ package body Normalize_XMI.Model.Association_Classes is
                         --  1-(*:1) or 1-(*:1c)
                         --  The identifying formalizing attribute is
                         --  taken from the many end (1).
-                        Assoc.Create_Referential_Attribute
+                        AC.Create_Referential_Attribute
                           (Referring_To => E1.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E1.Name,
                            Forming_Identifier => True);
-                        Assoc.Create_Referential_Attribute
+                        AC.Create_Referential_Attribute
                           (Referring_To => E2.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
@@ -276,13 +268,13 @@ package body Normalize_XMI.Model.Association_Classes is
                         --  1-(*:*)
                         --  The identifying formalizing attributes are
                         --  taken from both ends.
-                        Assoc.Create_Referential_Attribute
+                        AC.Create_Referential_Attribute
                           (Referring_To => E1.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E1.Name,
                            Forming_Identifier => True);
-                        Assoc.Create_Referential_Attribute
+                        AC.Create_Referential_Attribute
                           (Referring_To => E2.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
@@ -307,13 +299,12 @@ package body Normalize_XMI.Model.Association_Classes is
          Element_Vectors.Element (Pos).Output (To);
       end Output;
    begin
-      Put (To, "<association");
-      Put_Line (To, ">");
-      Put_Line (To, "<name>" & (+AC.Name) & "</name>");
+      Put (To, "<class");
+      Classes.Output_Class_Aspects (AC, To);
+      Put_Line (To, "<associative>");
       AC.Ends.Iterate (Output'Access);
-      AC.Output_Documentation (To);
-      Put_Line (To, "<associative>" & (+AC.Class.Name) & "</associative>");
-      Put_Line (To, "</association>");
+      Put_Line (To, "</associative>");
+      Put_Line (To, "</class>");
    end Output;
 
 

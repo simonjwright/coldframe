@@ -59,7 +59,6 @@ standard/coldframe-project-log_info.adb				\
 standard/coldframe-project-log_info.ads				\
 standard/coldframe-project-logging_support.adb			\
 standard/coldframe-project-logging_support.ads			\
-standard/coldframe-project-storage_pools.ads			\
 standard/coldframe-project-times.adb				\
 standard/coldframe-project-times.ads
 

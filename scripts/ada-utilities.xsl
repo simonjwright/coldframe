@@ -231,9 +231,6 @@
     <xsl:param name="c" select="."/>
 
     <xsl:variable name="name" select="$c/name"/>
-    <xsl:variable
-      name="assoc"
-      select="/domain/association[associative=$name]"/>
 
     <xsl:choose>
 
@@ -257,10 +254,10 @@
         <xsl:value-of select="$c/@max"/>
       </xsl:when>
 
-      <xsl:when test="$assoc">
+      <xsl:when test="$c/associative">
 
-        <xsl:variable name="role-1" select="$assoc/role[1]"/>
-        <xsl:variable name="role-2" select="$assoc/role[2]"/>
+        <xsl:variable name="role-1" select="$c/associative/role[1]"/>
+        <xsl:variable name="role-2" select="$c/associative/role[2]"/>
 
         <xsl:choose>
 

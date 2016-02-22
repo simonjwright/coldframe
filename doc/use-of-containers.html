@@ -76,11 +76,6 @@ Identifier record.
 <dt>Vectors <dd>for normal externally-visible aggregate
 manipulation.
 
-<!--
-<dt>Hashed_Sets <dd>to support Association operations, but also
-available for general use where warranted.
--->
-
 </dl>
 
 <p>In all cases the actual things contained (the "Element_Type"s) are
@@ -93,32 +88,11 @@ and deallocation in <tt>Delete</tt>.
 <h2><a name="instantiations">Standard Container instantiations</a></h2>
 
 <p>Given the domain <tt><i>Domain</i></tt> and the class
-<tt><i>Class</i></tt>, the standard public Component instantiations
-are the packages
-
-<dl>
-
-<dt><tt><i>Domain.Class</i>.Vectors</tt>
-
-<dd>An instantiation of <tt>Ada.Containers.Vectors</tt> using
-<tt><i>Domain.Class</i>.Handle</tt>
-
-<!--
-<dt><tt><i>Domain.Class</i>.Sets</tt>
-
-<dd>An instantiation of <tt>Ada.Containers.Hashed_Sets</tt>. A
-suitable hash function is provided (it's an instantiation of
-<tt>ColdFrame.Access_Hash</tt> for
-<tt><i>Domain.Class</i>.Handle</tt>).
--->
-
-</dl>
-
-<p>Because each of these is instantiated at Library level, they have
-to be <tt>with</tt>ed individually. ColdFrame generates a lot of code
-that <i>might</i> be useful; the intention of this design is that, as
-far as possible, only the code that is actually used ends up
-contributing to the final executable.
+<tt><i>Class</i></tt>, the standard public Component instantiation (in
+the package <tt><i>Domain.Class</i></tt>) is the
+package <tt><i>Domain.Class</i>.Vectors</tt>, an instantiation
+of <tt>Ada.Containers.Vectors</tt> (or <tt>Bounded_Vectors</tt>) using
+<tt><i>Domain.Class</i>.Handle</tt>.
 
 <h2><a name="vectors">Vectors</a></h2>
 
@@ -134,7 +108,6 @@ they have to be <tt>with</tt>ed individually):
 <dd>returns all the current instances of <tt><i>Domain.Class</i></tt>:
 
 <pre>
-with <i>Domain.Class</i>.Collections;
 function <i>Domain.Class</i>.All_Instances
    return <i>Domain.Class</i>.Vectors.Vector;
 </pre>
@@ -146,7 +119,6 @@ containing just those instances for which <tt>Pass</tt> returns
 <tt>True</tt>:
 
 <pre>
-with <i>Domain.Class</i>.Vectors;
 generic
    with function Pass (This : Handle) return Boolean is <>;
 function <i>Domain.Class</i>.Filter_Function
@@ -160,7 +132,6 @@ function <i>Domain.Class</i>.Filter_Function
 for which <tt>Pass</tt> returns <tt>True</tt>:
 
 <pre>
-with <i>Domain.Class</i>.Vectors;
 generic
    with function Pass (This : Handle) return Boolean is <>;
 function <i>Domain.Class</i>.Selection_Function

@@ -1,11 +1,9 @@
 with ColdFrame.Instances;
 with GNAT.IO;
+with Problem_Reporting.Defect.From_Vectors;
 with Problem_Reporting.Defect.Iterate;
-with Problem_Reporting.Defect.Vectors;
 with Problem_Reporting.Diagnosed_Problem_Report.Iterate;
-with Problem_Reporting.Diagnosed_Problem_Report.Vectors;
 with Problem_Reporting.Problem_Report;
-with Problem_Reporting.R100.From_Vectors;
 with Problem_Reporting.Unallocated_Problem_Report;
 
 --  Maintain referential integrity when the Component is deleted, by
@@ -30,20 +28,20 @@ procedure Clean
    procedure Check (DPR : Diagnosed_Problem_Report.Handle);
    procedure Check is new Diagnosed_Problem_Report.Iterate (Check);
 
-   Defects : constant Defect.Vectors.Vector := R100.Affects (This);
+   Defects : constant Defect.Vectors.Vector := Defect.Affects (This);
    DPRs : constant Diagnosed_Problem_Report.Vectors.Vector
-     := R100.From_Vectors.Affects (Defects);
+     := Defect.From_Vectors.Affects (Defects);
 
    procedure Delete (D : Defect.Handle) is
       That : Defect.Handle := D;
    begin
-      R100.Unlink (That);
+      Defect.Unlink (That);
       Defect.Delete (That);
    end Delete;
 
    procedure Check (DPR : Diagnosed_Problem_Report.Handle) is
       This_DPRs_Defects : constant Defect.Vectors.Vector
-        := R100.Is_Affected_By (DPR);
+        := Defect.Is_Affected_By (DPR);
    begin
       if This_DPRs_Defects.Is_Empty then
          declare

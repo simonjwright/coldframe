@@ -19,7 +19,7 @@ procedure Add_Problem
 begin
 
    --  Create a new Problem Report
-   H := Problem_Report.Create ((Id => Number));
+   H := Problem_Report.Create ((ID => Number));
 
    --  Store the additional information
    Problem_Report.Set_Details (H, +Details);

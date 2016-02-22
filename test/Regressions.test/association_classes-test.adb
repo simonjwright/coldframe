@@ -19,26 +19,17 @@
 with AUnit.Assertions; use AUnit.Assertions;
 
 with Association_Classes.A0;
-with Association_Classes.A0_Class;
 with Association_Classes.A1;
-with Association_Classes.A1_Class;
 with Association_Classes.A2;
-with Association_Classes.A2_Class;
 with Association_Classes.A3;
-with Association_Classes.A3_Class;
 with Association_Classes.A4;
-with Association_Classes.A4_Class.Vectors;
-with Association_Classes.A5.Vectors;
-with Association_Classes.A5_Association;
+with Association_Classes.A5;
 with Association_Classes.A6;
-with Association_Classes.A6_Associative.Vectors;
-with Association_Classes.A7_Association;
-with Association_Classes.A7_Associative.Vectors;
+with Association_Classes.A7;
 with Association_Classes.A8;
-with Association_Classes.A8_Associative.Vectors;
 
-with Association_Classes.L.Vectors;
-with Association_Classes.R.Vectors;
+with Association_Classes.L;
+with Association_Classes.R;
 with Association_Classes.Initialize;
 with Association_Classes.Tear_Down;
 
@@ -58,8 +49,8 @@ package body Association_Classes.Test is
    procedure Navigate_A0_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A0_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A0_Class.Handle;
-      use type A0_Class.Handle;
+      AH : A0.Handle;
+      use type A0.Handle;
    begin
       AH := A0.A0L (A_L => null);
       Assert (AH = null,
@@ -72,7 +63,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A0.A0R (AC => null);
+      LH := A0.A0R (An_A0 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A0_From_Null_A_To_L;
@@ -91,8 +82,8 @@ package body Association_Classes.Test is
    procedure Navigate_A0_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A0_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A0_Class.Handle;
-      use type A0_Class.Handle;
+      AH : A0.Handle;
+      use type A0.Handle;
    begin
       AH := A0.A0R (A_R => null);
       Assert (AH = null,
@@ -105,7 +96,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A0.A0L (AC => null);
+      RH := A0.A0L (An_A0 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A0_From_Null_A_To_R;
@@ -124,8 +115,8 @@ package body Association_Classes.Test is
    procedure Navigate_A1_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A1_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A1_Class.Handle;
-      use type A1_Class.Handle;
+      AH : A1.Handle;
+      use type A1.Handle;
    begin
       AH := A1.A1L (A_L => null);
       Assert (AH = null,
@@ -138,7 +129,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A1.A1R (AC => null);
+      LH := A1.A1R (An_A1 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A1_From_Null_A_To_L;
@@ -157,8 +148,8 @@ package body Association_Classes.Test is
    procedure Navigate_A1_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A1_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A1_Class.Handle;
-      use type A1_Class.Handle;
+      AH : A1.Handle;
+      use type A1.Handle;
    begin
       AH := A1.A1R (A_R => null);
       Assert (AH = null,
@@ -171,7 +162,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A1.A1L (AC => null);
+      RH := A1.A1L (An_A1 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A1_From_Null_A_To_R;
@@ -190,8 +181,8 @@ package body Association_Classes.Test is
    procedure Navigate_A2_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A2_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A2_Class.Handle;
-      use type A2_Class.Handle;
+      AH : A2.Handle;
+      use type A2.Handle;
    begin
       AH := A2.A2L (A_L => null);
       Assert (AH = null,
@@ -204,7 +195,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A2.A2R (AC => null);
+      LH := A2.A2R (An_A2 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A2_From_Null_A_To_L;
@@ -223,8 +214,8 @@ package body Association_Classes.Test is
    procedure Navigate_A2_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A2_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A2_Class.Handle;
-      use type A2_Class.Handle;
+      AH : A2.Handle;
+      use type A2.Handle;
    begin
       AH := A2.A2R (A_R => null);
       Assert (AH = null,
@@ -237,7 +228,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A2.A2L (AC => null);
+      RH := A2.A2L (An_A2 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A2_From_Null_A_To_R;
@@ -256,8 +247,8 @@ package body Association_Classes.Test is
    procedure Navigate_A3_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A3_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A3_Class.Handle;
-      use type A3_Class.Handle;
+      AH : A3.Handle;
+      use type A3.Handle;
    begin
       AH := A3.A3L (A_L => null);
       Assert (AH = null,
@@ -270,7 +261,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A3.A3R (AC => null);
+      LH := A3.A3R (An_A3 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A3_From_Null_A_To_L;
@@ -289,8 +280,8 @@ package body Association_Classes.Test is
    procedure Navigate_A3_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A3_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A3_Class.Handle;
-      use type A3_Class.Handle;
+      AH : A3.Handle;
+      use type A3.Handle;
    begin
       AH := A3.A3R (A_R => null);
       Assert (AH = null,
@@ -303,7 +294,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A3.A3L (AC => null);
+      RH := A3.A3L (An_A3 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A3_From_Null_A_To_R;
@@ -321,11 +312,11 @@ package body Association_Classes.Test is
    procedure Navigate_A4_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A4_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A4_Class.Vectors.Vector;
+      AC : A4.Vectors.Vector;
    begin
       AC := A4.A4L (A_L => null);
       Assert (AC.Is_Empty,
-              "expected empty A4_Class collection");
+              "expected empty A4 collection");
    end Navigate_A4_From_Null_L_To_A;
 
    procedure Navigate_A4_From_Null_A_To_L (C : in out Test_Case'Class);
@@ -334,7 +325,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A4.A4R (AC => null);
+      LH := A4.A4R (An_A4 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A4_From_Null_A_To_L;
@@ -353,8 +344,8 @@ package body Association_Classes.Test is
    procedure Navigate_A4_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A4_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A4_Class.Handle;
-      use type A4_Class.Handle;
+      AH : A4.Handle;
+      use type A4.Handle;
    begin
       AH := A4.A4R (A_R => null);
       Assert (AH = null,
@@ -367,7 +358,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A4.A4L (AC => null);
+      RH := A4.A4L (An_A4 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A4_From_Null_A_To_R;
@@ -377,7 +368,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       RC : R.Vectors.Vector;
    begin
-      RC := A5_Association.A5L (A_L => null);
+      RC := A5.A5L (A_L => null);
       Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A5_From_Null_L_To_R;
@@ -387,7 +378,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       AC : A5.Vectors.Vector;
    begin
-      AC := A5_Association.A5L (A_L => null);
+      AC := A5.A5L (A_L => null);
       Assert (AC.Is_Empty,
               "expected empty A5 collection");
    end Navigate_A5_From_Null_L_To_A;
@@ -398,7 +389,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A5_Association.A5R (An_A5 => null);
+      LH := A5.A5R (An_A5 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A5_From_Null_A_To_L;
@@ -409,7 +400,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A5_Association.A5R (A_R => null);
+      LH := A5.A5R (A_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A5_From_Null_R_To_L;
@@ -420,7 +411,7 @@ package body Association_Classes.Test is
       AH : A5.Handle;
       use type A5.Handle;
    begin
-      AH := A5_Association.A5R (A_R => null);
+      AH := A5.A5R (A_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A5_From_Null_R_To_A;
@@ -431,7 +422,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A5_Association.A5L (An_A5 => null);
+      RH := A5.A5L (An_A5 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A5_From_Null_A_To_R;
@@ -449,11 +440,11 @@ package body Association_Classes.Test is
    procedure Navigate_A6_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A6_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A6_Associative.Vectors.Vector;
+      AC : A6.Vectors.Vector;
    begin
       AC := A6.A6L (A_L => null);
       Assert (AC.Is_Empty,
-              "expected empty A6_Associative collection");
+              "expected empty A6 collection");
    end Navigate_A6_From_Null_L_To_A;
 
    procedure Navigate_A6_From_Null_A_To_L (C : in out Test_Case'Class);
@@ -462,7 +453,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A6.A6R (AA => null);
+      LH := A6.A6R (An_A6 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A6_From_Null_A_To_L;
@@ -481,8 +472,8 @@ package body Association_Classes.Test is
    procedure Navigate_A6_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A6_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A6_Associative.Handle;
-      use type A6_Associative.Handle;
+      AH : A6.Handle;
+      use type A6.Handle;
    begin
       AH := A6.A6R (A_R => null);
       Assert (AH = null,
@@ -495,7 +486,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A6.A6L (AA => null);
+      RH := A6.A6L (An_A6 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A6_From_Null_A_To_R;
@@ -505,7 +496,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       RC : R.Vectors.Vector;
    begin
-      RC := A7_Association.A7L (A_L => null);
+      RC := A7.A7L (A_L => null);
       Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A7_From_Null_L_To_R;
@@ -513,11 +504,11 @@ package body Association_Classes.Test is
    procedure Navigate_A7_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A7_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A7_Associative.Vectors.Vector;
+      AC : A7.Vectors.Vector;
    begin
-      AC := A7_Association.A7L (A_L => null);
+      AC := A7.A7L (A_L => null);
       Assert (AC.Is_Empty,
-              "expected empty A7_Associative collection");
+              "expected empty A7 collection");
    end Navigate_A7_From_Null_L_To_A;
 
    procedure Navigate_A7_From_Null_A_To_L (C : in out Test_Case'Class);
@@ -526,7 +517,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A7_Association.A7R (AA => null);
+      LH := A7.A7R (An_A7 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A7_From_Null_A_To_L;
@@ -537,7 +528,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A7_Association.A7R (A_R => null);
+      LH := A7.A7R (A_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A7_From_Null_R_To_L;
@@ -545,10 +536,10 @@ package body Association_Classes.Test is
    procedure Navigate_A7_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A7_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AH : A7_Associative.Handle;
-      use type A7_Associative.Handle;
+      AH : A7.Handle;
+      use type A7.Handle;
    begin
-      AH := A7_Association.A7R (A_R => null);
+      AH := A7.A7R (A_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A7_From_Null_R_To_A;
@@ -559,7 +550,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A7_Association.A7L (AA => null);
+      RH := A7.A7L (An_A7 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A7_From_Null_A_To_R;
@@ -577,11 +568,11 @@ package body Association_Classes.Test is
    procedure Navigate_A8_From_Null_L_To_A (C : in out Test_Case'Class);
    procedure Navigate_A8_From_Null_L_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A8_Associative.Vectors.Vector;
+      AC : A8.Vectors.Vector;
    begin
       AC := A8.A8L (A_L => null);
       Assert (AC.Is_Empty,
-              "expected empty A8_Associative collection");
+              "expected empty A8 collection");
    end Navigate_A8_From_Null_L_To_A;
 
    procedure Navigate_A8_From_Null_A_To_L (C : in out Test_Case'Class);
@@ -590,7 +581,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A8.A8R (AA => null);
+      LH := A8.A8R (An_A8 => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A8_From_Null_A_To_L;
@@ -608,11 +599,11 @@ package body Association_Classes.Test is
    procedure Navigate_A8_From_Null_R_To_A (C : in out Test_Case'Class);
    procedure Navigate_A8_From_Null_R_To_A (C : in out Test_Case'Class) is
       pragma Unreferenced (C);
-      AC : A8_Associative.Vectors.Vector;
+      AC : A8.Vectors.Vector;
    begin
       AC := A8.A8R (A_R => null);
       Assert (AC.Is_Empty,
-              "expected empty A8_Associative collection");
+              "expected empty A8 collection");
    end Navigate_A8_From_Null_R_To_A;
 
    procedure Navigate_A8_From_Null_A_To_R (C : in out Test_Case'Class);
@@ -621,7 +612,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A8.A8L (AA => null);
+      RH := A8.A8L (An_A8 => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A8_From_Null_A_To_R;

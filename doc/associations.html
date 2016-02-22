@@ -13,13 +13,43 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h1>ColdFrame: Associations</h1>
 
+<ul>
+
+<li><a href="#modelling">Modelling</a>
+<ul>
+<li><a href="#role-names">Associations and role names</a>
+<li><a href="#multiplicity">Associations and multiplicity</a>
+<li><a href="#association-classes">Association classes</a>
+<li><a href="#formalising">Formalising associations</a>
+<ul>
+<li><a href="#complex-formalization">Complex formalization</a>
+<li><a href="#symmetric">Symmetric associations</a>
+</ul>
+</ul>
+
+<li><a href="#translation">Translation</a>
+<ul>
+<li><a href="#linking">Linking</a>
+<li><a href="#unlinking">Unlinking</a>
+<li><a href="#finding">Finding</a>
+<li><a href="#referential-attributes">Referential attributes</a>
+</ul>
+
+<li><a href="#use">Use</a>
+<ul>
+<li><a href="#using-navigational-operations">Using navigation operations</a>
+<li><a href="#maintaining-operations">Maintaining associations</a>
+</ul>
+
+</ul>
+
 <!--
 <h2>Motivation</h2>
 -->
 
-<h2>Modelling</h2>
+<h2><a name="modelling">Modelling</a></h2>
 
-<h3>Associations and role names</h3>
+<h3><a name="role-names">Associations and role names</a></h3>
 
 <p>Role names in associations are very important, and should be verbs
 or verb phrases. Each end of the association must be named; the object
@@ -34,7 +64,7 @@ Window</em>.
 sometimes things really do seem different depending on where you're
 standing.
 
-<h3>Associations and multiplicity</h3>
+<h3><a name="multiplicity">Associations and multiplicity</a></h3>
 
 <p>You need to think carefully about the multiplicity of associations;
 they capture application rules and policies, which it's important to
@@ -54,7 +84,7 @@ about it. Perhaps there's some super/subtype (<a
 href="generalizations.html">inheritance</a>) relationship lurking in
 there.
 
-<h3>Associative classes</h3>
+<h3><a name="association-classes">Association classes</a></h3>
 
 <p>In the <a href="resources.html#build-object-models">Executable
 UML</a> view, an associative class implements an associative
@@ -67,18 +97,10 @@ implemented the association and the associative class as two different
 things. UML (and therefore ArgoUML) regard them as one thing,
 an <i>AssociationClass</i>.
 
-<p>At 18.iii.12, ColdFrame still generates two packages, one for the
-association and one for the associative class. By default, the
-association takes the name in the model and the associative class is
-named by appending <tt>_Class</tt>. This can be overridden by the
-stereotype <em>&#171;association-class-naming&#187;</em> and the
-associated tags <tt>{association-name=<i>new-name</i>}</tt>
-and <tt>{class-name=<i>new-name</i>}</tt>.
+<p>ColdFrame merges the <i>class</i> and <i>association</i> aspects of
+an association class into one package.
 
-<p>This behaviour isn't ideal; a better approach would be to merge the
-generated packages.
-
-<h3>Formalising associations</h3>
+<h3><a name="formalising">Formalising associations</a></h3>
 
 <p>In the original Shlaer-Mellor method, associations and inheritance
 relationships needed to be "formalised" by the use of "referential
@@ -117,7 +139,7 @@ you to tell it how the association is to be formalized.
 <p>You do this by marking one of the roles (<i>AssociationEnds</i>)
 with the stereotype <em>&#171;source&#187</em>.
 
-<h2>Translation</h2>
+<h2><a name="translation">Translation</a></h2>
 
 <p>Each Association maps into
 
@@ -131,12 +153,13 @@ unlinking and navigation from single instances
 <tt><i>Domain.Association</i>.From_Collections</tt>, which deals with
 navigation from collections of instances
 
-<li>a "referential attribute" (or two, in the case of a many-to-many
-association, with its associative class).
+<li>a "referential attribute" (in one of the associated classes for a
+plain association, in the association class in the case of an
+association class).
 
 </ul>
 
-<h3>Linking</h3>
+<h3><a name="linking">Linking</a></h3>
 
 <p>All association packages include a <tt>Link</tt> operation. In the
 case of the Library example <a href="#simple-association">below</a>,
@@ -147,10 +170,10 @@ procedure Link
    Is_Borrowing : Book.Handle);
 </pre>
 
-<p>whereas if the association had had an association class <i>Current
-Loan</i> (not a bad idea; where else would you put the date when the
-book is due for return?) the <tt>Link</tt> operation would be a
-function:
+<p>whereas if the association was implemented in an association
+class <i>Current Loan</i> (not a bad idea; where else would you put
+the date when the book is due for return?) the <tt>Link</tt> operation
+would be a function:
 <pre>
 function Link
   (Is_On_Loan_To : Borrower.Handle;
@@ -158,7 +181,7 @@ function Link
   return Current_Loan.Handle;
 </pre>
 
-<h3>Unlinking</h3>
+<h3><a name="unlinking">Unlinking</a></h3>
 
 <p>All association packages include an <tt>Unlink</tt> operation. In
 the case of the Library example <a
@@ -181,15 +204,15 @@ association instance; this is because you may have cleaning-up jobs to
 do (unlinking other associations with the association instance, for
 example).
 
-<h3>Finding</h3>
+<h3><a name="finding">Finding</a></h3>
 
-<p>For associations with an associative class, a <tt>Find</tt>
-operation is generated in <tt><i>Domain.Association</i></tt> which,
-given the handles of two potentially associated instances, returns the
-corresponding associative instance's handle (or <tt>null</tt>, of
+<p>For associations in an associative class, a <tt>Find</tt> operation
+is generated in <tt><i>Domain.Association_Class</i></tt> which, given
+the handles of two potentially associated instances, returns the
+corresponding association class's handle (or <tt>null</tt>, of
 course).
 
-<h3>Referential attributes</h3>
+<h3><a name="referential-attributes">Referential attributes</a></h3>
 
 <p>The implementing referential attrubute, and its assciated "get",
 "set" operations are in the public part of the class package but
@@ -210,7 +233,7 @@ get to more efficiently.
 
 <h2><a name="use">Use</a></h2>
 
-<h3>Using navigation operations</h3>
+<h3><a name="using-navigational-operations">Using navigation operations</a></h3>
 
 <p>It can be difficult to work out which of the navigation operations
 you need to use.
@@ -261,7 +284,7 @@ needs adjustment;
 
 <p>and the answer is probably "<i>is fallback for</i>".
 
-<h3>Maintaining associations</h3>
+<h3><a name="maintaining-operations">Maintaining associations</a></h3>
 
 <p>It's quite legal to have more than one association between a pair
 of classes. For example, A1 <i>Book is on loan to Borrower</i> for

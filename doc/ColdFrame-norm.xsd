@@ -72,6 +72,7 @@
         <xsd:element ref="operation" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="statemachine" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="associative" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
       <xsd:attribute name="abstract"/>
       <xsd:attribute name="active"/>
@@ -81,6 +82,14 @@
       <xsd:attribute name="singleton"/>
       <xsd:attribute name="stack"/>
       <xsd:attribute name="utility"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="associative">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="role" minOccurs="2" maxOccurs="2"/>
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 
@@ -315,7 +324,6 @@
       <xsd:sequence>
         <xsd:element name="name"/>
         <xsd:element ref="role" minOccurs="2" maxOccurs="2"/>
-        <xsd:element name="associative" minOccurs="0" maxOccurs="1"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
     </xsd:complexType>

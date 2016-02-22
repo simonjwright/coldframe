@@ -52,10 +52,10 @@ package body Digital_IO.Arduino_Support is
                12),
          3 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOC_IRQ,
                Registers.ATSAM3X8.PIO.PIOC'Access,
-               13));
-         --  4 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOC_IRQ,
-         --        Registers.ATSAM3X8.PIO.PIOC'Access,
-         --        14));
+               13),
+         4 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOC_IRQ,
+               Registers.ATSAM3X8.PIO.PIOC'Access,
+               14));
 
    subtype Used_Input_Signal
      is Digital_IO_Support.Input_Signal range Input_Pin_Map'Range;

@@ -174,10 +174,11 @@
         <xsl:if test="not(../operation[name=$operation-name])">
 
           <!-- If this is an association, rather than an inheritance,
-               tell them to use navgation operations. -->
+               tell them to use navigation operations. -->
 
           <xsl:variable name="rel" select="@relation"/>
-          <xsl:if test="/domain/association/name=$rel">
+          <xsl:if test="/domain/association/name=$rel
+                        or (../associative and ../name=$rel)">
             <xsl:value-of select="$I"/>
             <xsl:text>--  Private use only, use navigation operations&#10;</xsl:text>
           </xsl:if>

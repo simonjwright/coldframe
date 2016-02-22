@@ -17,7 +17,6 @@ with Van_Fleet.A2;
 with Van_Fleet.Customer;
 with Van_Fleet.Hired_Van.Inheritance;
 with Van_Fleet.Pool_Van.All_Instances;
-with Van_Fleet.Pool_Van.Vectors;
 with Van_Fleet.Pool_Van.Inheritance;
 
 separate (Van_Fleet.Van)

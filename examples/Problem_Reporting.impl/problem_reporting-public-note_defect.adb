@@ -7,7 +7,6 @@ with Problem_Reporting.Defect;
 with Problem_Reporting.Diagnosed_Problem_Report;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
-with Problem_Reporting.R100;
 
 separate (Problem_Reporting.Public)
 procedure Note_Defect
@@ -26,7 +25,7 @@ procedure Note_Defect
 begin
 
    --  Find the indicated Component.
-   H := Problem_Report.Find ((Id => Problem_Number));
+   H := Problem_Report.Find ((ID => Problem_Number));
 
    case Problem_Report.Get_R1_Child (H).Current is
 
@@ -46,7 +45,7 @@ begin
 
          --  If the Problem Report was Rejected, we can't accept any
          --  further diagnosis.
-         Put ("problem" & Problem_Report.Get_Id (H)'Img & "(");
+         Put ("problem" & Problem_Report.Get_ID (H)'Img & "(");
          Put (Problem_Report.Get_Details (H));
          Put_Line (") already rejected.");
          return;
@@ -63,11 +62,11 @@ begin
    end case;
 
    --  Find the indicated Component.
-   C := Problem_Reporting.Component.Find ((Id => +Component_Name));
+   C := Problem_Reporting.Component.Find ((ID => +Component_Name));
 
    --  Create a new Defect.
-   Def := R100.Link (Affects => C,
-                     Is_Affected_By => D);
+   Def := Defect.Link (Affects => C,
+                       Is_Affected_By => D);
 
    --  Store the diagnosed Problem in the new Defect.
    Defect.Set_Problem (Def, +Description);

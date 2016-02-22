@@ -23,21 +23,6 @@ best cause confusion if you use these names in your models.
 
 <tr><th>Name <th>Use
 
-<tr><td>Abstract_Collections<td>part of Booch Component instantiation
-for visible collections
-
-<tr><td>Abstract_Containers<td>part of Booch Component instantiation
-for visible collections, sets
-
-<tr><td>Abstract_Map_Containers<td>part of Booch Component
-instantiation for internal use
-
-<tr><td>Abstract_Maps<td>part of Booch Component instantiation for
-internal use
-
-<tr><td>Abstract_Sets<td>part of Booch Component instantiation for
-visible sets
-
 <tr><td>All_Instances<td>utility operation to obtain all current
 instances of a class
 
@@ -48,9 +33,6 @@ initialize other domains (especially in unit test)
 other domains (only in unit test)
 
 <tr><td>Class_Initialize<td>class initialization operation
-
-<tr><td>Collections<td>Booch Component instantiation for visible
-collections
 
 <tr><td>Counterpart<td>reference to a class in another Domain
 
@@ -77,8 +59,6 @@ collection of instances
 
 <tr><td>Iterate<td>generic, to iterate over a collection of instances
 
-<tr><td>Maps<td>Booch Component instantiation for internal use
-
 <tr><td>Next_Identifier<td>class variable to support Autonumber
 
 <tr><td>Old_State_Machine_State<td>attribute to contain the previous
@@ -89,8 +69,6 @@ instances of a class
 
 <tr><td>Serializable<td>child package to support the
 <tt>{serializable}</tt> facility
-
-<tr><td>Sets<td>Booch Component instantiation for visible sets
 
 <tr><td>State_Image<td>operation to return a string describing the
 state of an instance's state machine
@@ -109,7 +87,7 @@ state
 <tt>Ada.Strings.Unbounded.Unbounded_String</tt>
 
 <tr><td>The_Container<td>class variable to contain all the instances
-(will be an array or a Map)
+(will be a pointer, an array or a Map)
 
 <tr><td>This<td>parameter (or, for singletons, class variable) to hold
 the (current) instance

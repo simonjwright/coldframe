@@ -19,7 +19,6 @@ with Event_Test.Tear_Down;
 
 with Event_Test.Machine;
 with Event_Test.Machine.All_Instances;
-with Event_Test.Machine.Vectors;
 with Event_Test.Events;
 
 with ColdFrame.Exceptions;

@@ -19,6 +19,17 @@ private package Normalize_XMI.Model.Classes is
 
    type Class_Element is new Element with private;
 
+   --  Used by Association_Classes to read from the Model.
+   procedure Populate_Class_Aspects
+     (Of_Element : not null Element_P;
+      From       : not null DOM.Core.Node);
+
+   --  Used by Association_Classes to output the body of the
+   --  <association-class/> (including the trailing > of the opening
+   --  tag, which appears after any attributes).
+   procedure Output_Class_Aspects (C  : Class_Element'Class;
+                                   To : Ada.Text_IO.File_Type);
+
    --  Create referential attributes to formalize relationships (both
    --  associations and generalizations).
    --

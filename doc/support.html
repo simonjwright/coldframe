@@ -48,22 +48,6 @@ package <tt>ColdFrame</tt>. The more user-interesting ones are
 
 <dl>
 
-<dt><tt>ColdFrame.Bounded_Storage_Pools</tt>
-
-<dd>Used in place of the <tt>'Storage_Size</tt> attribute for access
-types; it provides the mutual exclusion omitted from GNAT up to
-3.16a1, and fills allocated memory with improbable data
-(<tt>16#deadbeef#</tt> when viewed in the debugger).
-<br>Freed memory is refilled with <tt>16#dead#</tt> (the Ada runtime
-overwrites the first few bytes for internal purposes).
-
-<p><dt><tt>ColdFrame.Unbounded_Storage_Pools</tt>
-
-<dd>Provides a storage pool which uses the standard system memory
-allocator but fills allocated memory with improbable data
-(<tt>16#deadbeef#</tt> when viewed in the debugger).
-<br>Freed memory is refilled with <tt>16#deaddead#</tt>.
-
 <p><dt><tt>ColdFrame.Callbacks</tt>
 
 <dd>Provides callback (Observer) support.
@@ -242,9 +226,8 @@ translation for <i>Date</i>, <i>Time</i> attributes.
 
 <dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with
 event basis from <tt>ColdFrame.Project.Event_Basis</tt>, time support
-from <tt>ColdFrame.Project.Times</tt>, logging from
-<tt>ColdFrame.Project.Logging_Support</tt>, and storage from
-<tt>ColdFrame.Project.Storage_Pools</tt>.
+from <tt>ColdFrame.Project.Times</tt>, and logging from
+<tt>ColdFrame.Project.Logging_Support</tt>.
 
 <br>The <tt>project</tt> subdirectory of the distribution contains
 <ul>
@@ -338,19 +321,6 @@ href="serialization-page.html">serializable</a></i> types; an instantiation of
 <tt>ColdFrame.Serialization_Signature</tt>
 using <tt>ColdFrame.Serialization</tt>,
 -->
-
-<p><dt><tt>ColdFrame.Project.Storage_Pools</tt>
-
-<dd>Provides a Bounded_Pool type and an Unbounded_Pool type and
-instance. The Bounded type is used for allocating instances of classes
-whose maximum extent is known, while the Unbounded type is used for
-all other classes.
-
-<br>The supplied version accesses
-<tt>ColdFrame.Bounded_Storage_Pools</tt>,
-<tt>ColdFrame.Unbounded_Storage_Pools</tt>.
-
-<br>You may find <tt>GNAT.Debug_Pools</tt> useful.
 
 <p><dt><tt>ColdFrame.Project.Task_Deletion</tt>
 

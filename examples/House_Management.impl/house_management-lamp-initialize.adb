@@ -15,7 +15,6 @@
 --  This operation initializes the Lamps and Buttons.
 
 with House_Management.Button;
-with House_Management.Button_To_Lamp;
 with House_Management.A1;
 
 separate (House_Management.Lamp)
@@ -25,7 +24,7 @@ procedure Initialize is
    procedure Connect (The_Button : Button_Name; To : Lamp_Name) is
       BH : constant Button.Handle := Button.Find ((Name => The_Button));
       LH : constant Lamp.Handle := Lamp.Find ((Name => To));
-      CH : constant Button_To_Lamp.Handle
+      CH : constant A1.Handle
         := A1.Link (Controls => LH, Is_Controlled_By => BH);
       pragma Warnings (Off, CH);
    begin
