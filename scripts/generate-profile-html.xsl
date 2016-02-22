@@ -125,6 +125,9 @@
     <tr>
       <td>
         <a name="st-{@name}"><xsl:value-of select="@name"/></a>
+        <xsl:if test=".//UML:TagDefinition[@name='deprecated']/../../UML:TaggedValue.dataValue = 'true'">
+          *deprecated*
+        </xsl:if>
       </td>
       <td>
         <table>
@@ -170,6 +173,9 @@
         <!-- We might have the same tag name under more than one
              stereotype. -->
         <a name="st-{../../@name}-tag-{@name}"><xsl:value-of select="@name"/></a>
+        <xsl:if test=".//UML:TagDefinition[@name='deprecated']/../../UML:TaggedValue.dataValue = 'true'">
+          *deprecated*
+        </xsl:if>
       </td>
       <td>
         <xsl:call-template name="break">

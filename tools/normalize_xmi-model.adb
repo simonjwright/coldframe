@@ -436,8 +436,6 @@ begin
    --  Initialize Tags (for checking tag values as they are read)
    Tags.Insert ("abbreviation", (Must_Be_Name => True));
    Tags.Insert ("access-to-type", (Must_Be_Name => True));
-   Tags.Insert ("association-name", (Must_Be_Name => True));
-   Tags.Insert ("class-name", (Must_Be_Name => True));
    Tags.Insert ("constrains", (Must_Be_Name => True));
    Tags.Insert ("documentation", (Must_Be_Name => False));
    Tags.Insert ("formalizes", (Must_Be_Name => True));
