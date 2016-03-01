@@ -46,9 +46,34 @@ abstract project Options_Ravenscar is
          null;
    end case;
 
+   type Build_Type is ("Production", "Debug");
+   Build : Build_Type := external ("BUILD", "Debug");
+
+   COMPILER_SWITCHES :=
+     (
+      "-gnat12",
+      "-g");
+   case RTS is
+      when "native" =>
+         null;
+      when others =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES &
+           (
+            --  .. dead code elimination (with -fgc-sections at link)
+            "-ffunction-sections",
+            "-fdata-sections"
+           );
+   end case;
+   case Build is
+      when "Production" =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O2");
+      when "Debug" =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-Og");
+   end case;
+
    --  Builder configuration options.
    package Builder is
-      for Default_Switches ("ada") use ("-gnat12", "-g", "-Og");
+      for Default_Switches ("ada") use COMPILER_SWITCHES;
    end Builder;
 
    --  GCC configuration options.
@@ -69,10 +94,6 @@ abstract project Options_Ravenscar is
             for Default_Switches ("ada") use
               Compiler'Default_Switches ("ada") &
               (
-               --  .. dead code elimination (with -fgc-sections at link)
-               "-ffunction-sections",
-               "-fdata-sections",
-
                "-gnatw.X"
                --  .. and non-local exceptions (exceptions invoking Last
                --  Chance Handler: expected!)

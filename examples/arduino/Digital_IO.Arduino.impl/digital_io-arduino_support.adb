@@ -274,16 +274,21 @@ package body Digital_IO.Arduino_Support is
          Bits := (others => 0);
          Bits (Data.The_Pin) := 1;
 
-         Data.The_PIO.SCDR := 32768 / 200;
-         --  debounce slow clock multiplier; slow clock is 32768 Hz,
-         --  we want 5 ms => 200 Hz.
-
          Data.The_PIO.PER    := Bits; -- enable pin
          Data.The_PIO.ODR    := Bits; -- pin is input
          --  pull-up is enabled at reset
          Data.The_PIO.AIMER  := Bits; -- rising/falling interrupt modes
          Data.The_PIO.REHLSR := Bits; -- interrupts on button-up
-         Data.The_PIO.DIFSR  := Bits; -- debounce
+
+         --  Debounce: slow clock multiplier (32 kHz; we want 5 ms, 200 Hz)
+         --  From 11057 datasheet, 31.5.9 & 31.7.2:
+         --     Tdiv_slclk = 2*(DIV+1)*Tslow_clock
+         --  so
+         --     DIV = Tdiv_slclk/Tslow_clock/2 - 1
+         --         = Fslow_clock/Fslclk/2 - 1
+         Data.The_PIO.SCDR  := 32768 / 200 / 2 - 1;
+         Data.The_PIO.DIFSR := Bits; -- debounce vs glitch
+         Data.The_PIO.IFER  := Bits; -- enable debounce
 
          --  clear previously-set interrupts (best done before general
          --  processing starts!)
