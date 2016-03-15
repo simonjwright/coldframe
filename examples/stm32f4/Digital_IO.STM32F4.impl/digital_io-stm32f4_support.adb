@@ -80,7 +80,7 @@ package body Digital_IO.STM32F4_Support is
       Output_Signal_To_Line : constant array (Output_Signal) of Used_Line :=
         (0      => (True, A, 5),
          1      => (True, C, 3),
-         2      => (True, F, 6),
+         2      => (True, F, 7),
          3      => (True, G, 2),
          others => <>);
 
