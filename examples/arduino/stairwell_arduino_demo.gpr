@@ -2,7 +2,6 @@
 
 with "Options_Ravenscar";
 with "ColdFrame_Ravenscar";
-with "arduino_due_bsp";
 
 project Stairwell_Arduino_Demo is
 

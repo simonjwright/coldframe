@@ -13,11 +13,10 @@
 with Ada.Interrupts.Names;
 with Ada.Real_Time;
 with Digital_IO.Input_Signal_State_Callback;
-with Interfaces;
 with System;
-with Registers.ATSAM3X8.Peripheral_Identifiers;
-with Registers.ATSAM3X8.PMC;
-with Registers.ATSAM3X8.PIO;
+
+with ATSAM3X8E.PIO; use ATSAM3X8E.PIO;
+with ATSAM3X8E.PMC; use ATSAM3X8E.PMC;
 
 package body Digital_IO.Arduino_Support is
 
@@ -25,7 +24,7 @@ package body Digital_IO.Arduino_Support is
 
    type Pin_Data is record
       The_Peripheral_ID : Natural;
-      The_PIO           : access Registers.ATSAM3X8.PIO.PIO;
+      The_PIO           : access PIO_Peripheral;
       The_Pin           : Natural;
    end record;
 
@@ -41,20 +40,20 @@ package body Digital_IO.Arduino_Support is
      is array (Digital_IO_Support.Input_Signal range <>) of Pin_Data;
 
    Input_Pin_Map : constant Input_Pin_Mapping
-     := (0 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOB_IRQ,
-               Registers.ATSAM3X8.PIO.PIOB'Access,
+     := (0 => (Ada.Interrupts.Names.PIOB_IRQ,
+               PIOB_Periph'Access,
                14),
-         1 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOB_IRQ,
-               Registers.ATSAM3X8.PIO.PIOB'Access,
+         1 => (Ada.Interrupts.Names.PIOB_IRQ,
+               PIOB_Periph'Access,
                21),
-         2 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOC_IRQ,
-               Registers.ATSAM3X8.PIO.PIOC'Access,
+         2 => (Ada.Interrupts.Names.PIOC_IRQ,
+               PIOC_Periph'Access,
                12),
-         3 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOC_IRQ,
-               Registers.ATSAM3X8.PIO.PIOC'Access,
+         3 => (Ada.Interrupts.Names.PIOC_IRQ,
+               PIOC_Periph'Access,
                13),
-         4 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOC_IRQ,
-               Registers.ATSAM3X8.PIO.PIOC'Access,
+         4 => (Ada.Interrupts.Names.PIOC_IRQ,
+               PIOC_Periph'Access,
                14));
 
    subtype Used_Input_Signal
@@ -71,17 +70,17 @@ package body Digital_IO.Arduino_Support is
      is array (Digital_IO_Support.Output_Signal range <>) of Pin_Data;
 
    Output_Pin_Map : constant Output_Pin_Mapping
-     := (0 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOB_IRQ,
-               Registers.ATSAM3X8.PIO.PIOB'Access,
+     := (0 => (Ada.Interrupts.Names.PIOB_IRQ,
+               PIOB_Periph'Access,
                26),
-         1 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOA_IRQ,
-               Registers.ATSAM3X8.PIO.PIOA'Access,
+         1 => (Ada.Interrupts.Names.PIOA_IRQ,
+               PIOA_Periph'Access,
                14),
-         2 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOA_IRQ,
-               Registers.ATSAM3X8.PIO.PIOA'Access,
+         2 => (Ada.Interrupts.Names.PIOA_IRQ,
+               PIOA_Periph'Access,
                15),
-         3 => (Registers.ATSAM3X8.Peripheral_Identifiers.PIOD_IRQ,
-               Registers.ATSAM3X8.PIO.PIOD'Access,
+         3 => (Ada.Interrupts.Names.PIOD_IRQ,
+               PIOD_Periph'Access,
                0));
 
 
@@ -135,15 +134,14 @@ package body Digital_IO.Arduino_Support is
       end Button_Pressed;
 
       procedure PIOA_IRQ_Handler is
-         Read_Value : constant Registers.Bits_32x1
-           := Registers.ATSAM3X8.PIO.PIOA.ISR;
-         use Registers.ATSAM3X8.Peripheral_Identifiers;
-         use type Registers.Bits_1;
+         Read_Value : constant ISR_Register := PIOA_Periph.ISR;
+         use Ada.Interrupts.Names;
+         use type ATSAM3X8E.Bit;
       begin
          Triggered := True;
          for J in Input_Pin_Map'Range loop
             if Input_Pin_Map (J).The_Peripheral_ID = PIOA_IRQ
-              and then Read_Value (Input_Pin_Map (J).The_Pin) /= 0
+              and then Read_Value.Arr (Input_Pin_Map (J).The_Pin) /= 0
             then
                Input_Handler.Inputs (J) := True;
             end if;
@@ -151,15 +149,14 @@ package body Digital_IO.Arduino_Support is
       end PIOA_IRQ_Handler;
 
       procedure PIOB_IRQ_Handler is
-         Read_Value : constant Registers.Bits_32x1
-           := Registers.ATSAM3X8.PIO.PIOB.ISR;
-         use Registers.ATSAM3X8.Peripheral_Identifiers;
-         use type Registers.Bits_1;
+         Read_Value : constant ISR_Register := PIOB_Periph.ISR;
+         use Ada.Interrupts.Names;
+         use type ATSAM3X8E.Bit;
       begin
          Triggered := True;
          for J in Input_Pin_Map'Range loop
             if Input_Pin_Map (J).The_Peripheral_ID = PIOB_IRQ
-              and then Read_Value (Input_Pin_Map (J).The_Pin) /= 0
+              and then Read_Value.Arr (Input_Pin_Map (J).The_Pin) /= 0
             then
                Input_Handler.Inputs (J) := True;
             end if;
@@ -167,15 +164,14 @@ package body Digital_IO.Arduino_Support is
       end PIOB_IRQ_Handler;
 
       procedure PIOC_IRQ_Handler is
-         Read_Value : constant Registers.Bits_32x1
-           := Registers.ATSAM3X8.PIO.PIOC.ISR;
-         use Registers.ATSAM3X8.Peripheral_Identifiers;
-         use type Registers.Bits_1;
+         Read_Value : constant ISR_Register := PIOC_Periph.ISR;
+         use Ada.Interrupts.Names;
+         use type ATSAM3X8E.Bit;
       begin
          Triggered := True;
          for J in Input_Pin_Map'Range loop
             if Input_Pin_Map (J).The_Peripheral_ID = PIOC_IRQ
-              and then Read_Value (Input_Pin_Map (J).The_Pin) /= 0
+              and then Read_Value.Arr (Input_Pin_Map (J).The_Pin) /= 0
             then
                Input_Handler.Inputs (J) := True;
             end if;
@@ -183,20 +179,20 @@ package body Digital_IO.Arduino_Support is
       end PIOC_IRQ_Handler;
 
       procedure PIOD_IRQ_Handler is
-         Read_Value : constant Registers.Bits_32x1
-           := Registers.ATSAM3X8.PIO.PIOD.ISR;
-         use Registers.ATSAM3X8.Peripheral_Identifiers;
-         use type Registers.Bits_1;
+         Read_Value : constant ISR_Register := PIOD_Periph.ISR;
+         use Ada.Interrupts.Names;
+         use type ATSAM3X8E.Bit;
       begin
          Triggered := True;
          for J in Input_Pin_Map'Range loop
             if Input_Pin_Map (J).The_Peripheral_ID = PIOD_IRQ
-              and then Read_Value (Input_Pin_Map (J).The_Pin) /= 0
+              and then Read_Value.Arr (Input_Pin_Map (J).The_Pin) /= 0
             then
                Input_Handler.Inputs (J) := True;
             end if;
          end loop;
       end PIOD_IRQ_Handler;
+
    end Input_Handler;
 
    task body Receive_Button_Interrupt is
@@ -216,31 +212,57 @@ package body Digital_IO.Arduino_Support is
 
    task body Heartbeat is
       --  The on-board LED is pin PB27.
-      use Registers.ATSAM3X8.Peripheral_Identifiers;
-      use Registers.ATSAM3X8.PMC;
-      use Registers.ATSAM3X8.PIO;
+      use Ada.Interrupts.Names;
       use type Ada.Real_Time.Time;
    begin
       --  Enable PIOB
-      PMC.PCER0 := (PIOB_IRQ => 1, others => 0);
+      declare
+         PIDs : PMC_PCER0_PID_Field_Array := (others => 0);
+      begin
+         PIDs (PIOB_IRQ) := 1;
+         PMC_Periph.PMC_PCER0 := (PID    => (As_Array => True,
+                                             Arr      => PIDs),
+                                  others => <>);
+      end;
       --  Enable PB27 ..
-      PIOB.PER := (27 => 1, others => 0);
+      PIOB_Periph.PER := (As_Array => True,
+                          Arr => (27 => 1, others => 0));
       --  .. as output.
-      PIOB.OER := (27 => 1, others => 0);
+      PIOB_Periph.OER := (As_Array => True,
+                          Arr => (27 => 1, others => 0));
 
       --  flash for 1 second at startup
       for J in 1 .. 5 loop
-         PIOB.CODR := (27 => 1, others => 0);
+         for Data of Input_Pin_Map loop
+            declare
+               use type ATSAM3X8E.Bit;
+            begin
+               null;
+               pragma Assert (Data.The_PIO.PSR.Arr (Data.The_Pin) /= 0,
+                                "PIO inactive");
+               pragma Assert (Data.The_PIO.OSR.Arr (Data.The_Pin) = 0,
+                                "output enabled");
+               pragma Assert (Data.The_PIO.PUSR.Arr (Data.The_Pin) = 0,
+                                "pullup disabled");
+               pragma Assert (Data.The_PIO.IMR.Arr (Data.The_Pin) /= 0,
+                                "interrupt disabled");
+            end;
+         end loop;
+         PIOB_Periph.CODR := (As_Array => True,
+                              Arr => (27 => 1, others => 0));
          delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
-         PIOB.SODR := (27 => 1, others => 0);
+         PIOB_Periph.SODR := (As_Array => True,
+                              Arr => (27 => 1, others => 0));
          delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
       end loop;
 
       --  flash every second while running
       loop
-         PIOB.CODR := (27 => 1, others => 0);
+         PIOB_Periph.CODR := (As_Array => True,
+                              Arr => (27 => 1, others => 0));
          delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (900);
-         PIOB.SODR := (27 => 1, others => 0);
+         PIOB_Periph.SODR := (As_Array => True,
+                              Arr => (27 => 1, others => 0));
          delay until Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (100);
       end loop;
    end Heartbeat;
@@ -256,29 +278,55 @@ package body Digital_IO.Arduino_Support is
    end Initialize;
 
    procedure Configure_Inputs is
-      Bits : Registers.Bits_32x1;
-      use Registers.ATSAM3X8.PMC;
-      use type Interfaces.Unsigned_32;
+      use type ATSAM3X8E.Bit;  -- for assertions
    begin
       for Data of Input_Pin_Map loop
          --  enable the PIO
-         Bits := (others => 0);
          if Data.The_Peripheral_ID < 32 then
-            Bits (Data.The_Peripheral_ID) := 1;
-            PMC.PCER0 := Bits;
+            declare
+               PIDs : PMC_PCER0_PID_Field_Array := (others => 0);
+            begin
+               PIDs (Data.The_Peripheral_ID) := 1;
+               PMC_Periph.PMC_PCER0 := (PID    => (As_Array => True,
+                                                   Arr      => PIDs),
+                                        others => <>);
+            end;
          else
-            Bits (Data.The_Peripheral_ID - 32) := 1;
-            PMC.PCER1 := Bits;
+            declare
+               PIDs : PMC_PCER1_PID_Field_Array := (others => 0);
+            begin
+               PIDs (Data.The_Peripheral_ID - 32) := 1;
+               PMC_Periph.PMC_PCER1 := (PID    => (As_Array => True,
+                                                   Arr      => PIDs),
+                                        others => <>);
+            end;
          end if;
 
-         Bits := (others => 0);
-         Bits (Data.The_Pin) := 1;
+         --  enable pin
+         Data.The_PIO.PER := (As_Array => False,
+                              Val => 2 ** Data.The_Pin);
+         pragma Assert (Data.The_PIO.PSR.Arr (Data.The_Pin) /= 0,
+                          "PIO inactive");
 
-         Data.The_PIO.PER    := Bits; -- enable pin
-         Data.The_PIO.ODR    := Bits; -- pin is input
-         --  pull-up is enabled at reset
-         Data.The_PIO.AIMER  := Bits; -- rising/falling interrupt modes
-         Data.The_PIO.REHLSR := Bits; -- interrupts on button-up
+         --  pin is input
+         Data.The_PIO.ODR := (As_Array => False,
+                              Val => 2 ** Data.The_Pin);
+         pragma Assert (Data.The_PIO.OSR.Arr (Data.The_Pin) = 0,
+                          "output enabled");
+
+         --  pull-up should be enabled at reset, but set it anyway
+         Data.The_PIO.PUER := (As_Array => False,
+                               Val => 2 ** Data.The_Pin);
+         pragma Assert (Data.The_PIO.PUSR.Arr (Data.The_Pin) = 0,
+                          "pullup not enabled");
+
+         --  rising/falling interrupt modes
+         Data.The_PIO.AIMER := (As_Array => False,
+                                Val => 2 ** Data.The_Pin);
+
+         --  interrupts on button-up
+         Data.The_PIO.REHLSR := (As_Array => False,
+                                 Val => 2 ** Data.The_Pin);
 
          --  Debounce: slow clock multiplier (32 kHz; we want 5 ms, 200 Hz)
          --  From 11057 datasheet, 31.5.9 & 31.7.2:
@@ -286,43 +334,76 @@ package body Digital_IO.Arduino_Support is
          --  so
          --     DIV = Tdiv_slclk/Tslow_clock/2 - 1
          --         = Fslow_clock/Fslclk/2 - 1
-         Data.The_PIO.SCDR  := 32768 / 200 / 2 - 1;
-         Data.The_PIO.DIFSR := Bits; -- debounce vs glitch
-         Data.The_PIO.IFER  := Bits; -- enable debounce
+         Data.The_PIO.SCDR  := (DIV => ATSAM3X8E.UInt14 (32768 / 200 / 2 - 1),
+                                others => <>);
+
+         --  debounce vs glitch
+         Data.The_PIO.DIFSR := (As_Array => False,
+                                Val => 2 ** Data.The_Pin);
+
+         --  enable debounce
+         Data.The_PIO.IFER := (As_Array => False,
+                               Val => 2 ** Data.The_Pin);
 
          --  clear previously-set interrupts (best done before general
          --  processing starts!)
          declare
-            Dummy : Registers.Bits_32x1
-              with Unreferenced;
+            ISR : ISR_Register;
          begin
-            Dummy := Data.The_PIO.ISR;
+            ISR := Data.The_PIO.ISR;
+            ISR := Data.The_PIO.ISR;
+            pragma Assert (ISR.Arr (Data.The_Pin) = 0,
+                          "interrupt outstanding");
          end;
-         Data.The_PIO.IER    := Bits; -- enable interrupts
+
+         --  enable interrupts
+         Data.The_PIO.IER := (As_Array => False,
+                              Val => 2 ** Data.The_Pin);
+         pragma Assert (Data.The_PIO.IMR.Arr (Data.The_Pin) /= 0,
+                          "interrupt not enabled");
       end loop;
    end Configure_Inputs;
 
    procedure Configure_Outputs is
-      Bits : Registers.Bits_32x1;
-      use Registers.ATSAM3X8.PMC;
+      use type ATSAM3X8E.Bit;  -- for assertions
    begin
       for Data of Output_Pin_Map loop
          --  enable the PIO
-         Bits := (others => 0);
          if Data.The_Peripheral_ID < 32 then
-            Bits (Data.The_Peripheral_ID) := 1;
-            PMC.PCER0 := Bits;
+            declare
+               PIDs : PMC_PCER0_PID_Field_Array := (others => 0);
+            begin
+               PIDs (Data.The_Peripheral_ID) := 1;
+               PMC_Periph.PMC_PCER0 := (PID    => (As_Array => True,
+                                                   Arr      => PIDs),
+                                        others => <>);
+            end;
          else
-            Bits (Data.The_Peripheral_ID - 32) := 1;
-            PMC.PCER1 := Bits;
+            declare
+               PIDs : PMC_PCER1_PID_Field_Array := (others => 0);
+            begin
+               PIDs (Data.The_Peripheral_ID - 32) := 1;
+               PMC_Periph.PMC_PCER1 := (PID    => (As_Array => True,
+                                                   Arr      => PIDs),
+                                        others => <>);
+            end;
          end if;
 
-         Bits := (others => 0);
-         Bits (Data.The_Pin) := 1;
+         --  enable pin
+         Data.The_PIO.PER := (As_Array => False,
+                              Val => 2 ** Data.The_Pin);
+         pragma Assert (Data.The_PIO.PSR.Arr (Data.The_Pin) /= 0,
+                          "PIO inactive");
 
-         Data.The_PIO.PER  := Bits; -- enable pin
-         Data.The_PIO.OER  := Bits; -- pin is output
-         Data.The_PIO.CODR := Bits; -- clear
+         --  pin is output
+         Data.The_PIO.OER := (As_Array => False,
+                              Val => 2 ** Data.The_Pin);
+         pragma Assert (Data.The_PIO.OSR.Arr (Data.The_Pin) /= 0,
+                          "output disabled");
+
+         --  clear pin
+         Data.The_PIO.CODR := (As_Array => False,
+                               Val => 2 ** Data.The_Pin);
       end loop;
    end Configure_Outputs;
 
@@ -333,10 +414,10 @@ package body Digital_IO.Arduino_Support is
    is
       pragma Unreferenced (This);  -- only used for dispatching
       The_Data : constant Pin_Data := Input_Pin_Map (For_Input);
-      use type Registers.Bits_1;
+      use type ATSAM3X8E.Bit;
    begin
       --  The 'on' state is logic 0, because we're pulling up.
-      return The_Data.The_PIO.PDSR (The_Data.The_Pin) = 0;
+      return The_Data.The_PIO.PDSR.Arr (The_Data.The_Pin) = 0;
    end Get;
 
    procedure Set (This       : Implementation;
@@ -345,13 +426,13 @@ package body Digital_IO.Arduino_Support is
    is
       pragma Unreferenced (This);  -- only used for dispatching
       The_Data : constant Pin_Data := Output_Pin_Map (For_Output);
-      Bits : Registers.Bits_32x1 := (others => 0);
    begin
-      Bits (The_Data.The_Pin) := 1;
       if To then
-         The_Data.The_PIO.SODR := Bits;
+         The_Data.The_PIO.SODR := (As_Array => False,
+                                   Val => 2 ** The_Data.The_Pin);
       else
-         The_Data.The_PIO.CODR := Bits;
+         The_Data.The_PIO.CODR := (As_Array => False,
+                                   Val => 2 ** The_Data.The_Pin);
       end if;
    end Set;
 
