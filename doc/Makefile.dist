@@ -74,6 +74,7 @@ DOCS =						\
   strategy.html					\
   stubs.html					\
   support.html					\
+  support-ravenscar.html			\
   target.html					\
   testing.html					\
   testing-class.html				\
