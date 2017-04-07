@@ -58,7 +58,7 @@ class Base:
         self.name = ''
         self.parent = None
         self.documentation = None
-        self.annotations = {}
+        self.annotations = ()
         self.contents = ()
 
     def __str__(self):
@@ -233,6 +233,85 @@ class Class(Base):
 
 class Class_Utility(Class):
     pass
+
+
+class Datatype(Base):
+
+    def add_xml(self, to):
+        dtp = self.add_xml_path(to, ('UML:DataType',))
+        dtp.set('name', self.name)
+        self.add_xml_documentation(dtp)
+        self.add_xml_annotations(dtp)
+
+        # The modifiers for datatypes (primitives) are visibility,
+        # abstract, external, role.
+        possible_visibilities = {'public', 'private', 'package', 'protected'}
+        mods = set(self.modifiers)
+        visibility_mods = possible_visibilities & mods
+        if not visibility_mods:
+            dtp.set('visibility', 'private')
+        elif len(visibility_mods) == 1:
+            for v in visibility_mods:
+                if v == 'package':
+                    dtp.set('visibility', 'public')
+                else:
+                    dtp.set('visibility', v)
+        if dtp.get('visibility') == 'public':
+            pub = self.add_xml_path(dtp, ('UML:ModelElement.stereotype',
+                                          'UML:Stereotype'))
+            pub.set('name', 'public')
+        mods = mods - visibility_mods
+        if 'abstract' in mods:
+            dtp.set('isAbstract', 'true')
+        else:
+            dtp.set('isAbstract', 'false')
+        mods.discard('abstract')
+        if len(mods) > 0:
+            for m in mods:
+                print "unsupported modifier %s in %s" % (m, self.path_name())
+            sys.exit(1)
+
+
+class Enumeration(Base):
+    """self.literals is a tuple containing the literals."""
+
+    def add_xml(self, to):
+        en = self.add_xml_path(to, ('UML:Enumeration',))
+        en.set('name', self.name)
+        self.add_xml_documentation(en)
+        self.add_xml_annotations(en)
+
+        # The modifiers for datatypes (primitives) are visibility,
+        # abstract, external, role.
+        possible_visibilities = {'public', 'private', 'package', 'protected'}
+        mods = set(self.modifiers)
+        visibility_mods = possible_visibilities & mods
+        if not visibility_mods:
+            en.set('visibility', 'private')
+        elif len(visibility_mods) == 1:
+            for v in visibility_mods:
+                if v == 'package':
+                    en.set('visibility', 'public')
+                else:
+                    en.set('visibility', v)
+        if en.get('visibility') == 'public':
+            pub = self.add_xml_path(en, ('UML:ModelElement.stereotype',
+                                          'UML:Stereotype'))
+            pub.set('name', 'public')
+        mods = mods - visibility_mods
+        if 'abstract' in mods:
+            en.set('isAbstract', 'true')
+        else:
+            en.set('isAbstract', 'false')
+        mods.discard('abstract')
+        if len(mods) > 0:
+            for m in mods:
+                print "unsupported modifier %s in %s" % (m, self.path_name())
+            sys.exit(1)
+        lits = self.add_xml_path(en, ('UML:Enumeration.literal',))
+        for e in self.literals:
+            lit = self.add_xml_path(lits, ('UML:EnumerationLiteral',))
+            lit.set('name', e[1])
 
 
 class Event(Base):
@@ -558,7 +637,10 @@ def p_top_level_element(p):
     if isinstance(p[3], Base):
         p[0] = p[3]
         p[0].documentation = p[1]
-        p[0].annotations = p[2]
+        # Add any annotations to the end of existing ones (e.g., at
+        # the time of writing, a textuml datatype implemented as a
+        # Class stereotyped <<datatype>>).
+        p[0].annotations += p[2]
     else:
         # (model_comment_opt, annotations_opt, top_level_element)
         p[0] = (p[1], p[2], p[3])
@@ -568,10 +650,15 @@ def p_top_level_element_choice(p):
     '''
     top_level_element_choice \
         : class_def
+        | enumeration_def
+        | primitive_def
         | sub_namespace
     '''
+    # XXX textuml.scc has enumeration as a class_type. I suppose this
+    # would allow you to specify operations - but how would you
+    # specify the literals? Ugh. Not documented. Not clear!
     # association_def stereotype_def detached_operation_def
-    # function_decl primitive_def
+    # function_decl
     p[0] = p[1]
 
 
@@ -681,18 +768,15 @@ def p_class_def(p):
     '''
     class_def : class_header feature_decl_list END SEMICOLON
     '''
-    # XXX we're going to want to return a Class, but won't know the
-    # model_comment_opt or annotations_opt until later.
-    # YYY actually, could be a Datatype or an Enumeration or ...
-    # (class_header feature_decl_list)
-    if p[1][1] == 'class':
-        p[0] = Class()
-        p[0].name = p[1][2]
-        p[0].modifiers = p[1][0]
-        p[0].contents = p[2]
-    else:
-        # something else ...
-        p[0] = (p[1], p[2])
+    p[0] = Class()
+    p[0].name = p[1][2]
+    p[0].modifiers = p[1][0]
+    p[0].contents = p[2]
+    # ColdFrame, because of ArgoUML features, represents a data type
+    # with attributes to be implemented as a class but with the
+    # stereotype <<datatype>>.
+    if p[1][1] == 'datatype':
+        p[0].annotations = (('datatype', ()),)
 
 
 def p_class_header(p):
@@ -771,7 +855,7 @@ def p_feature_decl_list(p):
 def p_feature_decl(p):
     '''
     feature_decl \
-        : model_comment_opt annotations_opt modifier_list feature_type
+        : model_comment_opt annotations_opt modifiers_opt feature_type
     '''
     p[0] = p[4]
     p[0].documentation = p[1]
@@ -779,16 +863,27 @@ def p_feature_decl(p):
     p[0].modifiers = p[3]
 
 
-def p_modifier_list(p):
+def p_modifiers_opt(p):
     '''
-    modifier_list \
-        : modifier modifier_list
+    modifiers_opt \
+        : modifier_list
         | empty
     '''
     if p[1] is None:
         p[0] = ()
     else:
+        p[0] = p[1]
+
+def p_modifier_list(p):
+    '''
+    modifier_list \
+        : modifier modifier_list
+        | modifier
+    '''
+    if len(p) == 3:
         p[0] = (p[1],) + p[2]
+    else:
+        p[0] = (p[1],)
 
 
 def p_modifier(p):
@@ -1143,6 +1238,110 @@ def p_annotation_value(p):
         : literal
         | IDENTIFIER
     '''
+    p[0] = p[1]
+
+
+# Enumeration definition
+
+# XXX I had a lot of grief with reduce/reduce conflicts when I added
+# enumeration_def; I was using data_type_modifiers then. Hence the
+# explicit restriction to one visibility_modifier; now I just have a
+# shift/reduce conflict, which is resolved correctly. Still ...
+
+def p_enumeration_def(p):
+    '''
+    enumeration_def \
+        : visibility_modifier ENUMERATION IDENTIFIER \
+            enumeration_literal_decl_list END SEMICOLON
+        | ENUMERATION IDENTIFIER \
+            enumeration_literal_decl_list END SEMICOLON
+    '''
+    p[0] = Enumeration()
+    if len(p) == 7:
+        p[0].name = p[3]
+        p[0].modifiers = (p[1],)
+        p[0].literals = p[4]
+    else:
+        p[0].name = p[2]
+        p[0].literals = p[3]  # elements are (documentation, name)
+
+
+def p_enumeration_literal_decl_list(p):
+    '''
+    enumeration_literal_decl_list \
+        : enumeration_literal_decl enumeration_literal_decl_list_tail
+    '''
+    p[0] = (p[1],) + p[2]
+
+
+def p_enumeration_literal_decl(p):
+    '''
+    enumeration_literal_decl : model_comment_opt IDENTIFIER
+    '''
+    p[0] = (p[1], p[2])
+
+def p_enumeration_literal_decl_list_tail(p):
+    '''
+    enumeration_literal_decl_list_tail \
+        : COMMA enumeration_literal_decl_list
+        | empty
+    '''
+    if len(p) == 2:
+        p[0] = ()
+    else:
+        p[0] = p[2]
+
+
+# Primitive definition
+
+
+def p_primitive_def(p):
+    '''
+    primitive_def \
+        : visibility_modifier PRIMITIVE IDENTIFIER SEMICOLON
+        | PRIMITIVE IDENTIFIER SEMICOLON
+    '''
+    # removed the textuml.scc annotations? - added in p_top_level_element(p)
+    # NB textuml doesn't allow modifiers on primitives! (fixed - issue #120)
+    if len(p) == 5:
+        p[0] = Datatype()
+        p[0].name = p[3]
+        p[0].modifiers = (p[1],)
+    else:
+        p[0] = Datatype()
+        p[0].name = p[2]
+
+
+def p_data_type_modifiers(p):
+    '''
+    data_type_modifiers \
+        : data_type_modifier_list
+        | empty
+    '''
+    if p[1] is None:
+        p[0] = ()
+    else:
+        p[0] = p[1]
+
+
+def p_data_type_modifier_list(p):
+    '''
+    data_type_modifier_list \
+        : data_type_modifier data_type_modifier_list
+        | data_type_modifier
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],) + p[2]
+    else:
+        p[0] = (p[1],)
+
+
+def p_data_type_modifier(p):
+    '''
+    data_type_modifier \
+        : visibility_modifier
+    '''
+    # XXX EXTERNAL
     p[0] = p[1]
 
 
