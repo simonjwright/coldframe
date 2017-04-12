@@ -56,9 +56,10 @@ class Base:
     def __init__(self):
         """The aspects that every Object can be expected to have."""
         self.name = ''
-        self.parent = None
+        self.owner = None
         self.documentation = None
         self.annotations = ()
+        self.modifiers = ()
         self.contents = ()
 
     def __str__(self):
@@ -71,16 +72,16 @@ class Base:
 
     def path_name(self):
         """Returns the full path name of the object by following the
-        self.parent link."""
-        if self.parent is None:
+        self.owner link."""
+        if self.owner is None:
             return ''
-        elif self.parent.parent_name == '':
+        elif self.owner.owner_name == '':
             return self.name
         else:
-            return self.parent.path_name() + '.' + self.name
+            return self.owner.path_name() + '.' + self.name
 
     def add_xml(self, to):
-        """to is the ET.Element of the parent; add the necessary
+        """to is the ET.Element of the owner; add the necessary
         intermediate elements, then self."""
         pass
 
@@ -107,7 +108,6 @@ class Base:
         """Annotations are stereotypes and tagged values."""
         # self.annotations is a list,
         # ((stereotype-name, (tag-name, tag_value))))
-        # XXX omit tagged values for now ...
         to.set('xmi.id', self.path_name())  # required by normalize_xmi - ?
         for a in self.annotations:
             self.add_xml_stereotype(to, a)
@@ -127,6 +127,42 @@ class Base:
                 dv = self.add_xml_path(tv, ('UML:TaggedValue.dataValue',))
                 dv.text = t[1]
 
+    def add_top_level_element_xml(self, to):
+        """Adds the XML components common to all top level elements to the
+        ET.Element 'to'."""
+        to.set('name', self.name)
+        self.add_xml_documentation(to)
+        self.add_xml_annotations(to)
+
+        # The modifiers for top level elements are visibility, abstract,
+        # external, role.
+        possible_visibilities = {'public', 'private', 'package', 'protected'}
+        mods = set(self.modifiers)
+        visibility_mods = possible_visibilities & mods
+        if not visibility_mods:
+            to.set('visibility', 'private')
+        elif len(visibility_mods) == 1:
+            for v in visibility_mods:
+                if v == 'package':
+                    to.set('visibility', 'public')
+                else:
+                    to.set('visibility', v)
+        if to.get('visibility') == 'public':
+            pub = self.add_xml_path(to, ('UML:ModelElement.stereotype',
+                                          'UML:Stereotype'))
+            pub.set('name', 'public')
+        mods = mods - visibility_mods
+        if 'abstract' in mods:
+            to.set('isAbstract', 'true')
+        else:
+            to.set('isAbstract', 'false')
+        mods.discard('abstract')
+        if len(mods) > 0:
+            for m in mods:
+                warning("unsupported modifier %s in %s\n"
+                        % (m, self.path_name()))
+            sys.exit(1)
+
 
 class Action(Base):
     """Part of State. The only Actions we care about are entry actions."""
@@ -140,7 +176,32 @@ class Action_Time(Base):
 
 
 class Association(Base):
-    pass
+
+    def add_xml(self, to):
+        ass = self.add_xml_path(to, ('UML:Association',))
+        self.add_top_level_element_xml(ass)
+        self.add_xml_association(ass)
+
+    def add_xml_association(self, to):
+        """adds the UML:Association.connection, with the two
+        UML:AssociationEnd's to the ET.Element in to."""
+        con = self.add_xml_path(to, ('UML:Association.connection',))
+        for role in self.roles:
+            role.owner = self
+            role.add_xml(con)
+
+
+class Association_Class(Association):
+
+    def add_xml(self, to):
+        ass = self.add_xml_path(to, ('UML:AssociationClass',))
+        self.add_top_level_element_xml(ass)
+        self.add_xml_association(ass)
+        ass.set('isActive', 'false')  # XXX
+        cnt = self.add_xml_path(ass, ('UML:Classifier.feature',))
+        for c in self.contents:
+            c.owner = self
+            c.add_xml(cnt)
 
 
 class Attribute(Base):
@@ -168,7 +229,7 @@ class Attribute(Base):
         if 'id' in mods:
             ident = self.add_xml_path(att, ('UML:ModelElement.stereotype',
                                             'UML:Stereotype'))
-            ident.set('name', 'id');
+            ident.set('name', 'id')
         mods.discard('id')
         if 'static' in mods:
             att.set('ownerScope', 'classifier')
@@ -177,7 +238,8 @@ class Attribute(Base):
         mods.discard('static')
         if len(mods) > 0:
             for m in mods:
-                print "unsupported modifier %s in %s" % (m, self.name)
+                warning("unsupported modifier %s in %s\n"
+                        % (m, self.path_name()))
             sys.exit(1)
         typ = self.add_xml_path(att, ('UML:StructuralFeature.type',
                                       'UML:DataType'))
@@ -193,41 +255,11 @@ class Class(Base):
     def add_xml(self, to):
         cls = self.add_xml_path(to, ('UML:Class',))
         cls.set('name', self.name)
-        self.add_xml_documentation(cls)
-        self.add_xml_annotations(cls)
-
-        # The modifiers for classes are visibility, abstract,
-        # external, role.
-        possible_visibilities = {'public', 'private', 'package', 'protected'}
-        mods = set(self.modifiers)
-        visibility_mods = possible_visibilities & mods
-        if not visibility_mods:
-            cls.set('visibility', 'private')
-        elif len(visibility_mods) == 1:
-            for v in visibility_mods:
-                if v == 'package':
-                    cls.set('visibility', 'public')
-                else:
-                    cls.set('visibility', v)
-        if cls.get('visibility') == 'public':
-            pub = self.add_xml_path(cls, ('UML:ModelElement.stereotype',
-                                          'UML:Stereotype'))
-            pub.set('name', 'public')
-        mods = mods - visibility_mods
-        if 'abstract' in mods:
-            cls.set('isAbstract', 'true')
-        else:
-            cls.set('isAbstract', 'false')
-        mods.discard('abstract')
-        if len(mods) > 0:
-            for m in mods:
-                print "unsupported modifier %s in %s" % (m, self.name)
-            sys.exit(1)
-
+        self.add_top_level_element_xml(cls)
         cls.set('isActive', 'false')  # XXX
         cnt = self.add_xml_path(cls, ('UML:Classifier.feature',))
         for c in self.contents:
-            c.parent = self
+            c.owner = self
             c.add_xml(cnt)
 
 
@@ -239,37 +271,7 @@ class Datatype(Base):
 
     def add_xml(self, to):
         dtp = self.add_xml_path(to, ('UML:DataType',))
-        dtp.set('name', self.name)
-        self.add_xml_documentation(dtp)
-        self.add_xml_annotations(dtp)
-
-        # The modifiers for datatypes (primitives) are visibility,
-        # abstract, external, role.
-        possible_visibilities = {'public', 'private', 'package', 'protected'}
-        mods = set(self.modifiers)
-        visibility_mods = possible_visibilities & mods
-        if not visibility_mods:
-            dtp.set('visibility', 'private')
-        elif len(visibility_mods) == 1:
-            for v in visibility_mods:
-                if v == 'package':
-                    dtp.set('visibility', 'public')
-                else:
-                    dtp.set('visibility', v)
-        if dtp.get('visibility') == 'public':
-            pub = self.add_xml_path(dtp, ('UML:ModelElement.stereotype',
-                                          'UML:Stereotype'))
-            pub.set('name', 'public')
-        mods = mods - visibility_mods
-        if 'abstract' in mods:
-            dtp.set('isAbstract', 'true')
-        else:
-            dtp.set('isAbstract', 'false')
-        mods.discard('abstract')
-        if len(mods) > 0:
-            for m in mods:
-                print "unsupported modifier %s in %s" % (m, self.path_name())
-            sys.exit(1)
+        self.add_top_level_element_xml(dtp)
 
 
 class Enumeration(Base):
@@ -277,37 +279,7 @@ class Enumeration(Base):
 
     def add_xml(self, to):
         en = self.add_xml_path(to, ('UML:Enumeration',))
-        en.set('name', self.name)
-        self.add_xml_documentation(en)
-        self.add_xml_annotations(en)
-
-        # The modifiers for datatypes (primitives) are visibility,
-        # abstract, external, role.
-        possible_visibilities = {'public', 'private', 'package', 'protected'}
-        mods = set(self.modifiers)
-        visibility_mods = possible_visibilities & mods
-        if not visibility_mods:
-            en.set('visibility', 'private')
-        elif len(visibility_mods) == 1:
-            for v in visibility_mods:
-                if v == 'package':
-                    en.set('visibility', 'public')
-                else:
-                    en.set('visibility', v)
-        if en.get('visibility') == 'public':
-            pub = self.add_xml_path(en, ('UML:ModelElement.stereotype',
-                                          'UML:Stereotype'))
-            pub.set('name', 'public')
-        mods = mods - visibility_mods
-        if 'abstract' in mods:
-            en.set('isAbstract', 'true')
-        else:
-            en.set('isAbstract', 'false')
-        mods.discard('abstract')
-        if len(mods) > 0:
-            for m in mods:
-                print "unsupported modifier %s in %s" % (m, self.path_name())
-            sys.exit(1)
+        self.add_top_level_element_xml(en)
         lits = self.add_xml_path(en, ('UML:Enumeration.literal',))
         for e in self.literals:
             lit = self.add_xml_path(lits, ('UML:EnumerationLiteral',))
@@ -333,11 +305,11 @@ class Model(Base):
         self.add_xml_documentation(model)
         contents = self.add_xml_path(model, ('UML:Namespace.ownedElement',))
         for c in self.contents:
-            c.parent = self
+            c.owner = self
             c.add_xml(contents)
 
     def path_name(self):
-        '''At the root of the tree, so no parent; so the path name is
+        '''At the root of the tree, so no owner; so the path name is
         just the name.'''
         return self.name
 
@@ -376,11 +348,12 @@ class Operation(Base):
         mods.discard('static')
         if len(mods) > 0:
             for m in mods:
-                print "unsupported modifier %s in %s" % (m, self.name)
+                sys.stderr.write("unsupported modifier %s in %s\n"
+                                 % (m, self.path_name()))
             sys.exit(1)
         pars = self.add_xml_path(opn, ('UML:BehavioralFeature.parameter',))
         for p in self.parameters:
-            p.parent = self
+            p.owner = self
             p.add_xml(pars)
         if self.rtn is not None:
             rtn = self.add_xml_path(pars, ('UML:Parameter',))
@@ -395,12 +368,10 @@ class Package(Base):
 
     def add_xml(self, to):
         pkg = self.add_xml_path(to, ('UML:Package',))
-        pkg.set('name', self.name)
-        self.add_xml_documentation(pkg)
-        self.add_xml_annotations(pkg)
+        self.add_top_level_element_xml(pkg)
         cnt = self.add_xml_path(pkg, ('UML:Namespace.ownedElement',))
         for c in self.contents:
-            c.parent = self
+            c.owner = self
             c.add_xml(cnt)
 
 
@@ -422,23 +393,49 @@ class Parameter(Base):
             for m in mode_mods:
                 par.set('kind', m)
         else:
-            print "too many modifiers %s on parameter %s" \
-                % (mode_mods, self.name)
+            error("too many modifiers %s on parameter %s"
+                  % (mode_mods, self.path_name()))
         mods = mode_mods - possible_mode_mods
         if len(mods) > 0:
             for m in mods:
-                print "unsupported modifier %s in %s" % (m, self.name)
+                warning("unsupported modifier %s in %s\n"
+                        % (m, self.path_name))
             sys.exit(1)
         typ = self.add_xml_path(par, ('UML:Parameter.type', 'UML:DataType'))
         typ.set('name', self.type)
         if self.default_value is not None:
             dv = self.add_xml_path(par, ('UML:Parameter.defaultValue',
                                          'UML:Expression'))
-            dv.set ('body', self.default_value)
+            dv.set('body', self.default_value)
 
 
 class Role(Base):
-    pass
+
+    def add_xml(self, to):
+        asnd = self.add_xml_path(to, ('UML:AssociationEnd',))
+        asnd.set('name', self.name)
+        self.add_xml_documentation(asnd)
+        self.add_xml_annotations(asnd)
+        part = self.add_xml_path(asnd, ('UML:AssociationEnd.participant',
+                                        'UML:Class'))
+        part.set('name', self.target)
+        mult = self.add_xml_path(asnd, ('UML:AssociationEnd.multiplicity',
+                                        'UML:Multiplicity',
+                                        'UML:Multiplicity.range',
+                                        'UML:MultiplicityRange'))
+        if isinstance(self.multiplicity, tuple):
+            mult.set('lower', self.multiplicity[0])
+            upper = self.multiplicity[1]
+            if upper == '*' or upper == 'n':
+                mult.set('upper', '-1')
+            else:
+                mult.set('upper', upper)
+        elif self.multiplicity == '*' or self.multiplicity == 'n':
+            mult.set('lower', '0')
+            mult.set('upper', '-1')
+        else:
+            mult.set('lower', self.multiplicity)
+            mult.set('upper', self.multiplicity)
 
 
 class State_Machine(Base):
@@ -489,8 +486,7 @@ def p_start(p):
         p[0].annotations = p[2]
         p[0].contents = p[5]
     else:
-        print "ERROR! expecting 'model', got '%s'" % p[3][0]
-        sys.exit(1)
+        error("ERROR! expecting 'model', got '%s'" % p[3][0])
 
 
 def p_package_heading(p):
@@ -650,6 +646,8 @@ def p_top_level_element_choice(p):
     '''
     top_level_element_choice \
         : class_def
+        | association_def
+        | association_class_def
         | enumeration_def
         | primitive_def
         | sub_namespace
@@ -724,8 +722,8 @@ def p_multiplicity_spec(p):
         | multiplicity_value
     '''
     # If we return a list, => (lower_bound, upper_bound)
-    if len(p) == 2:
-        p[0] = (p[1], p[2])
+    if len(p) == 4:
+        p[0] = (p[1], p[3])
     else:
         p[0] = p[1]
 
@@ -759,6 +757,80 @@ def p_multiplicity_constraint(p):
         | NONUNIQUE
     '''
     p[0] = p[1]
+
+
+# Associations
+
+
+def p_association_def(p):
+    '''
+    association_def \
+        : annotations_opt ASSOCIATION IDENTIFIER association_role_decl_list \
+            END SEMICOLON
+    '''
+    # No aggregation, composition
+    p[0] = Association()
+    p[0].name = p[3]
+    p[0].annotations = p[1]
+    p[0].roles = p[4]
+
+
+def p_association_class_def(p):
+    '''
+    association_class_def \
+        : annotations_opt ASSOCIATION_CLASS IDENTIFIER \
+            association_role_decl_list feature_decl_list \
+            END SEMICOLON
+        | annotations_opt ASSOCIATION_CLASS IDENTIFIER \
+            association_role_decl_list \
+            END SEMICOLON
+    '''
+    # No aggregation, composition
+    p[0] = Association_Class()
+    p[0].name = p[3]
+    p[0].annotations = p[1]
+    p[0].roles = p[4]
+    if len(p) == 8:
+        p[0].contents = p[5]
+    else:
+        p[0].contents = ()
+
+
+def p_association_role_decl_list(p):
+    '''
+    association_role_decl_list \
+        : association_role_decl association_role_decl
+    '''
+    # must be two
+    p[0] = (p[1], p[2])
+
+
+def p_association_role_decl(p):
+    '''
+    association_role_decl \
+        : model_comment_opt annotations_opt \
+            IDENTIFIER IDENTIFIER IDENTIFIER association_multiplicity SEMICOLON
+    '''
+    # The first identifier is the originating class, the second the
+    # verb phrase, the third is the target class.
+    # e.g. window is_displayed_on screen[0, 1]
+    # returns (cmt, anno, orig, verb, targ, mult)
+    p[0] = Role()
+    p[0].documentation = p[1]
+    p[0].annotation = p[2]
+    p[0].origin = p[3]
+    p[0].name = p[4]
+    p[0].target = p[5]
+    p[0].multiplicity = p[6]
+
+
+def p_association_multiplicity(p):
+    '''
+    association_multiplicity \
+        : L_BRACKET multiplicity_spec R_BRACKET
+    '''
+    # returns either a single string (e.g. "1", "*") or a tuple (lb, ub)
+    p[0] = p[2]
 
 
 # Classes and interfaces
@@ -874,6 +946,7 @@ def p_modifiers_opt(p):
     else:
         p[0] = p[1]
 
+
 def p_modifier_list(p):
     '''
     modifier_list \
@@ -927,7 +1000,6 @@ def p_operation_decl(p):
     # XXX operation_constraint* optional_behavioral_feature_body
     p[0] = Operation()
     p[0].name = p[1][1]
-    # XXX signature! in p[1][2]
     p[0].parameters = p[1][2][0]
     # p[0].rtn = p[1][2][1]
     # rtn is (annotations_opt, (single_type_identifier optional_multiplicity))
@@ -1280,6 +1352,7 @@ def p_enumeration_literal_decl(p):
     '''
     p[0] = (p[1], p[2])
 
+
 def p_enumeration_literal_decl_list_tail(p):
     '''
     enumeration_literal_decl_list_tail \
@@ -1408,126 +1481,6 @@ def p_multiplicity_value(p):
     p[0] = p[1]
 
 
-# def p_cat_file(p):
-#     'cat_file : object object'
-#     p[0] = p[2]
-
-# def p_object(p):
-#     'object : OBJECT ID qualifiers reference attributes RPAREN'
-#     p[0] = create_object(p[2])
-#     p[0].qualifiers = p[3]
-#     p[0].attributes = p[5]
-
-# def p_qualifiers(p):
-#     """qualifiers : qualifier qualifiers
-#                   | empty"""
-#     if len(p) == 3:
-#         p[0] = (p[1],) + p[2]
-#     else:
-#         p[0] = ()
-
-# def p_qualifier(p):
-#     'qualifier : QSTRING'
-#     p[0] = p[1]
-
-# def p_reference(p):
-#     """reference : AMP INTNUM
-#                  | empty"""
-#     if len(p) == 3:
-#         p[0] = p[2]
-#     else:
-#         p[0] = None
-
-# def p_attributes(p):
-#     """attributes : attribute attributes
-#                   | empty"""
-#     if len(p) == 3:
-#         p[0] = p[2]
-#         n = p[1][0]
-#         if n == 'statemachine' or n == 'Event' or n == 'action':
-#             # There is something very odd here; mjj thought it might
-#             # be a copy/deepcopy problem, but that seems to end up
-#             # trying to deepcopy None -- just like the problem without
-#             # the deepcopy! Converting these particular cases to a
-#             # tuple seems to work. Could maybe be generalised?
-#             p[0][n] = (p[1][1],)
-#         else:
-#             p[0][n] = p[1][1]
-#     else:
-#         p[0] = {}
-
-# def p_attribute(p):
-#     'attribute : ID value'
-#     p[0] = (p[1], p[2])
-
-# def p_value(p):
-#     """value : QSTRING
-#              | FLONUM
-#              | INTNUM
-#              | ID
-#              | location
-#              | list
-#              | value_list
-#              | reference
-#              | doclines
-#              | object"""
-#     p[0] = p[1]
-
-# def p_location(p):
-#     'location : LPAREN INTNUM COMMA INTNUM RPAREN'
-#     p[0] = (p[2], p[4])
-
-# def p_list(p):
-#     'list : LIST ID list_members RPAREN'
-#     p[0] = p[3]
-
-# def p_value_list(p):
-#     'value_list : VALUE ID value RPAREN'
-#     p[0] = p[3]
-
-# def p_doclines(p):
-#     """doclines : DOCLINE doclines
-#                 | DOCLINE"""
-#     if len(p) == 3:
-#         p[0] = p[1] + '\n' + p[2]
-#     else:
-#         p[0] = p[1]
-
-# def p_list_members(p):
-#     """list_members : objects
-#                     | locations
-#                     | qstrings
-#                     | empty"""
-#     if p[1]:
-#         p[0] = p[1]
-#     else:
-#         p[0] = ()
-
-# def p_objects(p):
-#     """objects : object objects
-#                | object"""
-#     if len(p) == 3:
-#         p[0] = (p[1],) + p[2]
-#     else:
-#         p[0] = (p[1],)
-
-# def p_locations(p):
-#     """locations : location locations
-#                  | location"""
-#     if len(p) == 3:
-#         p[0] = (p[1],) + p[2]
-#     else:
-#         p[0] = (p[1],)
-
-# def p_qstrings(p):
-#     """qstrings : QSTRING qstrings
-#                 | QSTRING"""
-#     if len(p) == 3:
-#         p[0] = (p[1],) + p[2]
-#     else:
-#         p[0] = (p[1],)
-
-
 # Empty productions
 
 
@@ -1539,7 +1492,7 @@ def p_empty(p):
 def p_error(p):
     '''Panic mode recovery.'''
     if not p:
-        print "That seems to be it."
+        warning("That seems to be it.")
         return None
     text = lexer.lexdata
     last_cr = text.rfind('\n', 0, p.lexpos)
@@ -1547,8 +1500,7 @@ def p_error(p):
         last_cr = 0
     print last_cr
     column = (p.lexpos - last_cr) - 1
-    print "Syntax error at %s on line %d:%d" % (p.type, p.lineno, column)
-    sys.exit(1)
+    error("Syntax error at %s on line %d:%d" % (p.type, p.lineno, column))
     # # Read ahead looking for a terminating ";" or "."
     # while 1:
     #     tok = parser.token()             # Get the next token
@@ -1581,6 +1533,7 @@ reserved = {
     'anyone': 'ANYONE',
     'apply': 'APPLY',
     'association': 'ASSOCIATION',
+    'association_class': 'ASSOCIATION_CLASS',
     'as': 'AS',
     'attribute': 'ATTRIBUTE',
     'begin': 'BEGIN',
@@ -1842,6 +1795,15 @@ def t_error(t):
 # ----------------------------------------------------------------------
 
 
+def warning(msg):
+    sys.stderr.write("%s\n" % msg)
+
+
+def error(msg):
+    sys.stderr.write("%s\n" % msg)
+    sys.exit(1)
+
+
 def main():
 
     def usage():
@@ -1865,7 +1827,6 @@ def main():
         sys.exit(1)
 
     input = sys.stdin
-    output = sys.stdout
     output_file = ''
     verbosity = False
 
@@ -1886,8 +1847,7 @@ def main():
         try:
             input = open(input_file, 'r')
         except:
-            sys.stderr.write("couldn't open %s for input.\n" % input_file)
-            sys.exit(1)
+            error("couldn't open %s for input.\n" % input_file)
 
     # create the lexer
     global lexer
@@ -1900,11 +1860,13 @@ def main():
     parser = yacc.yacc()
     # parse the input, creating a Model
     m = parser.parse(lexer=lexer, debug=verbosity)
-    # recursively load any child domains
-    # XXX d.load_children(input_file)
     # output
-    # by default, the output is to "the domain's normalized name".raw
-    if output == sys.stdout:
+    # by default, the output for a domain is to <domain>.xmi
+    if output_file == '-':
+        output = sys.stdout
+    elif output_file == '' and len(args) == 0:
+        output = sys.stdout
+    else:
         if output_file == '':
             root, ext = os.path.splitext(input_file)
             output_file = root + '.xmi'
@@ -1921,7 +1883,7 @@ def main():
 
     m.add_xml(model)
 
-    xmi_document.write(sys.stdout, encoding='utf-8', xml_declaration=True)
+    xmi_document.write(output, encoding='utf-8', xml_declaration=True)
 
     output.close()
 
