@@ -18,7 +18,11 @@
 # Reads a TextUML file and converts it to an XMI-like format. The
 # format is based on that used by ArgoUML, so may well have
 # idiosyncracies; there is enough present to support ColdFrame's
-# "normalize" utility.
+# "normalize_xmi" utility.
+#
+# Why do it this way, rather than doing as the RationalRose
+# cat2raw.tcl did? Because there's a lot of checking/updating done in
+# normalize_xmi which it seems pointless to reproduce.
 
 # See http://abstratt.github.io/textuml/readme.html,
 # https://github.com/abstratt/textuml.
@@ -289,6 +293,13 @@ class Enumeration(Base):
 class Event(Base):
     # I expect all the output will be managed elsewhere ...
     pass
+
+
+class Exception(Base):
+
+    def add_xml(self, to):
+        exc = self.add_xml_path(to, ('UML:Exception',))
+        self.add_top_level_element_xml(exc)
 
 
 class Inheritance(Base):
@@ -649,6 +660,7 @@ def p_top_level_element_choice(p):
         | association_def
         | association_class_def
         | enumeration_def
+        | exception_def
         | primitive_def
         | sub_namespace
     '''
@@ -1365,6 +1377,24 @@ def p_enumeration_literal_decl_list_tail(p):
         p[0] = p[2]
 
 
+# Exception definition
+
+
+def p_exception_def(p):
+    '''
+    exception_def \
+        : visibility_modifier EXCEPTION IDENTIFIER SEMICOLON
+        | EXCEPTION IDENTIFIER SEMICOLON
+    '''
+    if len(p) == 5:
+        p[0] = Exception()
+        p[0].name = p[3]
+        p[0].modifiers = (p[1],)
+    else:
+        p[0] = Exception()
+        p[0].name = p[2]
+
+
 # Primitive definition
 
 
@@ -1558,6 +1588,7 @@ reserved = {
     'end': 'END',
     'entry': 'ENTRY',
     'enumeration': 'ENUMERATION',
+    'exception': 'EXCEPTION',
     'exit': 'EXIT',
     'extends': 'EXTENDS',
     'extent': 'EXTENT',
