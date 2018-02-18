@@ -177,6 +177,9 @@ package body Normalize_XMI.Model.Operations is
       if O.Has_Tag ("renames") then
          Put (To, " renames='" & O.Tag_Value ("renames") & "'");
       end if;
+      if O.Has_Stereotype ("teardown") then
+         Put (To, " teardown='true'");
+      end if;
       if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Put (To, " return='" & (+O.Return_Type) & "'");
       end if;
