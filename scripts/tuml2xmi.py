@@ -61,8 +61,9 @@ class Base:
         """The aspects that every Object can be expected to have."""
         self.name = ''
         self.owner = None
+        self.element = None       # the XML element
         self.documentation = None
-        self.annotations = ()
+        self.annotations = ()     # stereotypes
         self.modifiers = ()
         self.contents = ()
 
@@ -96,6 +97,8 @@ class Base:
         result = to
         for e in elements:
             result = ET.SubElement(result, e)
+        if self.element is None:
+            self.element = result
         return result
 
     def add_xml_documentation(self, to):
@@ -290,11 +293,6 @@ class Enumeration(Base):
             lit.set('name', e[1])
 
 
-class Event(Base):
-    # I expect all the output will be managed elsewhere ...
-    pass
-
-
 class Exception(Base):
 
     def add_xml(self, to):
@@ -449,16 +447,139 @@ class Role(Base):
             mult.set('upper', self.multiplicity)
 
 
-class State_Machine(Base):
-    pass
+class Signal(Base):
 
+    def __repr__(self):
+        return ('signal(signal=%r,path_name=%r)'
+                % (self.name, self.path_name()))
+
+    def add_xml(self, to):
+        sig = self.add_xml_path(to, ('UML:SignalEvent',))
+        sig.set('name', self.name)
+        self.add_top_level_element_xml(sig)
+        if len(self.contents) > 0:
+            print('# attributes %r' % len(self.contents))
+            ev = self.add_xml_path(sig, ('UML:Event.parameter',))
+            for p in self.contents:
+                p.owner = self
+                p.add_xml(ev)
+
+
+class State_Machine(Base):
+
+    def add_xml(self, to):
+        # The UML:StateMachine is owned by the package, not the class.
+        # Currently at
+        # Package/Namespace.ownedElement/Class/Classifier.feature
+        # owned  /                      /owned/
+        # skip up (gets us to Package) & find Namespace.ownedElement.
+
+        def find_namespace_below(e):
+            for el in e.findall('*'):
+                if el.tag == 'UML:Namespace.ownedElement':
+                    return el
+            return None
+
+        oel = find_namespace_below(self.owner.owner.element)
+        sm = self.add_xml_path (oel, ('UML:StateMachine',))
+        ctx = self.add_xml_path(sm, ('UML:StateMachine.context', 'UML:Class'))
+        ctx.set('xmi.idref', self.owner.path_name())
+        subv = self.add_xml_path(sm, ('UML:StateMachine.top',
+                                      'UML:CompositeState',
+                                      'UML:CompositeState.subvertex'))
+        trans = self.add_xml_path(sm, ('UML:StateMachine.transitions',))
+        # work out the xml_tag for all the states - needed for transitions
+        for s in self.states:
+            s.owner = self
+            if s.modifier == 'initial':
+                s.xml_tag = 'UML:Pseudostate'
+            elif s.modifier in ('final', 'terminate'):
+                s.xml_tag = 'UML:FinalState'
+            else:
+                s.xml_tag = 'UML:SimpleState'
+        for s in self.states:
+            st = self.add_xml_path(subv, (s.xml_tag,))
+            st.set('name', s.name)
+            st.set('xmi.id', s.path_name())  # XXX why not done already?
+            # at this point, ArgoUML adds incoming & outgoing transitions in
+            # UML:StateVertex.{incoming,outgoing}/UML:Transition
+            # elements, but normalize_xmi doesn't use them, and they'd
+            # be a pain to produce.
+            for beh in s.behaviours:
+#                beh.owner = s
+                if beh[0] == 'entry':
+                    act = self.add_xml_path(st, ('UML:State.entry',
+                                                 'UML:CallAction',
+                                                 'UML:Action.script',
+                                                 'UML:ActionExpression'))
+                    act.set('body', beh[1])
+            for t in s.transitions:
+                t.owner = s
+                tr = self.add_xml_path(trans, ('UML:Transition',))
+
+                # trigger
+                if t.signal is not None:
+                    trig = self.add_xml_path(tr, ('UML:Transition.trigger',
+                                                  'UML:SignalEvent'))
+                    trig.set('name', t.signal)
+                    signals = [sig for sig in self.owner.owner.contents
+                               if isinstance(sig, Signal)]
+                    sig = [sig for sig in signals if sig.name == t.signal]
+                    if len(sig) == 0:
+                        sys.stderr.write("no signal %s.%s\n" %
+                                         (self.owner.owner.name, t.signal))
+                    elif len(sig) > 1:
+                        sys.stderr.write("more than 1 signal %s.%s\n" %
+                                         (self.owner.owner.name, t.signal))
+                    else:
+                        sys.stderr.write("triggering on signal %s" % t.signal)
+                        sys.stderr.write(" %r\n" % sig[0])
+                        trig.set('xmi.idref', sig[0].path_name())
+
+                # source
+                src = self.add_xml_path(tr, ('UML:Transition.source',
+                                             s.xml_tag))
+                print("src %s, idref %s" % (s.name, s.path_name()))
+                src.set('name', s.name)
+                src.set('xmi.idref', s.path_name())
+
+                # target
+                # have to find the target to know its xml_tag & xmi.id
+                # XXX recast as list comprehension?
+                target_found = 0
+                for target in self.states:
+                    if target.name == t.target:
+                        target_found = 1
+                        targ = self.add_xml_path(tr, ('UML:Transition.target',
+                                                      target.xml_tag))
+                        targ.set('name', target.name)
+                        targ.set('xmi.idref', target.path_name())
+                        break
+                if not target_found:
+                    sys.stderr.write('transition target %s.%s not found\n' %
+                                     (self.owner.owner.name, t.target))
+
+                # effect
+                if t.effect is not None:
+                    eff = self.add_xml_path(tr, ('UML:Transition.effect',
+                                                 'UML:CallAction',
+                                                 'UML:Action.script',
+                                                 'UML:ActionExpression'))
+                    eff.set('body', t.effect)
 
 class State(Base):
+    # No add_xml(), because the output required by State_Machine is
+    # complex & interrelated.
     pass
 
 
 class Transition(Base):
-    pass
+    # No add_xml(), because the output required by State_Machine is
+    # complex & interrelated.
+
+    def __repr__(self):
+        return ('Transition(signal=%r,source=%r,target=%r,effect=%r)'
+                % (self.signal, self.source, self.target, self.effect))
 
 
 class Uses_Relationship(Base):
@@ -533,11 +654,12 @@ def p_qualified_identifier_list(p):
 def p_qualified_identifier(p):
     '''
     qualified_identifier \
-        : IDENTIFIER NAMESPACE_SEPARATOR qualified_identifier
-        | IDENTIFIER
+        : identifier NAMESPACE_SEPARATOR qualified_identifier
+        | identifier
     '''
     if len(p) == 4:
-        p[0] = p[1] + '::' + p[3]
+        # Downstream expects the name components to be separated by '.'.
+        p[0] = p[1] + '.' + p[3]
     else:
         p[0] = p[1]
 
@@ -601,7 +723,7 @@ def p_import_decl(p):
 
 def p_optional_alias(p):
     '''
-    optional_alias : ALIAS IDENTIFIER
+    optional_alias : ALIAS identifier
                    | empty
     '''
     # XXX
@@ -662,13 +784,17 @@ def p_top_level_element_choice(p):
         | enumeration_def
         | exception_def
         | primitive_def
+        | signal_def
         | sub_namespace
     '''
     # XXX textuml.scc has enumeration as a class_type. I suppose this
     # would allow you to specify operations - but how would you
     # specify the literals? Ugh. Not documented. Not clear!
-    # association_def stereotype_def detached_operation_def
-    # function_decl
+    # stereotype_def detached_operation_def function_decl
+    #
+    # added signal_def: I want this to be separate from class_def,
+    # because a signal might have no attributes (& certainly won't
+    # have operations, state machines)
     p[0] = p[1]
 
 
@@ -777,7 +903,7 @@ def p_multiplicity_constraint(p):
 def p_association_def(p):
     '''
     association_def \
-        : annotations_opt ASSOCIATION IDENTIFIER association_role_decl_list \
+        : annotations_opt ASSOCIATION identifier association_role_decl_list \
             END SEMICOLON
     '''
     # No aggregation, composition
@@ -790,10 +916,10 @@ def p_association_def(p):
 def p_association_class_def(p):
     '''
     association_class_def \
-        : annotations_opt ASSOCIATION_CLASS IDENTIFIER \
+        : annotations_opt ASSOCIATION_CLASS identifier \
             association_role_decl_list feature_decl_list \
             END SEMICOLON
-        | annotations_opt ASSOCIATION_CLASS IDENTIFIER \
+        | annotations_opt ASSOCIATION_CLASS identifier \
             association_role_decl_list \
             END SEMICOLON
     '''
@@ -821,7 +947,7 @@ def p_association_role_decl(p):
     '''
     association_role_decl \
         : model_comment_opt annotations_opt \
-            IDENTIFIER IDENTIFIER IDENTIFIER association_multiplicity SEMICOLON
+            identifier identifier identifier association_multiplicity SEMICOLON
     '''
     # The first identifier is the originating class, the second the
     # verb phrase, the third is the target class.
@@ -865,7 +991,7 @@ def p_class_def(p):
 
 def p_class_header(p):
     '''
-    class_header : class_modifiers class_type IDENTIFIER
+    class_header : class_modifiers class_type identifier
     '''
     # XXX optional_formal_template_parameters
     # class_specializes_section class_implements_section
@@ -914,10 +1040,11 @@ def p_class_type(p):
         | INTERFACE
         | DATATYPE
         | ACTOR
-        | SIGNAL
         | COMPONENT
         | ENUMERATION
     '''
+    # SIGNAL extracted (can only have attributes, not the full set of
+    # features; and need not have any attributes).
     p[0] = p[1]
 
 
@@ -998,11 +1125,186 @@ def p_visibility_modifier(p):
 def p_feature_type(p):
     '''
     feature_type \
-        : operation_decl
+        : state_machine_decl
+        | operation_decl
         | attribute_decl
     '''
     # XXX lots missing!
     p[0] = p[1]
+
+
+def p_state_machine_decl(p):
+    '''
+    state_machine_decl \
+        : STATEMACHINE identifier state_decls END SEMICOLON
+        | STATEMACHINE state_decls END SEMICOLON
+    '''
+    p[0] = State_Machine()
+    if len(p) == 6:
+        p[0].name = p[2]
+        p[0].states = p[3]
+    else:
+        p[0].states = p[2]
+
+def p_state_decls(p):
+    '''
+    state_decls \
+        : state_decl state_decls
+        | state_decl
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],) + p[2]
+    else:
+        p[0] = (p[1],)
+
+def p_state_decl(p):
+    '''
+    state_decl \
+        : model_comment_opt state_modifier STATE identifier state_behaviours \
+            transition_decls END SEMICOLON
+        | model_comment_opt STATE identifier state_behaviours \
+          transition_decls END SEMICOLON
+    '''
+    # XXX no more that one state_modifier
+    # XXX identifier mandatory
+    p[0] = State()
+    p[0].documentation = p[1]
+    if len(p) == 9:
+        p[0].modifier = p[2]
+        p[0].name = p[4]
+        p[0].behaviours = p[5]
+        p[0].transitions = p[6]
+    else:
+        p[0].name = p[3]
+        p[0].behaviours = p[4]
+        p[0].transitions = p[5]
+    sys.stderr.write("state %s, mod %s\n" % (p[0].name, p[0].modifier))
+    for b in p[0].behaviours:
+        sys.stderr.write("behaviour %s %s\n" % (b[0], b[1]))
+    for t in p[0].transitions:
+        sys.stderr.write("transition on %s to %s\n" % (t.signal, t.target))
+
+def p_state_modifier(p):
+    '''
+    state_modifier \
+        : INITIAL
+        | TERMINATE
+        | FINAL
+    '''
+    p[0] = p[1]
+
+def p_state_behaviours(p):
+    '''
+    state_behaviours \
+        : state_behaviour_list
+        | empty
+    '''
+    if p[1] is None:
+        p[0] = ()
+    else:
+        p[0] = p[1]
+
+def p_state_behaviour_list(p):
+    '''
+    state_behaviour_list \
+        : state_behaviour state_behaviour_list
+        | state_behaviour
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],) + p[2]
+    else:
+        p[0] = (p[1],)
+
+def p_state_behaviour(p):
+    '''
+    state_behaviour : ENTRY state_behaviour_definition SEMICOLON
+    '''
+    # XXX we don't support DO or EXIT
+    p[0] = (p[1], p[2])
+
+def p_state_behaviour_definition(p):
+    '''
+    state_behaviour_definition : simple_statement_block
+    '''
+    p[0] = p[1]
+
+def p_transition_decls(p):
+    '''
+    transition_decls \
+        : transition_decl_list
+        | empty
+    '''
+    if p[1] is None:
+        p[0] = ()
+    else:
+        p[0] = p[1]
+
+def p_transition_decl_list(p):
+    '''
+    transition_decl_list \
+        : transition_decl transition_decl_list
+        | transition_decl
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],) + p[2]
+    else:
+        p[0] = (p[1],)
+
+def p_transition_decl(p):
+    '''
+    transition_decl \
+        : model_comment_opt TRANSITION ON SIGNAL \
+            L_PAREN qualified_identifier R_PAREN \
+            TO identifier transition_effect_opt SEMICOLON
+        | model_comment_opt TRANSITION TO identifier \
+            transition_effect_opt SEMICOLON
+    '''
+    # XXX only one transition_trigger???
+    # XXX no transition_guard
+    p[0] = Transition()
+    p[0].documentation = p[1]
+    if len(p) == 12:
+        p[0].signal = p[6]
+        p[0].target = p[9]
+        p[0].effect = p[10]
+    else:
+        p[0].target = p[4]
+        p[0].effect = p[5]
+
+
+def p_transition_effect_opt(p):
+    '''
+    transition_effect_opt \
+        : DO simple_statement_block
+        | empty
+    '''
+    if len(p) == 3:
+        p[0] = p[2]
+
+
+def p_simple_statement_block(p):
+    '''
+    simple_statement_block \
+        : L_PAREN statement_list R_PAREN
+        | identifier
+    '''
+    # XXX identifier list
+    if len(p) == 4:
+        p[0] = p[2]
+    else:
+        p[0] = p[1]
+
+
+def p_statement_list(p):
+    '''
+    statement_list \
+        : identifier SEMICOLON statement_list
+        | identifier
+    '''
+    if len(p) == 4:
+        p[0] = p[1] + '; ' + p[3]
+    else:
+        p[0] = p[1]
 
 
 def p_operation_decl(p):
@@ -1021,7 +1323,7 @@ def p_operation_decl(p):
 
 def p_operation_header(p):
     '''
-    operation_header : operation_keyword IDENTIFIER signature
+    operation_header : operation_keyword identifier signature
     '''
     # XXX QUERY wildcard_types_opt
     p[0] = (p[1], p[2], p[3])
@@ -1038,7 +1340,7 @@ def p_operation_keyword(p):
 def p_attribute_decl(p):
     '''
     attribute_decl \
-        : ATTRIBUTE IDENTIFIER COLON type_identifier \
+        : ATTRIBUTE identifier COLON type_identifier \
             initialization_expression_opt SEMICOLON
     '''
     # XXX optional_subsetting attribute_invariant
@@ -1098,7 +1400,7 @@ def p_tuple_type_slots(p):
 def p_tuple_type_slot(p):
     '''
     tuple_type_slot \
-        : IDENTIFIER COLON type_identifier
+        : identifier COLON type_identifier
         | COLON type_identifier
     '''
     if len(p) == 4:
@@ -1211,7 +1513,7 @@ def p_simple_param_decl(p):
 def p_optional_parameter_name(p):
     '''
     optional_parameter_name \
-        : IDENTIFIER
+        : identifier
         | empty
     '''
     p[0] = p[1]
@@ -1311,7 +1613,7 @@ def p_annotation_value_spec_list(p):
 
 def p_annotation_value_spec(p):
     '''
-    annotation_value_spec : IDENTIFIER EQUALS annotation_value
+    annotation_value_spec : identifier EQUALS annotation_value
     '''
     p[0] = (p[1], p[3])
 
@@ -1320,7 +1622,7 @@ def p_annotation_value(p):
     '''
     annotation_value \
         : literal
-        | IDENTIFIER
+        | identifier
     '''
     p[0] = p[1]
 
@@ -1335,9 +1637,9 @@ def p_annotation_value(p):
 def p_enumeration_def(p):
     '''
     enumeration_def \
-        : visibility_modifier ENUMERATION IDENTIFIER \
+        : visibility_modifier ENUMERATION identifier \
             enumeration_literal_decl_list END SEMICOLON
-        | ENUMERATION IDENTIFIER \
+        | ENUMERATION identifier \
             enumeration_literal_decl_list END SEMICOLON
     '''
     p[0] = Enumeration()
@@ -1360,7 +1662,7 @@ def p_enumeration_literal_decl_list(p):
 
 def p_enumeration_literal_decl(p):
     '''
-    enumeration_literal_decl : model_comment_opt IDENTIFIER
+    enumeration_literal_decl : model_comment_opt identifier
     '''
     p[0] = (p[1], p[2])
 
@@ -1383,8 +1685,8 @@ def p_enumeration_literal_decl_list_tail(p):
 def p_exception_def(p):
     '''
     exception_def \
-        : visibility_modifier EXCEPTION IDENTIFIER SEMICOLON
-        | EXCEPTION IDENTIFIER SEMICOLON
+        : visibility_modifier EXCEPTION identifier SEMICOLON
+        | EXCEPTION identifier SEMICOLON
     '''
     if len(p) == 5:
         p[0] = Exception()
@@ -1395,14 +1697,104 @@ def p_exception_def(p):
         p[0].name = p[2]
 
 
+# Signal definition
+
+
+def p_signal_def(p):
+    '''
+    signal_def : signal_decl
+    '''
+    # I did have
+    #    : signal_modifiers signal_decl
+    #    | signal_decl
+    # (to allow 'static') but this leads to a reduce-reduce conflict
+    # vs class_modifier.
+    if len(p) == 3:
+        p[0] = p[2]
+        p[0].modifiers = p[1]
+    else:
+        p[0] = p[1]
+
+
+def p_signal_decl(p):
+    '''
+    signal_decl \
+        : SIGNAL qualified_identifier signal_attributes END SEMICOLON
+        | SIGNAL qualified_identifier SEMICOLON
+    '''
+    p[0] = Signal()
+    p[0].name = p[2].replace('::', '.')
+    if len(p) == 6:
+        p[0].contents = p[3]
+
+
+def p_signal_modifiers(p):
+    '''
+    signal_modifiers \
+        : signal_modifier_list
+        | empty
+    '''
+    if p[1] is None:
+        p[0] = ()
+    else:
+        p[0] = p[1]
+
+
+def p_signal_modifier_list(p):
+    '''
+    signal_modifier_list \
+        : signal_modifier signal_modifier_list
+        | signal_modifier
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],) + p[2]
+    else:
+        p[0] = (p[1],)
+
+
+def p_signal_modifier(p):
+    '''
+    signal_modifier \
+        : visibility_modifier
+        | STATIC
+    '''
+    p[0] = p[1]
+
+
+def p_signal_attributes(p):
+    '''
+    signal_attributes \
+        : signal_attribute_decl signal_attributes
+        | signal_attribute_decl
+    '''
+    if len(p) == 3:
+        p[0] = (p[1], p[2])
+    else:
+        p[0] = (p[1],)
+
+
+def p_signal_attribute_decl(p):
+    # In XMI, these need to be parameters.
+    # Using Parameter makes things easier here, at the possible cost
+    # of including stuff in the XMI that shouldn't be there.
+    '''
+    signal_attribute_decl \
+        : ATTRIBUTE identifier COLON type_identifier SEMICOLON
+    '''
+    p[0] = Parameter()
+    p[0].name = p[2]
+    p[0].type = p[4][0]   # omit multiplicity - really?
+#    p[0].default_value = p[5]
+
+
 # Primitive definition
 
 
 def p_primitive_def(p):
     '''
     primitive_def \
-        : visibility_modifier PRIMITIVE IDENTIFIER SEMICOLON
-        | PRIMITIVE IDENTIFIER SEMICOLON
+        : visibility_modifier PRIMITIVE identifier SEMICOLON
+        | PRIMITIVE identifier SEMICOLON
     '''
     # removed the textuml.scc annotations? - added in p_top_level_element(p)
     # NB textuml doesn't allow modifiers on primitives! (fixed - issue #120)
@@ -1464,6 +1856,13 @@ def p_model_comment_opt(p):
     p[0] = p[1]
 
 
+def p_identifier(p):
+    '''
+    identifier : IDENTIFIER
+    '''
+    p[0] = p[1].replace('\\', '')
+
+
 def p_literal(p):
     '''
     literal \
@@ -1479,7 +1878,7 @@ def p_literal_or_identifier(p):
     '''
     literal_or_identifier \
         : literal
-        | IDENTIFIER
+        | identifier
     '''
     p[0] = p[1]
 
@@ -1528,7 +1927,7 @@ def p_error(p):
     last_cr = text.rfind('\n', 0, p.lexpos)
     if last_cr < 0:
         last_cr = 0
-    print last_cr
+    #print(last_cr)
     column = (p.lexpos - last_cr) - 1
     error("Syntax error at %s on line %d:%d" % (p.type, p.lineno, column))
     # # Read ahead looking for a terminating ";" or "."
@@ -1769,16 +2168,18 @@ def t_ignore_COMMENT(t):
 
 def t_MODEL_COMMENT(t):
     # This lexeme may be multiline; need to update the line number.
+    # If an input line terminates with a backslash, the next line is
+    # concatenated.
     r'\(\*([^*]|\*[^)])*\*\)'
     for c in t.value:
         if c == '\n':
             t.lexer.lineno += 1
-    t.value = t.value[2:-2].strip()
+    t.value = t.value[2:-2].strip().replace('\\\n', '')
     return t
 
 
 def t_IDENTIFIER(t):
-    r'[a-zA-Z][a-zA-Z0-9_]*'
+    r'\\?[a-zA-Z][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'IDENTIFIER')  # Check for reserved words
     return t
 
@@ -1817,7 +2218,7 @@ t_ignore = ' \t\r'
 
 def t_error(t):
     '''Error handling.'''
-    print "Illegal character '%s', line %d" % (t.value, t.lexer.lineno)
+    sys.stderr.write("Illegal character '%s', line %d" % (t.value, t.lexer.lineno))
     t.lexer.skip(1)
 
 
