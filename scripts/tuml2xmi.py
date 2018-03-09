@@ -165,10 +165,8 @@ class Base:
             to.set('isAbstract', 'false')
         mods.discard('abstract')
         if len(mods) > 0:
-            for m in mods:
-                warning("unsupported modifier %s in %s\n"
-                        % (m, self.path_name()))
-            sys.exit(1)
+            error("unsupported modifier(s) %s in %s\n"
+                  % (', '.join(mods), self.path_name()))
 
 
 class Action(Base):
@@ -244,10 +242,8 @@ class Attribute(Base):
             att.set('ownerScope', 'instance')
         mods.discard('static')
         if len(mods) > 0:
-            for m in mods:
-                warning("unsupported modifier %s in %s\n"
-                        % (m, self.path_name()))
-            sys.exit(1)
+            error("unsupported modifier(s) %s in %s\n"
+                  % (', '.join(mods), self.path_name()))
         typ = self.add_xml_path(att, ('UML:StructuralFeature.type',
                                       'UML:DataType'))
         typ.set('name', self.type)
@@ -356,10 +352,8 @@ class Operation(Base):
             opn.set('ownerScope', 'instance')
         mods.discard('static')
         if len(mods) > 0:
-            for m in mods:
-                sys.stderr.write("unsupported modifier %s in %s\n"
-                                 % (m, self.path_name()))
-            sys.exit(1)
+            error("unsupported modifier(s) %s in %s\n"
+                  % (', '.join(mods), self.path_name()))
         pars = self.add_xml_path(opn, ('UML:BehavioralFeature.parameter',))
         for p in self.parameters:
             p.owner = self
@@ -406,10 +400,8 @@ class Parameter(Base):
                   % (mode_mods, self.path_name()))
         mods = mode_mods - possible_mode_mods
         if len(mods) > 0:
-            for m in mods:
-                warning("unsupported modifier %s in %s\n"
-                        % (m, self.path_name))
-            sys.exit(1)
+            error("unsupported modifier(s) %s in %s\n"
+                  % (', '.join(mods), self.path_name()))
         typ = self.add_xml_path(par, ('UML:Parameter.type', 'UML:DataType'))
         typ.set('name', self.type)
         if self.default_value is not None:
@@ -458,7 +450,6 @@ class Signal(Base):
         sig.set('name', self.name)
         self.add_top_level_element_xml(sig)
         if len(self.contents) > 0:
-            print('# attributes %r' % len(self.contents))
             ev = self.add_xml_path(sig, ('UML:Event.parameter',))
             for p in self.contents:
                 p.owner = self
@@ -482,6 +473,7 @@ class State_Machine(Base):
 
         oel = find_namespace_below(self.owner.owner.element)
         sm = self.add_xml_path (oel, ('UML:StateMachine',))
+        self.add_top_level_element_xml(sm)
         ctx = self.add_xml_path(sm, ('UML:StateMachine.context', 'UML:Class'))
         ctx.set('xmi.idref', self.owner.path_name())
         subv = self.add_xml_path(sm, ('UML:StateMachine.top',
@@ -526,20 +518,17 @@ class State_Machine(Base):
                                if isinstance(sig, Signal)]
                     sig = [sig for sig in signals if sig.name == t.signal]
                     if len(sig) == 0:
-                        sys.stderr.write("no signal %s.%s\n" %
-                                         (self.owner.owner.name, t.signal))
+                        error("no signal %s.%s\n" %
+                              (self.owner.owner.name, t.signal))
                     elif len(sig) > 1:
-                        sys.stderr.write("more than 1 signal %s.%s\n" %
-                                         (self.owner.owner.name, t.signal))
+                        error("more than 1 signal %s.%s\n" %
+                              (self.owner.owner.name, t.signal))
                     else:
-                        sys.stderr.write("triggering on signal %s" % t.signal)
-                        sys.stderr.write(" %r\n" % sig[0])
                         trig.set('xmi.idref', sig[0].path_name())
 
                 # source
                 src = self.add_xml_path(tr, ('UML:Transition.source',
                                              s.xml_tag))
-                print("src %s, idref %s" % (s.name, s.path_name()))
                 src.set('name', s.name)
                 src.set('xmi.idref', s.path_name())
 
@@ -556,8 +545,8 @@ class State_Machine(Base):
                         targ.set('xmi.idref', target.path_name())
                         break
                 if not target_found:
-                    sys.stderr.write('transition target %s.%s not found\n' %
-                                     (self.owner.owner.name, t.target))
+                    error('transition target %s.%s not found\n' %
+                          (self.owner.owner.name, t.target))
 
                 # effect
                 if t.effect is not None:
@@ -1165,7 +1154,7 @@ def p_state_decl(p):
         | model_comment_opt STATE identifier state_behaviours \
           transition_decls END SEMICOLON
     '''
-    # XXX no more that one state_modifier
+    # XXX no more than one state_modifier
     # XXX identifier mandatory
     p[0] = State()
     p[0].documentation = p[1]
@@ -1178,11 +1167,7 @@ def p_state_decl(p):
         p[0].name = p[3]
         p[0].behaviours = p[4]
         p[0].transitions = p[5]
-    sys.stderr.write("state %s, mod %s\n" % (p[0].name, p[0].modifier))
-    for b in p[0].behaviours:
-        sys.stderr.write("behaviour %s %s\n" % (b[0], b[1]))
-    for t in p[0].transitions:
-        sys.stderr.write("transition on %s to %s\n" % (t.signal, t.target))
+
 
 def p_state_modifier(p):
     '''
@@ -1927,7 +1912,6 @@ def p_error(p):
     last_cr = text.rfind('\n', 0, p.lexpos)
     if last_cr < 0:
         last_cr = 0
-    #print(last_cr)
     column = (p.lexpos - last_cr) - 1
     error("Syntax error at %s on line %d:%d" % (p.type, p.lineno, column))
     # # Read ahead looking for a terminating ";" or "."
@@ -2305,8 +2289,7 @@ def main():
         try:
             output = open(output_file, 'w')
         except:
-            sys.stderr.write("couldn't open %s for output.\n" % output_file)
-            sys.exit(1)
+            error("couldn't open %s for output.\n" % output_file)
 
     xmi_document = ET.ElementTree(ET.Element('uml'))
     model = xmi_document.getroot()
