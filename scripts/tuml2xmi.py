@@ -192,7 +192,6 @@ class Association(Base):
         UML:AssociationEnd's to the ET.Element in to."""
         con = self.add_xml_path(to, ('UML:Association.connection',))
         for role in self.roles:
-            role.owner = self
             role.add_xml(con)
 
 
@@ -205,7 +204,6 @@ class Association_Class(Association):
         ass.set('isActive', 'false')  # XXX
         cnt = self.add_xml_path(ass, ('UML:Classifier.feature',))
         for c in self.contents:
-            c.owner = self
             c.add_xml(cnt)
 
 
@@ -262,7 +260,6 @@ class Class(Base):
         cls.set('isActive', 'false')  # XXX
         cnt = self.add_xml_path(cls, ('UML:Classifier.feature',))
         for c in self.contents:
-            c.owner = self
             c.add_xml(cnt)
 
 
@@ -310,7 +307,6 @@ class Model(Base):
         self.add_xml_documentation(model)
         contents = self.add_xml_path(model, ('UML:Namespace.ownedElement',))
         for c in self.contents:
-            c.owner = self
             c.add_xml(contents)
 
     def path_name(self):
@@ -356,7 +352,6 @@ class Operation(Base):
                   % (', '.join(mods), self.path_name()))
         pars = self.add_xml_path(opn, ('UML:BehavioralFeature.parameter',))
         for p in self.parameters:
-            p.owner = self
             p.add_xml(pars)
         if self.rtn is not None:
             rtn = self.add_xml_path(pars, ('UML:Parameter',))
@@ -374,7 +369,6 @@ class Package(Base):
         self.add_top_level_element_xml(pkg)
         cnt = self.add_xml_path(pkg, ('UML:Namespace.ownedElement',))
         for c in self.contents:
-            c.owner = self
             c.add_xml(cnt)
 
 
@@ -452,7 +446,6 @@ class Signal(Base):
         if len(self.contents) > 0:
             ev = self.add_xml_path(sig, ('UML:Event.parameter',))
             for p in self.contents:
-                p.owner = self
                 p.add_xml(ev)
 
 
@@ -482,7 +475,6 @@ class State_Machine(Base):
         trans = self.add_xml_path(sm, ('UML:StateMachine.transitions',))
         # work out the xml_tag for all the states - needed for transitions
         for s in self.states:
-            s.owner = self
             if s.modifier == 'initial':
                 s.xml_tag = 'UML:Pseudostate'
             elif s.modifier in ('final', 'terminate'):
@@ -506,7 +498,6 @@ class State_Machine(Base):
                                                  'UML:ActionExpression'))
                     act.set('body', beh[1])
             for t in s.transitions:
-                t.owner = s
                 tr = self.add_xml_path(trans, ('UML:Transition',))
 
                 # trigger
@@ -606,6 +597,8 @@ def p_start(p):
         p[0].documentation = p[1]
         p[0].annotations = p[2]
         p[0].contents = p[5]
+        for c in p[0].contents:
+            c.owner = p[0]
     else:
         error("ERROR! expecting 'model', got '%s'" % p[3][0])
 
@@ -740,6 +733,8 @@ def p_sub_namespace(p):
         p[0] = Package()
         p[0].name = p[1][1]
         p[0].contents = p[2]
+        for c in p[0].contents:
+            c.owner = p[0]
     else:
         p[0] = (p[1], p[2])
 
@@ -919,6 +914,8 @@ def p_association_class_def(p):
     p[0].roles = p[4]
     if len(p) == 8:
         p[0].contents = p[5]
+        for c in p[0].contents:
+            c.owner = p[0]
     else:
         p[0].contents = ()
 
@@ -971,6 +968,8 @@ def p_class_def(p):
     p[0].name = p[1][2]
     p[0].modifiers = p[1][0]
     p[0].contents = p[2]
+    for c in p[0].contents:
+        c.owner = p[0]
     # ColdFrame, because of ArgoUML features, represents a data type
     # with attributes to be implemented as a class but with the
     # stereotype <<datatype>>.
@@ -1134,6 +1133,8 @@ def p_state_machine_decl(p):
         p[0].states = p[3]
     else:
         p[0].states = p[2]
+    for s in p[0].states:
+        s.owner = p[0]
 
 def p_state_decls(p):
     '''
@@ -1167,6 +1168,8 @@ def p_state_decl(p):
         p[0].name = p[3]
         p[0].behaviours = p[4]
         p[0].transitions = p[5]
+    for t in p[0].transitions:
+        t.owner = p[0]
 
 
 def p_state_modifier(p):
@@ -1300,6 +1303,8 @@ def p_operation_decl(p):
     p[0] = Operation()
     p[0].name = p[1][1]
     p[0].parameters = p[1][2][0]
+    for par in p[0].parameters:
+        par.owner = p[0]
     # p[0].rtn = p[1][2][1]
     # rtn is (annotations_opt, (single_type_identifier optional_multiplicity))
     if p[1][2][1] is not None:
@@ -1708,9 +1713,11 @@ def p_signal_decl(p):
         | SIGNAL qualified_identifier SEMICOLON
     '''
     p[0] = Signal()
-    p[0].name = p[2].replace('::', '.')
+    p[0].name = p[2]
     if len(p) == 6:
         p[0].contents = p[3]
+        for a in p[0].contents:
+            a.owner = p[0]
 
 
 def p_signal_modifiers(p):
