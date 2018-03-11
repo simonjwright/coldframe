@@ -261,6 +261,28 @@ class Class(Base):
         cnt = self.add_xml_path(cls, ('UML:Classifier.feature',))
         for c in self.contents:
             c.add_xml(cnt)
+        if self.specializes is not None:
+            if len(self.specializes) > 1:
+                # XXX
+                error("%s specializes > 1 class, not yet supported"
+                      % self.path_name)
+            # The UML:Generalization is owned by the package, not the class.
+            # Currently at
+            # Package/Namespace.ownedElement/Class
+            # owned  /                      /owned/
+            # skip up (gets us to Package) & find Namespace.ownedElement.
+            oel = find_namespace_below(self.owner.element)
+            gen = self.add_xml_path(oel, ('UML:Generalization',))
+            parent = self.specializes[0]
+            gen.set('name', parent)
+            gen.set('discriminator', parent)
+            gen.set('xmi.id', self.path_name() + '.specialization')
+            ch = self.add_xml_path(gen, ('UML:Generalization.child',
+                                         'UML:Class'))
+            ch.set('name', self.name)
+            par = self.add_xml_path(gen, ('UML:Generalization.parent',
+                                          'UML:Class'))
+            par.set('name', parent)
 
 
 class Class_Utility(Class):
@@ -457,13 +479,6 @@ class State_Machine(Base):
         # Package/Namespace.ownedElement/Class/Classifier.feature
         # owned  /                      /owned/
         # skip up (gets us to Package) & find Namespace.ownedElement.
-
-        def find_namespace_below(e):
-            for el in e.findall('*'):
-                if el.tag == 'UML:Namespace.ownedElement':
-                    return el
-            return None
-
         oel = find_namespace_below(self.owner.owner.element)
         sm = self.add_xml_path (oel, ('UML:StateMachine',))
         self.add_top_level_element_xml(sm)
@@ -572,7 +587,17 @@ class Uses_Relationship(Base):
 # ----------------------------------------------------------------------
 
 
+def find_namespace_below(e):
+    """'e' is an XML element. Looks through the children to find a
+    Namespace.ownedElement; return that if found, otherwise None."""
+    for el in e.findall('*'):
+        if el.tag == 'UML:Namespace.ownedElement':
+            return el
+    return None
+
+
 def object_name(fqn):
+    # XXX not used?
     """Strips the leading model path from a fully qualified name."""
     last_sep = fqn.rfind('::')
     if last_sep >= 0:
@@ -967,6 +992,7 @@ def p_class_def(p):
     p[0] = Class()
     p[0].name = p[1][2]
     p[0].modifiers = p[1][0]
+    p[0].specializes = p[1][3]
     p[0].contents = p[2]
     for c in p[0].contents:
         c.owner = p[0]
@@ -979,11 +1005,11 @@ def p_class_def(p):
 
 def p_class_header(p):
     '''
-    class_header : class_modifiers class_type identifier
+    class_header \
+        : class_modifiers class_type identifier class_specializes_section
     '''
-    # XXX optional_formal_template_parameters
-    # class_specializes_section class_implements_section
-    p[0] = (p[1], p[2], p[3])
+    # XXX optional_formal_template_parameters class_implements_section
+    p[0] = (p[1], p[2], p[3], p[4])
 
 
 def p_class_modifiers(p):
@@ -1034,6 +1060,27 @@ def p_class_type(p):
     # SIGNAL extracted (can only have attributes, not the full set of
     # features; and need not have any attributes).
     p[0] = p[1]
+
+
+def p_class_specializes_section(p):
+    '''
+    class_specializes_section \
+        : SPECIALIZES class_specializes_list
+        | empty
+    '''
+    if len(p) == 3:
+        p[0] = p[2]
+
+def p_class_specializes_list(p):
+    '''
+    class_specializes_list \
+        : identifier COMMA class_specializes_list
+        | identifier
+    '''
+    if len(p) == 4:
+        p[0] = (p[1],) + p[3]
+    else:
+        p[0] = (p[1],)
 
 
 # Class features
