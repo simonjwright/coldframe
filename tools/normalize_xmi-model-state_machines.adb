@@ -387,7 +387,8 @@ package body Normalize_XMI.Model.State_Machines is
                                        From => Name'Last,
                                        Going => Ada.Strings.Backward);
       begin
-         E.Name := +Name (Positive'Max (Dot + 1, Name'First) .. Name'Last);
+         E.Name := +Identifiers.Normalize
+           (Name (Positive'Max (Dot + 1, Name'First) .. Name'Last));
       end;
 
       --  Parameter Type. We aren't interested in the parameter name,
