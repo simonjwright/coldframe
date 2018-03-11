@@ -12,20 +12,18 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  This state entry action sets the instance Timeout to the required
---  activation period.
+--  Called to indicate to connected Lamps that the Button's state has
+--  changed.
 
-with ColdFrame.Project.Events;
-with House_Management.Events;
+with House_Management.A1;
+with House_Management.Lamp;
 
-separate (House_Management.Lamp)
-procedure Set_Timeout
+separate (House_Management.Button)
+procedure Notify_Connected_Lamps
   (This : not null Handle) is
+   Lamps : constant Lamp.Vectors.Vector := A1.Is_Controlled_By (This);
 begin
-
-   ColdFrame.Project.Events.Set (The_Timer => This.Timeout,
-                                 On => Events.Dispatcher,
-                                 To_Fire => new Timeout (This),
-                                 After => 5.0);
-
-end Set_Timeout;
+   for L of Lamps loop
+      Lamp.Changed (L);
+   end loop;
+end Notify_Connected_Lamps;

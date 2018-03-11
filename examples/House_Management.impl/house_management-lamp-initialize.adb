@@ -14,7 +14,9 @@
 
 --  This operation initializes the Lamps and Buttons.
 
+with Digital_IO;
 with House_Management.Button;
+with House_Management.Timed_Button.Inheritance;
 with House_Management.A1;
 
 separate (House_Management.Lamp)
@@ -43,11 +45,21 @@ begin
       end;
    end loop;
 
-   --  .. and the buttons ..
+   --  Turn off all the lamps ..
+   for L in Digital_IO.Output_Signal loop
+      Digital_IO.Set (O => L, To_State => False);
+   end loop;
+
+   --  .. and the buttons , all of which are timed buttons for now.
    for B in Button_Name loop
       declare
-         BH : constant Button.Handle := Button.Create ((Name => B));
+         BH : constant Button.Handle
+           := Button.Create ((Name => B));
          pragma Warnings (Off, BH);
+         TBH : constant Timed_Button.Handle
+           := Timed_Button.Inheritance.Create_Tree
+             (ColdFrame.Instances.Handle (BH));
+         pragma Warnings (Off, TBH);
       begin
          null;
       end;

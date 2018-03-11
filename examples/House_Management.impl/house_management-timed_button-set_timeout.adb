@@ -12,14 +12,18 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  This state entry action turns off the associated signal using
---  Output_For_Lamp.
+--  This state entry action sets the instance Timeout to the required
+--  activation period.
 
-with Digital_IO;
+with ColdFrame.Project.Events;
+with House_Management.Events;
 
-separate (House_Management.Lamp)
-procedure Turn_Off
+separate (House_Management.Timed_Button)
+procedure Set_Timeout
   (This : not null Handle) is
 begin
-   Digital_IO.Set (Output_For_Lamp (This), To_State => False);
-end Turn_Off;
+   ColdFrame.Project.Events.Set (The_Timer => This.Timeout,
+                                 On        => Events.Dispatcher,
+                                 To_Fire   => new Timeout (This),
+                                 After     => 5.0);
+end Set_Timeout;

@@ -1,0 +1,171 @@
+model Housing;
+
+	(*
+	Copyright (C) Simon Wright <simon@pushface.org>
+	This package is free software; you can redistribute it and/or modify it \
+	under terms of the GNU General Public License as published by the Free \
+	Software Foundation; either version 2, or (at your option) any later \
+	version. This package is distributed in the hope that it will be useful, \
+	but WITHOUT ANY WARRANTY; without even the implied warranty of \
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General \
+	Public License for more details. You should have received a copy of the \
+	GNU General Public License distributed with this package; see file COPYING. \
+	If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, \
+	Boston, MA 02111-1307, USA.
+	This domain represents an electronic household control system.
+	The first release only manages the stairwell lighting system.
+	*)
+	[domain]
+	package House_Management;
+
+		(* There is a pushbutton on each landing. This type names \
+		the pushbuttons. *)
+		enumeration Button_Name
+			Basement,
+			Ground_Floor,
+			First_Floor,
+			Second_Floor
+		end;
+
+		(* There is a lamp beween each pair of landings. This type names the \
+		lamps; the name is that of the landing on whose ceiling the lamp is \
+		fixed. *)
+		enumeration Lamp_Name
+			Basement,
+			Ground_Floor,
+			First_Floor,
+			Second_Floor
+		end;
+
+		(* This type is used by the supporting Digital IO domain to report \
+		input (switch) state changes. *)
+		[imported (imported = Digital_IO)]
+		primitive Input_Signal_State;
+
+		(* This type is used by the supporting Digital IO domain to name \
+		outputs (lamps). *)
+		[imported (imported = Digital_IO)]
+		primitive Output_Signal;
+
+		(* There is a pushbutton on each landing. Each pushbutton controls \
+		a number of Lamps; if any of the controlling Buttons is set, the \
+		controlled Lamp is lit. *)
+		abstract class Button
+
+			(* Each Button is uniquely identified by its name. The name corresponds \
+			to the geographical location of the button. *)
+			id attribute Name : Button_Name;
+
+			/* ---------------------------------------- */
+
+			abstract public operation Get_State(): Boolean;
+
+			(* Acts as receiver of state changes from Digital IO, via \
+			Signal State Callback. Calls the instance Changed so the Button \
+			can take the appropriate action. *)
+			[callback] private static operation Changed(S : Input_Signal_State);
+
+      (* Called to indicate that the Button has been pushed or released. *)
+      abstract private operation Changed(Pushed : Boolean);
+
+      (* Called to indicate to connected Lamps that the Button's state \
+			has changed. *)
+			protected operation Notify_Connected_Lamps();
+
+		end; /* Button */
+
+    /* XXX the signals have to be declared before they're used. */
+		signal Timed_Button::Button_Push;
+		signal Timed_Button::Timeout;
+
+		(*When a Timed Button is pushed, it remains set for a preset period.
+		If it is pushed again while it is still set, the set period \
+		is extended by the preset period. *)
+		class Timed_Button specializes Button
+
+			(* This ColdFrame Timer is used to reset the Button at the end of \
+			its activation period. *)
+			private attribute Timeout : Timer;
+
+			/* ---------------------------------------- */
+
+      (* This overriding implementation returns the current state of the \
+			Timed Button (True => on) *)
+		  public operation Get_State(): Boolean;
+
+      (* This overriding implementation is called to indicate that the \
+			Button has been pushed or released.
+			For this kind of Button, actions a Button_Pushed event in case of \
+			a push; a release is ignored. *)
+			public operation Changed(Pushed : Boolean);
+
+			(* This state entry action unsets the instance Timeout. *)
+			private operation Clear_Timeout();
+
+			(* This state entry action sets the instance Timeout to the \
+			required activation period. *)
+			private operation Set_Timeout();
+
+			/* ---------------------------------------- */
+
+			statemachine Timed_Button
+
+				initial state Initial
+				  transition to Reset; /* untriggered */
+				end;
+
+				(* In this state, the Button is off.
+				It's assumed that it's acceptable to reset the button even if \
+				it is off already. *)
+				state Reset
+					transition on signal(Timed_Button::Button_Push) to Set
+					  do Notify_Connected_Lamps;
+				end; /* Reset */
+
+				(* In this state, the Button is set and the Timer is set. *)
+				state Set
+					entry (Set_Timeout);
+					transition on signal(Timed_Button::Timeout) to Reset
+					  do Notify_Connected_Lamps;
+					transition on signal(Timed_Button::Button_Push) to Set
+					  do Clear_Timeout;
+				end; /* Set */
+
+			end; /* statemachine */
+
+		end; /* Timed_Button */
+
+		(* There is a lamp between each pair of landings.
+		When the lamp is activated, it comes on for a preset period.
+		If it is activated again while it is still on, the activation period \
+		is extended by the preset period. *)
+		class Lamp
+
+			(* Each Lamp is uniquely identified by its name. The name corresponds \
+			to the geographical location of the lamp. *)
+			id attribute Name : Lamp_Name;
+
+			/* ---------------------------------------- */
+
+      (* This operation is used by a linked Button to tell the Lamp \
+			to evaluate all its linked Buttons to see if any are Set (in which \
+			case the Lamp should be lit) or all are Reset (in which case the \
+			Lamp should be off). *)
+			public operation Changed();
+
+			(* This operation initializes the Lamps and Buttons. *)
+			[init] private static operation Initialize();
+
+			(* Maps the Lamp to the corresponding Digital_IO output pin. *)
+			private operation Output_For_Lamp(): Output_Signal;
+
+		end; /* Lamp */
+
+    association_class A1
+		    Button Controls Lamp[1,*];
+				Lamp Is_Controlled_By Button[1,*];
+		end; /* A1 */
+
+	end; /* House_Management */
+
+end.

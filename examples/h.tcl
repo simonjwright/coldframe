@@ -46,19 +46,21 @@ wait_until_idle
 echo "lamps 0 and 1 should be set"
 check_number_of_new_calls digital_io.set 2
 check-outputs true true false false
+save_number_of_calls digital_io.set
 
 echo "waiting until just before the timeout"
 wait_from_mark a 4.995
 echo "checking the lamps are still set"
-check_number_of_new_calls digital_io.set 2
+check_number_of_new_calls digital_io.set 0
 # this is tautological if there've been no calls, but ..
 check-outputs true true false false
+save_number_of_calls digital_io.set
 
 echo "waiting until just after the timeout"
 wait_from_mark a 5.005
 
 echo "checking the lamps are now clear"
-check_number_of_new_calls digital_io.set 4
+check_number_of_new_calls digital_io.set 2
 check-outputs false false false false
 
 echo "done."

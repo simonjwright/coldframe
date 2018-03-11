@@ -13,12 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  Acts as receiver of state changes from Digital IO, via Signal
---  State Callback. If a Button has been pushed, posts
---  Button_Pushed events to the Lamps which are controlled by that
---  Button. Button releases are ignored.
-
-with House_Management.Lamp.Iterate;
-with House_Management.A1;
+--  State Callback. Calls the instance Changed so the Button can take
+--  the appropriate action.
 
 separate (House_Management.Button)
 procedure Changed
@@ -34,31 +30,13 @@ procedure Changed
          3 => Basement);
 
 begin
-
-   if S.State then
-
-      if S.S in Valid_Input_Signal then
-
-         declare
-            procedure Button_Pushed (L : not null Lamp.Handle);
-            pragma Inline (Button_Pushed);
-            procedure Process is new Lamp.Iterate (Button_Pushed);
-            procedure Button_Pushed (L : not null Lamp.Handle) is
-               Ev : Lamp.Button_Push (For_The_Instance => L);
-               pragma Warnings (Off, Ev);
-            begin
-               Lamp.Handler (Ev);
-            end Button_Pushed;
-
-            BH : constant Handle := Find ((Name => Buttons (S.S)));
-            LHS : constant Lamp.Vectors.Vector
-              := A1.Is_Controlled_By (BH);
-         begin
-            Process (LHS);
-         end;
-
-      end if;
-
+   if S.S in Valid_Input_Signal then
+      declare
+         B : constant Handle := Find ((Name => Buttons (S.S)));
+      begin
+         --  If there are any events involved, they must be processed
+         --  synchronously.
+         Changed (This => B, Pushed => S.State);
+      end;
    end if;
-
 end Changed;

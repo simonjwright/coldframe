@@ -52,10 +52,12 @@ else
   endif
 endif
 
-EXECUTABLES += house_management-harness$(exe) house_management-scripting$(exe)
+#EXECUTABLES += house_management-harness$(exe)
 house_management-harness$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
 	$(GPRBUILD) -p -PHouse_Management_Test
+
+EXECUTABLES += house_management-scripting$(exe)
 house_management-scripting$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
 	$(GPRBUILD) -p -PHouse_Management_Scripting
@@ -114,7 +116,6 @@ NORM_FILES =					\
  Digital_IO.norm				\
  Digital_IO.Tcl.norm				\
  Digital_IO_Interface.norm			\
- House_Management.norm				\
  Interrupt_Handling.norm			\
  Library.norm					\
  Performance.norm				\
@@ -125,6 +126,23 @@ NORM_FILES =					\
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
 $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
+
+TUML_NORM_FILES =				\
+ House_Management.norm
+
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(TUML_NORM_FILES): Housing.tuml-norm-stamp ;
+
+%.tuml-norm-stamp: %.xmi
+	$(COLDFRAME)/tools/normalize_xmi	\
+	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
+	  $(NORM_VERBOSE)			\
+	  $<
+	touch $@
+
+%.xmi: %.tuml
+	$(COLDFRAME)/scripts/tuml2xmi.py $<
 
 clean::
 	for g in *.gpr; do			\

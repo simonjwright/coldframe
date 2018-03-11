@@ -17,12 +17,10 @@
 with ColdFrame.Project.Events;
 with House_Management.Events;
 
-separate (House_Management.Lamp)
+separate (House_Management.Timed_Button)
 procedure Clear_Timeout
   (This : not null Handle) is
 begin
-
    ColdFrame.Project.Events.Unset (The_Timer => This.Timeout,
-                                   On => Events.Dispatcher);
-
+                                   On        => Events.Dispatcher);
 end Clear_Timeout;

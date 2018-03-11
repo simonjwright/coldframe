@@ -12,14 +12,22 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  This state entry action turns on the associated signal using
---  Output_For_Lamp.
+--  This overriding implementation is called to indicate that the
+--  Button has been pushed or released.
+--
+--  For this kind of Button, actions a Button_Pushed event in case of
+--  a push; a release is ignored.
 
-with Digital_IO;
-
-separate (House_Management.Lamp)
-procedure Turn_On
-  (This : not null Handle) is
+separate (House_Management.Timed_Button)
+procedure Changed
+  (This : not null Handle;
+   Pushed : Boolean) is
 begin
-   Digital_IO.Set (Output_For_Lamp (This), To_State => True);
-end Turn_On;
+   if Pushed then
+      declare
+         Ev : Button_Push (This);
+      begin
+         Ev.Handler;
+      end;
+   end if;
+end Changed;
