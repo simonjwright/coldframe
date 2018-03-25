@@ -113,9 +113,6 @@ Digital_IO_Interface.gen: Digital_IO_Interface.norm
 # ArgoUML support
 
 NORM_FILES =					\
- Digital_IO.norm				\
- Digital_IO.Tcl.norm				\
- Digital_IO_Interface.norm			\
  Interrupt_Handling.norm			\
  Library.norm					\
  Performance.norm				\
@@ -128,21 +125,14 @@ NORM_FILES =					\
 $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 TUML_NORM_FILES =				\
- House_Management.norm
+ House_Management.norm				\
+ Digital_IO.norm				\
+ Digital_IO_Interface.norm			\
+ Digital_IO.Tcl.norm
 
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
 $(TUML_NORM_FILES): Housing.tuml-norm-stamp ;
-
-%.tuml-norm-stamp: %.xmi
-	$(COLDFRAME)/tools/normalize_xmi	\
-	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
-	  $(NORM_VERBOSE)			\
-	  $<
-	touch $@
-
-%.xmi: %.tuml
-	$(COLDFRAME)/scripts/tuml2xmi.py $<
 
 clean::
 	for g in *.gpr; do			\

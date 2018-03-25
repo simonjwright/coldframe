@@ -124,15 +124,14 @@ class Base:
         st = self.add_xml_path(to, ('UML:ModelElement.stereotype',
                                     'UML:Stereotype'))
         st.set('name', stereotype[0])
-        if len(stereotype[1]) > 0:
+        for t in stereotype[1]:
             tv = self.add_xml_path(to, ('UML:ModelElement.taggedValue',
                                         'UML:TaggedValue'))
-            for t in stereotype[1]:
-                typ = self.add_xml_path(tv, ('UML:TaggedValue.type',
-                                             'UML:TagDefinition'))
-                typ.set('name', t[0])
-                dv = self.add_xml_path(tv, ('UML:TaggedValue.dataValue',))
-                dv.text = t[1]
+            typ = self.add_xml_path(tv, ('UML:TaggedValue.type',
+                                         'UML:TagDefinition'))
+            typ.set('name', t[0])
+            dv = self.add_xml_path(tv, ('UML:TaggedValue.dataValue',))
+            dv.text = t[1]
 
     def add_top_level_element_xml(self, to):
         """Adds the XML components common to all top level elements to the
@@ -292,8 +291,20 @@ class Class_Utility(Class):
 class Datatype(Base):
 
     def add_xml(self, to):
-        dtp = self.add_xml_path(to, ('UML:DataType',))
+        # ColdFrame, because of ArgoUML features, represents a data type
+        # with attributes to be implemented as a class but with the
+        # stereotype <<datatype>>.
+        if len([a for a in self.contents if isinstance(a, Attribute)]) > 0:
+            dtp = self.add_xml_path(to, ('UML:Class',))
+            dtp.set('isActive', 'false')             # Class always has this
+            self.annotations += (('datatype', ()),)
+        else:
+            dtp = self.add_xml_path(to, ('UML:DataType',))
+        dtp.set('name', self.name)
         self.add_top_level_element_xml(dtp)
+        cnt = self.add_xml_path(dtp, ('UML:Classifier.feature',))
+        for c in self.contents:
+            c.add_xml(cnt)
 
 
 class Enumeration(Base):
@@ -787,9 +798,10 @@ def p_top_level_element(p):
 def p_top_level_element_choice(p):
     '''
     top_level_element_choice \
-        : class_def
+        : association_class_def
         | association_def
-        | association_class_def
+        | class_def
+        | datatype_def
         | enumeration_def
         | exception_def
         | primitive_def
@@ -989,6 +1001,8 @@ def p_class_def(p):
     '''
     class_def : class_header feature_decl_list END SEMICOLON
     '''
+    if p[1][1] != 'class':
+        error("'%s' for '%s' not implemented" % (p[1][1], p[1][2]))
     p[0] = Class()
     p[0].name = p[1][2]
     p[0].modifiers = p[1][0]
@@ -996,11 +1010,6 @@ def p_class_def(p):
     p[0].contents = p[2]
     for c in p[0].contents:
         c.owner = p[0]
-    # ColdFrame, because of ArgoUML features, represents a data type
-    # with attributes to be implemented as a class but with the
-    # stereotype <<datatype>>.
-    if p[1][1] == 'datatype':
-        p[0].annotations = (('datatype', ()),)
 
 
 def p_class_header(p):
@@ -1052,11 +1061,11 @@ def p_class_type(p):
     class_type \
         : CLASS
         | INTERFACE
-        | DATATYPE
         | ACTOR
         | COMPONENT
-        | ENUMERATION
     '''
+    # DATATYPE extracted
+    # ENUMERATION extracted
     # SIGNAL extracted (can only have attributes, not the full set of
     # features; and need not have any attributes).
     p[0] = p[1]
@@ -1622,10 +1631,16 @@ def p_annotation(p):
         : qualified_identifier annotation_optional_value_specs
         | qualified_identifier
     '''
+    def check_lispy_stereotypes(s):
+        # XXX more to come ...
+        if s == 'domain_interface':
+            return 'domain-interface'
+        return s
+    name = check_lispy_stereotypes(p[1])
     if len(p) == 3:
-        p[0] = (p[1], p[2])  # NB the second element is a tuple
+        p[0] = (name, p[2])  # NB the second element is a tuple
     else:
-        p[0] = (p[1], ())
+        p[0] = (name, ())
 
 
 def p_annotation_optional_value_specs(p):
@@ -1659,7 +1674,59 @@ def p_annotation_value(p):
     '''
     annotation_value \
         : literal
-        | identifier
+        | qualified_identifier
+    '''
+    p[0] = p[1]
+
+
+# Datatype definition
+
+def p_datatype_def(p):
+    '''
+    datatype_def : datatype_header feature_decl_list END SEMICOLON
+    '''
+    p[0] = Datatype()
+    p[0].name = p[1][1]
+    p[0].modifiers = p[1][0]
+    p[0].contents = p[2]
+    for c in p[0].contents:
+        c.owner = p[0]
+
+
+def p_datatype_header(p):
+    '''
+    datatype_header : datatype_modifiers DATATYPE identifier
+    '''
+    p[0] = (p[1], p[3])
+
+
+def p_datatype_modifiers(p):
+    '''
+    datatype_modifiers \
+        : datatype_modifier_list
+        | empty
+    '''
+    if p[1] is None:
+        p[0] = ()
+    else:
+        p[0] = p[1]
+
+
+def p_datatype_modifier_list(p):
+    '''
+    datatype_modifier_list \
+        : datatype_modifier datatype_modifier_list
+        | datatype_modifier
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],) + p[2]
+    else:
+        p[0] = (p[1],)
+
+
+def p_datatype_modifier(p):
+    '''
+    datatype_modifier : visibility_modifier
     '''
     p[0] = p[1]
 
@@ -1844,39 +1911,6 @@ def p_primitive_def(p):
     else:
         p[0] = Datatype()
         p[0].name = p[2]
-
-
-def p_data_type_modifiers(p):
-    '''
-    data_type_modifiers \
-        : data_type_modifier_list
-        | empty
-    '''
-    if p[1] is None:
-        p[0] = ()
-    else:
-        p[0] = p[1]
-
-
-def p_data_type_modifier_list(p):
-    '''
-    data_type_modifier_list \
-        : data_type_modifier data_type_modifier_list
-        | data_type_modifier
-    '''
-    if len(p) == 3:
-        p[0] = (p[1],) + p[2]
-    else:
-        p[0] = (p[1],)
-
-
-def p_data_type_modifier(p):
-    '''
-    data_type_modifier \
-        : visibility_modifier
-    '''
-    # XXX EXTERNAL
-    p[0] = p[1]
 
 
 # Closures
