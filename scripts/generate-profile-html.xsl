@@ -48,13 +48,6 @@
       </head>
       <body bgcolor="#FFFFFF">
 
-        <div id="header">
-          <a href="http://sourceforge.net">
-            <img src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
-              width="88" height="31" border="0" alt="SourceForge.net Logo"/>
-          </a>
-        </div>
-
         <h1><xsl:value-of select="@name"/></h1>
 
         <ul>
