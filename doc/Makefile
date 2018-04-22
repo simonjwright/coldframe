@@ -14,18 +14,15 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
-# This Makefile is used for distribution generation.
-
-# DIST is the location where distribution files are to be copied, eg
-# /Users/simon/coldframe/cf-20110731hg
+# This Makefile is used for documentation generation.
 
 include ../Makefile.inc
 
-# For test only
-DIST ?= ./dist
+# This is to be a directory containing the gh-pages branch of the
+# Github repo.
+DEST ?= $(HOME)/coldframe-pages
 
-all:
-	@echo "Only meant to be called from the parent Makefile.dist."
+all::
 
 DATE = $(subst cf-,,$(notdir $(DIST)))
 
@@ -38,6 +35,7 @@ DOCS =						\
   associations.html				\
   attributes.html				\
   bugs.html					\
+  building-for-scripting.html			\
   callbacks.html				\
   classes.html					\
   coldframe-architecture.html			\
@@ -156,7 +154,7 @@ NORM_FILES = $(subst .html,.norm,$(GENERATED_DOCUMENTS))
 
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
-$(NORM_FILES): ColdFrame_Examples.norm-stamp ;
+$(NORM_FILES): Housing.tuml-norm-stamp ;
 
 # graphviz:
 %.png: %.dot
@@ -165,19 +163,17 @@ $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 ColdFrameProfile.html: $(COLDFRAMEOUT)/ColdFrameProfile.rr
 	$(SAXON) $< $(COLDFRAME)/scripts/generate-profile-html.xsl >$@
 
-dist::
-	-$(RM) -rf $(DIST)/doc
-	$(MKDIR) -p $(DIST)/doc
-	$(CP) -p $(ALL) $(DIST)/doc/
+all::
+	$(CP) -p $(ALL) $(DEST)/
 
-dist::
+all::
 	for f in $(DATED_FILES); do \
-	    ($(SED) -e "s;DATE;$(DATE);g" <$$f >$(DIST)/doc/$$f) \
+	    ($(SED) -e "s;DATE;$(DATE);g" <$$f >$(DEST)/$$f) \
 	done
 
-dist:: $(GENERATED_FILES) $(GENERATED_DOCUMENTS) $(GENERATED_IMAGES)
+all:: $(GENERATED_FILES) $(GENERATED_DOCUMENTS) $(GENERATED_IMAGES)
 	$(TAR) cf -							  \
 	  $(GENERATED_FILES) $(GENERATED_DOCUMENTS) $(GENERATED_IMAGES) | \
-	  tar xf - -C $(DIST)/doc/
+	  tar xf - -C $(DEST)/
 
-.PHONY: dist force
+.PHONY: all force
