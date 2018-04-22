@@ -1,0 +1,8 @@
+.build-house_management_stm32f4
+
+*.gen
+
+Digital_IO.impl
+House_Management.impl
+
+stairwell_stm32f4_demo

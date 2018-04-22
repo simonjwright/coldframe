@@ -1,0 +1,8 @@
+.build-house_management_arduino
+
+*.gen
+
+Digital_IO.impl
+House_Management.impl
+
+stairwell_arduino_demo

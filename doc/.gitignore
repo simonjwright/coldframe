@@ -1,0 +1,10 @@
+*.norm
+*.images
+*norm-stamp
+
+# Generated
+ColdFrameProfile.html
+Digital_IO.html
+House_Management.html
+self-events.png
+use-cases.html

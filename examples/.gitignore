@@ -1,0 +1,13 @@
+.build
+
+*.gen
+*.norm
+*.images
+*.ada
+*.norm-stamp
+*.tuml-norm-stamp
+
+Digital_IO.html
+House_Management.html
+
+stairwell_demo
