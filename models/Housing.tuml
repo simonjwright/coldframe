@@ -95,13 +95,13 @@ model Housing;
          Button has been pushed or released.
          For this kind of Button, actions a Button_Pushed event in case of \
          a push; a release is ignored. *)
-      public operation Changed(Pushed : Boolean);
+      protected operation Changed(Pushed : Boolean);
 
       (* This state entry action unsets the instance Timeout. *)
       private operation Clear_Timeout();
 
       (* This state entry action sets the instance Timeout to the \
-      required activation period. *)
+         required activation period. *)
       private operation Set_Timeout();
 
       /* ---------------------------------------- */
@@ -268,9 +268,9 @@ model Housing;
        in the real application, which will have real switches).
        Input_Signal is declared in Digital_IO, so the rules on visibility \
        of parental declarations are the same as Ada's. *)
-	  public class HCI
-    	public operation Set_Input (Of_Signal : Input_Signal, To : Boolean);
-		end; /* HCI */
+    public class HCI
+      public operation Set_Input (Of_Signal : Input_Signal, To : Boolean);
+    end; /* HCI */
 
   end; /* Digital_IO::Tcl */
 

@@ -1,43 +1,43 @@
-(require 'smie)
-(defvar tuml-smie-grammar
-  (smie-prec2->grammar
-   (smie-bnf->prec2
-    '(
-      (id)
-      ;;(ids (ids id) (id))
-      (id_list (id_list "," id) (id))
-      ;;(stereotype "[" idlist "]")
-      (package ("model" id namespace_contents "end" "."))
-      (namespace_contents (namespace_contents ";" top_level_element)
-                          (top_level_element))
-      (top_level_element ("class" class_def)
-                        ;; ("association" association_def)
-                         ("enumeration" enumeration_def)
-                         ("exception" exception_def)
-                         ("primitive" primitive_def)) ;; lots missing
-      (class_def (id ";" feature_decl_list "end"))
-      (feature_decl_list (feature_decl_list ";" feature_decl)
-                         (feature_decl))
-      (feature_decl (feature_type))
-      (feature_type (operation_decl)
-                    (attribute_decl))
-      (operation_decl ("operation" id "(" param_decl_list ")" ":" id)
-                      ("operation" id "("  ")" ":" id)
-                      ("operation" id "(" param_decl_list ")")
-                      ("operation" id "("  ")"))
-      (signature ("(" param_decl_list ")" id)
-                 ("(" param_decl_list ")"))
-      (param_decl_list (param_decl_list "," param_decl)
-                       (param_decl))
-      (param_decl (id ":" id ":=" id)
-                  (id ":" id))
-      (enumeration_def ("id" id_list "end"))
-      (exception_def (id))
-      (primitive_def (id)))
-    '((assoc ";") (assoc ":"))
-   )))
-
-(defun tuml-indentation-rule (method arg) nil)
+;; (require 'smie)
+;; (defvar tuml-smie-grammar
+;;   (smie-prec2->grammar
+;;    (smie-bnf->prec2
+;;     '(
+;;       (id)
+;;       ;;(ids (ids id) (id))
+;;       (id_list (id_list "," id) (id))
+;;       ;;(stereotype "[" idlist "]")
+;;       (package ("model" id namespace_contents "end" "."))
+;;       (namespace_contents (namespace_contents ";\" top_level_element)
+;;                           (top_level_element))
+;;       (top_level_element ("class" class_def)
+;;                         ;; ("association" association_def)
+;;                          ("enumeration" enumeration_def)
+;;                          ("exception" exception_def)
+;;                          ("primitive" primitive_def)) ;; lots missing
+;;       (class_def (id ";\" feature_decl_list "end"))
+;;       (feature_decl_list (feature_decl_list ";\" feature_decl)
+;;                          (feature_decl))
+;;       (feature_decl (feature_type))
+;;       (feature_type (operation_decl)
+;;                     (attribute_decl))
+;;       (operation_decl ("operation" id "(" param_decl_list ")" ":" id)
+;;                       ("operation" id "("  ")" ":" id)
+;;                       ("operation" id "(" param_decl_list ")")
+;;                       ("operation" id "("  ")"))
+;;       (signature ("(" param_decl_list ")" id)
+;;                  ("(" param_decl_list ")"))
+;;       (param_decl_list (param_decl_list "," param_decl)
+;;                        (param_decl))
+;;       (param_decl (id ":" id ":=" id)
+;;                   (id ":" id))
+;;       (enumeration_def ("id" id_list "end"))
+;;       (exception_def (id))
+;;       (primitive_def (id)))
+;;     '((assoc ";\") (assoc ":"))
+;;    )))
+;;
+;; (defun tuml-indentation-rule (method arg) nil)
 
 ;; (defvar tuml-constants
 ;;   '("reservedword1"
@@ -207,8 +207,14 @@
   ;; (modify-syntax-entry ?# "< b" tuml-mode-syntax-table)
   ;; (modify-syntax-entry ?\n "> b" tuml-mode-syntax-table)
 
-  ;; Note that there's no need to manually call `tuml-mode-hook'; `define-derived-mode'
-  ;; will define `tuml-mode' to call it properly right before it exits
+  (defun untabify-buffer ()
+    (untabify (point-min) (point-max)))
+
+  (add-hook 'before-save-hook 'untabify-buffer nil t)
+
+  ;; Note that there's no need to manually call `tuml-mode-hook';
+  ;; `define-derived-mode' will define `tuml-mode' to call it properly
+  ;; right before it exits
   )
 
 (provide 'tuml-mode)
