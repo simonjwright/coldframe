@@ -1,0 +1,466 @@
+<html>
+<head>
+<title>ColdFrame: Use of Ada Containers</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Use of Ada Containers</h1>
+
+<ul>
+
+<li><a href="#introduction">Introduction</a>
+
+<li><a href="#containers">The Containers</a>
+
+<li><a href="#instantiations">Standard Container instantiations</a>
+
+<li><a href="#vectors">Vectors</a>
+
+<!--
+<li><a href="#sets">Sets</a>
+
+<li><a href="#navigation">Navigation</a>
+-->
+
+<li>Operations
+
+<ul>
+
+<li><a href="#iteration">Iteration</a>
+
+<!--
+<li><a href="#copying">Copying</a>
+-->
+
+<li><a href="#filtering">Filtering</a>
+
+<li><a href="#sorting">Sorting</a>
+
+</ul>
+
+</ul>
+
+<h2><a name="introduction">Introduction</a></h2>
+
+<p>The current software architecture of ColdFrame
+uses <a href="http://www.adaic.org/resources/add_content/standards/05rm/html/RM-A-18.html">Ada
+2005 Containers</a>, which provide various ways of handling groups of
+things in
+<i>containers</i>.
+
+<p>In ColdFrame, for each non-&#171;singleton&#187; Class, there's a
+private means of holding all the current Instances of the class,
+together with public interfaces allowing the creation, finding,
+accessing and eventual deletion of instances.
+
+<p>As well as this, there is public support for obtaining and handling
+vectors (collections) of instances.
+
+<h2><a name="containers">The Containers</a></h2>
+
+<p>The container types used by generated code are
+<dl>
+
+<dt>Hashed_Maps <dd>for the internal storage of all the instances of a
+class when it's not possible to use an array. The Key is the class's
+Identifier record.
+
+<dt>Vectors <dd>for normal externally-visible aggregate
+manipulation.
+
+</dl>
+
+<p>In all cases the actual things contained (the "Element_Type"s) are
+Handles, ie pointers to instances of the class concerned. Allocation
+of instances is handled within the class's <tt>Create</tt> function,
+and deallocation in <tt>Delete</tt>.
+
+<p><a href="testing.html#stubs">Stubs</a> use Maps, Sets, and Vectors.
+
+<h2><a name="instantiations">Standard Container instantiations</a></h2>
+
+<p>Given the domain <tt><i>Domain</i></tt> and the class
+<tt><i>Class</i></tt>, the standard public Component instantiation (in
+the package <tt><i>Domain.Class</i></tt>) is the
+package <tt><i>Domain.Class</i>.Vectors</tt>, an instantiation
+of <tt>Ada.Containers.Vectors</tt> (or <tt>Bounded_Vectors</tt>) using
+<tt><i>Domain.Class</i>.Handle</tt>.
+
+<h2><a name="vectors">Vectors</a></h2>
+
+<p>ColdFrame provides three utility functions for dealing with
+variables of type <tt><i>Domain.Class</i>.Vectors.Vector</tt>,
+as child subprograms of <tt><i>Domain.Class</i></tt> (note, this means
+they have to be <tt>with</tt>ed individually):
+
+<dl>
+
+<dt>All_Instances
+
+<dd>returns all the current instances of <tt><i>Domain.Class</i></tt>:
+
+<pre>
+function <i>Domain.Class</i>.All_Instances
+   return <i>Domain.Class</i>.Vectors.Vector;
+</pre>
+
+<dt><a name="filter-function">Filter_Function</a>
+
+<dd>given a <tt>Vector</tt>, returns a new <tt>Vector</tt>
+containing just those instances for which <tt>Pass</tt> returns
+<tt>True</tt>:
+
+<pre>
+generic
+   with function Pass (This : Handle) return Boolean is <>;
+function <i>Domain.Class</i>.Filter_Function
+   (The_Vector : <i>Domain.Class</i>.Vectors.Vector)
+   return <i>Domain.Class</i>.Vectors.Vector;
+</pre>
+
+<dt><a name="selection-function">Selection_Function</a>
+
+<dd>returns all the current instances of <tt><i>Domain.Class</i></tt>
+for which <tt>Pass</tt> returns <tt>True</tt>:
+
+<pre>
+generic
+   with function Pass (This : Handle) return Boolean is <>;
+function <i>Domain.Class</i>.Selection_Function
+   return <i>Domain.Class</i>.Vectors.Vector;
+</pre>
+
+<dt>
+
+<!--
+<h2><a name="sets">Sets</a></h2>
+
+<p>In order to support some of the more complex <a
+href="#navigation">Navigations</a>, ColdFrame generates Set
+instantiations. These are of course available for other uses. The
+interesting operations provided are in
+<tt><i>Domain.Class</i>.Sets</tt>.
+
+<p>Considering two Sets of Tracks (actually, Track.Handle), <tt>H</tt>
+containing all the <i>Hostile</i> tracks and <tt>C</tt> containing all
+the <i>Close</i> tracks, the operations are as follows (note,
+functional versions are also available):
+
+<table border=1 cellpadding=2>
+
+<tr>
+<th>Procedure
+<th>Call
+<th>Result
+
+<tr>
+<td>
+<pre>
+procedure Union
+  (S : in out Set;
+   O : Set);
+</pre>
+
+<td><tt>Union (H, C)</tt>
+
+<td><tt>H</tt> holds all the tracks which are either <i>Hostile</i> or
+<i>Close</i> or both.
+
+<tr>
+<td>
+<pre>
+procedure Intersection
+  (S : in out Set;
+   O : Set);
+</pre>
+
+<td><tt>Intersection (H, C)</tt>
+
+<td><tt>H</tt> holds all the tracks which are both <i>Hostile</i> and
+<i>Close</i>.
+
+<tr>
+<td>
+<pre>
+procedure Difference
+  (S : in out Set;
+   O : Set);
+</pre>
+
+<td><tt>Difference (H, C)</tt>
+
+<td><tt>H</tt> holds all the tracks which are <i>Hostile</i> but not
+<i>Close</i>.
+
+</table>
+
+<h2><a name="navigation">Navigation</a></h2>
+
+<p>Another way of getting hold of Vectors is by use of navigation
+functions related to associations.
+
+<p><img src="navigation.jpg">
+
+<p>In the figure, the association <i>r3</i> is translated to the
+package <tt><i>Domain</i>.R3</tt> containing the operations
+
+<table border=1 cellpadding=2>
+
+<tr>
+<td>
+<pre>
+procedure Link
+  (Contributes_To : Track.Handle;
+   Is_Composed_Of : Sensor_Track.Handle);
+</pre>
+
+<td>Associates a Track and a Sensor Track.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+procedure Unlink
+  (Contributes_To : Track.Handle;
+   Is_Composed_Of : Sensor_Track.Handle);
+</pre>
+
+<td>Dissociates a Track and a Sensor Track.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Contributes_To
+  (T : Track.Handle)
+  return Sensor_Track.Vectors.Vector;
+</pre>
+
+<td>Given a Track, returns the <i>Vector</i> of Sensor_Tracks that
+contribute to it.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Contributes_To
+  (T : Track.Vectors.Vector)
+  return Sensor_Track.Vectors.Vector;
+</pre>
+
+<td>Given a <i>Vector</i> of Tracks, returns the <i>Vector</i>
+of Sensor_Tracks that contribute to them.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Is_Composed_Of
+  (ST : Sensor_Track.Handle)
+  return Track.Handle;
+</pre>
+
+<td>Given a Sensor Track, return the Track that is composed of
+it. Other Sensor Tracks may also be contributing.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Is_Composed_Of
+  (ST : Sensor_Track.Vectors.Vector)
+  return Track.Vectors.Vector;
+</pre>
+
+<td>Given a <i>Vector</i> of Sensor Tracks, return a
+<i>Vector</i> of all the Tracks composed of these (and possibly
+other) Sensor Tracks.
+
+</tr>
+
+</table>
+-->
+
+<h2>Operations</h2>
+
+<h3><a name="iteration">Iteration</a></h3>
+
+<p>For each Class, ColdFrame generates a generic procedure
+<tt><i>Domain.Class</i>.Iterate</tt>; it can be easier to
+<a href="#coldframe-iteration">use this</a> than to use the
+Containers' iteration facilities directly. Also, direct use means that
+your code is more closely tied than it need be to the current
+ColdFrame implementation strategy.
+
+<p>If you do need to use Container iteration, there are two forms:
+open and closed (Ada 2012 adds a third, much simpler, form).
+
+<p>With open iteration, you create an iterator or Cursor designating
+the first element of the container; while the cursor designates a
+valid element you process the element, then advance the cursor to the
+next element in the container it references. With closed iteration,
+you supply a procedure which gets called for each element in the
+container.
+
+<p>The operations on Cursors are all defined in
+<tt><i>Domain.Class</i>.Vectors</tt>.
+
+<p>The examples below are in terms of a pre-existing container
+<tt>The_Vector</tt>. You may take exception to the overloading of
+the name <tt>Process</tt>!
+
+<h4>Open iteration</h4>
+
+<pre>
+declare
+   It : <i>Class</i>.Vectors.Cursor := The_Vector.First;
+   use type <i>Class</i>.Vectors.Cursor;
+begin
+   while It /= <i>Class</i>.Vectors.No_Element loop
+      declare
+         H : <i>Class</i>.Handle := <i>Class</i>.Vectors.Element (It);
+      begin
+         -- do something with H
+      end;
+      <i>Class</i>.Vectors.Next (It);
+   end loop;
+end;
+</pre>
+
+<h4>Closed iteration</h4>
+
+<pre>
+declare
+   procedure Process (C : <i>Class</i>.Vectors.Cursor) is
+   begin
+      -- do something with <i>Class</i>.Vectors.Element (C)
+   end Process;
+begin
+    The_Vector.Iterate (Print'Access);
+end;
+</pre>
+
+<h4><a name="coldframe-iteration">Iteration using ColdFrame's
+<tt><i>Domain.Class</i>.Iterate</tt></a></h4>
+
+<pre>
+declare
+   procedure Process (H : <i>Class</i>.Handle);
+   pragma Inline_Always (Process);
+
+   procedure Process
+     is new <i>Class</i>.Iterate (Process);
+
+   procedure Process (H : <i>Class</i>.Handle) is
+   begin
+      -- do something with H
+   end Process;
+begin
+   Process (The_Vector);
+end;
+</pre>
+
+<!--
+<h3><a name="copying">Copying</a></h3>
+
+<p>If you're going to use the <a href="#sets">Set</a> operations,
+first catch your Set. The basic Containers used by ColdFrame (such as
+those produced by <a href="#navigation">navigations</a>) are
+Vectors.
+
+<p>The operation that supports conversion from Vector to Set, and
+vice versa, is provided by the generic <tt>BC.Copy</tt>.
+
+<p>Assuming the existence of <tt>Engaged_Tracks</tt> of type
+<tt>Track.Vectors.Vector</tt>, we could write
+
+<pre>
+declare
+
+   procedure Make_Set is new BC.Copy
+     (Item => Track.Handle,
+      Source => Track.Abstract_Containers,
+      From => Track.Vectors.Vector,
+      Target => Track.Abstract_Containers,
+      To => Track.Sets.Set,
+      Clear => Track.Sets.Clear,
+      Add => Track.Sets.Add);
+
+   Engaged_Track_Set : Track.Sets.Set;
+
+begin
+
+   Make_Set
+     (Input => Engaged_Tracks,
+      Output => Engaged_Track_Set);
+
+   -- operations with Engaged_Track_Set
+</pre>
+-->
+
+<h3><a name="filtering">Filtering</a></h3>
+
+<p>Most filtering requirements should be
+met by the generated <a
+href="#filter-function"><tt>Filter_Function</tt></a> and <a
+href="#selection-function"><tt>Selection_Function</tt></a> generics.
+
+<h3><a name="sorting">Sorting</a></h3>
+
+<p>The Ada Container Vectors provide a generic sorting facility in
+<tt><i>Domain.Class.</i>Vectors.Generic_Sort</tt>.
+
+<p>The resulting ordering is in terms of the function that
+instantiates the parameter <tt>"<"</tt>; the Element that is "less
+than" all the other Elements in the Vector will end up first. The sort
+should not be expected to be stable; that is, don't expect Elements
+which compare <tt>"="</tt> to remain in the same order.
+
+<p>An example of sorting by threateningness, assuming the existence of
+<tt>Candidate_Tracks</tt> of type
+<tt>Track.Vectors.Vector</tt>, is
+
+<pre>
+declare
+   function Is_More_Threatening (L, R : Track.Handle) return Boolean;
+
+   package Sorting is new Track.Vectors.Generic_Sort
+     ("<" => Is_More_Threatening);
+
+   function Is_More_Threatening (L, R : Track.Handle) return Boolean is
+   begin
+      return L.Time_Of_CPA < R.Time_Of_CPA;
+   end Is_More_Threatening;
+begin
+   Sorting.Sort (Candidate_Tracks);
+end;
+</pre>
+
+after which <tt>Candidate_Tracks.First_Element</tt> will
+return the track with the earliest <tt>Time_Of_CPA</tt> (<i>CPA</i>
+means <i>Closest Point of Approach</i>).
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

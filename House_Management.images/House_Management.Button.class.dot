@@ -1,0 +1,14 @@
+digraph "Button.class" {
+      graph [root=Button]
+      edge [fontsize=10]
+      node [shape=record, style=filled, fillcolor=lightgray, fontsize=10]
+
+      
+      Button [fillcolor=moccasin, URL="#Button", label="{Button|«id» Name : Button_Name|- «class» Changed()\n- «abstract» Changed()\n+ «abstract» Get_State(): Boolean\n# Notify_Connected_Lamps()}"]
+A1 [fillcolor=lightsteelblue, URL="#A1"]
+Timed_Button [URL="#Timed_Button"]
+Button -> A1 [label="A1", arrowhead=none, URL="#A1"]
+Timed_Button -> Button [label="Button", arrowhead=onormal, URL="#Button"]
+
+      }
+     

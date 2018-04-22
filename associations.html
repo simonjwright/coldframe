@@ -1,0 +1,311 @@
+<head>
+<title>ColdFrame: Associations</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Associations</h1>
+
+<ul>
+
+<li><a href="#modelling">Modelling</a>
+<ul>
+<li><a href="#role-names">Associations and role names</a>
+<li><a href="#multiplicity">Associations and multiplicity</a>
+<li><a href="#association-classes">Association classes</a>
+<li><a href="#formalising">Formalising associations</a>
+<ul>
+<li><a href="#complex-formalization">Complex formalization</a>
+<li><a href="#symmetric">Symmetric associations</a>
+</ul>
+</ul>
+
+<li><a href="#translation">Translation</a>
+<ul>
+<li><a href="#linking">Linking</a>
+<li><a href="#unlinking">Unlinking</a>
+<li><a href="#finding">Finding</a>
+<li><a href="#referential-attributes">Referential attributes</a>
+</ul>
+
+<li><a href="#use">Use</a>
+<ul>
+<li><a href="#using-navigational-operations">Using navigation operations</a>
+<li><a href="#maintaining-operations">Maintaining associations</a>
+</ul>
+
+</ul>
+
+<!--
+<h2>Motivation</h2>
+-->
+
+<h2><a name="modelling">Modelling</a></h2>
+
+<h3><a name="role-names">Associations and role names</a></h3>
+
+<p>Role names in associations are very important, and should be verbs
+or verb phrases. Each end of the association must be named; the object
+of the verb phrase is the class at the same end as the name, the
+subject is the class at the other end. So, for example, you might have
+<em>Window "appears on" Screen</em>, <em>Screen "displays"
+Window</em>.
+
+<p><img src="window-screen.jpg">
+
+<p>Often the role names will be inverses of each other, but
+sometimes things really do seem different depending on where you're
+standing.
+
+<h3><a name="multiplicity">Associations and multiplicity</a></h3>
+
+<p>You need to think carefully about the multiplicity of associations;
+they capture application rules and policies, which it's important to
+get right.
+
+<p>Clearly each <em>Screen</em> <em>"displays"</em> a number
+of <em>Window</em>s, but can a <em>Window</em> <em>"appear on"</em>
+more than one <em>Screen</em>? (perhaps, if you have multi-headed
+display capability). Can you have a <em>Window</em> which <em>"appears
+on"</em> no <em>Screen</em>s? (well, no, not if your display
+technology is X--in which case <em>"appears on"</em> may not be quite
+right either, since the application could be iconised).
+
+<p>Unconditional multiplicity is good; if each end of an association
+is conditional (0..1, 0..n), maybe you should think more carefully
+about it. Perhaps there's some super/subtype (<a
+href="generalizations.html">inheritance</a>) relationship lurking in
+there.
+
+<h3><a name="association-classes">Association classes</a></h3>
+
+<p>In the <a href="resources.html#build-object-models">Executable
+UML</a> view, an associative class implements an associative
+relationship. One reason for needing this is that the association is
+many-to-many; other reasons include the existence of attributes that
+only make sense while the association exists.
+
+<p>Previous versions of ColdFrame used Rational Rose, which
+implemented the association and the associative class as two different
+things. UML (and therefore ArgoUML) regard them as one thing,
+an <i>AssociationClass</i>.
+
+<p>ColdFrame merges the <i>class</i> and <i>association</i> aspects of
+an association class into one package.
+
+<h3><a name="formalising">Formalising associations</a></h3>
+
+<p>In the original Shlaer-Mellor method, associations and inheritance
+relationships needed to be "formalised" by the use of "referential
+attributes". Considering <em>Window "appears on" Screen</em>, where
+clearly there are many <em>Window</em>s but only one <em>Screen</em>,
+you'd need a referential attribute <em>screen&nbsp;id</em> in the
+<em>Window</em> instance.
+
+<p>ColdFrame, however,
+follows <a href="resources.html#build-object-models">Executable
+UML</a>; you usually don't need to provide referential attributes (it
+would be quite cumbersome to do so, since ArgoUML, as is typical for a
+UML tool, is unaware of the concept). Instead, ColdFrame automatically
+implements the relationships. Sometimes it needs a little help, for
+example for complex formalization or in a symmetric association.
+
+<h4><a name="complex-formalization">Complex formalization</a></h4>
+
+<p>Consider R8, <em>Licence</em> <em>"is issued by"</em> <em>Licensing
+Office</em>. The identifier of Licence consists of the licence number
+and also the issuing Licensing Office, since the various offices don't
+use disjoint licence number ranges. In this case, we'd specify the
+attribute as
+<pre>
+&#171;id&#187; Issuing_Office : Licensing_Office
+</pre>
+
+<p>and include the tag <tt>{formalizes=R8}</tt>.
+
+<h4><a name="symmetric">Symmetric associations</a></h4>
+
+<p>If you have a symmetrical association of multiplicity <i>1:1</i>,
+<i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>, ColdFrame requires
+you to tell it how the association is to be formalized.
+
+<p>You do this by marking one of the roles (<i>AssociationEnds</i>)
+with the stereotype <em>&#171;source&#187</em>.
+
+<h2><a name="translation">Translation</a></h2>
+
+<p>Each Association maps into
+
+<ul>
+
+<li>a package
+<tt><i>Domain.Association</i></tt>, which deals with linking,
+unlinking and navigation from single instances
+
+<li>a package
+<tt><i>Domain.Association</i>.From_Collections</tt>, which deals with
+navigation from collections of instances
+
+<li>a "referential attribute" (in one of the associated classes for a
+plain association, in the association class in the case of an
+association class).
+
+</ul>
+
+<h3><a name="linking">Linking</a></h3>
+
+<p>All association packages include a <tt>Link</tt> operation. In the
+case of the Library example <a href="#simple-association">below</a>,
+this would be
+<pre>
+procedure Link
+  (Is_On_Loan_To : Borrower.Handle;
+   Is_Borrowing : Book.Handle);
+</pre>
+
+<p>whereas if the association was implemented in an association
+class <i>Current Loan</i> (not a bad idea; where else would you put
+the date when the book is due for return?) the <tt>Link</tt> operation
+would be a function:
+<pre>
+function Link
+  (Is_On_Loan_To : Borrower.Handle;
+   Is_Borrowing : Book.Handle)
+  return Current_Loan.Handle;
+</pre>
+
+<h3><a name="unlinking">Unlinking</a></h3>
+
+<p>All association packages include an <tt>Unlink</tt> operation. In
+the case of the Library example <a
+href="#simple-association">below</a>, this would be
+<pre>
+procedure Unlink
+  (Is_On_Loan_To : Borrower.Handle;
+   Is_Borrowing : Book.Handle);
+</pre>
+
+<p>whereas if the association had had an association class <i>Current
+Loan</i> the <tt>Unlink</tt> operation would be
+<pre>
+procedure Unlink
+  (Current_Loan_Handle : Current_Loan.Handle);
+</pre>
+
+<p>Note that in this case <tt>Unlink</tt> doesn't actually delete the
+association instance; this is because you may have cleaning-up jobs to
+do (unlinking other associations with the association instance, for
+example).
+
+<h3><a name="finding">Finding</a></h3>
+
+<p>For associations in an associative class, a <tt>Find</tt> operation
+is generated in <tt><i>Domain.Association_Class</i></tt> which, given
+the handles of two potentially associated instances, returns the
+corresponding association class's handle (or <tt>null</tt>, of
+course).
+
+<h3><a name="referential-attributes">Referential attributes</a></h3>
+
+<p>The implementing referential attrubute, and its assciated "get",
+"set" operations are in the public part of the class package but
+aren't intended for general use; use the
+<tt><i>Domain.Association</i></tt> package's operations instead.
+
+<p>In the present implementation (10.ii.12), each navigation has a
+<i>natural</i> and a <i>hard</i> direction. The natural direction is
+from the class in which the referential attribute is
+implemented.
+
+<p>Normally you have no choice on where the referential attributes go;
+for example, in a <i>1:m</i> association, ColdFrame puts the
+referential attribute at the <i>many</i> end. However,
+in <a href="#symmetric">symmetric associations</a>, you should put the
+required <tt>{source}</tt> tag on the end that you want to be able to
+get to more efficiently.
+
+<h2><a name="use">Use</a></h2>
+
+<h3><a name="using-navigational-operations">Using navigation operations</a></h3>
+
+<p>It can be difficult to work out which of the navigation operations
+you need to use.
+
+<p><a name="simple-association"><img src="simple-association.png"></a>
+
+<p>In the diagram, <tt><i>Domain</i>.A2</tt> has two navigation
+operations:
+
+<ul>
+
+<li><tt>Is_Borrowing</tt> takes a <i>Book</i> (<tt>Book.Handle</tt>)
+parameter and returns a <i>Borrower</i> (<tt>Borrower.Handle</tt>),
+which may be <tt>null</tt>.
+
+<li><tt>Is_On_Loan_To</tt> takes a <i>Borrower</i> and returns a
+collection of <i>Books</i> (<tt>Book.Collections.Collection</tt>).
+
+</ul>
+
+<p>This is as though <i>is&nbsp;borrowing()</i> were an operation of
+<i>Book</i> and <i>is&nbsp;on&nbsp;loan&nbsp;to()</i> were an
+operation of <i>Borrower</i>.
+
+<p>It may help to ask yourself, as you write the assignment
+<pre>
+Borrower_H := A2.<i>what goes here</i> (Book_H);
+</pre>
+
+<blockquote>
+"what is the <i>result</i> that <i>role</i> this <i>starting
+instance</i>?"
+</blockquote>
+
+<p>which in this case is "what is the <i>Borrower</i> that <i>is
+borrowing</i> this <i>Book</i>?"
+
+<p><img src="reflexive.png">
+
+<p>It's more difficult with reflexive associations, and if you get it
+wrong the compiler won't be able to help you. The litte mnemonic above
+needs adjustment;
+
+<blockquote>
+"what is the <b>other</b> <i>Strategy</i> that
+<i>role</i> this <i>Strategy</i>"
+</blockquote>
+
+<p>and the answer is probably "<i>is fallback for</i>".
+
+<h3><a name="maintaining-operations">Maintaining associations</a></h3>
+
+<p>It's quite legal to have more than one association between a pair
+of classes. For example, A1 <i>Book is on loan to Borrower</i> for
+current loans, vs A2 <i>Book has been on loan to Borrower</i> for
+historical loans.
+
+<p>The navigation operations <tt>Is_On_Loan_To</tt>
+and <tt>Has_Been_On_Loan_To</tt> both return <em>temporary</em>
+collections of references to Book instances. You can't move a Book
+instance from A1 to A2 when it's returned by moving the references
+between these collections; instead, use <tt>A1.Unlink</tt>
+and <tt>A2.Link</tt>.
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

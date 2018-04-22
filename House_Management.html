@@ -1,0 +1,344 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C/DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:at="http://pushface.org/coldframe/attribute" xmlns:ut="http://pushface.org/coldframe/utilities" lang="en" xml:lang="en">
+   <head>
+      <meta http-equiv="Content-type" content="text/html; charset=iso-8859-1"></meta><style type="text/css">
+          * { margin : 0;
+          padding : 0;
+          }
+          html { font-family : Verdana, Arial, Helvetica, sans-serif;
+          font-size : 20pt;
+          }
+          body { font-size : 50%;
+          margin-left : .5em;
+          margin-right : .5em;
+          color : black;
+          background : white;
+          }
+          h1, h2, h3, h4, h5, h6 { margin : 0.1em; }
+          h1 { font-size : 1.7em;
+          text-transform : uppercase;
+          letter-spacing :.2em;
+          margin-top : .3em;
+          }
+          h2 { font-size : 1.5em;
+          margin-top : .2em;
+          }
+          h3 { font-size : 1.3em; }
+          h4 { font-size : 1.2em; }
+          h5 { font-size : 1.1em; }
+          h6 { font-size : 1em; }
+          p { margin : .1em 0 .1em 1em; }
+          dl { margin-left : 1em; }
+          dl dl { margin-left : 2em; }
+          ol, ul { margin-left : 2.2em; }
+          table { margin-left : 1em;
+          font-size : 100%;
+          border : thin solid black;
+          border-collapse : collapse;
+          empty-cells : show; }
+          th { border : thin solid black;
+          padding : 0.1em; }
+          td { border : thin solid black;
+          padding : 0.1em; }
+          tt { font-family : Courier, monospace;
+          font-size : 1.05em;
+          }
+          hr { margin-top : .5em; }
+        </style><title>House_Management</title>
+   </head>
+   <body>
+      <h1>House_Management</h1>
+      <p xmlns="">Copyright (C) Simon Wright &lt;simon@pushface.org&gt;</p>
+      <p xmlns="">     This package is free software; you can redistribute it and/or modify it      under terms of the GNU General Public License
+         as published by the Free      Software Foundation; either version 2, or (at your option) any later      version. This package
+         is distributed in the hope that it will be useful,      but WITHOUT ANY WARRANTY; without even the implied warranty of   
+         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU      General Public License for more details. You should
+         have received      a copy of the GNU General Public License distributed with this package;      see file COPYING. If not,
+         write to the Free Software Foundation, 59      Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+      </p>
+      <p xmlns="">     This domain represents an electronic household control system.</p>
+      <p xmlns="">     The first release only manages the stairwell lighting system.</p>
+      <h1>Contents</h1>
+      <h2>All classes</h2><map xmlns="" id="overall" name="overall">
+         <area shape="rect" id="node1" href="#A1" title="\N" alt="" coords="132,121,204,170">
+         <area shape="rect" id="node2" href="#Button" title="\N" alt="" coords="28,6,100,55">
+         <area shape="poly" id="edge2" href="#A1" title="A1" alt="" coords="88,53,149,119,145,123,84,57">
+         <area shape="rect" id="edge2-label" href="#A1" title="A1" alt="" coords="123,81,140,95">
+         <area shape="rect" id="node4" href="#Timed_Button" title="\N" alt="" coords="5,121,104,170">
+         <area shape="poly" id="edge3" href="#Button" title="Button" alt="" coords="60,68,59,80,57,121,52,121,53,80,55,68">
+         <area shape="rect" id="edge3-label" href="#Button" title="Button" alt="" coords="56,81,93,95">
+         <area shape="rect" id="node3" href="#Lamp" title="\N" alt="" coords="135,6,207,55">
+         <area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="173,55,171,121,166,121,167,55">
+         <area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="171,81,188,95"></map><img src="House_Management.images/House_Management.overall.png" border="0" ismap="true" usemap="#overall" alt="Class diagram for House_Management"></img><h2>Private Classes</h2>
+      <ul>
+         <li xmlns=""><a href="#A1">A1</a></li>
+         <li xmlns=""><a href="#Button">Button</a></li>
+         <li xmlns=""><a href="#Lamp">Lamp</a></li>
+         <li xmlns=""><a href="#Timed_Button">Timed_Button</a></li>
+      </ul>
+      <h2>Inheritance relationships</h2>
+      <ul>
+         <li xmlns=""><a href="#Button">Button</a></li>
+      </ul>
+      <h2>Types</h2>
+      <ul>
+         <li xmlns=""><a href="#Button_Name">Button_Name</a></li>
+         <li xmlns=""><a href="#Input_Signal_State">Input_Signal_State</a></li>
+         <li xmlns=""><a href="#Lamp_Name">Lamp_Name</a></li>
+         <li xmlns=""><a href="#Output_Signal">Output_Signal</a></li>
+      </ul>
+      <hr></hr>
+      <h1>Private Classes</h1>
+      <h2 xmlns=""><a name="A1">A1</a></h2><map xmlns="" id="A1.class" name="A1.class">
+         <area shape="rect" id="node1" href="#A1" title="{A1||}" alt="" coords="176,5,248,83">
+         <area shape="rect" id="node2" href="#Button" title="\N" alt="" coords="347,19,419,69">
+         <area shape="poly" id="edge2" href="#A1" title="A1" alt="" coords="248,41,347,41,347,47,248,47">
+         <area shape="rect" id="edge2-label" href="#A1" title="A1" alt="" coords="280,29,297,44">
+         <area shape="rect" id="node3" href="#Lamp" title="\N" alt="" coords="5,19,77,69">
+         <area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="176,47,77,47,77,41,176,41">
+         <area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="109,29,127,44"></map><img xmlns="" src="House_Management.images/House_Management.A1.class.png" border="0" ismap="true" usemap="#A1.class" alt="Context class diagram for A1"><p xmlns="">This is an Association Class.</p>
+      <h3 xmlns="">Roles</h3>
+      <p xmlns=""><a href="#Button">Button</a> (1..n) <i>Controls</i> (1..n) <a href="#Lamp">Lamp</a></p>
+      <p xmlns=""><a href="#Lamp">Lamp</a> (1..n) <i>Is_Controlled_By</i> (1..n) <a href="#Button">Button</a></p>
+      <h2 xmlns=""><a name="Button">Button</a></h2><map xmlns="" id="Button.class" name="Button.class">
+         <area shape="rect" id="node1" href="#Button" title="{Button|&laquo;id&raquo; Name : Button_Name|- &laquo;class&raquo; Changed()\n- &laquo;abstract&raquo; Changed()\n+ &laquo;abstract&raquo; Get_State(): Boolean\n# Notify_Connected_Lamps()}" alt="" coords="201,5,405,127">
+         <area shape="rect" id="node2" href="#A1" title="\N" alt="" coords="515,41,587,91">
+         <area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="406,63,515,63,515,69,406,69">
+         <area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="443,51,460,66">
+         <area shape="rect" id="node3" href="#Timed_Button" title="\N" alt="" coords="5,41,105,91">
+         <area shape="poly" id="edge2" href="#Button" title="Button" alt="" coords="106,63,187,63,187,69,106,69">
+         <area shape="rect" id="edge2-label" href="#Button" title="Button" alt="" coords="109,51,146,66"></map><img xmlns="" src="House_Management.images/House_Management.Button.class.png" border="0" ismap="true" usemap="#Button.class" alt="Context class diagram for Button"><p xmlns="">There is a pushbutton on each landing. Each pushbutton controls        a number of Lamps; if any of the controlling Buttons
+         is set, the        controlled Lamp is lit.
+      </p>
+      <p xmlns="">Supertype in <a href="#Button">Button</a>.
+         
+      </p>
+      <h3 xmlns="">Identifying attributes</h3>
+      <dl xmlns="">
+         <dt>Name : <a href="#Button_Name">Button_Name</a></dt>
+         <dd>
+            <p>Each Button is uniquely identified by its name. The name corresponds          to the geographical location of the button.</p>
+         </dd>
+      </dl>
+      <h3 xmlns="">Private class operations</h3>
+      <dl xmlns="">
+         <dt><a name="Button.Changed">Changed</a></dt>
+         <dd>
+            <p>Acts as receiver of state changes from Digital IO, via          Signal State Callback. Calls the instance Changed so the Button
+                        can take the appropriate action.
+            </p>
+            <p>Parameters:</p>
+            <dl>
+               <dt>S : in <a href="#Input_Signal_State">Input_Signal_State</a></dt>
+               <dd></dd>
+            </dl>
+         </dd>
+      </dl>
+      <h3 xmlns="">Public instance operations</h3>
+      <dl xmlns="">
+         <dt><a name="Button.Get_State">Get_State</a>, abstract returns Boolean
+         </dt>
+         <dd></dd>
+      </dl>
+      <h3 xmlns="">Protected instance operations</h3>
+      <dl xmlns="">
+         <dt><a name="Button.Notify_Connected_Lamps">Notify_Connected_Lamps</a></dt>
+         <dd>
+            <p>Called to indicate to connected Lamps that the Button's state          has changed.</p>
+         </dd>
+      </dl>
+      <h3 xmlns="">Private instance operations</h3>
+      <dl xmlns="">
+         <dt><a name="Button.Changed">Changed</a>, abstract
+         </dt>
+         <dd>
+            <p>Called to indicate that the Button has been pushed or released.</p>
+            <p>Parameters:</p>
+            <dl>
+               <dt>Pushed : in Boolean</dt>
+               <dd></dd>
+            </dl>
+         </dd>
+      </dl>
+      <h3 xmlns="">Associations</h3>
+      <ul xmlns="">
+         <li><a href="#A1">A1</a></li>
+      </ul>
+      <h2 xmlns=""><a name="Lamp">Lamp</a></h2><map xmlns="" id="Lamp.class" name="Lamp.class">
+         <area shape="rect" id="node1" href="#Lamp" title="{Lamp|&laquo;id&raquo; Name : Lamp_Name|- &laquo;class&raquo; Initialize()\n+ Changed()\n- Output_For_Lamp(): Output_Signal}" alt="" coords="5,5,229,112">
+         <area shape="rect" id="node2" href="#A1" title="\N" alt="" coords="325,34,397,83">
+         <area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="229,56,325,56,325,61,229,61">
+         <area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="260,44,277,59"></map><img xmlns="" src="House_Management.images/House_Management.Lamp.class.png" border="0" ismap="true" usemap="#Lamp.class" alt="Context class diagram for Lamp"><p xmlns="">There is a lamp between each pair of landings.</p>
+      <p xmlns="">       When the lamp is activated, it comes on for a preset period.</p>
+      <p xmlns="">       If it is activated again while it is still on, the activation period        is extended by the preset period.</p>
+      <h3 xmlns="">Identifying attributes</h3>
+      <dl xmlns="">
+         <dt>Name : <a href="#Lamp_Name">Lamp_Name</a></dt>
+         <dd>
+            <p>Each Lamp is uniquely identified by its name. The name corresponds          to the geographical location of the lamp.</p>
+         </dd>
+      </dl>
+      <h3 xmlns="">Private class operations</h3>
+      <dl xmlns="">
+         <dt><a name="Lamp.Initialize">Initialize</a>, class initialization
+         </dt>
+         <dd>
+            <p>This operation initializes the Lamps and Buttons.</p>
+         </dd>
+      </dl>
+      <h3 xmlns="">Public instance operations</h3>
+      <dl xmlns="">
+         <dt><a name="Lamp.Changed">Changed</a></dt>
+         <dd>
+            <p>This operation is used by a linked Button to tell the Lamp          to evaluate all its linked Buttons to see if any are Set
+               (in which          case the Lamp should be lit) or all are Reset (in which case the          Lamp should be off).
+            </p>
+         </dd>
+      </dl>
+      <h3 xmlns="">Private instance operations</h3>
+      <dl xmlns="">
+         <dt><a name="Lamp.Output_For_Lamp">Output_For_Lamp</a> returns <a href="#Output_Signal">Output_Signal</a></dt>
+         <dd>
+            <p>Maps the Lamp to the corresponding Digital_IO output pin.</p>
+         </dd>
+      </dl>
+      <h3 xmlns="">Associations</h3>
+      <ul xmlns="">
+         <li><a href="#A1">A1</a></li>
+      </ul>
+      <h2 xmlns=""><a name="Timed_Button">Timed_Button</a></h2><map xmlns="" id="Timed_Button.class" name="Timed_Button.class">
+         <area shape="rect" id="node1" href="#Timed_Button" title="{Timed_Button|Timeout : Timer|+ Changed()\n- Clear_Timeout()\n+ Get_State(): Boolean\n- Set_Timeout()}" alt="" coords="5,5,151,127">
+         <area shape="rect" id="node2" href="#Button" title="\N" alt="" coords="247,41,319,91">
+         <area shape="poly" id="edge1" href="#Button" title="Button" alt="" coords="233,69,151,69,151,63,233,63">
+         <area shape="rect" id="edge1-label" href="#Button" title="Button" alt="" coords="155,51,192,66"></map><img xmlns="" src="House_Management.images/House_Management.Timed_Button.class.png" border="0" ismap="true" usemap="#Timed_Button.class" alt="Context class diagram for Timed_Button"><p xmlns="">When a Timed Button is pushed, it remains set for a preset period.</p>
+      <p xmlns="">       If it is pushed again while it is still set, the set period        is extended by the preset period.</p>
+      <p xmlns="">Subtype of <a href="#Button">Button</a> in <a href="#Button">Button</a>.
+         
+      </p>
+      <h3 xmlns="">Normal attributes</h3>
+      <dl xmlns="">
+         <dt>Timeout : Timer</dt>
+         <dd>
+            <p>This ColdFrame Timer is used to reset the Button at the end of          its activation period.</p>
+         </dd>
+      </dl>
+      <h3 xmlns="">States</h3>
+      <dl xmlns="">
+         <dt><a name="Timed_Button.Initial">Initial</a></dt>
+         <dd></dd>
+         <dt><a name="Timed_Button.Reset">Reset</a></dt>
+         <dd></dd>
+         <dt><a name="Timed_Button.Set">Set</a></dt>
+         <dd></dd>
+      </dl>
+      <h3 xmlns="">Events</h3>
+      <dl xmlns="">
+         <dt><a name="Timed_Button.Button_Push">Button_Push</a></dt>
+         <dd></dd>
+         <dt><a name="Timed_Button.Timeout">Timeout</a></dt>
+         <dd></dd>
+      </dl>
+      <h3 xmlns="">State-Event Matrix</h3>
+      <table xmlns="" border="1" summary="State machine for Timed_Button">
+         <tr>
+            <th rowspan="2">State</th>
+            <th rowspan="2">Entry Action(s)</th>
+            <th colspan="2">Event</th>
+            <th rowspan="2">Drop-through</th>
+         </tr>
+         <tr>
+            <th>Button_Push</th>
+            <th>Timeout</th>
+         </tr>
+         <tr>
+            <td><a href="#Timed_Button.Initial">Initial</a></td>
+            <td><i>none</i></td>
+            <td><i>can't happen</i></td>
+            <td><i>can't happen</i></td>
+            <td>Reset</td>
+         </tr>
+         <tr>
+            <td><a href="#Timed_Button.Reset">Reset</a></td>
+            <td><i>none</i></td>
+            <td>Set/<br><a href="#Timed_Button.Notify_Connected_Lamps">Notify_Connected_Lamps</a></td>
+            <td><i>can't happen</i></td>
+            <td><i>none</i></td>
+         </tr>
+         <tr>
+            <td><a href="#Timed_Button.Set">Set</a></td>
+            <td><a href="#Timed_Button.Set_Timeout">Set_Timeout</a></td>
+            <td>Set/<br><a href="#Timed_Button.Clear_Timeout">Clear_Timeout</a></td>
+            <td>Reset/<br><a href="#Timed_Button.Notify_Connected_Lamps">Notify_Connected_Lamps</a></td>
+            <td><i>none</i></td>
+         </tr>
+      </table>
+      <h3 xmlns="">State Diagram</h3><img xmlns="" src="House_Management.images/House_Management.Timed_Button.state.png" border="0" alt="State diagram for House_Management.Timed_Button"><h3 xmlns="">Public instance operations</h3>
+      <dl xmlns="">
+         <dt><a name="Timed_Button.Changed">Changed</a></dt>
+         <dd>
+            <p>This overriding implementation is called to indicate that the          Button has been pushed or released.</p>
+            <p>         For this kind of Button, actions a Button_Pushed event in case of          a push; a release is ignored.</p>
+            <p>Parameters:</p>
+            <dl>
+               <dt>Pushed : in Boolean</dt>
+               <dd></dd>
+            </dl>
+         </dd>
+         <dt><a name="Timed_Button.Get_State">Get_State</a> returns Boolean
+         </dt>
+         <dd>
+            <p>This overriding implementation returns the current state of the          Timed Button (True =&gt; on)</p>
+         </dd>
+      </dl>
+      <h3 xmlns="">Private instance operations</h3>
+      <dl xmlns="">
+         <dt><a name="Timed_Button.Clear_Timeout">Clear_Timeout</a></dt>
+         <dd>
+            <p>This state entry action unsets the instance Timeout.</p>
+         </dd>
+         <dt><a name="Timed_Button.Set_Timeout">Set_Timeout</a></dt>
+         <dd>
+            <p>This state entry action sets the instance Timeout to the       required activation period.</p>
+         </dd>
+      </dl>
+      <h1>Inheritance relationships</h1>
+      <h2 xmlns=""><a name="Button">Button</a></h2>
+      <h3 xmlns="">Superclass</h3>
+      <p xmlns=""><a href="#Button">Button</a></p>
+      <h3 xmlns="">Children</h3>
+      <ul xmlns="">
+         <li><a href="#Timed_Button">Timed_Button</a></li>
+      </ul>
+      <h1>Types</h1>
+      <h2 xmlns=""><a name="Button_Name">Button_Name</a></h2>
+      <p xmlns="">There is a pushbutton on each landing. This type names        the pushbuttons.</p>
+      <p xmlns="">An enumeration, with literals:</p>
+      <ul xmlns="">
+         <li>Basement</li>
+         <li>Ground_Floor</li>
+         <li>First_Floor</li>
+         <li>Second_Floor</li>
+      </ul>
+      <h2 xmlns=""><a name="Input_Signal_State">Input_Signal_State</a></h2>
+      <p xmlns="">This type is used by the supporting Digital IO domain to report        input (switch) state changes.</p>
+      <p xmlns="">Imported from <tt>Digital_IO</tt>.
+      </p>
+      <h2 xmlns=""><a name="Lamp_Name">Lamp_Name</a></h2>
+      <p xmlns="">There is a lamp beween each pair of landings. This type names the        lamps; the name is that of the landing on whose ceiling
+         the lamp is        fixed.
+      </p>
+      <p xmlns="">An enumeration, with literals:</p>
+      <ul xmlns="">
+         <li>Basement</li>
+         <li>Ground_Floor</li>
+         <li>First_Floor</li>
+         <li>Second_Floor</li>
+      </ul>
+      <h2 xmlns=""><a name="Output_Signal">Output_Signal</a></h2>
+      <p xmlns="">This type is used by the supporting Digital IO domain to name        outputs (lamps).</p>
+      <p xmlns="">Imported from <tt>Digital_IO</tt>.
+      </p>
+   </body>
+</html>

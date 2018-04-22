@@ -1,0 +1,2243 @@
+<html>
+<head>
+<title>ColdFrame: Releases</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Releases</h1>
+
+<hr>
+
+<p>You can <a href="https://sourceforge.net/p/coldframe/code/">access
+the Mercurial Repository to browse or download</a>.
+
+<p>Release archives can be
+downloaded <a href="http://sourceforge.net/projects/coldframe/files/coldframe/">here</a>.
+
+<p>Archives are available in <tt>.zip</tt> or <tt>.tgz</tt>
+(<tt>.tar.gz</tt>) form. The file name encodes the date of the
+release: <tt>cf-<font color="blue">20010130</font>.zip</tt> was the
+zipped release of 30 January 2001.
+
+<p>You'll sometimes see a suffix on the date, for example
+<tt>20050503hg</tt>. The meanings are
+
+<table border="1">
+
+<tr><th>Suffix <th>Meaning <th>Tagged
+
+<tr><td>- <td>full release <td>yes
+
+<tr><td>p1, p2... <td>patch release <td>yes
+
+<tr><td>a, b... <td>candidate release <td>yes
+
+<tr><td>hg <td>from Mercurial <td>no
+
+<tr><td>cvs <td>from CVS (historical)<td>no
+
+<tr><td>t, u... <td>temporary <td>no
+
+</table>
+
+<dl id="release">
+
+<!-- The D A T E gets substituted by the Makefile with the current release.
+     Don't use D A T E elsewhere! -->
+
+<!--
+<dt>dist
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li><b>Modelling</b>
+
+<li><b>Generation</b>
+
+<li><b>Code</b>
+
+<li><b>Testing</b>
+
+<li><b>Installation</b>
+
+</ul>
+-->
+
+<dt>20151101
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li>This is a major release, which merges the Association and Class
+aspects of an AssociationClass into one package.
+
+<li><b>Modelling</b>
+
+<li>The <i>&#171;association-class-naming&#187;</i> stereotype and the
+associated <i>{association-name}</i> and <i>{class-name}</i> tags are
+no longer interpreted, and will be removed from the profile at a later
+date.
+
+<li><b>Generation</b>
+
+<li>An AssociationClass is coded as a package containing both class
+and association aspects.
+
+<li>The <tt><i>Domain.Class</i>.Vectors</tt> package is generated in
+the class package rather than as a child package.
+
+<li>The default storage pool is used rather than ColdFrame-provided
+ones.
+
+<li><b>Code</b>
+
+<li>Fixed
+bug <a href="http://sourceforge.net/p/coldframe/bugs/87/">87</a>
+(Invalidated events use queue space).
+
+<li><b>Testing</b>
+
+<li>Included a demonstration program of Ravenscar features for the
+Arduino Due.
+
+</ul>
+
+<dt>20150415
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li>This is a major release; ColdFrame is targeted at Ada 2012. It uses
+Bounded containers when possible. Alternative Ravenscar-compatible
+code generation is provided.
+
+<li><b>Modelling</b>
+
+<li>In Ravenscar mode, classes can't be &#171;active&#187;, and the
+maximum number of instances of each class must be bounded; either
+naturally (making the identifier be an enumerated type, for instance)
+or by use of &#171;cardinality&#187;. Strings in identifiers (bounded
+or unbounded) aren't supported.
+
+<li><b>Generation</b>
+
+<li>If the environment/Makefile variable <tt>PROFILE</tt> is set to
+other than the default <tt>standard</tt>, the generated code is
+Ravenscar-compliant.
+
+<li> <i>Filter_Function</i> was still generated using the Booch
+Components.
+
+<li><b>Code</b>
+
+<li>Provided a Ravenscar-compliant runtime.
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/24/">24</a>
+(Doesn't detect state machine error).
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/85/">85</a>
+(Incompatibility with ArgoUML 0.35.1).
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/86/">86</a>
+(Finalize stereotype on operation ignored).
+
+<li><b>Testing</b>
+
+<li>Included support for
+<a href="http://coldframe.sourceforge.net/scripted_testing/">scripted testing</a>.
+
+<li>Included a demonstration program of Ravenscar features for the
+STM32F429I Discovery board from STMicroelectronics.
+
+<li> <tt>ColdFrame.Stubs</tt> supports retrieving the value passed in
+one parameter when another parameter last had a given value; useful
+for checking what was passed to a <i>Set (Key, Value)</i>
+operation. This is in response to
+bug <a href="https://sourceforge.net/p/coldframe/bugs/84/">84</a>.
+
+<li> <tt>ColdFrame.Stubs.Number_Of_New_Calls</tt> reports the number
+of calls since the last call
+to <tt>ColdFrame.Stubs.Save_Number_Of_Calls</tt>.
+
+<li> Removed the special value <tt>ColdFrame.Stubs.Last</tt>
+(<tt>0</tt>, which is the default
+for <tt>Get_Input_Value</tt>'s <tt>For_Call</tt>, does just as well).
+
+<li><b>Installation</b>
+
+<li>Although there is no reason why a Ravenscar-compliant build should
+not be run in any environment, the supplied configuration (see
+<tt>ColdFrame_Ravenscar.gpr</tt> and <tt>Options_Ravenscar.gpr</tt>)
+is targeted to the STM32F429I Discovery board from STMicroelectronics,
+using the runtime system at
+the <a href="https://sourceforge.net/projects/stm32f4-gnat-rts/">STM32F4
+GNAT Run Time System</a>.
+
+</ul>
+
+<dt>20140422
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li> This is a major release; ColdFrame is now targeted at Ada
+2005. It uses Ada.Containers instead of the Booch Components.
+
+<li><b>Modelling</b>
+
+<li> <a href="ColdFrameProfile.html#st-convention">&#171;convention&#187;</a>
+is supported for types and operations, in response to
+bug <a href="https://sourceforge.net/p/coldframe/bugs/81/">81</a>.
+
+<li> <a href="ColdFrameProfile.html#st-cardinality">
+&#171;cardinality&#187;</a>
+and <a href="ColdFrameProfile.html#st-utility">&#171;utility&#187;</a>
+are supported for classes.
+
+<li> &#171;callback&#187; can now be applied to (class) operations
+which are to receive callbacks from other, lower-level, domains.
+
+<li> Supports the
+tag <a href="ColdFrameProfile.html#st-imported-tag-hash"><tt>{hash=<i>style</i>}</tt></a>
+for <a href="ColdFrameProfile.html#st-imported">&#171;imported&#187;</a>
+and <a href="ColdFrameProfile.html#st-renaming">&#171;renaming&#187;</a>
+types.
+
+<li><b>Generation</b>
+
+<li> Uses Ada.Containers. The most obvious effect of this is that <tt><i>Domain.Class</i>.Collections.Collection</tt> has become <tt><i>Domain.Class</i>.Vectors.Vector</tt>.
+
+<li> Inheritance arrowheads were missing on generated diagrams.
+
+<li> Improved detection of the use of invalid names.
+
+<li><b>Code</b>
+
+<li> Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/83/">83</a>
+(Timed event not invalidated on instance deletion). This was a very
+obscure bug, which is present in all earlier releases of ColdFrame; to
+trigger it, you need two timed events for the same instance, where the
+first event's handler deletes the instance.
+
+<li> For &#171;callback&#187; operations, code is generated to
+
+<ul>
+
+<li> register with the callback provider at domain initialization,
+
+<li> create class events to transfer the data into the receiver
+domain's context, and
+
+<li> support teardown for unit test.
+
+</ul>
+
+<li><b>Installation</b>
+
+<li> You no longer need to have the Booch Components available.
+
+</ul>
+
+<dt>20130621
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+This is a maintenance release.
+
+<li><b>Modelling</b>
+
+<li>Included the package stereotype &#171;ignore&#187; (the package,
+and any child packages, are to be completely ignored) in response to
+support
+request <a href="https://sourceforge.net/p/coldframe/support-requests/5/">5</a>
+(Domain Subpackage &#171;hand-coded&#187; Stereotype).
+
+<li><b>Generation</b>
+
+<li>Added extra checks on &#171;access&#187; and &#171;constraint&#187;.
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/75/">75</a> (Mac
+OS X Mountain Lion problem).
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/79/">79</a> (a
+function's result type wasn't normalized).
+
+<li>Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/80/">80</a>
+(Interrupt Handling example doesn't compile on Windows/Cygwin).
+
+<li><b>Testing</b>
+
+<li>The Interrupt_Handling example uses SIGINT (crtl-C), not SIGHUP.
+
+</ul>
+
+<dt>20130420
+
+<dd>
+<ul class="release">
+
+<li><b>Modelling</b>
+
+<li>Added DataType stereotype &#171;constraint&#187; with
+tags <tt>{constrains}</tt> (names the type to be
+constrained), <tt>lower</tt>, and <tt>upper</tt>, in response to the
+support
+request <a href="https://sourceforge.net/p/coldframe/support-requests/3/">Declaration
+of Datatypes as Integer Ranges</a>.
+
+</ul>
+
+<dt>20130413
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li>This is a maintenance release.
+
+<li><b>Generation</b>
+
+<li> Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/60/">60</a>
+(Can't have negative values for Integer identifier components).
+
+<li> Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/63/">63</a>
+(Constraint error navigating n:1 from (null)).
+
+<li> Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/74/">74</a>
+(Confusing document generated for access-to-operation).
+
+<li><b>Testing</b>
+
+<li> Fixed
+bug <a href="https://sourceforge.net/p/coldframe/bugs/76/">76</a>
+(Test cases don't compile).
+
+<li><b>Installation</b>
+
+<li>The script to convert case exception data from Emacs to GPS format
+(<tt>scripts/case_exceptions.py</tt>) has been made executable.
+
+<li><b>Documentation</b>
+
+<li> Links changed to match migration of the ColdFrame Sourceforge
+project to the new Allura platform.
+
+</ul>
+
+<dt>20120324
+
+<dd>
+<ul class="release">
+
+<li><b>Modelling</b>
+
+<li>Added &#171;bounded-string&#187;, &#171;discriminated&#187;,
+&#171;fixed-string&#187; and &#171;protected&#187;.
+
+<li>Reworked <i>AssociationClass</i> handling; the stereotype is now
+&#171;association-class-naming&#187;, and you can
+specify <tt>{association-name}</tt>, <tt>{class-name}</tt>, or both
+(though that would add another layer of confusion).
+
+<li>You can specify the <i>discriminator</i> of
+a <i>Generalization</i>, which has the advantage of appearing on the
+class diagram. If you specify both the name and the discriminator,
+they have to match.
+
+<li><b>Generation</b>
+
+<li>Progress is only traced if <i>make</i> is
+given <tt>VERBOSE=yes</tt>.
+
+<li><b>Testing</b>
+
+<li> Added <tt>example/</tt> and <tt>test/</tt> code.
+
+<li>Noted that many of the tests use AUnit 3 (as supplied with GNAT
+GPL 2011), and aren't compatible with the AUnit 1.03 provided with
+Debian (up to <i>wheezy</i>).
+
+<li><b>Installation</b>
+
+<li>Changes for Debian 6 compatibility
+(see <a href="installation.html">installation notes</a>).
+
+</ul>
+
+<dt>20120219
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li>ColdFrame can't currently be installed on Windows or Debian
+(problems with TclXML). This has prompted a long-overdue move from
+modelling with Rational Rose to modelling
+with <a href="http://argouml.tigris.org/">ArgoUML</a>.
+
+<li>Unfortunately there's no easy route from a Rose model to an ArgoUML
+one, but Rose has never been freely available.
+
+<li>The changes to ColdFrame's source are on the <i>ArgoUML</i> branch
+in the Sourceforge repository. The Rose version is on
+the <i>RationalRose</i> branch (currently the same as the default).
+
+<li>The old <tt>.raw</tt> files and related scripts are no longer
+used. Instead, the ArgoUML <tt>.uml</tt> model files, containing XMI,
+are converted directly to ColdFrame's <tt>.norm</tt> format, and code
+is then generated as before. The conversion is done by an Ada program
+(<i>normalize_xmi</i>), which
+uses <a href="resources.html#xml">XIA</a> (a copy is included with
+ColdFrame).
+
+<li><b>Modelling</b>
+
+<li>ColdFrame's previous profile hasn't been completely migrated
+yet. The main omissions are the data typing options, for example
+constraints, conventions, and modular types. A lot of the problem is
+the UML 1.4 preference for tagged values to be regarded as properties
+of stereotypes, which leads to
+some <a href="classes.html#class-abbreviation">contortions</a>.
+
+<li>See the model <i>ColdFrame_Examples.uml</i> in the <tt>models/</tt>
+subdirectory for example models.
+
+<li>The ability to extend ColdFrame's processing (by using your own
+profile and code generation) isn't supported; unrecognised stereotypes
+and tagged values are ignored. This may change.
+
+<li><b>Code</b>
+
+<li>Implemented a workround for a bug in GNAT GPL
+2011/<a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=50934">GCC
+4.7</a>
+
+<li><b>Testing</b>
+
+<li>AUnit (version 3),
+the <a href="https://sourceforge.net/projects/booch95/">Booch
+Components</a>
+and <a href="https://sourceforge.net/projects/tcladashell/">TclAdaShell</a>
+(for <tt>examples/</tt>) are expected to be installed or
+on <tt>ADA_PROJECT_PATH</tt>.
+
+<li><b>Installation</b>
+
+<li>Much changed, please see
+the <a href="installation.html">documentation</a>.
+
+</ul>
+
+<dt>20110720
+
+<dd>
+<ul class="release">
+
+<li><b>Generation</b>
+
+<li>Generated HTML for instance events didn't select the right
+payload.
+
+<li>Generated HTML includes simple hyperlinked class diagram and
+exceptions.
+
+<li>Diagrams in generated HTML are optional.
+
+<li>Removed no-longer-relevant warnings about singletons in
+associations.
+
+<li>The Make option <tt>CHECKING</tt> (default <tt>strict</tt>)
+demotes some relatively benign errors to warnings. These include
+
+<ul>
+
+<li>Multiple declarations of the same type. No check is made that the
+declarations are the same, and no promises are made as to which will
+be chosen if they are different.
+
+<li>Missing types: a child domain can use types declared in its
+parent.
+
+</ul>
+
+<li><b>Code</b>
+
+<li>Code is compatible with Ada 2005 (but doesn't use any new
+features, so remains compatible with Ada 95 as well).
+
+<li>For classes whose maximum number of instances is known,
+raise <tt>Too_Many_Instances</tt> instead of <tt>Storage_Error</tt> if
+this number is exceeded.
+
+<li>Work round a GNAT 3.16a1 memory leak problem with <tt>Find</tt>
+and class <tt>Delete</tt> for unbounded classes.
+
+<li>When an instance of an active class is deleted, its task is only
+deleted after it has terminated.
+
+<li>Added informative text to generated assertions.
+
+<li><b>Testing</b>
+
+<li><tt>ColdFrame.Stubs.Get_Input_Value</tt>'s <tt>For_Call</tt>
+parameter is extended:
+<ul>
+
+<li>Positive values denote the indicated call.
+
+<li>You can specify the last call by supplying <tt>0</tt> as well
+as <tt>ColdFrame.Stubs.Last</tt>.
+
+<li>Negative values denote previous calls; thus <tt>-1</tt> indicates
+the last call but one.
+
+</ul>
+
+<li><b>Installation</b>
+
+<li>The distribution and the repository now have the same
+structure. In particular, the distribution contains a complete set of
+documentation (in the subdirectory <tt>doc/</tt>).
+
+<li>The distribution contains a
+single <i>Makefile</i> (<tt>Makefile.inc</tt>) at the top level,
+designed to be included in user <tt>Makefile</tt>s regardless of whether
+the platform is Windows or Unix-based.
+
+<li><tt>Makefile</tt>s in the <tt>examples/</tt> and <tt>test/</tt>
+subdirectories expect <a href="http://libre.adacore.com/">AUnit</a>
+(version 3) and the <a href="http://booch95.sourceforge.net/">Booch
+Components</a> to be installed (<tt>aunit.gpr</tt> and <tt>bc.gpr</tt>
+should be accessible, either in the default Project search path or
+via <tt>ADA_PROJECT_PATH</tt>).<br>
+
+One of the examples (Stairwell Lights)
+requires <a href="http://sourceforge.net/projects/tcladashell/">TclAdaShell</a>
+and <tt>tash.gpr</tt> similarly.
+
+</ul>
+
+<dt>20080503
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li>Added a more explicit <a href="copying.html">copyright
+statement</a>.
+
+<li><b>Modelling</b>
+
+<li>Associations involving &#171;singleton&#187;s are fully supported.
+
+<li><b>Generation</b>
+
+<li><tt>ColdFrame.Exceptions.Initialization_Error</tt> is no longer
+called; an exception raised during domain initialization is
+propagated.
+
+<li>The error of having more than one class with the same name is
+detected.
+
+<li>The error of having more than one type with the same name is
+detected.
+
+<li>The error of having more than one transition from a state
+triggered by the same event is detected properly.
+
+<li>With a new option (<tt>GENERATE_EVENT_LOGGING=yes</tt>), all
+events in the domain concerned are logged as they are handled (for
+instance events, the state on entry is included).
+
+<li>Generated HTML documents now include state diagrams
+(via <a href="http://www.graphviz.org/">Graphviz</a>).
+
+<li><b>Code</b>
+
+<li><tt>Cant_Happen</tt> exception reports are no longer accompanied
+with a traceback. The message says it all.
+
+<li>The standard Event
+Queue <a href="event-use.html#eventpriorities">gives instance events
+priority over class events</a>.
+
+<li>Event Queue informational and error logging is now done via
+<tt>ColdFrame.Project.Log_Info</tt> (new) and
+<tt>ColdFrame.Project.Log_Error</tt> directly rather than via a
+generic signature package.
+
+<li>A Trace event queue no longer includes the time in log messages
+(you have probably included the time in your project logger).
+
+<li><b>Testing</b>
+
+<li>Unit Test support can be generated for a class with an attribute
+of a protected type.
+
+<li>There's a new <tt>Fire</tt> operation to allow handling events on
+Timers.
+
+<li>Added a new Monitoring event queue; it checks runs of events
+without a return to idle, and reports if the run has taken an
+excessive time (probably a symptom of inappropriate behaviour in an
+action routine; you shouldn't block by, for example, delaying or
+making a network connection, because you're holding up the whole
+application).
+
+<li>Added a Debug storage pool which keeps track of allocations and
+deallocations by call site (actually, by call chain, so an allocating
+library subprogram will have a different record for each caller).
+
+</ul>
+
+<dt>20060427
+
+<dd>
+<ul class="release">
+
+<li><b>Modelling</b>
+
+<li>You can mark an attribute <i>{aliased}</i> (or
+&#171;aliased&#187;; it's probably best to use the tagged
+(<i>{aliased}</i>) form for this, since it hardly contributes to the
+problem-domain analysis and the stereotype form is very visible; but
+note that in UML2 tagged values can only be used in association with a
+particular stereotype, so the diagram clutter will be unavoidable).
+
+<li>A completion transition from a state with a &#171;final&#187;
+action to a final state isn't treated as an error.
+
+<li><b>Generation</b>
+
+<li>The generated separate bodies for functions of classes returning
+type <i>Handle</i> now compile.
+<br>The approved way of achieving this effect is to use the name of
+the class concerned.
+
+<li>There was a problem with protected types which used access types
+created using <i>{access=name}</i>.
+
+<li><b>Code</b>
+
+<li>The functions <tt>Is_Set</tt> and <tt>Expires_At</tt>
+in <tt>ColdFrame.Events_G.Test_G</tt> were not dispatching operations
+in the same way as <tt>Wait_Until_Idle</tt>, this made calling them
+very clumsy.
+
+</ul>
+
+<dt>20060326
+
+<dd>
+<ul class="release">
+
+<li><b>Documentation</b>
+
+<li>Improved the presentation of the HTML documents.
+
+<li>Revised, and documented,the support
+for <a href="testing.html#access-to-private">low-level unit tests</a>
+and <a href="testing.html#inspecting-event-queues">inspecting event
+queues</a>. Note in particular that the accessors for a state
+machine's current state are
+now <i>Get_State_Machine_State</i>, <i>Set_State_Machine_State</i>,
+and that when inspecting an event queue the events are held in posting
+order, not time order.
+
+<li><b>Modelling</b>
+
+<li>You can specify &#171;atomic&#187; and &#171;volatile&#187; (as
+well as <i>{atomic}</i> and <i>{volatile}</i>).
+
+<li><b>Generation</b>
+
+<li>Warnings are generated for unrecognised stereotypes (but not for
+tagged values).
+
+<li><b>Code</b>
+
+<li>Fixed a problem with <tt>Domain_Initialized</tt>, which was
+getting set too early.
+
+<li>A <tt>Test_Trace</tt> event queue starts 'unstarted', as you'd
+expect.
+
+<li><b>Stub support</b>
+
+<li>Stubbed operations of types weren't thread-safe.
+
+<li>Setting up 'output' values and exceptions for stubbed operations
+is now thread-safe.
+
+<li>It's more convenient to retrieve the "last" value of an <i>in</i>
+parameter.
+
+<li>A domain package body is generated even if there are no operations
+of types (in case the full domain does have a body, to avoid
+compilation difficulties with extension GPRs).
+
+<li>The accessors for a state machine's current state are
+now <i>Get_State_Machine_State</i>, <i>Set_State_Machine_State</i>.
+
+<li>When inspecting an event queue the events are held in posting
+order, not time order.
+
+</ul>
+
+<dt>20051107
+
+<dd>
+<ul class="release">
+
+<li>Added a limited form of inspection for Timers.
+
+<li>Unit testing might freeze during tear down (again!).
+
+<li>Fixed a storage leak caused by improper instance deletion during an
+action routine.
+
+<li>Improved the presentation of generated HTML.
+
+</ul>
+
+<dt>20051019
+
+<dd>
+<ul class="release">
+
+<li>Generation took a lot longer than you would expect on Windows
+2000, Windows XP.
+
+<li>Problems with <tt>cat2raw.py</tt> and transitions to
+unnamed <i>final</i> states.
+
+<li>Leading or trailing dots in names are treated as errors.
+
+<li>Unit testing might freeze during tear down.
+
+</ul>
+
+<dt>20051001
+
+<dd>
+<ul class="release">
+
+<li>Various corrections and improvements to test stub generation/use.
+
+<li>Corrected a race condition which could block on starting a
+low-priority event queue.
+
+<li>A type used for the return type of a protected function might have
+been declared too late.
+
+<li>Some domain initialization (creation of singletons, default values
+for class attributes) is done before any domain <i>{init}</i>
+operation is called.
+
+<li>Corrected problems with &#171;final&#187; event actions (actions
+which delete the instance).
+
+<li>The Makefiles allow you to specify which version of a command (eg,
+<tt>find</tt>) to use; especially useful with mixed CMD/Cygwin builds.
+
+<li>Added support for low-level unit test involving Event Queues; you
+can inspect a (non-started)
+queue. See <tt>ColdFrame.Events_G.Standard_G.Inspection_G</tt> for
+details; there's an instantiation
+at <tt>ColdFrame.Project.Events.Standard.Inspection</tt>.
+
+<li>Protected function return types are taken account of when
+calculating the order in which to output type declarations.
+
+</ul>
+
+<dt>20050515
+
+<dd>
+<ul class="release">
+
+<li><font color="red">For this release, it's necessary to re-extract
+all Domains from the model and to regenerate.</font>
+
+<li><b>Modelling</b>
+
+<li>ColdFrame now recognises <i>utility classes</i> ("classes" with no
+instances, only operations).
+
+<li>Visibility is partially implemented for operations of classes and
+&#171;protected&#187; types; <i>public</i> and <i>protected</i>
+operations are public, <i>private</i> and <i>implementation</i>
+operations are private.
+<br>This doesn't include &#171;entry&#187; operations of
+&#171;active&#187; classes, which are always public (but only visible
+in the context of their own class, since the task is declared in the
+private part of the class package).
+
+<li>You can constrain a scalar type; for a Height, you could say <i>{
+constrains = Metres | lower 0.0 | upper 100_000.0 }</i>.
+
+<li>You can declare types <tt>private</tt>,  by saying
+&#171;type, private&#187;, (more tidily, perhaps) by tagging
+<i>{private}</i>, or even by using the Rose class specification dialog
+box!
+<br><i>{serializable}</i> types must be <i>public</i>, as must the
+types of any components. ColdFrame checks the former but not the
+latter.
+
+<li>You can mark a nested package that's to be included as
+<em>&#171;include&#187;</em> instead of <em>&#171;generate&#187;</em>
+if you find it clearer.
+
+<li>You can use Ada attributes (eg, <tt>'Small</tt>) in values (initial
+values, bounds).
+
+<li>You can specify an initialization operation to be called before any
+&#171;init&#187; operations during domain initialization, using
+<i>{ init = ada-package-name.operation }</i> on the domain.
+
+<li>You can declare unsigned (modular) types.
+
+<li>You can make ColdFrame generate access types for your own types.
+
+<li>You can specify <i>{atomic}</i>, <i>{volatile}</i> on types or
+attributes (translating to the corresponding pragmas). If the type is
+an <i>{array}</i> type, the components are marked as <i>atomic</i> or
+<i>volatile</i> (the array itself will almost certainly be too large
+to be marked as a whole).
+
+<li><b>Event queues, state machines</b>
+
+
+<li>Action routines can be inherited from the parent.
+
+
+<li>ColdFrame checks that operations corresponding to actions actually
+exist.
+
+
+<li>There are added checks on state machine legality.
+
+
+<li>The error of creating a Timer on the stack now results in a log
+message rather than an exception.
+
+
+<li>The Event Queue task responsible for delayed Events has been
+renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
+(since it doesn't just deal with Timers).
+
+
+<li>The <tt>Debug</tt> versions of Event Queues are now deprecated; use
+the new <tt>Trace</tt> versions instead
+(<tt>ColdFrame.Project.Events.Standard.Trace</tt> and
+<tt>ColdFrame.Project.Events.Standard.Test_Trace</tt>).
+<br>As an added incentive to change, Trace now includes the time since
+program start with each log message and reports the fully-qualified
+state name..
+
+
+<li><b>Callbacks</b>
+
+
+<li>If an exception gets raised in a called-back routine, an error is
+logged (rather than re-raising the exception to the supplier).
+<br><i>You need to be careful with this, because it can lead to
+elaboration circularity if your
+<tt>ColdFrame.Project.Logging_Support</tt> uses callbacks.</i>
+
+
+<li>A callback operation can deregister itself (though the
+register/deregister operations aren't task-safe).
+
+
+<li><b>Miscellaneous</b>
+
+
+<li><a href="http://xml.coverpages.org/schemas.html">XML Schemas</a>
+are now supplied for ColdFrame's "<a href="ColdFrame-raw.xsd">raw</a>"
+and "<a href="ColdFrame-norm.xsd">normalized</a>" XML.
+
+
+<li>It's been made a bit more straightforward to <a
+href="extending.html">add your own code generation extensions</a>. You
+can also customize the banner ColdFrame outputs at the head of each
+file.
+
+
+<li>You can change the generated top-level package name of a domain,
+using <i>{ name = New Name }</i> on the domain. See the new <a
+href="testing.html">discussion on testing</a>.
+
+
+<li>The supplied <tt>ColdFrame.Project.Calendar</tt> provides an
+<tt>Epoch</tt> function (to be used for aggregates); so should a
+Project's replacement.
+
+
+<li>Because it's a Bad Idea for user code to call them, the operations
+previously named <tt><i>Domain.Class</i>.Class_Initialize</tt> and
+<tt>Tear_Down</tt> are now named <tt>CF_Class_Initialize</tt> and
+<tt>CF_Tear_Down</tt> respectively.
+
+
+<li>ColdFrame can now generate <a href="testing.html">test stubs</a>.
+
+
+<li><i>{array}</i> types can be (de)serialized automatically.
+
+
+<li>If a &#171;public&#187; class has no attributes, no instance record
+will be generated.
+
+
+<li>The ColdFrame-supplied storage pools, as well as filling
+newly-allocated memory with an obviously bad pattern
+(<tt>16#deadbeef#</tt>), now refill just-freed memory with
+<tt>16#deaddead#</tt>.
+
+
+<li>Unimplemented operations raise <tt>Unimplemented</tt> instead
+of <tt>Program_Error</tt>.
+
+
+<li>Tear Down has been reworked to remove some race conditions that
+could lead to <tt>Tasking_Error</tt>.
+
+
+<li>The error of deleting an active instance from its own task is
+detected.
+
+
+<li>Making an association with a &#171;public&#187; class was never
+meant to be supported and now results in an error.
+
+
+<li>Floating point types are always generated as constrained subtypes,
+using <tt>'Base'First</tt> or <tt>'Base'Last</tt> as appropriate for
+omitted bounds.
+
+
+<li>It's possible to suppress the deserialization code in generated
+Image operations in a target-dependent way;
+see <tt>ColdFrame.Project.Serialization</tt>.
+
+</ul>
+
+<dt>20040319
+
+<dd>
+<ul class="release">
+
+<li>Unrecognised tagged values (eg, <i>{status}</i>) are no longer
+reported. Instead, they are included in the <i>normalized</i>
+intermediate file, so that, for example, you can add your own code
+generation extensions.
+
+
+<li>Tagged values with names containing illegal characters are treated
+as errors. (Legal characters are alphanumerics, hyphen and
+underscore).
+
+
+<li>You can specify an empty type using the tag <i>{null}</i>.
+
+
+<li><tt>Cant_Happen</tt> exceptions in state machines are accompanied
+by exception information (to make them easier to debug).
+
+
+<li>You can specify array &#171;type&#187;s
+(<tt>{array=<i>element-type</i>, index=<i>index-type</i>}</tt>).  You
+can also say <tt>{unconstrained}</tt>: since unconstrained arrays are
+indefinite (<a
+href="http://www.adaic.org/standards/95lrm/html/RM-3-3.html#I1396">ARM
+3.3(23)</a>, <a
+href="http://www.adaic.org/standards/95lrm/html/RM-3-7.html#I1869">3.7(26)</a>),
+you can't use them as attributes, but they can be used as parameters
+or as function return values.
+<br>If you want to <a href="serialization.html">serialize</a> array
+types, you must supply your own field-image operation.
+
+
+<li>For increased performance, if a class has a single identifier of
+type
+<ul>
+<li><tt>Boolean</tt>
+<li>an <tt>{imported}</tt> or <tt>{renames}</tt> &#171;type&#187;
+marked <tt>{hash=enumeration}</tt>
+<li>an <tt>{integer}</tt> or <tt>{enumerated}</tt> &#171;type&#187; of
+small enough range (currently 49 by default, the parameter
+<tt>max-hash-buckets</tt>)
+</ul>
+the container for the extent of the class (all the current instances)
+is implemented as an array rather than a <a
+href="resources.html#booch-components">Booch Components</a>
+<tt>Map</tt>.
+
+
+<li>Callback support asserts that:
+<ul>
+<li>on registering, the procedure hasn't already been registered
+<li>on deregistering, the procedure has been registered
+</ul>
+
+
+<li>Making an association with a &#171;public&#187; class was never
+meant to be supported; doing so results in a "strong warning" during
+code generation, and will result in an error in a future release.
+
+
+<li>Fixed-length strings are supported (say <tt>{string = fixed
+27}</tt>, for example).
+
+
+<li>A state machine action is allowed to delete its instance if
+<ul>
+<li>The operation is the (generated) <tt>Delete</tt>.
+<li>The operation is stereotyped &#171;final&#187;.
+</ul>
+Other uses will result in an exception.
+
+
+<li>The error of creating (and using) a Timer on the stack is
+detected. Unfortunately, this means getting a <tt>Program_Error</tt>
+because of an unhandled exception in a <tt>Finalize</tt> subprogram.
+
+</ul>
+
+<dt>20031126
+
+<dd>
+<ul class="release">
+
+<li>The class <tt>Delete</tt> operation for a 0..1 class didn't null
+out the container, so it appeared that there was still an instance.
+
+</ul>
+
+<dt>20031123
+
+<dd>
+<ul class="release">
+
+<li>There was a memory leak if an exception should occur in a callback
+routine.
+
+
+<li>The generated separate bodies of operations of types didn't include
+any documentation comments.
+
+
+<li>UML <i>tagged values</i> are supported as well as ColdFrame's
+original <tt>[[annotations]]</tt>.
+
+</ul>
+
+<dt>20031102
+
+<dd>
+<ul class="release">
+
+<li>Improved the default error logging (stop concurrent access
+mangling the output; flush the output after each message).
+
+
+<li>Serializable output used the wrong field names.
+
+
+<li>Performance improvements in class <tt>Filter_Function</tt>,
+<tt>Selection_Function</tt>.
+
+</ul>
+
+<dt>20030930
+
+<dd>
+<ul class="release">
+
+<li>A class variable of the class's type wouldn't compile
+("representation item appears too late").
+
+
+<li>Classes with state machines wouldn't compile ("primitive operation
+declared too late").
+
+
+<li>Improved detection and reporting of problems with state machines.
+
+
+<li>Code for &#171;accessor&#187;s is no longer inlined (compilation
+times were greatly extended).
+
+</ul>
+
+<dt>20030914
+
+<dd>
+<ul class="release">
+
+<li>Serialization supports nested (but not discriminated!) records.
+
+
+<li>The old <tt>[[image]]</tt> functionality for outputting serialized
+data was clumsy for unstructured types (such as an imported Time). A
+new <tt>type-image</tt> annotation is provided.
+<br>The old <tt>[[image]]</tt> functionality is retained but
+deprecated; use <tt>[[field-image]]</tt> instead.
+
+</ul>
+
+<dt>20030906
+
+<dd>
+<ul class="release">
+
+<li>The old <tt>Hash</tt> function has been replaced by
+<tt>Instance_Hash</tt> (because the arguments are different).
+
+
+<li>Code generation doesn't stop on the first error.
+
+
+<li>State machines support actions on transitions.
+
+
+<li>It was possible, especially with <tt>Cascade_Teardown</tt>s, for a
+shared event queue to be torn down more than once, leading to
+<tt>Constraint_Error</tt>s.
+
+
+<li>With the new container implementation, calling <tt>Find</tt> for
+an &#171;active&#187; (multiple-instance) class would hang.
+
+
+<li>Started a set of regression tests, in the <tt>test/</tt>
+subdirectory of the distribution.
+
+
+<li>ColdFrame identification commentary (revision of the model, date of
+extraction, revision of ColdFrame components) is added to each
+generated file.
+
+</ul>
+
+<dt>20030815
+
+<dd>
+<ul class="release">
+
+<li>Added <tt>ColdFrame.Project.Log_Error</tt>, and used it to report
+exceptions in domain initialization.
+
+
+<li>If all the attributes of a &#171;singleton&#187; (or
+&#171;public&#187;) class were &#171;class&#187; attributes, the
+generated code wouldn't compile.
+
+
+<li>Generates code for <i>&#171;protected&#187;</i> types.
+
+
+<li>Includes Rose "model" files for the <tt>example</tt> and
+<tt>test</tt> distribution subdirectories.
+
+
+<li>Exceptions can be imported or renamed.
+
+
+<li>Operations can be renamed (this provides a form of overloading,
+which isn't otherwise possible given that ColdFrame generates separate
+proper bodies).
+
+
+<li>Attributes marked <i>class</i> in the Rose class specification
+dialog are seen as such.
+
+
+<li>Operations marked <i>abstract</i> in the class specification dialog
+are seen as such.
+
+
+<li>Included <tt>cf-banner.el</tt>, an Emacs add-in to aid replacing
+ColdFrame's generated banner file heading with something appropriate
+to your version control system (in this case, PVCS).
+
+
+<li>Improved code generation efficiency (by eliminating many
+instantiations of Booch Components).
+<br>Note, to allow further improvements without impacting your code,
+it would be a <em>good idea</em> to use the generated
+<tt><i>Domain.Class</i>.Iterate</tt> generic for iterations rather
+than open iterations using
+<tt><i>Domain.Class</i>.Abstract_Containers</tt>.
+
+
+<li>Memory allocation (for instance, when creating an instance of a
+class) now fills the allocated memory with an improbable pattern. This
+should help to catch use of uninitialized attributes.
+
+
+<li>You can specify an active class's stack size and priority (as an
+offset from the system's default priority, the larger the number the
+higher the priority).
+
+</ul>
+
+<dt>20030519
+
+<dd>
+<ul class="release">
+
+<li>You can use expressions in range specifications for types, initial
+values for attributes, and default values for parameters. <i>Pi</i> is
+specially recognised (it translates to a domain constant equal to
+<tt>Ada.Numerics.Pi</tt>).
+
+
+<li>Code for &#171;accessor&#187;s, and for supporting inheritance and
+&#171;abstract&#187; operations, is generated in the package body
+rather than in <tt>separate</tt>s.
+
+
+<li>Code for &#171;accessor&#187;s is made "inline".
+
+
+<li>The Makefiles are much quieter.
+
+
+<li>The Makefiles report any code in the <tt>.impl</tt> directory that
+doesn't correspond to generated code.
+
+</ul>
+
+<dt>20030513
+
+<dd>
+<ul class="release">
+
+<li>Corrected problems deleting an instance with extant held events.
+
+
+<li>The script to split serialized XML files into CSV format is
+included in the distribution.
+
+
+<li>A class with a Timer but no state machine will now compile.
+
+
+<li>These stereotypes now imply &#171;type&#187;:
+<ul>
+<li><i>&#171;callback&#187;</i>
+<li><i>&#171;counterpart&#187;</i>
+<li><i>&#171;discriminated&#187;</i>
+</ul>
+
+
+<li>You can tear down an Event Queue that hasn't been started.
+
+
+<li>The generated <tt>Create</tt> operation checks that supplied
+referential parameters are of the correct class.
+
+
+<li>The <tt><i>Domain</i>.Serializable</tt> package is generated even
+if there are no serializable types in the domain (in which case it
+will, of course, be empty).
+
+</ul>
+
+<dt>20030330
+
+<dd>
+<ul class="release">
+
+<li>Some documentation rework.
+
+
+<li>Handle parameter modes correctly (the old way, with the
+<tt>[[mode]]</tt> annotation, is still supported).
+
+
+<li>A Serialization Base class now needs to support the function
+Base_Attribute_Image (to output any of its own attributes, such as a
+timestamp).
+
+
+<li>The supplied makefiles include a target (<tt>install</tt>) to help
+override ColdFrame's support code (the <tt>ColdFrame.Project</tt>
+hierarchy). See the <a href="installation.html">installation
+notes</a>.
+
+</ul>
+
+<dt>20030316
+
+<dd>
+<ul class="release">
+
+<li><tt><i>Domain</i>.Cascade_Initialize</tt> and
+<tt>.Cascade_Tear_Down</tt> procedures are generated; as generated,
+they call the domain's <tt>Initialize</tt> procedure.
+
+
+<li>Removed <tt>ColdFrame.Serialization_Signature</tt>, no longer
+needed.
+
+
+<li>Corrected errors in calculating multiplicity and dealing with
+<tt>[[hash]]</tt> annotations.
+
+
+<li>Normalization reports problems with trailing dots in (Ada) names.
+
+
+<li>Added <tt>ColdFrame.Project.Events.Standard.Test_Debug</tt>, which
+is a Test event queue (ie, it doesn't start until told, and allows you
+to wait until it's idle) which prints what's going on.
+
+
+<li>Adding extra kinds of Time (for held events) is simplified.
+
+</ul>
+
+<dt>20030309
+
+<dd>
+<ul class="release">
+
+<li>Operations of &#171;type&#187;s no longer have an implicit
+<tt>This</tt> parameter (you can of course always provide an explicit
+one).
+
+
+<li>Case normalization has been improved; the GLIDE rules are now
+followed, so that you can specify that <i>short</i> comes out as
+<tt>short</tt> while <i>short&nbsp;message</i> comes out as
+<tt>Short_Message</tt>.
+
+
+<li>The way in which Booch Maps are used has been changed; now, the
+number of hash buckets is the maximum number of instances, up to a
+value which can be changed in the Makefile but is defaulted to 49.
+
+
+<li>If a class has a single-attribute identifier that is an enumeration
+or an integer range, the maximum number of instances is calculated
+automatically (but doesn't override any user-specified maximum).
+
+
+<li>The maximum number of instances of association classes is
+calculated.
+
+
+<li>If you have <a href="serialization.html">serialized</a> output in
+<tt><i>output</i>.xml</tt>, you can say
+<br>
+<tt>&nbsp;&nbsp;&nbsp;make -f $TOP/$COLDFRAME/Makefile-unix <i>output</i>.csv</tt>
+<br>(or, of course, <tt>Makefile-winnt</tt> if you're on Windows) to
+run a script to split the output into "comma separated variable"
+files, one per serialized type included in the input file. Comma
+separated variable format is importable into spreadsheets.
+
+
+<li>If events to run "after an interval" are posted to an event queue
+which hasn't yet started, the interval refers to the time when
+the queue is eventually started.
+
+</ul>
+
+<dt>20030207w
+
+<dd>
+<ul class="release">
+
+<li>The HTML documentation is distributed in a zip file alongside the
+source code.
+
+
+<li>The <tt>[[extends]]</tt> annotation allows you to specify that a
+type is derived from an external type.
+<br><i>(It might have been possible to use inheritance relationships,
+but that would have opened a raft of problems with supporting
+polymorphic operations of types, and in any case you should probably
+be looking at classes rather than types for your own work.)</i>
+
+
+<li>The <tt>[[convention]]</tt> annotation allows you to specify the
+programming language calling convention that an operation will be
+called with.
+<br><i>For Ada, this translates to <tt>pragma&nbsp;Convention</tt>.</i>
+
+
+<li>If an association has an associative class, a <tt>Find</tt>
+operation is generated in <tt><i>Domain.Association</i></tt> which,
+given the handles of two potentially associated instances, returns the
+corresponding associative instance's handle (or <tt>null</tt>, of
+course).
+
+
+<li>Callbacks are now unbounded (you can continue to specify a "maximum
+number of observers", but it will not be used).
+
+
+<li>The <tt>[[serializable]]</tt> annotation allows you to specify
+support for transmitting values of a (record) type via some external
+medium -- perhaps to record binary data for future analysis.
+
+
+<li>Your main program can coordinate the Event Queues (Dispatchers)
+used by the Domains.
+<br>If you pass a Dispatcher to <tt><i>Domain</i>.Initialize</tt>, it
+will use it instead of calling <tt><i>Domain</i>.Events.Initialize</tt>.
+
+</ul>
+
+<dt>20030107a
+
+<dd>
+<ul class="release">
+
+<li>Extraction from Rose loads required packages recursively.
+
+
+<li>Added a new Logging signature package,
+<tt>ColdFrame.Logging_Signature</tt>.
+
+
+<li>Using the same generalization name with more than one parent is
+detected.
+
+
+<li>The last entry action of a <i>final</i> State can (and probably
+should) delete the instance - unless of course it's a defunct
+&#171;singleton&#187;. It no longer needs to be named
+<tt>Delete</tt>.
+
+
+<li>If you want to make a class visible for unit test support, mark it
+&#171;visible-for-test&#187;.
+
+<br>This should be reserved for unusual cases (typically, unit test
+variants of device support domains).
+
+
+<li>Added <tt>ColdFrame.Interrupts</tt> for interrupt support.
+
+
+<li>Added <i>Interrupt_Handling</i>, <i>Library</i> demos.
+
+
+<li>The environment variable <tt>CASE_EXCEPTIONS</tt> specifies one or
+more case exception files. If there's more than one, the separator is
+; on Windows, : on Unix.
+
+
+<li><tt>[[counterpart]]</tt> &#171;type&#187;s are implemented as
+renamings (subtypings) of <tt>ColdFrame.Instances.Handle</tt>.
+
+
+<li>&#171;teardown&#187; operations are called during domain teardown.
+
+
+<li>&#171;class&#187; accessor operation bodies are automatically
+generated for &#171;class&#187; variables.
+
+
+<li>You can specify that an imported or renamed type is to be hashed as
+a discrete type (using
+<tt>[[&nbsp;hash&nbsp;:&nbsp;discrete&nbsp;]]</tt>).
+
+
+<li>Added a reasonably complete example (the Stairwell demonstration).
+
+</ul>
+
+<dt>20020921
+
+<dd>
+<ul class="release">
+
+<li>Extraction from Rose now loads a Domain package if it isn't
+already loaded.
+
+
+<li>The Rose <i>Path Map</i> variable and the environment variable
+<tt>ColdFrameOut</tt> are both now capitalized
+(<tt>COLDFRAMEOUT</tt>). This is because of an interaction between
+Windows and Cygwin.
+
+
+<li>Extraction checks the environment variable <tt>COLDFRAMEOUT</tt> if
+there's no <i>Path Map</i> setting. There are <a
+href="installation.html">notes</a>.
+
+
+<li>There was an error in Event <tt>Tear_Down</tt> which caused
+<tt>Storage_Error</tt> if there were in fact any Events.
+
+
+<li>The <tt>Selection_Function</tt> of a class with multiplicity 0..1
+gave a <tt>Constraint_Error</tt> if there was no instance.
+
+</ul>
+
+<dt>20020917
+
+<dd>
+<ul class="release">
+
+<li>Reworked how Time is handled in <tt>ColdFrame.Project.Events</tt>.
+
+
+<li>There's a new <tt>ColdFrame.Events_G.Test_G</tt> add-in which
+allows you to query whether a <i>Timer</i> is set, and when it will
+expire.
+
+<br>These are not appropriate in operational code; state machine logic
+should be encoded in the state machine, as far as possible, and you
+ought to <u>know</u> whether a <i>Timer</i> is set or not.
+
+<br>The <tt>Start</tt> operation has a default implementation which
+raises <tt>ColdFrame.Exceptions.Use_Error</tt> (because operational
+code shouldn't be calling it). Test queues support this operation; the
+queue doesn't start dispatching events until the operation is called.
+
+<br>The <tt>Wait_Until_Idle</tt> operation has a default
+implementation which raises <tt>ColdFrame.Exceptions.Use_Error</tt>
+(because operational code shouldn't be calling it). Test queues
+support this operation; the operation blocks the test thread of
+control until all event activity has terminated. A parameter
+<tt>Ignoring_Timers</tt> (defaulted to <tt>False</tt>) controls
+whether <i>Timer</i>s are included in the count.
+
+
+<li>Documentation is copied through into the generated code.
+
+
+<li>The way in which the "lines of code" count is generated and
+reported has changed.
+
+
+<li>The provided <tt>ColdFrame.Projects.Calendar</tt> implements
+<tt>Time</tt> as a renaming (subtype) of <tt>Ada.Calendar.Time</tt>;
+there was an interaction with a GNAT feature (GCC PR/7613) when the
+whole package was a renaming of <tt>Ada.Calendar</tt>.
+
+<br>Generated code no longer <tt>use</tt>s
+<tt>ColdFrame.Projects.Calendar</tt>; instead, there's a
+<tt>use&nbsp;type</tt> for it. This will change operations' profiles.
+
+
+<li>Attempts to use Ada reserved words for identifiers are caught.
+
+
+<li><tt>Tear_Down</tt> now cleans up &#171;singleton&#187;s and class
+variables (actually, they're reset on the next <tt>Initialize</tt> via
+a new <tt>Class_Initialize</tt> operation; <tt>Class_Initialize</tt>
+is now reserved).
+
+
+<li>If a state entry action procedure has a parameter, it's of the
+type of the corresponding event's payload rather than the event
+itself. This allows different events to cause transitions to the same
+state, so long as they all have the same payload type.
+
+
+<li>State entry actions can now see both the previous and the current
+state of the instance.
+
+
+<li><tt>Delete</tt> is supported as an entry action (not available for
+&#171;singleton&#187;s, and it had better be the last action!).
+
+
+<li>The Makefiles allow the Rose model to be extracted to a different
+directory from that under which the code is kept (using the
+<i>make</i> variable <tt>ColdFrameOut</tt>).
+
+</ul>
+
+<dt>20020716
+
+<dd>
+<ul class="release">
+
+<li>Event Queues now have a <tt>Wait_Until_Idle</tt> operation, for
+unit tests to use after posting test Events; the operation blocks the
+test thread of control until all event activity has terminated.
+
+
+<li>Event Queues now have a <tt>Tear_Down</tt> operation; this is
+automatically called from the domain <tt>Tear_Down</tt>. Note, this is
+also intended for unit test!
+
+
+<li>There is a new <tt>Post_To_Self</tt> operation on Event Queues, to
+be used by a state machine instance which is posting an event to
+itself to make sure that the event is processed before any
+externally-signalled events to the same instance.
+
+
+<li>Missing names/types are detected for attributes and parameters
+before code is generated (during normalization).
+
+
+<li><i>Date</i>, <i>Time</i> types are translated to
+<tt>ColdFrame.Projects.Calendar.Time</tt>, which is provided as a
+renaming of <tt>Ada.Calendar</tt>.
+
+</ul>
+
+<dt>20020706
+
+<dd>
+<ul class="release">
+
+<li>&#171;instantiation&#187; can be used to mark operations which you
+want to appear on a sequence diagram but which will be implemented by
+instantiating a generic (for example,
+<tt><i>Class</i>.Selection_Function</tt>).
+
+
+<li>The <tt>[[set]]</tt> annotation (defining a type consisting of a
+collection of instances of a class) is no longer available; I couldn't
+find a sensible mechanism to implement it now that I don't use <i>WITH
+TYPE</i> any more.
+
+
+<li>Initial support for state machines.
+
+
+<li>Support &#171;class&#187; attributes.
+
+
+<li>Added <i>Counterparts</i>.
+
+
+<li>Create the default "abbreviation" for single-word classes by
+prepending <tt>A</tt> or <tt>An</tt> to the class name.
+
+
+<li>Check for illegal characters in identifiers.
+
+
+<li>Added Exceptions (like &#171;type&#187;s, but marked
+&#171;exception&#187;, generated in the Domain package).
+
+
+<li>Initializers can be signed.
+
+
+<li>Autonumbering is reset by <tt>Tear_Down</tt>.
+
+
+<li>Added <tt>pragma Elaborate_Body</tt> for generated instantiable
+units.
+
+
+<li>Navigation of associations from collections is now in a separate
+child package <tt><i>Domain.Association</i>.From_Collections</tt>.
+
+
+<li>Include "don't edit" warnings in generated code.
+
+
+<li>It's no longer necessary to mess with your CLASSPATH to include
+<tt>saxon.jar</tt>; <i>java</i>'s called with <tt>-cp</tt>. You do
+need to unpack Saxon where the <tt>Makefile</tt>'s expecting it (see
+the <a href="installation.html">installation notes</a>).
+
+
+<li>Added special processing where an dispatching or inherited
+operation has a parameter of the same type as its class; the parameter
+is converted to the same type as the implicit <tt>This</tt> parameter.
+
+<br>This may be what's called <i>covariance</i> in Eiffel.
+
+
+<li>Tear-down of an active non-singleton instance didn't terminate the
+associated task.
+
+
+<li>Some of the generated operations (eg, some accessors for
+referential attributes) are only intended to be called by generated
+code. These are now marked in the spec.
+
+
+<li>&#171;access&#187; functions were generated as though they were
+procedures.
+
+
+<li>ColdFrame now respects the modeller's casing; if you say
+<i>FOO</i> it should come out as <tt>FOO</tt> (in the absence of a
+case exception for <i>foo</i>).
+
+<br>This change has two consequences:
+
+<ul>
+
+<li>you need to be consistent about case; the code generator is
+case-sensitive
+
+<li>you need to use the case that ColdFrame expects (for example,
+<tt>AutoNumber</tt> won't work).
+</ul>
+
+
+<li>There's a new exception
+<tt>ColdFrame.Exceptions.Existing_Child</tt>, raised when you create a
+child of a parent which already has one.
+
+
+<li>Operations of &#171;type&#187;s are generated.
+
+<br>This allows you to have domain-wide &#171;access&#187; operations,
+too: declare them as operations of some &#171;type&#187; (if there are
+no other <tt>[[annotations]]</tt>, attributes or operations the
+&#171;type&#187; itself won't be generated).
+
+
+<li>As well as setting Events that you want to be delivered at some
+future time on Timers, which allows you to retract the event (by
+unsetting the timer), you can just Post them (in a "fire and forget"
+way).
+
+
+<li>Event-related exceptions have been moved to
+<tt>ColdFrame.Exceptions</tt> (with the rest).
+
+
+<li>The generated bodies of functions that return composite (record)
+types now compile.
+
+
+<li><tt>Create</tt> operations <tt>Assert</tt> that any identifying
+referential attributes aren't <tt>null</tt>.
+
+<br><tt>Link</tt> operations <tt>Assert</tt> that their arguments aren't
+<tt>null</tt>.
+
+
+<li>"Subtype migration" (<a href="faq.html#inheritance">dynamic
+classification</a>) is supported; for each class involved in an
+inheritance relationship there's a child package
+(<tt><i>Domain.Class</i>.Inheritance</tt>) containing the new
+operations.
+
+
+<li>Include <a href="installation.html">installation notes</a>.
+
+
+<li>Projects will want to provide their own versions of supporting Ada
+packages, for example to provide the default storage pool; but
+ColdFrame needs to know how to <tt>with</tt> them.
+
+<br>A new package hierarchy rooted at <tt>ColdFrame.Project</tt> is
+used to hold such packages.
+
+<br>A new Ada source library directory
+<tt>cf-<i>yyyymmdd</i>/project</tt> is provided to hold example
+versions of required packages.
+
+
+<li>The exceptions declared in <tt>ColdFrame.Exceptions</tt> are no
+longer renamings of Booch exceptions.
+
+</ul>
+
+<dt>20020116
+
+<dd>
+<ul class="release">
+
+<li>&#171;abstract&#187; is supported on Classes (nothing is done with
+it yet).
+
+
+<li>The supplied <tt>Makefile</tt>s assume there's a case exceptions
+file (<tt>~/.emacs_case_exceptions</tt>); normalization no longer
+fails if there isn't one.
+
+
+<li>Normalization no longer checks that the parent in an inheritance
+relationship has an identifier (if it hasn't, that will be found later
+anyway). This means it's no longer a fluke if inheritance trees work
+properly!
+
+
+<li>The Rose Extractor only extracts (selected) packages in the current
+class diagram; it pops up a dialog box on completion to say what it's
+done.
+
+
+<li>Reports of unhandled stereotypes, annotations tidied up.
+
+
+<li>The domain package comments include the generated lines-of-code
+count (actually, the usual Ada "number of semicolons").
+
+
+<li>Normally ColdFrame only extracts classes and associations from the
+top-level (domain) package. If you prefer to organize your model with,
+say, the &#171;type&#187;s in a "Types" child package, mark it with
+&#171;generate&#187;.
+
+</ul>
+
+<dt>20011209
+
+<dd>
+<ul class="release">
+
+<li>There's a new scheme for mutual visibility of Class package specs,
+<em>not</em> involving the GNAT <i>WITH TYPE</i> extension.
+
+
+<li>In multiple inheritance, an inherited operation is called in the
+correct parent.
+
+
+<li>&#171;abstract&#187; and &#171;finalize&#187; operations don't map
+to task entries.
+
+
+<li>A new operation stereotype &#171;navigation&#187; is like
+&#171;generated&#187; (but is intended to mark operations that are in
+fact provided in an association package).
+
+
+<li>&#171;finalize&#187; operations aren't inherited.
+
+
+<li>The domain <tt>Tear_Down</tt> clears all registered Callbacks.
+
+
+<li>A proper error message is given when a <tt>[[callback]]</tt>
+annotation is given on a non-record type (a type without attributes).
+
+
+<li>Implement the <tt>[[renames]]</tt> annotation.
+
+
+<li>Sort out multiplicities (on roles) and cardinalities (on classes).
+
+
+<li>Implement <i>Autonumber</i> using GNAT's <tt>Long_Long_Integer</tt>
+(64 bits). Let's see you overflow <em>that</em>!
+
+</ul>
+
+<dt>20011011
+
+<dd>
+<ul class="release">
+
+<li>To support testing with <i>AUnit</i>, a
+<tt>Tear_Down</tt> child procedure is generated for each Class, which
+deletes all instances. This <em>won't</em> (31.viii.01) work for
+&#171;active&#187; classes.
+
+<br>A domain <tt>Tear_Down</tt> child procedure is also generated,
+which calls all the class <tt>Tear_Down</tt>s.
+
+
+<li><tt>normalize-rose.tcl</tt> supports the
+<tt>--casing&nbsp;<i>file</i></tt> flag, which specifies a file
+containing identifier case exceptions.
+
+<br>A GLIDE case exception file can be used, but GLIDE's distinction
+between partial and complete exceptions isn't preserved (you could
+tell GLIDE to upcase <i>gnat</i> only when it formed the whole of an
+identifier, so you'd get <tt>GNAT</tt> but <tt>Gnat_Id</tt>).
+
+<br>You can specify more than one exception file by repeating
+<tt>--casing</tt>.
+
+
+<li>A child class's <tt>Create</tt> operation sets up the parents'
+child information record.
+
+
+<li>Deletion of an instance of a child class clears the parent's (or
+parents') child information record(s).
+
+
+<li>Deletion of an instance of a parent class deletes the current child
+instance.
+
+
+<li>A parameterless instance procedure marked &#171;finalize&#187; is
+called by <tt>Delete</tt> just before the instance is freed.
+
+
+<li>Operations marked &#171;generated&#187; are treated as "already
+generated", that is, no new code is generated for them.
+
+<br>This is to allow the standard <tt>Create</tt>, <tt>Find</tt> and
+<tt>Delete</tt> operations to be used on sequence diagrams without
+Rose complaining.
+
+
+<li>The supplied Makefiles, when placing generated code in
+<tt><i>Domain</i>.gen</tt>, delete any <tt>.ad?</tt> files which are
+already present in <tt><i>Domain</i>.impl</tt>. This should reduce
+confusion (and may make the use of GNAT Projects easier).
+
+
+<li>(Record) types marked <tt>[[discriminated]]</tt> are generated as
+discriminated records; the discriminant is an enumeration type with
+literals formed from the attribute names with <tt>_T</tt> appended.
+
+
+<li>A child generic procedure <tt><i>Domain.Class</i>.Iterate</tt> is
+created for non-&#171;singleton&#187; classes to simplify iteration
+over Collections.
+
+
+<li>Storage management for the Booch Containers, where relevant, adopts
+the new style (you need a version of the BCs later than 20010927).
+
+
+<li>Generated <tt>Hash</tt> functions now compute a useful (I hope)
+value.
+
+
+<li>The supporting code for hash functions has been reorganised under
+<tt>ColdFrame.Hash</tt>.
+
+
+<li>Generated package specs and bodies have added blank lines to make
+them easier to read. This is controlled by the Make variable
+<tt>BLANK_LINES</tt> (<tt>yes</tt> means "add blank lines", anything
+else means "don't").
+
+
+<li>Verbosity is controlled by the Make variable <tt>VERBOSE</tt>;
+<tt>yes</tt> means "be chatty", anything else means "don't".
+
+</ul>
+
+<dt>20010819
+
+<dd>
+<ul class="release">
+
+<li>The Domain <tt>Initialize</tt> procedure used to call an
+<tt>Initialize</tt> procedure for each Class, for which a default
+empty implementation was supplied. Now, it only calls operations with
+the &#171;init&#187; stereotype (&#171;init&#187; implies
+&#171;class&#187;). They should be parameterless procedures (a warning
+is given, but code generation completes); a standard stub
+implementation is provided, which raises <tt>Program_Error</tt>.
+
+
+<li>ColdFrame used to use &#171;interface&#187; to indicate that the
+stereotyped class should be visible outside the Domain
+package. &#171;interface&#187; is used for another purpose in UML; now
+ColdFrame uses &#171;public&#187; instead. &#171;interface&#187; is
+retained but deprecated (ie, it will disappear at some later time;
+stop using it as soon as you can).
+
+
+<li>The generated top-level Ada file contains identification
+information:
+<ul>
+
+<li>revision control information for the domain (this is extracted
+from a <tt>[[revision]]</tt> annotation for the domain, if any: to put
+this in the Rose model in the correct place, select the domain Package
+in the browser)
+
+<li>date and time of extraction
+
+<li>the ColdFrame releases (in the form <tt>cf-<i>yyyymmdd</i></tt>)
+of the extractor, normalizer and generator components of ColdFrame
+used.
+
+</ul>
+
+
+<li>In Rose, you can extract more than one Domain at once by
+<ul>
+
+<li>having a class diagram showing the Domain packages to be
+extracted, and making it the active diagram
+
+<li>selecting more than one Domain package in the Rose browser (or the
+extraction diagram).
+
+</ul>
+
+
+<li>There is no longer an extraction dialog:
+<ul>
+
+<li>the extracted file name is formed from the package name, with
+spaces replaced by underscores
+
+<li>the extraction directory is that specified by the Rose Path Map
+variable <tt>ColdFrameOut</tt> or, if not specified, the current
+directory.
+
+</ul>
+
+
+<li>The extracted code is laid out using GNAT's defaults (standard
+indentation 3 spaces, continuations 2 spaces). These can be
+overridden.
+
+</ul>
+
+<dt>20010707
+
+<dd>
+<ul class="release">
+
+<li>Generate the <tt>Link</tt> operation for 1-(1:1) associations correctly.
+
+
+<li>Work round a GNAT problem (tasks and <tt>with type</tt> don't mix).
+
+
+<li>Work round a GNAT problem (<tt>with type</tt> in the spec needs to
+be matched with a plain <tt>with</tt> in the body).
+
+
+<li>If the Saxon command line parameter <tt>generate-accessors</tt> is
+set to <tt>defined</tt>, attribute accessor subprograms will be
+generated if they were specified in the Rose model. Corresponding task
+entries for active classes are suppressed.<br>
+
+For an attribute <tt><i>Attr</i></tt>, an operation is a "set"
+accessor if it is a non-&#171;class&#187; procedure named
+<tt>Set_<i>Attr</i></tt> with a single parameter of the same type as
+<tt><i>Attr</i></tt>, and an operation is a "get" accessor if it is a
+non-&#171;class&#187; function named <tt>Get_<i>Attr</i></tt> with no
+parameters returning a value of the same type as <tt><i>Attr</i></tt>.
+
+
+<li>Generate short names (omit Domain name and own Class name), where
+possible. This is because of GNAT 3.14a1 problems with complex
+separates.
+
+</ul>
+
+<dt>20010623
+
+<dd>
+<ul class="release">
+
+<li>Operations can be stereotyped as "access to subprogram" (and, by
+implication, as &#171;class&#187; operations) using
+&#171;access&#187;. This was actually present but undocumented in
+20010520.
+
+
+<li>Allow types to be <tt>[[imported]]</tt>.
+
+
+<li>Partitioned inheritance trees were not being distinguished
+properly.
+
+
+<li>Support "autonumber" attributes.
+
+
+<li>Domain types are generated in (reverse) dependency order, so you
+can safely specify records containing records.
+
+
+<li>1-(1:1), 1-(1:1c), 1-(1c:1c) associations now supported.
+
+
+<li>Operations are generated with "separate" bodies, instead of using
+child subprogram units.
+
+
+<li>Active classes (in Rose, go to the Class/Detail tab and select
+Active) are generated with a task for each instance. The task body is
+"separate". Each non-&#171;class&#187; procedure operation has a
+matching entry; the generated (separate) procedure body calls the task
+entry.
+
+
+<li>Singleton (but not Interface) classes now provide a <tt>Handle</tt>
+type (accessed through the <tt>Find</tt> function), for use in
+associations.
+
+
+<li>All Classes have a &#171;class&#187; operation <tt>Initialize</tt>
+(no parameters); the Domain has an Initialize operation which calls
+each of the Class' Initialize (in alphabetical order).
+
+
+<li>If the Saxon command line parameter <tt>generate-accessors</tt>
+isn't set to <tt>yes</tt>, attribute accessor subprograms won't be
+generated.
+
+
+<li>The Makefiles set the file protection on generated code to
+read-only (to give you some sort of warning when you accidentally edit
+generated code).
+
+
+<li>Include proper default initialization for Date/Time.
+
+
+<li>Dispatching operations supported, including &#171;abstract&#187;
+operations.
+
+
+<li>Associations with &#171;singleton&#187;s now supported.
+
+</ul>
+
+<dt>20010520
+
+<dd>
+<ul class="release">
+
+<li>Includes support for Associations.
+
+
+<li>Generates HTML documentation.
+
+
+<li>Supports record &#171;type&#187;s (no check yet that record types
+are declared after record types that they reference).
+
+
+<li>Provides a callback facility (the Observer pattern).
+
+
+<li>Allows the use of a class' Cardinality instead of <tt>[[max]]</tt>
+or &#171;singleton&#187;.
+
+</ul>
+
+<dt>20010325
+
+<dd>
+<ul class="release">
+
+<li>Whether a class is a singleton or not is now determined by the
+&#171;singleton&#187; stereotype (or annotation).
+
+
+<li>All classes except those with the &#171;interface&#187; stereotype
+or annotation are implemented as private
+children. &#171;interface&#187; classes are automatically
+&#171;singleton&#187;s.
+
+
+<li>If a class is implemented using Bounded containers (because the
+number of instances is known), a fixed-size storage pool is used for
+the Handle access type (so that memory is only allocated from the
+heap at package elaboration). This has forced the
+<tt>Abstract_Containers</tt> package to be implemented as a child of
+the <tt><i>Domain.Class</i></tt> package.
+
+
+<li>References are implemented using the <tt>Handle</tt> of the
+referenced class. This means we have to use the GNAT "with type"
+extension.
+
+<br>I've included a <tt>pragma Extensions_Allowed (On);</tt> in each
+package that needs it, but there seems to be a GNAT problem here
+(3.13p, 3.14a) so you may need to include this in your configuration
+file (<tt>gnat.adc</tt>) or use the <tt>-gnatX</tt> flag.
+
+
+<li>The child class enumeration literals now have <tt>_T</tt> appended
+(otherwise the literals masked the class package, so you had to say
+<tt><i>Domain.Class</i>.thing</tt> rather than just
+<tt><i>Class</i>.thing</tt> in subprogram bodies).
+
+
+<li><tt>Delete</tt> operations didn't in fact free allocated memory.
+
+
+<li>You need at least Release 20010325 of the <a
+href="http://booch95.sourceforge.net/">Booch Components</a>.
+
+</ul>
+
+<dt>20010228
+
+<dd>
+<ul class="release">
+
+<li>Choose between Bounded and Unbounded Containers depending on the
+class's <tt>[[ max: <i>max-size</i> ]]</tt> documentation annotation.
+
+<li>Choose the number of hash buckets for Bounded Maps depending on the
+<tt>[[ max: <i>max-size</i> ]]</tt> documentation annotation.
+
+<li>Added documentation on the paraphernalia surrounding an Identified
+Class Package.
+
+</ul>
+
+<dt>20010204
+
+<dd>
+<ul class="release">
+
+<li>Added support for singleton classes (classes with no Identifier
+attributes).
+
+<li>Added documentation of the relationship between the normalized
+ColdFrame metamodel and generated Ada.
+
+</ul>
+
+<dt>20010130
+
+<dd>Initial release.
+
+</dl>
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

@@ -1,0 +1,12 @@
+digraph "Lamp.class" {
+      graph [root=Lamp]
+      edge [fontsize=10]
+      node [shape=record, style=filled, fillcolor=lightgray, fontsize=10]
+
+      
+      Lamp [fillcolor=moccasin, URL="#Lamp", label="{Lamp|«id» Name : Lamp_Name|- «class» Initialize()\n+ Changed()\n- Output_For_Lamp(): Output_Signal}"]
+A1 [fillcolor=lightsteelblue, URL="#A1"]
+Lamp -> A1 [label="A1", arrowhead=none, URL="#A1"]
+
+      }
+     

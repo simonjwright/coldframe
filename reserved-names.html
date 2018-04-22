@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>ColdFrame: Reserved names</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Reserved names</h1>
+
+<p>ColdFrame uses some names to build the framework for you. It will at
+best cause confusion if you use these names in your models.
+
+<p>The table below shows the names and their uses.
+
+<p><table border="1">
+
+<tr><th>Name <th>Use
+
+<tr><td>All_Instances<td>utility operation to obtain all current
+instances of a class
+
+<tr><td>Cascade_Initialize<td>domain initialization operation, can
+initialize other domains (especially in unit test)
+
+<tr><td>Cascade_Tear_Down<td>domain teardown operation, can tear down
+other domains (only in unit test)
+
+<tr><td>Class_Initialize<td>class initialization operation
+
+<tr><td>Counterpart<td>reference to a class in another Domain
+
+<tr><td>Delete<td>instance deletion operation
+
+<tr><td>Events<td>domain event support
+
+<tr><td>Filter_Function<td>generic, to select some instances of a
+collection of instances
+
+<tr><td>Find<td>instance location operation
+
+<tr><td>Handle<td>type used to access instances
+
+<tr><td>Handle_Hash<td>operation to support Booch Sets
+
+<tr><td>Identifier<td>type used to identify instances
+
+<tr><td>Initialize<td>domain initialization operation
+
+<tr><td>Instance<td>type to hold instance data
+
+<tr><td>Instance_Hash<td>operation to support Booch Maps
+
+<tr><td>Iterate<td>generic, to iterate over a collection of instances
+
+<tr><td>Next_Identifier<td>class variable to support Autonumber
+
+<tr><td>Old_State_Machine_State<td>attribute to contain the previous
+state of an instance's state machine during an action procedure call
+
+<tr><td>Selection_Function<td>generic, to select some of the current
+instances of a class
+
+<tr><td>Serializable<td>child package to support the
+<tt>{serializable}</tt> facility
+
+<tr><td>State_Image<td>operation to return a string describing the
+state of an instance's state machine
+
+<tr><td>State_Machine_State<td>attribute to contain the state of an
+instance's state machine (the new state, during an action procedure
+call)
+
+<tr><td>State_Machine_State_T<td>type to describe the state of an
+instance's state machine
+
+<tr><td>Tear_Down<td>operation to return the domain to its initial
+state
+
+<tr><td>Text<td>translates to
+<tt>Ada.Strings.Unbounded.Unbounded_String</tt>
+
+<tr><td>The_Container<td>class variable to contain all the instances
+(will be a pointer, an array or a Map)
+
+<tr><td>This<td>parameter (or, for singletons, class variable) to hold
+the (current) instance
+
+<tr><td>Time<td>translates to <tt>ColdFrame.Project.Calendar.Time</tt>
+
+<tr><td>Timer<td>type of an attribute to hold cancellable delayed
+events
+
+</table>
+
+You may find it useful sometimes
+to <a href="operations.html#basic">overload the instance creation
+operation <tt>Create</tt></a>.
+
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

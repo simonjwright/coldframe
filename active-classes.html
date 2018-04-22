@@ -1,0 +1,235 @@
+<head>
+<title>ColdFrame: Active Classes</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Active Classes</h1>
+
+<ul>
+<li><a href="#background">Background</a>
+<li><a href="#motivation">Motivation</a>
+<li><a href="#modelling">Modelling</a>
+<li><a href="#translation">Translation</a>
+<li><a href="#use">Use</a>
+</ul>
+
+<h2><a name="background">Background</a></h2>
+
+<p>A <i>task</i> is an independent thread of execution within a
+program. Tasks are supported by the operating system in use, which may
+well have a different name for the concept (VxWorks uses <i>task</i>,
+Linux uses <i>thread</i>, Solaris uses <i>light-weight process</i>).
+
+<p>Desktop operating systems like Windows and Linux have an additional
+concept <i>process</i>. Typically, processes don't share memory but
+can contain multiple threads/tasks, which do share process memory (and
+other resources, such as file handles).
+
+<p>VxWorks only has tasks.
+
+<p>Some programming languages provide tasking (concurrency) constructs
+as part of the language - for example, Ada, Java, C#. If your language
+doesn't have inbuilt support, you can call operating system primitives
+(for example, the VxWorks task creation operation is
+<tt>taskSpawn</tt>) or rely on support libraries such as
+<i>pthreads</i>.
+
+<p>With multiple CPUs, under an operating system which can use them
+(for example, an SMP-aware Linux), the program's tasks can be truly
+independent, so that more than one is running at any instant. Of
+course, there are still likely to be many fewer CPUs than tasks! The
+normal situation is to have one CPU per computer, shared between the
+tasks.
+
+<p>This might seem to be adding complexity, and indeed it does bring
+its own difficulties for programmers (especially in getting tasks to
+share data safely).
+
+<p>A key benefit is that it's much easier to deal with a multiply
+concurrent problem if the separate aspects can be designed
+independently. If the computer has to receive LAN updates from a radar
+system at the same time as initializing a different comms device using
+a complex multi-step protocol, it's as well if the two concerns can be
+kept separate (including, if possible, implementation by different
+teams, which ColdFrame supports by <a href="domains.html">domains</a>).
+
+
+<h2><a name="motivation">Motivation</a></h2>
+
+<p>Aside from the tasks which are semi-incidentally involved with <a
+href="events.html">event handling</a>, tasks are needed for two
+purposes:
+
+<ul>
+
+<li>to manage blocking input-output, and
+
+<li>to manage hard real time responses.
+
+</ul>
+
+<h3>Blocking input-output</h3>
+
+<p>If your application has to wait for something to arrive from the
+outside (for example, for an Ethernet message from another part of the
+system), the natural way to program it is to use a blocking read.
+
+<p>One example would be calling <tt>GNAT.Sockets.Accept_Socket</tt>,
+which blocks until a client (probably in another processor) chooses to
+call <tt>Connect_Socket</tt>.
+
+<!--
+<p>Another example, from the <a
+href="serialization-page.html">serialization</a> demonstration, is
+<pre>
+declare
+   Rec : constant ColdFrame.Project.Serialization.Base'Class :=
+     ColdFrame.Project.Serialization.Base'Class'Input (Channel);
+begin
+   ...
+</pre>
+
+<p>where the <tt>'Class'Input</tt> call blocks.
+-->
+
+<p>It would be <em>quite incorrect</em> to make these calls within
+ColdFrame's normal event processing, because the event queue concerned
+would be effectively stopped until the blocking call completed. They
+need to be made from distinct tasks.
+
+<h3>Hard real time responses</h3>
+
+<p>Two (related) approaches to managing multiple concurrent jobs which
+have to meet deadlines
+are <a href="http://en.wikipedia.org/wiki/Rate-monotonic_scheduling">Rate
+Monotonic Analysis</a> (RMA) and
+<a href="http://en.wikipedia.org/wiki/Deadline-monotonic_scheduling">Deadline
+Monotonic Analysis</a> (DMA).
+
+<p>Both are concerned mainly with <i>periodic</i> or cyclic jobs; for
+example, driving a tracker radar to point at its target at 64 Hz,
+where you mustn't miss the correct time to output the demands because
+you'll lose the target (or perhaps rattle the tracker to pieces!)
+
+<p>Both rely on preemptive scheduling (high-priority tasks forcibly
+suspend, or preempt, lower-priority tasks). Each job is allocated to a
+task (usually one job per task, but two jobs with the same scheduling
+requirements could be allocated to one task, other things being
+equal).
+
+<p>RMA allocates the highest priority to the task which has to run
+most frequently, while DMA allocates it to the task with the shortest
+deadline (ie, the shortest period between when it can start a cycle of
+processing and when it has to have completed).
+
+<h2><a name="modelling">Modelling</a></h2>
+
+<p>You specify a class as active by marking it with the stereotype
+&#171;active&#187;.
+
+<p>Procedure operations (ie, those without a return value) of an
+active class can be stereotyped &#171;entry&#187;; see <a
+href="http://www.adaic.org/standards/95lrm/html/RM-9-5.html">ARM
+9.5</a> for a discussion on entries.
+
+<p>It is permitted for an &#171;entry&#187; operation to have the same name as
+an ordinary operation.
+
+<p>You can specify the run-time priority of the task using the tag
+<i>priority</i>. The form is
+<pre>
+{priority = <i>priority relative to system default</i>}
+</pre>
+
+<p>You can specify the stack size of the task using the tag
+<i>stack</i>. The form is
+<pre>
+{stack = <i>stack size</i>}
+</pre>
+
+<p>You can also specify a class as active by setting
+the <i>isActive</i> checkbox in the <i>modifiers</i> section of the
+ArgoUML <i>Properties</i> tab, but
+<ol>
+<li> this is much less obvious in the model, and
+<li> it doesn't allow the use of the <tt>{priority}</tt>
+and <tt>{stack}</tt> tags.
+</ol>
+
+<h2><a name="translation">Translation</a></h2>
+
+<p>Each instance of an &#171;active&#187; class has an associated task. The
+task's name, if supported by the operating system, is
+<tt><i>Domain.Class</i></tt>.
+
+<p>You access the task using <tt>This.The_T</tt>; so if there is an
+<i>&#171;entry&#187; Start</i>, you would call it as <tt>This.The_T.Start</tt>.
+
+<p>If a &#171;<a href="types.html#protected">protected</a>&#187;
+type's &#171;entry&#187; operation's visibility is <i>public</i>
+or <i>protected</i>, it is implemented as a public entry; otherwise as
+a private entry. You would use this
+for <a
+href="http://www.adaic.com/standards/95aarm/html/AA-9-5-4.html">requeuing</a>.
+
+<p>The visibility of task entries is always public (but only to the
+class in which it's defined).
+
+<h2><a name="use">Use</a></h2>
+
+<h3>Accessing instance attributes and calling operations</h3>
+
+<p>The task is constrained by <tt>This : access Instance</tt>, so
+within the task you can quite often treat <tt>This</tt> as if it were
+a <tt>Handle</tt>. However, it isn't quite, so if the compiler
+complains use a view conversion:
+<pre>
+Handle (This)
+</pre>
+
+<h3>Deleting the instance</h3>
+
+<p>The generated <tt>Delete</tt> operation of an &#171;active&#187;
+class aborts the task before freeing the task and instance
+memory. This means that if you call <tt>Delete</tt> from the task you
+are pulling the rug from under your feet!
+
+<p>What's needed is <i>another</i> task. The nearest candidate is the
+task in the <a href="event-use.html">event queue</a> for the domain; so
+the canonical solution is to post an event to the event queue which
+will <tt>Delete</tt> the instance when it fires.
+
+<p>Some examples of this idiom have posted the event to run after a
+delay. This should not be necessary.
+
+<p>To avoid the need for a special state machine, a <i>&#171;class
+event&#187;</i> should be used (if there can be more than one
+instance, it will need a parameter of type <i>Class</i>, translating
+to <tt>Handle</tt>, to indicate which instance is to be deleted).
+
+<h3>State machines</h3>
+
+<p>If an active class has a state machine, you have to
+be <a href="event-use.html#activeclasses">careful about instance
+initialization</a>.
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

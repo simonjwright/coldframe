@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>ColdFrame: Scripting the Event Queue</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Scripting the Event Queue</h1>
+
+<dl>
+<dt><tt>ColdFrame.Scripted_Testing_G</tt>
+<dd>Provides the procedure <tt>Register</tt> to tell the framework
+<ul>
+<li>which Dispatcher (event queue) is in use
+<li>and the <tt>Initialize</tt>
+procedure to call to initialize all the domains,
+</ul>
+and the
+commands <tt>initialize</tt>, <tt>start_dispatcher</tt>
+and <tt>wait_until_idle</tt>.
+<br>To use <tt>wait_until_idle</tt>, the event queue in use must be a
+Test or Test_Trace queue.
+
+<dt><tt>ColdFrame.Project.Scripted_Testing</tt>
+<dd>Instantiates <tt>ColdFrame.Scripted_Testing_G</tt> with the
+project Event Queue.
+
+</dl>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

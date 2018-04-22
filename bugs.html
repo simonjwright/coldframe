@@ -1,0 +1,3567 @@
+<html>
+<head>
+<title>ColdFrame: Bugs</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Bugs</h1>
+
+<blockquote>
+  If a bug is numbered <i>nnnn</i> it's only reported in this
+  document. If a bug is numbered <i>nnnn</i>/<i>mmmmmmm</i>,
+  the <i>mmmmmmm</i> is
+  the (old) <a href="https://sourceforge.net/tracker/?group_id=135558&atid=733915">SourceForge</a>
+  bug number.
+
+  Bugs after <a href="#0376">0376</a> are only logged
+  at <a href="https://sourceforge.net/tracker/?group_id=135558&atid=733915">SourceForge</a>.
+</blockquote>
+
+<ul>
+
+<li><a href="#outstanding">Outstanding</a>
+
+<li><a href="#fixed">Fixed</a>
+
+<li><a href="#feature">Features</a>
+
+<li><a href="#rejected">Rejected</a>
+
+</ul>
+
+<h2><a name="outstanding">Outstanding</a></h2>
+
+<dl>
+
+<dt>0062 (raised 23.i.02)
+
+<dd>It would be useful to be able to specify constants.
+<br><i>Pi is specially handled, in "expression" contexts
+(initial values, <tt>{real}</tt> ranges).</i>
+
+<dt>0078 (raised 18.iv.02)
+
+<dd>ColdFrame doesn't detect the error of having non-unique
+abbreviations.
+
+<dt>0174 (raised 17.vi.03)
+
+<dd>The error of making an Association with a &#171;type&#187; should
+be detected (instead of generating bad code).
+
+<dt>0182 (raised 9.vii.03)
+
+<dd>Using <tt><i>{formalizes}</i></tt> on a non-class attribute gives
+an unhelpful error message.
+
+<dt>0183 (raised 9.vii.03)
+
+<dd>Using <tt><i>{imported}</i></tt> (and possibly others) on a
+&#171;type&#187; with attributes gives an unhelpful error message.
+
+<dt>0184 (raised 9.vii.03)
+
+<dd>&#171;public&#187; and &#171;singleton&#187; classes have a
+<tt>Create</tt> operation which is not meant to be called by
+handwritten code. Perhaps it should be renamed.
+
+<dt>0203 (raised 16.ix.03)
+
+<dd>When checking whether an abstract operation has been implemented,
+ColdFrame doesn't check that the operation profiles match (for
+example, that both are procedures or both functions). This can lead to
+compilation errors in generated code.
+
+<dt>0240 (raised 2.iii.04)
+
+<dd>The Event Queue operation <tt>Unset</tt> assumes it's called in an
+action (ie, with the Event Queue locked).
+
+<dt>0253 (raised 19.iv.04)
+
+<dd>In a state chart, the error of having more than one state with the
+same name is not detected as such (this really only happens if you
+name one of your states <i>initial</i> or <i>final</i>, which are the
+default names used for initial and final states).
+
+<dt>0262 (raised 14.v.04)
+
+<dd>Extraction (via Rose) can fail silently.
+<br><i>Probably caused by using nested packages. Consider
+using <tt>cat2raw.py</tt>.</i>
+
+<dt>0265 (raised 26.v.04)
+
+<dd>There is no check that associations' multiplicities have been
+maintained.
+
+<dt>0277 (raised 26.vii.04)
+
+<dd>The error messages that are given if there's a relationship
+involving a class not in the current package (either from a
+non-&#171;generate&#187; child or from another domain altogether)
+aren't as helpful as they could be.
+
+<dt>0283 (raised 11.ix.04)
+
+<dd>The generated code won't compile if all the attributes of a
+&#171;public&#187; class are &#171;class&#187; attributes.
+<br><i>If you feel you absolutely must have &#171;class&#187;
+attributes, add a dummy instance attribute as well. But it's not
+obvious why you'd want to.</i>
+
+<dt>0285 (raised 6.xi.04)
+
+<dd>The fact that an operation's parameter has a default value isn't
+considered when checking whether the operation is allowable as an
+action.
+
+<dt>0292 (raised 31.i.05)
+
+<dd>There's no way of seeing the <i>{revision}</i> string for a
+&#171;generate&#187;d (now &#171;include&#187;d) package.
+
+<dt>0332 (raised 30.ix.05)
+
+<dd>You can't
+use <a href="event-modelling.html#post-to-self">events-to-self</a>
+from an event that's being handled synchronously.
+
+<dt>0342/<a href="https://sourceforge.net/support/tracker.php?aid=1401275">1401275</a> (raised 10.i.06)
+
+<dd>ColdFrame's checks on state machines don't properly handle the
+case where actions are inherited; in particular, the error of having
+transitions (particularly completion transitions) from a state with a
+&#171;final&#187; action (ie, where the instance has been deleted) may
+not be detected.
+<br><i>26.x.07: checks now include inherited actions, but the reported
+problem still exists.</i>
+
+<dt>0362 (raised 5.ix.06)
+
+<dd>Generated unit test support fails to compile if a
+&#171;public&#187; class has an attribute of a private type.
+<br><i>On the whole it's best if public classes don't have attributes
+at all.</i>
+
+<dt>0369/<a href="https://sourceforge.net/support/tracker.php?aid=1964067">1964067</a> (raised 14.v.08)
+
+<dd>If an instance event is declared with &#171;instance event&#187;
+but there's no corresponding transition on the state machine, the
+generated spec requires a handler which the body doesn't provide.
+
+<!-- next: 0377 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>6.ix.08</h3>
+
+<dl>
+
+<dt><a name="0376">0376</a>/<a href="https://sourceforge.net/support/tracker.php?aid=2080418">2080418</a> (raised 28.viii.08)
+
+<dd>If you have a sequence diagram with messages that contain a quote
+(for example), they are backslash-escaped; and cat2raw.py (the lex
+component, I guess) rejects them.
+
+</dl>
+
+<h3>8.vii.08</h3>
+
+<dl>
+
+<dt>0371/<a href="https://sourceforge.net/support/tracker.php?aid=2009429">2009429</a> (raised 3.vii.08)
+
+<dd>When an active instance is deleted, no check is made for whether
+its task has actually terminated. If it hasn't, the task won't
+actually get deleted, and memory will leak.
+
+<dt>0372 (raised 3.vii.08)
+
+<dd>The <tt>Delete</tt> and <tt>Find</tt> operations for unbounded
+classes can leak memory with some older releases of GNAT.
+<br><i>This was originally notified 31.i.06.</i>
+
+<dt>0373/<a href="https://sourceforge.net/support/tracker.php?aid=2013298">2013298</a> (raised 8.vii.08)
+
+<dd>Exception renaming/import requires old [[annotation]] syntax.
+
+<dt>0374/<a href="https://sourceforge.net/support/tracker.php?aid=2013300">2013300</a> (raised 8.vii.08)
+
+<dd>Generated HTML doesn't include exceptions.
+
+<dt>0375/<a href="https://sourceforge.net/support/tracker.php?aid=2013830">2013830</a> (raised 8.vii.08)
+
+<dd>Generated HTML doesn't include &#171;abstract&#187; in
+single-class diagrams.
+
+</dl>
+
+<h3>1.vii.08</h3>
+
+<dl>
+
+<dt>0370/<a href="https://sourceforge.net/support/tracker.php?aid=1983328">1983328</a> (raised 3.vi.08)
+
+<dd>The code generated when GENERATE_EVENT_LOGGING=yes doesn't match
+the recent changes to ColdFrame.Project logging.
+
+</dl>
+
+<h3>3.v.08</h3>
+
+<dl>
+
+<dt>0035 (raised 1.xi.01)
+
+<dd>The association support packages generated when one of the parties
+in a 1:1 association is a &#171;singleton&#187; won't work if the
+non-singleton party is marked <tt>{source}</tt>.
+
+</dl>
+
+<h3>27.x.07</h3>
+
+<dl>
+
+<dt>0368/<a href="https://sourceforge.net/support/tracker.php?aid=1811578">1811578</a> (raised 11.x.07)
+
+<dd>The generated code for a protected function doesn't handle the
+many non-simple possibilities for return value types (eg, arrays).
+
+</dl>
+
+<h3>1.vii.07</h3>
+
+<dl>
+
+<dt>0361/<a href="https://sourceforge.net/support/tracker.php?aid=1546249">1546249</a> (raised 24.viii.06)
+
+<dd>While doing unit tests
+using <tt>ColdFrame.Project.Events.Standard.Inspection</tt>, it wasn't
+possible to simulate the firing of a <tt>Timer</tt> where the actions
+result in the <tt>Timer</tt> getting set again (for example, when
+sending a regular message) by getting the event
+using <tt>Event_Of</tt> and invoking its <tt>Handler</tt>, because
+the <tt>Timer</tt> was still set.
+<br>Added a new procedure <tt>Inspection.Fire (A_Timer)</tt>.
+
+<dt>0367/<a href="https://sourceforge.net/support/tracker.php?aid=1744249">1744249</a> (raised 27.vi.07)
+
+<dd>A ColdFrame.Interrupts.Handler must detach itself from the
+interrupt if there was no previous handler to replace.
+
+</dl>
+
+<h3>18.v.07</h3>
+
+<dl>
+
+<dt>0359/<a href="https://sourceforge.net/support/tracker.php?aid=1544856">1544856</a> (raised 22.viii.06)
+
+<dd>At present, class and instance events have the same priority.
+However, since class events are usually used to isolate one domain
+from another, it's arguable that class events should have lower
+priority than instance events; all the instance events following from
+the handling of a class event should be handled before considering the
+next class event.
+
+</dl>
+
+<h3>24.iii.07</h3>
+
+<dl>
+
+<dt>0366/<a href="https://sourceforge.net/support/tracker.php?aid=1687327">1687327</a> (raised 23.iii.07)
+
+<dd>The error of having multiple transitions from a state triggered by
+the same event isn't detected (the fix implemented in response to 0206
+didn't always work).
+
+</dl>
+
+<h3>30.xi.06</h3>
+
+<dl>
+
+<dt>0352 (raised 6.iv.06)
+
+<dd>ColdFrame doesn't detect the error of having more than one type
+with the same name.
+
+<dt>0364/<a href="https://sourceforge.net/support/tracker.php?aid=1605567">1605567</a> (raised 29.xi.06)
+
+<dd>The error of a domain having two different type definitions isn't
+detected. This could happen with an interface child UML package.
+
+</dl>
+
+<h3>3.xi.06</h3>
+
+<dl>
+
+<dt>0363/<a href="https://sourceforge.net/support/tracker.php?aid=1589302">1589302</a> (raised 3.xi.06)
+
+<dd>Hash function generation doesn't recognise modular types.
+<br><i>Use {hash=discrete} in the &#171;type&#187;.</i>
+
+</dl>
+
+<h3>5.ix.06</h3>
+
+<dl>
+
+<dt>0358/<a href="https://sourceforge.net/support/tracker.php?aid=1517591">1517591</a> (raised 7.vii.06)
+
+<dd>When a class has an attribute whose type is a protected type the
+generated Unit_Test child package fails to compile.
+
+</dl>
+
+<h3>23.iv.06</h3>
+
+<dl>
+
+<dt>0355 (raised 21.iv.06)
+
+<dd>The (de)serialization code generated
+for <i>{type-image}</i> doesn't compile.
+
+<dt>0356 (raised 21.iv.06)
+
+<dd>Would it be possible to mark an attribute <i>{aliased}</i>? (Ada
+semantics).
+
+<dt>0357 (raised 21.iv.06)
+
+<dd>It would be good if a completion transition from a state with a
+&#171;final&#187; action to a final state wasn't treated as an error.
+
+</dl>
+
+<h3>19.iv.06</h3>
+
+<dl>
+
+<dt>0353/<a href="https://sourceforge.net/support/tracker.php?aid=1472823">1472823</a> (raised 19.iv.06)
+
+<dd>ColdFrame reports:
+<pre>
+   Error: couldn't generate type Recording_Queue
+   no definition of type Serialization_Base_Class_P
+</pre>
+
+Where Recording_Queue is a protected type with an operation accessing
+Serialization_Base_Class_P and Serialization_Base_Class is defined as
+a type with:
+<pre>
+   {renames = Serialization_Support.Base Class}
+   {access = Serialization_Base_Class_P}
+</pre>
+
+The problem is not reported if a dummy type is declared which has an
+attribute of Serialization_Base_Class_P.
+
+<dt>0354/<a href="https://sourceforge.net/support/tracker.php?aid=1473115">1473115</a> (raised 19.iv.06)
+
+<dd>The functions Is_Set and Expires_At in ColdFrame.Events_G.Test_G
+are not dispatching operations in the same way as Wait_Until_Idle,
+this makes calling these functions virtually impossible.
+<br>Versions of Is_Set and Expires_At need declaring in
+ColdFrame.Events_G in the same way as Wait_Until_Idle to make them
+usable.
+
+</dl>
+
+<h3>8.iv.06</h3>
+
+<dl>
+
+<dt>0351 (raised 6.iv.06)
+
+<dd>If you specify a function returning Handle, the generated
+stub tries to return <tt>Handle'First</tt> instead of <tt>null</tt>.
+<br><i>If the <tt>Handle</tt> represents an instance of a class in
+this domain (including 'this' class), use the class name. If it
+represents an instance of a class in another domain,
+use <tt>Counterpart</tt> (or a <tt>{counterpart}</tt> type).</i>
+
+</dl>
+
+<h3>22.iii.06</h3>
+
+<dl>
+
+<dt>0331 (raised 27.ix.05)
+
+<dd>If a &#171;type&#187; includes an attribute whose type is a class
+in the domain (which is translated
+as <tt>ColdFrame.Instances.Handle</tt>), that of itself doesn't cause
+a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
+
+<dt>0350 (raised 22.iii.06)
+
+<dd>If the interface part of a domain that has no operations of types
+is being stubbed, no package body is generated. This is a Bad Thing if
+the full domain does have operations of types (or protected types),
+because you can't just use an extension GPR to override the full
+software tree.
+
+</dl>
+
+<h3>18.iii.06</h3>
+
+<dl>
+
+<dt>0349 (raised 9.iii.06)
+
+<dd>Teardown doesn't finalize instance Timers (so you get log messages
+about a Timer being destroyed while holding an event).
+
+</dl>
+
+<h3>4.iii.06</h3>
+
+<dl>
+
+<dt>0348/<a href="https://sourceforge.net/support/tracker.php?aid=1442276">1442276</a> (raised 3.iii.06)
+
+<dd>When inspecting an event queue, held events are in time order
+whereas you would expect them to be in posting order.
+
+</dl>
+
+<h3>18.ii.06</h3>
+
+<dl>
+
+<dt>0346/<a href="https://sourceforge.net/support/tracker.php?aid=1433373">1433373</a> (raised 17.ii.06)
+
+<dd>The documentation says that atomic and volatile can be specified
+using stereotypes on objects; in fact they can only be specified using
+tags. Shouldn't there be at least a warning for unrecognised
+stereotypes?
+
+</dl>
+
+<h3>6.ii.06</h3>
+
+<dl>
+
+<dt>0343 (raised 29.i.06)
+
+<dd>The problem reported at <a href="#0319">0319</a> wasn't a problem
+at all. Domain initialization should be called at the very beginning;
+and there should be some documentation on initialization.
+
+<dt>0344 (raised 6.ii.06)
+
+<dd>Stubbed operations of types aren't thread-safe.
+
+<dt>0345 (raised 6.ii.06)
+
+<dd>Although it would be normal for the output values and the
+exceptions in a stubbed interface to be set up before execution
+begins, it would be a good thing if the setup could be thread-safe.
+
+</dl>
+
+<h3>31.xii.05</h3>
+
+<dl>
+
+<dt>0341 (raised 29.xii.05)
+
+<dd>Rose doesn't mind if people use the "wrong" capitalization
+for <tt>CURDIR</tt>, so it would be as well if <tt>cat2raw.py</tt>
+didn't either.
+
+</dl>
+
+<h3>17.xii.05</h3>
+
+<dl>
+
+<dt>0338/<a href="https://sourceforge.net/support/tracker.php?aid=1359556">1359556</a> (raised 18.xi.05)
+
+<dd>The supplied <tt>test/Makefile</tt> may not work if the
+environment has been customised by the project; particularly, the Ada
+project path shouldn't introduce additional dependencies, and
+executables generated need to run on the host.
+
+<dt>0339/<a href="https://sourceforge.net/support/tracker.php?aid=1365266">1365266</a> (raised 24.xi.05)
+
+<dd><tt>Domain_Initialized</tt> can't be used by a task to tell when
+initialization is complete.
+
+<dt>0340/<a href="https://sourceforge.net/support/tracker.php?aid=1371468">1371468</a> (raised 2.xii.05)
+
+<dd>A <tt>ColdFrame.Project.Events.Standard.Test_Trace</tt> event
+queue starts in the started state.
+
+</dl>
+
+<h3>2.xi.05</h3>
+
+<dl>
+
+<dt>0334/<a href="https://sourceforge.net/support/tracker.php?aid=1315548">1315548</a> (raised 7.x.05)
+
+<dd>There is a storage leak if a state machine action that is not
+marked &#171;final&#187; or named <tt>Delete</tt> deletes the
+instance. The leak is caused by the deliberate raising
+of <tt>ColdFrame.Exceptions.Use_Error</tt>.
+<br><i>Of course the code that deleted the instance is in violation of
+its contract ...</i>
+
+</dl>
+
+<h3>1.xi.05</h3>
+
+<dl>
+
+<dt>0337/<a href="https://sourceforge.net/support/tracker.php?aid=1337007">1337007</a> (raised 25.x.05)
+
+<dd> There's a potential deadly embrace if a dispatched action tries
+ to delete an instance after the Held Event Manager has finished.
+
+</dl>
+
+<h3>19.x.05</h3>
+
+<dl>
+
+<dt>0335/<a href="https://sourceforge.net/support/tracker.php?aid=1331554">1331554</a> (raised 19.x.05)
+
+<dd> The 'normalization' phase of code generation takes a very long
+time on Windows systems; observed on Windows2000 and XP. Seemed bad
+enough on 2k (about 60 times slower than on Linux), really painful on
+XP.
+
+<dt>0336/<a href="https://sourceforge.net/support/tracker.php?aid=1331565">1331565</a> (raised 19.x.05)
+
+<dd>A <tt>cat2raw.py</tt> problem: the Python stack trace ends
+with:<br>
+
+File "cat2raw.py", line 502, in emit_contents
+<br>self.statemachine.state_named(self.supplier).name(),
+<br>AttributeError: 'NoneType' object has no attribute 'name'
+
+</dl>
+
+<h3>1.x.05</h3>
+
+<dl>
+
+<dt>0333 (raised 30.ix.05)
+
+<dd>The provided <tt>Test_Trace</tt> and <tt>Test_Debug</tt>
+instantiations don't compile.
+<br><i>This seems to be a compiler problem (FSF 4.0.0, GNAT 5.03a1).</i>
+
+</dl>
+
+<h3>3.ix.05</h3>
+
+<dl>
+
+<dt>0326/<a href="https://sourceforge.net/support/tracker.php?aid=1266456">1266456</a> (raised 22.viii.05)
+
+<dd> Especially when running under Windows, it's all too possible for
+the Makefiles to pick the wrong version of a command (eg
+<tt>find</tt>).
+
+<dt>0327/<a href="https://sourceforge.net/support/tracker.php?aid=1265701">1265701</a> (raised 22.viii.05)
+
+<dd>It would be helpful to output a domain's {revision}, to standard
+error; that way you could see the revision in captured logs.
+
+<dt>0328 (raised 22.viii.05)
+
+<dd>An Event Queue with no references can't be torn down.
+
+<dt>0329 (raised 2.ix.05)
+
+<dd>If you call <tt>Wait_Until_Idle</tt> on a (<i>test</i>) event
+queue that hasn't been started, it may hang.
+<br>Now, a <tt>Use_Error</tt> exception is raised.
+
+</dl>
+
+<h3>12.viii.05</h3>
+
+<dl>
+
+<dt>0324 (raised 12.viii.05)
+
+<dd>The event Dispatcher's logic is faulty; specifically,
+Stop_Handling is called twice.
+
+<dt>0325 (raised 12.viii.05)
+
+<dd>The Stop_Handling operation for instance events results in invalid
+memory accesses if the instance was deleted by the event handler.
+
+</dl>
+
+<h3>7.viii.05</h3>
+
+<dl>
+
+<dt>0321/<a href="https://sourceforge.net/support/tracker.php?aid=1239282">1239282</a> (raised 16.vii.05)
+
+<dd>It would be helpful to check that subprogram names and parameters
+passed to the stub mechanism are correct; also that overridings are
+intended.
+
+<dt>0322/<a href="https://sourceforge.net/support/tracker.php?aid=1252188">1252188</a> (raised 4.viii.05)
+
+<dd> If you have an event queue which doesn't start at creation (all
+Test event queues, or any queue with Start_Started false), there's a
+possible race condition (especially if the queue is low priority)
+which can lead to lockup when Start is eventually called.
+
+<dt>0323/<a href="https://sourceforge.net/support/tracker.php?aid=1253254">1253254</a> (raised 6.viii.05)
+
+<dd>The stub mechanism isn't thread-safe.
+
+</dl>
+
+<h3>12.vii.05</h3>
+
+<dl>
+
+<dt>0318 (raised 6.vii.05)
+
+<dd>A class may be active (have a task) and have a state machine. If
+so, it would be a good idea if the current state could be made atomic.
+
+<dt><a name="0319">0319</a> (raised 6.vii.05)
+
+<dd>A domain initialization <i>{init}</i> operation should be called
+after any class initializations have been done (ie, singletons exist,
+class attributes with default values have been set up).
+
+<dt>0320 (raised 12.vii.05)
+
+<dd>Stub generation fails for types such as <tt>Time</tt>.
+
+</dl>
+
+<h3>4.vii.05</h3>
+
+<dl>
+
+<dt>0317/<a href="https://sourceforge.net/support/tracker.php?aid=1231591">1231591</a> (raised 4.vii.05)
+
+<dd>Protected function return types aren't taken account of when
+calculating the order in which to output type declarations.
+
+</dl>
+
+<h3>16.vi.05</h3>
+
+<dl>
+
+<dt>0316 (raised 16.vi.05)
+
+<dd>Bad code was generated for an association formalized by an
+identifying attribute.
+
+</dl>
+
+<h3>14.vi.05</h3>
+
+<dl>
+
+<dt>0314/<a href="https://sourceforge.net/support/tracker.php?aid=1219816">1219816</a> (raised 13.vi.05)
+
+<dd>The body code generated for the Create and Find operations of a
+many-to-many reflexive association doesn't compile (it uses the same
+parameter name for each role).
+
+<dt>0315 (raised 14.vi.05)
+
+<dd>Navigations for reflexive associations aren't correct.
+
+</dl>
+
+<h3>11.vi.05</h3>
+
+<dl>
+
+<dt>0311 (raised 24.v.05)
+
+<dd>It would be good to be able to suppress the 'de-serialization'
+code in the <tt><i>Domain</i>.Serializable</tt> package (it's only
+needed in the <i>analyzing</i> executable).
+
+</dl>
+
+<h3>28.v.05</h3>
+
+<dl>
+
+<dt>0312 (raised 26.v.05)
+
+<dd>With GNAT there are no hardware floating-point exceptions; you
+just get <i>Inf</i>s or <i>NaN</i>s on overflow. However, you do
+get <tt>Constraint_Error</tt> on assigning to a constrained subtype;
+it would be a Good Thing if this feature could be used.
+
+<dt>0313 (raised 27.v.05)
+
+<dd>A parental <i>class</i> operation masks a failure to declare a
+state action procedure.
+
+</dl>
+
+<h3>18.v.05</h3>
+
+<dl>
+
+<dt>0307 (raised 12.v.05)
+
+<dd>The version reported by the code generation phase is misleading if
+<tt>CODEGEN_SCRIPT</tt> was defined and you've forgotten to import the
+new XSLT scripts.
+<br><i>This also happens with the normalization script.</i>
+
+<dt>0310 (raised 18.v.05)
+
+<dd>If an inherited operation is marked <i>private</i> (or
+<i>implementation</i>), two specs will be generated (the inherited one
+in the public part, the private one in the private part).
+
+</dl>
+
+<h3>13.v.05</h3>
+
+<dl>
+
+<dt>0308 (raised 12.v.05)
+
+<dd>Bad code is generated in children where an &#171;accessor&#187;
+operation is marked <i>private</i>.
+<br><i>Not clear what good a private accessor is - you have direct
+visibility of the instance attributes! Perhaps the user meant to say
+</i>protected<i>?</i>
+
+<dt>0309 (raised 12.v.05)
+
+<dd>The generated header for separate proper bodies ought not to
+include ColdFrame version information (it will be well out of date
+after a few years, and people don't seem to want to delete it).
+
+</dl>
+
+<h3>12.v.05</h3>
+
+<dl>
+
+<dt>0305/<a href="https://sourceforge.net/support/tracker.php?aid=1199638">1199638</a> (raised 11.v.05)
+
+<dd> It is not possible to use a class called System as compiling the
+generated code fails with: "Storage_Elements" not declared in
+"System". This can be resolved by prefixing System with Standard in
+the generated code.
+
+<dt>0306 (raised 12.v.05)
+
+<dd>If a function returns a class, the proper dummy return value is
+<tt>null</tt>.
+
+</dl>
+
+<h3>8.v.05</h3>
+
+<dl>
+
+<dt>0068 (raised 6.iii.02)
+
+<dd>It would be useful to be able to specify subtypes (eg, of
+enumerations).
+<br><i>Use {constrains}.</i>
+
+</dl>
+
+<h3>30.iv.05</h3>
+
+<dl>
+
+<dt>0302 (raised 29.iv.05)
+
+<dd>A private type couldn't depend on (eg, have a component of) a
+public type.
+
+<dt>0303 (raised 30.iv.05)
+
+<dd>A private type can't be <i>{serializable}</i>.
+<br><i>Exactly so! This is now reported.</i>
+
+</dl>
+
+<h3>23.iv.05</h3>
+
+<dl>
+
+<dt>0300/<a href="https://sourceforge.net/support/tracker.php?aid=1182842">1182842</a> (raised 14.iv.05)
+
+<dd>The Wait_Until_Idle operation of test event queues has an option
+to ignore events that are held on timers (and can be retracted) but
+not events that are just held (fire and forget).
+<br><i>The Ignoring_Timers parameter now indicates that both timer and
+plain held events are to be ignored.</i>
+
+<dt>0301 (raised 22.iv.05)
+
+<dd>It's an unrecoverable error for an active instance's task to try
+to delete itself, so it would be a good idea to report it.
+
+</dl>
+
+<h3>22.iv.05</h3>
+
+<dl>
+
+<dt>0298/<a href="https://sourceforge.net/support/tracker.php?aid=1183184">1183184</a> (raised 14.iv.05)
+
+<dd>The supplied storage pools fill memory with 16#deadbeef# both
+before returning it from Allocate and when it's returned to
+Deallocate. Might be helpful to fill with something different in the
+two cases.
+<br><i>Deallocated memory is filled with 16#dead#.</i>
+
+<dt>0299/<a href="https://sourceforge.net/support/tracker.php?aid=1183180">1183180</a> (raised 14.iv.05)
+
+<dd>The provided storage pools fill memory with 16#deadbeef#. This
+looks fine on PowerPC (big-endian) hardware but less visible on Intel
+(little-endian), because the *byte* order is reversed (16#efbeadde#).
+
+</dl>
+
+<h3>3.iv.05</h3>
+
+<dl>
+
+<dt>0297 (raised 3.iv.05)
+
+<dd>Normalization failed with newer releases of Tcl (the element start
+command callback has additional parameters for namespace information).
+
+</dl>
+
+<h3>24.ii.05</h3>
+
+<dl>
+
+<dt>0294 (raised 6.ii.05)
+
+<dd>It would be helpful to be able to specify an initialization
+operation to be called before any &#171;init&#187; operations during
+domain initialization.
+
+<dt>0295 (raised 11.ii.05)
+
+<dd>It would be useful to be able to specify <i>atomic</i>,
+<i>volatile</i> on types (translating to the corresponding pragmas).
+
+</dl>
+
+<h3>6.ii.05</h3>
+
+<dl>
+
+<dt>0293 (raised 4.ii.05)
+
+<dd>&#171;teardown&#187; operations mustn't also be &#171;class&#187;
+operations.
+
+</dl>
+
+<h3>2.ii.05</h3>
+
+<dl>
+
+<dt>0291 (raised 28.i.05)
+
+<dd>Could the documentation of attributes be output in the generated
+code?
+
+</dl>
+
+<h3>30.i.05</h3>
+
+<dl>
+
+<dt>0261 (raised 29.iv.04)
+
+<dd>The DTDs should be brought up-to-date (or replaced by schemas).
+<br><i>See <a href="ColdFrame-raw.xsd">ColdFrame-raw.xsd</a> for
+<tt>.raw</tt> files, <a
+href="ColdFrame-norm.xsd">ColdFrame-norm.xsd</a> for normalized
+files.</i>
+
+</dl>
+
+<h3>29.i.05</h3>
+
+<dl>
+
+<dt>0289 (raised 15.xi.04)
+
+<dd>If a &#171;protected&#187; type can't be declared because of an
+undeclared type in one of its operations, the error message doesn't
+mention the offending type.
+<br><i>The actual problem was <tt>Natural</tt>, which of course Ada
+programmers know exists in package <tt>Standard</tt>. Perhaps some
+more of Ada's standard types should be predefined for ColdFrame.</i>
+<br>Added <tt>Character</tt>, <tt>Duration</tt>, <tt>Natural</tt>,
+<tt>Positive</tt>.
+
+</dl>
+
+<h3>20.xii.04</h3>
+
+<dl>
+
+<dt>0290 (raised 20.xii.04)
+
+<dd>There seems to be a Cygwin problem if the .impl directory has too
+much code in it (total length of *.ad[bs] was > 37,000 characters).
+<br><i>This was actually fixed 2.xi.04.</i>
+
+</dl>
+
+<h3>3.xii.04</h3>
+
+<dl>
+
+<dt>0249 (raised 2.iv.04)
+
+<dd>The <em>&#171;generate&#187;</em> stereotype on nested packages is
+confusing. Perhaps it should be <em>&#171;include&#187;</em>?
+<br><i>Of course, &#171;generate&#187; must be retained for
+compatibility.</i>
+
+<dt>0271 (raised 30.vi.04)
+
+<dd>It would be helpful to have an <tt>Epoch</tt> value in
+<tt>ColdFrame.Project.Calendar</tt>.
+
+<dt>0288 (raised 11.xi.04)
+
+<dd>The <a href="generalizations.html">information on generalization
+and inheritance</a> doesn't describe what you're supposed to do with
+operations and attributes.
+
+</dl>
+
+<h3>12.xi.04</h3>
+
+<dl>
+
+<dt>0286 (raised 9.xi.04)
+
+<dd>The element type for an <i>{array}</i> isn't translated properly
+(so, for example, <i>Text</i> isn't converted to
+<tt>Unbounded_String</tt>).
+
+<dt>0287 (raised 9.xi.04)
+
+<dd>The new <i>{access}</i> tag's value needs to be hand-normalized
+(you have to put in your own underscores and capitalization).
+<br><i>This only happened for types without attributes.</i>
+
+</dl>
+
+<h3>25.x.04</h3>
+
+<dl>
+
+<dt>0090 (raised 7.vi.02)
+
+<dd>It should be possible to declare &#171;type&#187;s "private".
+
+</dl>
+
+<h3>11.ix.04</h3>
+
+<dl>
+
+<dt>0281 (raised 9.ix.04)
+
+<dd>A Timer can't be a &#171;class&#187; attribute.
+<br><i>It's not obvious why you'd want to do that.</i>
+
+<dt>0282 (raised 9.ix.04)
+
+<dd>A &#171;protect&#187;ed type without operations (which is a
+problem in its own right!) won't compile.
+
+</dl>
+
+<h3>8.ix.04</h3>
+
+<dl>
+
+<dt>0280 (raised 8.ix.04)
+
+<dd><tt>All_Instances</tt> and <tt>Selection_Function</tt> won't
+compile for a class which can have at most one instance.
+
+</dl>
+
+<h3>3.ix.04</h3>
+
+<dl>
+
+<dt>0250 (raised 4.iv.04)
+
+<dd>Unsigned types should be supported.
+
+</dl>
+
+<h3>31.viii.04</h3>
+
+<dl>
+
+<dt>0274 (raised 26.vii.04)
+
+<dd>If a <i>private</i> operation is marked &#171;init&#187; the
+resulting code won't compile.
+
+<dt>0278 (raised 26.vii.04)
+
+<dd>If a &#171;protect&#187;ed type has an operation with parameters,
+the types of the parameters may not be declared before the protected
+type itself.
+
+<dt>0279 (raised 26.vii.04)
+
+<dd>&#171;access&#187; operations of <em>&#171;protect&#187;</em>ed
+types aren't generated.
+
+</dl>
+
+<h3>28.vii.04</h3>
+
+<dl>
+
+<dt>0276 (raised 28.vii.04)
+
+<dd>Integer &#171;type&#187;s are generated as <tt>new Integer
+range</tt>, should be just <tt>range</tt>.
+
+<dt>0275 (raised 27.vii.04)
+
+<dd>Integer &#171;type&#187;s used to be generated as
+<tt>type</tt>s, now they are <tt>subtype</tt>s.
+
+</dl>
+
+<h3>14.vii.04</h3>
+
+<dl>
+
+<dt>0272 (raised 9.vii.04)
+
+<dd>Using <tt><i>{imported}</i></tt> etc on a &#171;type&#187; with
+attributes is silently ignored.
+
+</dl>
+
+<h3>7.vii.04</h3>
+
+<dl>
+
+<dt>0227 (raised 23.i.04)
+
+<dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
+returning a composite value, the generated code won't compile.") is
+still present (for both &#171;type&#187;s and &#171;class&#187;es)
+when the composite value is imported or inherited from a parent
+domain (and therefore isn't otherwise mentioned in the model).
+
+</dl>
+
+<h3>3.vii.04</h3>
+
+<dl>
+
+<dt>0019 (raised 4.ix.01)
+
+<dd>It would be good to support private operations.
+<br><i>Private operations of classes and protected types are
+implemented as <tt>private</tt> subprograms.</i>
+
+<dt>0177 (raised 26.vi.03)
+
+<dd>It would be helpful for ColdFrame to recognize "class utilities"
+(classes which have no instances).
+
+<dt>0195 (raised 5.ix.03)
+
+<dd>For &#171;public&#187; classes without attributes, it seems
+wasteful to allocate an <tt>Instance</tt>.
+
+<dt>0222 (raised 3.xii.03)
+
+<dd>Active class instances are torn down after the domain event queue,
+which may cause <tt>Tasking_Error</tt> if the active instance tries
+(for example) to post an event.
+
+<dt>0269 (raised 17.vi.04)
+
+<dd>Some of the <i>Event Test</i> tests have slightly too tight time
+limits, so that tests can fail the first time they're run.
+
+</dl>
+
+<h3>30.vi.04</h3>
+
+<dl>
+
+<dt>0270 (raised 23.vi.04)
+
+<dd>The error of omitting the initial state of a state machine isn't
+detected (instead, you get bad code).
+
+</dl>
+
+<h3>18.vi.04</h3>
+
+<dl>
+
+<dt>0267 (raised 14.vi.04)
+
+<dd>If an event handler throws an exception, the instance can't be
+deleted (probably until an event is successfully handled).
+
+<dt>0268 (raised 17.vi.04)
+
+<dd>The test procedure names (reported by the <tt>-v</tt> AUnit
+option) aren't all as clear as they could be.
+
+</dl>
+
+<h3>10.vi.04</h3>
+
+<dl>
+
+<dt>0233 (raised 10.ii.04)
+
+<dd>Exceptions in the standard Event Queue's <tt>Timer_Manager</tt>
+are fatal.
+<br><i>Of course, the system will be unstable after such an exception.</i>
+
+</dl>
+
+<h3>4.vi.04</h3>
+
+<dl>
+
+<dt>0264 (raised 20.v.04)
+
+<dd>A race condition where tear-down involving a Timer can result in
+<tt>Program_Error</tt> exceptions makes unit test difficult. This is a
+result of the cure for bug <a href="#bug-0236">0236</a>.
+<br><i>Instead of raising an exception, ColdFrame now logs an
+error. Some sort of traceback would clearly be helpful, though.</i>
+
+<dt>0266 (raised 4.vi.04)
+
+<dd>Leading and trailing spaces in Domain package names get translated
+into underscores; they should be stripped.
+
+</dl>
+
+<h3>20.v.04</h3>
+
+<dl>
+
+<dt>0263 (raised 20.v.04)
+
+<dd>If a callback operation deregisters itself it leads to a jump out
+of program (Program_Error, if you're lucky!)
+<br>Messing about with registering/deregistering callbacks is still
+not task-safe. However, so long as you don't try deregistering
+<i>another</i> callback from a callback operation you should be OK!
+
+</dl>
+
+<h3>12.v.04</h3>
+
+<dl>
+
+<dt>0206 (raised 27.ix.03)
+
+<dd>The error of having multiple transitions from a state triggered by
+the same event isn't detected.
+
+<dt>0256 (raised 22.iv.04)
+
+<dd>Naming an event <i>Ev</i> results in bad code.
+
+</dl>
+
+<h3>5.v.04</h3>
+
+<dl>
+
+<dt>0254 (raised 21.iv.04)
+
+<dd>A &#171;finalize&#187; operation on a &#171;singleton&#187;
+results in bad code. It should be a code generation error.
+
+<dt>0260 (raised 29.iv.04)
+
+<dd>Extracted documentation should be in CDATA sections (to ensure
+that the <tt>.raw</tt> file is valid XML).
+
+</dl>
+
+<h3>29.iv.04</h3>
+
+<dl>
+
+<dt>0242 (raised 11.iii.04)
+
+<dd>It would be helpful to translate a &#171;type&#187; with no
+attributes and no type-specifying tags (<i>{real}</i> etc) into a
+<tt>null record</tt>, perhaps with a warning.
+
+<dt>0258 (raised 28.iv.04)
+
+<dd>Bad code is generated if you say
+<i>{integer,&nbsp;lower=1,&nbsp;upper=6}</i> (rather than
+<i>{integer&nbsp;=&nbsp;lower&nbsp;1&nbsp;|&nbsp;upper&nbsp;6}</i>).
+<br><i>If you omit a bound the corresponding 'First or 'Last is
+used.</i>
+
+</dl>
+
+<h3>26.iv.04</h3>
+
+<dl>
+
+<dt>0257 (raised 26.iv.04)
+
+<dd>If an exception gets raised in a called-back routine, an error
+should be logged (rather than re-raising the exception to the
+supplier).
+
+</dl>
+
+<h3>22.iv.04</h3>
+
+<dl>
+
+<dt>0234 (raised 12.ii.04)
+
+<dd>It would be helpful if action routines could be inherited from a
+superclass.
+
+<dt>0255 (raised 21.iv.04)
+
+<dd>Using an <i>{integer}</i> &#171;type&#187; with bounds expressed
+as based literals (<tt>16#ff#</tt>, for instance) as the only
+identifier of a class results in bad code.
+<br><i>As a workround, legal but non-optimal code is generated.</i>
+
+</dl>
+
+<h3>17.iv.04</h3>
+
+<dl>
+
+<dt>0247 (raised 27.iii.04)
+
+<dd>It's not obvious what the test models <i>Bad Model
+Regressions</i>, <i>Bad Code Regressions</i> are testing <em>for</em>.
+
+<dt>0251 (raised 15.iv.04)
+
+<dd>Generated HTML doesn't include operations of
+<em>&#171;type&#187;</em>s unless the type has attributes.
+
+<dt>0252 (raised 16.iv.04)
+
+<dd>Attempts to give a <em>&#171;public&#187;</em> class a state model
+should be explicitly forbidden, rather than letting them generate
+non-compiling code.
+
+</dl>
+
+<h3>4.iv.04</h3>
+
+<dl>
+
+<dt>0031 (raised 13.x.01)
+
+<dd>&#171;finalize&#187; operations which are functions or have
+parameters (or are &#171;class&#187; operations) are silently
+<em>not</em> called at finalization.
+<br><i>There are other instances of bad usage which need reporting
+(perhaps in a separate pass?)</i>
+
+<dt>0088 (raised 7.vi.02)
+
+<dd>Extraction hangs if the output directory (the environment variable
+<tt>COLDFRAMEOUT</tt>) doesn't exist.
+
+<dt>0167 (raised 25.iv.03)
+
+<dd>It is easy to forget to initialize a domain. Could something be
+included to give early and specific warning that this has occurred?
+<br><i>Non-&#171;singleton&#187; <tt>Create</tt>s, and generated
+operations of &#171;public&#187; classes include an assertion.</i>
+
+</dl>
+
+<h3>1.iv.04</h3>
+
+<dl>
+
+<dt>0248 (raised 31.iii.04)
+
+<dd>Expressions in, for example, the lower bound of an
+<i>{integer}</i> specification don't handle <tt>**</tt>.
+<br><i><tt>^</tt> and <tt>**</tt> are both handled (<tt>^</tt>
+translates to <tt>**</tt>, of course).</i>
+
+</dl>
+
+<h3>27.iii.04</h3>
+
+<dl>
+
+<dt>0215 (raised 15.xi.03)
+
+<dd>The installation instructions' notes on <a
+href="installation.html">overriding <tt>ColdFrame.Project</tt>
+source</a> are wrong for both <a
+href="installation.html#linux-override">Linux</a> and <a
+href="installation.html#windows-override">Windows</a>.
+
+</dl>
+
+<h3>24.iii.04</h3>
+
+<dl>
+
+<dt>0246 (raised 23.iii.04)
+
+<dd>Can't generate code for a &#171;type&#187; containing an attribute
+of an <i>{array}</i> type.
+<br><i>The problem was that the array element type hadn't been
+declared. Now reports the undeclared type.</i>
+
+</dl>
+
+<h3>19.iii.04</h3>
+
+<dl>
+
+<dt>0056 (raised 8.i.02)
+
+<dd>The generated HTML doesn't report default parameter values.
+
+</dl>
+
+<h3>13.iii.04</h3>
+
+<dl>
+
+<dt>0243 (raised 12.iii.04)
+
+<dd>Domain tear down will fail if you have an &#171;active&#187; class
+with a <i>Timer</i>, and an instance's Timer has a held event.
+
+</dl>
+
+<h3>9.iii.04</h3>
+
+<dl>
+
+<dt>0241 (raised 9.iii.04)
+
+<dd>Bad code is generated if a class has a single attribute identifier
+of a type which is either an enumeration with a single value
+(<i>{enumeration=foo}</i>) or an integer range with a single value
+(<i>{integer=lower&nbsp;42|upper&nbsp;42}</i>).
+
+</dl>
+
+<h3>2.iii.04</h3>
+
+<dl>
+
+<dt>0239 (raised 1.iii.04)
+
+<dd>Can't generate code for a Rose state model that has been renamed
+from the standard <i>State/Activity Model</i> (with possible trailing
+numbers).
+
+</dl>
+
+<h3>23.ii.04</h3>
+
+<dl>
+
+<dt>0214 (raised 12.xi.03)
+
+<dd>The mechanism for dealing with multiple users of the same Event
+Queue is flawed;
+<ul>
+<li>it's up to the user to remember to call the <tt>Copy</tt> operation
+<li>the <tt>Copy</tt> operation won't accept a null parameter.
+</ul>
+<p><i>The <tt>Copy</tt> operation is obsolete.</i>
+
+</dl>
+
+<h3>22.ii.04</h3>
+
+<dl>
+
+<dt>0237 (raised 17.ii.04)
+
+<dd>It would be helpful to detect the error of deleting an instance
+from within a state machine action for that instance.
+<br><i>It's allowed to call the generated instance <tt>Delete</tt> or
+an operation stereotyped &#171;final&#187;. Deleting the instance from
+within any other operation will result in a
+<tt>Program_Error</tt> with a suitable message..</i>
+
+</dl>
+
+<h3>21.ii.04</h3>
+
+<dl>
+
+<dt><a name="bug-0236">0236</a> (raised 17.ii.04)
+
+<dd>It would be helpful to detect the error of creating (and using) a
+Timer on the stack.
+<br><i>Detects the case when the Timer still has a held Event when it
+goes out of scope. Also invalidates the Event.</i>
+
+</dl>
+
+<h3>13.ii.04</h3>
+
+<dl>
+
+<dt>0230 (raised 2.ii.04)
+
+<dd>It would be useful to be able to specify fixed-length string
+types.
+
+</dl>
+
+<h3>10.ii.04</h3>
+
+<dl>
+
+<dt>0231 (raised 9.ii.04)
+
+<dd>An association with a &#171;public&#187; class generates bad code
+without warning.
+
+</dl>
+
+<h3>27.i.04</h3>
+
+<dl>
+
+<dt>0226 (raised 22.i.04)
+
+<dd>If a class is an &#171;active&#187; &#171;singleton&#187; and has
+&#171;class&#187; attributes with initial values, the task starts
+before the initial values are assigned.
+
+<dt>0228 (raised 23.i.04)
+
+<dd>It would be useful to assert that:
+<ul>
+<li>on registering, the procedure hasn't already been registered
+<li>on deregistering, the procedure has been registered
+</ul>
+
+<dt>0229 (raised 25.i.04)
+
+<dd>The documentation on an operation that matches an accessor profile
+isn't copied to the separate body.
+
+</dl>
+
+<h3>13.i.04</h3>
+
+<dl>
+
+<dt>0225 (raised 13.i.04)
+
+<dd>If a <i>{null}</i> type is marked <i>{serializable}</i>, the
+generated code doesn't compile.
+
+</dl>
+
+<h3>11.i.04</h3>
+
+<dl>
+
+<dt>0047 (raised 6.xii.01)
+
+<dd>It might be useful to be able to describe <i>array</i>
+&#171;type&#187;s.
+
+</dl>
+
+<h3>3.i.04</h3>
+
+<dl>
+
+<dt>0219 (raised 27.xi.03)
+
+<dd>It would be helpful if a <tt>Cant_Happen</tt> exception was
+accompanied by exception information (to make it easier to debug).
+
+</dl>
+
+<h3>13.xii.03</h3>
+
+<dl>
+
+<dt>0220 (raised 27.xi.03)
+
+<dd>Would it be possible to have &#171;type&#187;s with no contents?
+Useful for, for example, callbacks where only the event matters.
+<br><i>Use the <tt>{null}</tt> tag.</i>
+
+</dl>
+
+<h3>12.xii.03</h3>
+
+<dl>
+
+<dt>0221 (raised 2.xii.03)
+
+<dd>Using a bounded string (<tt>{string = max 15}</tt> say) in an
+identifier generates code that fails to compile.
+
+<dt>0223 (raised 11.xii.03)
+
+<dd>Tagged values of the form <tt><i>{xxxx:1234}</i></tt> generate bad
+XML in the <tt>.norm</tt> file.
+<br><i>This is now an error.</i>
+
+<dt>0224 (raised 12.xii.03)
+
+<dd>Reporting all unrecognised tags can be very annoying (especially
+where there are ubiquitous project-specific uses!)
+
+</dl>
+
+<h3>25.xi.03</h3>
+
+<dl>
+
+<dt>0217 (raised 25.xi.03)
+
+<dd>The class Delete operation for a 0..1 class doesn't null out the
+container, so it appears that there is still an instance.
+
+<dt>0218 (raised 25.xi.03)
+
+<dd>If a class with multiplicity 0..1 is the parent in an inheritance
+relationship and has a state machine, the generated code may not
+compile.
+
+</dl>
+
+<h3>21.xi.03</h3>
+
+<dl>
+
+<dt>0216 (raised 21.xi.03)
+
+<dd><tt>package body <i>Domain</i></tt> is generated even if the only
+operations are imported or renamings.
+
+</dl>
+
+<h3>14.xi.03</h3>
+
+<dl>
+
+<dt>0059 (raised 16.i.02)
+
+<dd>It would be proper to use UML tagged values instead of
+<tt>[[&nbsp;]]</tt> annotations.
+<br><i>Annotations are, of course, retained.</i>
+
+</dl>
+
+<h3>Remembrance Day 2003</h3>
+
+<dl>
+
+<dt>0211 (raised Remembrance Day 2003)
+
+<dd>There is a memory leak if an exception occurs in a callback
+routine. <a href="#bug-0191">See bug 0191</a>.
+
+<dt>0213 (raised Remembrance Day 2003)
+
+<dd>The generated separate bodies of operations of types don't include
+any documentation comments.
+
+</dl>
+
+<h3>4.xi.03</h3>
+
+<dl>
+
+<dt>0209 (raised 3.xi.03)
+
+<dd>Taking the hash of a null access type resulted in a
+<tt>Constraint_Error</tt>.
+
+</dl>
+
+<h3>31.x.03</h3>
+
+<dl>
+
+<dt>0208 (raised 30.x.03)
+
+<dd>The generated serialization Image code includes the outer record
+name in the field names.
+
+</dl>
+
+<h3>4.x.03</h3>
+
+<dl>
+
+<dt>0207 (raised 2.x.03)
+
+<dd>The default error logging produces mangled output if there are
+multiple tasks.
+
+</dl>
+
+<h3>27.ix.03</h3>
+
+<dl>
+
+<dt>0205 (raised 27.ix.03)
+
+<dd>Although ColdFrame detects multiple drop-through transitions from
+a state, it reports them as being from another state.
+<br><i>The error of having both drop-through and triggered transitions
+from the same state is also detected.</i>
+
+</dl>
+
+<h3>23.ix.03</h3>
+
+<dl>
+
+<dt>0204 (raised 23.ix.03)
+
+<dd>Classes with state machines won't compile ("primitive operation
+declared too late").
+
+</dl>
+
+<h3>17.ix.03</h3>
+
+<dl>
+
+<dt>0201 (raised 16.ix.03)
+
+<dd>If you use an expression for an upper or lower bound, it mustn't
+have spaces (so write <tt><i>lower&nbsp;-2.0*Pi</i></tt>). Initial
+values are OK.
+
+<dt>0202 (raised 16.ix.03)
+
+<dd>A class variable of the class's type doesn't compile
+("representation item appears too late").
+
+</dl>
+
+<h3>13.ix.03</h3>
+
+<dl>
+
+<dt>0200 (raised 12.ix.03)
+
+<dd>If you don't need an event queue, you don't need to edit
+<tt><i>Domain</i>.Events.Initialize</tt>.
+<br><i>Normally you'd supply <tt><i>Domain</i>.Initialize</tt> or
+<tt>.Cascade_Initialize</tt> with an event queue; you only need to
+implement <tt>Events.Initialize</tt> for unit test.</i>
+
+</dl>
+
+<h3>6.ix.03</h3>
+
+<dl>
+
+<dt>0194 (raised 5.ix.03)
+
+<dd>Would it be possible to put the "identification information"
+header comments in all generated files, not just the domain spec?
+<br><i>Is it necessary still to output the number of generated lines
+of code? What algorithm should be used (at present it's a semicolon
+count)?</i>
+
+</dl>
+
+<h3>3.ix.03</h3>
+
+<dl>
+
+<dt>0193 (raised 3.ix.03)
+
+<dd>With the new container implementation, calling <tt>Find</tt> for
+an &#171;active&#187; class hangs.
+
+</dl>
+
+<h3>2.ix.03</h3>
+
+<dl>
+
+<dt>0192 (raised 2.ix.03)
+
+<dd>During a cascade teardown, it is possible for an event dispatcher
+to be torn-down twice (resulting in a constraint error when updating
+the access count).
+
+</dl>
+
+<h3>31.viii.03</h3>
+
+<dl>
+
+<dt>0190 (raised 22.viii.03)
+
+<dd>It could be useful to allow actions on event transitions.
+<br><i>You could try colouring the states which have the actions that
+you'd have preferred to put on transitions in a pale colour
+(white?)</i>
+</dl>
+
+<h3>28.viii.03</h3>
+
+<dl>
+
+<dt><a name="bug-0191">0191</a> (raised 27.viii.03)
+
+<dd>In &#171;callback&#187; handling, if a registered callback
+operation raises an exception during <tt>Call_Callbacks</tt>
+processing will stop (so that some registered callback operations
+don't get called).
+
+</dl>
+
+<h3>24.vii.03</h3>
+
+<dl>
+
+<dt>0189 (raised 22.viii.03)
+
+<dd>The order in which the State Event matrix is presented in
+generated HTML is confusing (the entry actions should come first).
+
+</dl>
+
+<h3>15.viii.03</h3>
+
+<dl>
+
+<dt>0187 (raised 13.viii.03)
+
+<dd>If a class with an <i>Autonumber</i> identifier has a maximum
+number of instances of 1, an unused procedure <tt>Set_Identifier</tt>
+is generated.
+
+<dt>0188 (raised 15.viii.03)
+
+<dd>Doesn't know how to hash Positive (or Natural?).
+
+</dl>
+
+<h3>12.viii.03</h3>
+
+<dl>
+
+<dt>0186 (raised 12.viii.03)
+
+<dd>Normalization doesn't correctly handle substring exceptions (eg,
+<i>*IO</i> doesn't make <tt>text&nbsp;io</tt> appear as
+<tt>Text_IO</tt> but as <tt>Text_Io</tt>).
+
+</dl>
+
+<h3>30.vii.03</h3>
+
+<dl>
+
+<dt>0170 (raised 29.iv.03)
+
+<dd>If an operation of a &#171;type&#187; is a function returning a
+composite value, the generated code won't compile.
+
+</dl>
+
+<h3>4.vii.03</h3>
+
+<dl>
+
+<dt>180 (raised 4.vii.03)
+
+<dd>Class events without &#171;handler&#187;s aren't detected.
+
+<dt>181 (raised 4.vii.03)
+
+<dd>A &#171;handler&#187; with the wrong profile isn't detected.
+
+</dl>
+
+<h3>3.vii.03</h3>
+
+<dl>
+
+<dt>0154 (raised 21.ii.03)
+
+<dd>Operations marked <i>abstract</i> in the class specification
+dialog aren't seen as such.
+
+</dl>
+
+<h3>26.vi.03</h3>
+
+<dl>
+
+<dt>0175 (raised 25.vi.03)
+
+<dd>It would be helpful if there was some way of providing overloaded
+operations (at present, operations are implemented in "separates",
+which prevents overloading, <a
+href="http://www.adaic.com/standards/95lrm/html/RM-10-1-3.html">RM10.1.3</a>(14)).
+
+<dt>0176 (raised 25.vi.03)
+
+<dd>It would be helpful to be able to rename exceptions.
+
+</dl>
+
+<h3>14.vi.03</h3>
+
+<dl>
+
+<dt>0156 (raised 21.ii.03)
+
+<dd>Attributes marked <i>class</i> in the class specification dialog
+aren't seen as such.
+
+<dt>0173 (raised 12.vi.03)
+
+<dd>If all the attributes of a &#171;singleton&#187; (or
+&#171;public&#187;) class are &#171;class&#187; attributes, the
+generated code won't compile.
+
+</dl>
+
+<h3>25.v.03</h3>
+
+<dl>
+
+<dt>0171 (raised 15.v.03)
+
+<dd>Exceptions in domain <tt>Initialize</tt> procedures aren't reported
+(unless there's a default "unhandled exception" handler).
+
+</dl>
+
+<h3>18.v.03</h3>
+
+<dl>
+
+<dt>0163 (raised 1.iv.03)
+
+<dd>If an operation is made &#171;abstract&#187;, its previously
+implemented body will override the generated dispatching body.
+
+</dl>
+
+
+<h3>17.v.03</h3>
+
+<dl>
+
+<dt>0071 (raised 19.iii.02)
+
+<dd>It would be useful to be able to use Pi (<tt>Ada.Numerics.Pi</tt>)
+in type range specifications.
+
+</dl>
+
+<h3>10.v.03</h3>
+
+<dl>
+
+<dt>0143 (raised 9.i.03)
+
+<dd>The Create operation could usefully check that referential
+parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
+of the correct actual type.
+
+</dl>
+
+<h3>2.v.03</h3>
+
+<dl>
+
+<dt>171 (raised 1.v.03)
+
+<dd>If you tear down an event queue that hasn't been started, the
+program hangs.
+
+</dl>
+
+<h3>1.v.03</h3>
+
+<dl>
+
+<dt>0129 (raised 8.x.02)
+
+<dd><tt>[[callback]]</tt> types tend to be unnoticeable; could a
+&#171;callback&#187; stereotype be used instead?
+
+</dl>
+
+<h3>29.iv.03</h3>
+
+<dl>
+
+<dt>0169 (raised 29.iv.03)
+
+<dd>The generated code for functions returning &#171;counterpart&#187;
+types won't compile.
+
+</dl>
+
+<h3>25.iv.03</h3>
+
+<dl>
+
+<dt>0168 (raised 25.iv.03)
+
+<dd>The script to split serialized XML files into CSV format isn't
+included in the distribution.
+
+</dl>
+
+<h3>8.iv.03</h3>
+
+<dl>
+
+<dt>0166 (raised 8.iv.03)
+
+<dd>A class with a Timer but no state machine generates code that
+won't compile.
+
+</dl>
+
+<h3>7.iv.03</h3>
+
+<dl>
+
+<dt>0164 (raised 7.iv.03)
+
+<dd>Deleting an instance with held events pending for it raises an
+exception.
+
+<dt>0165 (raised 7.iv.03)
+
+<dd>The special-case state entry action <tt>Delete</tt> isn't
+completely handled (the event isn't marked as "instance deleted").
+
+</dl>
+
+<h3>30.iii.03</h3>
+
+<dl>
+
+<dt>0157 (raised 9.iii.03)
+
+<dd>In the UML, the syntax of <i>parameter</i> is
+<br>kind name : type-expression = default-value
+<br>where kind is <i>in</i>, <i>out</i>, or <i>inout</i>, with the
+default <i>in</i> if absent.
+
+<dt>0162 (raised 25.iii.03)
+
+<dd>The documentation on associations needs to discuss usage for
+linking and unlinking operations.
+
+</dl>
+
+<h3>16.iii.03</h3>
+
+<dl>
+
+<dt>0161 (raised 15.iii.03)
+
+<dd>The new <i>Held Events</i> facility isn't general enough; dealing
+with additional kinds of Time will require a lot of recoding.
+<br><i>Added a <tt>Time_Kind</tt> enumeration and discriminant in
+<tt>Time_Signature</tt>.</i>
+
+</dl>
+
+<h3>13.iii.03</h3>
+
+<dl>
+
+<dt>0159 (raised 13.iii.03)
+
+<dd>When normalizing names, trailing dots aren't noticed, resulting in
+obscure <i>gnatchop</i> errors.
+
+<dt>0160 (raised 13.iii.03)
+
+<dd>If you specify a class to have a multiplicity of <i>0..(n &gt;
+1)</i>, and the class has an identifying attribute whose type has only
+one value (eg an enumeration with only one literal), the generated
+code won't compile.
+
+</dl>
+
+<h3>10.iii.03</h3>
+
+<dl>
+
+<dt>0158 (raised 10.iii.03)
+
+<dd>If you use <tt>[[hash:<i>style</i>]]</tt> (<tt>discrete</tt> only
+at the moment), the <tt><i>style</i></tt> needs to be in lower case.
+
+</dl>
+
+<h3>9.iii.03</h3>
+
+<dl>
+
+<dt>0150 (raised 6.ii.03)
+
+<dd>There needs to be a way to have the "held" Event Queue's entries
+be re-sorted when the basis of ordering changes (eg, between a local
+and a standard time frame).
+<br><i>This is done the next time an event fires or is posted.</i>
+
+<dt>0151 (raised 11.ii.03)
+
+<dd>If events to run "after an interval" are posted to an event queue
+which hasn't yet started, the interval should refer to the time when
+the queue is eventually started.
+
+</dl>
+
+<h3>16.ii.03</h3>
+
+<dl>
+
+<dt>0018 (raised 4.ix.01)
+
+<dd>For efficiency, classes whose identifier has a limited range (eg,
+Forward/Aft or 1..10) should be implemented with array-like behaviour.
+
+<dt>0050 (raised 27.xii.01)
+
+<dd>It would be a good thing if the multiplicity of an association
+class was calculated automatically (where the multiplicity of each
+associated class is specified).
+
+</dl>
+
+<h3>Valentine's Day 2003</h3>
+
+<dl>
+
+<dt>0152 (raised Valentine's Day 2003)
+
+<dd>The comments in the body of a function that returns a composite
+type are not generated properly.
+
+</dl>
+
+<h3>6.ii.03</h3>
+
+<dl>
+
+<dt>0149 (raised 6.ii.03)
+
+<dd>There should be an option for an individual domain's
+<tt>Events.Initialize</tt> to be overridden when constructing a whole
+system.
+<br><tt><i>Domain</i>.Initialize</tt> now takes a <tt>Dispatcher</tt>
+parameter, defaulted to <tt>null</tt>. If not <tt>null</tt>, it is
+used as the domain's dispatcher, and <tt>Events.Initialize</tt> isn't
+called.
+
+</dl>
+
+<h3>2.ii.03</h3>
+
+<dl>
+
+<dt>0072 (raised 19.iii.02)
+
+<dd>It seems unnecessary that the <tt>[[callback]]</tt> facility
+requires you to specify the maximum number of instances.
+
+
+</dl>
+
+<h3>19.i.03</h3>
+
+<dl>
+
+<dt>0139 (raised 2.xii.02)
+
+<dd>If an event queue is designated by more than one domain, the
+tear-down unit test support won't work properly.
+<br><i>Use <tt>ColdFrame.Events.Copy</tt> to copy
+<tt><i>Domain</i>.Events.Dispatcher</tt>.</i>
+
+<dt>0142 (raised 9.i.03)
+
+<dd>The navigation package for an association could usefully have a
+Find operation to locate the association class instance given the
+associated instances' handles.
+
+<dt>0148 (raised 16.i.03)
+
+<dd>It would be helpful to be able to specify an operation's language
+calling convention.
+
+</dl>
+
+<h3>11.i.03</h3>
+
+<dl>
+
+<dt>0147 (raised 10.i.03)
+
+<dd>It would be useful to be able to specify type extension.
+<br><i>You can extend external types, not ones internal to the domain;
+ColdFrame isn't in the business of supporting every possible language
+feature!</i>
+
+</dl>
+
+<h3>10.i.03</h3>
+
+<dl>
+
+<dt>0145 (raised 10.i.03)
+
+<dd>Normalization crashes (<i>can't read "rel": no such variable</i>)
+if you have an association with no multiplicities.
+
+<dt>0146 (raised 10.i.03)
+
+<dd>The <i>make</i> process doesn't halt if normalization crashes.
+
+</dl>
+
+<h3>9.i.03</h3>
+
+<dl>
+
+<dt>0144 (raised 9.i.03)
+
+<dd>The distribution should contain the HTML documentation.
+
+</dl>
+
+<h3>24.xii.02</h3>
+
+<dl>
+
+<dt>0128 (raised 8.x.02)
+
+<dd>It would be helpful to be able to specify how to hash
+imported/renamed types.
+<br><i>Supports <tt>[[ hash : discrete ]]</tt>.</i>
+</dl>
+
+<h3>10.xii.02</h3>
+
+<dl>
+
+<dt>0135 (raised 26.xi.02)
+
+<dd>The documentation refers to transitions from a state which need no
+event to trigger them as "unguarded". In fact they are "completion
+transitions" (UML 1.3, section 2.12).
+
+<dt>0140 (raised 3.xii.02)
+
+<dd>If a &#171;type&#187; has an attribute of type
+<tt>Counterpart</tt>, the necessary
+<tt>with&nbsp;ColdFrame.Instances;</tt> isn't generated.
+
+</dl>
+
+<h3>3.xii.02</h3>
+
+<dl>
+
+<dt>0094 (raised 24.vi.02)
+
+<dd>It's not possible to have automatically-generated accessors for
+class variables.
+<br>Bodies of &#171;class&#187; operations which match an accessor
+profile will be automatically generated for a &#171;class&#187;
+variable.
+
+<dt>0137 (raised 26.xi.02)
+
+<dd>Timed events can cause exceptions in the Event Queue.
+
+<dt>0138 (raised 28.xi.02)
+
+<dd>Callback packages aren't marked "do not edit".
+
+</dl>
+
+<h3>20.xi.02</h3>
+
+<dl>
+
+<dt>0086 (raised 14.v.02)
+
+<dd>It would be helpful if the build process could report
+unimplemented bodies.
+
+<dt>0131 (raised 25.x.02)
+
+<dd>&#171;finalize&#187; operations don't get called during teardown.
+
+<br><i>This is deliberate; finalization is about keeping the model
+consistent, while teardown is much more brutal. However, the case in
+point involved closing a socket, which <em>does</em> need to happen at
+teardown.
+<br>An additional stereotype &#171;teardown&#187; is provided.</i>
+
+</dl>
+
+<h3>13.xi.02</h3>
+
+<dl>
+
+<dt>0098 (raised 25.vi.02)
+
+<dd>Multiple delayed events which are required to fire at the same
+time will result in a <tt>delay&nbsp;0.0</tt> between each.
+
+<dt>0134 (raised 13.xi.02)
+
+<dd>It might be useful to add the annotation <tt>[[counterpart]]</tt>;
+the translation would be a renaming (subtyping) of
+<tt>ColdFrame.Instances.Handle</tt>.
+
+</dl>
+
+<h3>11.xi.02</h3>
+
+<dl>
+
+<dt>0133 (raised 7.xi.02)
+
+<dd><tt>[[formalizes]]</tt> should suppress creating additional
+referential attributes and matching operations.
+
+</dl>
+
+<h3>6.xi.02</h3>
+
+<dl>
+
+<dt>0132 (raised Guy Fawkes' Day 02)
+
+<dd>Domain initialization calls
+<tt><i>Domain</i>.Events.Initialize</tt>, could be just
+<tt>Events.Initialize</tt>.
+
+</dl>
+
+<h3>22.x.02</h3>
+
+<dl>
+
+<dt>0065 (raised 28.ii.02)
+
+<dd>The mechanism for handling multiple case exception files isn't
+easy to reconcile with use in Makefiles. Probably needs to use an
+environment variable.
+
+<br><i>The environment variable <tt>CASE_EXCEPTIONS</tt> specifies one
+or more case exception files. If there's more than one, the separator
+is ; on Windows, : on Unix.</i>
+
+<dt>0130 (raised 22.x.02)
+
+<dd>Active classes tend to be unnoticeable; could an
+&#171;active&#187; stereotype be used instead? as well?
+
+</dl>
+
+<h3>13.x.02</h3>
+
+<dl>
+
+<dt>0037 (raised 16.xi.01)
+
+<dd>Would it be better only to generate task entries when there's an
+&#171;entry&#187; stereotype?
+
+<dt>0111 (raised 2.ix.02)
+
+<dd>It would make testing easier if non-&#171;public&#187; classes
+could be generated as non-<tt>private</tt> Ada packages.
+
+<br><i>Use the stereotype &#171;visible-for-test&#187;. You shouldn't
+do this sort of thing except for unit test, hence the
+explicitness.</i>
+
+</dl>
+
+<h3>9.x.02</h3>
+
+<dl>
+
+<dt>0125 (raised 7.x.02)
+
+<dd>Layout of generated exception declarations is incorrect.
+
+<dt>0126 (raised 8.x.02)
+
+<dd>It's difficult to delete a child instance <em>and its parent</em> in
+a state machine.
+
+<dt>0127 (raised 8.x.02)
+
+<dd>Incorrectly reusing an inheritance relationship name isn't detected.
+
+</dl>
+
+<h3>1.x.02</h3>
+
+<dl>
+
+<dt>0124 (raised 30.ix.02)
+
+<dd>Extraction from Rose doesn't notice if sub-units of a Domain
+aren't loaded.
+
+</dl>
+
+<h3>20.ix.02</h3>
+<dl>
+
+<dt>0120 (raised 19.ix.02)
+
+<dd>Extraction from Rose doesn't notice if a Domain package isn't
+actually loaded. The result is a very sparsely-populated domain.
+
+<br><i>Extraction now loads packages that aren't already loaded.</i>
+
+<dt>0121 (raised 19.ix.02)
+
+<dd>Using the Windows environment variable <tt>ColdFrameOut</tt>
+causes trouble under Cygwin; it comes out as <tt>COLDFRAMEOUT</tt>.
+
+<br><i>Rolled over; now in upper case.</i>
+
+<dt>0122 (raised 19.ix.02)
+
+<dd>Tear-down of Event Queues results in strange
+<tt>Storage_Error</tt> or <tt>Program_Error</tt> exceptions.
+
+<dt>0123 (raised 19.ix.02)
+
+<dd>Navigation from a 0..1 instance results in <tt>Constraint_Error</tt>.
+
+</dl>
+
+<h3>17.ix.02</h3>
+<dl>
+
+<dt>0119 (raised 16.ix.02)
+
+<dd>Entry actions would be simpler to write, in some cases, if the
+state variable contained the new state rather than the old one.
+
+<br><i>There are two instance variables: <tt>State_Machine_State</tt>
+and <tt>Old_State_Machine_State</tt>. Inside an action,
+<tt>State_Machine_State</tt> holds the new state; outside an action,
+both have the same value.</i>
+
+</dl>
+
+<h3>15.ix.02</h3>
+<dl>
+
+<dt>0117 (raised 12.ix.02)
+
+<dd>There's no support for deleting instances in <i>final</i> states.
+
+<dt>0018 (raised 13.ix.02)
+
+<dd>The <i>Lock</i> facility of Event Queues ought to allow "events to
+self" a higher priority than external locks.
+
+</dl>
+
+<h3>12.ix.02</h3>
+<dl>
+
+<dt>0113 (raised 9.ix.02)
+
+<dd>The <tt>Wait_Until_Idle</tt> operation isn't as useful as it could
+be if you have timeouts (because there's almost always something held
+on the event queue).
+
+<br><i><tt>Wait_Until_Idle</tt> now has an optional
+parameter<tt>Ignoring_Timers</tt> (defaulted to <tt>False</tt>) which
+controls whether <i>Timer</i>s are included in the count.</i>
+
+<dt>0116 (raised 12.ix.02)
+
+<dd>The generated code for an operation returning a value of type Time
+doesn't compile.
+
+</dl>
+
+<h3>10.ix.02</h3>
+<dl>
+
+<dt>0114 (raised 10.ix.02)
+
+<dd>The warning given when a role's multiplicity has a specific upper
+bound greater than one (ie, not 1 or *) isn't very helpful.
+
+<dt>0115 (raised 10.ix.02)
+
+<dd>Creation events for singletons aren't coded properly.
+
+</dl>
+
+
+<h3>8.ix.02</h3>
+<dl>
+
+<dt>0110 (raised 2.ix.02)
+
+<dd>The <tt>Lock</tt> features of the standard Event Queue will result
+in a deadly embrace if used by two domains sharing the same event
+queue.
+
+<dt>0112 (raised 5.ix.02)
+
+<dd>There'll be a memory leak if a domain is <tt>Initialize</tt>d more
+than once.
+
+<br><i><tt>Tear_Down</tt> allows (requires!) the domain to be
+re-<tt>Initialize</tt>d.</i>
+
+</dl>
+
+<h3>19.viii.02</h3>
+<dl>
+
+<dt>0097 (raised 25.vi.02)
+
+<dd>All the Events that transition to a State with an Action with a
+parameter must be the same. It would be helpful if this could be
+changed to "must carry the same payload".
+
+</dl>
+
+<h3>17.viii.02</h3>
+<dl>
+
+<dt>0073 (raised 11.iv.02)
+
+<dd>If a class has a multiplicity of 0..1, it should be possible to
+<tt>Find</tt> the only instance (or of course <tt>null</tt>) without
+supplying an Identifier.
+
+<br><i>Both <tt>Find</tt>s are generated; the one which requires an
+Identifier is "deprecated".</i>
+
+<dt>0081 (raised 9.v.02)
+
+<dd>Tear_Down doesn't clean up singletons (especially active ones).
+
+<dt>0087 (raised 21.v.02)
+
+<dd><tt>Tear_Down</tt> doesn't reset &#171;class&#187; variables.
+
+<br><i>It's actually the <tt>Class_Initialize</tt> operation that does
+this.</i>
+
+<dt>0103 (raised 16.vii.02)
+
+<dd>Automatic formation of abbreviations can result in generating
+reserved words.
+
+<br><i>If this condition occurs, an error is reported.</i>
+
+<br><i>Other uses of reserved words are also reported as errors.</i>
+
+<dt>0106 (raised 25.vii.02)
+
+<dd>The generated lines-of-code count is wrong, and less useful than
+it could be.
+
+<br><i>It's now correct (though still not so useful).</i>
+
+<dt>0107 (raised 25.vii.02)
+
+<dd>It would be a good thing if documentation in the model could be
+carried through into the generated code.
+
+<dt>0108 (raised 16.viii.02)
+
+<dd>The style of programming implied by the present version of
+<tt>ColdFrame.Project.Calendar</tt> (a renaming of
+<tt>Ada.Calendar</tt>) falls foul of a GNAT feature which fails when
+you <tt>with</tt> two renamings of the same package.
+
+</dl>
+
+<h3>16.vii.02</h3>
+<dl>
+
+<dt>0102 (raised 15.vii.02)
+
+<dd>Date, Time should be translated to
+<tt>ColdFrame.Projects.Calendar.Time</tt>, with a provided default
+renaming of <tt>Ada.Calendar</tt>.
+
+<dt>0104 (raised 16.vii.02)
+
+<dd>&#171;Singleton&#187;s with state machines don't <i>with</i>
+<tt>ColdFrame.Exceptions</tt>.
+
+</dl>
+
+<h3>12.vii.02</h3>
+<dl>
+
+<dt>0101 (raised 5.vii.02)
+
+<dd>Link operations should check that the instances aren't already
+linked.
+
+</dl>
+
+<h3>10.vii.02</h3>
+<dl>
+
+<dt>0027 (raised 5.x.01)
+
+<dd>For attributes and operation parameters, it would be good to
+detect missing types (or names).
+
+</dl>
+
+<h3>7.vii.02</h3>
+<dl>
+
+<dt>0092 (raised 24.vi.02)
+
+<dd>There's no <tt>Tear_Down</tt> for Event management.
+
+</dl>
+
+<h3>4.vii.02</h3>
+<dl>
+
+<dt>0095 (raised 25.vi.02)
+
+<dd>Operations of &#171;type&#187;s are generated even if they're
+marked &#171;generated&#187; (which means that they're operations that
+ColdFrame generates automatically).
+
+<dt>0100 (raised 4.vii.01)
+
+<dd>Signed initializers aren't supported.
+
+</dl>
+
+<h3>27.vi.02</h3>
+<dl>
+
+<dt>0079 (raised 1.v.02)
+
+<dd>It would be helpful if there was a means of declaring exceptions.
+
+<dt>0099 (raised 27.vi.02)
+
+<dd>Association across reflexive associations is incorrect.
+
+<br><i>Actually, it's not; but there needs to be more documentation on
+how to think about role names.</i>
+
+</dl>
+
+<h3>25.vi.02</h3>
+<dl>
+
+<dt>0093 (raised 24.vi.02)
+
+<dd>Deleting an instance may hang if there are no timed events
+outstanding.
+
+<dt>0096 (raised 25.vi.02)
+
+<dd>Operations of &#171;type&#187;s don't compile.
+
+</dl>
+
+<h3>8.vi.02</h3>
+<dl>
+
+<dt>0089 (raised 7.vi.02)
+
+<dd>Reflexive associations (without an associative class) generate
+code that doesn't compile (especially if the cardinality of the class
+involved has been specified).
+
+</dl>
+
+<h3>29.v.02</h3>
+<dl>
+
+<dt>0009 (raised 27.vi.01)
+
+<dd>It would be helpful if the <tt>Create</tt> and <tt>Find</tt>
+operations of child classes checked that the given identifier (of the
+parent class's instance) isn't <tt>null</tt>.
+
+<br>Actually, this comes down to checking in <tt>Create</tt> that no
+identifying referential attribute is <tt>null</tt>. As for
+<tt>Find</tt>, there seems no particular reason to check.
+
+</dl>
+
+<h3>20.v.02</h3>
+<dl>
+
+<dt>0014 (raised 13.vii.01)
+
+<dd>No code is generated for operations of &#171;type&#187;s.
+
+</dl>
+
+<h3>18.v.02</h3>
+
+<dl>
+
+<dt>0075 (raised 16.iv.02)
+
+<dd>Some of the generated operations (eg, accessors for referential
+attributes) are only intended to be called by generated code. It would
+be good to indicate this somehow.
+
+<dt>0083 (raised 14.v.02)
+
+<dd>&#171;access&#187; functions are generated as though they were
+procedures.
+
+<dt>0084 (raised 14.v.02)
+
+<dd>ColdFrame ought to respect the modeller's casing; if you say
+<i>FOO</i> it should come out as <tt>FOO</tt>.
+
+<i>
+<br>This change has two consequences:
+
+<ul>
+
+<li>you need to be consistent about case; the code generator is
+case-sensitive
+
+<li>you need to use the case that ColdFrame expects (for example,
+<tt>AutoNumber</tt> won't work)
+</ul>
+</i>
+
+<dt>0085 (raised 14.v.02)
+
+<dd>ColdFrame generates accessors for referential attributes, but they
+aren't intended for general use. Can they be marked "private" in the
+generated code?
+
+<br><i>See also 0075.</i>
+
+</dl>
+
+<h3>9.v.02</h3>
+
+<dl>
+
+<dt>0025 (raised 26.ix.01)
+
+<dd>It would be a good thing if illegal characters in names were detected.
+
+<dt>0082 (raised 9.v.02)
+
+<dd>Tear_Down of an active non-singleton doesn't clean up the
+associated task.
+
+</dl>
+
+<h3>18.iv.02</h3>
+<dl>
+
+<dt>0077 (raised 18.iv.02)
+
+<dd>If a class has a one-word name, the automatically-generated
+abbreviation is a single letter. It's a nuisance to have to think of
+an abbreviation for each such class.
+
+<br><it>The default "abbreviation" for a single-word class is made by
+prepending <tt>A</tt> or <tt>An</tt>.</it>
+
+</dl>
+
+<h3>17.iv.02</h3>
+<dl>
+
+<dt>0076 (raised 17.iv.02)
+
+<dd>In inheritance hierarchies, bad code is generated for operation
+parameters whose type is the class in which the operation is declared.
+
+</dl>
+
+<h3>12.iv.02</h3>
+<dl>
+
+<dt>0074 (raised 11.iv.02)
+
+<dd>On Windows, an error in code generation doesn't cause the Make
+process to quit (so you get a truncated Ada output file rather than
+none).<br>
+
+<i>Fix is to use <tt>instantsaxon</tt> version 6.5.1 or later.</i>
+
+</dl>
+
+<h3>18.iii.02</h3>
+<dl>
+
+<dt>0070 (raised 15.iii.02)
+
+<dd>For large domains, the Makefile can generate command lines too
+long for (the Cygwin) <tt>bash</tt>.
+
+</dl>
+
+<h3>9.iii.02</h3>
+<dl>
+
+<dt>0066 (raised 5.iii.02)
+
+<dd>Making generated real types <tt>new</tt> will mean lots of
+instantiations of
+<tt>Ada.Numerics.Generic_Elementary_Functions</tt>. Perhaps subtypes
+of <tt>Float</tt>, <tt>Long_Float</tt> would be better.
+
+<dt>0069 (raised 8.iii.02)
+
+<dd>If an association is formalized using <tt>[[formalizes]]</tt> the
+association package doesn't <tt>with</tt> the necessary
+<tt>Selection_Function</tt>.
+
+</dl>
+
+<h3>4.iii.02</h3>
+<dl>
+
+<dt>0054 (raised 8.i.02)
+
+<dd>Attribute, parameter and result types in the generated HTML should
+be hyperlinked to their definitions (unless they're standard).
+
+<dt>0063 (raised 23.i.02)
+
+<dd>It would be useful to be able to specify class variables.
+
+<dt>0064 (raised 23.i.02)
+
+<dd>There's no documentation on how to set up the Makefiles, how to
+use on Linux vs Windows etc.
+
+</dl>
+
+<h3>24.i.02</h3>
+<dl>
+
+<dt>0026 (raised 4.x.01)
+
+<dd>It should probably be possible for an operation to take or return
+a collection of its own class. At present this gives rise to a cyclic
+dependency.<br>
+
+<i>"Fix" is to withdraw the <tt>[[set]]</tt> facility. The way to get
+hold of collections of instances is to use the <tt>All_Instances</tt>,
+<tt>Selection/Filter_Function</tt>, and association navigation
+facilities.</i>
+
+<dt>0033 (raised 30.x.01)
+
+<dd>The generated HTML for <i>&#171;class&#187; op (this : Class)</i>
+is <tt>ColdFrame.Instances.Handle</tt>; should be just
+<tt>Handle</tt>.
+
+</dl>
+
+<h3>17.i.02</h3>
+<dl>
+
+<dt>0060 (raised 17.i.02)
+
+<dd>Imported and renamed types can lead to excessively long source
+lines.
+
+</dl>
+
+<h3>16.i.02</h3>
+<dl>
+
+<dt>0058 (raised 16.i.02)
+
+<dd>The installable Makefiles (<tt>Makefile-winnt</tt>,
+<tt>Makefile-unix</tt>) ought to make code generation depend on the
+user <tt>Makefile</tt>; because she can change macro values in it.
+
+</dl>
+
+<h3>13.i.02</h3>
+<dl>
+
+<dt>0057 (raised 10.i.02)
+
+<dd>Please can the number of lines of code generated be reported (for
+example, in the header comments of the main domain package).
+
+</dl>
+
+<h3>3.i.02</h3>
+<dl>
+
+<dt>0051 (raised 2.i.02)
+
+<dd>In inheritance trees, the parents may not have been processed when
+the grandchildren are processed, resulting in failed normalization.
+
+<dt>0052 (raised 2.i.02)
+
+<dd>The Makefiles expect a Case Exception File, and normalization
+fails if it's not present.
+
+<dt>0053 (raised 2.i.02)
+
+<dd>Model domains are extracted for all selected packages, not just
+those in the current diagram.
+
+<dt>0061 (raised 23.i.02)
+
+<dd>The supplied Windows makefile (<tt>Makefile-winnt</tt>) assumes
+software is installed on the <tt>D:</tt> drive; better if the default
+was <tt>C:</tt>. <i>The customer bug report came after the problem was
+fixed.</i>
+
+</dl>
+
+<h3>11.xii.01</h3>
+<dl>
+
+<dt>0046 (raised 28.xi.01)
+
+<dd>The intended use of <tt><i>Association</i>.Unlink</tt> isn't
+clear.
+
+<dt>0048 (raised 11.xii.01)
+
+<dd>Using escapable HTML entities (&amp;, &lt;, &gt;) in the
+Documentation section prevents proper processing of annotations.
+
+<br>
+<i>Use a newer <a href="resources.html#xml">TclXML</a> release
+(tclxml-2.1theta works fine).</i>
+
+</dl>
+
+<h3>3.xii.01</h3>
+<dl>
+
+<dt>0044 (raised 28.xi.01)
+
+<dd>The <i>Autonumber</i> facility is implemented using plain
+<tt>Integer</tt>s. This might cause integer overflow under heavy
+long-term use.
+
+</dl>
+
+<h3>29.xi.01</h3>
+<dl>
+
+<dt>0020 (raised 4.ix.01)
+
+<dd>Cardinalities and multiplicities of the form 1..42 should be
+recognised (even if not implemented as specified: a warning would be
+sensible in that case).
+
+<dt>0038 (raised 16.xi.01)
+
+<dd>&#171;abstract&#187; procedure operations of active classes
+generate task entries. They probably shouldn't.
+
+<dt>0042 (raised 28.xi.01)
+
+<dd>Operations of <tt>[[imported]]</tt> types aren't visible.
+
+<dt>0045 (raised 28.xi.01)
+
+<dd>Multiplicity and cardinality processing in normalization only
+recognizes the <i>n</i> forms; the official <i>*</i> forms should be
+supported too.
+
+</dl>
+
+<h3>19.xi.01</h3>
+<dl>
+
+<dt>0041 (raised 19.xi.01)
+
+<dd><tt>[[callback]]</tt> doesn't work on plain types, you need to use
+a record.<br>
+<i>An error is reported.</i>
+
+</dl>
+
+<h3>17.xi.01</h3>
+<dl>
+
+<dt>0036 (raised 16.xi.01)
+
+<dd>The domain <tt>Initialize</tt> procedure should be a child
+unit. As it is, a <tt>with</tt> of the domain package, probably for
+its types, calls in all the class packages that have &#171;init&#187;
+operations.
+
+<dt>0040 (raised 17.xi.01)
+
+<dd>&#171;generated&#187; and &#171;navigation&#187; procedure
+operations of active classes generate task entries.
+
+</dl>
+
+<h3>16.xi.01</h3>
+<dl>
+
+<dt>0030 (raised 13.x.01)
+
+<dd>&#171;finalize&#187; operations shouldn't be inherited.
+
+<dt>0034 (raised 1.xi.01)
+
+<dd>&#171;finalize&#187; operations of active classes shouldn't be
+mapped to task entries.
+
+<dt>0039 (raised 16.xi.01)
+
+<dd><tt>Tear_Down</tt> should clear out any registered Callbacks.
+
+</dl>
+
+<h3>29.x.01</h3>
+<dl>
+
+<dt>0028 (raised 12.x.01)
+
+<dd>The WITH TYPE extension seems to trigger a lot of instability in
+GNAT. An alternative would be better.
+
+<dt>0032 (raised 28.x.01)
+
+<dd>With multiple inheritance, ColdFrame doesn't necessarily choose
+the right parent class to call inherited operations.
+
+</dl>
+
+<h3>13.x.01</h3>
+<dl>
+
+<dt>0029 (raised 12.x.01)
+
+<dd>The generated Tear_Down procedure bodies have unused WITH clauses.
+
+</dl>
+
+<h3>28.ix.01</h3>
+<dl>
+
+<dt>0017 (raised 4.ix.01)
+
+<dd>It would be good if the generated hash functions made some attempt
+to actually hash.
+
+</dl>
+
+<h3>26.ix.01</h3>
+<dl>
+
+<dt>0022 (raised 14.ix.01)
+
+<dd>It should be easier to iterate over Collections.
+
+<dt>0023 (raised 26.ix.01)
+
+<dd>It would be helpful if discriminated record types could be
+generated.
+
+<dt>0024 (raised 26.ix.01)
+
+<dd>The generated domain <tt>Tear_Down</tt> procedure has a bad body
+if there are no Classes (just Types) in the domain.
+
+</dl>
+
+<h3>14.ix.01</h3>
+<dl>
+
+<dt>0021 (raised 4.ix.01)
+
+<dd>Identifier normalization should match GLIDE's casing rules.
+
+</dl>
+
+<h3>6.viii.01</h3>
+<dl>
+<dt>0015 (raised 1.viii.01)
+
+<dd>The generated code should include indications of the date of
+extraction and the revisions of the tools concerned (or perhaps of
+ColdFrame itself).
+
+</dl>
+
+<h3>13.vii.01</h3>
+<dl>
+
+<dt>0013 (raised 12.vii.01)
+
+<dd><tt>Initialize</tt> procedures should only be generated (and
+called by the Domain <tt>Initialize</tt>) where the Model specifies a
+parameterless &#171;class&#187; procedure <tt>Initialize</tt>.
+
+</dl>
+
+<h3>7.vii.01</h3>
+<dl>
+
+<dt>0011 (raised 27.vi.01)
+
+<dd><tt>Unlink</tt> operations on simple associations should null out
+referential attributes.
+
+</dl>
+
+<h3>28.vi.01</h3>
+<dl>
+
+<dt>0008 (raised 26.vi.01)
+
+<dd>Class operations of active classes generate an entry and a
+matching (bad) body stub.
+
+</dl>
+
+<h3>26.vi.01</h3>
+<dl>
+
+<dt>0004 (raised 25.vi.01)
+
+<dd>The <tt>Link</tt> function for a 1-(1:1) association is generated
+wrongly (uses the wrong end of the association).
+
+<dt>0007 (raised 26.vi.01)
+
+<dd>The error message generated when there's no concrete
+implementation of an abstract operation is garbled.
+
+</dl>
+
+<h3>21.vi.01</h3>
+<dl>
+
+<dt>0001 (raised 21.vi.01)
+
+<dd>If an operation takes a parameter of the current class, or returns
+a value of the current class, CF generates a "with" of the current
+class (resulting in a circular dependency).
+
+<dt>0002 (raised 21.vi.01)
+
+<dd>Active Interfaces don't declare the type Instance before it's used.
+
+<dt>0003 (raised 21.vi.01)
+
+<dd>Associations with Singletons aren't supported properly.
+
+</dl>
+
+<h2><a name="feature">Features</a></h2>
+
+<dl>
+
+<dt>0105 (raised 23.vii.02)
+
+<dd>If an enumeration type is imported or renamed, the enumeration
+literals aren't.
+
+<dt>0136 (raised 26.xi.02)
+
+<dd>The documentation gives an example of a
+&#171;class&nbsp;event&#187; without a payload, which can't actually
+be specified in a model.
+
+<dt>0178 (raised 1.vii.03)
+
+<dd>There's no way for ColdFrame to inform the application that an
+unhandled exception has been caught in the event dispatcher.
+<br><i>It does log an Error, this may be enough; after all, the
+application is now unstable.</i>
+
+<dt>0210 (raised Guy Fawkes' Day 2003)
+
+<dd>A &#171;type&#187; can't have an attribute of an
+&#171;access&#187; (access-to-operation) type.
+<br><i>The problem is that all access-to-operation types are declared
+after all ordinary types. Note that the declarations are done in two
+tranches depending on the visibility, so consider declaring the
+access-to-operation types with public visibility (ie as operations of
+types with public visibility) and the using types with private
+visibility.</i>
+
+<dt>0235 (raised 12.ii.04)
+
+<dd>Initial states can't have entry actions.
+
+<dt>0244 (raised 15.iii.04)
+
+<dd>Handling final states only works properly if the state is a UML
+final state in Rose (a black blob in a circle).
+<br><i>Seems reasonable! Though the original problem was that
+&#171;final&#187; on a non-blob state didn't work).</i>
+
+<dt>0245 (raised 19.iii.04)
+
+<dd>There seems to be a problem tearing down instances of
+&#171;active&#187; classes.
+<br><i>This seems to be a problem with the <tt>-fstack-check</tt>
+compiler option.</i>
+
+<dt>0259 (raised 29.iv.04)
+
+<dd>Now that unrecognised (and arbitrary) tagged values are passed
+through into the normalized file, it would be a Good Idea to use XML
+namespaces to distinguish ColdFrame's elements and attributes from
+others.
+<br><i>Made a start by prefixing each template with a 2-character
+namespace abbreviation to indicate the file it's declared in.</i>
+
+<dt>0296 (raised 1.iv.05)
+
+<dd>If you paste commentary into the model, it's possible to get odd
+characters which cause problems at code generation. Typical offenders
+would be Windows "smart quotes".
+
+<dt>0304 (raised 30.iv.05)
+
+<dd>An association class that's not in the same package as the
+association (might be in a child or parent) can be missed during
+extraction.
+<br><i>This seems to be a Rose quirk; it happens if a package is moved
+in the model, or imported into a different model.</i>
+
+<dt>0330/<a href="https://sourceforge.net/support/tracker.php?aid=1303319">1303319</a> (raised 24.ix.05)
+
+<dd>If a state model has a completion transition from the initial
+state, the transition is performed synchronously during instance
+creation using a special <i>creation event</i>. Normally this won't
+cause a problem, but if the class is a singleton this transition, and
+any entry actions on the first state, will take place during domain
+initialization, <b>after</b> the domain <i>{init}</i> operation
+but <b>before</b> any class &#171;init&#187; operations have been
+called; which means that those entry actions had better not depend on
+any of the class initializations.
+
+<dt>0347/<a href="https://sourceforge.net/support/tracker.php?aid=1434319">1434319</a> (raised 18.ii.06)
+
+<dd>Especially with large arrays (or perhaps just with large records),
+the performance of converting a serialized output stream to XML is
+very sluggish.
+<br><i>Some initial work done --
+see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
+better to have a primitive Print operation.</i>
+
+<dt>0365/<a href="https://sourceforge.net/support/tracker.php?aid=1664467">1664467</a> (raised 4.iii.07)
+
+<dd>If an type is serializable in its source domain
+(<tt>{serializable-there}</tt>) it would be helpful if it could also
+be <tt>{serializable}</tt> immediately "here".
+
+</dl>
+
+<h2><a name="rejected">Rejected</a></h2>
+
+<h3>10.vi.08</h3>
+
+<dl>
+
+<dt>0016 (raised 6.viii.01)
+
+<dd>It would be helpful if an association class could be automatically
+generated for many-to-many associations where the analyst hasn't
+provided one already.
+<br><i>I think it would just lead to confusion!</i>
+
+<dt>0049 (raised 27.xii.01)
+
+<dd>It would be a good thing if project-specific configuration
+information (such as multiplicities) could be supplied in a separate
+document from the domain model.
+<br><i>I don't really see how to do that. Not sure whether other tools
+allow this, either.</i>
+
+<dt>0141 (raised 13.xii.02)
+
+<dd>Ada doesn't allow functions to have <tt>in out</tt> or
+<tt>out</tt> parameters; ColdFrame could check.
+<br><i>This will show up so straightforwardly that it can be
+left. Maybe revisit this decision if <tt>normalize-rose.tcl</tt> ever
+gets rewritten?</i>
+
+<dt>0172 (raised 6.vi.03)
+
+<dd>Would it be possible to specify the need for accessor operations
+by marking the attribute concerned? (perhaps by a stereotype, or just
+using visibility markup).
+<br><i>Don't want to encourage people to use accessors.</i>
+
+<dt>0198 (raised 11.ix.03)
+
+<dd>Would it be possible to specify that operations should be inlined?
+<br>
+<i>Not obvious from PowerPC experience that inlining is that useful -
+OK, this was with GNAT 3.16a1.</i>
+
+<dt>0284 (raised 28.x.04)
+
+<dd>It would be useful to have support for modelling the test harness
+for a domain.
+<br><i>This might involve code generation options to allow conditional
+generation of the test support classes.</i>
+<br><i>Not sure now what the actual intention was. Now, I think that
+using the generated unit test support is a better way to go.</i>
+
+</dl>
+
+<h3>3.v.08</h3>
+
+<dl>
+
+<dt>0185 (raised 11.viii.03)
+
+<dd>It can be very confusing to detect the error where an event is
+(mistakenly) <tt>Set</tt> on a <tt>Timer</tt> to fire <i>after</i> a
+zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
+used instead of <tt>Natural_Duration</tt>?
+<br><i>What error is that?</i>
+
+</dl>
+
+<h3>26.ix.07</h3>
+
+<dl>
+
+<dt>0360/<a href="https://sourceforge.net/support/tracker.php?aid=1544860">1544860</a> (raised 22.viii.06)
+
+<dd>It would be helpful to allow an action to be attached to stubbed
+operations (perhaps just procedures?).
+
+</dl>
+
+<h3>19.i.05</h3>
+
+<dl>
+
+<dt>0196 (raised 5.ix.03)
+
+<dd>Now that state machines support actions on transitions, what about
+guards?
+<br><i>This seems very complex to implement.</i>
+
+<dt>0197 (raised 5.ix.03)
+
+<dd>If you need an event action, you have to specify the matching
+(procedure) operation in the model. Would it be possible for the
+existence of the action to imply the operation?
+<br><i>This seems like a bad idea. Very un-obvious that there's an
+operation there!</i>
+
+<dt>0238 (raised 25.ii.04)
+
+<dd>Would it be possible for operations named
+<tt>Is_<i>boolean-attribute-name</i></tt> returning <tt>Boolean</tt>
+to be treated as &#171;accessor&#187;s?
+<br><i>No.</i>
+
+<dt>0273 (raised 22.vii.04)
+
+<dd>It could be helpful to have a <i>{stub}</i> tag to ask ColdFrame
+to generate a default, non-separate, body.
+<br><i>You'd then have to change the model when implementation time
+came round.</i>
+
+</dl>
+
+<h3>3.xii.04</h3>
+
+<dl>
+
+<dt>0067 (raised 5.iii.02)
+
+<dd>If the action associated with a timed event sets the just-fired
+timer again, there's a race condition which can result in a Use_Error
+exception.
+<br><i>I think this must have been fixed!</i>
+
+</dl>
+
+<h3>10.vi.04</h3>
+
+<dl>
+
+<dt>0232 (raised 10.ii.04)
+
+<dd>In the standard Event Queue's <tt>Timer_Manager</tt>, only the first
+available event is immediately processed after a delay.
+
+</dl>
+
+<h3>1.ii.04</h3>
+
+<dl>
+
+<dt>0212 (raised Remembrance Day 2003)
+
+<dd>Would it be possible for the task of an active class to have
+<tt>This</tt> of type <tt>Handle</tt> rather than <tt>access
+Instance</tt>?
+<br><i>No, unfortunately; there's a problem with ordering the
+declarations so as to allow controlling the storage pool for
+<tt>Handle</tt>.</i>
+
+</dl>
+
+<h3>3.i.04</h3>
+
+<dl>
+
+<dt>0109 (raised 19.viii.02)
+
+<dd>The error where a state has more than one exiting transition
+triggered by the same event (or drop-through) isn't detected.
+<br><i>Partially implemented. Replaced by bug #0206</i>
+
+</dl>
+
+<h3>13.ix.03</h3>
+
+<dl>
+
+<dt>0199 (raised 11.ix.03)
+
+<dd>Documentation on &#171;protected&#187; types isn't carried through
+into comments on the generated code.
+
+<br><i>Already done.</i>
+
+</dl>
+
+<h3>30.vii.03</h3>
+
+<dl>
+
+<dt>0153 (raised 21.ii.03)
+
+<dd>Putting <tt>[[callback]]</tt> on a non-&#171;type&#187; isn't
+recognised as an error.
+
+<br><i>Since <tt>[[callback]]</tt>, or &#171;callback&#187;, don't
+need &#171;type&#187;, putting &#171;callback&#187; on something you
+didn't mean to be a &#171;type&#187; converts it to one
+automatically.</i>
+
+</dl>
+
+<h3>3.vii.03</h3>
+
+<dl>
+
+<dt>0179 (raised 3.vii.03)
+
+<dd>An &#171;abstract&#187; operation which happens to match the
+profile of an accessor has accessor (rather than dispatching) code
+generated for it.
+
+<br><i>This fault has been cleared since release 20030330.</i>
+
+</dl>
+
+<h3>27.ii.03</h3>
+<dl>
+
+<dt>0155 (raised 21.ii.03)
+
+<dd>Operations marked <i>class</i> in the class specification dialog
+aren't seen as such.
+<br><i>Operations can't be so marked -- in Rose &lt;= 2001, anyway.</i>
+</dl>
+
+<h3>10.xii.02</h3>
+<dl>
+
+<dt>0010 (raised 27.vi.01)
+
+<dd>It would be helpful if active classes' procedures (which call the
+corresponding entries) trapped and reported exceptions.
+
+<br><i>Active class procedures no longer call the corresponding
+entries. In any case, you're better off using GNAT's features for
+reporting unhandled exceptions.</i>
+
+<dt>0012 (raised 12.vii.01)
+
+<dd>It would be helpful if exception handlers could be automatically
+generated in stub subprograms.
+<br><i>You're better off using GNAT's features for reporting unhandled
+exceptions.</i>
+
+<dt>0080 (raised 1.v.02)
+
+<dd>In multiple inheritance, would it be possible for an operation
+inherited from one parent to act as the concrete version of an
+abstract operation declared in the other parent?
+
+</dl>
+
+<h3>17.viii.02</h3>
+<dl>
+
+<dt>0055 (raised 8.i.02)
+
+<dd>To create an instance of a child class (or any class that has a
+reference to another class in its identifier), you have to type
+convert the <tt>Handle</tt> to <tt>ColdFrame.Instances.Handle</tt>.
+
+<br><i>This problem was most tedious with inheritance hierarchies. The
+new inheritance support removes most of the problem.</i>
+
+</dl>
+
+<h3>10.vii.02</h3>
+<dl>
+
+<dt>0043 (raised 28.xi.01)
+
+<dd>It may be desirable to allow <tt>[[callback]]</tt>s to be
+targeted to specific instances of a particular class.
+
+<br>This can be done with the <i>Counterpart</i> facility, if
+required.
+
+</dl>
+
+<h3>25.vi.02</h3>
+<dl>
+
+<dt>0091 (raised 10.vi.02)
+
+<dd>It would be helpful if an association with an unnamed role could
+be identified more precisely ("unnamed role in association" isn't very
+good!)
+
+<br><i>This only happens when the association itself isn't named. Not
+much we can do.</i>
+
+</dl>
+
+<h3>4.xii.01</h3>
+<dl>
+
+<dt>0005 (raised 25.vi.01)
+
+<dd>The translation for active classes fails when the <tt>[[max]]</tt>
+number of instances is specified.<br>
+<i>Can't reproduce this.</i>
+
+<dt>0006 (raised 25.vi.01)
+
+<dd>The translation for active classes requires users to jump through
+hoops involving <tt>.all'Unrestricted_Access</tt> to get a
+<tt>Handle.</tt><br>
+<i>A simple <tt>Handle&nbsp;(This)</tt> type conversion will do the
+trick, not so bad I think.</i>
+
+</dl>
+
+<p>
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

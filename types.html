@@ -1,0 +1,494 @@
+<head>
+<title>ColdFrame: Types</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Types</h1>
+
+<h2>Motivation</h2>
+
+<p>Clearly a class corresponds, in a programming language sense, to a
+type. In Ada, you'll see statements like
+<pre>
+type My_Class is ...
+</pre>
+
+<p>The distinction that ColdFrame makes between <i>type</i> and
+<i>class</i> is that classes have instances, each instance being
+distinct from any other instance, while types merely have values, and
+you can have many different identical values of the same type.
+
+
+<h2>Modelling</h2>
+
+<p>With ArgoUML, a data type needs to be defined before you use it as
+the type of an <i>Attribute</i> or <i>Parameter</i>. It's often
+quickest to enter the name and type straight onto the class diagram,
+but be careful; if you do this and the name of the type isn't an exact
+match (including capitalization and the use of underscores), ArgoUML
+invents a new <i>Class</i> with the mistaken name (so you can have the
+fun of deleting it).
+
+<p>ColdFrame-specific types are declared in
+the <a href="ColdFrameProfile.html#Types">profile</a>.
+
+<p>Under some circumstances, you may need to use the name of
+a <i>Class</i> in the domain (for example,
+to <a href="associations.html#complex-formalization">formalize an
+association</a>).
+
+<p>Because ArgoUML allows <i>DataTypes</i> to have attributes but
+doesn't show them on the class diagram, ColdFrame requires you to
+model types with attributes as ArgoUML <i>Classes</i> with the
+stereotype <em>&#171;datatype&#187;</em>.
+
+<p>Other types are modelled in <i>DataTypes</i> or <i>Enumerations</i>
+(or <i>Exceptions</i>, but
+beware: <a href="http://argouml.tigris.org/issues/show_bug.cgi?id=6403">ArgoUML
+displays these as <i>Signals</i></a>).
+
+<p>You can specify the <i>visibility</i> of a type in
+the <i>Visibility</i> section of the ArgoUML <i>Properties</i>
+dialog.
+
+<!--
+<p>The previous (Rational Rose) version of ColdFrame offered several
+other facilities, which may appear in future releases of this version:
+(see below)
+-->
+
+<h3>Stereotypes that apply to <i>DataTypes</i> only</h3>
+<dl>
+
+<dt><em>&#171;access&#187;</em>
+<dd>specifies that you need a type which provides access to objects of
+another type (ie, a pointer type).
+
+<br>Specify the target type name using the <tt>{access-to-type}</tt>
+tag. It can't be one of
+the <a href="ColdFrameProfile.html#Types">types that ColdFrame
+defines</a> (such as <tt>Integer</tt>).
+
+<br>It's probably a good idea to adopt a naming convention:
+ColdFrame's precedent would be to append
+<tt>_P</tt> to the target type name, your project might prefer
+something more like <tt>_Access</tt>.
+
+<br>So, if you've created a &#171;datatype&#187; <i>Foo</i>, and you
+want pointers to <i>Foo</i>s, tag  &#171;access&#187; <i>Foo
+P</i> as <tt>{access-to-type=<i>Foo</i>}</tt>.
+
+<dt><em><a name="access-to-operation">&#171;access-to-operation&#187;</a></em>
+<dd>Implementation may require you to create a type which represents
+an access to an operation of a particular profile. As noted above,
+ArgoUML requires that you represent this using something that it
+recognises as a type.
+
+<br>To work round this problem, create a <i>DataType</i> and apply
+this stereotype. ColdFrame then requires you to provide a single
+operation, whose name doesn't matter (though you will be warned if
+it's not the same as the name of the data type).
+
+<dt><em>&#171;bounded-string&#187;</em>
+<dd>is used with the associated <tt>{length}</tt> tag to specify a
+string of up to the maximum length specified.
+
+<dt><em>&#171;constraint&#187;</em>
+<dd>is used to define a constrained version of a parent scalar
+type. The type to be constrained is specified using
+the <tt>{constrains}</tt> tag; there are no ColdFrame-imposed
+restrictions, so you can for example constrain <tt>Long_Float</tt>.
+
+<br>The new lower bound is specified via the <tt>{lower}</tt> tag, and
+the new upper bound via <tt>{upper}</tt>. At least one of these tags
+must be supplied; if either is omitted, the corresponding bound of the
+parent type is used.
+
+<dt><em>&#171;counterpart&#187;</em>
+<dd>is used for references to instances in other domains.
+
+<dt><em>&#171;fixed-string&#187;</em>
+<dd>is used with the associated <tt>{length}</tt> tag to specify a
+string of the length specified.
+
+<dt><em>&#171;imported&#187;</em>
+<dd>specifies that the given type is to be found at the external
+reference specified in the associated <tt>{imported}</tt> tag.<br/>
+
+The <a name="hash"><tt>{hash=<i>style</i>}</tt></a> tag specifies
+how an imported or renamed type is to be hashed. Currently the only
+supported <i>styles</i> are
+<ul>
+<li><tt>discrete</tt>, which will work for imported enumerations or
+integer ranges but not for private or access types, and
+<li><tt>enumeration</tt>, which is similar but acts as a code
+generation optimization directive.
+</ul>
+
+<dt><a name="null-record"><em>&#171;null&#187;</em></a>
+<dd>specifies an empty record; useful for a callback with no actual
+data associated.
+
+<dt><a name="renaming"><em>&#171;renaming&#187;</em></a>
+<dd>specifies that the given type or exception renames the external
+reference specified in the associated <tt>{renames}</tt> tag.<br/>
+
+The <tt>{<a href="#hash">hash=<i>style</i></a>}</tt> tag is available
+as for <em>&#171;imported&#187;</em> above.
+
+<dt><em>&#171;unsigned&#187;</em>
+<dd>specifies that the given type is to hold unsigned numbers with
+modulus as specified in the associated <tt>{mod}</tt> tag.
+
+</dl>
+
+<h3>Stereotypes that apply to <i>&#171;datatype&#187; Classes</i> only</h3>
+<dl>
+
+<dt><em>&#171;discriminated&#187;</em>
+<dd>causes the generation of discriminated records; the discriminant
+is an enumeration type with literals formed from the attribute names
+with <tt>_T</tt> appended.
+
+<dt><em>&#171;protected&#187;</em>
+<dd>specifies that instances of the type are protected against
+concurrent access by multiple threads of execution.
+
+</dl>
+
+<h3>Stereotypes that apply to either kind of data type</h3>
+<dl>
+
+<dt><em>&#171;callback&#187;</em>
+<dd>specifies that <a href="callbacks.html">callback</a> support code
+is to be generated. The idea here is that a (lower-level) Domain may
+need to support Observers from higher-level Domains, and the
+higher-level Domains can register to be notified when something has
+changed in the lower-level Domain.
+
+</dl>
+
+<h3>Others</h3>
+<dl>
+
+<dt><a name="convention"><em>&#171;convention&#187;</em></a>
+<dd>specifies that the conventions of the programming language
+specified in the associated <tt>{language}</tt> tag (typically C) are
+to be used.
+<p>Can be applied to enumerations and <i>&#171;datatype&#187; Classes</i>.
+
+</dl>
+
+<!--
+
+<p>The tags supported for <em>&#171;type&#187;</em>s are:
+
+<ul>
+
+<li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
+and optionally <tt>, unconstrained</tt>.
+<br>Please <em>don't</em> use arrays to implement associations!
+
+<li><tt>extends = <i>external-type</i></tt> specifies that the
+given type extends (inherits) the specified  external reference.
+
+<li><tt><a name="field-image">field-image</a> =
+<i>image-operation</i></tt> specifies the operation to be used to
+print a record field containing a value of the type when it has been
+serialized as one or more XML elements. See
+<a href="serialization-page.html">separate information</a>.
+
+<li><tt>image = <i>image-operation</i></tt> is an alternate for
+<a href="#field-image"><tt>field-image</tt></a>, retained for
+compatibility..
+
+<li><tt>serializable</tt> specifies support for outputting values of
+the type to an external medium. See
+<a href="serialization-page.html">separate information</a>.
+
+<li><tt>serializable-there</tt> (only applicable to <i>{imported}</i>
+or <i>{renames}</i> types) specifies that the type is
+<i>{serializable}</i> in the package in which it is actually declared.
+See <a href="serialization-page.html">separate information</a>.
+
+<li><tt>type-image = <i>image-operation</i></tt> specifies the
+operation to be used to print values of the type when it has been
+serialized. See <a href="serialization-page.html">separate information</a>.
+
+</ul>
+-->
+
+<h3>Operations</h3>
+
+<p>Types can have operations.
+
+<p>In the case of <tt>protected</tt> types, operations (without return
+values) can be stereotyped <em>&#171;entry&#187;</em>, with <a
+href="http://www.adaic.org/standards/95lrm/html/RM-9-5-2.html">Ada
+semantics</a>.
+
+<h2>Translation</h2>
+
+<p>Types defined in
+the <a href="ColdFrameProfile.html#Types">profile</a> are translated
+as defined there.
+
+<p>References to the current class are translated as <tt>Handle</tt>.
+
+<p>References to any other class in the domain are translated
+as <tt>ColdFrame.Instances.Handle</tt>.
+
+<p>New types are declared in the domain package, in the private part
+if they were marked <i>private</i> or <i>package</i> in the
+model. Where appropriate, supporting code is generated as a child unit
+of the domain package.
+
+<p>Operations of types are generated in the domain package. They have
+no implicit <tt>This</tt> parameter.
+
+<dl>
+
+<dt>&#171;access&#187; <i>Foo</i> and <tt>{access-to-type=<i>Bar</i>}</tt>
+<dd>after the declaration of <tt>Bar</tt>,
+generates
+<pre>
+type <i>Foo</i> is access all <i>Bar</i>;
+for <i>Foo</i>'Storage_Size use 0;
+</pre>
+Any instances of <tt>Bar</tt> are declared <tt>aliased</tt>, to
+allow <tt>'Access</tt> to be used.
+
+<dt>&#171;access-to-operation&#187; <i>Foo_P</i>
+<dd>after the declaration of all types in the public or private part
+of the domain package spec (depending on the visibility of the
+stereotyped <i>DataType</i>), generates
+<pre>
+type Foo_P is access procedure
+  (<i>parameters</i>);
+</pre>
+
+<dt>&#171;bounded-string&#187; and <tt>{length=79}</tt>
+<dd>gives an instantiation of
+<tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
+example (see <a href="#discriminated-record-pic">below</a>),
+<pre>
+with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+package <i>Domain</i> is
+
+   package Information_Package is
+     new Generic_Bounded_Length (Max => 79);
+   subtype Information is Information_Package.Bounded_String;
+   use type Information;
+</pre>
+and a library-level hash function
+<pre>
+with ColdFrame.Hash.Strings.Bounded;
+function <i>Domain</i>.Information_Hash
+is new ColdFrame.Hash.Strings.Bounded (Information_Package);
+</pre>
+
+<dt>&#171;callback&#187; <i>Foo</i>
+<dd>the
+generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
+<pre>
+with ColdFrame.Callbacks;
+package <i>Domain</i>.<i>Foo</i>_Callback
+is new ColdFrame.Callbacks
+  (T => <i>Domain</i>.<i>Foo</i>);
+</pre>
+
+<dt>&#171;counterpart&#187; <i>Foo_Handle</i>
+<dd>gives
+<pre>
+with ColdFrame.Instances;
+..
+subtype Foo_Handle is ColdFrame.Instances.Handle;
+</pre>
+
+<dt>&#171;convention&#187; <i>T</i> and <tt>{language=<i>lang</i>}</tt>
+<dd>gives
+<pre>
+pragma Convention (<i>T</i>, <i>lang</i>);
+</pre>
+
+<dt>&#171;discriminated&#187;
+<dd>Given a model fragment as in the picture
+
+<br><a name="discriminated-record-pic"><img src="discriminated-record.png"></a>
+
+<br>ColdFrame generates
+<pre>
+type Message_Discriminant is
+  (Info_T,
+   Level_T);
+type Message
+  (Discriminant : Message_Discriminant
+   := Message_Discriminant'First)
+is record
+   case Discriminant is
+      when Info_T =>
+         Info : Information;
+      when Level_T =>
+         Level : Alert_Level;
+   end case;
+end record;
+</pre>
+
+<dt>&#171;fixed-string&#187; <i>T</i> and <tt>{length=<i>length</i>}</tt>
+<dd>gives a subtype of the
+standard <tt>String</tt> of the specified length:
+<pre>
+subtype <i>T</i> is String (1 .. <i>length</i>);
+</pre>
+
+<dt>&#171;imported&#187; <i>T</i> and <tt>{imported=<i>external-reference</i>}</tt>
+<dd>gives
+<pre>
+with <i>external-reference</i>;
+..
+subtype T is <i>external-reference</i>.T;
+use type T;
+</pre>
+(clearly <tt><i>external-reference</i></tt> needs to correspond to a
+with-able package name).
+
+<dt>&#171;null&#187; <i>T</i>
+<dd>generates <tt>type <i>T</i> is null record;</tt>
+
+<dt>&#171;protected&#187;
+<dd>generates a <tt>protected</tt> type in the domain
+package. Operations of the type map to protected operations; procedure
+operations stereotyped &#171;entry&#187; map to protected entries.
+
+<br>The protected type's body is generated as a <tt>separate</tt> body;
+the operations raise <tt>Unimplemented</tt> if called.
+
+<dt>&#171;renaming&#187; <i>T</i> and <tt>{renames=<i>external-type</i>}</tt>
+<dd>If the <i>external-type</i> is <tt>Ada.Real_Time.Time</tt>, gives
+<pre>
+with Ada.Real_Time;
+..
+subtype T is Ada.Real_Time.Time;
+use type T;
+</pre>
+
+<dt>&#171;unsigned&#187; <i>T</i> and <tt>{mod=<i>modulus</i>}</tt>
+<dl>gives
+<pre>
+type T is mod <i>modulus</i>;
+</pre>
+
+</dl>
+
+<!--
+<h3>Tags</h3>
+
+<ul>
+
+
+<li><tt>array = <i>element-type</i>, index = <i>index-type</i>[,
+unconstrained]</tt>
+
+<p>Generates
+<pre>
+type <i>Typ</i> is
+  array (<i>index-type</i>)
+  of <i>element-type</i>;
+</pre>
+
+<p>or, if the <tt>{unconstrained}</tt> tag is specified as well,
+<pre>
+type <i>Typ</i> is
+  array (<i>index-type</i> range &lt;&gt;)
+  of <i>element-type</i>;
+</pre>
+
+<li><tt>extends = <i>external-type</i></tt>: for a type named
+<tt>Derived</tt>, extending <tt><i>Other_Domain</i>.Base</tt>, gives
+<pre>
+with <i>Other_Domain</i>;
+..
+type Base is new <i>Other_Domain</i>.Base with record
+   ..
+end record;
+</pre>
+
+<li><tt>image = <i>image-operation</i></tt>: see
+<a href="serialization-page.html">separate information</a>.
+
+<li><tt>serializable</tt> has no effect on the type to which it's
+attached, but causes a corresponding declaration in the domain's
+<tt>Serializable</tt> child package: for a type T,
+<pre>
+with ColdFrame.Project.Serialization;
+package <i>Domain</i>.Serializable is
+   type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
+      Payload : <i>Domain</i>.<i>T</i>;
+   end record;
+   function Image (S : <i>T</i>) return String;
+end <i>Domain</i>.Serializable;
+</pre>
+
+<p><tt>Image</tt> produces an XML rendition of the recorded value.
+
+<p><tt>ColdFrame.Project.Serialization</tt> is expected to contain a
+tagged type <tt>Base</tt>, which the Project output package
+understands (it might want to add timestamp information, for example)
+
+<p>See <a href="serialization-page.html">separate information</a>.
+
+<li><tt>serializable-there</tt> has no effect on the type to which
+it's attached; the <tt><i>Domain</i>.Serializable.Image</tt> operation
+of any local <i>serializable</i> types with components of a
+<i>serializable-there</i> type will complete processing for the
+components whose type it does know about and then invoke the
+<tt><i>Other_Domain</i>.Serializable.Image</tt> operation on the
+"there" components, having copied the
+<tt>ColdFrame.Project.Serialization.Base</tt> part (project-defined;
+containing timestamp, serial number etc) from the original record.
+
+<p>
+
+</ul>
+-->
+
+<h2>Use</h2>
+
+<h3>Access types</h3>
+
+<p>Normally you should only use these where you have to give access to
+an attribute to another class; perhaps the attribute is of a
+&#171;protected&#187; (and therefore <i>limited</i>) type.
+
+<!--
+<h3>Type extension</h3>
+
+<p><i>{extends}</i> is intended to support the use of external
+packages which require type extension (for example, to take data
+records). It is not meant to provide generalized support for type
+extension. If you <i>really</i> want to use Ada tagged types, or
+indeed other features of Ada that ColdFrame doesn't use, then maybe
+you should consider translating your UML models by hand or rethinking
+your model; check out <a
+href="resources.html#build-object-models">Leon Starr's book</a>.
+-->
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

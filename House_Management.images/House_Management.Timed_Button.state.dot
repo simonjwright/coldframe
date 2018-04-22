@@ -1,0 +1,14 @@
+
+      digraph {
+      edge [fontsize=10];
+      node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];
+      Initial[shape=point, fillcolor=black, width=0.1];
+Reset[label="{Reset}"];
+Set[label="{Set|Set_Timeout}"];
+Initial->Reset;
+Reset->Set[label="Button_Push    \n/Notify_Connected_Lamps    "];
+Set->Reset[label="Timeout    \n/Notify_Connected_Lamps    "];
+Set->Set[label="Button_Push    \n/Clear_Timeout    "];
+
+      }
+    

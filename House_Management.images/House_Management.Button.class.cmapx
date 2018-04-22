@@ -1,0 +1,9 @@
+<map id="Button.class" name="Button.class">
+<area shape="rect" id="node1" href="#Button" title="{Button|«id» Name : Button_Name|&#45; «class» Changed()\n&#45; «abstract» Changed()\n+ «abstract» Get_State(): Boolean\n# Notify_Connected_Lamps()}" alt="" coords="201,5,405,127"/>
+<area shape="rect" id="node2" href="#A1" title="\N" alt="" coords="515,41,587,91"/>
+<area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="406,63,515,63,515,69,406,69"/>
+<area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="443,51,460,66"/>
+<area shape="rect" id="node3" href="#Timed_Button" title="\N" alt="" coords="5,41,105,91"/>
+<area shape="poly" id="edge2" href="#Button" title="Button" alt="" coords="106,63,187,63,187,69,106,69"/>
+<area shape="rect" id="edge2-label" href="#Button" title="Button" alt="" coords="109,51,146,66"/>
+</map>

@@ -1,0 +1,14 @@
+
+      digraph "overall" {
+      edge [fontsize=10];
+      node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];
+      A1 [fillcolor=lightsteelblue, URL="#A1"]
+Button [URL="#Button"]
+Lamp [URL="#Lamp"]
+Timed_Button [URL="#Timed_Button"]
+Lamp -> A1 [label="A1", arrowhead=none, URL="#A1"]
+Button -> A1 [label="A1", arrowhead=none, URL="#A1"]
+Button -> Timed_Button [label="Button", dir=back, arrowhead=none, arrowtail=onormal, URL="#Button"]
+
+      }
+    

@@ -1,0 +1,113 @@
+<head>
+<title>ColdFrame: Callbacks</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Callbacks</h1>
+
+<h2>Motivation</h2>
+
+<p>Many systems use the Layered approach to architecture, and it's
+likely that a ColdFrame-based system will do the same. In any case,
+there has to be support for interactions between different Domains
+(subject matters).
+
+<p>To avoid awkward dependencies, both at the design level and in the
+translated code, ColdFrame supports <i>callbacks</i>. Another name for
+this concept is the <i>Observer</i> pattern.
+
+<p>With callbacks, the lower-level domain provides a facility so that
+higher-level domains can <i>register</i> to be informed when a
+particular event occurs; when it does occur, the lower-level domain
+<i>calls the callbacks</i>, which notifies the registered higher-level
+domains (clients) without needing to know anything about them.
+
+<p>A domain can <i>deregister</i> from a callback, though it would be
+more normal to connect at initialization and stay connected.
+
+<h2>Modelling</h2>
+
+<h3>Server-side</h3>
+
+<p>In the lower-level domain, create a type corresponding to the event
+that clients need notifying about.
+
+<p>Mark it as a callback type by applying
+the <em>&#171;callback&#187;</em> stereotype.
+
+<p>If the data you want to transmit is a basic type (such
+as <i>Boolean</i>), you'll still need to create a domain type to
+apply <em>&#171;callback&#187;</em> to. This could be via
+a <a href="types.html#renaming">renaming</a>.
+
+<h3>Client-side</h3>
+
+<p>First, import the callback type from the server domain (the
+stereotype <em>&#171;imported&#187;</em> and the
+tag <tt>{imported=<i>Server</i>}</tt>).
+
+<p>In an appropriate class, create an operation taking a single
+(<tt>in</tt>) parameter of the imported callback type, to act as the
+receiver.
+
+<p>ColdFrame provides automatic registration for such an operation
+with the server if you apply the
+stereotype <em>&#171;callback&#187;</em>; in that case the operation
+will be treated as a class operation. If you don't want this (that is,
+you'll register with the server callback "by hand"), you <em>must</em>
+model the operation as a class operation (by
+checking <i>ownerScope</i>).
+
+<h2>Translation</h2>
+
+<p>For a <em>&#171;callback&#187;</em> type <i>CB</i>, ColdFrame
+generates an instantiation:
+<pre>
+package <i>Domain</i>.CB_Callback
+is new ColdFrame.Callbacks
+  (T => <i>Domain</i>.CB);
+</pre>
+
+<p>For a <em>&#171;callback&#187;</em> operation, ColdFrame generates
+the code necessary to move the callback message from the server
+domain's context to the client domain's context, using implicit class
+events. When the callback operation is invoked, it is in the client
+domain's context and can use synchronous event processing as
+appropriate.
+
+<h2>Use</h2>
+
+<p><a href="event-use.html">Here's an example of mixing callbacks and
+events</a>.
+
+<p>If all you want to say is that something has happened, mark your
+&#171;callback&#187; datatype <em>&#171;null&#187;</em> . ColdFrame
+generates a <tt>null record</tt> declaration. To create an instance of
+a null record (to call the callbacks with), say <tt>(null&nbsp;record)</tt>.
+
+<p>Don't bother to deregister for callbacks during AUnit test
+teardown; ColdFrame automatically does this for you.
+
+<!--
+exceptions
+-->
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

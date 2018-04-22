@@ -1,0 +1,14 @@
+digraph "A1.class" {
+      graph [root=A1]
+      edge [fontsize=10]
+      node [shape=record, style=filled, fillcolor=lightgray, fontsize=10]
+
+      
+      A1 [fillcolor=lightsteelblue, URL="#A1", label="{A1||}"]
+Button [URL="#Button"]
+Lamp [URL="#Lamp"]
+A1 -> Lamp [label="A1", arrowhead=none, URL="#A1"]
+A1 -> Button [label="A1", arrowhead=none, URL="#A1"]
+
+      }
+     

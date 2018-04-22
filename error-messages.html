@@ -1,0 +1,271 @@
+<html>
+<head>
+<title>ColdFrame: Error messages</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Error messages</h1>
+
+<p>This is a list of error and warning messages that you may see from
+ColdFrame.
+
+<h2>Bugs in ColdFrame</h2>
+
+<p>Messages beginning "CF:" indicate an internal error. Report to the
+author. You'll need to include the extracted <tt>.raw</tt> file if you
+want anything to happen!
+
+<h2>User problems</h2>
+
+<h3>"Normalization" messages</h3>
+
+<dl>
+
+<dt>Error: abbreviation of <i>name</i> is reserved word <dd>For class <i>name</i>, the standard abbreviation (for names of more than one word, formed from the initial letters of the words) makes an Ada reserved word. Specify your own, using the <tt>{abbreviation}</tt> tag.
+
+<dt>Error: attribute <i>Class.Attribute</i> used to formalize non-existent <i>Association</i> <dd>The <tt>formalizes</tt> annotation has been used naming an association that doesn't exist.
+
+<dt>Error: attribute <i>Class.Name</i> marked as &#171;class&#187; and &#171;id&#187; <dd>Class attributes can't be identifying attributes as well.
+
+<dt>Error: both ends of <i>name</i> are marked as source <dd>The <tt>{source}</tt> tag has been specified on both ends of the named association.
+
+<dt>Error: can't specify priority for non-active class <i>Class</i> <dd>Priority can only be specified for &#171;active&#187; classes.
+
+<dt>Error: can't specify stack for non-active class <i>Class</i> <dd>Stack size can only be specified for &#171;active&#187; classes.
+
+<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>{source}</tt> in a disallowed way (on the <i>many</i> end of an association).
+
+<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>{source}</tt> on both ends of the named association.
+
+<dt>Error: discriminated type <i>type</i> has no attributes <dd>Discriminated types must have attributes.
+
+<dt>Error: duplicate definition of class <i>name</i> <dd>A class has been defined more than once.
+
+<dt>Error: duplicate definition of type <i>name</i> <dd>A type has been defined more than once.
+
+<dt>Error: function <i>name</i> can't be an entry <dd>An entry operation can't be a function.
+
+<dt>Error: illegal lower bound 1 in cardinality "<i>cardinality</i>" for <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, <tt>n</tt> or <tt>0..<i>m</i></tt>.
+
+<dt>Error: illegal lower bound (<i>b</i>) of multiplicity in role <i>Association.Role</i> <dd>The lower bound of a role multiplicity must be 0 or 1.
+
+<dt>Error: illegal lower bound <i>bound</i> in cardinality "<i>cardinality</i>" for <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or <tt>0..<i>m</i></tt>.
+
+<dt>Error: illegal M:M association <i>Association</i> <dd>Many-to-many associations must have an association class.
+
+<dt>Error: illegal name "<i>name</i>" in <i>Class</i>.<i>Operation</i> <dd>There's some illegal character in an operation's parameter (you may have used a semicolon rather than a comma to separate parameters).
+
+<dt>Error: illegal name "<i>name</i>" in &lt;<i>tag</i>&gt; <dd>There's some illegal character in a &lt;tag&gt; element (eg, a &lt;class&gt;.
+
+<dt>Error: illegal tag name in {<i>tag</i>} <dd>There's some illegal character in a tagged value's tag name.
+
+<dt>Error: inconsistent constraints for <i>Type</i> <dd>The tagged
+value specifying <i>Type</i> is inconsistent (for example,
+<tt>string</tt> can't be both fixed-length (<tt>fixed</tt>) and
+variable-length (<tt>max</tt>)).
+
+<dt>Error: kind <i>kind</i> (class <i>name</i>) not handled <dd>A class kind that isn't handled has been specified.
+
+<dt>Error: missing attribute name in <i>Class</i> <dd>One of the attributes of the named class has no name.
+
+<dt>Error: missing attribute type for <i>Class.Attribute</i> <dd>The named attribute has no type specified.
+
+<dt>Error: missing parameter name in <i>Class.Operation</i> <dd>There's a problem with one of the named operation's parameters.
+
+<dt>Error: missing parameter type for <i>Class.Operation(Param)</i> <dd>There's a problem with the named operation parameter.
+
+<dt>Error: multiple parents (<i>Class</i>, <i>Class</i>) for <i>Inheritance</i> <dd>More than one class appears as parent in the named inheritance relationship.
+
+<dt>Error: must specify cardinality for <i>name</i> as 0..<i>bound</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or <tt>0..<i>m</i></tt>.
+
+<dt>Error: <i>name</i> has no identifier <dd>Ordinary classes must have identifiers.
+
+<dt>Error: neither end of biconditional <i>name</i> is marked as source <dd>Symmetric 0..1:0..1 associations must have the source end marked. Place <tt>{source}</tt> on the end you want it to be most efficient to navigate <i>to</i>.
+
+<dt>Error: neither end of unconditional <i>name</i> is marked as source <dd>Symmetric 1:1 associations must have the source end marked. Place <tt>{source}</tt> on the end you want it to be most efficient to navigate <i>to</i>.
+
+<dt>Error: no index type for array type <i>type</i> <dd>You must specify the type of the index of an array.
+
+<dt>Error: operation <i>Class.Name</i> can't be class and teardown <dd>Teardown operations are per-instance.
+
+<dt>Error: operation <i>class.name</i> can't be abstract and an accessor <dd>Accessor operations have to be concrete.
+
+<dt>Error: protected type <i>type</i> has no attributes <dd>A protected type must have attributes.
+
+<dt>Error: public <i>name</i> can't be active <dd>Public classes may not be active.
+
+<dt>Error: public <i>name</i> has a state machine <dd>Public classes may not have state machines.
+
+<dt>Error: required constraint not found for <i>Type</i> <dd>The
+tagged value specifying <i>Type</i> doesn't contain all the required
+information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
+
+<dt>Error: reserved word "<i>word</i>" in &lt;<i>tag</i>&gt; <dd>You've used an Ada reserved word as a name.
+
+<dt>Error: singleton <i>name</i> has identifier <dd>Singleton's aren't allowed to have identifiers.
+
+<dt>Error: spare . in <i>name</i> <dd>The <i>name</i> has a leading or trailing period.
+
+<dt>Error: tried to extend <i>type</i>, which has no attributes <dd>If a type is to be extended, it must have attributes.
+
+<dt>Error: type <i>name</i> can't be active <dd>Types may not be active.
+
+<dt>Error: type <i>name</i> can't be atomic <dd>Record and protected types may not be atomic.
+
+<dt>Error: type <i>name</i> can't be volatile <dd>Record and protected types may not be volatile.
+
+<dt>Error: type <i>name</i> has a state machine <dd>Types may not have state machines.
+
+<dt>Error: type <i>name</i> has identifier <dd><i>name</i> is a &#171;type&#187;; it can't have an identifier.
+
+<dt>Error: type <i>name</i> is marked {<i>tag</i>} but has attributes <dd>The tag {<i>tag</i>} (eg, {<i>renames</i>}) isn't consistent with having attributes.
+
+<dt>Error: type <i>name</i> must be public (not private) because it is serializable <dd>The alternative would be to make the package <tt><i>Domain</i>.Serializable</tt> a private child .. hmm, might work ..
+
+<dt>Error: unnamed association between "<i>Class</i>" and "<i>Class</i>" <dd>Missing association name.
+
+<dt>Error: unnamed inheritance of <i>Parent</i> by <i>Child</i> <dd>All branches of an inheritance relationship must have a name.
+
+<dt>Error: unnamed role in association <i>name</i> <dd>Each end of an association must be named.
+
+<dt>Error: unrecognised cardinality "<i>cardinality</i>" in <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or <tt>0..<i>m</i></tt>.
+
+<dt>Error: unrecognised multiplicity "<i>string</i>" in role <i>Association.Role</i> <dd>Multiplicities should be 1, 0..1, 1..*, 0..*, * or n.
+
+<dt>Error: unrecognised parameter mode <i>mode</i> <dd>A parameter mode must be <tt>in</tt>, <tt>inout</tt> or <tt>out</tt>.
+
+<dt>Error: utility <i>name</i> can't be active <dd>Utility classes may not be active.
+
+<dt>Error: utility <i>name</i> has attributes/associations <dd>Utility classes may not have parameters or take part in associations.
+
+<dt>Error: utility <i>name</i> has a state machine <dd>Utility classes may not have state machines.
+
+<dt>Error: utility <i>name</i> is a type <dd>Utility classes may not be &#171;type&#187;s.
+
+</dl>
+
+
+
+<dl>
+
+<dt>Warning: annotation not handled, "<i>entity</i> [[<i>annotation</i> : <i>value</i>]]" <dd>The given annotation wasn't understood.
+
+<dt>Warning: can't open <i>file</i>: <i>reason</i> <dd>Unable to open case exception file.
+
+<dt>Warning: <i>datatype</i> type <i>Name</i> can't be atomic <dd>Marking the type <i>{atomic}</i> isn't supported.
+
+<dt>Warning: <i>datatype</i> type <i>Name</i> can't be volatile <dd>Marking the type <i>{volatile}</i> isn't supported.
+
+<dt>Warning: &lt;&lt;init&gt;&gt; operation <i>Class.Name</i> was marked 'private' <dd>The operation needs to be visible for domain initialization to work, and has been made so.
+
+<dt>Warning: invalid constraint <i>constraint</i> in type <i>Type</i>
+<dd>A tagged value specifying <i>Type</i> is invalid (for example,
+<tt>lower</tt> in <tt>{unsigned = mod 8 | lower 2}</tt>
+
+<dt>Warning: no tags to indicate type of <i>Type</i>, treated as {null} <dd><i>Type</i> has been stereotyped as <i>type</i> but no detail is given.
+
+<dt>Warning: stereotype not handled, "<i>Entity &#171;stereotype&#187;</i>" <dd>The given stereotype wasn't understood.
+
+<dt>Warning: unrecognised hash mechanism "<i>mechanism</i>" for <i>Type</i> <dd>The hash mechanism specified wasn't understood.
+
+<dt>Warning: upper bound (<i>u</i>) of multiplicity in role <i>Association.Role</i> treated as * <dd>The upper bounds of associations are always treated as indefinite.
+
+<dt>Warning: use of {image} in <i>Type</i> deprecated -- use {field-image} <dd>Convert to use of <i>{field-image}</i>.
+
+</dl>
+
+
+<dl>
+
+<dt>Info: {<i>tag</i>=<i>value</i>} not handled in <i>name</i> <dd>The given tagged value wasn't understood.
+
+</dl>
+
+
+
+<h3>Code generation messages</h3>
+
+
+<dl>
+
+<dt>Error: <i>Class.Event</i>'s payload is of the wrong type (<i>Type</i>): <i>Operation</i> expects <i>Type</i> <dd>If an entry action has a parameter, it must be of the type of the associated event's payload.
+
+<dt>Error: <i>Class.Operation</i> takes a parameter, can't be used in drop-through action <dd>If an entry action has a parameter, there must be an associated event/payload to provide the parameter.
+
+<dt>Error: <i>Class.Operation</i> is wrongly stereotyped as an accessor <dd>The operation's name or profile don't match any parameter (name, type, class-ness).
+
+<dt>Error: <i>Class</i>.<i>State</i>, a singleton entry action may not delete the instance <dd>It's not permitted to delete a singleton.
+
+<dt>Error: <i>Class.State</i>, <i>Operation</i> has too many parameters to be an entry action <dd>An entry action in the model can have at most one parameter (the event payload). Of course, for non-singleton classes there will be an initial <tt>This</tt> parameter in the generated code.
+
+<dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
+
+<dt>Error: completion (drop-through) and triggered transitions from state <i>Class</i>.<i>State</i>  <dd>Triggered transitions can never be taken if there's a drop-through.
+
+<dt>Error: completion (drop-through) transition after final state <i>Class</i>.<i>State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
+
+<dt>Error: entry action(s) after final action <i>Class</i>.<i>Operation</i> in <i>Class</i>.<i>State</i> <dd>An entry action that deletes the instance must be the last action.
+
+<dt>Error: entry action(s) after final action on transition to <i>Class</i>.<i>State</i> <dd>If a transition action deletes the instance, you can't put entry actions on the target state.
+
+<dt>Error: illegal association <i>Association</i> with class <i>Class</i> <dd>Associations with &#171;public&#187; classes aren't allowed.
+
+<dt>Error: illegal finalize operation <i>Class.Operation</i> <dd>&#171;finalize&#187; operations must not be &#171;abstract&#187; or &#171;class&#187;, or return a value, or have parameters; and &#171;singleton&#187;s can't have &#171;finalize&#187; operations at all.
+
+<dt>Error: "inherited" private operation <i>Parent.Operation</i> in <i>Child</i>  <dd>Implementations of abstract operations must be <i>public</i> (or <i>protected</i>).
+
+<dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only identifying ones).
+
+<dt>Error: more than one completion (drop-through) transition from state <i>Class</i>.<i>State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
+
+<dt>Error: more than one handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
+
+<dt>Error: more than one transition triggered by <i>Event</i> from state <i>Class</i>.<i>State</i> <dd>An event can trigger at most one transition from any state.
+
+<dt>Error: no operation for <i>Class</i>, state <i>State</i>, action <i>Action</i> <dd>No matching operation was found in this class (or any parent class).
+
+<dt>Error: no concrete operation for <i>Parent.Operation</i> in <i>Leaf</i> <dd><tt>Operation</tt> was specified &#171;abstract&#187; in <tt>Parent</tt>, but no implementation has been found in the branch leading to the leaf class <tt>Leaf</tt>.
+
+<dt>Error: no handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
+
+<dt>Error: no initial state in <i>Class</i> <dd>Each state machine must have an initial state.
+
+<dt>Error: protected type <i>type</i> has no operations <dd>A protected type must have operations.
+
+<dt>Error: <i>type</i> must be recorded as <i>original-package</i>.Serializable.<i>original-type</i> <dd>A type can't be both <i>{serializable-there}</i> and <i>{serializable}</i>; record values using the original package's Serializable child.
+
+</dl>
+
+<dl>
+
+<dt>Warning: <i>Class</i>: no rule to hash <i>Type</i> <dd>ColdFrame doesn't know how to hash values of type <tt>Type</tt> in order to make a reasonable hash function. This normally happens when <tt>Type</tt> is <tt>{imported}</tt>. The generated code will still operate, but it's best if you can replace the default <tt>Class.Instance_Hash</tt>. <br>If the imported type is discrete (for example, an integer or an enumeration), you can say <a href="types.html#hash"><tt>{hash=discrete}</tt> or <tt>{hash=enumeration}</tt></a>.
+
+<dt>Warning: possible problems with type <i>Type</i> <dd>The type has an attribute, or is an array involving, or is a protected type with an operation involving, a type or types that haven't been specified. The possibly-undefined types are listed. Note, this can occur with a public type that depends on a private type, or, if the domain is a child domain (<i>Parent</i>.<i>Child</i>), it may be a type defined in <i>Parent</i>.
+
+<dt>Warning: upper or lower bound not specified for <i>Type</i> <dd>Provide both upper and lower bounds for {integer} or {real} types.
+
+</dl>
+
+
+
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

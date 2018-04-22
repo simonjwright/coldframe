@@ -1,0 +1,335 @@
+<html>
+<head>
+<title>ColdFrame: Installation</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Installation</h1>
+
+<h2>Prerequisites</h2>
+
+<p>ColdFrame uses:
+
+<ul>
+
+<li><a href="http://argouml.tigris.org/">ArgoUML</a>
+
+<li><a href="http://www.adacore.com">GNAT</a> (an Ada 95/2005/2012
+compiler; must support Ada2005)
+
+<li><a href="http://sourceforge.net/projects/saxon/">Saxon</a> (an
+XSLT processor)
+
+</ul>
+
+<p>The <tt>examples/</tt> also
+require <a href="http://sourceforge.net/projects/tcladashell/">TclAdaShell</a>
+to be installed on <tt>ADA_PROJECT_PATH</tt>.
+
+<h2>ColdFrame setup</h2>
+
+<p>First, unpack ColdFrame (it unpacks into a
+directory <tt>cf-<i>yyyymmdd</i></tt>, for
+example <tt>cf-20120218</tt>), and enter that directory.
+
+<p>If you're running Debian 6 (<i>squeeze</i>), there are a couple of
+changes needed (<i>gnatmake</i> doesn't
+understand <tt>external_as_list()</tt> in a Project file): say
+<pre>
+<i>$</i> patch -p1 &lt;debian-6.diff
+</pre>
+
+<p>In all cases, say
+<pre>
+<i>$</i> make setup
+</pre>
+
+<p>This builds the tools supplied in source form in
+the <tt>tools/</tt> subdirectory.
+
+<h2>ArgoUML setup</h2>
+
+<p>ArgoUML installation is
+documented <a href="argouml-installation.html">separately</a>.
+
+<h2>Environment variables</h2>
+
+<p>These are the main environment variables that can be used to
+control ColdFrame's code generation. The indicated defaults are as set
+up in the Makefile <tt>Makefile.inc</tt>. They can all be overridden
+except for <tt>ADA_PROJECT_PATH</tt> (which <tt>Makefile.inc</tt>
+extends).
+
+<table border="1">
+
+<tr>
+<th>Variable
+<th>Meaning
+<th>Default
+
+<tr><td>ADA_PROJECT_PATH
+<td>Where
+your <a href="http://gcc.gnu.org/onlinedocs/gnat_ugn_unw/GNAT-Project-Manager.html">GNAT
+Project</a> <tt>.gpr</tt> files are. Makefile.inc adds its own
+location to your setting.
+<td>-
+
+<tr><td>BLANK_LINES
+<td>Should the generated code have extra blank lines to improve legibility?
+<td>yes
+
+<tr><td>CASE_EXCEPTIONS
+<td>The list of case exceptions to be used when generating code (for
+example, "GNAT").
+<td>$SCRIPTS/emacs_case_exceptions
+
+<tr><td>COLDFRAME
+<td>Where ColdFrame is installed (overridden in the Makefiles); set it
+to, for example, <tt><i>/where/ever/</i>cf-<i>20110720</i></tt>
+<td>-
+
+<tr><td>COLDFRAMEOUT
+<td>Where the <tt>.rr</tt> files, made by preprocessing
+ArgoUML's <tt>.uml</tt> files, are to be placed/found.
+<td>$COLDFRAME/coldframeout
+
+<tr><td>GENERATE_ACCESSORS
+<td>Under what circumstances should accessor code be generated?
+<td>defined
+
+<tr><td>GENERATE_DIAGRAMS
+<td>Should diagrams be generated as part of generating HTML?
+<td>yes
+
+<tr><td>GENERATE_EVENT_LOGGING
+<td>Should additional code be generated to log event handing?
+<td>no
+
+<tr><td>GENERATE_STUBS
+<td>Should stub code be generated instead of the normal code?
+<td>no
+
+<tr><td>GNATCHOP
+<td>Older ColdFrame projects may have used <tt>Interface</tt> as a
+name; it became a keyword in Ada 2005. Modern versions
+of <tt>gnatchop</tt> need to be told to adopt Ada95 rules, but older
+versions wouldn't understand the flag. Set
+to <tt>gnatchop -gnat95</tt> if this is the case.
+<td>gnatchop
+
+<tr><td>JAVA
+<td>There should be no need to change this.
+<td>java
+
+<tr><td>MAXIMPLDEPTH
+<td>It may be that there are subdirectories
+of <tt><i>Domain</i>.impl</tt> to be searched for code bodies that
+need to be removed from the <tt>.gen</tt> directory.
+<td>1
+
+<tr><td>MODELS
+<td>Where model files are located (to be overridden with the location
+of a project's model files).
+<td>$COLDFRAME/models
+
+<tr><td>SAXON
+<td>How to run Saxon. Shouldn't need to be overridden.
+<td>$JAVA -cp $SAXON_CLASSPATH com.icl.saxon.StyleSheet
+
+<tr><td>SAXON_CLASSPATH
+<td>Where Saxon's code is located.
+<td>/usr/local/lib/saxon/saxon.jar
+
+<tr><td>SCRIPTS
+<td>Where ColdFrame's scripts are located. Shouldn't need to be overridden.
+<td>$COLDFRAME/scripts
+
+<tr><td>UNIT_TEST_SUPPORT
+<td>Should unit test support code (enabling inspection etc) be generated?
+<td>no
+
+<tr><td>VERBOSE
+<td>Should ColdFrame be chatty as it generates code?
+<td>no
+
+</table>
+
+<h2>Your Makefile</h2>
+
+<p>Your project will in general consist of a number
+of <a href="domains.html">domains</a>, and (unlike some other
+modelling tools, such as Rational Rose) ArgoUML offers no facility to
+keep the domains in separately-controlled files. Your choice is then
+to have one UML file per domain, one per project, or somethng in
+between.
+
+<p>ColdFrame supports having multiple domains per UML file.
+
+<p>Create a <tt>Makefile</tt> in the directory where your generated
+<tt><i>Domain</i>.gen/</tt> files (will) live (next to your
+implementation <tt><i>Domain</i>.impl/</tt> files).
+
+<p>It should begin by defining where your model (<tt>.uml</tt>) files
+live, so as to override ColdFrame's default:
+
+<pre>
+MODELS = <i>/where/ever</i>
+</pre>
+
+<p>and then include ColdFrame's standard Makefile:
+
+<pre>
+include $(COLDFRAME)/Makefile.inc
+</pre>
+
+<p>Next, define the domains: ColdFrame creates the
+intermediate <tt>.norm</tt> file names as it does other names in the
+model, by normalizing case and replacing spaces by underscores. Let's
+suppose that the model is <tt><i>/where/ever/</i>Model.uml</tt> and it
+contains domains <i>House Management</i> and <i>Digital IO</i> (the
+latter containing a child package stereotyped
+&#171;domain-interface&#187; called <i>Digital IO Interface</i> with
+the tag <tt>{name=Digital IO}</tt>, see the section
+on <a href="testing.html#stubs">testing with stubs</a>):
+
+<pre>
+DOMAINS = House_Management Digital_IO Digital_IO_Interface
+</pre>
+
+<p>Tell ColdFrame about the relationship between <tt>Model.uml</tt>
+and the domains using the incantation
+
+<pre>
+$(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.norm-stamp ;
+</pre>
+
+<p>Later on, you'll add rules to build the executables, but to start
+with you can just generate the code:
+
+<pre>
+all:: $(addsuffix .gen,$(DOMAINS))
+</pre>
+
+<h3>Creating your build directories</h3>
+
+<p>If you have a recent GNAT you can use the <tt>-p</tt> flag to
+tell <tt>gnatmake</tt> or <tt>gprbuild</tt> to create any needed
+directories as required.
+
+<h3>Creating
+a <a href="http://gcc.gnu.org/onlinedocs/gnat_ugn_unw/GNAT-Project-Manager.html">GNAT
+Project</a> file</h3>
+
+<p>If you don't need to override any of the <tt>ColdFrame.Project</tt>
+source, your project file can be pretty simple: the supplied
+<tt>Event_Test.gpr</tt> (in the <tt>test/</tt> subdirectory) is
+
+<pre>
+with "ColdFrame";
+with "Options";
+with "aunit";
+
+project Event_Test is
+
+  for Main use ("event_test-harness");
+
+  for Exec_Dir use ".";
+
+  for Source_Dirs use
+    ("<i>Event_Test.impl"</i>,
+     "<i>Event_Test.gen</i>",
+     "<i>Event_Test.test</i>");
+
+  for Object_Dir use ".build";
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
+
+end Event_Test;
+</pre>
+
+<p>Add further domains as required, of course.
+
+<h3>Overriding <tt>ColdFrame.Project</tt> source</h3>
+
+<p>If you need to override some of the Ada source code in the
+<tt>$COLDFRAME/project</tt> directory, life becomes complicated
+because you have to avoid circularity and having multiple occurrences
+of the same file; you can't use the supplied
+<tt>ColdFrame.gpr</tt>.
+
+<p>Suppose your overriding source is in
+<tt>~/Base/Build/ColdFrameProject/project</tt>; change directory to
+<tt>~/Base/Build/ColdFrameProject</tt> and say
+<pre>
+$ $COLDFRAME/scripts/install-project
+</pre>
+
+<p>This will place those of ColdFrame's files that you haven't
+overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
+
+<p>The project file now looks like
+
+<p><pre>
+with "Options";
+with "aunit";
+
+project Event_Test is
+
+  for Main use ("event_test-harness");
+
+  for Exec_Dir use ".";
+
+  Project_Base = external ("HOME") & "/Base/Build/ColdFrameProject";
+
+  for Source_Dirs use
+    (
+     "<i>Event_Test.impl"</i>,
+     "<i>Event_Test.gen</i>",
+     "<i>Event_Test.test</i>",
+     external ("COLDFRAME") & "/lib",
+     Project_Base & "/project",
+     Project_Base & "/inherited"
+    );
+
+  for Object_Dir use ".build";
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
+
+end Event_Test;
+</pre>
+
+<hr>
+
+<h2>Windows notes</h2>
+
+<p>ColdFrame is built on a Unix system and requires typical Unix
+utilities in order to function.
+
+<p>A Unix-like environment which has proved effective in the past
+is <a href="http://www.cygwin.com/">Cygwin</a>.
+
+<p>When installing Cygwin, choose the 'developer' option.
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

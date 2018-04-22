@@ -1,0 +1,497 @@
+<html>
+<head>
+<title>ColdFrame: Testing Classes</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Testing Classes</h1>
+
+<hr/>
+
+<ul>
+
+<li><a href="#aunit">AUnit</a>
+<li><a href="#access-to-private">Access to private information</a>
+<li><a href="#example">Example</a>
+<li><a href="#inspecting-event-queues">Inspecting event queues</a>
+
+</ul>
+
+<hr/>
+
+<h2><a name="aunit">AUnit</a></h2>
+
+<p>The discussion here is based on the use
+of <a href="http://libre.adacore.com/libre/tools/aunit/">AUnit</a>.
+
+<p>AUnit has the concept <i>test case</i>; for each test case there is
+a <i>fixture</i>, which corresponds to the standard setup that each
+test procedure in the test case expects.
+
+<p>The fixture is implemented using the test case operations
+<tt>Set_Up</tt> and <tt>Tear_Down</tt>.
+
+<p>ColdFrame supports <tt>Set_Up</tt> using its standard
+<a href="domains.html#initialize"><tt><i>Domain</i>.Initialize</tt></a> (and
+<a
+href="domains.html#cascade-initialize"><tt>Cascade_Initialize</tt></a>)
+procedures.
+
+<p>ColdFrame supports <tt>Tear_Down</tt> by providing
+<a href="domains.html#teardown"><tt><i>Domain</i>.Tear_Down</tt></a>
+(and
+<a
+href="domains.html#cascade-teardown"><tt>Cascade_Tear_Down</tt></a>)
+procedures.
+
+<p>The <tt>examples/</tt> and <tt>test/</tt> subdirectories contain
+AUnit tests of aspects of ColdFrame's functionality. Note that these
+tests are written using version 3 of AUnit, as supplied with GNAT GPL
+2011, and <b>will not work with the Debian-supplied software</b> (up
+to at least <i>wheezy</i>) because it provides only AUnit 1.03.
+
+<h2><a name="access-to-private">Access to private information</a></h2>
+
+<p>ColdFrame takes a fairly restrictive attitude to the visibility of
+constructs in the generated code. For example, only &#171;public&#187;
+classes are publicly visible outside the domain; all other classes are
+implemented as private children of the domain package, and the full
+declaration of a class's instance record is in the private part of the
+class's package specification.
+
+<p>If you are doing domain-level "unit" tests (that is, tests that
+involve <a href="stubs.html">stubbed functionality</a> from
+other domains), implement the test suite in a child unit of the domain
+(perhaps <tt><i>Domain</i>.Unit_Test</tt>).
+
+<p>There are two approaches to doing class-level unit tests.
+
+<p>The first is similar to that for domain-level tests: implement the
+test suite in a child unit of the class (perhaps
+<tt><i>Domain.Class</i>.Tests</tt>).
+
+<p>You may feel that this leads to too many deeply-nested packages. As
+an alternative, generate the code with the <tt>UNIT_TEST_SUPPORT</tt>
+variable set to <tt>yes</tt>:
+
+<pre>
+$ make <i>Domain</i>.gen UNIT_TEST_SUPPORT=yes
+</pre>
+
+<p>This generates a child package for each
+class, <tt><i>Domain.Class</i>.Unit_Test</tt>, which
+contains <tt>Get_</tt> and <tt>Set_</tt> subprograms for each mutable
+attribute excluding <i>Timer</i>s and, for a class with a state
+machine, <tt>Get_State_Machine_State</tt>
+and <tt>Set_State_Machine_State</tt> subprograms.
+
+<p>Identifying attributes are immutable, and only have a <tt>Get_</tt>
+operation.
+
+<p><i>Timer</i>s are supported by an <tt>Access_</tt> function
+returning an access-to-Timer; you can use
+the <a href="#inspecting-event-queues">event queue inspection
+facilities</a> to find out more.
+
+<p>What it does <em>not</em> do is allow you to access private
+subprograms of the class. A common reason for having private
+operations is to implement state machines; in this case, you could
+consider <a href="event-use.html#synchronous">calling the event
+handler synchronously</a> (just remember to set the state first). It's
+arguable that by doing this you have a more representative execution
+path, anyway.
+
+<h2><a name="example">Example</a></h4>
+
+<p>There's a note on <a href="stubs.html#generated-stub">generating
+stubs</a> as used in the <tt>examples/House_Management.test/</tt>
+subdirectory of the source distribution,
+with <a href="stubs.html#using-generated-stub">additional information
+on using them</a>. This example uses this feature.
+
+<p>Note that the test suite is a child of
+the <tt>House_Management.Lamp</tt> package. This is so that the test
+code has access to private members of the domain
+(non-&#171;public&#187; classes and associations, for a start) and to
+private subprograms of the class.
+
+<ul>
+
+<li><a href="#main">The main program</a>
+
+<li><a href="#suite-spec">The test suite spec</a>
+
+<li>The test suite body
+
+<ul>
+
+<li><a href="#aunit-withs">Standard AUnit withs</a>
+
+<li><a href="#test-withs">Test-specific withs</a>
+
+<li><a href="#suite-body">The actual body</a>
+
+<ul>
+
+<li><a href="#instantiations">Instantiations of <tt>ColdFrame.Stubs</tt> generics</a>
+
+<li><a href="#case-spec">A test case spec, for testing <i>Lamp</i> code</a>
+
+<li><a href="#case-body">The test case body</a>
+
+<ul>
+
+<li><a href="#proc-spec">A test procedure spec</a>
+
+<li><a href="#proc-body">The test procedure body</a>
+
+<li><a href="#case-name">The test case name</a>
+
+<li><a href="#registration">Test procedure registration</a>
+
+<li><a href="#set-up">The test case set-up</a>
+
+<li><a href="#tear-down">The test case tear-down</a>
+
+</ul>
+
+<li><a href="#end-case">End of test case</a>
+
+</ul>
+
+<li><a href="#suite-function">The test suite function</a>
+
+<li><a href="#end-suite">End of test suite</a>
+
+</ul>
+
+</ul>
+
+<hr/>
+
+<p><a name="main">The main program</a>:
+<pre>
+with AUnit.Reporter.Text;
+with AUnit.Run;
+with House_Management.Lamp.Test_Suite;
+with GNAT.Exception_Traces;
+
+procedure House_Management.Harness is
+
+   procedure Run is new AUnit.Run.Test_Runner (Lamp.Test_Suite.Suite);
+
+   Reporter : AUnit.Reporter.Text.Text_Reporter;
+
+begin
+
+   GNAT.Exception_Traces.Trace_On
+     (Kind => GNAT.Exception_Traces.Unhandled_Raise);
+
+   Run (Reporter);
+
+end House_Management.Harness;
+</pre>
+
+<p><a name="suite-spec">The test suite spec</a>:
+<pre>
+with AUnit.Test_Suites;
+
+package House_Management.Lamp.Test_Suite is
+
+   function Suite return AUnit.Test_Suites.Access_Test_Suite;
+
+end House_Management.Lamp.Test_Suite;
+</pre>
+
+<p>The test suite body:
+
+<p><a name="aunit-withs">Standard AUnit withs</a>:
+<pre>
+with AUnit.Assertions; use AUnit.Assertions;
+with AUnit.Test_Cases; use AUnit.Test_Cases;
+</pre>
+
+<p><a name="test-withs">Test-specific withs</a>:
+<pre>
+with ColdFrame.Project.Events.Standard.Test;
+with ColdFrame.Stubs;
+with Digital_IO.Initialize;
+with Digital_IO.Tear_Down;
+with House_Management.Initialize;
+with House_Management.Tear_Down;
+</pre>
+
+<p><a name="suite-body">The actual body</a>:
+<pre>
+package body House_Management.Lamp.Test_Suite is
+</pre>
+
+<p><a name="instantiations">Instantiations of <tt>ColdFrame.Stubs</tt> generics</a>:
+<pre>
+   function Get_Boolean
+   is new ColdFrame.Stubs.Get_Input_Value (Boolean);
+   function Get_Signal_Name
+   is new ColdFrame.Stubs.Get_Input_Value (Digital_IO.Output_Signal);
+</pre>
+
+<p><a name="case-spec">A test case, for testing <i>Lamp</i> code</a>:
+<pre>
+   package Lamps is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return AUnit.Message_String;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Lamps;
+</pre>
+
+<p><a name="case-body">The test case body</a>:
+<pre>
+   package body Lamps is
+</pre>
+
+<p><a name="proc-spec">A test procedure spec</a> (GNAT with style checks
+enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
+<pre>
+      <i>--  Check that each Lamp is connected to the correct Signal in
+      --  the Digital_IO domain, in the correct sense (ie, turning the
+      --  Lamp on sets the Signal to True).</i>
+      procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class);
+</pre>
+
+<p><a name="proc-body">The test procedure body</a>:
+<pre>
+      procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class) is
+         pragma Unreferenced (R);
+         use type Digital_IO.Output_Signal;
+      begin
+
+         <i>--  Initialization creates a number of lamps; each one turns
+         --  itself off on creation (to be tested elsewhere). However,
+         --  we have to account for them; we can't just not initialize
+         --  the domain, because initialization creates all the
+         --  domain's singletons, initialises &#171;class&#187; attributes,
+         --  and calls user {init} operations to, amongst other
+         --  things, set up 'specification' instances and
+         --  associations.</i>
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set_Output") = 4,
+                 "wrong number of calls");
+
+         <i>--  Turn on the Basement lamp.</i>
+         Lamp.Turn_On (Lamp.Find ((Name => Basement)));
+         --  There should have been 5 calls now.
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set_Output") = 5,
+                 "wrong number of calls (a)");
+         <i>--  The 5th call should have been for Lamp D ...</i>
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                    "O",
+                                    5) = 3,
+                 "wrong signal (a)");
+         <i>--  ... and it should have been turned on.</i>
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              5),
+                 "should have been turned on (a)");
+
+         <i>--  Repeat for the remaining Lamps.</i>
+         Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set") = 6,
+                 "wrong number of calls (b)");
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                  "S",
+                                  6) = 2
+                 "wrong signal (b)");
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              6),
+                 "should have been turned on (b)");
+
+         Lamp.Turn_On (Lamp.Find ((Name => First_Floor)));
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set") = 7,
+                 "wrong number of calls (c)");
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                  "S",
+                                  7) = 1,
+                 "wrong signal (c)");
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              7),
+                 "should have been turned on (c)");
+
+         Lamp.Turn_On (Lamp.Find ((Name => Second_Floor)));
+         Assert (ColdFrame.Stubs.Number_Of_Calls
+                   ("Digital_IO.Application.Set") = 8,
+                 "wrong number of calls (d)");
+         Assert (Get_Output_Signal ("Digital_IO.Application.Set",
+                                  "S",
+                                  8) = 0,
+                 "wrong signal (d)");
+         Assert (Get_Boolean ("Digital_IO.Application.Set",
+                              "To_State",
+                              8),
+                 "should have been turned on (d)");
+
+      end Turn_On;
+</pre>
+
+<p><a name="case-name">The test case name</a>:
+<pre>
+      function Name (C : Case_1) return AUnit.Message_String  is
+         pragma Unreferenced (C);
+      begin
+         return new String'("Lamps.Case_1");
+      end Name;
+</pre>
+
+<p><a name="registration">Test procedure registration</a> (only the one test procedure so far!):
+<pre>
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Turn_On'Access,
+            "turn on");
+      end Register_Tests;
+</pre>
+
+<p><a name="set-up">The test case set-up</a>:
+<pre>
+      procedure Set_Up (C : in out Case_1) is
+         pragma Unreferenced (C);
+         Q : constant ColdFrame.Project.Events.Event_Queue_P
+           := new ColdFrame.Project.Events.Standard.Test.Event_Queue;
+      begin
+         ColdFrame.Stubs.Set_Up;
+         Digital_IO.Initialize (Q);
+         House_Management.Initialize (Q);
+      end Set_Up;
+</pre>
+
+<p><a name="tear-down">The test case tear-down</a>:
+<pre>
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Unreferenced (C);
+      begin
+         House_Management.Tear_Down;
+         Digital_IO.Tear_Down;
+         ColdFrame.Stubs.Tear_Down;
+      end Tear_Down;
+</pre>
+
+<p><a name="end-case">End of test case</a>:
+<pre>
+   end Lamps;
+</pre>
+
+<p><a name="suite-function">The test suite function</a>:
+<pre>
+   function Suite return AUnit.Test_Suites.Access_Test_Suite is
+      Result : constant AUnit.Test_Suites.Access_Test_Suite
+        := new AUnit.Test_Suites.Test_Suite;
+   begin
+      AUnit.Test_Suites.Add_Test (Result, new Lamps.Case_1);
+      return Result;
+   end Suite;
+</pre>
+
+<p><a name="end-suite">End of test suite</a>:
+<pre>
+end House_Management.Lamp.Test_Suite;
+</pre>
+
+<h2><a name="inspecting-event-queues">Inspecting event queues</a></h2>
+
+<p>If your domain has state machines (and most will), you'll need to
+cater for them in your testing. But it can be very difficult to manage
+a unit test when the state machines are all ticking over with timed
+events every 10 milliseconds!
+
+<p>Rather than posting events to a running event queue and observing
+the results, the supported way of dealing with this is via event queue
+inspection; run the code, using an unstarted event queue, and check
+that the appropriate events have been posted.
+
+<p>An event queue inspector is provided
+in <tt>ColdFrame.Project.Events.Standard.Inspection</tt>.
+
+<p>There's no need to use the <tt>Test</tt> variant, because the queue
+mustn't be started. To create an unstarted standard queue, say
+<pre>
+Q := new ColdFrame.Project.Events.Standard.Event_Queue_Base
+  (Start_Started => False,
+   Priority => System.Default_Priority,
+   Storage_Size => 20_000);
+</pre>
+
+<p>You can inspect the queue's self events using the functions
+<pre>
+function Number_Of_Self_Events (On : Event_Queue_P) return Natural;
+function Self_Event (On : Event_Queue_P;
+                     At_Index : Positive) return Event_P;
+</pre>
+
+<p>You can inspect the queue's standard events (posted to run 'now')
+using the functions
+<pre>
+function Number_Of_Now_Events (On : Event_Queue_P) return Natural;
+function Now_Event (On : Event_Queue_P;
+                    At_Index : Positive) return Event_P;
+</pre>
+
+<p>You can inspect the queue's events posted to run after a delay
+using the functions
+<pre>
+function Number_Of_After_Events (On : Event_Queue_P) return Natural;
+function After_Event (On : Event_Queue_P;
+                      At_Index : Positive) return Event_P;
+function How_Long_After (On : Event_Queue_P;
+                         At_Index : Positive) return Duration;
+</pre>
+
+<p>You can inspect the queue's events posted to run at a later time
+using the functions
+<pre>
+function Number_Of_Later_Events (On : Event_Queue_P) return Natural;
+function Later_Event (On : Event_Queue_P;
+                      At_Index : Positive) return Event_P;
+function When_Later (On : Event_Queue_P;
+                     At_Index : Positive) return Time.Time;
+</pre>
+<p>(<tt>Time</tt> is the time support package used in
+instantiating <tt>ColdFrame.Project.Events</tt>,
+usually <tt>ColdFrame.Project.Times</tt>).
+
+<p>All of the above access events in order of posting, and
+raise <tt>Not_Found</tt> if there is no such event.
+
+<p>Additionally, you can access the event held on a <i>Timer</i>:
+<pre>
+function Event_Of (The_Timer : Timer) return Event_P;
+</pre>
+<p>(returns <tt>null</tt> if there isn't one).
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

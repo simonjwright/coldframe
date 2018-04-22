@@ -1,0 +1,151 @@
+<head>
+<title>ColdFrame: Attributes</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Attributes</h1>
+
+<h2>Motivation</h2>
+
+<p>An attribute holds a property of an object (either one per
+instance, for example the Accession Number of a Book in a Library, or
+per class, for example the <em>next</em> Accession Number to be used).
+
+<h3>Identifiers</h3>
+
+<p>Instances of a Class must be uniquely identifiable by some
+attribute or combination of attributes. For example, a Vehicle Excise
+Disk (a UK thing, up until October 2014: the circular document you
+displayed on your car's windscreen to show you'd paid the annual road
+tax) might be identified by the combination of Vehicle Index Mark (the
+licence plate number) and Validity Start Date. Vehicle Index Mark and
+Validity Start Date then become "identifying attributes", whereas Date
+Of Issue and Period Of Validity are just common-or-garden attributes.
+
+<p>In ColdFrame, you <em>must not</em> specify identifiers for
+
+<ul>
+<li>child classes in inheritance relationships,
+<li>associative classes,
+<li>singletons, or
+<li>types.
+</ul>
+
+<p>All other classes <em>must</em> have identifiers. In this, ColdFrame
+doesn't follow <a href="resources.html#build-object-models">Executable
+UML</a>; it seems risky to apply too many defaults.
+
+<p>For the case where there's no suitable naming attribute, ColdFrame
+provides the attribute type <tt><i>Autonumber</i></tt> (rather like
+the Microsoft Access feature it's named after): each newly-created
+instance gets a new value.
+
+<h3>Types</h3>
+
+<p>If a <a href="types.html">&#171;datatype&#187; class</a> has
+attributes, it corresponds to a C <tt>struct</tt> or an Ada
+<tt>record</tt>.
+
+<h2>Modelling</h2>
+
+<p>Attributes are, of course, modelled as attributes of a UML class.
+
+<p>In UML, an attribute is expressed as
+<pre>
+&#171;stereotype&#187; <font color="red">visibility name</font> [multiplicity] <font color="red">: type-expression</font> = initial-value {property-string}
+</pre>
+
+<p>where the red parts are mandatory.
+
+<p>ColdFrame doesn't support <i>multiplicity</i>; you'll either need
+to use array <a href="types.html">types</a> <font color="red">(not yet
+implemented with ArgoUML)</font> or
+an <a href="associations.html">association</a>.
+
+<p>The <i>property-string</i> (a tagged value) isn't supported.
+
+<p>Attributes of classes can be <i>class</i> attributes, ie there is a
+single value shared by all instances. Indicate this by checking
+the <i>ownerScope</i> checkbox in the <i>modifiers</i> section of the
+ArgoUML <i>Properties</i> tab.
+
+<h3>Stereotypes</h3>
+
+<dl>
+
+<dt><em>&#171;aliased&#187;</em>
+<dd>The attribute is to be stored in such a way that its address can
+be taken (in Ada, <tt>'Access</tt>).
+
+<dt><em>&#171;atomic&#187;</em>
+<dd>The attribute must be read from memory or written to memory each
+time it is accessed, like <tt>volatile</tt>, but additionally in such
+a way that it's proof against concurrent access.
+<br>The implementation may limit the size of objects that can be
+treated as atomic.
+
+<dt><em>&#171;id&#187;</em>
+<dd>The attribute is an identifying attribute.
+
+<br>The tag <tt><a name="formalizes">{formalizes</a>
+= <i>association-name</i>}</tt> indicates that the attribute is a
+referential attribute.
+
+<br>This is needed when the attribute has to be specified by the
+analyst (normally, ColdFrame can manage references as required).
+
+<br>Consider R8, Licence is-issued-by Licensing Office. The identifier
+of Licence consists of the licence number and also the issuing
+Licensing Office, since the various offices don't use disjoint licence
+number ranges. In this case, we'd specify the attributes as
+<pre>
+&#171;id&#187; Number : Positive
+&#171;id&#187; Issuing_Office : Licensing_Office {formalizes=R8}
+</pre>
+
+<dt><em>&#171;volatile&#187;</em>
+<dd>The attribute must be read from memory or written to memory each
+time it is accessed.
+
+</dl>
+
+<h2>Translation</h2>
+
+<p>Attributes of types are implemented as Ada record components.
+
+<p>Ordinary attributes of classes are implemented in the "instance
+record", accessed as <tt>This.<i>attribute-name</i></tt>.
+
+<p>Class attributes are implemented as variables in the private part
+of the class package, and are accessed directly by name.
+
+<!--
+<p>If the attribute's type is known to be an array, the <i>{atomic}</i> and
+<i>{volatile}</i> tags are translated to <tt>pragma
+Atomic_Components</tt> or
+<tt>pragma Volatile_Components</tt> respectively.
+-->
+
+<!--
+<h2>Use</h2>
+-->
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
