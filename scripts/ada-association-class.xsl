@@ -816,16 +816,6 @@
       <xsl:with-param name="assoc" select="$assoc"/>
     </xsl:call-template>
     <xsl:text> is&#10;</xsl:text>
-
-    <!--
-         use type {assoc}.Handle;
-         -->
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>use type </xsl:text>
-    <xsl:value-of select="$assoc"/>
-    <xsl:text>.Handle;&#10;</xsl:text>
-
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
