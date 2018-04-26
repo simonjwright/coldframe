@@ -189,6 +189,10 @@ class Association(Base):
     def add_xml_association(self, to):
         """adds the UML:Association.connection, with the two
         UML:AssociationEnd's to the ET.Element in to."""
+        if self.roles[0].origin != self.roles[1].target \
+           or self.roles[1].origin != self.roles[0].target:
+            error("mismatch in participant classes in %s"
+                  % self.path_name())
         con = self.add_xml_path(to, ('UML:Association.connection',))
         for role in self.roles:
             role.add_xml(con)
@@ -1631,12 +1635,10 @@ def p_annotation(p):
         : qualified_identifier annotation_optional_value_specs
         | qualified_identifier
     '''
-    def check_lispy_stereotypes(s):
-        # XXX more to come ...
-        if s == 'domain_interface':
-            return 'domain-interface'
-        return s
-    name = check_lispy_stereotypes(p[1])
+    # normalize_xmi requires some stereotypes to have
+    # lisp-hyphenenated names; but TextUML requires identifiers. So
+    # translate underscores to hyphens.
+    name = p[1].replace('_', '-')
     if len(p) == 3:
         p[0] = (name, p[2])  # NB the second element is a tuple
     else:
@@ -1667,7 +1669,10 @@ def p_annotation_value_spec(p):
     '''
     annotation_value_spec : identifier EQUALS annotation_value
     '''
-    p[0] = (p[1], p[3])
+    # normalize_xmi requires some tags to have lisp-hyphenated names;
+    # but TextUML requires identifiers. So translate underscores to
+    # hyphens.
+    p[0] = (p[1].replace('_', '-'), p[3])
 
 
 def p_annotation_value(p):
