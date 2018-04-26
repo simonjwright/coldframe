@@ -40,13 +40,6 @@ package body Hierarchies.Test_Deletions is
    use type Ada.Containers.Count_Type;
 
    subtype CIH is ColdFrame.Instances.Handle;
-   use type R_1.Handle;
-   use type R_2.Handle;
-   use type R_3.Handle;
-   use type S_2.Handle;
-   use type S_3.Handle;
-   use type T_2.Handle;
-   use type F_2.Handle;
 
    R1_H : R_1.Handle;
    R2_H : R_2.Handle;
