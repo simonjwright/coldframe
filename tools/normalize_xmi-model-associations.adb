@@ -40,7 +40,7 @@ package body Normalize_XMI.Model.Associations is
                E : constant Element_P :=
                  Association_Ends.Read_Association_End
                  (DOM.Core.Nodes.Item (Nodes, J),
-                  Parent => Parent);
+                  Parent => N);
             begin
                A.Ends.Append (New_Item => E);
             end;

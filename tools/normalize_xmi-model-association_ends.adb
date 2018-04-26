@@ -107,7 +107,7 @@ package body Normalize_XMI.Model.Association_Ends is
          end if;
          if E.Participant = null then
             Messages.Error
-              ("Couldn't find participant "
+              ("Couldn't find participant class "
                  & Name
                  & " for association end "
                  & E.Fully_Qualified_Name);
