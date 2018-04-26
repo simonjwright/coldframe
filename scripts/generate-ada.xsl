@@ -528,7 +528,7 @@
       name="class-initializations"
       select="class[attribute[@class and initial]
               or @singleton
-              or (@public and attribute)
+              or (@public and attribute[not(@class)])
               or operation/@callback]"/>
 
     <!-- XXX Why do I distinguish here? "instance-initialization"

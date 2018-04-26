@@ -2080,7 +2080,7 @@
     mode="cl:class-initialization"
     match="class[attribute[@class and initial]
            or @singleton
-           or (@public and attribute)
+           or (@public and attribute[not(@class)])
            or operation/@callback]">
 
     <xsl:call-template name="ut:do-not-edit"/>
@@ -2109,7 +2109,7 @@
     <xsl:value-of select="name"/>
     <xsl:text>.CF_Class_Initialize is&#10;</xsl:text>
 
-    <xsl:if test="@singleton or @public">
+    <xsl:if test="@singleton or (@public and attribute[not(@class)])">
       <xsl:value-of select="$I"/>
       <xsl:text>H : Handle;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -2128,7 +2128,7 @@
 
     </xsl:for-each>
 
-     <xsl:if test="@singleton or @public">
+     <xsl:if test="@singleton or (@public and attribute[not(@class)])">
       <xsl:value-of select="$I"/>
       <xsl:text>H := Create;&#10;</xsl:text>
     </xsl:if>
