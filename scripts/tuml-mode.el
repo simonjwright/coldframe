@@ -43,6 +43,8 @@
 ;;   '("reservedword1"
 ;;     "reservedword2"))
 
+;; font-lock for comments from https://stackoverflow.com/a/15239704/40851
+
 (defvar tuml-keywords
   '(
     "abstract"
@@ -172,12 +174,12 @@
   `((
      ;; stuff between double quotes
      ("\"\\.\\*\\?" . font-lock-string-face)
-     ("(\\*[\0-\377[:nonascii:]]*?\\*)" . font-lock-doc-face)
-     ("/\\*[\0-\377[:nonascii:]]*?\\*/" . font-lock-comment-face)
-     ;; ; : , ; { } =>  @ $ = are all special elements
-     ;; (":\\|,\\|;\\\|{\\|}\\|=>\\|@\\|$\\|=" . font-lock-keyword-face)
+     ;; model comments
+     ("(\\*\\(.\\|\n\\)*\\*)" . font-lock-doc-face)
+     ;; code comments
+     ("/\\*\\(.\\|\n\\)*\\*/" . font-lock-comment-face)
+     ;; keywords
      ( ,(regexp-opt tuml-keywords 'words) . font-lock-keyword-face)
-     ;; ( ,(regexp-opt tuml-constants 'words) . font-lock-constant-face)
      )))
 
 (define-derived-mode tuml-mode fundamental-mode "TUML script"
@@ -185,6 +187,24 @@
 
   ;; (smie-setup tuml-smie-grammar 'tuml-indentation-rule)
 
+  (add-hook 'font-lock-extend-region-functions
+            'tuml-font-lock-extend-region)
+
+  (defun tuml-font-lock-extend-region ()
+  "Extend the search region to include an entire block of text."
+  ;; Avoid compiler warnings about these global variables from font-lock.el.
+  ;; See the documentation for variable `font-lock-extend-region-functions'.
+  (eval-when-compile (defvar font-lock-beg) (defvar font-lock-end))
+  (save-excursion
+    (goto-char font-lock-beg)
+    (let ((found (or (re-search-backward "\n\n" nil t) (point-min))))
+      (goto-char font-lock-end)
+      (when (re-search-forward "\n\n" nil t)
+        (beginning-of-line)
+        (setq font-lock-end (point)))
+      (setq font-lock-beg found))))
+
+  ;; buffer-local
   (setq font-lock-defaults tuml-font-lock-defaults)
 
   ;; buffer-local
