@@ -17,6 +17,7 @@ with Ada.Strings.Maps.Constants;
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Operations;
 
 package body Normalize_XMI.Model.Data_Types is
@@ -104,13 +105,14 @@ package body Normalize_XMI.Model.Data_Types is
                        & "' designated by <<access>> type "
                        & T.Fully_Qualified_Name
                        & " not found");
-               elsif not (Target_Type.all in Data_Type_Element'Class) then
+               elsif Target_Type.all not in Types.Type_Element'Class
+               then
                   Messages.Error
                     ("Type '"
                        & Target_Type_Name
                        & "' designated by <<access>> type "
                        & T.Fully_Qualified_Name
-                       & " is not a data type");
+                       & " is not an appropriate data type");
                else
                   Types.Type_Element (Target_Type.all).Accessor
                     := T'Unchecked_Access;
@@ -170,16 +172,18 @@ package body Normalize_XMI.Model.Data_Types is
                        & "', to be constrained by "
                        & T.Fully_Qualified_Name
                        & ", not found");
-               elsif
-                 not (Constrained_Type.all in Data_Type_Element'Class)
-                 and not (Constrained_Type.all in Standard_Type_Element'Class)
+               elsif not
+                 (Constrained_Type.all in Data_Type_Element'Class
+                  or Constrained_Type.all in
+                    Enumerations.Enumeration_Element'Class
+                  or Constrained_Type.all in Standard_Type_Element'Class)
                then
                   Messages.Error
                     ("Type '"
                        & Constrained_Type_Name
                        & "', to be constrained by "
                        & T.Fully_Qualified_Name
-                       & ", is not a data type");
+                       & ", is not an appropriate data type");
                end if;
             end;
          else

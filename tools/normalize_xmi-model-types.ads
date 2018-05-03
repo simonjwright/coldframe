@@ -31,7 +31,13 @@ private package Normalize_XMI.Model.Types is
    --  reference to the <<access>> type in the designated type.
    --
    --  To be extended by all the type-specifying packages:
-   --  Class_Types, Data_Types, Enumerations.
+   --  Class_Types, Data_Types.
+   --
+   --  Why Class_Types? because of ArgoUML limitations, which mean
+   --  that we model data types with attributes as classes with
+   --  stereotype <<datatype>>. There's no circumstance in which you'd
+   --  actually need a pointer to a class instance; they're translated
+   --  as instance handles anyway.
    type Type_Element is abstract new Element with record
       Accessor : Element_P;
    end record;

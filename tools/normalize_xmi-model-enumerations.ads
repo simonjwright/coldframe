@@ -12,16 +12,16 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-with Normalize_XMI.Model.Types;
-
 private package Normalize_XMI.Model.Enumerations is
+
+   type Enumeration_Element is new Element with private;
 
    function Read_Enumeration (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P;
 
 private
 
-   type Enumeration_Element is new Types.Type_Element with record
+   type Enumeration_Element is new Element with record
       Literals : String_Vectors.Vector;
       Operations : Element_Maps.Map;
    end record;
