@@ -20,14 +20,18 @@ separate (House_Management.Button)
 procedure Changed
   (S : Input_Signal_State) is
 
-   subtype Valid_Input_Signal is Digital_IO.Input_Signal range 0 .. 3;
+   subtype Valid_Input_Signal is Digital_IO.Input_Signal range 0 .. 7;
 
    --  For some reason, the input signals are mapped "upside down".
    Buttons : constant array (Valid_Input_Signal) of Button_Name
-     := (0 => Second_Floor,
-         1 => First_Floor,
-         2 => Ground_Floor,
-         3 => Basement);
+     := (0 => Second_Floor_Timed,
+         1 => First_Floor_Timed,
+         2 => Ground_Floor_Timed,
+         3 => Basement_Timed,
+         4 => Second_Floor_Toggle,
+         5 => First_Floor_Toggle,
+         6 => Ground_Floor_Toggle,
+         7 => Basement_Toggle);
 
 begin
    if S.S in Valid_Input_Signal then

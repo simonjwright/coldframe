@@ -17,6 +17,7 @@
 with Digital_IO;
 with House_Management.Button;
 with House_Management.Timed_Button.Inheritance;
+with House_Management.Toggle_Button.Inheritance;
 with House_Management.A1;
 
 separate (House_Management.Lamp)
@@ -50,8 +51,8 @@ begin
       Digital_IO.Set (O => L, To_State => False);
    end loop;
 
-   --  .. and the buttons , all of which are timed buttons for now.
-   for B in Button_Name loop
+   --  .. and the buttons
+   for B in Timed_Button_Name loop
       declare
          BH : constant Button.Handle
            := Button.Create ((Name => B));
@@ -64,6 +65,21 @@ begin
          null;
       end;
    end loop;
+   for B in Toggle_Button_Name loop
+      declare
+         BH : constant Button.Handle
+           := Button.Create ((Name => B));
+         pragma Warnings (Off, BH);
+         TBH : constant Toggle_Button.Handle
+           := Toggle_Button.Inheritance.Create_Tree
+             (ColdFrame.Instances.Handle (BH));
+         pragma Warnings (Off, TBH);
+      begin
+         null;
+      end;
+   end loop;
+
+   --  Timed buttons:
 
    --  The second floor lamp is controlled by the buttons on the first
    --  and second floors.
@@ -76,17 +92,28 @@ begin
 
    --  The basement lamp is controlled by the basement button only.
 
-   Connect (The_Button => Second_Floor, To => Second_Floor);
-   Connect (The_Button => First_Floor, To => Second_Floor);
+   Connect (The_Button => Second_Floor_Timed, To => Second_Floor);
+   Connect (The_Button => First_Floor_Timed, To => Second_Floor);
 
-   Connect (The_Button => Second_Floor, To => First_Floor);
-   Connect (The_Button => First_Floor, To => First_Floor);
-   Connect (The_Button => Ground_Floor, To => First_Floor);
+   Connect (The_Button => Second_Floor_Timed, To => First_Floor);
+   Connect (The_Button => First_Floor_Timed, To => First_Floor);
+   Connect (The_Button => Ground_Floor_Timed, To => First_Floor);
 
-   Connect (The_Button => First_Floor, To => Ground_Floor);
-   Connect (The_Button => Ground_Floor, To => Ground_Floor);
-   Connect (The_Button => Basement, To => Ground_Floor);
+   Connect (The_Button => First_Floor_Timed, To => Ground_Floor);
+   Connect (The_Button => Ground_Floor_Timed, To => Ground_Floor);
+   Connect (The_Button => Basement_Timed, To => Ground_Floor);
 
-   Connect (The_Button => Basement, To => Basement);
+   Connect (The_Button => Basement_Timed, To => Basement);
+
+   --  Toggle buttons: each button is connected to the lamp on its own
+   --  floor.
+
+   Connect (The_Button => Second_Floor_Toggle, To => Second_Floor);
+
+   Connect (The_Button => First_Floor_Toggle, To => First_Floor);
+
+   Connect (The_Button => Ground_Floor_Toggle, To => Ground_Floor);
+
+   Connect (The_Button => Basement_Toggle, To => Basement);
 
 end Initialize;

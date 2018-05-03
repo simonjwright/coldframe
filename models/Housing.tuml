@@ -16,14 +16,27 @@ model Housing;
   [domain]
   package House_Management;
 
-    (* There is a pushbutton on each landing. This type names \
+    (* There are pushbuttons on each landing. This type names \
        the pushbuttons. *)
     enumeration Button_Name
-      Basement,
-      Ground_Floor,
-      First_Floor,
-      Second_Floor
+      Basement_Timed,
+      Ground_Floor_Timed,
+      First_Floor_Timed,
+      Second_Floor_Timed,
+      Basement_Toggle,
+      Ground_Floor_Toggle,
+      First_Floor_Toggle,
+      Second_Floor_Toggle
     end;
+
+    [constraint (constrains = Button_Name,
+                 lower = Basement_Timed,
+                 upper = Second_Floor_Timed)]
+    primitive Timed_Button_Name;
+    [constraint (constrains = Button_Name,
+                 lower = Basement_Toggle,
+                 upper = Second_Floor_Toggle)]
+    primitive Toggle_Button_Name;
 
     (* There is a lamp beween each pair of landings. This type names the \
        lamps; the name is that of the landing on whose ceiling the lamp is \
@@ -79,6 +92,7 @@ model Housing;
     (* When a Timed Button is pushed, it remains set for a preset period.
        If it is pushed again while it is still set, the set period \
        is extended by the preset period. *)
+    [abbreviation (abbreviation = TiB)]
     class Timed_Button specializes Button
 
       (* This ColdFrame Timer is used to reset the Button at the end of \
@@ -132,6 +146,27 @@ model Housing;
       end; /* statemachine */
 
     end; /* Timed_Button */
+
+    (* A Toggle Button is a push-on, push-off toggle. *)
+    [abbreviation (abbreviation = ToB)]
+    class Toggle_Button specializes Button
+
+      private attribute On : Boolean := False;
+
+      /* ---------------------------------------- */
+
+      (* This overriding implementation returns the current state of the \
+         Toggle Button (from On) *)
+      public operation Get_State(): Boolean;
+
+      (* This overriding implementation is called to indicate that the \
+         Button has been pushed or released.
+         For this kind of Button, toggles On in case of a push; a release \
+         is ignored.
+         Notifies connected lamps of the change. *)
+      protected operation Changed(Pushed : Boolean);
+
+    end; /* Toggle_Button */
 
     (* There is a lamp between each pair of landings.
        When the lamp is activated, it comes on for a preset period.
