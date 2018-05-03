@@ -129,9 +129,6 @@ package body Normalize_XMI.Model.Enumerations is
       end Output_Literal;
    begin
       Put (To, "<type");
-      if E.Accessor /= null then
-         Put (To, " access='" & (+E.Accessor.Name) & "'");
-      end if;
       if E.Has_Stereotype ("callback") then
          Put (To, " callback='true'");
       end if;
