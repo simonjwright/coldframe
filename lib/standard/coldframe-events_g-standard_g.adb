@@ -533,7 +533,6 @@ package body ColdFrame.Events_G.Standard_G is
    protected body Excluder is
 
       procedure Done is
-         use type Ada.Task_Identification.Task_Id;
       begin
          if The_Queue.The_Self_Events.Is_Empty then
             Locks := 0;
