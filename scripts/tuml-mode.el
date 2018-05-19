@@ -175,15 +175,15 @@
      ;; stuff between double quotes
      ("\"\\.\\*\\?" . font-lock-string-face)
      ;; model comments
-     ("(\\*\\(.\\|\n\\)*\\*)" . font-lock-doc-face)
+     ("(\\*\\(.\\|\n\\)*?\\*)" . font-lock-doc-face)
      ;; code comments
-     ("/\\*\\(.\\|\n\\)*\\*/" . font-lock-comment-face)
+     ("/\\*\\(.\\|\n\\)*?\\*/" . font-lock-comment-face)
      ;; keywords
      ( ,(regexp-opt tuml-keywords 'words) . font-lock-keyword-face)
      )))
 
 (define-derived-mode tuml-mode fundamental-mode "TUML script"
-  "TUML mode is a major mode for editing TUML files"
+  "TUML mode is a major mode for editing TUML (TextUML) files"
 
   ;; (smie-setup tuml-smie-grammar 'tuml-indentation-rule)
 
