@@ -12,12 +12,12 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with Ada.Real_Time;
 with ColdFrame.Events;
 with Digital_IO.Initialize;
 with House_Management.Initialize;
 with Digital_IO.Arduino_Support;
 with Stairwell_Arduino_Demo_Dispatcher;
-with Start_FreeRTOS_Scheduler;
 
 procedure Stairwell_Arduino_Demo is
 
@@ -30,6 +30,6 @@ begin
    Digital_IO.Arduino_Support.Initialize;
    House_Management.Initialize (Dispatcher);
 
-   Start_FreeRTOS_Scheduler;
+   delay until Ada.Real_Time.Time_Last;
 
 end Stairwell_Arduino_Demo;
