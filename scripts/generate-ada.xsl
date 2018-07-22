@@ -108,6 +108,60 @@
   <!-- Control verbosity: no or yes. -->
   <xsl:param name="verbose" select="'no'"/>
 
+  <!-- Log parameters -->
+  <xsl:template name="log-parameters">
+    <xsl:if test="not($verbose='no')">
+      <xsl:message>
+        <xsl:text>add-blank-lines: </xsl:text>
+        <xsl:value-of select="$add-blank-lines"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>checking-policy: </xsl:text>
+        <xsl:value-of select="$checking-policy"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>continuation-indent: "</xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text>"&#10;</xsl:text>
+
+        <xsl:text>fill-column: </xsl:text>
+        <xsl:value-of select="$fill-column"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>generate-accessors: </xsl:text>
+        <xsl:value-of select="$generate-accessors"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>generate-event-logging: </xsl:text>
+        <xsl:value-of select="$generate-event-logging"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>generate-stubs: </xsl:text>
+        <xsl:value-of select="$generate-stubs"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>max-bounded-container: </xsl:text>
+        <xsl:value-of select="$max-bounded-container"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>max-hash-buckets: </xsl:text>
+        <xsl:value-of select="$max-hash-buckets"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>profile: </xsl:text>
+        <xsl:value-of select="$profile"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>standard-indent: "</xsl:text>
+        <xsl:value-of select="$standard-indent"/>
+        <xsl:text>"&#10;</xsl:text>
+
+        <xsl:text>unit-test-support: </xsl:text>
+        <xsl:value-of select="$unit-test-support"/>
+        <xsl:text>&#10;</xsl:text>
+      </xsl:message>
+    </xsl:if>
+  </xsl:template>
 
   <!-- Global shorthands for indentation. -->
   <xsl:param name="I" select="$standard-indent"/>
@@ -148,6 +202,8 @@
        others. -->
   <xsl:template match="domain" mode="coldframe">
 
+    <xsl:call-template name="log-parameters"/>
+
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
@@ -175,6 +231,12 @@
     <xsl:text>package </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+
+    <!-- Imported & renamed types are decorated with 'use type' (or
+         'use all type'); GCC8 objects. -->
+    <xsl:value-of select="$I"/>
+    <xsl:text>pragma Warnings (Off, "use clause * has no effect");&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
     <!-- If there are protected types, or operations of types, or if

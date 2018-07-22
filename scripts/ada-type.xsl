@@ -534,7 +534,7 @@
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>use type </xsl:text>
+        <xsl:text>use all type </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
@@ -556,7 +556,7 @@
         <xsl:value-of select="renames"/>
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>use type </xsl:text>
+        <xsl:text>use all type </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
