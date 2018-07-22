@@ -31,7 +31,6 @@ library project ColdFrame_Ravenscar is
 
    for Object_Dir use ".build-ravenscar-" & Options_Ravenscar.RTS;
 
-   package Builder renames Options_Ravenscar.Builder;
    package Compiler renames Options_Ravenscar.Compiler;
 
 end ColdFrame_Ravenscar;

@@ -1,0 +1,20 @@
+--  Master GNAT project file for the Stairwell demonstration.
+--  Sets up environment (scenario) variables.
+
+aggregate project Stairwell_Arduino_Demo_Master is
+
+   for Target use "arm-eabi";
+   for Runtime ("ada") use
+     external ("HOME") & "/cortex-gnat-rts/local/arduino-due";
+
+   for external ("BUILD") use "Production";
+   for external ("RTS") use "arduino";
+
+   for Project_Path  use ("../..");
+   for Project_Files use ("stairwell_arduino_demo.gpr");
+
+   package Builder is
+      for Switches (others) use ("--create-map-file");
+   end Builder;
+
+end Stairwell_Arduino_Demo_Master;

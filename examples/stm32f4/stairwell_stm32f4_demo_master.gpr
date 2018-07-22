@@ -1,0 +1,20 @@
+--  Master GNAT project file for the Stairwell demonstration.
+--  Sets up environment (scenario) variables.
+
+aggregate project Stairwell_STM32F4_Demo_Master is
+
+   for Target use "arm-eabi";
+   for Runtime ("ada") use
+     external ("HOME") & "/cortex-gnat-rts/local/stm32f4";
+
+   for external ("BUILD") use "Production";
+   for external ("RTS") use "stm32f4";
+
+   for Project_Path  use ("../..");
+   for Project_Files use ("stairwell_stm32f4_demo.gpr");
+
+   package Builder is
+      for Switches (others) use ("--create-map-file");
+   end Builder;
+
+end Stairwell_STM32F4_Demo_Master;

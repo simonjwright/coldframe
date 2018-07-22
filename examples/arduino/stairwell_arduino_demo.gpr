@@ -23,9 +23,7 @@ project Stairwell_Arduino_Demo is
    for Object_Dir use ".build-house_management_arduino";
 
    package Builder is
-      for Default_Switches ("ada") use
-        Options_Ravenscar.Builder'Default_Switches ("ada")
-        & ("--create-map-file=" & project'Project_Dir & project'Name & ".map");
+      for Switches ("ada") use ("--create-map-file");
    end Builder;
 
    package Compiler renames Options_Ravenscar.Compiler;

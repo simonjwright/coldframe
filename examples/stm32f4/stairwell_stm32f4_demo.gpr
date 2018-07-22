@@ -2,7 +2,6 @@
 
 with "Options_Ravenscar";
 with "ColdFrame_Ravenscar";
-with "stm32f429i_disco_bsp";
 
 project Stairwell_STM32F4_Demo is
 
@@ -24,9 +23,7 @@ project Stairwell_STM32F4_Demo is
    for Object_Dir use ".build-house_management_stm32f4";
 
    package Builder is
-      for Default_Switches ("ada") use
-        Options_Ravenscar.Builder'Default_Switches ("ada")
-        & ("--create-map-file=" & project'Project_Dir & project'Name & ".map");
+      for Switches ("ada") use ("--create-map-file");
    end Builder;
 
    package Compiler renames Options_Ravenscar.Compiler;

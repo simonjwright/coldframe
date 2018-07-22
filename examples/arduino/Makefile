@@ -45,10 +45,6 @@ all:: $(EXECUTABLES)
 # ArgoUML support
 
 NORM_FILES =					\
- Digital_IO.norm				\
- Digital_IO.Tcl.norm				\
- Digital_IO_Interface.norm			\
- House_Management.norm				\
  Interrupt_Handling.norm			\
  Library.norm					\
  Performance.norm				\
@@ -59,6 +55,15 @@ NORM_FILES =					\
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
 $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
+
+TUML_NORM_FILES =				\
+ House_Management.norm				\
+ Digital_IO.norm				\
+ Digital_IO_Interface.norm
+
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(TUML_NORM_FILES): Housing.tuml-norm-stamp ;
 
 setup::
 	-ln -s ../Digital_IO.impl .
