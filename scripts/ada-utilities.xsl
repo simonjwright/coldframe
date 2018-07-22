@@ -28,7 +28,7 @@
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.0"
+  version="1.1"
   xmlns:saxon="http://icl.com/saxon"
   extension-element-prefixes="saxon"
 >
@@ -221,7 +221,6 @@
     </xsl:choose>
   </xsl:template>
 
-
   <!-- Called at domain/class to compute number of instances.
        (If not at domain/class, set parameter "c" to the class
        for which the computation is required.)
@@ -252,6 +251,36 @@
 
       <xsl:when test="$c/@max">
         <xsl:value-of select="$c/@max"/>
+      </xsl:when>
+
+      <xsl:when test="/domain/inheritance/child=$name">
+
+        <!-- Make a tree fragment roots/max where the max elements
+             contain the max number of instances of each parent. This
+             is a recursive call. -->
+        <xsl:variable name="roots">
+          <xsl:for-each select="/domain/inheritance[child=$name]/parent">
+            <xsl:element name="max">
+              <xsl:call-template name="ut:number-of-instances">
+                <xsl:with-param
+                  name="c"
+                  select="/domain/class[name=current()]"/>
+              </xsl:call-template>
+            </xsl:element>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <!-- Sort into descending order and select the first element.
+             See https://stackoverflow.com/a/4692734/40851. -->
+        <xsl:for-each select="$roots/max">
+          <xsl:sort
+            select="."
+            data-type="number"
+            order="descending"/>
+          <xsl:if test="position()=1">
+            <xsl:value-of select="."/>
+          </xsl:if>
+        </xsl:for-each>
       </xsl:when>
 
       <xsl:when test="$c/associative">
