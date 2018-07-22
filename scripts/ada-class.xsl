@@ -1489,11 +1489,6 @@
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
 
-    <xsl:if test="@active">
-      <xsl:value-of select="$II"/>
-      <xsl:text>use type Ada.Task_Identification.Task_ID;&#10;</xsl:text>
-    </xsl:if>
-
     <xsl:if test="$max &gt; 1">
       <xsl:value-of select="$II"/>
       <xsl:text>This : Handle;&#10;</xsl:text>
