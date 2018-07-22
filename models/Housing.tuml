@@ -29,10 +29,18 @@ model Housing;
       Second_Floor_Toggle
     end;
 
+    (* Some of the pushbuttons are 'timed', that is, the electrical \
+       connection is made for a period after the button is pushed. \
+       If the button is pushed again before the period expires, the \
+       made period is extended. *)
     [constraint (constrains = Button_Name,
                  lower = Basement_Timed,
                  upper = Second_Floor_Timed)]
     primitive Timed_Button_Name;
+
+    (* Some of the pushbuttons are 'toggled', that is, the electrical \
+       connection is made when the button is pushed, and remains made \
+       until the Button is pushed again. *)
     [constraint (constrains = Button_Name,
                  lower = Basement_Toggle,
                  upper = Second_Floor_Toggle)]
@@ -58,9 +66,9 @@ model Housing;
     [imported (imported = Digital_IO)]
     primitive Output_Signal;
 
-    (* There is a pushbutton on each landing. Each pushbutton controls \
-       a number of Lamps; if any of the controlling Buttons is set, the \
-       controlled Lamp is lit. *)
+    (* There are one or more pushbuttons on each landing. Each pushbutton \
+       controls a number of Lamps; if any of the controlling Buttons is set, \
+       the controlled Lamp is lit. *)
     abstract class Button
 
       (* Each Button is uniquely identified by its name. The name corresponds \
@@ -92,6 +100,8 @@ model Housing;
     (* When a Timed Button is pushed, it remains set for a preset period.
        If it is pushed again while it is still set, the set period \
        is extended by the preset period. *)
+    /* Have to specify the appreviation: otherwise Toggle & Timed would
+       have the same. */
     [abbreviation (abbreviation = TiB)]
     class Timed_Button specializes Button
 
@@ -126,9 +136,7 @@ model Housing;
           transition to Reset; /* untriggered */
         end;
 
-        (* In this state, the Button is off.
-        It's assumed that it's acceptable to reset the button even if \
-        it is off already. *)
+        (* In this state, the Button is off. *)
         state Reset
           transition on signal(Timed_Button::Button_Push) to Set
             do Notify_Connected_Lamps;
@@ -148,6 +156,8 @@ model Housing;
     end; /* Timed_Button */
 
     (* A Toggle Button is a push-on, push-off toggle. *)
+    /* Have to specify the appreviation: otherwise Toggle & Timed would
+       have the same. */
     [abbreviation (abbreviation = ToB)]
     class Toggle_Button specializes Button
 
@@ -169,9 +179,8 @@ model Housing;
     end; /* Toggle_Button */
 
     (* There is a lamp between each pair of landings.
-       When the lamp is activated, it comes on for a preset period.
-       If it is activated again while it is still on, the activation period \
-       is extended by the preset period. *)
+       A Lamp is connected to one or more Buttons; it is lit if any \
+       of the connected Buttons is set. *)
     class Lamp
 
       (* Each Lamp is uniquely identified by its name. The name corresponds \
@@ -194,6 +203,10 @@ model Housing;
 
     end; /* Lamp */
 
+    (* Eacb Button controls one or more Lamps; each Lamp is controlled by \
+       one or more Buttons.
+       There's no association-specific data, but this has to be an \
+       association class because it's a many-to-many relationship. *)
     association_class A1
         Button Controls Lamp[1,*];
         Lamp Is_Controlled_By Button[1,*];
