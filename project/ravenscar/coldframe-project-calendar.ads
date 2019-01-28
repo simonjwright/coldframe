@@ -8,24 +8,19 @@
 --  ColdFrame expects this package to exist to support time
 --  management.
 --
---  This is ColdFrame's default implementation.
+--  This is ColdFrame's default implementation for Ravenscar.
 
-with Ada.Calendar;
+with Ada.Real_Time;
 
 package ColdFrame.Project.Calendar is
 
-   subtype Time is Ada.Calendar.Time;
+   subtype Time is Ada.Real_Time.Time;
 
-   function Clock return Time renames Ada.Calendar.Clock;
+   function "-" (L, R : Time) return Duration;
 
-   function "-" (L, R : Time) return Duration renames Ada.Calendar."-";
+   function Clock return Time renames Ada.Real_Time.Clock;
 
    function Epoch return Time;
    --  Returns a value suitable for use in aggregates.
-
-   function Image (T : Time) return String;
-   --  Returns a string version of Time for use in generated
-   --  Serialization.Image functions.
-   --  This implementation returns time as a Duration since 1 Jan 1970 00:00.
 
 end ColdFrame.Project.Calendar;
