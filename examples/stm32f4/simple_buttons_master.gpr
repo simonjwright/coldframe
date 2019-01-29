@@ -1,0 +1,16 @@
+--  GNAT Project file for the Simple_Buttons demo.
+--  This aggregate project sets up options for the main GPR.
+
+aggregate project Simple_Buttons_Master is
+
+   for Target use "arm-eabi";
+
+   for Runtime ("ada") use external ("HOME") & "/cortex-gnat-rts/local/stm32f4";
+   for external ("RTS") use "stm32f4";
+
+   for external ("BUILD") use "Debug";
+
+   for Project_Files use ("simple_buttons.gpr");
+   for Project_Path use ("../..");
+
+end Simple_Buttons_Master;

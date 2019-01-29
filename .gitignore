@@ -3,4 +3,8 @@ lib*static*
 
 gpr_query*
 
+*.bin
+*.gen
+*.html
+*.images
 *.map

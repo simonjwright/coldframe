@@ -10,14 +10,14 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  The debouncing code here (task Debounce_Inputs) was inspired by
---  Jack Ganssle's paper "A Guide to Debouncing" at
---  https://pubweb.eng.utah.edu/~cs5780/debouncing.pdf.
-
+with Ada.Interrupts.Names;
 with Ada.Real_Time;
 with Digital_IO.Input_Signal_State_Callback;
+with System;
+with STM32F40x.EXTI;   use STM32F40x.EXTI;
 with STM32F40x.GPIO;   use STM32F40x.GPIO;
 with STM32F40x.RCC;    use STM32F40x.RCC;
+with STM32F40x.SYSCFG; use STM32F40x.SYSCFG;
 
 package body Digital_IO.STM32F4_Support is
 
@@ -90,9 +90,45 @@ package body Digital_IO.STM32F4_Support is
    end GPIO_Configuration;
    use GPIO_Configuration;
 
+   protected EXTI_Handler
+   with
+     Interrupt_Priority => System.Interrupt_Priority'First
+   is
+      entry Button_Pressed (B : out Interfaces.Unsigned_32);
+   private
+      Triggered        : Boolean := False;
+
+      Last_Read_Values : Interfaces.Unsigned_32 := 0;
+      --  We accumulate interrupt indications as they arrive, and
+      --  clear when retreived by the caller of Button_Pressed.
+
+      procedure EXTI0_IRQ_Handler;
+      pragma Attach_Handler (EXTI0_IRQ_Handler,
+                               Ada.Interrupts.Names.EXTI0_IRQ);
+      procedure EXTI1_IRQ_Handler;
+      pragma Attach_Handler (EXTI1_IRQ_Handler,
+                               Ada.Interrupts.Names.EXTI1_IRQ);
+      procedure EXTI2_IRQ_Handler;
+      pragma Attach_Handler (EXTI2_IRQ_Handler,
+                               Ada.Interrupts.Names.EXTI2_IRQ);
+      procedure EXTI3_IRQ_Handler;
+      pragma Attach_Handler (EXTI3_IRQ_Handler,
+                               Ada.Interrupts.Names.EXTI3_IRQ);
+      procedure EXTI4_IRQ_Handler;
+      pragma Attach_Handler (EXTI4_IRQ_Handler,
+                               Ada.Interrupts.Names.EXTI4_IRQ);
+      procedure EXTI9_5_IRQ_Handler;
+      pragma Attach_Handler (EXTI9_5_IRQ_Handler,
+                               Ada.Interrupts.Names.EXTI9_5_IRQ);
+      procedure EXTI15_10_IRQ_Handler;
+      pragma Attach_Handler (EXTI15_10_IRQ_Handler,
+                               Ada.Interrupts.Names.EXTI15_10_IRQ);
+   end EXTI_Handler;
+
    task Heartbeat;
    --  Flash the green LED
 
+   task Receive_Button_Interrupt;
    task Debounce_Inputs;
 
    procedure Configure_Inputs;
@@ -104,6 +140,111 @@ package body Digital_IO.STM32F4_Support is
    procedure Set_Output_State
      (For_Output : Digital_IO_Support.Output_Signal;
       To         : Boolean);
+
+   protected body EXTI_Handler is
+      entry Button_Pressed (B : out Interfaces.Unsigned_32)
+        when Triggered is
+      begin
+         B := Last_Read_Values;
+         Last_Read_Values := 0;
+         Triggered := False;
+      end Button_Pressed;
+
+      procedure EXTI0_IRQ_Handler is
+         Read_Value : constant PR_Register := EXTI_Periph.PR;
+         use type Interfaces.Unsigned_32;
+      begin
+         EXTI_Periph.PR := Read_Value;
+         Triggered := True;
+         Last_Read_Values :=
+           Last_Read_Values or Interfaces.Unsigned_32 (Read_Value.PR.Val);
+      end EXTI0_IRQ_Handler;
+
+      procedure EXTI1_IRQ_Handler is
+         Read_Value : constant PR_Register := EXTI_Periph.PR;
+         use type Interfaces.Unsigned_32;
+      begin
+         EXTI_Periph.PR := Read_Value;
+         Triggered := True;
+         Last_Read_Values :=
+           Last_Read_Values or Interfaces.Unsigned_32 (Read_Value.PR.Val);
+      end EXTI1_IRQ_Handler;
+
+      procedure EXTI2_IRQ_Handler is
+         Read_Value : constant PR_Register := EXTI_Periph.PR;
+         use type Interfaces.Unsigned_32;
+      begin
+         EXTI_Periph.PR := Read_Value;
+         Triggered := True;
+         Last_Read_Values :=
+           Last_Read_Values or Interfaces.Unsigned_32 (Read_Value.PR.Val);
+      end EXTI2_IRQ_Handler;
+
+      procedure EXTI3_IRQ_Handler is
+         Read_Value : constant PR_Register := EXTI_Periph.PR;
+         use type Interfaces.Unsigned_32;
+      begin
+         EXTI_Periph.PR := Read_Value;
+         Triggered := True;
+         Last_Read_Values :=
+           Last_Read_Values or Interfaces.Unsigned_32 (Read_Value.PR.Val);
+      end EXTI3_IRQ_Handler;
+
+      procedure EXTI4_IRQ_Handler is
+         Read_Value : constant PR_Register := EXTI_Periph.PR;
+         use type Interfaces.Unsigned_32;
+      begin
+         EXTI_Periph.PR := Read_Value;
+         Triggered := True;
+         Last_Read_Values :=
+           Last_Read_Values or Interfaces.Unsigned_32 (Read_Value.PR.Val);
+      end EXTI4_IRQ_Handler;
+
+      procedure EXTI9_5_IRQ_Handler is
+         Read_Value : constant PR_Register := EXTI_Periph.PR;
+         use type Interfaces.Unsigned_32;
+      begin
+         EXTI_Periph.PR := Read_Value;
+         Triggered := True;
+         Last_Read_Values :=
+           Last_Read_Values or Interfaces.Unsigned_32 (Read_Value.PR.Val);
+      end EXTI9_5_IRQ_Handler;
+
+      procedure EXTI15_10_IRQ_Handler is
+         Read_Value : constant PR_Register := EXTI_Periph.PR;
+         use type Interfaces.Unsigned_32;
+      begin
+         EXTI_Periph.PR := Read_Value;
+         Triggered := True;
+         Last_Read_Values :=
+           Last_Read_Values or Interfaces.Unsigned_32 (Read_Value.PR.Val);
+      end EXTI15_10_IRQ_Handler;
+   end EXTI_Handler;
+
+   task body Receive_Button_Interrupt is
+      Last_Read_Values : Interfaces.Unsigned_32;
+      Bits : Bits_32x1;
+   begin
+      loop
+         EXTI_Handler.Button_Pressed (Last_Read_Values);
+         Bits := U32_To_B1 (Last_Read_Values);
+         for Line in EXTI_Line loop
+            if Bits (Integer (Line)) /= 0
+            and then Line_To_Input_Signal (Line).Valid
+            then
+               declare
+                  S : constant Input_Signal
+                    := Line_To_Input_Signal (Line).Signal;
+               begin
+                  Input_Signal_State_Callback.Call_Callbacks
+                    ((S     => S,
+                      State => Get_Input_State
+                        (Digital_IO_Support.Input_Signal (S))));
+               end;
+            end if;
+         end loop;
+      end loop;
+   end Receive_Button_Interrupt;
 
    task body Debounce_Inputs is
       type Debounce_Index is mod Debounce_Count;
@@ -207,6 +348,37 @@ package body Digital_IO.STM32F4_Support is
                --  user pushbutton has an internal pull-down
                --  resistor). 0 => released, 1 => pushed.
                GPIO.PUPDR.Arr (Line) := 0;
+
+               --  Enable SYSCFG's clock.
+               RCC_Periph.APB2ENR.SYSCFGEN := 1;
+
+               --  Connect the GPIO to the interrupt Line.
+               declare
+                  type EXTI_CR is range 0 .. 3;
+                  Offset : constant EXTI_CR := EXTI_CR (Line / 4);
+                  Index : constant Natural := Line mod 4;
+                  GPIO_Number : constant STM32F40x.UInt4
+                    := GPIO_Index'Pos (Which_GPIO);
+               begin
+                  case Offset is
+                     when 0 =>
+                        SYSCFG_Periph.EXTICR1.EXTI.Arr (Index) := GPIO_Number;
+                     when 1 =>
+                        SYSCFG_Periph.EXTICR2.EXTI.Arr (Index) := GPIO_Number;
+                     when 2 =>
+                        SYSCFG_Periph.EXTICR3.EXTI.Arr (Index) := GPIO_Number;
+                     when 3 =>
+                        SYSCFG_Periph.EXTICR4.EXTI.Arr (Index) := GPIO_Number;
+                  end case;
+               end;
+
+               --  Then, configure EXTI on this line for falling-edge
+               --  (button-release) and rising-edge (button-push).
+               EXTI_Periph.FTSR.TR.Arr (Line) := 1;
+               EXTI_Periph.RTSR.TR.Arr (Line) := 1;
+
+               --  and enable interrupts on the line.
+               --  EXTI_Periph.IMR.MR.Arr (Line) := 1;
             end;
          end if;
       end loop;

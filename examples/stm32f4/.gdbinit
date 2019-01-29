@@ -1,7 +1,7 @@
 echo Setting the target...\n
 target remote :4242
 echo Setting the file...\n
-file stairwell_stm32f4_demo
+load simple_buttons
 
 #define hookpost-load
 #echo Resetting the processor and peripherals...\n

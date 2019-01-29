@@ -1,0 +1,18 @@
+--  GNAT Project file for Simple_Buttons scripting.
+--  This aggregate project sets up options for the main GPR.
+
+aggregate project Simple_Buttons_Scripting_Master is
+
+   for external ("BUILD") use "Debug";
+
+   Home := external ("HOME");
+
+   for Project_Files use ("simple_buttons_scripting.gpr");
+   for Project_Path use
+     (
+      "..",
+      Home & "/tcladashell",
+      Home & "/scripted_testing"
+     );
+
+end Simple_Buttons_Scripting_Master;

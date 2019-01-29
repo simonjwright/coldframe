@@ -1,0 +1,31 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This unit is free software; you can redistribute it and/or modify
+--  it as you wish. This unit is distributed in the hope that it will
+--  be useful, but WITHOUT ANY WARRANTY; without even the implied
+--  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+with "Options";
+with "ColdFrame";
+with "../extras/ColdFrame_Scripting";
+
+project Simple_Buttons_Scripting is
+
+   for Main use ("simple_buttons-scripting");
+   for Exec_Dir use ".";
+   for Source_Dirs use
+     (
+      "Simple_Buttons.gen",
+      "Simple_Buttons.impl",
+      "Simple_Buttons.test",
+      "Digital_IO_Interface.gen"
+     );
+   for Object_Dir use ".build-simple_buttons_test";
+   for Create_Missing_Dirs use "true";
+
+   package Builder renames Options.Builder;
+   package Compiler renames Options.Compiler;
+   package Binder renames Options.Binder;
+   package Linker renames Options.Linker;
+
+end Simple_Buttons_Scripting;

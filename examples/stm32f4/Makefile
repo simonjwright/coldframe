@@ -27,15 +27,16 @@ setup::
 clean::
 
 PROFILE=ravenscar
-ADA_PROJECT_PATH=../..:$(HOME)/cortex-gnat-rts/stm32f429i-disco-bsp
+ADA_PROJECT_PATH=../..
 
 include ../../Makefile.inc
 
-EXECUTABLES += stairwell_stm32f4_demo.bin
 
-stairwell_stm32f4_demo.bin: stairwell_stm32f4_demo
-stairwell_stm32f4_demo: House_Management.gen Digital_IO.gen force
-	gprbuild -p -P stairwell_stm32f4_demo.gpr -XRTS=stm32f4
+EXECUTABLES += simple_buttons.bin
+
+simple_buttons.bin: simple_buttons
+simple_buttons: Simple_Buttons.gen Digital_IO.gen force
+	gprbuild -p -P simple_buttons.gpr -XRTS=stm32f4
 
 %.bin: %
 	arm-eabi-objcopy -O binary $< $@
@@ -53,6 +54,7 @@ NORM_FILES =					\
  Library.norm					\
  Performance.norm				\
  Problem_Reporting.norm				\
+ Simple_Buttons.norm				\
  States.norm					\
  Van_Fleet.norm
 
@@ -62,13 +64,13 @@ $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 setup::
 	-ln -s ../Digital_IO.impl .
-	-ln -s ../House_Management.impl .
+	-ln -s ../Simple_Buttons.impl .
 
 clean::
 	-for g in *.gpr; do			\
 	  gprclean -P $$g;			\
 	done
-	rm -f Digital_IO.impl House_Management.impl
+	rm -f Digital_IO.impl Simple_Buttons.impl
 	rm -rf *.{bin,map,norm-stamp,stamp,norm,ada,gen,html,images}
 
 .PHONY: force all setup clean

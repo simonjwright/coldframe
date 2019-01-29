@@ -35,9 +35,9 @@ abstract project Options_Ravenscar is
 
    case RTS is
       when "stm32f4" =>
-         for Runtime ("ada") use CORTEX_GNAT_RTS & "/stm32f429i-disco-rtos";
+         for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/stm32f4";
       when "arduino" =>
-         for Runtime ("ada") use CORTEX_GNAT_RTS & "/arduino-due";
+         for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/arduino-due";
       when "full" =>
          for Runtime ("ada") use "ravenscar-full-stm32f4";
       when "sfp" =>
@@ -68,25 +68,26 @@ abstract project Options_Ravenscar is
       when "Production" =>
          COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O2");
       when "Debug" =>
-         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-Og");
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O0");
    end case;
 
    --  Builder configuration options.
    package Builder is
-      for Default_Switches ("ada") use COMPILER_SWITCHES;
+      for Global_Compilation_Switches ("ada") use COMPILER_SWITCHES;
    end Builder;
 
    --  GCC configuration options.
    package Compiler is
       for Default_Switches ("ada") use
-        (
-         "-gnatqQafoy",
-         --  keep .alis, assertions, full messages, hardware overflow
-         --  checks, style checks
+        COMPILER_SWITCHES
+        & (
+           "-gnatqQafoy",
+           --  keep .alis, assertions, full messages, hardware overflow
+           --  checks, style checks
 
-         "-gnatwaL"
-         --  All standard warnings except elaboration problems
-        );
+           "-gnatwaL"
+          --  All standard warnings except elaboration problems
+          );
       case RTS is
          when "native" =>
             null;

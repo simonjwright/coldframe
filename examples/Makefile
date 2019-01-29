@@ -86,6 +86,11 @@ serialization_server: Serialization.gen \
  force
 	$(GPRBUILD) -p -PSerialization
 
+EXECUTABLES += simple_buttons-scripting$(exe)
+simple_buttons-scripting$(exe): \
+  Simple_Buttons.gen Digital_IO_Interface.gen force
+	$(GPRBUILD) -p -PSimple_Buttons_Scripting
+
 EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
 	$(GPRBUILD) -p -PStates
@@ -119,6 +124,7 @@ NORM_FILES =					\
  Library.norm					\
  Performance.norm				\
  Problem_Reporting.norm				\
+ Simple_Buttons.norm				\
  States.norm					\
  Van_Fleet.norm
 
