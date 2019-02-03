@@ -4,7 +4,7 @@ ColdFrame is an open-source code generator backend for use with UML
 tools.
 
 In its present state, it's targeted
-at [ArgoUML](http://argouml.tigris.org/)[^1] and
+at [ArgoUML](http://argouml.tigris.org/)<sup>1</sup> and
 generates [Ada](http://www.adaic.org/) code frameworks.
 
 The intermediate representation uses [XML](http://www.xml.com/).
@@ -17,6 +17,8 @@ transformation mechanisms to the programming language of your choice.
 See [here](https://simonjwright.github.io/coldframe/) for more
 information.
 
-[^1]: ArgoUML [version
-    0.35.1](http://argouml-downloads.tigris.org/argouml-0.35.1/) is
-    recommended.
+----
+
+1: ArgoUML
+[version 0.35.1](http://argouml-downloads.tigris.org/argouml-0.35.1/)
+is recommended.
