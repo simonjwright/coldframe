@@ -1,10 +1,9 @@
+.DS_Store
+
 .build*
 lib*static*
 
-gpr_query*
+coldframeout
 
-*.bin
-*.gen
-*.html
-*.images
-*.map
+# in case of Python virtual environment
+venv

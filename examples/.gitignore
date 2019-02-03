@@ -1,13 +1,21 @@
-.build
+# for MCU examples
+*.map
 
-*.gen
 *.norm
+*.gen
+*.html
 *.images
 *.ada
 *.norm-stamp
-*.tuml-norm-stamp
 
-Digital_IO.html
-House_Management.html
+gpr_query*
 
+house_management-scripting
+interrupt_handling-harness
+library_test_harness
+performance-harness
+problem_reporting_harness
+simple_buttons-scripting
 stairwell_demo
+states-t
+van_fleet-demo
