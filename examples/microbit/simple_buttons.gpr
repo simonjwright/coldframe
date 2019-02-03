@@ -1,0 +1,37 @@
+--  GNAT project file for the Stairwell demonstration.
+
+with "Options_Ravenscar";
+with "ColdFrame_Ravenscar";
+
+project Simple_Buttons is
+
+   for Main use ("simple_buttons_main.adb");
+
+   for Exec_Dir use ".";
+
+   for Source_Dirs use
+     (".",
+      "Simple_Buttons.impl",
+      "Simple_Buttons.gen",
+      "Digital_IO.impl",
+      "Digital_IO.gen",
+      "Digital_IO.Microbit.impl");
+
+   for Target use Options_Ravenscar'Target;
+   for Runtime ("ada") use Options_Ravenscar'Runtime ("ada");
+   for Create_Missing_Dirs use "true";
+
+   for Object_Dir use ".build";
+
+   package Builder is
+      for Executable ("simple_buttons_main.adb") use "simple_buttons";
+      for Default_Switches ("ada") use
+        Options_Ravenscar.Builder'Default_Switches ("ada")
+        & ("--create-map-file=" & project'Project_Dir & project'Name & ".map");
+   end Builder;
+
+   package Compiler renames Options_Ravenscar.Compiler;
+   package Binder renames Options_Ravenscar.Binder;
+   package Linker renames Options_Ravenscar.Linker;
+
+end Simple_Buttons;

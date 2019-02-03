@@ -22,7 +22,7 @@ abstract project Options_Ravenscar is
 
    CORTEX_GNAT_RTS := external ("HOME") & "/cortex-gnat-rts";
 
-   type RTS_Type is ("stm32f4", "arduino", "full", "sfp", "native");
+   type RTS_Type is ("stm32f4", "arduino", "microbit", "full", "sfp", "native");
 
    RTS : RTS_Type := external ("RTS", "stm32f4");
 
@@ -38,6 +38,8 @@ abstract project Options_Ravenscar is
          for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/stm32f4";
       when "arduino" =>
          for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/arduino-due";
+      when "microbit" =>
+         for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/microbit";
       when "full" =>
          for Runtime ("ada") use "ravenscar-full-stm32f4";
       when "sfp" =>

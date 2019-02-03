@@ -35,7 +35,7 @@ include ../Makefile.inc
 # Nothing in this directory
 
 # Set up subdirectories
-SETUP_SUBDIRS = arduino stm32f4
+SETUP_SUBDIRS = arduino microbit stm32f4
 setup::
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s setup;			\
@@ -52,10 +52,12 @@ else
   endif
 endif
 
-EXECUTABLES += house_management-harness$(exe) house_management-scripting$(exe)
+#EXECUTABLES += house_management-harness$(exe)
 house_management-harness$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
 	$(GPRBUILD) -p -PHouse_Management_Test
+
+EXECUTABLES += house_management-scripting$(exe)
 house_management-scripting$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
 	$(GPRBUILD) -p -PHouse_Management_Scripting
