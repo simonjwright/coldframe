@@ -1,7 +1,7 @@
 with ColdFrame.Events.Standard;
 with System;
 
-package Stairwell_Arduino_Demo_Dispatcher is
+package Simple_Buttons_Dispatcher is
 
    --  The ColdFrame event queue.
    Dispatcher : aliased ColdFrame.Events.Standard.Event_Queue_Base
@@ -9,4 +9,4 @@ package Stairwell_Arduino_Demo_Dispatcher is
       Storage_Size => 4096,
       Capacity => 16);
 
-end Stairwell_Arduino_Demo_Dispatcher;
+end Simple_Buttons_Dispatcher;

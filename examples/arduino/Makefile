@@ -27,18 +27,14 @@ setup::
 clean::
 
 PROFILE=ravenscar
-ADA_PROJECT_PATH=../..:$(HOME)/cortex-gnat-rts/arduino-due-bsp
+ADA_PROJECT_PATH=../..:$(HOME)/cortex-gnat-rts/local/arduino-due
 
 include ../../Makefile.inc
 
-EXECUTABLES += stairwell_arduino_demo.bin
+EXECUTABLES += simple_buttons
 
-stairwell_arduino_demo.bin: stairwell_arduino_demo
-stairwell_arduino_demo: House_Management.gen Digital_IO.gen force
-	gprbuild -p -P stairwell_arduino_demo.gpr -XRTS=arduino
-
-%.bin: %
-	arm-eabi-objcopy -O binary $< $@
+simple_buttons: Simple_Buttons.gen Digital_IO.gen force
+	gprbuild -p -P simple_buttons.gpr -XRTS=arduino
 
 all:: $(EXECUTABLES)
 
@@ -53,6 +49,7 @@ NORM_FILES =					\
  Library.norm					\
  Performance.norm				\
  Problem_Reporting.norm				\
+ Simple_Buttons.norm				\
  States.norm					\
  Van_Fleet.norm
 
@@ -62,13 +59,13 @@ $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 setup::
 	-ln -s ../Digital_IO.impl .
-	-ln -s ../House_Management.impl .
+	-ln -s ../Simple_Buttons.impl .
 
 clean::
 	-for g in *.gpr; do			\
 	  gprclean -P $$g -XRTS=arduino;			\
 	done
-	rm -f Digital_IO.impl House_Management.impl
-	rm -rf *.{bin,map,norm-stamp,stamp,norm,ada,gen,html,images}
+	rm -f Digital_IO.impl Simple_Buttons.impl
+	rm -rf *.{map,norm-stamp,stamp,norm,ada,gen,html,images}
 
 .PHONY: force all setup clean

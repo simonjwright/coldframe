@@ -12,24 +12,30 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with Ada.Real_Time;
 with ColdFrame.Events;
 with Digital_IO.Initialize;
-with House_Management.Initialize;
+with Simple_Buttons.Initialize;
 with Digital_IO.Arduino_Support;
-with Stairwell_Arduino_Demo_Dispatcher;
-with Start_FreeRTOS_Scheduler;
+with Simple_Buttons_Dispatcher;
 
-procedure Stairwell_Arduino_Demo is
+procedure Simple_Buttons_Main is
+
+   Environment_Task_Storage_Size : constant Natural := 4096
+     with
+       Export,
+       Convention => Ada,
+       External_Name => "_environment_task_storage_size";
 
    Dispatcher : constant ColdFrame.Events.Event_Queue_P
-     := Stairwell_Arduino_Demo_Dispatcher.Dispatcher'Unchecked_Access;
+     := Simple_Buttons_Dispatcher.Dispatcher'Unchecked_Access;
 
 begin
 
    Digital_IO.Initialize (Dispatcher);
    Digital_IO.Arduino_Support.Initialize;
-   House_Management.Initialize (Dispatcher);
+   Simple_Buttons.Initialize (Dispatcher);
 
-   Start_FreeRTOS_Scheduler;
+   delay until Ada.Real_Time.Time_Last;
 
-end Stairwell_Arduino_Demo;
+end Simple_Buttons_Main;

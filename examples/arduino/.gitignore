@@ -1,8 +1,5 @@
-.build-house_management_arduino
-
-*.gen
-
+# these two are symlinks.
 Digital_IO.impl
-House_Management.impl
+Simple_Buttons.impl
 
-stairwell_arduino_demo
+simple_buttons
