@@ -34,15 +34,20 @@ package ColdFrame.Events.Standard is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue_Base (Priority     : System.Priority;
-                          Storage_Size : Positive;
-                          Capacity     : Ada.Containers.Count_Type)
-   is new Events.Event_Queue_Base with private;
+   type Event_Queue_Base (Priority             : System.Priority;
+                          Storage_Size         : Positive;
+                          Secondary_Stack_Size : Natural;
+                          Capacity             : Ada.Containers.Count_Type)
+     is new Events.Event_Queue_Base with private;
+
+   Default_Storage_Size : constant := 2048;
+   --  The default secondary stack size is 10% of the storage size
 
    subtype Event_Queue is Event_Queue_Base
-     (Priority     => System.Default_Priority,
-      Storage_Size => 2048,
-      Capacity     => 64);
+     (Priority             => System.Default_Priority,
+      Storage_Size         => Default_Storage_Size,
+      Secondary_Stack_Size => Default_Storage_Size / 10,
+      Capacity             => 64);
 
    procedure Post (The_Event : not null Event_P;
                    On : not null access Event_Queue_Base);
@@ -210,9 +215,10 @@ private
    use Event_Management;
 
 
-   task type Dispatcher (The_Queue    : access Event_Queue_Base'Class;
-                         Priority     : System.Priority;
-                         Storage_Size : Positive) is
+   task type Dispatcher (The_Queue            : access Event_Queue_Base'Class;
+                         Priority             : System.Priority;
+                         Storage_Size         : Positive;
+                         Secondary_Stack_Size : Natural) is
 
       --  We need to constrain by 'Class so that internal calls to
       --  potentially dispatching operations (such as
@@ -220,16 +226,20 @@ private
 
       pragma Priority (Priority);
       pragma Storage_Size (Storage_Size);
+      pragma Secondary_Stack_Size (Secondary_Stack_Size);
 
    end Dispatcher;
 
 
-   type Event_Queue_Base (Priority     : System.Priority;
-                          Storage_Size : Positive;
-                          Capacity     : Ada.Containers.Count_Type)
-     is new Events.Event_Queue_Base (Start_Started => True,
-                                     Priority      => Priority,
-                                     Storage_Size  => Storage_Size)
+   type Event_Queue_Base (Priority             : System.Priority;
+                          Storage_Size         : Positive;
+                          Secondary_Stack_Size : Natural;
+                          Capacity             : Ada.Containers.Count_Type)
+     is new Events.Event_Queue_Base
+       (Start_Started        => True,
+        Priority             => Priority,
+        Storage_Size         => Storage_Size,
+        Secondary_Stack_Size => Secondary_Stack_Size)
       with record
 
          The_Events : All_Events (Event_Queue_Base'Access,
@@ -237,9 +247,11 @@ private
 
          The_Ticker : Ticker (Event_Queue_Base'Access);
 
-         The_Dispatcher : Dispatcher (Event_Queue_Base'Access,
-                                      Priority     => Priority,
-                                      Storage_Size => Storage_Size);
+         The_Dispatcher : Dispatcher
+           (Event_Queue_Base'Access,
+            Priority             => Priority,
+            Storage_Size         => Storage_Size,
+            Secondary_Stack_Size => Secondary_Stack_Size);
       end record;
 
    procedure Invalidate_Events

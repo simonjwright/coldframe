@@ -116,7 +116,8 @@ package ColdFrame.Events is
 
    type Event_Queue_Base (Start_Started : Boolean;
                           Priority : System.Priority;
-                          Storage_Size : Positive)
+                          Storage_Size : Positive;
+                          Secondary_Stack_Size : Natural)
    is abstract tagged limited private;
    --  An Event Queue is intended to decouple the occurrence of an
    --  event from its being handled. Normally, one would have a single
@@ -138,7 +139,15 @@ package ColdFrame.Events is
    --  events are handled.
    --
    --  Storage_Size defines (if appropriate) the storage (stack) size
-   --  for the task in whose context events are handled..
+   --  for the task in whose context events are handled.
+   --
+   --  Secondary_Stack_Size defines (if appropriate) the size of the
+   --  secondary stack for the task in whose context events are
+   --  handled.
+   --  This is not compatible with GCC6 (GNAT GPL 2016) and earlier,
+   --  but will only result in an 'unrecognised pragma' warning.
+   --  In GCC7 (GNAT GPL 2017) the specified size is taken out of the
+   --  task's stack. In GCC8 (GNAT GE 2018) it's separately allocated.
 
    type Event_Queue_P is access all Event_Queue_Base'Class;
 
@@ -297,21 +306,21 @@ private
       Instance_Deleted : Boolean := False;
    end record;
 
-   type Event_Queue_Base (Start_Started : Boolean;
-                          Priority : System.Priority;
-                          Storage_Size : Positive)
-   is abstract tagged limited record
-      --  Attributes to manage teardown, particularly for queues
-      --  shared by multiple domains.
+   type Event_Queue_Base (Start_Started        : Boolean;
+                          Priority             : System.Priority;
+                          Storage_Size         : Positive;
+                          Secondary_Stack_Size : Natural)
+      is abstract tagged limited record
+         --  Attributes to manage teardown, particularly for queues
+         --  shared by multiple domains.
 
-      --  when this reaches 0, the queue can be deleted
-      Access_Count : Natural := 0;
-      --  if this is true, the queue has been stopped
-      Stopped : Boolean := False;
+         --  when this reaches 0, the queue can be deleted
+         Access_Count : Natural := 0;
+         --  if this is true, the queue has been stopped
+         Stopped : Boolean := False;
 
-      --  the queue is running
-      Started : Boolean := Start_Started;
-
+         --  the queue is running
+         Started : Boolean := Start_Started;
    end record;
 
 
