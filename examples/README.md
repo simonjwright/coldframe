@@ -4,8 +4,9 @@ There are several examples of ColdFrame usage here; the `.gpr` files enable buil
 
 As released, the build expects to find the following additional packages:
 
->**[tcladashell](https://sourceforge.net/projects/tcladashell/)** installed at `~/tcladashell` <br/>
->**[scripted_testing](https://sourceforge.net/projects/scriptedtesting.coldframe.p/)** at `~/scripted_testing`
+
+  * **[tcladashell](https://sourceforge.net/projects/tcladashell/)** installed at `~/tcladashell` <br/>
+  * **[scripted_testing](https://sourceforge.net/projects/scriptedtesting.coldframe.p/)** at `~/scripted_testing`
 
 ## The examples ##
 
@@ -61,9 +62,9 @@ for how long to light an LED. The main motivation is that the other
 candidate, `House_Management`, is quite impractical for demonstrating
 the use of ColdFrame in a Ravenscar-limited environment with typical
 MCUs; no one is going to want to breadboard an application with 8
-buttons and 4 LEDs! See the MCU subdirectories `arduino/` (Arduino
-Due), `microbit/` (the BBC micro:bit) and `stm32f4/` (the STM32F407
-Disco board).
+buttons and 4 LEDs! See the MCU subdirectories [`arduino/`](arduino)
+(Arduino Due), [`microbit/`](microbit/) (the BBC micro:bit)
+and [`stm32f4/`](stm32f4) (the STM32F407 Disco board).
 
 A short press on the Button lights the LED for 5 seconds. A further
 short press restarts the timer.

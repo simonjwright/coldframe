@@ -17,6 +17,8 @@ transformation mechanisms to the programming language of your choice.
 See [here](https://simonjwright.github.io/coldframe/) for more
 information.
 
+There are [examples](examples/).
+
 ----
 
 1: ArgoUML
