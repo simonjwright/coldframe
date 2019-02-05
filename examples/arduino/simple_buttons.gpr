@@ -1,4 +1,4 @@
---  GNAT project file for the Stairwell demonstration.
+--  GNAT project file for the Simple_Buttons demonstration.
 
 with "Options_Ravenscar";
 with "ColdFrame_Ravenscar";

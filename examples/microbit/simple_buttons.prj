@@ -1,0 +1,6 @@
+Emacs ada-mode project file for the Simple_Buttons demonstration.
+
+gpr_file=simple_buttons.gpr
+gpr_project_path=../..
+$RTS=microbit
+$BUILD=Production
