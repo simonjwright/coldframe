@@ -54,11 +54,8 @@ provided using <tt>ColdFrame.Time_Signature</tt>.
 <br>Logging expects <tt>ColdFrame.Project.Log_Error</tt>
 and <tt>ColdFrame.Project.Log_Info</tt>.
 
-<br>Events are based on an abstract <i>basis</i> type; the "no-frills"
-version is in <tt>ColdFrame.Events_Basis</tt>, while the version in
-<tt>ColdFrame.Logging_Events_Basis</tt> captures statistics on the
-time for which events are queued and on the time taken to handle each
-event.
+<br>Events are based on an abstract <i>basis</i> type; a "no-frills"
+version is in <tt>ColdFrame.Events_Basis</tt>.
 
 <br>Child packages are
 
@@ -200,9 +197,12 @@ services to be provided by specific packages (under
 able to provide your own version.
 
 <p>In these cases, sample implementations are provided. The support
-code above is distributed in the directory
-<tt>cf-<i>yyyymmdd</i>/lib</tt>, while the sample project code below
-is under <tt>cf-<i>yyyymmdd</i>/project</tt>.
+code above is distributed in the directories
+<tt>cf-<i>yyyymmdd</i>/lib</tt> and <tt>/lib/standard</tt> (for
+unrestricted runtimes, <tt>/lib/ravenscar</tt> for restricted
+runtimes) while the sample project code below is
+under <tt>cf-<i>yyyymmdd</i>/project</tt> and,
+similarly, <tt>/project/standard</tt> or <tt>project/ravenscar</tt>.
 
 <dl>
 
@@ -223,17 +223,7 @@ from <tt>ColdFrame.Project.Times</tt>, and logging from
 <tt>ColdFrame.Project.Logging_Support</tt>.
 
 <br>The <tt>project</tt> subdirectory of the distribution contains
-<ul>
-
-<li>the standard instantiation
-
-<li>a copy of the standard instantiation, in
-<tt>coldframe-project-events.ads-standard</tt>
-
-<li>an instantiation using <tt>ColdFrame.Logging_Event_Basis</tt>, in
-<tt>coldframe-project-events.ads-logging</tt>
-
-</ul>
+the standard instantiation.
 
 Eight concrete instantiations are provided:
 
@@ -291,15 +281,9 @@ which prints what's going on).
 
 </dl>
 
-<p><dt><tt>ColdFrame.Project.Events.Creation</tt>
-
-<dd>A standard instantiation of
-<tt>ColdFrame.Events_G.Creation_G</tt>.
-
 <p><dt><tt>ColdFrame.Project.High_Resolution_Time</tt>
 
-<dd>Provides high resolution time measurement; used by
-<tt>ColdFrame.Logging_Event_Basis</tt>.
+<dd>Provides high resolution time measurement.
 
 <p><dt><tt>ColdFrame.Project.Log_Error, Log_Info</tt>
 
