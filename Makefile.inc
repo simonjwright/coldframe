@@ -137,7 +137,6 @@ CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl		\
   $(SCRIPTS)/ada-collection.xsl				\
   $(SCRIPTS)/ada-inheritance.xsl			\
   $(SCRIPTS)/ada-operation.xsl				\
-  $(SCRIPTS)/ada-serialization.xsl			\
   $(SCRIPTS)/ada-state.xsl				\
   $(SCRIPTS)/ada-type.xsl				\
   $(SCRIPTS)/ada-teardown.xsl				\

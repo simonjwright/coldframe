@@ -78,16 +78,6 @@ EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
 	$(GPRBUILD) -p -PProblem_Reporting
 
-#EXECUTABLES += serialization_client$(exe)
-serialization_client$(exe): serialization_server$(exe)
-
-#EXECUTABLES += serialization_server$(exe)
-serialization_server: Serialization.gen \
- Serialization_Demo.gen \
- Serialization_Demo_Other.gen \
- force
-	$(GPRBUILD) -p -PSerialization
-
 EXECUTABLES += simple_buttons-scripting$(exe)
 simple_buttons-scripting$(exe): \
   Simple_Buttons.gen Digital_IO_Interface.gen force

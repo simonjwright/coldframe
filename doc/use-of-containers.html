@@ -333,6 +333,14 @@ begin
 end;
 </pre>
 
+<h4>Open iteration (Ada 2012)</h4>
+
+<pre>
+for H of The_Vector loop
+   -- do something with H
+end loop;
+</pre>
+
 <h4>Closed iteration</h4>
 
 <pre>
@@ -342,7 +350,7 @@ declare
       -- do something with <i>Class</i>.Vectors.Element (C)
    end Process;
 begin
-    The_Vector.Iterate (Print'Access);
+    The_Vector.Iterate (Process'Access);
 end;
 </pre>
 

@@ -181,7 +181,6 @@ to be used.
 </dl>
 
 <!--
-
 <p>The tags supported for <em>&#171;type&#187;</em>s are:
 
 <ul>
@@ -192,29 +191,6 @@ and optionally <tt>, unconstrained</tt>.
 
 <li><tt>extends = <i>external-type</i></tt> specifies that the
 given type extends (inherits) the specified  external reference.
-
-<li><tt><a name="field-image">field-image</a> =
-<i>image-operation</i></tt> specifies the operation to be used to
-print a record field containing a value of the type when it has been
-serialized as one or more XML elements. See
-<a href="serialization-page.html">separate information</a>.
-
-<li><tt>image = <i>image-operation</i></tt> is an alternate for
-<a href="#field-image"><tt>field-image</tt></a>, retained for
-compatibility..
-
-<li><tt>serializable</tt> specifies support for outputting values of
-the type to an external medium. See
-<a href="serialization-page.html">separate information</a>.
-
-<li><tt>serializable-there</tt> (only applicable to <i>{imported}</i>
-or <i>{renames}</i> types) specifies that the type is
-<i>{serializable}</i> in the package in which it is actually declared.
-See <a href="serialization-page.html">separate information</a>.
-
-<li><tt>type-image = <i>image-operation</i></tt> specifies the
-operation to be used to print values of the type when it has been
-serialized. See <a href="serialization-page.html">separate information</a>.
 
 </ul>
 -->
@@ -414,41 +390,6 @@ type Base is new <i>Other_Domain</i>.Base with record
 end record;
 </pre>
 
-<li><tt>image = <i>image-operation</i></tt>: see
-<a href="serialization-page.html">separate information</a>.
-
-<li><tt>serializable</tt> has no effect on the type to which it's
-attached, but causes a corresponding declaration in the domain's
-<tt>Serializable</tt> child package: for a type T,
-<pre>
-with ColdFrame.Project.Serialization;
-package <i>Domain</i>.Serializable is
-   type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
-      Payload : <i>Domain</i>.<i>T</i>;
-   end record;
-   function Image (S : <i>T</i>) return String;
-end <i>Domain</i>.Serializable;
-</pre>
-
-<p><tt>Image</tt> produces an XML rendition of the recorded value.
-
-<p><tt>ColdFrame.Project.Serialization</tt> is expected to contain a
-tagged type <tt>Base</tt>, which the Project output package
-understands (it might want to add timestamp information, for example)
-
-<p>See <a href="serialization-page.html">separate information</a>.
-
-<li><tt>serializable-there</tt> has no effect on the type to which
-it's attached; the <tt><i>Domain</i>.Serializable.Image</tt> operation
-of any local <i>serializable</i> types with components of a
-<i>serializable-there</i> type will complete processing for the
-components whose type it does know about and then invoke the
-<tt><i>Other_Domain</i>.Serializable.Image</tt> operation on the
-"there" components, having copied the
-<tt>ColdFrame.Project.Serialization.Base</tt> part (project-defined;
-containing timestamp, serial number etc) from the original record.
-
-<p>
 
 </ul>
 -->

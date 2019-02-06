@@ -37,7 +37,6 @@
   xmlns:co="http://pushface.org/coldframe/collection"
   xmlns:in="http://pushface.org/coldframe/inheritance"
   xmlns:op="http://pushface.org/coldframe/operation"
-  xmlns:se="http://pushface.org/coldframe/serialization"
   xmlns:st="http://pushface.org/coldframe/state"
   xmlns:td="http://pushface.org/coldframe/teardown"
   xmlns:ty="http://pushface.org/coldframe/type"
@@ -55,7 +54,6 @@
   <xsl:include href="ada-collection.xsl"/>
   <xsl:include href="ada-inheritance.xsl"/>
   <xsl:include href="ada-operation.xsl"/>
-  <xsl:include href="ada-serialization.xsl"/>
   <xsl:include href="ada-state.xsl"/>
   <xsl:include href="ada-teardown.xsl"/>
   <xsl:include href="ada-type.xsl"/>
@@ -857,16 +855,6 @@
         select="'.. any support packages for specially-declared types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="type" mode="ty:domain-type-support"/>
-
-    <!-- Serializable support. -->
-
-    <xsl:call-template name="ut:progress-message">
-      <xsl:with-param
-        name="m"
-        select="'.. the support package for serializable types ..'"/>
-    </xsl:call-template>
-    <xsl:call-template name="se:serializable-type-spec"/>
-    <xsl:call-template name="se:serializable-type-body"/>
 
     <!-- Package specs for individual classes. -->
     <xsl:call-template name="ut:progress-message">

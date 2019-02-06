@@ -79,20 +79,6 @@ system), the natural way to program it is to use a blocking read.
 which blocks until a client (probably in another processor) chooses to
 call <tt>Connect_Socket</tt>.
 
-<!--
-<p>Another example, from the <a
-href="serialization-page.html">serialization</a> demonstration, is
-<pre>
-declare
-   Rec : constant ColdFrame.Project.Serialization.Base'Class :=
-     ColdFrame.Project.Serialization.Base'Class'Input (Channel);
-begin
-   ...
-</pre>
-
-<p>where the <tt>'Class'Input</tt> call blocks.
--->
-
 <p>It would be <em>quite incorrect</em> to make these calls within
 ColdFrame's normal event processing, because the event queue concerned
 would be effectively stopped until the blocking call completed. They

@@ -122,8 +122,6 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: type <i>name</i> is marked {<i>tag</i>} but has attributes <dd>The tag {<i>tag</i>} (eg, {<i>renames</i>}) isn't consistent with having attributes.
 
-<dt>Error: type <i>name</i> must be public (not private) because it is serializable <dd>The alternative would be to make the package <tt><i>Domain</i>.Serializable</tt> a private child .. hmm, might work ..
-
 <dt>Error: unnamed association between "<i>Class</i>" and "<i>Class</i>" <dd>Missing association name.
 
 <dt>Error: unnamed inheritance of <i>Parent</i> by <i>Child</i> <dd>All branches of an inheritance relationship must have a name.
@@ -233,8 +231,6 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 <dt>Error: no initial state in <i>Class</i> <dd>Each state machine must have an initial state.
 
 <dt>Error: protected type <i>type</i> has no operations <dd>A protected type must have operations.
-
-<dt>Error: <i>type</i> must be recorded as <i>original-package</i>.Serializable.<i>original-type</i> <dd>A type can't be both <i>{serializable-there}</i> and <i>{serializable}</i>; record values using the original package's Serializable child.
 
 </dl>
 

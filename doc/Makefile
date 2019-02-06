@@ -68,7 +68,6 @@ DOCS =						\
   scripting-callbacks.html			\
   scripting-event-queue.html			\
   scripting-stubs.html				\
-  serialization-page.html			\
   strategy.html					\
   stubs.html					\
   support.html					\
@@ -121,13 +120,6 @@ reflexive.png					\
 relationships-mapping.png			\
 sample_a.png					\
 save-project-as-uml.png				\
-serialization-class-model-t.png			\
-serialization-class-model.png			\
-serialization-sequence-t.png			\
-serialization-sequence.png			\
-serialization-state-t.png			\
-serialization-state.png				\
-serialization.png				\
 simple-association.png				\
 type-mapping.png				\
 vague-association.png
