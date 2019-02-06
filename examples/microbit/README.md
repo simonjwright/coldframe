@@ -16,7 +16,10 @@ For this MCU, the Button is button A, and the LED is the one at row 3,
 column 2. The LED at row 3, column 4 provides a heartbeat (rapid
 flashing for the first second, thereafter a flash every second).
 
-Note, because of the limited space on this MCU, this demo needs to be
-built with optimisation (`BUILD=Production`, resulting in nearly
-halving the size). It's OK to have the runtime and the ColdFrame
-library built for debug (`BUILD=Debug`, the default).
+Note, because of the limited space on this MCU, this demo and
+ColdFrame need to be built with optimisation (`BUILD=Production`,
+resulting in nearly halving the size). It's OK to have the runtime
+built for debug (`BUILD=Debug`, the default).
+
+<!-- Actually, the problem with ColdFrame is that the Ticker task
+overflowed its stack when unoptimised! -->

@@ -70,7 +70,8 @@ package body Digital_IO.Microbit_Support is
    --  a change
    Debounce_Count : constant := 4;
 
-   task Debounce_Inputs;
+   task Debounce_Inputs
+   with Secondary_Stack_Size => 0;
 
    procedure Configure_Inputs;
    procedure Configure_Outputs;

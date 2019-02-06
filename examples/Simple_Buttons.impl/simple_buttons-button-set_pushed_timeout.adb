@@ -8,5 +8,5 @@ begin
    ColdFrame.Project.Events.Set (The_Timer => This.Pushed_Timer,
                                  On        => Events.Dispatcher,
                                  To_Fire   => new Push_Timeout (This),
-                                 After     => 1.0);
+                                 After     => 0.25);
 end Set_Pushed_Timeout;

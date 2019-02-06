@@ -25,6 +25,9 @@ puts "script starting"
 # setup required
 set-boolean digital_io.get return false
 
+set SHORT_PUSH_LIMIT 0.25
+set LIT_PERIOD 5.0
+
 #setup done
 initialize
 start_dispatcher
@@ -37,6 +40,8 @@ save_number_of_calls digital_io.set
 proc short_push {} {
     echo "\n\n*** SHORT PUSH ***\n"
 
+    global SHORT_PUSH_LIMIT LIT_PERIOD
+
     echo "pushing button 0"
     mark short_push
     callback-digital_io.input_signal_state {0 true}
@@ -47,7 +52,7 @@ proc short_push {} {
     check-output true
 
     echo "waiting until just before the pushed timeout"
-    wait_from_mark short_push 0.995
+    wait_from_mark short_push [expr $SHORT_PUSH_LIMIT - 0.005]
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
     # this is tautological if there've been no calls, but ..
@@ -63,7 +68,7 @@ proc short_push {} {
     check-output true
 
     echo "waiting until just before the lit timeout"
-    wait_from_mark short_push 4.995
+    wait_from_mark short_push [expr $LIT_PERIOD - 0.005]
 
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
@@ -71,7 +76,7 @@ proc short_push {} {
     check-output true
 
     echo "waiting until just after the lit timeout"
-    wait_from_mark short_push 5.005
+    wait_from_mark short_push [expr $LIT_PERIOD + 0.005]
 
     echo "checking the LED is now clear"
     check_number_of_new_calls digital_io.set 2
@@ -80,6 +85,8 @@ proc short_push {} {
 
 proc repeated_short_push {} {
     echo "\n\n*** REPEATED SHORT PUSH ***\n"
+
+    global SHORT_PUSH_LIMIT LIT_PERIOD
 
     save_number_of_calls digital_io.set
     mark repeated_short_push
@@ -93,7 +100,7 @@ proc repeated_short_push {} {
     check-output true
 
     echo "waiting until just before the pushed timeout"
-    wait_from_mark repeated_short_push 0.995
+    wait_from_mark repeated_short_push [expr $SHORT_PUSH_LIMIT - 0.005]
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
     # this is tautological if there've been no calls, but ..
@@ -109,7 +116,7 @@ proc repeated_short_push {} {
     check-output true
 
     echo "waiting until just after the pushed timeout"
-    wait_from_mark repeated_short_push 1.005
+    wait_from_mark repeated_short_push [expr $SHORT_PUSH_LIMIT + 0.005]
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
     # this is tautological if there've been no calls, but ..
@@ -136,7 +143,7 @@ proc repeated_short_push {} {
     check-output true
 
     echo "waiting until just before the lit timeout"
-    wait_from_mark second_repeated_short_push 4.995
+    wait_from_mark second_repeated_short_push [expr $LIT_PERIOD - 0.005]
 
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 2
@@ -144,7 +151,7 @@ proc repeated_short_push {} {
     check-output true
 
     echo "waiting until just after the lit timeout"
-    wait_from_mark second_repeated_short_push 5.005
+    wait_from_mark second_repeated_short_push [expr $LIT_PERIOD + 0.005]
 
     echo "checking the LED is now clear"
     check_number_of_new_calls digital_io.set 3
@@ -153,6 +160,8 @@ proc repeated_short_push {} {
 
 proc long_push {} {
     echo "\n\n*** LONG PUSH ***\n"
+
+    global SHORT_PUSH_LIMIT LIT_PERIOD
 
     save_number_of_calls digital_io.set
     mark long_push
@@ -166,14 +175,14 @@ proc long_push {} {
     check-output true
 
     echo "waiting until just before the pushed timeout"
-    wait_from_mark long_push 0.995
+    wait_from_mark long_push [expr $SHORT_PUSH_LIMIT - 0.005]
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
     # this is tautological if there've been no calls, but ..
     check-output true
 
     echo "waiting until just after the pushed timeout"
-    wait_from_mark long_push 1.005
+    wait_from_mark long_push [expr $SHORT_PUSH_LIMIT + 0.005]
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
     # this is tautological if there've been no calls, but ..
@@ -189,7 +198,7 @@ proc long_push {} {
     check-output true
 
     echo "waiting until after the lit timeout"
-    wait_from_mark long_push 6.000
+    wait_from_mark long_push [expr $LIT_PERIOD + 1.0]
 
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
@@ -215,6 +224,8 @@ proc long_push {} {
 proc short_then_long_push {} {
     echo "\n\n*** SHORT THEN LONG PUSH ***\n"
 
+    global SHORT_PUSH_LIMIT LIT_PERIOD
+
     save_number_of_calls digital_io.set
     mark short_then_long_push
 
@@ -227,7 +238,7 @@ proc short_then_long_push {} {
     check-output true
 
     echo "waiting until just before the pushed timeout"
-    wait_from_mark short_then_long_push 0.995
+    wait_from_mark short_then_long_push [expr $SHORT_PUSH_LIMIT - 0.005]
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
     # this is tautological if there've been no calls, but ..
@@ -243,7 +254,7 @@ proc short_then_long_push {} {
     check-output true
 
     echo "waiting until just after the pushed timeout"
-    wait_from_mark short_then_long_push 1.005
+    wait_from_mark short_then_long_push [expr $SHORT_PUSH_LIMIT + 0.005]
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 1
     # this is tautological if there've been no calls, but ..
@@ -261,7 +272,7 @@ proc short_then_long_push {} {
     check-output true
 
     echo "waiting until just after the pushed timeout"
-    wait_from_mark second_short_then_long_push 1.005
+    wait_from_mark second_short_then_long_push [expr $SHORT_PUSH_LIMIT + 0.005]
 
     echo "releasing button 0"
     callback-digital_io.input_signal_state {0 false}
@@ -273,7 +284,7 @@ proc short_then_long_push {} {
     check-output true
 
     echo "waiting until just after the lit timeout"
-    wait_from_mark second_short_then_long_push 6.000
+    wait_from_mark second_short_then_long_push [expr $LIT_PERIOD + 1.0]
 
     echo "checking the LED is still set"
     check_number_of_new_calls digital_io.set 2
