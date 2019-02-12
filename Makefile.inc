@@ -82,7 +82,6 @@ MODELS ?= $(COLDFRAME)/models
 # Where are non-standard Ada project files?
 export ADA_PROJECT_PATH := $(COLDFRAME):$(ADA_PROJECT_PATH)
 
-
 CASE_EXCEPTIONS ?= $(SCRIPTS)/emacs_case_exceptions
 COLDFRAMEOUT ?= $(COLDFRAME)/coldframeout
 

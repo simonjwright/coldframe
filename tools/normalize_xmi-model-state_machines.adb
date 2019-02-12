@@ -148,7 +148,7 @@ package body Normalize_XMI.Model.State_Machines is
       N : constant Element_P := new Transition_Element (Parent);
       T : Transition_Element renames Transition_Element (N.all);
    begin
-      T.Populate (From => From);
+      T.Populate (From => From, Needs_Name => False);
 
       --  Trigger
       declare
@@ -276,7 +276,7 @@ package body Normalize_XMI.Model.State_Machines is
       S : State_Element renames State_Element (N.all);
       Node_Name : constant String := DOM.Core.Nodes.Node_Name (From);
    begin
-      S.Populate (From => From);
+      S.Populate (From => From, Needs_Name => False);
 
       if Node_Name = "UML:Pseudostate" then
          S.Kind := Initial;
@@ -294,6 +294,10 @@ package body Normalize_XMI.Model.State_Machines is
               & S.Fully_Qualified_Name
               & "'s kind: "
               & Node_Name);
+      elsif +S.Name = "" then
+         S.Name := +"{unnamed}";
+         Messages.Error
+           ("Unnamed state " & S.Fully_Qualified_Name);
       end if;
 
       --  Entry actions
@@ -386,9 +390,17 @@ package body Normalize_XMI.Model.State_Machines is
                                        Pattern => ".",
                                        From => Name'Last,
                                        Going => Ada.Strings.Backward);
+         Candidate_Name : constant String
+           := Name (Positive'Max (Dot + 1, Name'First) .. Name'Last);
       begin
-         E.Name := +Identifiers.Normalize
-           (Name (Positive'Max (Dot + 1, Name'First) .. Name'Last));
+         if Identifiers.Is_Valid (Candidate_Name) then
+            E.Name := +Identifiers.Normalize
+              (Name (Positive'Max (Dot + 1, Name'First) .. Name'Last));
+         else
+            null;
+            --  The error will already have been reported via
+            --  Populate() above.
+         end if;
       end;
 
       --  Parameter Type. We aren't interested in the parameter name,

@@ -73,11 +73,22 @@ package body Normalize_XMI.Model is
    --------------------------
 
    not overriding
-   procedure Populate (E : in out Element; From : DOM.Core.Node)
+   procedure Populate (E : in out Element;
+                       From : DOM.Core.Node;
+                       Needs_Name : Boolean := True)
    is
       Name : constant String := Read_Attribute ("name", From_Element => From);
    begin
       E.Node := From;
+
+      if Needs_Name and then Name'Length = 0
+      then
+         E.Name := +"{unnamed}";
+         Messages.Error ("Unnamed "
+                           & E.Kind
+                           & " "
+                           & E.Fully_Qualified_Name);
+      end if;
 
       if Identifiers.Is_Valid (Name) then
          E.Name := +Identifiers.Normalize (Name);

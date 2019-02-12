@@ -115,7 +115,7 @@ NORM_FILES =					\
 $(NORM_FILES): ColdFrame_Tests.norm-stamp ;
 
 # Regression tests (by which I mean, tests related to bug reports on
-# Sourceforge)
+# Sourceforge/Github)
 
 # Some of the domains are in the ColdFrame_Development model.
 DEVELOPMENT_DOMAINS =				\
@@ -146,16 +146,17 @@ clean::
 	-gnatclean -PRegressions
 
 # Bad models
-BAD_MODEL_REGRESSION_DOMAINS =			\
-  Identifiers					\
-  Multiplicities
+#BAD_MODEL_REGRESSION_DOMAINS =			\
+#  Identifiers					\
+#  Multiplicities
 
-BAD_MODEL_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_MODEL_REGRESSION_DOMAINS))
-$(BAD_MODEL_REGRESSION_NORMS): Bad_Model_Regressions.norm-stamp ;
-BAD_MODEL_REGRESSION_GENS = $(addsuffix .gen,$(BAD_MODEL_REGRESSION_DOMAINS))
+#BAD_MODEL_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_MODEL_REGRESSION_DOMAINS))
+#$(BAD_MODEL_REGRESSION_NORMS): Bad_Model_Regressions.norm-stamp ;
+#BAD_MODEL_REGRESSION_GENS = $(addsuffix .gen,$(BAD_MODEL_REGRESSION_DOMAINS))
 
 fails::
 	-$(MAKE) Bad_Model_Regressions.norm-stamp
+	-$(MAKE) Naming.norm-stamp
 
 # Bad code
 BAD_CODE_REGRESSION_DOMAINS =			\

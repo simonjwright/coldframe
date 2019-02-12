@@ -57,8 +57,12 @@ private
    end record;
 
    --  Fill in the Node, Name, Stereotypes, and Tagged_Values fields.
+   --  Needs_Name is False if the Name field isn't required
+   --  (e.g. initial/final states, completion transitions).
    not overriding
-   procedure Populate (E : in out Element; From : DOM.Core.Node);
+   procedure Populate (E : in out Element;
+                       From : DOM.Core.Node;
+                       Needs_Name : Boolean := True);
 
    --  Determine the full name of the element: for example,
    --  {domain}.{class}.{operation}.{parameter}. Used for error

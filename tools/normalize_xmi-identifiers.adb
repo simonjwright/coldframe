@@ -330,4 +330,7 @@ begin
    Reserved.Insert ("overriding");
    Reserved.Insert ("synchronized");
 
+   --  Include the reserved words new in Ada 2012.
+   Reserved.Insert ("some");
+
 end Normalize_XMI.Identifiers;
