@@ -41,15 +41,22 @@ setup::
 	  make -C $$s setup;			\
 	done
 
-# Assume that tash.gpr is on the existing ADA_PROJECT_PATH (or
-# installed).
-ifeq (, $(ADA_PROJECT_PATH))
-  export ADA_PROJECT_PATH := ..
+ifeq (, $(TASH))
+  tash := $(HOME)/tcladashell
 else
-  ADA_PROJECT_PATH := $(ADA_PROJECT_PATH):..
-  ifneq (, $(CYGWIN))
-    ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
-  endif
+  tash := $(TASH)
+endif
+
+ifeq (, $(SCRIPTED_TESTING))
+  scripted_testing := $(HOME)/scripted_testing
+else
+  scripted_testing := $(SCRIPTED_TESTING)
+endif
+
+export ADA_PROJECT_PATH := ":$(tash):$(scripted_testing):$(ADA_PROJECT_PATH)"
+
+ifneq (, $(CYGWIN))
+  ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
 endif
 
 #EXECUTABLES += house_management-harness$(exe)
