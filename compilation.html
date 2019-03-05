@@ -8,12 +8,9 @@
 <h1>ColdFrame: Compilation</h1>
 
 <p>ColdFrame comes with a set of <a
-href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+href="http://docs.adacore.com/live/wave/gprbuild/html/gprbuild_ug/gprbuild_ug.html">GNAT
 Project</a> (<tt>.gpr</tt>) files. They're designed to work with a set
 of environment variables.
-
-<p>GNAT Project files are only available in GNAT version 3.15 and the
-GCC-3 series.
 
 <h2>The Project Files</h2>
 
@@ -25,10 +22,6 @@ GCC-3 series.
 <tr><td><tt>Options.gpr</tt>
 <td>Contains standard IDE, make (build), compilation, binding and
 linking options.
-<br>Note that the IDE options (really only useful if you're using
-doing cross-development) are only avaiable in GNAT 3.15 and GCC-3.3 or
-later compilers. You'll need to comment this section out for GCC-3.1,
-3.2.
 
 <tr><td><tt>ColdFrame.gpr</tt>
 <td>Picks up the standard ColdFrame components.
@@ -38,69 +31,35 @@ hierarchy.
 
 </table>
 
-<h2>The Environment Variables</h2>
-
-<table border="1">
-
-<tr><th>Variable
-<th>Use
-<th>Unix
-<th>Windows
-
-<tr><td><tt>ADA_PROJECT_PATH</tt>
-<td>Where <i>gnatmake</i> is to search for project files (you don't
-need to mention the location of the starting project file)
-<td><tt>$TOP/$COLDFRAME</tt>
-<td><tt>$TOP/$COLDFRAME</tt>
-
-<tr><td><tt>BUILD_DIR</tt>
-<td>Where the Ada library files (<tt>.ali</tt>, <tt>.o</tt>) are to be
-placed
-<td><tt>~/.build</tt>
-<td><tt>C:/Temp/.build</tt>
-
-<tr><td><tt>COLDFRAME</tt>
-<td>The location of ColdFrame, relative to <tt>$TOP</tt>
-<td><tt>cf-20030126</tt>
-<td><tt>cf-20030126</tt>
-
-<tr><td><tt>TOP</tt>
-<td>The place that the software is installed beneath
-<td><tt>/usr/local/lib</tt>
-<td><tt>C:</tt>
-
-</table>
-
 <h2>An example</h2>
 
-<p>This simple example is from the <i>Serialization</i> demonstration,
-and lives in the <tt>Serialization.impl</tt> directory.
+<p>This simple example is from the <i>Van_Fleet</i> demonstration,
+and lives in the <tt>examples/</tt> directory.
 
 <pre>
-with "Options";
 with "ColdFrame";
+with "Options";
 
-project Serialization is
+project Van_Fleet is
 
-  for Source_Dirs use (".",
-                       "../Serialization.gen",
-                       "../Serialization_Demo.gen");
-
-  for Main use ("client", "server");
+  for Main use ("van_fleet-demo");
 
   for Exec_Dir use ".";
 
-  for Object_Dir use Options'Object_Dir;
+  for Source_Dirs use
+    (
+     "Van_Fleet.impl",
+     "Van_Fleet.gen"
+    );
+
+  for Object_Dir use ".build";
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
   package Linker renames Options.Linker;
 
-end Serialization;
+end Van_Fleet;
 </pre>
-
-It would perhaps be more normal to put the project file one level up,
-above both the <tt>.impl</tt> and <tt>.gen</tt> directories.
 
 </body>
 </html>
