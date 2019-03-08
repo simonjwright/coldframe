@@ -1,0 +1,12 @@
+digraph "Toggle_Button.class" {
+      graph [root=Toggle_Button]
+      edge [fontsize=10]
+      node [shape=record, style=filled, fillcolor=lightgray, fontsize=10]
+
+      
+      Toggle_Button [fillcolor=moccasin, URL="#Toggle_Button", label="{Toggle_Button|On : Boolean|# Changed()\n+ Get_State(): Boolean}"]
+Button [URL="#Button"]
+Button -> Toggle_Button [label="G1", dir=back, arrowhead=none, arrowtail=onormal, URL="#G1"]
+
+      }
+     
