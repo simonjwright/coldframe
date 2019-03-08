@@ -12,6 +12,8 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with Ada.Strings.Fixed;
+with Ada.Strings.Maps;
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
@@ -59,6 +61,25 @@ package body Normalize_XMI.Model.Operations is
             O.Return_Type :=
               +Identifiers.Normalize
                 (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0)));
+         end if;
+      end;
+
+      --  Body
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From,
+            "../UML:Method/UML:Method.specification/UML:Operation"
+              & "[(@name='" & (+O.Name) & "')]"
+              & "/../../UML:Method.body/UML:ProcedureExpression/@body");
+      begin
+         if DOM.Core.Nodes.Length (Nodes) = 1 then
+            O.Body_Text :=
+              +DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0));
+         elsif DOM.Core.Nodes.Length (Nodes) > 1 then
+            Messages.Error
+              ("Operation "
+                 & O.Fully_Qualified_Name
+                 & " has more than one body");
          end if;
       end;
 
@@ -204,6 +225,45 @@ package body Normalize_XMI.Model.Operations is
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+O.Name) & "</name>");
       O.Output_Documentation (To);
+      if Ada.Strings.Unbounded.Length (O.Body_Text) > 0 then
+         declare
+            use Ada.Strings;
+            use Ada.Strings.Fixed;
+            use Ada.Strings.Maps;
+            Body_Text : constant String := +O.Body_Text;
+            First : Positive := Body_Text'First;
+            Last : Natural;
+            CRLF : constant Character_Set := To_Set (ASCII.CR & ASCII.LF);
+         begin
+            Put_Line (To, "<body>");
+            --  We're going to use Find_Token, using a Character_Set with
+            --  CR/LF and Membership of Outside, to locate the lines, and
+            --  then trim each line (from the right only). Any remaining
+            --  non-empty lines get output as <line/> elements.
+            loop
+               Find_Token (Body_Text (First .. Body_Text'Last),
+                           Set => CRLF,
+                           Test => Outside,
+                           First => First,
+                           Last => Last);
+               exit when Last < First;
+               declare
+                  Line : constant String
+                    := Trim (Body_Text (First .. Last), Side => Right);
+               begin
+                  if Line'Length > 0 then
+                     Put (To, "<line><![CDATA[");
+                     Put (To, Line);
+                     Put_Line (To, "]]></line>");
+                  end if;
+               end;
+               --  On to the next candidate.
+               First := Last + 1;
+               exit when First > Body_Text'Last;
+            end loop;
+            Put_Line (To, "</body>");
+         end;
+      end if;
       O.Parameters.Iterate (Output'Access);
       Put_Line (To, "</operation>");
    end Output;

@@ -286,9 +286,8 @@
                when {source-state (ignored transition)} =>
                   null;
                when {source-state} =>
-                  Ada.Exceptions.Raise_Exception
-                    (ColdFrame.Exceptions.Cant_Happen'Identity,
-                     "{domain}.{class}.{event} in {source-state}");
+                  raise ColdFrame.Exceptions.Cant_Happen
+                    with "{domain}.{class}.{event} in {source-state}";
             end case;
          end Handler;
          -->
@@ -355,11 +354,9 @@
 
         <xsl:otherwise>
           <xsl:value-of select="$IIII"/>
-          <xsl:text>Ada.Exceptions.Raise_Exception&#10;</xsl:text>
+          <xsl:text>raise ColdFrame.Exceptions.Cant_Happen&#10;</xsl:text>
           <xsl:value-of select="$IIIIC"/>
-          <xsl:text>(ColdFrame.Exceptions.Cant_Happen'Identity,&#10;</xsl:text>
-          <xsl:value-of select="$IIIIC"/>
-          <xsl:text> "</xsl:text>
+          <xsl:text>with "</xsl:text>
           <xsl:value-of select="../../../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="../../name"/>
@@ -367,7 +364,7 @@
           <xsl:value-of select="$e"/>
           <xsl:text> in state </xsl:text>
           <xsl:value-of select="$s"/>
-          <xsl:text>");&#10;</xsl:text>
+          <xsl:text>";&#10;</xsl:text>
         </xsl:otherwise>
 
       </xsl:choose>
@@ -457,12 +454,19 @@
 
   <!-- Called at domain/class to generate any class body "with"s. -->
   <xsl:template name="st:state-body-context">
+    <xsl:if test="event or statemachine or attribute/type='Timer'">
 
-    <!-- Ada.Exceptions is only needed if there are Cant_Happen exceptions;
-         but that would be rather complex to detect. -->
-    <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
-    <xsl:text>pragma Warnings (Off, Ada.Exceptions);&#10;</xsl:text>
+      <!-- with {domain}.Events;
+           pragma Warnings (Off, {domain}.Events); -->
+      <xsl:variable name="dom">
+        <xsl:value-of select="../name"/>
+        <xsl:text>.Events</xsl:text>
+      </xsl:variable>
+      <xsl:call-template name="ut:context-clause-suppress-warnings">
+        <xsl:with-param name="package" select="$dom"/>
+      </xsl:call-template>
 
+    </xsl:if>
   </xsl:template>
 
 

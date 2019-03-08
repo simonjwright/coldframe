@@ -20,8 +20,9 @@ private package Normalize_XMI.Model.Operations is
 private
 
    type Operation_Element is new Element with record
-      Parameters : Element_Vectors.Vector;
+      Parameters  : Element_Vectors.Vector;
       Return_Type : Ada.Strings.Unbounded.Unbounded_String;
+      Body_Text   : Ada.Strings.Unbounded.Unbounded_String;
    end record;
    overriding
    procedure Resolve (O : in out Operation_Element);

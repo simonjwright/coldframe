@@ -559,7 +559,6 @@
       </xsl:otherwise>
     </xsl:choose>
 
-
   </xsl:template>
 
 
@@ -1120,12 +1119,9 @@
               <xsl:text>.</xsl:text>
               <xsl:value-of select="."/>
             </xsl:variable>
-            <xsl:text>with </xsl:text>
-            <xsl:value-of select="$spec"/>
-            <xsl:text>;&#10;</xsl:text>
-            <xsl:text>pragma Warnings (Off, </xsl:text>
-            <xsl:value-of select="$spec"/>
-            <xsl:text>);&#10;</xsl:text>
+            <xsl:call-template name="ut:context-clause-suppress-warnings">
+              <xsl:with-param name="package" select="$spec"/>
+            </xsl:call-template>
           </xsl:if>
         </xsl:for-each>
 

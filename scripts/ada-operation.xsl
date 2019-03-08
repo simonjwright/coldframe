@@ -272,6 +272,14 @@
 
           </xsl:when>
 
+          <xsl:when test="body">
+
+            <xsl:call-template name="op:generate-body-with-body-text">
+              <xsl:with-param name="current" select="$current"/>
+            </xsl:call-template>
+
+          </xsl:when>
+
           <xsl:otherwise>
 
             <!-- Concrete in current class; we provide a stub. -->
@@ -371,6 +379,7 @@
             select="$parents/operation
                       [not(@suppressed)
                        and not(@entry)
+                       and not(body)
                        and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
@@ -878,6 +887,35 @@
       </xsl:otherwise>
 
     </xsl:choose>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+
+  </xsl:template>
+
+
+  <!-- Called at class/operation to generate a body. -->
+  <xsl:template name="op:generate-body-with-body-text">
+
+    <!-- The current class (not necessarily the one where the operation
+         is defined, if we're talking inheritance) -->
+    <xsl:param name="current"/>
+
+    <xsl:call-template name="op:subprogram-specification">
+      <xsl:with-param name="indent" select="$I"/>
+    </xsl:call-template>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:for-each select="body/line">
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="."/>
+      <xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>

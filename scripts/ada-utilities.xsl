@@ -221,6 +221,7 @@
     </xsl:choose>
   </xsl:template>
 
+
   <!-- Called at domain/class to compute number of instances.
        (If not at domain/class, set parameter "c" to the class
        for which the computation is required.)
@@ -654,6 +655,22 @@
       </xsl:otherwise>
 
     </xsl:choose>
+  </xsl:template>
+
+
+  <!-- with $package;
+       pragma Warnings (Off, $package);
+       -->
+  <xsl:template name="ut:context-clause-suppress-warnings">
+    <xsl:param name="package"/>
+
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$package"/>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:text>pragma Warnings (Off, </xsl:text>
+    <xsl:value-of select="$package"/>
+    <xsl:text>);&#10;</xsl:text>
+
   </xsl:template>
 
 
