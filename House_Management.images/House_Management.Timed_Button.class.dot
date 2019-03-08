@@ -6,7 +6,7 @@ digraph "Timed_Button.class" {
       
       Timed_Button [fillcolor=moccasin, URL="#Timed_Button", label="{Timed_Button|Timeout : Timer|# Changed()\n- Clear_Timeout()\n+ Get_State(): Boolean\n- Set_Timeout()}"]
 Button [URL="#Button"]
-Button -> Timed_Button [label="Button", dir=back, arrowhead=none, arrowtail=onormal, URL="#Button"]
+Button -> Timed_Button [label="G1", dir=back, arrowhead=none, arrowtail=onormal, URL="#G1"]
 
       }
      

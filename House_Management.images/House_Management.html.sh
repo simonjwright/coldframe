@@ -4,4 +4,5 @@ ${CIRCO:-circo} -Tpng -oHouse_Management.A1.class.png -Tcmapx -oHouse_Management
 ${CIRCO:-circo} -Tpng -oHouse_Management.Button.class.png -Tcmapx -oHouse_Management.Button.class.cmapx House_Management.Button.class.dot
 ${CIRCO:-circo} -Tpng -oHouse_Management.Lamp.class.png -Tcmapx -oHouse_Management.Lamp.class.cmapx House_Management.Lamp.class.dot
 ${CIRCO:-circo} -Tpng -oHouse_Management.Timed_Button.class.png -Tcmapx -oHouse_Management.Timed_Button.class.cmapx House_Management.Timed_Button.class.dot
+${CIRCO:-circo} -Tpng -oHouse_Management.Toggle_Button.class.png -Tcmapx -oHouse_Management.Toggle_Button.class.cmapx House_Management.Toggle_Button.class.dot
 ${DOT:-dot} -Tpng -oHouse_Management.Timed_Button.state.png House_Management.Timed_Button.state.dot

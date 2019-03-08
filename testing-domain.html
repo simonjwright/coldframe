@@ -16,13 +16,13 @@ which can provide callbacks to the SUT).
 
 <p>ColdFrame supports testing at a level between unit testing (using,
 for
-example, <a href="http://libre.adacore.com/tools/aunit/">AUnit</a>)
+example, <a href="https://libre.adacore.com/tools/aunit/">AUnit</a>)
 and integration testing (using real hardware). Using a framework
 intended for unit testing at this level tends to be fragile, requiring
 a lot of rework for even minor functional changes in the requirements.
 
 <p>The
-project <a href="http://coldframe.sourceforge.net/scripted_testing">Scripted
+project <a href="https://coldframe.sourceforge.net/scripted_testing">Scripted
 Testing</a> provides a framework for testing using a scripting
 language. The idea is to build a program including the SUT
 and <a href="stubs.html">stubbed versions</a> of the lower-level
@@ -30,12 +30,12 @@ domains that it uses; the program adds commands to the scripting
 language to interact with the stubbed versions.
 
 <p>This scheme is related to the use
-of <a href="http://en.wikipedia.org/wiki/Mock_object">mock
+of <a href="https://en.wikipedia.org/wiki/Mock_object">mock
 objects</a>.
 
 <p>The scripting language supported
-is <a href="http://www.tcl.tk">Tcl</a>, and specifically the Ada
-binding <a href="http://sourceforge.net/projects/tcladashell/">TclAdaShell</a>. The
+is <a href="https://www.tcl.tk">Tcl</a>, and specifically the Ada
+binding <a href="https://sourceforge.net/projects/tcladashell/">TclAdaShell</a>. The
 reason for choosing Tcl rather than Python or Lua is that Tcl's
 interface is entirely string-based; this is important, considering the
 need to specifiy values of enumerated types.
