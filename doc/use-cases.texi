@@ -68,7 +68,7 @@ classes to map the analysis model to the Software Architecture
 (@pxref{Software Architecture}). An example would be a container for all
 the instances of a given class.
 
-A tool which uses this approach is @uref{http://www.rational.com/,
+A tool which uses this approach is @uref{https://www.rational.com/,
 Rational} Rose.
 
 @item Use an Analysis model
@@ -80,10 +80,10 @@ class through an association to find the set of corresponding instances
 of another class) is automatically generated.
 
 Tools which use this approach include Software through Pictures from
-@uref{http://www.aonix.com/,Aonix}, Rhapsody from I-Logix, xUML from
-@uref{http://www.abstractsolutions.co.uk/,Abstract Solutions} (was
+@uref{https://www.aonix.com/,Aonix}, Rhapsody from I-Logix, xUML from
+@uref{https://www.abstractsolutions.co.uk/,Abstract Solutions} (was
 Kennedy-Carter), BridgePoint from
-@uref{http://www.mentor.com/products/sm/bridgepoint,Mentor Graphics}
+@uref{https://www.mentor.com/products/sm/bridgepoint,Mentor Graphics}
 (was Project Technology; now open-sourced), and the present project.
 
 @end table

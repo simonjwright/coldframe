@@ -146,7 +146,7 @@ NORM_FILES = $(subst .html,.norm,$(GENERATED_DOCUMENTS))
 
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
-$(NORM_FILES): Housing.tuml-norm-stamp ;
+$(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 # graphviz:
 %.png: %.dot
