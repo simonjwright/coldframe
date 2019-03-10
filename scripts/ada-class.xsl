@@ -1070,21 +1070,63 @@
         <xsl:variable name="withs">
 
           <!-- Withs for referential attributes of the current class,
-          but not the current class (i.e. in reflexive associations)
-          or, in the case of an associative class, one of the classes
-          it associates (which are already with'd in the spec). -->
+               but not, in the case of an associative class, one of
+               the classes it associates (which are already with'd in
+               the spec): select the referred class. -->
           <xsl:for-each
             select="attribute[@refers
-                    and not(@refers=$name)
                     and not(@refers=$current/associative/role/classname)]">
             <xsl:element name="with">
               <xsl:value-of select="@refers"/>
             </xsl:element>
           </xsl:for-each>
 
-          <!-- Withs for subprograms of this and ancestor classes.
-               We only want classes (not including the current class)
-               that are used as parameters or results. -->
+          <!-- Withs for referential attributes of the current class,
+               but not, in the case of an associative class, one of the
+               classes it associates (which are already with'd in the
+               spec) or an inheritance: select the relation. -->
+          <xsl:for-each
+            select="attribute[@refers
+                    and not(@refers=$current/associative/role/classname)
+                    and not(@role='Parent')]">
+            <xsl:element name="with">
+              <xsl:value-of select="@relation"/>
+            </xsl:element>
+          </xsl:for-each>
+
+          <!-- Withs for associations (not generalizations) that refer
+               to this class. -->
+          <xsl:for-each
+            select = "/domain/class/attribute
+                      [@refers=$name and not(@role='Parent')]">
+            <xsl:element name="with">
+              <xsl:value-of select="@relation"/>
+            </xsl:element>
+          </xsl:for-each>
+
+          <!-- Withs for classes related by associations (not
+               generalizations). -->
+          <xsl:for-each
+            select = "/domain/class/attribute
+                      [@refers=$name and not(@role='Parent')]">
+            <xsl:element name="with">
+              <xsl:value-of select="../name"/>
+            </xsl:element>
+          </xsl:for-each>
+
+          <!-- Withs for classes related by associative associations. -->
+          <xsl:for-each
+            select = "/domain/class/associative[role/classname=$name]">
+            <xsl:element name="with">
+              <!-- Our own name gets ignored later. -->
+              <xsl:value-of select="role/classname"/>
+            </xsl:element>
+          </xsl:for-each>
+
+          <!-- Withs needed for subprograms of this and ancestor
+               classes. We only want classes (not including the
+               current class) that are used as parameters or
+               results. -->
           <xsl:for-each select="$ancestors/operation/parameter/type
                                 | $ancestors/operation/@return">
             <xsl:if test="/domain/class/name=. and not(.=$name)">
@@ -1104,7 +1146,9 @@
 
         </xsl:variable>
 
-        <xsl:variable name="d" select="/domain/name"/>
+        <!-- Need the domain name in a variable below, not sure
+             why. -->
+        <xsl:variable name="dom" select="/domain/name"/>
 
         <!-- Sort, uniqueify and output. -->
         <!-- XXX Saxon 6.5.1 allows this result tree fragment to be
@@ -1113,9 +1157,10 @@
              Should consider saxon:node-set() or exsl:node-set(). -->
         <xsl:for-each select="$withs/with">
           <xsl:sort/>
-          <xsl:if test="not (.=preceding-sibling::node())">
+          <xsl:if test="not (.=preceding-sibling::node())
+                        and not (.=$name)">
             <xsl:variable name="spec">
-              <xsl:value-of select="$d"/>
+              <xsl:value-of select="$dom"/>
               <xsl:text>.</xsl:text>
               <xsl:value-of select="."/>
             </xsl:variable>
