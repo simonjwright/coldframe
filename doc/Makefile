@@ -58,6 +58,7 @@ DOCS =						\
   index.html					\
   initialization.html				\
   installation.html				\
+  operation-bodies.html				\
   operation-parameters.html			\
   operations.html				\
   preparation.html				\
@@ -93,6 +94,13 @@ Screenshot-Settings-Profiles.png		\
 Screenshot-Settings-User.png			\
 argouml-installation.html			\
 better-association.png				\
+body-class.png					\
+body-lpanel-1.png				\
+body-lpanel-2.png				\
+body-rpanel-1.png				\
+body-rpanel-2.png				\
+body-rpanel-3.png				\
+body-rpanel-4.png				\
 browse-state-model.png				\
 button-class-state-machine.png			\
 class-mappings.png				\
