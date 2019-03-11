@@ -122,7 +122,7 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Mar 06 21:15:46 GMT+00:00 2019'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Mar 10 17:54:13 GMT+00:00 2019'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.35.1(6) revised on $Date: 2012-12-30 14:06:01 +0100 (Sun, 30 Dec 2012) $ </XMI.exporterVersion>
@@ -4639,6 +4639,17 @@ After a short push, the Button remains set for a period, which can be extended b
                   </UML:Method.body>
                   <UML:Method.specification>
                     <UML:Operation xmi.idref = '-64--88-1-2--5206b6e7:1688034fcec:-8000:000000000000105F'/>
+                  </UML:Method.specification>
+                </UML:Method>
+                <UML:Method xmi.id = '-64--88-1-2-5602f952:169686de277:-8000:000000000000108B'
+                  name = '' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  isQuery = 'false'>
+                  <UML:Method.body>
+                    <UML:ProcedureExpression xmi.id = '-64--88-1-2-5602f952:169686de277:-8000:00000000000010B6'
+                      language = '' body = 'declare&#10;   Set_In_State : constant array (State_Machine_State_T) of Boolean&#10;     := (Pushed | Held | Timed | Pushed_Again =&gt; True,&#10;         others =&gt; False);&#10;begin&#10;   return Set_In_State (This.State_Machine_State);&#10;end;&#10;'/>
+                  </UML:Method.body>
+                  <UML:Method.specification>
+                    <UML:Operation xmi.idref = '-64--88-1-2--44dee932:16885ff9f46:-8000:000000000000106D'/>
                   </UML:Method.specification>
                 </UML:Method>
               </UML:Classifier.feature>
