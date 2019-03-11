@@ -2,9 +2,6 @@
 --  reevaluate their own states (by checking whether any of the
 --  Buttons they are controlled by is set).
 
-with Simple_Buttons.A1;
-with Simple_Buttons.LED;
-
 separate (Simple_Buttons.Button)
 procedure Changed
   (This : not null Handle) is

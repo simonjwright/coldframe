@@ -1,7 +1,3 @@
-with ColdFrame.Project.Calendar;
-with ColdFrame.Project.Events;
-with Simple_Buttons.Events;
-
 separate (Simple_Buttons.Button)
 procedure Set_Lit_Timeout
   (This : not null Handle) is

@@ -1117,10 +1117,12 @@
           <!-- Withs for classes related by associative associations. -->
           <xsl:for-each
             select = "/domain/class/associative[role/classname=$name]">
-            <xsl:element name="with">
-              <!-- Our own name gets ignored later. -->
-              <xsl:value-of select="role/classname"/>
-            </xsl:element>
+            <xsl:for-each select="role/classname">
+              <!-- We need both names. Our own name gets ignored later. -->
+              <xsl:element name="with">
+                <xsl:value-of select="."/>
+              </xsl:element>
+            </xsl:for-each>
           </xsl:for-each>
 
           <!-- Withs needed for subprograms of this and ancestor

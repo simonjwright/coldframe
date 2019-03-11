@@ -1,9 +1,5 @@
 --  This operation initializes the Lamps and Buttons.
 
-with Digital_IO;
-with Simple_Buttons.Button;
-with Simple_Buttons.A1;
-
 separate (Simple_Buttons.LED)
 procedure Initialize is
 
@@ -23,8 +19,7 @@ begin
    --  Create the LEDs ..
    for L in LED_Name loop
       declare
-         LH : constant LED.Handle := LED.Create ((Name => L))
-           with Unreferenced;
+         Dummy : constant LED.Handle := LED.Create ((Name => L));
       begin
          null;
       end;

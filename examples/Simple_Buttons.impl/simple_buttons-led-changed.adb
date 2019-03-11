@@ -2,10 +2,6 @@
 --  the LED should be lit (if any of the controlling Buttons is set)
 --  or not.
 
-with Digital_IO;
-with Simple_Buttons.A1;
-with Simple_Buttons.Button;
-
 separate (Simple_Buttons.LED)
 procedure Changed
   (This : not null Handle) is
