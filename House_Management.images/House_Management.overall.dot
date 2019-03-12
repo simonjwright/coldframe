@@ -9,8 +9,8 @@ Timed_Button [URL="#Timed_Button"]
 Toggle_Button [URL="#Toggle_Button"]
 Lamp -> A1 [label="A1", arrowhead=none, URL="#A1"]
 Button -> A1 [label="A1", arrowhead=none, URL="#A1"]
-Button -> Timed_Button [label="G1", dir=back, arrowhead=none, arrowtail=onormal, URL="#G1"]
-Button -> Toggle_Button [label="G1", dir=back, arrowhead=none, arrowtail=onormal, URL="#G1"]
+Button -> Timed_Button [label="Button", dir=back, arrowhead=none, arrowtail=onormal, URL="#Button"]
+Button -> Toggle_Button [label="Button", dir=back, arrowhead=none, arrowtail=onormal, URL="#Button"]
 
       }
     

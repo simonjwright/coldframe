@@ -1,6 +1,6 @@
 <map id="Timed_Button.class" name="Timed_Button.class">
 <area shape="rect" id="node1" href="#Timed_Button" title="{Timed_Button|Timeout : Timer|# Changed()\n&#45; Clear_Timeout()\n+ Get_State(): Boolean\n&#45; Set_Timeout()}" alt="" coords="5,5,151,127"/>
 <area shape="rect" id="node2" href="#Button" title="\N" alt="" coords="247,41,319,91"/>
-<area shape="poly" id="edge1" href="#G1" title="G1" alt="" coords="233,69,151,69,151,63,233,63"/>
-<area shape="rect" id="edge1-label" href="#G1" title="G1" alt="" coords="175,51,192,66"/>
+<area shape="poly" id="edge1" href="#Button" title="Button" alt="" coords="233,69,151,69,151,63,233,63"/>
+<area shape="rect" id="edge1-label" href="#Button" title="Button" alt="" coords="155,51,192,66"/>
 </map>

@@ -1,12 +1,12 @@
 <map id="Button.class" name="Button.class">
-<area shape="rect" id="node1" href="#Button" title="{Button|«id» Name : Button_Name\nState : Boolean|&#45; «class» Changed()\n&#45; «abstract» Changed()\n+ «abstract» Get_State(): Boolean\n# Notify_Connected_Lamps()}" alt="" coords="76,181,280,317"/>
+<area shape="rect" id="node1" href="#Button" title="{Button|«id» Name : Button_Name|&#45; «class» Changed()\n&#45; «abstract» Changed()\n+ «abstract» Get_State(): Boolean\n# Notify_Connected_Lamps()}" alt="" coords="76,188,280,309"/>
 <area shape="rect" id="node2" href="#A1" title="\N" alt="" coords="391,224,463,273"/>
 <area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="280,246,391,246,391,251,280,251"/>
 <area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="318,234,335,249"/>
 <area shape="rect" id="node3" href="#Timed_Button" title="\N" alt="" coords="8,5,108,55"/>
-<area shape="poly" id="edge2" href="#G1" title="G1" alt="" coords="73,53,136,168,132,170,69,56"/>
-<area shape="rect" id="edge2-label" href="#G1" title="G1" alt="" coords="85,97,103,112"/>
+<area shape="poly" id="edge2" href="#Button" title="Button" alt="" coords="73,53,140,175,136,177,69,56"/>
+<area shape="rect" id="edge2-label" href="#Button" title="Button" alt="" coords="67,101,105,115"/>
 <area shape="rect" id="node4" href="#Toggle_Button" title="\N" alt="" coords="5,442,108,491"/>
-<area shape="poly" id="edge3" href="#G1" title="G1" alt="" coords="68,441,131,327,136,329,72,444"/>
-<area shape="rect" id="edge3-label" href="#G1" title="G1" alt="" coords="85,371,102,385"/>
+<area shape="poly" id="edge3" href="#Button" title="Button" alt="" coords="68,441,135,320,140,322,72,444"/>
+<area shape="rect" id="edge3-label" href="#Button" title="Button" alt="" coords="66,367,104,382"/>
 </map>

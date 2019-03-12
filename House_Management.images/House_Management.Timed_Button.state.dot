@@ -6,9 +6,9 @@
 Reset[label="{Reset}"];
 Set[label="{Set|Set_Timeout}"];
 Initial->Reset;
-Set->Set[label="Button_Push    \n/Clear_Timeout    "];
-Set->Reset[label="Timeout    \n/Notify_Connected_Lamps    "];
 Reset->Set[label="Button_Push    \n/Notify_Connected_Lamps    "];
+Set->Reset[label="Timeout    \n/Notify_Connected_Lamps    "];
+Set->Set[label="Button_Push    \n/Clear_Timeout    "];
 
       }
     

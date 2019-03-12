@@ -1,15 +1,15 @@
 <map id="overall" name="overall">
-<area shape="rect" id="node1" href="#A1" title="\N" alt="" coords="256,121,328,170"/>
+<area shape="rect" id="node1" href="#A1" title="\N" alt="" coords="257,121,329,170"/>
 <area shape="rect" id="node2" href="#Button" title="\N" alt="" coords="144,6,216,55"/>
-<area shape="poly" id="edge2" href="#A1" title="A1" alt="" coords="205,53,271,119,267,123,201,57"/>
+<area shape="poly" id="edge2" href="#A1" title="A1" alt="" coords="205,53,272,119,268,123,202,57"/>
 <area shape="rect" id="edge2-label" href="#A1" title="A1" alt="" coords="244,81,261,95"/>
 <area shape="rect" id="node4" href="#Timed_Button" title="\N" alt="" coords="5,121,104,170"/>
-<area shape="poly" id="edge3" href="#G1" title="G1" alt="" coords="146,66,82,123,78,119,142,62"/>
-<area shape="rect" id="edge3-label" href="#G1" title="G1" alt="" coords="125,81,143,95"/>
+<area shape="poly" id="edge3" href="#Button" title="Button" alt="" coords="146,66,82,123,78,119,142,62"/>
+<area shape="rect" id="edge3-label" href="#Button" title="Button" alt="" coords="125,81,163,95"/>
 <area shape="rect" id="node5" href="#Toggle_Button" title="\N" alt="" coords="129,121,231,170"/>
-<area shape="poly" id="edge4" href="#G1" title="G1" alt="" coords="183,69,183,121,177,121,177,69"/>
-<area shape="rect" id="edge4-label" href="#G1" title="G1" alt="" coords="180,81,197,95"/>
-<area shape="rect" id="node3" href="#Lamp" title="\N" alt="" coords="256,6,328,55"/>
-<area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="295,55,295,121,289,121,289,55"/>
-<area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="292,81,309,95"/>
+<area shape="poly" id="edge4" href="#Button" title="Button" alt="" coords="183,69,183,121,177,121,177,69"/>
+<area shape="rect" id="edge4-label" href="#Button" title="Button" alt="" coords="180,81,217,95"/>
+<area shape="rect" id="node3" href="#Lamp" title="\N" alt="" coords="260,6,332,55"/>
+<area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="298,55,297,121,291,121,293,55"/>
+<area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="296,81,313,95"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="Toggle_Button.class" name="Toggle_Button.class">
 <area shape="rect" id="node1" href="#Toggle_Button" title="{Toggle_Button|On : Boolean|# Changed()\n+ Get_State(): Boolean}" alt="" coords="5,5,151,97"/>
 <area shape="rect" id="node2" href="#Button" title="\N" alt="" coords="247,27,319,76"/>
-<area shape="poly" id="edge1" href="#G1" title="G1" alt="" coords="233,54,151,54,151,49,233,49"/>
-<area shape="rect" id="edge1-label" href="#G1" title="G1" alt="" coords="175,37,192,51"/>
+<area shape="poly" id="edge1" href="#Button" title="Button" alt="" coords="233,54,151,54,151,49,233,49"/>
+<area shape="rect" id="edge1-label" href="#Button" title="Button" alt="" coords="155,37,192,51"/>
 </map>

@@ -6,7 +6,7 @@ digraph "Toggle_Button.class" {
       
       Toggle_Button [fillcolor=moccasin, URL="#Toggle_Button", label="{Toggle_Button|On : Boolean|# Changed()\n+ Get_State(): Boolean}"]
 Button [URL="#Button"]
-Button -> Toggle_Button [label="G1", dir=back, arrowhead=none, arrowtail=onormal, URL="#G1"]
+Button -> Toggle_Button [label="Button", dir=back, arrowhead=none, arrowtail=onormal, URL="#Button"]
 
       }
      
