@@ -7,6 +7,7 @@
 *.images
 *.ada
 *.norm-stamp
+*.tuml-norm-stamp
 
 gpr_query*
 

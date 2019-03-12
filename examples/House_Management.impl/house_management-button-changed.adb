@@ -13,9 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  Acts as receiver of state changes from Digital IO, via Signal
---  State Callback. If a Button has been pushed, posts
---  Button_Pushed events to the Lamps which are controlled by that
---  Button. Button releases are ignored.
+--  State Callback. Calls the instance Changed so the Button can take
+--  the appropriate action.
 
 separate (House_Management.Button)
 procedure Changed

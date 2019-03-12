@@ -31,7 +31,6 @@ ADA_PROJECT_PATH=../..
 
 include ../../Makefile.inc
 
-
 EXECUTABLES += simple_buttons.bin
 
 simple_buttons.bin: simple_buttons

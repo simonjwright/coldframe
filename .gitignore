@@ -5,5 +5,9 @@ lib*static*
 
 coldframeout
 
+gpr_query*
+
+*.map
+
 # in case of Python virtual environment
 venv

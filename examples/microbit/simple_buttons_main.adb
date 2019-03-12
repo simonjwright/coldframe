@@ -27,6 +27,12 @@ procedure Simple_Buttons_Main is
        Convention => Ada,
        External_Name => "_environment_task_storage_size";
 
+   Default_Storage_Size : constant Natural := 1536
+     with
+       Export,
+       Convention => Ada,
+       External_Name => "_default_storage_size";
+
    Dispatcher : constant ColdFrame.Events.Event_Queue_P
      := Simple_Buttons_Dispatcher.Dispatcher'Unchecked_Access;
 

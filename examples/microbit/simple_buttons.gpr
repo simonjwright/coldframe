@@ -27,7 +27,8 @@ project Simple_Buttons is
       for Executable ("simple_buttons_main.adb") use "simple_buttons";
       for Default_Switches ("ada") use
         Options_Ravenscar.Builder'Default_Switches ("ada")
-        & ("--create-map-file=" & project'Project_Dir & project'Name & ".map");
+        & ("--create-map-file=" & project'Project_Dir & project'Name & ".map")
+        & ("-O2");
    end Builder;
 
    package Compiler renames Options_Ravenscar.Compiler;

@@ -53,8 +53,14 @@ abstract project Options_Ravenscar is
 
    COMPILER_SWITCHES :=
      (
+      --  keep .alis, assertions, full messages, hardware overflow
+      --  checks, style checks
+      "-gnatqQafoy",
+      --  All standard warnings except elaboration problems
+      "-gnatwaL",
       "-gnat12",
-      "-g");
+      "-g"
+     );
    case RTS is
       when "native" =>
          null;
@@ -63,7 +69,10 @@ abstract project Options_Ravenscar is
            (
             --  .. dead code elimination (with -fgc-sections at link)
             "-ffunction-sections",
-            "-fdata-sections"
+            "-fdata-sections",
+            --  .. non-local exceptions (exceptions invoking Last
+            --  Chance Handler: expected!)
+            "-gnatw.X"
            );
    end case;
    case Build is
@@ -80,28 +89,7 @@ abstract project Options_Ravenscar is
 
    --  GCC configuration options.
    package Compiler is
-      for Default_Switches ("ada") use
-        COMPILER_SWITCHES
-        & (
-           "-gnatqQafoy",
-           --  keep .alis, assertions, full messages, hardware overflow
-           --  checks, style checks
-
-           "-gnatwaL"
-          --  All standard warnings except elaboration problems
-          );
-      case RTS is
-         when "native" =>
-            null;
-         when others =>
-            for Default_Switches ("ada") use
-              Compiler'Default_Switches ("ada") &
-              (
-               "-gnatw.X"
-               --  .. and non-local exceptions (exceptions invoking Last
-               --  Chance Handler: expected!)
-              );
-      end case;
+      for Switches ("ada") use COMPILER_SWITCHES;
    end Compiler;
 
    -- GNATBIND configuration options.

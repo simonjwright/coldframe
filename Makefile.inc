@@ -186,9 +186,31 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 # Generate .norm files from .rr.
 # This is actually cast as a rule to generate .norm-stamp files from .rr,
 # because a .rr file can contain any number of domains.
-%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
+# Depends on normalize_xmi while under development.
+%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi
 	$(COLDFRAME)/tools/normalize_xmi	\
-	  -c $(CYGWIN)$(CASE_EXCEPTIONS)			\
+	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
+	  $(NORM_VERBOSE)			\
+	  $(CYGWIN)$<
+	touch $@
+
+# Generate .xmi files from .tuml (TextUML) in $(MODELS)
+# Depends on tuml2xml.py while under development.
+$(COLDFRAMEOUT)/%.xmi: $(MODELS)/%.tuml $(COLDFRAME)/scripts/tuml2xmi.py
+	$(COLDFRAME)/scripts/tuml2xmi.py --output=$@ $<
+
+# Generate .xmi files from .tuml (TextUML) in $PWD
+#
+$(COLDFRAMEOUT)/%.xmi: %.tuml $(COLDFRAME)/scripts/tuml2xmi.py
+	$(COLDFRAME)/scripts/tuml2xmi.py --output=$@ $<
+
+# Generate .norm files from .xmi (as produced by tuml2xmi.py).
+# This is actually cast as a rule to generate .tuml-norm-stamp files
+# from .xmi, because a .xmi file can contain any number of domains.
+# Depends on normalize_xmi while under development.
+%.tuml-norm-stamp: $(COLDFRAMEOUT)/%.xmi $(COLDFRAME)/tools/normalize_xmi
+	$(COLDFRAME)/tools/normalize_xmi	\
+	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
 	  $(NORM_VERBOSE)			\
 	  $(CYGWIN)$<
 	touch $@

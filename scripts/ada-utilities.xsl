@@ -221,7 +221,6 @@
     </xsl:choose>
   </xsl:template>
 
-
   <!-- Called at domain/class to compute number of instances.
        (If not at domain/class, set parameter "c" to the class
        for which the computation is required.)
