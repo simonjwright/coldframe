@@ -1,0 +1,142 @@
+<head>
+<title>ColdFrame: Operation Bodies</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<h1>ColdFrame: Operation Bodies</h1>
+
+<h2>Introduction</h2>
+
+<p>Operation declarations are generated in the appropriate package
+specification.
+
+<p>Normally, the body is generated as a body stub in the corresponding package body, and
+
+<tt>separate</tt> proper bodies <i>(this is the reason why all the
+operations of all but protected types, and all the operations of a
+class bar entries, must have distinct names;
+see <a href="https://www.adaic.com/standards/95lrm/html/RM-10-1-3.html">ARM
+10.1.3</a> (14))</i>.
+
+<p>The proper bodies are compilable, but raise
+a <tt>Not_Yet_Implemented</tt> exception if called. They are initially
+generated in <tt><i>domain</i>.gen</tt>; move them
+to <tt><i>domain</i>.impl</tt>, change the protection to read/write,
+and edit as required (remembering to remove the 'Edit this' comment at
+the top!)
+
+<p>With some limitations, it's possible instead to specify an
+operation's body content in the model. This has the advantage of
+reducing the number of implementation files to be kept under
+configuration management, and also makes it much simpler to change the
+name and profile of an operation.
+
+<h2>"Modelling"</h2>
+
+<p>Given a class with an operation (<tt>Is_Set</tt>) selected,
+
+<p>
+<img
+class="screenshot"
+src="body-class.png"
+alt="Class Button. operation Is_Set highlighted">
+
+<br>
+<p>the left of the lower panel looks like
+
+<p>
+<img
+class="screenshot"
+src="body-lpanel-1.png"
+alt="Class Button. operation Is_Set">
+
+<br>
+<p>and the right like
+
+<p>
+<img
+class="screenshot"
+src="body-rpanel-1.png"
+alt="Class Button. operation Is_Set, empty Method">
+
+<br>
+<p>Click on the arrowhead by <i>Method</i>
+
+<p>
+<img
+class="screenshot"
+src="body-rpanel-2.png"
+alt="Class Button. operation Is_Set, clicked Method">
+
+<br>
+<p>and click on the text (lower) icon, which brings up a box into
+which you can enter the code (this is a very unreal example! more
+later ...)
+
+<p>
+<img
+class="screenshot"
+src="body-rpanel-3.png"
+alt="Class Button. operation Is_Set, adding text>"
+
+<br>
+<p>To save, go to the left of the panel,
+
+<p>
+<img
+class="screenshot"
+src="body-lpanel-2.png"
+alt="Class Button. operation Is_Set, save changed method>"
+
+<br>
+<p>and click on the left arrowhead by the <i>Specification</i>; the
+right of the panel now shows one (unnamed) method, which you can
+revisit by double-clicking on it.
+
+<p>
+<img
+class="screenshot"
+src="body-rpanel-4.png"
+alt="Class Button. operation Is_Set, method added>"
+
+<pr>
+<p>ColdFrame only allows one method. If you accidentally create
+another, you can delete it (it will be the bottom one, but do check!)
+by selecting it and clicking on the wastebin icon.
+
+<h2>Limitations</h2>
+
+<h3>Declarations</h3>
+
+<p>The given body text is inserted into the generated code as-is
+(properly indented). You can't add code to the subprogram's
+declarative region.
+
+<p>However, you can use a declare block: for the <tt>Is_Set</tt>
+function above, this could look like
+
+<pre>
+declare
+   Set_In_State : constant array (State_Machine_State_T) of Boolean
+     := (Pushed | Held | Timed | Pushed_Again => True,
+         others => False);
+begin
+   return Set_In_State (This.State_Machine_State);
+end;
+</pre>
+
+<p>You'll have to write the code anyway, but you might consider that
+that is about at the limit of what's manageable.
+
+<h3>Context</h3>
+
+<p>ColdFrame adds context clauses (<tt>with</tt>s) to the class
+package body for all classes related to this class and for
+associations in which this class is mentioned.
+
+<p>If you need more, you'll have to implement the operation in a
+proper body.
+
+</body>
+</html>

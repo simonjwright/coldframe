@@ -181,14 +181,15 @@ separate proper body.
 package specification. If marked <em>&#171;accessor&#187;</em>, proper
 bodies are generated in the class package body; if not, body stubs are
 generated in the package body with <tt>separate</tt> proper bodies,
-like other operations except that you have the opportunity to provide
-your own implementation if desired.
+like other operations except that you don't need to provide your own
+implementation unless necessary.
 
-<p>Other operations are generated as
+<p>Other operations are generated as declarations in the appropriate
+package specification.
+
+<p>Bodies are normally generated as
 
 <ul>
-
-<li>declarations in the appropriate package specification,
 
 <li>body stubs in the corresponding package body, and
 
@@ -202,6 +203,10 @@ The bodies are compilable, but raise a <tt>Not_Yet_Implemented</tt>
 exception if called.
 
 </ul>
+
+<p>However, it's possible (with some limitations)
+to <a href="operation-bodies.html">specify the body's contents in the
+model</a>.
 
 <p>Operations with returns (<i>op():type-name</i> in the model) are
 implemented as functions.
