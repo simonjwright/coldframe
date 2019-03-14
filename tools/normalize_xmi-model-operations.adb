@@ -234,6 +234,11 @@ package body Normalize_XMI.Model.Operations is
             First : Positive := Body_Text'First;
             Last : Natural;
             CRLF : constant Character_Set := To_Set (ASCII.CR & ASCII.LF);
+
+            --  We want to strip off as much left white space as there
+            --  is on the first line of a multi-line body, to preserve
+            --  the author's layout.
+            First_Line_Pad : Integer := -1;
          begin
             Put_Line (To, "<body>");
             --  We're going to use Find_Token, using a Character_Set with
@@ -252,8 +257,29 @@ package body Normalize_XMI.Model.Operations is
                     := Trim (Body_Text (First .. Last), Side => Right);
                begin
                   if Line'Length > 0 then
+                     if First_Line_Pad < 0 then
+                        --  work out how much leading space to remove.
+                        --  XXX tabs?
+                        First_Line_Pad := 0;
+                        while Line (First_Line_Pad + 1) = ' ' loop
+                           First_Line_Pad := First_Line_Pad + 1;
+                        end loop;
+                     end if;
                      Put (To, "<line><![CDATA[");
-                     Put (To, Line);
+                     declare
+                        Start : Natural := 0;
+                     begin
+                        --  Remove the leading spaces.
+                        loop
+                           if Start > First_Line_Pad
+                             or else Line (Line'First + Start) /= ' '
+                           then
+                              Put (To, Line (Line'First + Start .. Line'Last));
+                              exit;
+                           end if;
+                           Start := Start + 1;
+                        end loop;
+                     end;
                      Put_Line (To, "]]></line>");
                   end if;
                end;

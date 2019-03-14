@@ -397,6 +397,14 @@ class Operation(Base):
             typ = self.add_xml_path(rtn, ('UML:Parameter.type',
                                           'UML:DataType'))
             typ.set('name', self.rtn)
+        if self.body is not None:
+            method = self.add_xml_path(to, ('UML:Method',))
+            spec = self.add_xml_path(method, ('UML:Method.specification',
+                                              'UML:Operation'))
+            spec.set('name', self.name)
+            body = self.add_xml_path(method, ('UML:Method.body',
+                                              'UML:ProcedureExpression'))
+            body.set('body', self.body)
 
 
 class Package(Base):
@@ -1355,11 +1363,22 @@ def p_statement_list(p):
         p[0] = p[1]
 
 
+def p_operation_body(p):
+    '''
+    operation_body : OPERATION_BODY
+    '''
+    if len(p) > 1:
+        # remove the { }
+        p[0] = p[1][1:-1]
+
+
 def p_operation_decl(p):
     '''
-    operation_decl : operation_header SEMICOLON
+    operation_decl \
+        : operation_header SEMICOLON operation_body
+        | operation_header SEMICOLON
     '''
-    # XXX operation_constraint* optional_behavioral_feature_body
+    # XXX operation_constraint*
     p[0] = Operation()
     p[0].name = p[1][1]
     p[0].parameters = p[1][2][0]
@@ -1369,6 +1388,8 @@ def p_operation_decl(p):
     # rtn is (annotations_opt, (single_type_identifier optional_multiplicity))
     if p[1][2][1] is not None:
         p[0].rtn = p[1][2][1][1][0]
+    if len(p) > 3:
+        p[0].body = p[3]
 
 
 def p_operation_header(p):
@@ -2197,6 +2218,9 @@ tokens = (
     # comments
     'COMMENT',
     'MODEL_COMMENT',
+
+    # operation body
+    'OPERATION_BODY',
 ) + tuple(reserved.values())
 
 t_PLUS = r'\+'
@@ -2252,6 +2276,16 @@ def t_MODEL_COMMENT(t):
         if c == '\n':
             t.lexer.lineno += 1
     t.value = t.value[2:-2].strip().replace('\\\n', '')
+    return t
+
+
+def t_OPERATION_BODY(t):
+    # This lexeme may be multiline; need to update the line number.
+    r'{([^}]+)}'
+    for c in t.value:
+        if c == '\n':
+            t.lexer.lineno += 1
+    # processing - eg t.value = t.value[2:-2].strip().replace('\\\n', '')
     return t
 
 
