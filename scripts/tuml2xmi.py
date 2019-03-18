@@ -25,7 +25,8 @@
 # normalize_xmi which it seems pointless to reproduce.
 
 # See http://abstratt.github.io/textuml/readme.html,
-# https://github.com/abstratt/textuml.
+# https://github.com/abstratt/textuml/blob/master/
+#   plugins/com.abstratt.mdd.frontend.textuml.grammar/textuml.scc
 
 # Uses PLY (http://www.dabeaz.com/ply/).
 
@@ -751,15 +752,6 @@ def p_import_decl(p):
     pass
 
 
-def p_optional_alias(p):
-    '''
-    optional_alias : ALIAS identifier
-                   | empty
-    '''
-    # XXX
-    pass
-
-
 def p_namespace_contents(p):
     '''
     namespace_contents \
@@ -1063,7 +1055,6 @@ def p_class_modifier(p):
         : visibility_modifier
         | ABSTRACT
         | EXTERNAL
-        | ROLE
     '''
     p[0] = p[1]
 
@@ -1073,7 +1064,6 @@ def p_class_type(p):
     class_type \
         : CLASS
         | INTERFACE
-        | ACTOR
         | COMPONENT
     '''
     # DATATYPE extracted
@@ -1368,8 +1358,7 @@ def p_operation_body(p):
     operation_body : OPERATION_BODY
     '''
     if len(p) > 1:
-        # remove the { }
-        p[0] = p[1][1:-1]
+        p[0] = p[1]
 
 
 def p_operation_decl(p):
@@ -2049,142 +2038,73 @@ def p_error(p):
 
 reserved = {
     'abstract': 'ABSTRACT',
-    'access': 'ACCESS',
-    'actor': 'ACTOR',
-    'aggregation': 'AGGREGATION',
-    'alias': 'ALIAS',
-    'allow': 'ALLOW',
-    'all': 'ALL',
-    'and': 'AND',
     'any': 'ANY',
-    'anyone': 'ANYONE',
     'apply': 'APPLY',
     'association': 'ASSOCIATION',
     'association_class': 'ASSOCIATION_CLASS',
-    'as': 'AS',
     'attribute': 'ATTRIBUTE',
-    'begin': 'BEGIN',
-    'broadcast': 'BROADCAST',
-    'by': 'BY',
-    'call': 'CALL',
-    'catch': 'CATCH',
     'class': 'CLASS',
     'component': 'COMPONENT',
-    'composition': 'COMPOSITION',
-    'connector': 'CONNECTOR',
     'create': 'CREATE',
     'datatype': 'DATATYPE',
     'delete': 'DELETE',
-    'deny': 'DENY',
-    'dependency': 'DEPENDENCY',
     'derived': 'DERIVED',
-    'destroy': 'DESTROY',
     'do': 'DO',
-    'else': 'ELSE',
-    'elseif': 'ELSEIF',
     'end': 'END',
     'entry': 'ENTRY',
     'enumeration': 'ENUMERATION',
     'exception': 'EXCEPTION',
-    'exit': 'EXIT',
     'extends': 'EXTENDS',
-    'extent': 'EXTENT',
     'external': 'EXTERNAL',
     'false': 'FALSE',
     'final': 'FINAL',
-    'finally': 'FINALLY',
-    'function': 'FUNCTION',
     'id': 'ID',
-    'if': 'IF',
-    'implements': 'IMPLEMENTS',
     'import': 'IMPORT',
     'in': 'IN',
     'initial': 'INITIAL',
     'inout': 'INOUT',
     'interface': 'INTERFACE',
-    'invariant': 'INVARIANT',
-    'is': 'IS',
-    'link': 'LINK',
     'literal': 'ENUMERATION_LITERAL',
     'load': 'LOAD',
     'model': 'MODEL',
-    'navigable': 'NAVIGABLE',
-    'new': 'NEW',
-    'none': 'NONE',
     'nonunique': 'NONUNIQUE',
-    'not': 'NOT',
     'null': 'NULL',
     'on': 'ON',
     'operation': 'OPERATION',
-    'opposite': 'OPPOSITE',
-    'or': 'OR',
     'ordered': 'ORDERED',
     'out': 'OUT',
     'package': 'PACKAGE',
-    'port': 'PORT',
     'postcondition': 'POSTCONDITION',
     'precondition': 'PRECONDITION',
     'primitive': 'PRIMITIVE',
     'private': 'PRIVATE',
     'profile': 'PROFILE',
-    'property': 'PROPERTY',
     'protected': 'PROTECTED',
-    'provided': 'PROVIDED',
     'public': 'PUBLIC',
-    'query': 'QUERY',
-    'raise': 'RAISE',
-    'raises': 'RAISES',
     'read': 'READ',
     'readonly': 'READONLY',
-    'reception': 'RECEPTION',
-    'reference': 'REFERENCE',
-    'repeat': 'REPEAT',
-    'required': 'REQUIRED',
-    'return': 'RETURN',
-    'role': 'ROLE',
-    'self': 'SELF',
-    'send': 'SEND',
     'signal': 'SIGNAL',
     'specializes': 'SPECIALIZES',
     'state': 'STATE',
     'statemachine': 'STATEMACHINE',
     'static': 'STATIC',
-    'stereotype': 'STEREOTYPE',
-    'subsets': 'SUBSETS',
     'terminate': 'TERMINATE',
-    'then': 'THEN',
     'to': 'TO',
     'transition': 'TRANSITION',
     'true': 'TRUE',
-    'try': 'TRY',
-    'type': 'TYPE',
     'unique': 'UNIQUE',
-    'unlink': 'UNLINK',
     'unordered': 'UNORDERED',
-    'until': 'UNTIL',
     'update': 'UPDATE',
-    'var': 'VAR',
-    'when': 'WHEN',
-    'where': 'WHERE',
-    'while': 'WHILE'
 }
 
 
 tokens = (
     # arithmetic symbols
-    'PLUS',
-    'MINUS',
     'MULT',
-    'DIV',
     'ASSIGNOP',
 
     # relational symbols
     'EQUALS',
-    'EQUALS_EQUALS',
-    'LT',
-    'LE',
-    'GT',
-    'GE',
 
     # separator symbols
     'COMMA',
@@ -2192,18 +2112,12 @@ tokens = (
     'SEMICOLON',
     'DOT',
     'NAMESPACE_SEPARATOR',
-    'HASH',
     'L_PAREN',
     'R_PAREN',
     'L_BRACKET',
     'R_BRACKET',
     'L_CURLY_BRACKET',
     'R_CURLY_BRACKET',
-    'LEFT_ARROW',
-    'RIGHT_ARROW',
-    'L_GUILLEMET',
-    'R_GUILLEMET',
-    'NOT_NULL',
 
     # identifiers
     'IDENTIFIER',
@@ -2223,36 +2137,22 @@ tokens = (
     'OPERATION_BODY',
 ) + tuple(reserved.values())
 
-t_PLUS = r'\+'
-t_MINUS = r'-'
 t_MULT = r'\*'
-t_DIV = r'/'
 t_ASSIGNOP = r':='
 
 t_EQUALS = r'='
-t_EQUALS_EQUALS = r'=='
-t_LT = r'<'
-t_LE = r'<='
-t_GT = r'>'
-t_GE = r'>='
 
 t_COMMA = r','
 t_COLON = r':'
 t_SEMICOLON = r';'
 t_DOT = r'.'
 t_NAMESPACE_SEPARATOR = r'::'
-t_HASH = r'\#'
 t_L_PAREN = r'\('
 t_R_PAREN = r'\)'
 t_L_BRACKET = r'\['
 t_R_BRACKET = r']'
 t_L_CURLY_BRACKET = r'{'
 t_R_CURLY_BRACKET = r'}'
-t_LEFT_ARROW = r'<-'
-t_RIGHT_ARROW = r'->'
-t_L_GUILLEMET = r'«'
-t_R_GUILLEMET = r'»'
-t_NOT_NULL = r'\?'
 
 t_INTEGER = r'[+-]?\d+'
 
@@ -2285,7 +2185,8 @@ def t_OPERATION_BODY(t):
     for c in t.value:
         if c == '\n':
             t.lexer.lineno += 1
-    # processing - eg t.value = t.value[2:-2].strip().replace('\\\n', '')
+    # Remove the { }
+    t.value = t.value[1:-1]
     return t
 
 
@@ -2352,12 +2253,12 @@ def main():
     def usage():
         sys.stderr.write('usage: tuml2xmi.py [flags] [input .tuml file]\n')
         sys.stderr.write('flags:\n')
-        sys.stderr.write('-h, --help:              '
+        sys.stderr.write('-h, --help:        '
                          + 'output this message\n')
-        sys.stderr.write('-o, --output=PATH:       '
+        sys.stderr.write('-o, --output=PATH: '
                          + 'the output path/file '
                          + '(default is ./domain_name.xmi)\n')
-        sys.stderr.write('-v, --verbose:              '
+        sys.stderr.write('-v, --verbose:     '
                          + 'detailed progress reporting\n')
 
     try:
@@ -2404,7 +2305,7 @@ def main():
     # parse the input, creating a Model
     m = parser.parse(lexer=lexer, debug=verbosity)
     # output
-    # by default, the output for a domain is to <domain>.xmi
+    # by default, the output for a model is to <model>.xmi
     if output_file == '-':
         output = sys.stdout
     elif output_file == '' and len(args) == 0:
