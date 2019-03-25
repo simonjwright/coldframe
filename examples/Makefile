@@ -123,7 +123,6 @@ NORM_FILES =					\
  Library.norm					\
  Performance.norm				\
  Problem_Reporting.norm				\
- Simple_Buttons.norm				\
  States.norm					\
  Van_Fleet.norm
 
@@ -132,10 +131,11 @@ NORM_FILES =					\
 $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 TUML_NORM_FILES =				\
+Simple_Buttons.norm
 
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
-$(TUML_NORM_FILES): Housing.tuml-norm-stamp ;
+$(TUML_NORM_FILES): Simple_Buttons.tuml-norm-stamp ;
 
 clean::
 	for g in *.gpr; do			\

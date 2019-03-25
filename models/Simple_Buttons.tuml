@@ -1,0 +1,303 @@
+(*
+Copyright (C) Simon Wright <simon@pushface.org>
+
+This package is free software; you can redistribute it and/or modify it \
+under terms of the GNU General Public License as published by the Free \
+Software Foundation; either version 2, or (at your option) any later \
+version. This package is distributed in the hope that it will be useful, \
+but WITHOUT ANY WARRANTY; without even the implied warranty of \
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General \
+Public License for more details. You should have received a copy of the \
+GNU General Public License distributed with this package; see file COPYING. \
+If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, \
+Boston, MA 02111-1307, USA.
+
+This domain is intended for demonstrating ColdFrame's use in Ravenscar \
+systems.
+
+Because sampler boards have very few buttons and user-accessible LEDs, \
+the design is very restricted.
+*)
+model Simple_Buttons;
+
+  (*
+  Copyright (C) Simon Wright <simon@pushface.org>
+
+  This package is free software; you can redistribute it and/or \
+  modify it under terms of the GNU General Public License as \
+  published by the Free Software Foundation; either version 2, or \
+  (at your option) any later version. This package is distributed \
+  in the hope that it will be useful, but WITHOUT ANY WARRANTY; \
+  without even the implied warranty of MERCHANTABILITY or FITNESS \
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License \
+  for more details. You should have received a copy of the GNU \
+  General Public License distributed with this package; see file \
+  COPYING. If not, write to the Free Software Foundation, 59 \
+  Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+  This domain is intended for demonstrating ColdFrame's use in Ravenscar \
+  systems.
+
+  Because sampler boards have very few buttons and user-accessible LEDs, \
+  the design is very restricted.
+  *)
+  [domain]
+  package Simple_Buttons;
+
+    (* Names the Buttons. Only B1 will be used. *)
+    enumeration Button_Name
+      B1,
+      B2
+    end;
+
+    (* Names the LEDs. Only L1 will be used. *)
+    enumeration LED_Name
+      L1,
+      L2
+    end;
+
+    (*
+    This type is used by the supporting Digital IO domain to report \
+    input (switch) state changes.
+    *)
+    [imported (imported = Digital_IO)]
+    datatype Input_Signal_State;
+
+    (*
+    This type is used by the supporting Digital IO domain to name \
+    outputs (LEDs).
+    *)
+    [imported (imported = Digital_IO)]
+    datatype Output_Signal;
+
+    /* ---------------------------------------- */
+    /* Classes */
+
+    /* ---------------------------------------- */
+    /* Button signals */
+
+    signal Button::Lit_Timeout;
+    signal Button::Push;
+    signal Button::Push_Timeout;
+    signal Button::Release;
+
+    (*
+    A Button controls a number of LEDs. When the Button is 'set', the  \
+    LEDs related by A1 are lit.
+
+    Buttons respond to both 'short' and 'long' pushes.
+
+    After a long push, the button remains set until it's pushed again \
+    (long or short).
+
+    After a short push, the Button remains set for a period, which can \
+    be extended by a further short push or a long push.
+    *)
+    class Button
+
+      (* The name of the Button. *)
+      id attribute Name : Button_Name;
+
+      (*
+      Holds the time when the Button was pushed, so that the Lit \
+      timeout can run from this initial time rather than (e.g.) when \
+      the Button was released.
+      *)
+      attribute Pushed_Time : Time;
+
+      (*
+      Controls how long the Button remains pushed after it's been \
+      released and entered the Timed state.
+      *)
+      attribute Lit_Timer : Timer;
+
+      (*
+      Controls how long the Button needs to remain pushed before \
+      transition to the Held state.
+      *)
+      attribute Pushed_Timer : Timer;
+
+      (*
+      The state of the button has changed; tell the controlled LEDs \
+      to reevaluate their own states (by checking whether any of \
+      the Buttons they are controlled by is set).
+      *)
+      private operation Changed();
+
+      (*
+      Stores the time at which the Button was pushed: the Lit \
+      timeout runs from this time, not the time of Button release.
+      *)
+      private operation Note_Pushed_Time();
+      {
+        This.Pushed_Time := ColdFrame.Project.Calendar.Clock;
+      }
+
+      private operation Set_Pushed_Timeout();
+      {
+        ColdFrame.Project.Events.Set
+          (The_Timer => This.Pushed_Timer,
+           On => Events.Dispatcher,
+           To_Fire => new Push_Timeout (This),
+           After => 0.25);
+      }
+
+      private operation Clear_Pushed_Timeout();
+      {
+        ColdFrame.Project.Events.Unset
+          (The_Timer => This.Pushed_Timer,
+           On => Events.Dispatcher);
+      }
+
+      private operation Set_Lit_Timeout();
+
+      private operation Clear_Lit_Timeout();
+      {
+        ColdFrame.Project.Events.Unset
+          (The_Timer => This.Lit_Timer,
+           On => Events.Dispatcher);
+      }
+
+      (*
+      Indicates whether the Button is set or not. It's set if it's \
+      in any of the states Pushed, Held, Timed, Pushed_Again.
+      *)
+      public operation Is_Set(): Boolean;
+      {
+        declare
+           Set_In_State : constant array (State_Machine_State_T) of Boolean
+             := (Pushed | Held | Timed | Pushed_Again => True,
+                 others => False);
+        begin
+           return Set_In_State (This.State_Machine_State);
+        end;
+      }
+
+      (*
+      Acts as receiver of state changes from Digital IO, via \
+      Input_Signal State Callback. Calls the instance Changed so \
+      the Button can take the appropriate action.
+      *)
+      [callback]
+      private static operation Receive_Change(S : Input_Signal_State);
+
+      /* ---------------------------------------- */
+
+      statemachine Button
+
+        initial state Initial
+          transition to Off;
+        end; /* Initial */
+
+        (*
+        The button is off, waiting for a Push. If this state was entered \
+        as a result of a Push in the Held state, there will be a \
+        corresponding Release, which is ignored.
+        *)
+        state Off
+          entry(Changed);
+          transition on signal(Button::Push) to Pushed;
+
+          (*
+          This Release corresponds to a Push which took the Button out \
+          of the Held state, and is ignored.
+          *)
+          [ignore] transition on signal(Button::Release) to Off;
+        end; /* Off */
+
+        (*
+        The button is on, awaiting a Push_Timeout, which transitions to \
+        the Held state (a long push), or a Release (a short push), which \
+        transitions to the Timed state.
+        *)
+        state Pushed
+          entry(Note_Pushed_Time; Changed; Set_Pushed_Timeout);
+          transition on signal(Button::Push_Timeout) to Held;
+          transition on signal(Button::Release) to Timed;
+        end; /* Pushed */
+
+        (*
+        The button is on after a short push, awaiting a Lit_Timeout (which \
+        transitions to the Off state) or another Push (which transitions to \
+        Pushed_Again).
+        *)
+        state Timed
+          entry(Clear_Pushed_Timeout; Set_Lit_Timeout);
+          transition on signal(Button::Push) to Pushed_Again;
+          transition on signal(Button::Lit_Timeout) to Off;
+        end; /* Held */
+
+        (*
+        The button has been pushed during the timeout after a short push. \
+        Resets the timeout and performs a completion transition to Pushed to \
+        start another check (this Push can be the start of another short \
+        push or a new long push).
+        *)
+        state Pushed_Again
+          entry(Clear_Lit_Timeout);
+          transition to Pushed;
+        end; /* Pushed_Again */
+
+        (*
+        The button is on, after a long push, awaiting another Push to \
+        transition to the Off state. The button is still pushed, so there \
+        will be a corresponding Release, which is ignored.
+        *)
+        state Held
+          transition on signal(Button::Push) to Off;
+
+          (*
+          This Release is ignored, because the Button is taken out of \
+          the Held state by another Push.
+          *)
+          [ignore] transition on signal(Button::Release) to Held;
+        end; /* Held */
+
+      end; /* statemachine */
+
+    end; /* Button */
+
+    (* An LED is lit when any of the Buttons it's controlled by is set. *)
+    class LED
+
+      (* Each LED has a name. *)
+      id attribute Name : LED_Name;
+
+      (*
+      Initializes the domain by creating Button(s) and LED(s) and \
+      associating them.
+      *)
+      [init]
+      private static operation Initialize();
+
+      (*
+      Called when a controlling Button has changed to evaluate whether \
+      the LED should be lit (if any of the controlling Buttons is set) \
+      or not.
+      *)
+      public operation Changed();
+
+      (* Maps the LED to the corresponding Digital_IO output pin. *)
+      private operation Output_Signal_For_LED(): Output_Signal;
+      {
+        --  This isn't going to be very extendable, but there's only one
+        --  LED in this simple demo.
+        return LED_Name'Pos (This.Name);
+      }
+
+    end; /* LED */
+
+    /* ---------------------------------------- */
+    /* Associations */
+
+    (*
+    Relates each LED to the Button(s) it's controlled by.
+    Each Button controls one or more LEDs.
+    *)
+    association_class A1
+      Button Controls LED[0,*];
+      LED Is_Controlled_By Button[0,*];
+    end; /* A1 */
+  end;
+
+end.

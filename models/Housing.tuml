@@ -156,7 +156,7 @@ model Housing;
     end; /* Timed_Button */
 
     (* A Toggle Button is a push-on, push-off toggle. *)
-    /* Have to specify the appreviation: otherwise Toggle & Timed would
+    /* Have to specify the abbreviation: otherwise Toggle & Timed would
        have the same. */
     [abbreviation (abbreviation = ToB)]
     class Toggle_Button specializes Button

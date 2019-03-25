@@ -115,7 +115,7 @@ class Base:
     def add_xml_annotations(self, to):
         """Annotations are stereotypes and tagged values."""
         # self.annotations is a list,
-        # ((stereotype-name, (tag-name, tag_value))))
+        # ((stereotype-name, (tag-name, tag_value)))
         to.set('xmi.id', self.path_name())  # required by normalize_xmi - ?
         for a in self.annotations:
             self.add_xml_stereotype(to, a)
@@ -141,8 +141,7 @@ class Base:
         self.add_xml_documentation(to)
         self.add_xml_annotations(to)
 
-        # The modifiers for top level elements are visibility, abstract,
-        # external, role.
+        # The modifiers for top level elements are visibility, abstract.
         possible_visibilities = {'public', 'private', 'package', 'protected'}
         mods = set(self.modifiers)
         visibility_mods = possible_visibilities & mods
@@ -218,9 +217,7 @@ class Attribute(Base):
         att.set('name', self.name)
         self.add_xml_documentation(att)
         self.add_xml_annotations(att)
-        # The modifiers for attributes are visibility, static,
-        # abstract, derived, readonly, id (clearly not all apply to
-        # attributes!)
+        # The modifiers for attributes are visibility, static, id.
         possible_visibilities = {'public', 'private', 'package', 'protected'}
         mods = set(self.modifiers)
         visibility_mods = possible_visibilities & mods
@@ -296,6 +293,9 @@ class Class_Utility(Class):
 class Datatype(Base):
 
     def add_xml(self, to):
+        if 'abstract' in self.modifiers:
+            error("'abstract' not supported in datatypes (%s)"
+                  % self.path_name())
         # ColdFrame, because of ArgoUML features, represents a data type
         # with attributes to be implemented as a class but with the
         # stereotype <<datatype>>.
@@ -360,9 +360,7 @@ class Operation(Base):
         opn.set('name', self.name)
         self.add_xml_documentation(opn)
         self.add_xml_annotations(opn)
-        # The modifiers for operations are visibility, static,
-        # abstract, derived, readonly, id (clearly the last 3 only
-        # apply to attributes!)
+        # The modifiers for operations are visibility, static, abstract.
         possible_visibilities = {'public', 'private', 'package', 'protected'}
         mods = set(self.modifiers)
         visibility_mods = possible_visibilities & mods
@@ -374,7 +372,7 @@ class Operation(Base):
                     opn.set('visibility', 'public')
                 else:
                     opn.set('visibility', v)
-        mods = mods - visibility_mods
+        mods -= possible_visibilities
         if 'abstract' in mods:
             opn.set('isAbstract', 'true')
         else:
@@ -425,8 +423,7 @@ class Parameter(Base):
         par.set('name', self.name)
         self.add_xml_documentation(par)
         self.add_xml_annotations(par)
-        # The modifiers for parameters are in, out, inout, read,
-        # create, update, delete. Only the first three matter here.
+        # The modifiers for parameters are in, out, inout.
         possible_mode_mods = {'in', 'out', 'inout'}
         mods = set(self.modifiers)
         mode_mods = possible_mode_mods & mods
@@ -438,7 +435,7 @@ class Parameter(Base):
         else:
             error("too many modifiers %s on parameter %s"
                   % (mode_mods, self.path_name()))
-        mods = mode_mods - possible_mode_mods
+        mods -= possible_mode_mods
         if len(mods) > 0:
             error("unsupported modifier(s) %s in %s\n"
                   % (', '.join(mods), self.path_name()))
@@ -524,6 +521,7 @@ class State_Machine(Base):
             st = self.add_xml_path(subv, (s.xml_tag,))
             st.set('name', s.name)
             st.set('xmi.id', s.path_name())  # XXX why not done already?
+            s.add_xml_documentation(st)
             # at this point, ArgoUML adds incoming & outgoing transitions in
             # UML:StateVertex.{incoming,outgoing}/UML:Transition
             # elements, but normalize_xmi doesn't use them, and they'd
@@ -538,6 +536,13 @@ class State_Machine(Base):
                     act.set('body', beh[1])
             for t in s.transitions:
                 tr = self.add_xml_path(trans, ('UML:Transition',))
+
+                # documentation
+                t.add_xml_documentation(tr)
+
+                # annotations
+                for a in t.annotations:
+                    self.add_xml_stereotype(tr, a)
 
                 # trigger
                 if t.signal is not None:
@@ -597,8 +602,12 @@ class Transition(Base):
     # complex & interrelated.
 
     def __repr__(self):
-        return ('Transition(signal=%r,source=%r,target=%r,effect=%r)'
-                % (self.signal, self.source, self.target, self.effect))
+        return ('Transition(signal=%r,source=%r,target=%r,annotations=%r,effect=%r)'
+                % (self.signal,
+                   self.source,
+                   self.target,
+                   self.annotations,
+                   self.effect))
 
 
 class Uses_Relationship(Base):
@@ -637,49 +646,23 @@ def object_name(fqn):
 def p_start(p):
     '''
     start : \
-        model_comment_opt annotations_opt package_heading \
-            global_directive_section_opt namespace_contents END DOT
+        model_comment annotations model_heading \
+             namespace_contents END DOT
     '''
-    if p[3][0] == 'model':
-        p[0] = Model()
-        p[0].name = p[3][1]
-        p[0].documentation = p[1]
-        p[0].annotations = p[2]
-        p[0].contents = p[5]
-        for c in p[0].contents:
-            c.owner = p[0]
-    else:
-        error("ERROR! expecting 'model', got '%s'" % p[3][0])
+    p[0] = Model()
+    p[0].name = p[3]
+    p[0].documentation = p[1]
+    p[0].annotations = p[2]
+    p[0].contents = p[4]
+    for c in p[0].contents:
+        c.owner = p[0]
 
 
-def p_package_heading(p):
+def p_model_heading(p):
     '''
-    package_heading : package_type qualified_identifier SEMICOLON
+    model_heading : MODEL qualified_identifier SEMICOLON
     '''
-    # (type, name)
-    p[0] = (p[1], p[2])
-
-
-def p_package_type(p):
-    '''
-    package_type \
-        : MODEL
-        | PACKAGE
-        | PROFILE
-    '''
-    p[0] = p[1]
-
-
-def p_qualified_identifier_list(p):
-    '''
-    qualified_identifier_list \
-        : qualified_identifier COMMA qualified_identifier_list
-        | qualified_identifier
-    '''
-    if len(p) == 4:
-        p[0] = (p[1],) + p[3]
-    else:
-        p[0] = (p[1],)
+    p[0] = p[2]
 
 
 def p_qualified_identifier(p):
@@ -693,63 +676,6 @@ def p_qualified_identifier(p):
         p[0] = p[1] + '.' + p[3]
     else:
         p[0] = p[1]
-
-
-def p_global_directive_section_opt(p):
-    '''
-    global_directive_section_opt \
-        : global_directive_section
-        | empty
-    '''
-    # XXX
-    pass
-
-
-def p_global_directive_section(p):
-    '''
-    global_directive_section \
-        : global_directive global_directive_section
-        | global_directive
-    '''
-    if len(p) == 3:
-        p[0] = (p[1],) + p[2]
-    else:
-        p[0] = (p[1],)
-
-
-def p_global_directive(p):
-    '''
-    global_directive \
-        : load_decl
-        | apply_profile_decl
-        | import_decl
-    '''
-    # XXX
-    pass
-
-
-def p_load_decl(p):
-    '''
-    load_decl : LOAD
-    '''
-    # XXX
-    pass
-
-
-def p_apply_profile_decl(p):
-    '''
-    apply_profile_decl : APPLY
-    '''
-    # XXX
-    pass
-
-
-def p_import_decl(p):
-    '''
-    import_decl : IMPORT
-    '''
-    # XXX
-    pass
 
 
 def p_namespace_contents(p):
@@ -766,17 +692,22 @@ def p_namespace_contents(p):
 
 def p_sub_namespace(p):
     '''
-    sub_namespace : package_heading namespace_contents END SEMICOLON
+    sub_namespace \
+        : package_heading \
+          namespace_contents END SEMICOLON
     '''
-    # (package_heading, namespace_contents)
-    if p[1][0] == 'package':
-        p[0] = Package()
-        p[0].name = p[1][1]
-        p[0].contents = p[2]
-        for c in p[0].contents:
-            c.owner = p[0]
-    else:
-        p[0] = (p[1], p[2])
+    p[0] = Package()
+    p[0].name = p[1]
+    p[0].contents = p[2]
+    for c in p[0].contents:
+        c.owner = p[0]
+
+
+def p_package_heading(p):
+    '''
+    package_heading : PACKAGE qualified_identifier SEMICOLON
+    '''
+    p[0] = p[2]
 
 
 # Top-level elements
@@ -785,7 +716,7 @@ def p_sub_namespace(p):
 def p_top_level_element(p):
     '''
     top_level_element \
-        : model_comment_opt annotations_opt top_level_element_choice
+        : model_comment annotations top_level_element_choice
     '''
     if isinstance(p[3], Base):
         p[0] = p[3]
@@ -795,7 +726,7 @@ def p_top_level_element(p):
         # Class stereotyped <<datatype>>).
         p[0].annotations += p[2]
     else:
-        # (model_comment_opt, annotations_opt, top_level_element)
+        # (model_comment, annotations, top_level_element)
         p[0] = (p[1], p[2], p[3])
 
 
@@ -826,34 +757,11 @@ def p_top_level_element_choice(p):
 # Type identifiers
 
 
-def p_minimal_type_identifier(p):
-    '''
-    minimal_type_identifier : qualified_identifier
-    '''
-    p[0] = p[1]
-
-
 def p_single_type_identifier(p):
     '''
-    single_type_identifier \
-        : minimal_type_identifier
-        | ANY
-        | tuple_type
+    single_type_identifier : qualified_identifier
     '''
-    # XXX template_binding?
     p[0] = p[1]
-
-
-def p_minimal_type_identifier_list(p):
-    '''
-    minimal_type_identifier_list \
-        : minimal_type_identifier COMMA minimal_type_identifier_list
-        | minimal_type_identifier
-    '''
-    if len(p) == 4:
-        p[0] = (p[1],) + p[3]
-    else:
-        p[0] = (p[1],)
 
 
 def p_type_identifier(p):
@@ -868,13 +776,10 @@ def p_type_identifier(p):
 def p_optional_multiplicity(p):
     '''
     optional_multiplicity \
-        : L_BRACKET multiplicity_spec R_BRACKET multiplicity_constraints
-        | L_BRACKET multiplicity_spec R_BRACKET
+        : L_BRACKET multiplicity_spec R_BRACKET
         | empty
     '''
-    if len(p) == 5:
-        p[0] = (p[2], p[4])
-    elif len(p) == 4:
+    if len(p) == 4:
         p[0] = (p[2],)
 
 
@@ -891,44 +796,13 @@ def p_multiplicity_spec(p):
         p[0] = p[1]
 
 
-def p_multiplicity_constraints(p):
-    '''
-    multiplicity_constraints \
-        : L_CURLY_BRACKET multiplicity_constraint_list R_CURLY_BRACKET
-    '''
-    p[0] = p[2]
-
-
-def p_multiplicity_constraint_list(p):
-    '''
-    multiplicity_constraint_list \
-        : multiplicity_constraint COMMA multiplicity_constraint_list
-        | multiplicity_constraint
-    '''
-    if len(p) == 4:
-        p[0] = (p[1],) + p[3]
-    else:
-        p[0] = (p[1],)
-
-
-def p_multiplicity_constraint(p):
-    '''
-    multiplicity_constraint \
-        : ORDERED
-        | UNORDERED
-        | UNIQUE
-        | NONUNIQUE
-    '''
-    p[0] = p[1]
-
-
 # Associations
 
 
 def p_association_def(p):
     '''
     association_def \
-        : annotations_opt ASSOCIATION identifier association_role_decl_list \
+        : annotations ASSOCIATION identifier association_role_decl_list \
             END SEMICOLON
     '''
     # No aggregation, composition
@@ -941,10 +815,10 @@ def p_association_def(p):
 def p_association_class_def(p):
     '''
     association_class_def \
-        : annotations_opt ASSOCIATION_CLASS identifier \
+        : annotations ASSOCIATION_CLASS identifier \
             association_role_decl_list feature_decl_list \
             END SEMICOLON
-        | annotations_opt ASSOCIATION_CLASS identifier \
+        | annotations ASSOCIATION_CLASS identifier \
             association_role_decl_list \
             END SEMICOLON
     '''
@@ -961,6 +835,15 @@ def p_association_class_def(p):
         p[0].contents = ()
 
 
+def p_association_multiplicity(p):
+    '''
+    association_multiplicity \
+        : L_BRACKET multiplicity_spec R_BRACKET
+    '''
+    # returns either a single string (e.g. "1", "*") or a tuple (lb, ub)
+    p[0] = p[2]
+
+
 def p_association_role_decl_list(p):
     '''
     association_role_decl_list \
@@ -973,7 +856,7 @@ def p_association_role_decl_list(p):
 def p_association_role_decl(p):
     '''
     association_role_decl \
-        : model_comment_opt annotations_opt \
+        : model_comment annotations \
             identifier identifier identifier association_multiplicity SEMICOLON
     '''
     # The first identifier is the originating class, the second the
@@ -987,15 +870,6 @@ def p_association_role_decl(p):
     p[0].name = p[4]
     p[0].target = p[5]
     p[0].multiplicity = p[6]
-
-
-def p_association_multiplicity(p):
-    '''
-    association_multiplicity \
-        : L_BRACKET multiplicity_spec R_BRACKET
-    '''
-    # returns either a single string (e.g. "1", "*") or a tuple (lb, ub)
-    p[0] = p[2]
 
 
 # Classes and interfaces
@@ -1054,22 +928,7 @@ def p_class_modifier(p):
     class_modifier \
         : visibility_modifier
         | ABSTRACT
-        | EXTERNAL
     '''
-    p[0] = p[1]
-
-
-def p_class_type(p):
-    '''
-    class_type \
-        : CLASS
-        | INTERFACE
-        | COMPONENT
-    '''
-    # DATATYPE extracted
-    # ENUMERATION extracted
-    # SIGNAL extracted (can only have attributes, not the full set of
-    # features; and need not have any attributes).
     p[0] = p[1]
 
 
@@ -1094,6 +953,20 @@ def p_class_specializes_list(p):
         p[0] = (p[1],)
 
 
+def p_class_type(p):
+    '''
+    class_type \
+        : CLASS
+        | INTERFACE
+        | COMPONENT
+    '''
+    # DATATYPE extracted
+    # ENUMERATION extracted
+    # SIGNAL extracted (can only have attributes, not the full set of
+    # features; and need not have any attributes).
+    p[0] = p[1]
+
+
 # Class features
 
 
@@ -1112,7 +985,7 @@ def p_feature_decl_list(p):
 def p_feature_decl(p):
     '''
     feature_decl \
-        : model_comment_opt annotations_opt modifiers_opt feature_type
+        : model_comment annotations feature_modifiers feature_type
     '''
     p[0] = p[4]
     p[0].documentation = p[1]
@@ -1120,10 +993,10 @@ def p_feature_decl(p):
     p[0].modifiers = p[3]
 
 
-def p_modifiers_opt(p):
+def p_feature_modifiers(p):
     '''
-    modifiers_opt \
-        : modifier_list
+    feature_modifiers \
+        : feature_modifier_list
         | empty
     '''
     if p[1] is None:
@@ -1132,11 +1005,11 @@ def p_modifiers_opt(p):
         p[0] = p[1]
 
 
-def p_modifier_list(p):
+def p_feature_modifier_list(p):
     '''
-    modifier_list \
-        : modifier modifier_list
-        | modifier
+    feature_modifier_list \
+        : feature_modifier feature_modifier_list
+        | feature_modifier
     '''
     if len(p) == 3:
         p[0] = (p[1],) + p[2]
@@ -1144,14 +1017,12 @@ def p_modifier_list(p):
         p[0] = (p[1],)
 
 
-def p_modifier(p):
+def p_feature_modifier(p):
     '''
-    modifier \
+    feature_modifier \
         : visibility_modifier
         | STATIC
         | ABSTRACT
-        | DERIVED
-        | READONLY
         | ID
     '''
     p[0] = p[1]
@@ -1208,9 +1079,9 @@ def p_state_decls(p):
 def p_state_decl(p):
     '''
     state_decl \
-        : model_comment_opt state_modifier STATE identifier state_behaviours \
+        : model_comment state_modifier STATE identifier state_behaviours \
             transition_decls END SEMICOLON
-        | model_comment_opt STATE identifier state_behaviours \
+        | model_comment STATE identifier state_behaviours \
           transition_decls END SEMICOLON
     '''
     # XXX no more than one state_modifier
@@ -1299,23 +1170,24 @@ def p_transition_decl_list(p):
 def p_transition_decl(p):
     '''
     transition_decl \
-        : model_comment_opt TRANSITION ON SIGNAL \
+        : model_comment annotations TRANSITION ON SIGNAL \
             L_PAREN qualified_identifier R_PAREN \
             TO identifier transition_effect_opt SEMICOLON
-        | model_comment_opt TRANSITION TO identifier \
+        | model_comment annotations TRANSITION TO identifier \
             transition_effect_opt SEMICOLON
     '''
     # XXX only one transition_trigger???
     # XXX no transition_guard
     p[0] = Transition()
     p[0].documentation = p[1]
-    if len(p) == 12:
-        p[0].signal = p[6]
-        p[0].target = p[9]
-        p[0].effect = p[10]
+    p[0].annotations = p[2]
+    if len(p) == 13:
+        p[0].signal = p[7]
+        p[0].target = p[10]
+        p[0].effect = p[11]
     else:
-        p[0].target = p[4]
-        p[0].effect = p[5]
+        p[0].target = p[5]
+        p[0].effect = p[6]
 
 
 def p_transition_effect_opt(p):
@@ -1374,7 +1246,7 @@ def p_operation_decl(p):
     for par in p[0].parameters:
         par.owner = p[0]
     # p[0].rtn = p[1][2][1]
-    # rtn is (annotations_opt, (single_type_identifier optional_multiplicity))
+    # rtn is (annotations, (single_type_identifier optional_multiplicity))
     if p[1][2][1] is not None:
         p[0].rtn = p[1][2][1][1][0]
     if len(p) > 3:
@@ -1383,18 +1255,9 @@ def p_operation_decl(p):
 
 def p_operation_header(p):
     '''
-    operation_header : operation_keyword identifier signature
+    operation_header : OPERATION identifier signature
     '''
-    # XXX QUERY wildcard_types_opt
     p[0] = (p[1], p[2], p[3])
-
-
-def p_operation_keyword(p):
-    '''
-    operation_keyword : OPERATION
-    '''
-    # XXX QUERY
-    p[0] = p[1]
 
 
 def p_attribute_decl(p):
@@ -1403,7 +1266,6 @@ def p_attribute_decl(p):
         : ATTRIBUTE identifier COLON type_identifier \
             initialization_expression_opt SEMICOLON
     '''
-    # XXX optional_subsetting attribute_invariant
     p[0] = Attribute()
     p[0].name = p[2]
     p[0].type = p[4][0]   # omit multiplicity - really?
@@ -1423,7 +1285,6 @@ def p_initialization_expression(p):
     '''
     initialization_expression : ASSIGNOP simple_initialization
     '''
-    # XXX expression_block
     p[0] = p[2]
 
 
@@ -1432,41 +1293,6 @@ def p_simple_initialization(p):
     simple_initialization : literal_or_identifier
     '''
     p[0] = p[1]
-
-
-# Tuple types
-
-
-def p_tuple_type(p):
-    '''
-    tuple_type \
-        : L_CURLY_BRACKET tuple_type_slots R_CURLY_BRACKET
-    '''
-    p[0] = p[2]
-
-
-def p_tuple_type_slots(p):
-    '''
-    tuple_type_slots \
-    : tuple_type_slot COMMA tuple_type_slots
-    | tuple_type_slot
-    '''
-    if len(p) == 4:
-        p[0] = (p[1],) + p[3]
-    else:
-        p[0] = (p[1],)
-
-
-def p_tuple_type_slot(p):
-    '''
-    tuple_type_slot \
-        : identifier COLON type_identifier
-        | COLON type_identifier
-    '''
-    if len(p) == 4:
-        p[0] = (p[1], p[3])
-    else:
-        p[0] = ('', p[2])
 
 
 # Signatures
@@ -1503,7 +1329,7 @@ def p_simple_signature(p):
 def p_optional_return_type(p):
     '''
     optional_return_type \
-        : annotations_opt simple_optional_return_type
+        : annotations simple_optional_return_type
         | empty
     '''
     if len(p) == 3:
@@ -1551,7 +1377,7 @@ def p_simple_param_decl_list(p):
 
 def p_param_decl(p):
     '''
-    param_decl : annotations_opt parameter_modifiers simple_param_decl
+    param_decl : annotations parameter_modifiers simple_param_decl
     '''
     p[0] = p[3]
     p[0].annotations = p[1]
@@ -1597,10 +1423,6 @@ def p_parameter_modifier(p):
         : IN
         | OUT
         | INOUT
-        | READ
-        | CREATE
-        | UPDATE
-        | DELETE
     '''
     p[0] = p[1]
 
@@ -1608,23 +1430,16 @@ def p_parameter_modifier(p):
 # Annotations
 
 
-def p_annotations_opt(p):
-    '''
-    annotations_opt \
-        : annotations
-        | empty
-    '''
-    if p[1] is None:
-        p[0] = ()
-    else:
-        p[0] = p[1]
-
-
 def p_annotations(p):
     '''
-    annotations : L_BRACKET annotation_list R_BRACKET
+    annotations \
+        : L_BRACKET annotation_list R_BRACKET
+        | empty
     '''
-    p[0] = p[2]
+    if len(p) == 4:
+        p[0] = p[2]
+    else:
+        p[0] = ()
 
 
 def p_annotation_list(p):
@@ -1642,10 +1457,10 @@ def p_annotation_list(p):
 def p_annotation(p):
     '''
     annotation \
-        : qualified_identifier annotation_optional_value_specs
+        : qualified_identifier annotation_value_specs
         | qualified_identifier
     '''
-    # normalize_xmi requires some stereotypes to have
+    # normalize_xmi requires multi-word stereotypes to have
     # lisp-hyphenenated names; but TextUML requires identifiers. So
     # translate underscores to hyphens.
     name = p[1].replace('_', '-')
@@ -1655,9 +1470,9 @@ def p_annotation(p):
         p[0] = (name, ())
 
 
-def p_annotation_optional_value_specs(p):
+def p_annotation_value_specs(p):
     '''
-    annotation_optional_value_specs \
+    annotation_value_specs \
         : L_PAREN annotation_value_spec_list R_PAREN
     '''
     p[0] = p[2]
@@ -1698,52 +1513,25 @@ def p_annotation_value(p):
 
 def p_datatype_def(p):
     '''
-    datatype_def : datatype_header feature_decl_list END SEMICOLON
+    datatype_def \
+        : datatype_header feature_decl_list END SEMICOLON
+        | datatype_header SEMICOLON
     '''
     p[0] = Datatype()
     p[0].name = p[1][1]
     p[0].modifiers = p[1][0]
-    p[0].contents = p[2]
-    for c in p[0].contents:
-        c.owner = p[0]
+    if len(p) == 5:
+        p[0].contents = p[2]
+        for c in p[0].contents:
+            c.owner = p[0]
 
 
 def p_datatype_header(p):
     '''
-    datatype_header : datatype_modifiers DATATYPE identifier
+    datatype_header : class_modifiers DATATYPE identifier
     '''
+    # class_modifiers are visibility, abstract.
     p[0] = (p[1], p[3])
-
-
-def p_datatype_modifiers(p):
-    '''
-    datatype_modifiers \
-        : datatype_modifier_list
-        | empty
-    '''
-    if p[1] is None:
-        p[0] = ()
-    else:
-        p[0] = p[1]
-
-
-def p_datatype_modifier_list(p):
-    '''
-    datatype_modifier_list \
-        : datatype_modifier datatype_modifier_list
-        | datatype_modifier
-    '''
-    if len(p) == 3:
-        p[0] = (p[1],) + p[2]
-    else:
-        p[0] = (p[1],)
-
-
-def p_datatype_modifier(p):
-    '''
-    datatype_modifier : visibility_modifier
-    '''
-    p[0] = p[1]
 
 
 # Enumeration definition
@@ -1781,7 +1569,7 @@ def p_enumeration_literal_decl_list(p):
 
 def p_enumeration_literal_decl(p):
     '''
-    enumeration_literal_decl : model_comment_opt identifier
+    enumeration_literal_decl : model_comment identifier
     '''
     p[0] = (p[1], p[2])
 
@@ -1823,16 +1611,7 @@ def p_signal_def(p):
     '''
     signal_def : signal_decl
     '''
-    # I did have
-    #    : signal_modifiers signal_decl
-    #    | signal_decl
-    # (to allow 'static') but this leads to a reduce-reduce conflict
-    # vs class_modifier.
-    if len(p) == 3:
-        p[0] = p[2]
-        p[0].modifiers = p[1]
-    else:
-        p[0] = p[1]
+    p[0] = p[1]
 
 
 def p_signal_decl(p):
@@ -1847,39 +1626,6 @@ def p_signal_decl(p):
         p[0].contents = p[3]
         for a in p[0].contents:
             a.owner = p[0]
-
-
-def p_signal_modifiers(p):
-    '''
-    signal_modifiers \
-        : signal_modifier_list
-        | empty
-    '''
-    if p[1] is None:
-        p[0] = ()
-    else:
-        p[0] = p[1]
-
-
-def p_signal_modifier_list(p):
-    '''
-    signal_modifier_list \
-        : signal_modifier signal_modifier_list
-        | signal_modifier
-    '''
-    if len(p) == 3:
-        p[0] = (p[1],) + p[2]
-    else:
-        p[0] = (p[1],)
-
-
-def p_signal_modifier(p):
-    '''
-    signal_modifier \
-        : visibility_modifier
-        | STATIC
-    '''
-    p[0] = p[1]
 
 
 def p_signal_attributes(p):
@@ -1905,7 +1651,6 @@ def p_signal_attribute_decl(p):
     p[0] = Parameter()
     p[0].name = p[2]
     p[0].type = p[4][0]   # omit multiplicity - really?
-#    p[0].default_value = p[5]
 
 
 # Primitive definition
@@ -1919,12 +1664,11 @@ def p_primitive_def(p):
     '''
     # removed the textuml.scc annotations? - added in p_top_level_element(p)
     # NB textuml doesn't allow modifiers on primitives! (fixed - issue #120)
+    p[0] = Datatype()
     if len(p) == 5:
-        p[0] = Datatype()
         p[0].name = p[3]
         p[0].modifiers = (p[1],)
     else:
-        p[0] = Datatype()
         p[0].name = p[2]
 
 
@@ -1935,9 +1679,9 @@ def p_primitive_def(p):
 # Miscellaneous stuff
 
 
-def p_model_comment_opt(p):
+def p_model_comment(p):
     '''
-    model_comment_opt \
+    model_comment \
         : MODEL_COMMENT
         | empty
     '''
@@ -2038,51 +1782,45 @@ def p_error(p):
 
 reserved = {
     'abstract': 'ABSTRACT',
-    'any': 'ANY',
-    'apply': 'APPLY',
     'association': 'ASSOCIATION',
     'association_class': 'ASSOCIATION_CLASS',
     'attribute': 'ATTRIBUTE',
     'class': 'CLASS',
     'component': 'COMPONENT',
-    'create': 'CREATE',
+    #'create': 'CREATE',
     'datatype': 'DATATYPE',
-    'delete': 'DELETE',
-    'derived': 'DERIVED',
+    #'delete': 'DELETE',
+    #'derived': 'DERIVED',
     'do': 'DO',
     'end': 'END',
     'entry': 'ENTRY',
     'enumeration': 'ENUMERATION',
     'exception': 'EXCEPTION',
-    'extends': 'EXTENDS',
-    'external': 'EXTERNAL',
+    #'extends': 'EXTENDS',
     'false': 'FALSE',
     'final': 'FINAL',
     'id': 'ID',
-    'import': 'IMPORT',
     'in': 'IN',
     'initial': 'INITIAL',
     'inout': 'INOUT',
     'interface': 'INTERFACE',
-    'literal': 'ENUMERATION_LITERAL',
-    'load': 'LOAD',
+    #'literal': 'ENUMERATION_LITERAL',
     'model': 'MODEL',
-    'nonunique': 'NONUNIQUE',
+    #'nonunique': 'NONUNIQUE',
     'null': 'NULL',
     'on': 'ON',
     'operation': 'OPERATION',
-    'ordered': 'ORDERED',
+    #'ordered': 'ORDERED',
     'out': 'OUT',
     'package': 'PACKAGE',
-    'postcondition': 'POSTCONDITION',
-    'precondition': 'PRECONDITION',
+    #'postcondition': 'POSTCONDITION',
+    #'precondition': 'PRECONDITION',
     'primitive': 'PRIMITIVE',
     'private': 'PRIVATE',
-    'profile': 'PROFILE',
     'protected': 'PROTECTED',
     'public': 'PUBLIC',
-    'read': 'READ',
-    'readonly': 'READONLY',
+    #'read': 'READ',
+    #'readonly': 'READONLY',
     'signal': 'SIGNAL',
     'specializes': 'SPECIALIZES',
     'state': 'STATE',
@@ -2092,9 +1830,9 @@ reserved = {
     'to': 'TO',
     'transition': 'TRANSITION',
     'true': 'TRUE',
-    'unique': 'UNIQUE',
-    'unordered': 'UNORDERED',
-    'update': 'UPDATE',
+    #'unique': 'UNIQUE',
+    #'unordered': 'UNORDERED',
+    #'update': 'UPDATE',
 }
 
 
@@ -2130,7 +1868,7 @@ tokens = (
     'STRING',
 
     # comments
-    'COMMENT',
+    #'COMMENT',   # see ignore_COMMENT below
     'MODEL_COMMENT',
 
     # operation body
