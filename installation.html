@@ -14,6 +14,7 @@
 <ul>
 
 <li><a href="http://argouml.tigris.org/">ArgoUML</a>
+or <a href="textuml.pdf">TextUML</a> for modelling
 
 <li><a href="https://www.adacore.com">GNAT</a> (an Ada 95/2005/2012
 compiler; must support Ada2005)
@@ -48,10 +49,11 @@ understand <tt>external_as_list()</tt> in a Project file): say
 <p>This builds the tools supplied in source form in
 the <tt>tools/</tt> subdirectory.
 
-<h2>ArgoUML setup</h2>
+<h2>Modelling tool setup</h2>
 
-<p>ArgoUML installation is
-documented <a href="argouml-installation.html">separately</a>.
+<p><a href="argouml-installation.html">ArgoUML</a>
+and <a href="textuml-installation.html">TextUML</a> installation are
+documented separately.
 
 <h2>Environment variables</h2>
 
@@ -203,6 +205,15 @@ and the domains using the incantation
 <pre>
 $(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.norm-stamp ;
 </pre>
+
+<p>or, if you're using TextUML,
+
+<pre>
+$(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.tuml-norm-stamp ;
+</pre>
+
+<p>(or, of course, both). In either case, <em>do not</em> omit the
+space before the semicolon.
 
 <p>Later on, you'll add rules to build the executables, but to start
 with you can just generate the code:
