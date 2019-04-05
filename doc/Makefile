@@ -77,6 +77,7 @@ DOCS =						\
   testing.html					\
   testing-class.html				\
   testing-domain.html				\
+  textuml-installation.html			\
   translation-rules.html			\
   types.html					\
   use-of-containers.html			\
@@ -132,7 +133,10 @@ simple-association.png				\
 type-mapping.png				\
 vague-association.png
 
-ALL = $(DOCS) $(GIFS) $(JPEGS) $(PNGS)
+PDFS =						\
+textuml/textuml.pdf
+
+ALL = $(DOCS) $(GIFS) $(JPEGS) $(PNGS) $(PDFS)
 
 # Files that need DATE substituted
 DATED_FILES =					\
@@ -162,6 +166,11 @@ $(NORM_FILES): Housing.tuml-norm-stamp ;
 
 ColdFrameProfile.html: $(COLDFRAMEOUT)/ColdFrameProfile.rr
 	$(SAXON) $< $(COLDFRAME)/scripts/generate-profile-html.xsl >$@
+
+textuml.pdf: force
+	make -C textuml $@
+	-rm $@
+	cp textuml/$@ $@
 
 all::
 	$(CP) -p $(ALL) $(DEST)/
