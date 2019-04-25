@@ -16,12 +16,15 @@ all:: Simple_Buttons.gen
 all:: Test_It.gen
 
 # twice round the block isn't quite enough!
-%.tuml %.pdf: %.w
+%.pdf: %.w
 	$(NUWEB) -r $(basename $<)
 	pdflatex -r $(basename $<)
 	$(NUWEB) -r $(basename $<)
 	pdflatex -r $(basename $<)
 	pdflatex -r $(basename $<)
+
+%.tuml: %.w
+	$(NUWEB) -t $(basename $<)
 
 # TextUML support
 

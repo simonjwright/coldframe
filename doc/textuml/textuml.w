@@ -131,14 +131,8 @@ package Simple_Buttons;
 end;
 @| Simple_Buttons @}
 
-Signals correspond to
-\href{https://simonjwright.github.io/coldframe/events.html}{events}. UML
-has them declared at package (domain) level, though ColdFrame's
-implementation actually declares the corresponding event types in the
-specification of the class where they're used (in this case, Button;
-hence the need, in general, to specify the target class here (suppose
-there was more than one class in the domain that had to receive
-events?). Note the namespace separator \verb|::|.
+Signals correspond to ColdFrame's
+\href{https://simonjwright.github.io/coldframe/events.html}{events}.
 
 A \href{https://simonjwright.github.io/coldframe/classes.html}{class}
 typically is an abstraction of something in the domain of interest. It
@@ -202,6 +196,15 @@ datatype Output_Signal;
 @| Output_Signal @}
 
 \subsection{Signals}
+
+As noted above, signals correspond to ColdFrame's events.
+
+UML has them declared at package (domain) level, though ColdFrame's
+implementation actually declares the corresponding event types in the
+specification of the class where they're used (in this case, Button;
+hence the need, in general, to specify the target class here (suppose
+there was more than one class in the domain that had to receive
+events?). Note the namespace separator \verb|::|.
 
 This event indicates that the button `pushed' period (after a short
 push) has expired.
@@ -412,8 +415,8 @@ statemachine Button
 end;
 @}
 
-This is the inital state (indicated by the \verb|init| modifier). It
-performs a completion transition to Off.
+This is the inital state (indicated by the \verb|initial|
+modifier). It performs a completion transition to Off.
 
 @d SB.Button states @{
 initial state Initial
