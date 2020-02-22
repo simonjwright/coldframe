@@ -170,15 +170,6 @@ package body ColdFrame.Events_G is
    end Instance_Is_Deleted;
 
 
-   procedure Invalidate (The_Event : not null access Event_Base;
-                         If_For_Instance : not null Instance_Base_P) is
-      pragma Unreferenced (The_Event);
-      pragma Unreferenced (If_For_Instance);
-   begin
-      null;
-   end Invalidate;
-
-
    procedure Invalidate (The_Event : not null access Instance_Event_Base;
                          If_For_Instance : not null Instance_Base_P) is
    begin
@@ -232,85 +223,10 @@ package body ColdFrame.Events_G is
    end Locker;
 
 
-   procedure Log_Post_Dispatch (The_Event : not null Event_P;
-                                On : not null access Event_Queue_Base) is
-      pragma Unreferenced (The_Event);
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Log_Post_Dispatch;
-
-
-   procedure Log_Pre_Dispatch (The_Event : not null Event_P;
-                               On : not null access Event_Queue_Base) is
-      pragma Unreferenced (The_Event);
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Log_Pre_Dispatch;
-
-
-   procedure Log_Retraction (The_Event : not null Event_P;
-                             On : not null access Event_Queue_Base) is
-      pragma Unreferenced (The_Event);
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Log_Retraction;
-
-
    procedure Mark_Deletable (The_Instance : not null access Instance_Base) is
    begin
       The_Instance.In_Handler := False;
    end Mark_Deletable;
-
-
-   procedure Note_Addition_Of_Held_Event
-     (On : not null access Event_Queue_Base) is
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Note_Addition_Of_Held_Event;
-
-
-   procedure Note_Addition_Of_Posted_Event
-     (On : not null access Event_Queue_Base) is
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Note_Addition_Of_Posted_Event;
-
-
-   procedure Note_Addition_Of_Timer_Event
-     (On : not null access Event_Queue_Base) is
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Note_Addition_Of_Timer_Event;
-
-
-   procedure Note_Removal_Of_Held_Event
-     (On : not null access Event_Queue_Base) is
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Note_Removal_Of_Held_Event;
-
-
-   procedure Note_Removal_Of_Posted_Event
-     (On : not null access Event_Queue_Base) is
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Note_Removal_Of_Posted_Event;
-
-
-   procedure Note_Removal_Of_Timer_Event
-     (On : not null access Event_Queue_Base) is
-      pragma Unreferenced (On);
-   begin
-      null;
-   end Note_Removal_Of_Timer_Event;
 
 
    procedure Start (The_Queue : not null access Event_Queue_Base) is
@@ -325,25 +241,11 @@ package body ColdFrame.Events_G is
    end Start;
 
 
-   procedure Start_Handling (The_Event : not null access Event_Base) is
-      pragma Unreferenced (The_Event);
-   begin
-      null;
-   end Start_Handling;
-
-
    procedure Start_Handling
      (The_Event : not null access Instance_Event_Base) is
    begin
       The_Event.For_The_Instance.In_Handler := True;
    end Start_Handling;
-
-
-   procedure Stop_Handling (The_Event : not null access Event_Base) is
-      pragma Unreferenced (The_Event);
-   begin
-      null;
-   end Stop_Handling;
 
 
    procedure Stop_Handling (The_Event : not null access Instance_Event_Base) is
@@ -377,14 +279,6 @@ package body ColdFrame.Events_G is
          Stop (The_Queue.all);  -- dispatches to actual Stop
       end if;
    end Stop;
-
-
-   procedure Tear_Down (The_Event : not null access Event_Base) is
-      pragma Unreferenced (The_Event);
-   begin
-      --  Default no-op.
-      null;
-   end Tear_Down;
 
 
    procedure Tear_Down (The_Queue : in out Event_Queue_Base) is

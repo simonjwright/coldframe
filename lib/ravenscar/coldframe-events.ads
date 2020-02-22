@@ -73,15 +73,16 @@ package ColdFrame.Events is
 
    --  Private use only
    procedure Invalidate (The_Event : not null access Event_Base;
-                         If_For_Instance : not null Instance_Base_P);
+                         If_For_Instance : not null Instance_Base_P)
+   is null;
 
    --  Private use only
-   procedure Start_Handling (The_Event : not null access Event_Base);
-   --  No action.
+   procedure Start_Handling (The_Event : not null access Event_Base)
+   is null;
 
    --  Private use only
-   procedure Stop_Handling (The_Event : not null access Event_Base);
-   --  No action.
+   procedure Stop_Handling (The_Event : not null access Event_Base)
+   is null;
 
 
    type Instance_Event_Base

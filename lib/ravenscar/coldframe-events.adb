@@ -111,15 +111,6 @@ package body ColdFrame.Events is
    end Instance_Is_Deleted;
 
 
-   procedure Invalidate (The_Event : not null access Event_Base;
-                         If_For_Instance : not null Instance_Base_P) is
-      pragma Unreferenced (The_Event);
-      pragma Unreferenced (If_For_Instance);
-   begin
-      null;
-   end Invalidate;
-
-
    procedure Invalidate (The_Event : not null access Instance_Event_Base;
                          If_For_Instance : not null Instance_Base_P) is
    begin
@@ -178,25 +169,11 @@ package body ColdFrame.Events is
    end Start;
 
 
-   procedure Start_Handling (The_Event : not null access Event_Base) is
-      pragma Unreferenced (The_Event);
-   begin
-      null;
-   end Start_Handling;
-
-
    procedure Start_Handling
      (The_Event : not null access Instance_Event_Base) is
    begin
       The_Event.For_The_Instance.In_Handler := True;
    end Start_Handling;
-
-
-   procedure Stop_Handling (The_Event : not null access Event_Base) is
-      pragma Unreferenced (The_Event);
-   begin
-      null;
-   end Stop_Handling;
 
 
    procedure Stop_Handling (The_Event : not null access Instance_Event_Base) is

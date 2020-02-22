@@ -159,7 +159,6 @@ package body Event_Management is
 
       procedure Done is
       begin
-         null;
          Check_Fetchable_Event;
       end Done;
 

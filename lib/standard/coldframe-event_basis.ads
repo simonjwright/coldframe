@@ -30,7 +30,8 @@ package ColdFrame.Event_Basis is
       Finishing);
 
    procedure Log (The_Event : not null access Event_Base;
-                  At_Phase : Event_Processing_Phase);
+                  At_Phase : Event_Processing_Phase)
+   is null;
 
 private
 

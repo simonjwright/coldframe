@@ -85,19 +85,20 @@ package ColdFrame.Events_G is
 
    --  Private use only
    procedure Invalidate (The_Event : not null access Event_Base;
-                         If_For_Instance : not null Instance_Base_P);
+                         If_For_Instance : not null Instance_Base_P)
+   is null;
 
    --  Private use only
-   procedure Start_Handling (The_Event : not null access Event_Base);
-   --  No action.
+   procedure Start_Handling (The_Event : not null access Event_Base)
+   is null;
 
    --  Private use only
-   procedure Stop_Handling (The_Event : not null access Event_Base);
-   --  No action.
+   procedure Stop_Handling (The_Event : not null access Event_Base)
+   is null;
 
    --  Private use only
-   procedure Tear_Down (The_Event : not null access Event_Base);
-   --  No action.
+   procedure Tear_Down (The_Event : not null access Event_Base)
+   is null;
 
 
    type Instance_Event_Base
@@ -395,34 +396,43 @@ private
    --  are null.
 
    procedure Note_Addition_Of_Posted_Event
-     (On : not null access Event_Queue_Base);
+     (On : not null access Event_Queue_Base)
+   is null;
 
    procedure Note_Removal_Of_Posted_Event
-     (On : not null access Event_Queue_Base);
+     (On : not null access Event_Queue_Base)
+   is null;
 
    procedure Note_Addition_Of_Held_Event
-     (On : not null access Event_Queue_Base);
+     (On : not null access Event_Queue_Base)
+   is null;
 
    procedure Note_Removal_Of_Held_Event
-     (On : not null access Event_Queue_Base);
+     (On : not null access Event_Queue_Base)
+   is null;
 
    procedure Note_Addition_Of_Timer_Event
-     (On : not null access Event_Queue_Base);
+     (On : not null access Event_Queue_Base)
+   is null;
 
    procedure Note_Removal_Of_Timer_Event
-     (On : not null access Event_Queue_Base);
+     (On : not null access Event_Queue_Base)
+   is null;
 
    --  Operations to support debug/logging. The implementations here
    --  are null.
 
    procedure Log_Retraction (The_Event : not null Event_P;
-                             On : not null access Event_Queue_Base);
+                             On : not null access Event_Queue_Base)
+   is null;
 
    procedure Log_Pre_Dispatch (The_Event : not null Event_P;
-                               On : not null access Event_Queue_Base);
+                               On : not null access Event_Queue_Base)
+   is null;
 
    procedure Log_Post_Dispatch (The_Event : not null Event_P;
-                                On : not null access Event_Queue_Base);
+                                On : not null access Event_Queue_Base)
+   is null;
 
    --  Operations to support Locking. The implementations here raise
    --  Program_Error if called.
