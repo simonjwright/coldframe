@@ -1751,28 +1751,23 @@ def p_empty(p):
 
 
 def p_error(p):
-    '''Panic mode recovery.'''
+    '''Report error and exit.'''
     if not p:
         warning("That seems to be it.")
         return None
     text = lexer.lexdata
-    last_cr = text.rfind('\n', 0, p.lexpos)
-    if last_cr < 0:
-        last_cr = 0
-    column = (p.lexpos - last_cr) - 1
-    error("Syntax error at %s on line %d:%d" % (p.type, p.lineno, column))
-    # # Read ahead looking for a terminating ";" or "."
-    # while 1:
-    #     tok = parser.token()             # Get the next token
-    #     if not tok:
-    #         break
-    #     if tok.type == 'SEMICOLON' or tok.type == 'DOT':
-    #         tok = parser.token()         # Skip it
-    #         break
-    # parser.errok()
-    # # Return the token (or nil) to the parser as the next lookahead
-    # # token
-    # return tok
+    last_nl = text.rfind('\n', 0, p.lexpos)
+    next_nl = text.find('\n', p.lexpos)
+    # warning("lexpos: %s, last_nl: %s, next_nl: %s, len: %s" %
+    #         (p.lexpos, last_nl, next_nl, len(text)))
+    if last_nl < 0:
+        last_nl = 0
+    if next_nl < 0: # unterminated last line
+        next_nl = len(text)
+    column = (p.lexpos - last_nl) - 1
+    warning("Syntax error at %s on line %d:%d" % (p.type, p.lineno, column))
+    warning(text[last_nl + 1:next_nl])
+    error(" " * column + "^")
 
 
 # ----------------------------------------------------------------------
@@ -1883,7 +1878,7 @@ t_EQUALS = r'='
 t_COMMA = r','
 t_COLON = r':'
 t_SEMICOLON = r';'
-t_DOT = r'.'
+t_DOT = r'\.'
 t_NAMESPACE_SEPARATOR = r'::'
 t_L_PAREN = r'\('
 t_R_PAREN = r'\)'
@@ -1941,18 +1936,6 @@ def t_STRING(t):
     r'"(\\.|[^"])*"'
     t.value = re.sub(r'\\(.)', r'\1', t.value[1:-1])
     return t
-
-
-# # remnant of cat2raw ...
-# # A DOCLINE has its leading pipe removed. Escapes are removed
-# # (assuming only quotes and backslashes get escaped).
-# def t_DOCLINE(t):
-#     r'\|.*'
-#     if t.value[len(t.value) - 1] == '\r':
-#         t.value = t.value[1:-1]
-#     else:
-#         t.value = re.sub(r'\\(.)', r'\1', t.value[1:])
-#     return t
 
 
 def t_newline(t):
@@ -2053,7 +2036,7 @@ def main():
             root, ext = os.path.splitext(input_file)
             output_file = root + '.xmi'
         try:
-            output = open(output_file, 'w')
+            output = open(output_file, 'wb')
         except:
             error("couldn't open %s for output.\n" % output_file)
 
