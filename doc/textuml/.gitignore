@@ -1,0 +1,14 @@
+# nuweb/latex
+
+*.aux
+*.fls
+*.log
+*.out
+*.pdf
+*.tex
+*.toc
+*.tuml
+
+Simple_Buttons.*
+Test_It.*
+
