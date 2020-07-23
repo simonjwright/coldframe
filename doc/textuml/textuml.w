@@ -152,7 +152,7 @@ is to implement the actual functionality of the domain.
 An
 \href{https://simonjwright.github.io/coldframe/associations.html}{association}
 is a relationship between two classes in the model (it is possible,
-though uncommon, to have a {\i reflexive} association between a class
+though uncommon, to have a {\it reflexive} association between a class
 and itself, e.g. {\it Action is-a-consequence-of Action}).
 
 \subsection{Enumerations}
@@ -201,7 +201,7 @@ As noted above, signals correspond to ColdFrame's events.
 
 UML has them declared at package (domain) level, though ColdFrame's
 implementation actually declares the corresponding event types in the
-specification of the class where they're used (in this case, Button;
+specification of the class where they're used (in this case, Button);
 hence the need, in general, to specify the target class here (suppose
 there was more than one class in the domain that had to receive
 events?). Note the namespace separator \verb|::|.

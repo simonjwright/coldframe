@@ -4,7 +4,7 @@
     <documentation>
       <authorname>Simon Wright</authorname>
       <authoremail>simon@pushface.org</authoremail>
-      <version>0.35.1</version>
+      <version>PRE-0.35.2</version>
       <description>
         
       </description>
@@ -122,13 +122,21 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Mar 26 19:48:32 GMT+00:00 2019'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Jul 23 10:20:25 BST 2020'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2012-12-30 14:06:01 +0100 (Sun, 30 Dec 2012) $ </XMI.exporterVersion>
+      <XMI.exporterVersion>PRE-0.35.2(6) revised on $Date$ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
+    <UML:CallAction xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:000000000000102B'
+      name = 'Set_Timeout' isSpecification = 'false' isAsynchronous = 'false'/>
+    <UML:TagDefinition xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000001042'
+      isSpecification = 'false'/>
+    <UML:TagDefinition xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000001043'
+      isSpecification = 'false'/>
+    <UML:TagDefinition xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000001044'
+      isSpecification = 'false'/>
     <UML:Model xmi.id = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000985'
       name = 'ColdFrame Examples' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
       isAbstract = 'false'>
@@ -4604,8 +4612,8 @@ After a short push, the Button remains set for a period, which can be extended b
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Method xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:0000000000001081'
-                  name = '' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false'>
+                  name = 'Note_Pushed_Time impl' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false'>
                   <UML:Method.body>
                     <UML:ProcedureExpression xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:0000000000001170'
                       language = '' body = 'This.Pushed_Time := ColdFrame.Project.Calendar.Clock;'/>
@@ -4615,8 +4623,8 @@ After a short push, the Button remains set for a period, which can be extended b
                   </UML:Method.specification>
                 </UML:Method>
                 <UML:Method xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:00000000000010DB'
-                  name = '' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false'>
+                  name = 'Clear_Lit_Timeout impl' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false'>
                   <UML:Method.body>
                     <UML:ProcedureExpression xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:000000000000110F'
                       language = '' body = 'ColdFrame.Project.Events.Unset &#10;  (The_Timer =&gt; This.Lit_Timer,&#10;   On =&gt; Events.Dispatcher);&#10;'/>
@@ -4626,8 +4634,8 @@ After a short push, the Button remains set for a period, which can be extended b
                   </UML:Method.specification>
                 </UML:Method>
                 <UML:Method xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:0000000000001110'
-                  name = '' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false'>
+                  name = 'Clear_Pushed_Timeout impl' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false'>
                   <UML:Method.body>
                     <UML:ProcedureExpression xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:000000000000111A'
                       language = '' body = 'ColdFrame.Project.Events.Unset&#10;  (The_Timer =&gt; This.Pushed_Timer,&#10;   On =&gt; Events.Dispatcher);'/>
@@ -4637,8 +4645,8 @@ After a short push, the Button remains set for a period, which can be extended b
                   </UML:Method.specification>
                 </UML:Method>
                 <UML:Method xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:000000000000111B'
-                  name = '' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false'>
+                  name = 'Set_Pushed_Timeout impl' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false'>
                   <UML:Method.body>
                     <UML:ProcedureExpression xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:0000000000001133'
                       language = '' body = 'ColdFrame.Project.Events.Set&#10;  (The_Timer =&gt; This.Pushed_Timer,&#10;   On =&gt; Events.Dispatcher,&#10;   To_Fire =&gt; new Push_Timeout (This),&#10;   After =&gt; 0.25);'/>
@@ -4648,7 +4656,7 @@ After a short push, the Button remains set for a period, which can be extended b
                   </UML:Method.specification>
                 </UML:Method>
                 <UML:Method xmi.id = '-64--88-1-2-5602f952:169686de277:-8000:000000000000108B'
-                  name = '' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Is_Set impl' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
                   isQuery = 'false'>
                   <UML:Method.body>
                     <UML:ProcedureExpression xmi.id = '-64--88-1-2-5602f952:169686de277:-8000:00000000000010B6'
@@ -5166,14 +5174,6 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
         </UML:Package>
       </UML:Namespace.ownedElement>
     </UML:Model>
-    <UML:TagDefinition xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000001042'
-      isSpecification = 'false'/>
-    <UML:TagDefinition xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000001043'
-      isSpecification = 'false'/>
-    <UML:TagDefinition xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000001044'
-      isSpecification = 'false'/>
-    <UML:CallAction xmi.id = '-64--88-1-2-1031a50d:16832c413bd:-8000:000000000000102B'
-      name = 'Set_Timeout' isSpecification = 'false' isAsynchronous = 'false'/>
   </XMI.content>
 </XMI>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000985"
