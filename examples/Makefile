@@ -138,8 +138,8 @@ Simple_Buttons.norm
 $(TUML_NORM_FILES): Simple_Buttons.tuml-norm-stamp ;
 
 clean::
-	for g in *.gpr; do			\
-	  -$(GPRCLEAN) -P $$g;			\
+	-for g in *.gpr; do			\
+	  $(GPRCLEAN) -P $$g;			\
 	done
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s clean;			\
