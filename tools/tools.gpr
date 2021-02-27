@@ -35,7 +35,6 @@ project Tools is
    package Compiler is
       for Default_Switches ("ada") use
         (
-         "-gnat05",
          "-gnatqQafoy",
          "-gnatwaL",
          "-O0"

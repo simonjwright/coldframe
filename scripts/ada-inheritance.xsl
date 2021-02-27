@@ -249,8 +249,9 @@
            ({rp1-abbrev} : ColdFrame.Instances.Handle;
             {rp2-abbrev} : ColdFrame.Instances.Handle;
             {rp3-abbrev} : ColdFrame.Instances.Handle) return Handle is
-            {p1-abbrev}_H : {p1}.Handle;
-            {p2-abbrev}_H : {p2}.Handle;
+            {rp1-abbrev}_H : {p1}.Handle;
+            {rp2-abbrev}_H : {p2}.Handle;
+            {rp3-abbrev}_H : {p2}.Handle;
             use type ColdFrame.Instances.Handle;
          begin
            {body - see below}

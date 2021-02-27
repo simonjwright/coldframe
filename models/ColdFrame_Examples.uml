@@ -122,7 +122,7 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Jul 23 10:20:25 BST 2020'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Sep 30 16:26:20 BST 2020'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>PRE-0.35.2(6) revised on $Date$ </XMI.exporterVersion>
@@ -4770,8 +4770,8 @@ After a short push, the Button remains set for a period, which can be extended b
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Method xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:0000000000001134'
-                  name = '' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false'>
+                  name = 'Output_Signal_For_LED impl' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false'>
                   <UML:Method.body>
                     <UML:ProcedureExpression xmi.id = '-64--88-1-2-3be1883:16953677a5a:-8000:000000000000116D'
                       language = '' body = 'pragma Unreferenced (This);&#10;return 0; -- only one button!'/>

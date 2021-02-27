@@ -1,7 +1,11 @@
 This is an ada-mode project file for Simple Buttons Scripting.
 
 gpr_file=Simple_Buttons_Scripting.gpr
+
+$HOME=/Users/simon
+
 gpr_project_path=..
 gpr_project_path=$HOME/scripted_testing
 gpr_project_path=$HOME/tcladashell
+
 $BUILD=Debug
