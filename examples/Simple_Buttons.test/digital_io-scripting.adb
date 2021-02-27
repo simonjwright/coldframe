@@ -14,6 +14,9 @@ package body Digital_IO.Scripting is
 
    function Input_Signal_State_Value (S : String) return Input_Signal_State;
 
+   --  Digital_IO.Input_Signal_State_Callback is an instantiation of
+   --  ColdFrame.Callbacks, so this adds the
+   --  ColdFrame.Callbacks.Scripting extension.
    package Input_Signal_State_Callback
      is new Digital_IO.Input_Signal_State_Callback.Scripting
        (Callback_Type_Name => "digital_io.input_signal_state",

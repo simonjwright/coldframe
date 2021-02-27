@@ -16,6 +16,8 @@ with Library.Tests;
 function Library.Test return Access_Test_Suite is
    Result : constant Access_Test_Suite := new Test_Suite;
 begin
+   pragma Warnings (Off, "anonymous access type allocator");
    Add_Test (Result, new Library.Tests.Test_Case);
+   pragma Warnings (On, "anonymous access type allocator");
    return Result;
 end Library.Test;

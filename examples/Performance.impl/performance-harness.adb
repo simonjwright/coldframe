@@ -173,6 +173,7 @@ begin
 
       declare
          Ptc : Pet.Vectors.Vector;
+         pragma Unreferenced (Ptc);
       begin
          T := Clock;
          for I in Os'Range loop
@@ -229,6 +230,7 @@ begin
 
       declare
          Hc : A2.Vectors.Vector;
+         pragma Unreferenced (Hc);
       begin
          T := Clock;
          for I in Pts'Range loop
@@ -242,6 +244,7 @@ begin
       declare
          Prc : Person.Vectors.Vector
            (Capacity => Owners'Pos (Owners'Last) + 1);
+         pragma Unreferenced (Prc);
       begin
          T := Clock;
          for I in Pts'Range loop

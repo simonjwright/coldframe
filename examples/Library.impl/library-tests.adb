@@ -119,7 +119,6 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       B : Borrower.Handle;
       pragma Warnings (Off, B);
-      use type Borrower.Handle;
    begin
       B := Authorship.Wrote (null);
    exception
@@ -139,7 +138,6 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       Bks : Book.Vectors.Vector;
       use type Ada.Containers.Count_Type;
-      use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (null);
       Assert (Book.Vectors.Length (Bks) = 0,
@@ -150,7 +148,6 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       Bks : Book.Vectors.Vector;
       use type Ada.Containers.Count_Type;
-      use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (Carol);
       Assert (Book.Vectors.Length (Bks) = 0,
@@ -161,7 +158,6 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       Bks : Book.Vectors.Vector;
       use type Ada.Containers.Count_Type;
-      use type Book.Handle;
    begin
       Bks := Authorship.Was_Written_By (Alice);
       Assert (Book.Vectors.Length (Bks) = 3,
