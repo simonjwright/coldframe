@@ -31,8 +31,10 @@ open-source code generator backend for use with UML tools, targeted at
 \href{https://www.adaic.org}{Ada}.
 
 Until recently (2019) the UML tool of choice has been
-\href{http://argouml.tigris.org}{ArgoUML}; however, it hasn't been
-updated since 2015, aside from some test code.
+\href{https://github.com/argouml-tigris-org/argouml}{ArgoUML}; it is
+still being worked on, but the released versions don't work on newer
+macOS releases, and the development version only runs from an awkward
+command line interface.
 
 The \href{https://github.com/abstratt/textuml}{TextUML} project is a
 Java-based tool to encode UML models in textual form. It goes beyond
@@ -262,7 +264,7 @@ Button.
 
 @d SB.Button attributes @{
 id attribute Name : Button_Name;
-@| @}
+@| Name @}
 
 This attribute holds the time when the Button was pushed, so that the
 Lit timeout can run from this initial time rather than (e.g.) when the
@@ -270,21 +272,21 @@ Button was released.
 
 @d SB.Button attributes @{
 attribute Pushed_Time : Time;
-@| @}
+@| Pushed_Time @}
 
 This ColdFrame timer controls how long the Button needs to remain
 pushed before transition to the Held state.
 
 @d SB.Button attributes @{
 attribute Lit_Timer : Timer;
-@| @}
+@| Lit_Timer @}
 
 This timer controls how long the Button needs to remain pushed before
 transition to the Held state.
 
 @d SB.Button attributes @{
 attribute Pushed_Timer : Timer;
-@| @}
+@| Pushed_Timer @}
 
 \subsubsection{Button operations}
 
@@ -294,7 +296,7 @@ they are controlled by is set). Note the modifier \verb|private|.
 
 @d SB.Button operations @{
 private operation Changed();
-@| @}
+@| Changed @}
 
 This operation stores the time at which the Button was pushed: the Lit
 timeout runs from this time, not the time of Button release.
@@ -307,7 +309,7 @@ private operation Note_Pushed_Time();
 {
    This.Pushed_Time := ColdFrame.Project.Calendar.Clock;
 }
-@| @}
+@| Note_Pushed_Time @}
 
 This operation sets the Pushed timeout, again including the code in
 the model. The indentation will be preserved (actually, relative to
@@ -322,7 +324,7 @@ private operation Set_Pushed_Timeout();
       To_Fire => new Push_Timeout (This),
       After => 0.25);
 }
-@| @}
+@| Set_Pushed_Timeout @}
 
 This operation clears the Pushed timeout.
 
@@ -333,7 +335,7 @@ private operation Clear_Pushed_Timeout();
      (The_Timer => This.Pushed_Timer,
       On => Events.Dispatcher);
 }
-@}
+@| Clear_Pushed_Timeout @}
 
 This operation sets the Lit timeout. It's called on button release
 after a short push, but the time is relative to the time when the
@@ -341,7 +343,7 @@ button was pushed.
 
 @d SB.Button operations @{
 private operation Set_Lit_Timeout();
-@| @}
+@| Set_Lit_Timeout @}
 
 This operation clears the Lit timeout.
 
@@ -352,7 +354,7 @@ private operation Clear_Lit_Timeout();
      (The_Timer => This.Lit_Timer,
       On => Events.Dispatcher);
 }
-@| @}
+@| Clear_Lit_Timeout @}
 
 This operation indicates whether the Button is set or not. It's set if
 it's in any of the states \verb|Pushed|, \verb|Held|, \verb|Timed|,
@@ -373,7 +375,7 @@ public operation Is_Set(): Boolean;
       return Set_In_State (This.State_Machine_State);
    end;
 }
-@| @}
+@| Is_Set @}
 
 This operation acts as receiver of state changes from Digital\_IO, via
 Input Signal State Callback. The annotation \verb|[callback]|
@@ -387,7 +389,7 @@ action.
 @d SB.Button operations @{
 [callback]
 private static operation Receive_Change(S : Input_Signal_State);
-@| @}
+@| Receive_Change @}
 
 \subsubsection{Button state machine}
 
@@ -405,7 +407,8 @@ as mixed machines.
   \caption{Generated Button statechart}
   \label{fig:button-statechart}
   \begin{center}
-    \includegraphics[width=5cm]{Simple_Buttons-Button-state.png}
+    \includegraphics[width=7.5cm]
+                    {Simple_Buttons.images/Simple_Buttons.Button.state.png}
   \end{center}
 \end {figure}
 
@@ -422,7 +425,7 @@ modifier). It performs a completion transition to Off.
 initial state Initial
    transition to Off;
 end;
-@}
+@| Initial @}
 
 In the state Off, the button is off, waiting for a Push. If this state
 was entered as a result of a Push in the Held state, there will be a
@@ -438,7 +441,7 @@ state Off
    transition on signal(Button::Push) to Pushed;
    [ignore] transition on signal(Button::Release) to Off;
 end;
-@}
+@| Off @}
 
 In the state Pushed, the button is on, awaiting a Push\_Timeout, which
 transitions to the Held state (a long push), or a Release (a short
@@ -461,7 +464,7 @@ state Pushed
    transition on signal(Button::Push_Timeout) to Held;
    transition on signal(Button::Release) to Timed;
 end;
-@}
+@| Pushed @}
 
 In the state Timed, the button is on after a short push, awaiting a
 Lit\_Timeout (which transitions to the Off state) or another Push
@@ -482,7 +485,7 @@ state Timed
    transition on signal(Button::Push) to Pushed_Again;
    transition on signal(Button::Lit_Timeout) to Off;
 end;
-@}
+@| Timed @}
 
 In the state Pushed\_Again, the button has been pushed during the
 timeout after a short push.  Resets the timeout (in the entry action)
@@ -494,7 +497,7 @@ state Pushed_Again
    entry(Clear_Lit_Timeout);
    transition to Pushed;
 end;
-@}
+@| Pushed_Again @}
 
 In the state Held, the button is on, after a long push, awaiting
 another Push to transition to the Off state. The button is still
@@ -505,7 +508,7 @@ state Held
    transition on signal(Button::Push) to Off;
    [ignore] transition on signal(Button::Release) to Held;
 end;
-@}
+@| Held @}
 
 Note that the state model could have been cast as a mixed Moore-Mealy
 machine, by writing the state Timed as
@@ -543,7 +546,7 @@ This attribute identifies the LED.
 
 @d SB.LED attributes @{
 id attribute Name : LED_Name;
-@}
+@| Name @}
 
 \subsubsection{LED operations}
 
@@ -555,7 +558,7 @@ diagram''.
 @d SB.LED operations @{
 [init]
 private static operation Initialize();
-@}
+@| Intialize @}
 
 This operation is called from a controlling Button which has changed
 to evaluate whether the LED should be lit (if any of the controlling
@@ -563,7 +566,7 @@ Buttons is set) or not.
 
 @d SB.LED operations @{
 public operation Changed();
-@}
+@| Changed @}
 
 This operation maps the LED to the corresponding Digital\_IO output
 pin.
@@ -575,7 +578,7 @@ private operation Output_Signal_For_LED(): Output_Signal;
   --  LED in this simple demo.
   return LED_Name'Pos (This.Name);
 }
-@}
+@| Output_Signal_For_LED @}
 
 \subsection{Associations}
 

@@ -14,6 +14,10 @@ NUWEB ?= ~/nuweb.py/nuweb.py
 
 all:: Simple_Buttons.gen
 all:: Test_It.gen
+all:: textuml.pdf
+
+textuml.pdf: Simple_Buttons.images
+Simple_Buttons.images: Simple_Buttons.html
 
 # twice round the block isn't quite enough!
 %.pdf: %.w
@@ -37,9 +41,7 @@ Test_It.norm
 $(NORM_FILES): test.tuml-norm-stamp textuml.tuml-norm-stamp ;
 
 clean::
-	-for g in *.gpr; do			\
-	  gprclean -P $$g;			\
-	done
-	rm -rf *.{bin,map,norm-stamp,tuml-norm-stamp,stamp,norm,ada,gen,html,images}
+	-rm -rf *.{bin,map,norm-stamp,tuml-norm-stamp,stamp,norm,ada,gen,html,images}
+	-rm -rf *.{tuml,aux,fls,log,out,pdf,tex,toc}
 
-.PHONY: force all setup clean
+.PHONY: all clean
