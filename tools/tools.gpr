@@ -18,9 +18,7 @@ project Tools is
 
    for Main use
      (
-      "generated_lines.adb",
-      "normalize_xmi-main.adb",
-      "serialized_to_csv.adb"
+      "normalize_xmi-main.adb"
      );
 
    for Source_Dirs use (".", "../lib");
