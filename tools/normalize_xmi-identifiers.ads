@@ -26,7 +26,7 @@ private package Normalize_XMI.Identifiers is
    function Normalize (Id : String) return String;
    --  Convert Id to a valid, properly cased Ada name.
    --
-   --  Raises Invalid_Name if Id is invalid (for example, contains a
+   --  Raises Invalid_Name if Id is invalid (for example, is a
    --  reserved word).
    Invalid_Name : exception;
 

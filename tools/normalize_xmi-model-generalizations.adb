@@ -26,23 +26,35 @@ package body Normalize_XMI.Model.Generalizations is
       Parent          :        not null Element_P;
       Accumulating_In : in out Element_Maps.Map)
    is
+      --  This function normalizes Name if valid, otherwise returns it
+      --  untouched.
+      --  Not the most efficient function, since Identifiers.Is_Valid
+      --  calls Identifiers.Normalize first!
+      function Normalize (Name : String) return String;
+      function Normalize (Name : String) return String is
+        (if Identifiers.Is_Valid (Name)
+         then Identifiers.Normalize (Name)
+         else Name);
+
       Model_Name : constant String :=
-        Read_Attribute ("name", From_Element => From);
+        Normalize (Read_Attribute ("name", From_Element => From));
       Discriminator : constant String :=
-        Read_Attribute ("discriminator", From_Element => From);
+        Normalize (Read_Attribute ("discriminator", From_Element => From));
       Name : Ada.Strings.Unbounded.Unbounded_String;
       Parent_Nodes : constant DOM.Core.Node_List
         := McKae.XML.XPath.XIA.XPath_Query (From,
                                             "UML:Generalization.parent/*");
       Parent_Name : constant String
-        := Read_Attribute
-          ("name", From_Element => DOM.Core.Nodes.Item (Parent_Nodes, 0));
+        := Normalize
+          (Read_Attribute
+             ("name", From_Element => DOM.Core.Nodes.Item (Parent_Nodes, 0)));
       Child_Nodes : constant DOM.Core.Node_List
         := McKae.XML.XPath.XIA.XPath_Query (From,
                                             "UML:Generalization.child/*");
       Child_Name : constant String
-        := Read_Attribute
-          ("name", From_Element => DOM.Core.Nodes.Item (Child_Nodes, 0));
+        := Normalize
+          (Read_Attribute
+             ("name", From_Element => DOM.Core.Nodes.Item (Child_Nodes, 0)));
       N : Element_P;
    begin
       if Model_Name'Length = 0 then
@@ -53,24 +65,20 @@ package body Normalize_XMI.Model.Generalizations is
                               & Parent_Name);
             return;
          else
-            if Identifiers.Is_Valid (Discriminator) then
-               Name := +Identifiers.Normalize (Discriminator);
-            else
+            Name := +Discriminator;
+            if not Identifiers.Is_Valid (Discriminator) then
                Messages.Error ("Invalid discriminator """
                                  & Discriminator
                                  & """ in generalization from "
                                  & Child_Name
                                  & " to "
                                  & Parent_Name);
-               Name := +Discriminator;
             end if;
          end if;
       else
          if Discriminator'Length = 0 or else Discriminator = Model_Name then
-            if Identifiers.Is_Valid (Model_Name) then
-               Name := +Identifiers.Normalize (Model_Name);
-            else
-               Name := +Model_Name;
+            Name := +Model_Name;
+            if not Identifiers.Is_Valid (Model_Name) then
                Messages.Error ("Invalid name """
                                  & Model_Name
                                  & """ in generalization from "

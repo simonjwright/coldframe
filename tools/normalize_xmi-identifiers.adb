@@ -14,8 +14,10 @@
 
 with Ada.Containers.Indefinite_Ordered_Maps;
 with Ada.Containers.Indefinite_Ordered_Sets;
+with Ada.Containers.Vectors;
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
+with Ada.Strings.Unbounded;
 with Ada.Text_IO;
 with GNAT.OS_Lib;
 with Normalize_XMI.Messages;
@@ -159,54 +161,122 @@ package body Normalize_XMI.Identifiers is
       use Ada.Strings.Fixed;
       use Ada.Strings.Maps;
       use Ada.Strings.Maps.Constants;
+      use Ada.Strings.Unbounded;
+
+      package String_Vectors is new Ada.Containers.Vectors
+        (Index_Type   => Positive,
+         Element_Type => Unbounded_String);
+
+      function "+" (R : String) return Unbounded_String
+        renames To_Unbounded_String;
+      function "+" (R : Unbounded_String) return String
+        renames To_String;
 
       --  A Component consists of lower-case space-separated Words,
       --  each of which is subjected to Sub_Case_Exceptions (such as
       --  "IO" in "Text_IO", or, if no exception is found, the first
       --  character is capitalized.
-      procedure Process_Component (S : in out String);
-      procedure Process_Word (S : in out String);
+      procedure Process_Component (S : in out Unbounded_String);
+      procedure Process_Word (S : in out Unbounded_String);
 
-      procedure Process_Component (S : in out String)
+      procedure Process_Component (S : in out Unbounded_String)
       is
-         Words : constant Spans := Find_Spans (S, ' ');
+         Str    : constant String := +S;
+         Words  : String_Vectors.Vector;
       begin
-         if Reserved.Contains (S) then
+         --  Check for reserved words, which don't contain underscores
+         --  (spaces by now) and must therefore be whole components.
+         if Reserved.Contains (Str) then
             raise Invalid_Name
-              with "reserved word """ & S & """ not allowed";
+              with "reserved word """ & Str & """ not allowed";
          end if;
-         for W in Words'Range loop
-            Process_Word (S (Words (W).L .. Words (W).U));
+
+         --  Split into words.
+         declare
+            WS : constant Spans := Find_Spans (Str, ' ');
+         begin
+            for W in WS'Range loop
+               --  Merge runs of spaces
+               if WS (W).U >= WS (W).L then
+                  Words.Append (+(Str (WS (W).L .. WS (W).U)));
+               end if;
+            end loop;
+         end;
+
+         for W of Words loop
+            Process_Word (W);
          end loop;
-         Translate (S, To_Mapping (" ", "_"));
-         --  Finally, we look for whole-component exceptions (such as
+
+         --  Merge the Words back into the Component, joining with '_'.
+         S := Words (1);
+         for J in 2 .. Natural (Words.Length) loop
+            Append (S, '_');
+            Append (S, Words (J));
+         end loop;
+
+         --  Finally, look for whole-component exceptions (such as
          --  "unsigned_short").
-         if Case_Exceptions.Contains (S) then
-            S := Case_Exceptions.Element (S);
+         if Case_Exceptions.Contains (+S) then
+            S := +Case_Exceptions.Element (+S);
          end if;
       end Process_Component;
 
-      procedure Process_Word (S : in out String)
+      procedure Process_Word (S : in out Unbounded_String)
       is
       begin
-         if Sub_Case_Exceptions.Contains (S) then
-            S := Sub_Case_Exceptions.Element (S);
-         elsif S'Length > 0 then
-            Translate (S (S'First .. S'First), Upper_Case_Map);
+         if Sub_Case_Exceptions.Contains (+S) then
+            S := +Sub_Case_Exceptions.Element (+S);
+         else
+            Replace_Slice
+              (S,
+               Low => 1,
+               High => 1,
+               By => Translate (Slice (S, Low => 1, High => 1),
+                                Upper_Case_Map));
          end if;
       end Process_Word;
 
-      --  Convert to space-separated.
-      Result : String := Translate (Trim (Id, Both), To_Mapping ("_", " "));
+      --  The dot-separated components
+      Components : String_Vectors.Vector;
 
-      --  Find the dot-separated components
-      Components : constant Spans := Find_Spans (Result, '.');
-
+      Result : Unbounded_String;
    begin
-      for C in Components'Range loop
-         Process_Component (Result (Components (C).L .. Components (C).U));
+      --  It's sometimes legal (e.g. in state transitions) for the
+      --  identifier to be empty.
+      if Id'Length = 0 then
+         return "";
+      end if;
+
+      --  Split the Id into components at the '.'s. For each
+      --  component, translate underscores into spaces, and trim the
+      --  result.
+      declare
+         CS : constant Spans := Find_Spans (Id, '.');
+      begin
+         for C in CS'Range loop
+            Components.Append
+              (+(Trim (Translate (Id (CS (C).L .. CS (C).U),
+                                  To_Mapping ("_", " ")), Both)));
+         end loop;
+      end;
+
+      --  Check that none of the components is empty.
+      if (for some C  of Components => Length (C) = 0) then
+         raise Invalid_Name with "empty component in """ & Id & """";
+      end if;
+
+      for C of Components loop
+         Process_Component (C);
       end loop;
-      return Result;
+
+      --  Merge the Components back into the Identifier, joining with '.'.
+      Result := Components (1);
+      for J in 2 .. Natural (Components.Length) loop
+         Append (Result, '.');
+         Append (Result, Components (J));
+      end loop;
+
+      return +Result;
    end Normalize;
 
 
