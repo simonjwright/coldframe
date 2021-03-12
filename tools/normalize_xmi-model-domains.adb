@@ -16,6 +16,7 @@ with Ada.Calendar;
 with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
+with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Association_Classes;
 with Normalize_XMI.Model.Associations;
@@ -250,9 +251,55 @@ package body Normalize_XMI.Model.Domains is
       begin
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
+
+      package String_Vectors is new Ada.Containers.Indefinite_Vectors
+        (Index_Type   => Positive,
+         Element_Type => String);
+      package Abbreviation_Maps is new Ada.Containers.Indefinite_Ordered_Maps
+        (Key_Type     => String,
+         Element_Type => String_Vectors.Vector,
+         "="          => String_Vectors."=");
+
+      Abbreviations : Abbreviation_Maps.Map;
+
+      procedure Collect_Class_Abbreviations (Pos : Element_Maps.Cursor);
+      procedure Collect_Class_Abbreviations (Pos : Element_Maps.Cursor)
+      is
+         use Ada.Strings.Unbounded;
+         Class_Name : constant String
+           := To_String (Element_Maps.Element (Pos).Name);
+         Maybe_Abbrev : constant String
+           := Element_Maps.Element (Pos).Tag_Value ("abbreviation");
+         Abbrev : constant String :=
+           (if Maybe_Abbrev'Length /= 0
+            then
+               Maybe_Abbrev
+            else
+               Identifiers.Abbreviate (Class_Name));
+      begin
+         if not Abbreviations.Contains (Abbrev) then
+            declare
+               V : String_Vectors.Vector;
+            begin
+               Abbreviations.Insert (Abbrev, V);
+            end;
+         end if;
+         Abbreviations (Abbrev).Append (Class_Name);
+      end Collect_Class_Abbreviations;
    begin
       Messages.Information (" checking domain " & (+D.Name));
       D.Classes.Iterate (Resolve'Access);
+      D.Classes.Iterate (Collect_Class_Abbreviations'Access);
+      for Cursor in Abbreviations.Iterate loop
+         if Natural (Abbreviation_Maps.Element (Cursor).Length) > 1 then
+            Messages.Warning ("duplicate abbreviation """
+                                & Abbreviation_Maps.Key (Cursor)
+                                & """");
+            for Name of Abbreviation_Maps.Element (Cursor) loop
+               Messages.Information ("  ... class """ & Name & """");
+            end loop;
+         end if;
+      end loop;
       D.Types.Iterate (Resolve'Access);
       D.Associations.Iterate (Resolve'Access);
       D.Generalizations.Iterate (Resolve'Access);
