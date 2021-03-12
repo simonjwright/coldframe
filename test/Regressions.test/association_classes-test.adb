@@ -41,7 +41,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A0.A0L (A_L => null);
+      RH := A0.A0L (An_L => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A0_From_Null_L_To_R;
@@ -52,7 +52,7 @@ package body Association_Classes.Test is
       AH : A0.Handle;
       use type A0.Handle;
    begin
-      AH := A0.A0L (A_L => null);
+      AH := A0.A0L (An_L => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A0_From_Null_L_To_A;
@@ -74,7 +74,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A0.A0R (A_R => null);
+      LH := A0.A0R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A0_From_Null_R_To_L;
@@ -85,7 +85,7 @@ package body Association_Classes.Test is
       AH : A0.Handle;
       use type A0.Handle;
    begin
-      AH := A0.A0R (A_R => null);
+      AH := A0.A0R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A0_From_Null_R_To_A;
@@ -107,7 +107,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A1.A1L (A_L => null);
+      RH := A1.A1L (An_L => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A1_From_Null_L_To_R;
@@ -118,7 +118,7 @@ package body Association_Classes.Test is
       AH : A1.Handle;
       use type A1.Handle;
    begin
-      AH := A1.A1L (A_L => null);
+      AH := A1.A1L (An_L => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A1_From_Null_L_To_A;
@@ -140,7 +140,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A1.A1R (A_R => null);
+      LH := A1.A1R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A1_From_Null_R_To_L;
@@ -151,7 +151,7 @@ package body Association_Classes.Test is
       AH : A1.Handle;
       use type A1.Handle;
    begin
-      AH := A1.A1R (A_R => null);
+      AH := A1.A1R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A1_From_Null_R_To_A;
@@ -173,7 +173,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A2.A2L (A_L => null);
+      RH := A2.A2L (An_L => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A2_From_Null_L_To_R;
@@ -184,7 +184,7 @@ package body Association_Classes.Test is
       AH : A2.Handle;
       use type A2.Handle;
    begin
-      AH := A2.A2L (A_L => null);
+      AH := A2.A2L (An_L => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A2_From_Null_L_To_A;
@@ -206,7 +206,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A2.A2R (A_R => null);
+      LH := A2.A2R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A2_From_Null_R_To_L;
@@ -217,7 +217,7 @@ package body Association_Classes.Test is
       AH : A2.Handle;
       use type A2.Handle;
    begin
-      AH := A2.A2R (A_R => null);
+      AH := A2.A2R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A2_From_Null_R_To_A;
@@ -239,7 +239,7 @@ package body Association_Classes.Test is
       RH : R.Handle;
       use type R.Handle;
    begin
-      RH := A3.A3L (A_L => null);
+      RH := A3.A3L (An_L => null);
       Assert (RH = null,
               "expected null R handle");
    end Navigate_A3_From_Null_L_To_R;
@@ -250,7 +250,7 @@ package body Association_Classes.Test is
       AH : A3.Handle;
       use type A3.Handle;
    begin
-      AH := A3.A3L (A_L => null);
+      AH := A3.A3L (An_L => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A3_From_Null_L_To_A;
@@ -272,7 +272,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A3.A3R (A_R => null);
+      LH := A3.A3R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A3_From_Null_R_To_L;
@@ -283,7 +283,7 @@ package body Association_Classes.Test is
       AH : A3.Handle;
       use type A3.Handle;
    begin
-      AH := A3.A3R (A_R => null);
+      AH := A3.A3R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A3_From_Null_R_To_A;
@@ -304,7 +304,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       RC : R.Vectors.Vector;
    begin
-      RC := A4.A4L (A_L => null);
+      RC := A4.A4L (An_L => null);
       Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A4_From_Null_L_To_R;
@@ -314,7 +314,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       AC : A4.Vectors.Vector;
    begin
-      AC := A4.A4L (A_L => null);
+      AC := A4.A4L (An_L => null);
       Assert (AC.Is_Empty,
               "expected empty A4 collection");
    end Navigate_A4_From_Null_L_To_A;
@@ -336,7 +336,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A4.A4R (A_R => null);
+      LH := A4.A4R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A4_From_Null_R_To_L;
@@ -347,7 +347,7 @@ package body Association_Classes.Test is
       AH : A4.Handle;
       use type A4.Handle;
    begin
-      AH := A4.A4R (A_R => null);
+      AH := A4.A4R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A4_From_Null_R_To_A;
@@ -368,7 +368,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       RC : R.Vectors.Vector;
    begin
-      RC := A5.A5L (A_L => null);
+      RC := A5.A5L (An_L => null);
       Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A5_From_Null_L_To_R;
@@ -378,7 +378,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       AC : A5.Vectors.Vector;
    begin
-      AC := A5.A5L (A_L => null);
+      AC := A5.A5L (An_L => null);
       Assert (AC.Is_Empty,
               "expected empty A5 collection");
    end Navigate_A5_From_Null_L_To_A;
@@ -400,7 +400,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A5.A5R (A_R => null);
+      LH := A5.A5R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A5_From_Null_R_To_L;
@@ -411,7 +411,7 @@ package body Association_Classes.Test is
       AH : A5.Handle;
       use type A5.Handle;
    begin
-      AH := A5.A5R (A_R => null);
+      AH := A5.A5R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A5_From_Null_R_To_A;
@@ -432,7 +432,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       RC : R.Vectors.Vector;
    begin
-      RC := A6.A6L (A_L => null);
+      RC := A6.A6L (An_L => null);
       Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A6_From_Null_L_To_R;
@@ -442,7 +442,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       AC : A6.Vectors.Vector;
    begin
-      AC := A6.A6L (A_L => null);
+      AC := A6.A6L (An_L => null);
       Assert (AC.Is_Empty,
               "expected empty A6 collection");
    end Navigate_A6_From_Null_L_To_A;
@@ -464,7 +464,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A6.A6R (A_R => null);
+      LH := A6.A6R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A6_From_Null_R_To_L;
@@ -475,7 +475,7 @@ package body Association_Classes.Test is
       AH : A6.Handle;
       use type A6.Handle;
    begin
-      AH := A6.A6R (A_R => null);
+      AH := A6.A6R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A6_From_Null_R_To_A;
@@ -496,7 +496,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       RC : R.Vectors.Vector;
    begin
-      RC := A7.A7L (A_L => null);
+      RC := A7.A7L (An_L => null);
       Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A7_From_Null_L_To_R;
@@ -506,7 +506,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       AC : A7.Vectors.Vector;
    begin
-      AC := A7.A7L (A_L => null);
+      AC := A7.A7L (An_L => null);
       Assert (AC.Is_Empty,
               "expected empty A7 collection");
    end Navigate_A7_From_Null_L_To_A;
@@ -528,7 +528,7 @@ package body Association_Classes.Test is
       LH : L.Handle;
       use type L.Handle;
    begin
-      LH := A7.A7R (A_R => null);
+      LH := A7.A7R (An_R => null);
       Assert (LH = null,
               "expected null L handle");
    end Navigate_A7_From_Null_R_To_L;
@@ -539,7 +539,7 @@ package body Association_Classes.Test is
       AH : A7.Handle;
       use type A7.Handle;
    begin
-      AH := A7.A7R (A_R => null);
+      AH := A7.A7R (An_R => null);
       Assert (AH = null,
               "expected null A handle");
    end Navigate_A7_From_Null_R_To_A;
@@ -560,7 +560,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       RC : R.Vectors.Vector;
    begin
-      RC := A8.A8L (A_L => null);
+      RC := A8.A8L (An_L => null);
       Assert (RC.Is_Empty,
               "expected empty R collection");
    end Navigate_A8_From_Null_L_To_R;
@@ -570,7 +570,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       AC : A8.Vectors.Vector;
    begin
-      AC := A8.A8L (A_L => null);
+      AC := A8.A8L (An_L => null);
       Assert (AC.Is_Empty,
               "expected empty A8 collection");
    end Navigate_A8_From_Null_L_To_A;
@@ -591,7 +591,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       LC : L.Vectors.Vector;
    begin
-      LC := A8.A8R (A_R => null);
+      LC := A8.A8R (An_R => null);
       Assert (LC.Is_Empty,
               "expected empty L collection");
    end Navigate_A8_From_Null_R_To_L;
@@ -601,7 +601,7 @@ package body Association_Classes.Test is
       pragma Unreferenced (C);
       AC : A8.Vectors.Vector;
    begin
-      AC := A8.A8R (A_R => null);
+      AC := A8.A8R (An_R => null);
       Assert (AC.Is_Empty,
               "expected empty A8 collection");
    end Navigate_A8_From_Null_R_To_A;

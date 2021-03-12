@@ -284,7 +284,14 @@ package body Normalize_XMI.Identifiers is
    is
       Words : constant Spans := Find_Spans (Name, '_');
    begin
-      if Words'Length = 1 then
+      if Name'Length = 1 then
+         case Name (Name'First) is
+            when
+              'A' | 'E' | 'I' | 'O' | 'F' | 'H' | 'L' | 'M' |
+              'N' | 'R' | 'S' | 'X' => return "An_" & Name;
+            when others => return "A_" & Name;
+         end case;
+      elsif Words'Length = 1 then
          case Name (Name'First) is
             when 'A' | 'E' | 'I' | 'O' | 'U' => return "An_" & Name;
             when others => return "A_" & Name;
