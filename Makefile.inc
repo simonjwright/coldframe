@@ -229,8 +229,8 @@ $(COLDFRAMEOUT)/%.xmi: %.tuml $(COLDFRAME)/scripts/tuml2xmi.py
 	  $(SH) -v `basename $@ .html`.images/$@.sh;	\
 	fi
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(CYGWIN)$(HTMLGEN_SCRIPT)			\
-	  cwd=$(shell pwd) diagrams=$(GENERATE_DIAGRAMS) >$@ ||	\
+	@$(SAXON) $< $(CYGWIN)$(HTMLGEN_SCRIPT)				\
+	  cwd="$(shell pwd)" diagrams=$(GENERATE_DIAGRAMS) >$@ ||	\
 	  ($(RM) -f $@; $(EXIT) 1)
 
 # Generate .ada files.
