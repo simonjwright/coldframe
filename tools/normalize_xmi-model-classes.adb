@@ -209,13 +209,20 @@ package body Normalize_XMI.Model.Classes is
       end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+C.Name) & "</name>");
-      Put (To, "<abbreviation>");
-      if C.Has_Tag ("abbreviation") then
-         Put (To, C.Tag_Value ("abbreviation"));
-      else
-         Put (To, Identifiers.Abbreviate (+C.Name));
-      end if;
-      Put_Line (To, "</abbreviation>");
+      declare
+         Abbrev : constant String
+           := (if C.Has_Tag ("abbreviation")
+               then C.Tag_Value ("abbreviation")
+               else Identifiers.Abbreviate (+C.Name));
+      begin
+         if not Identifiers.Is_Valid (Abbrev) then
+            Messages.Warning ("invalid abbreviation """
+                                & Abbrev
+                                & """ for class """
+                                & (+C.Name) & """");
+         end if;
+         Put_Line (To, "<abbreviation>" & Abbrev & "</abbreviation>");
+      end;
       C.Output_Documentation (To);
       C.Attributes.Iterate (Output_M'Access);
       C.Operations.Iterate (Output_V'Access);
