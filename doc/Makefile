@@ -55,6 +55,7 @@ DOCS =						\
   generalizations.html				\
   generalizations-extended.html			\
   generation.html				\
+  historical-releases.html			\
   index.html					\
   initialization.html				\
   installation.html				\
