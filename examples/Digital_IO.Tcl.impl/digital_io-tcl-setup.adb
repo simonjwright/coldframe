@@ -8,15 +8,15 @@
 --  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 --  PARTICULAR PURPOSE. See the GNU General Public License for more
 --  details. You should have received a copy of the GNU General Public
---  License distributed with this package; see file COPYING. If not,
+--  License distributed with this package; see file COPYING.  If not,
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-separate (States.Monitor)
-procedure Setup is
-   H : Handle;
-   pragma Warnings (Off, H);
+--  Performs domain setup.
+
+with Digital_IO.Tcl_Support;
+
+procedure Digital_IO.Tcl.Setup is
 begin
-   H := Create ((Dev => Input));
-   H := Create ((Dev => Output));
-end Setup;
+   Digital_IO.Tcl_Support.Initialize;
+end Digital_IO.Tcl.Setup;

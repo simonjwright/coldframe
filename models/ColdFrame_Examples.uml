@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Simple_Buttons_Class Diagram</activediagram>
+      <activediagram>Device Lifecycle</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -122,7 +122,7 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Sep 30 16:26:20 BST 2020'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Mar 22 14:33:42 GMT 2021'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>PRE-0.35.2(6) revised on $Date$ </XMI.exporterVersion>
@@ -1370,27 +1370,6 @@ Notifies connected lamps of the change.</UML:TaggedValue.dataValue>
                     <UML:Enumeration xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47'/>
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
-                <UML:Operation xmi.id = '-64--88-1-2-70aa68ee:16833608b71:-8000:000000000000134A'
-                  name = 'Initialize' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
-                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
-                  <UML:ModelElement.stereotype>
-                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-init'/>
-                  </UML:ModelElement.stereotype>
-                  <UML:ModelElement.taggedValue>
-                    <UML:TaggedValue xmi.id = '-64--88-1-2-70aa68ee:16833608b71:-8000:000000000000134C'
-                      isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>This operation initializes the Lamps and Buttons.</UML:TaggedValue.dataValue>
-                      <UML:TaggedValue.type>
-                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-                      </UML:TaggedValue.type>
-                    </UML:TaggedValue>
-                  </UML:ModelElement.taggedValue>
-                  <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-2-70aa68ee:16833608b71:-8000:000000000000134B'
-                      name = 'return' isSpecification = 'false' kind = 'return'/>
-                  </UML:BehavioralFeature.parameter>
-                </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-2-70aa68ee:16833608b71:-8000:000000000000134D'
                   name = 'Changed' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
@@ -1705,13 +1684,6 @@ It is intended for Tcl/Tk-based simulations only, so there is no actual digital 
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-75--7032f98f:14526e28dfa:-8000:0000000000000F9F'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>Digital_IO.Tcl_Support.Initialize</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-init'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
           <UML:Namespace.ownedElement>
             <UML:Class xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1'
@@ -1808,18 +1780,6 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
                     <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Timer'/>
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
-                <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF0'
-                  name = 'Initialize' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
-                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
-                  <UML:ModelElement.stereotype>
-                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-init'/>
-                  </UML:ModelElement.stereotype>
-                  <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF1'
-                      name = 'return' isSpecification = 'false' kind = 'return'/>
-                  </UML:BehavioralFeature.parameter>
-                </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF3'
                   name = 'Clear_Timeout' visibility = 'private' isSpecification = 'false'
                   ownerScope = 'instance' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
@@ -1844,18 +1804,6 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
                   isAbstract = 'false'>
                   <UML:BehavioralFeature.parameter>
                     <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF8'
-                      name = 'return' isSpecification = 'false' kind = 'return'/>
-                  </UML:BehavioralFeature.parameter>
-                </UML:Operation>
-                <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF9'
-                  name = 'Start' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
-                  <UML:ModelElement.stereotype>
-                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-entry'/>
-                  </UML:ModelElement.stereotype>
-                  <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFA'
                       name = 'return' isSpecification = 'false' kind = 'return'/>
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
@@ -2094,27 +2042,6 @@ This demonstration shows how ColdFrame&apos;s support for messages and state mac
                     <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Timer'/>
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
-                <UML:Operation xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E73'
-                  name = 'Setup' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
-                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
-                  <UML:ModelElement.stereotype>
-                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-init'/>
-                  </UML:ModelElement.stereotype>
-                  <UML:ModelElement.taggedValue>
-                    <UML:TaggedValue xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E78'
-                      isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>Initializes the Monitor by creating the necessary instances for the Devices.</UML:TaggedValue.dataValue>
-                      <UML:TaggedValue.type>
-                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-                      </UML:TaggedValue.type>
-                    </UML:TaggedValue>
-                  </UML:ModelElement.taggedValue>
-                  <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E74'
-                      name = 'return' isSpecification = 'false' kind = 'return'/>
-                  </UML:BehavioralFeature.parameter>
-                </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E75'
                   name = 'Receive' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
@@ -4362,6 +4289,9 @@ It should address one logical error (which may correspond to several necessary c
         <UML:Package xmi.id = '-64--88-1-2--5206b6e7:1688034fcec:-8000:0000000000001013'
           name = 'Simple_Buttons' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
+          <UML:ModelElement.stereotype>
+            <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
+          </UML:ModelElement.stereotype>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-2--5206b6e7:1688034fcec:-8000:0000000000001014'
               isSpecification = 'false'>
@@ -4708,27 +4638,6 @@ After a short push, the Button remains set for a period, which can be extended b
                     <UML:Enumeration xmi.idref = '-64--88-1-2--5206b6e7:1688034fcec:-8000:000000000000102E'/>
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
-                <UML:Operation xmi.id = '-64--88-1-2--44dee932:16885ff9f46:-8000:000000000000106F'
-                  name = 'Initialize' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
-                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
-                  <UML:ModelElement.stereotype>
-                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-init'/>
-                  </UML:ModelElement.stereotype>
-                  <UML:ModelElement.taggedValue>
-                    <UML:TaggedValue xmi.id = '-64--88-1-2--6e2f96c7:1689550c560:-8000:000000000000107E'
-                      isSpecification = 'false'>
-                      <UML:TaggedValue.dataValue>Initializes the domain by creating Button(s) and LED(s) and associating them.</UML:TaggedValue.dataValue>
-                      <UML:TaggedValue.type>
-                        <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
-                      </UML:TaggedValue.type>
-                    </UML:TaggedValue>
-                  </UML:ModelElement.taggedValue>
-                  <UML:BehavioralFeature.parameter>
-                    <UML:Parameter xmi.id = '-64--88-1-2--44dee932:16885ff9f46:-8000:0000000000001070'
-                      name = 'return' isSpecification = 'false' kind = 'return'/>
-                  </UML:BehavioralFeature.parameter>
-                </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-2--44dee932:16885ff9f46:-8000:0000000000001071'
                   name = 'Changed' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
@@ -6239,9 +6148,9 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       <lineto x="186"
               y="352" />
       <lineto x="186"
-              y="376" />
+              y="396" />
       <lineto x="235"
-              y="376" />
+              y="396" />
       <lineto x="235"
               y="451" />
       <lineto x="72"
@@ -6253,7 +6162,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       x="72"
       y="352"
       width="115"
-      height="25"
+      height="45"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -6266,13 +6175,12 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       justification="Left"
     >Simple_Buttons</text>
     <group name="Fig9.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[72, 352, 114, 1]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[72, 352, 114, 21]"
          href="-64--88-1-2--5206b6e7:1688034fcec:-8000:0000000000001013"
          fill="1"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
-         visibility="0"
     >
       <private>
       </private>
@@ -6281,18 +6189,34 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
         x="72"
         y="352"
         width="114"
-        height="1"
+        height="21"
         fill="1"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
+      <text name="Fig9.3.1"
+        x="72"
+        y="352"
+        width="114"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«domain»</text>
     </group>
     <text name="Fig9.4"
       x="72"
-      y="376"
+      y="396"
       width="164"
-      height="76"
+      height="56"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -9841,7 +9765,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
     </path>
   </group>
   <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[208, 16, 237, 126]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[208, 16, 240, 112]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000000FF5"
        fill="1"
        fillcolor="white"
@@ -9854,8 +9778,8 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
     <rectangle name="Fig9.0"
       x="208"
       y="16"
-      width="237"
-      height="126"
+      width="240"
+      height="112"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -9864,7 +9788,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
     <text name="Fig9.1"
       x="209"
       y="17"
-      width="235"
+      width="238"
       height="23"
       fill="0"
       fillcolor="white"
@@ -9878,7 +9802,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       justification="Center"
     >+ Lamp</text>
     <group name="Fig9.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[209, 17, 235, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[209, 17, 238, 0]"
          href="-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000000FF5"
          fill="0"
          fillcolor="white"
@@ -9892,7 +9816,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       <rectangle name="Fig9.2.0"
         x="209"
         y="17"
-        width="235"
+        width="238"
         height="0"
         fill="0"
         fillcolor="white"
@@ -9903,7 +9827,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
     <rectangle name="Fig9.3"
       x="208"
       y="40"
-      width="237"
+      width="240"
       height="1"
       fill="1"
       fillcolor="black"
@@ -9911,7 +9835,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig9.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[209, 41, 235, 32]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[209, 41, 238, 34]"
          href="-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000000FF5"
          fill="0"
          fillcolor="white"
@@ -9924,8 +9848,8 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       <rectangle name="Fig9.4.0"
         x="209"
         y="41"
-        width="235"
-        height="32"
+        width="238"
+        height="34"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -9934,7 +9858,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       <text name="Fig9.4.1"
         x="209"
         y="41"
-        width="235"
+        width="238"
         height="23"
         fill="0"
         fillcolor="white"
@@ -9950,8 +9874,8 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
     </group>
     <rectangle name="Fig9.5"
       x="208"
-      y="73"
-      width="237"
+      y="75"
+      width="240"
       height="1"
       fill="1"
       fillcolor="black"
@@ -9959,7 +9883,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig9.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[209, 74, 235, 66]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[209, 76, 238, 51]"
          href="-64--88-1-2-1031a50d:16832c413bd:-8000:0000000000000FF5"
          fill="0"
          fillcolor="white"
@@ -9971,9 +9895,9 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       
       <rectangle name="Fig9.6.0"
         x="209"
-        y="74"
-        width="235"
-        height="66"
+        y="76"
+        width="238"
+        height="51"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -9981,24 +9905,8 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       />
       <text name="Fig9.6.1"
         x="209"
-        y="74"
-        width="235"
-        height="17"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Left"
-      >«init» -Initialize()</text>
-      <text name="Fig9.6.2"
-        x="209"
-        y="91"
-        width="235"
+        y="76"
+        width="238"
         height="17"
         fill="0"
         fillcolor="white"
@@ -10011,10 +9919,10 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
         textsize="13"
         justification="Left"
       >+Changed()</text>
-      <text name="Fig9.6.3"
+      <text name="Fig9.6.2"
         x="209"
-        y="108"
-        width="235"
+        y="93"
+        width="238"
         height="23"
         fill="0"
         fillcolor="white"
@@ -10081,7 +9989,7 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       strokecolor="black"
     >
       <moveto x="296"
-              y="141" />
+              y="127" />
       <lineto x="296"
               y="352" />
     </path>
@@ -10231,9 +10139,9 @@ Each Button controls one or more LEDs.</UML:TaggedValue.dataValue>
       strokecolor="black"
     >
       <moveto x="298"
-              y="246" />
+              y="239" />
       <lineto x="392"
-              y="246" />
+              y="239" />
     </path>
   </group>
   <group name="Fig13"
@@ -10834,7 +10742,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[321, 101, 118, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[321, 101, 118, 41]"
          href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC"
          fill="0"
          fillcolor="white"
@@ -10848,7 +10756,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         x="321"
         y="101"
         width="118"
-        height="25"
+        height="41"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -10873,7 +10781,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     </group>
     <rectangle name="Fig0.5"
       x="320"
-      y="125"
+      y="142"
       width="120"
       height="1"
       fill="1"
@@ -10882,7 +10790,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[321, 126, 118, 93]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[321, 143, 118, 75]"
          href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC"
          fill="0"
          fillcolor="white"
@@ -10894,31 +10802,15 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       
       <rectangle name="Fig0.6.0"
         x="321"
-        y="126"
+        y="143"
         width="118"
-        height="93"
+        height="75"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
       <text name="Fig0.6.1"
-        x="321"
-        y="126"
-        width="118"
-        height="17"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Left"
-      >«init» -Initialize()</text>
-      <text name="Fig0.6.2"
         x="321"
         y="143"
         width="118"
@@ -10934,7 +10826,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         textsize="13"
         justification="Left"
       >-Clear_Timeout()</text>
-      <text name="Fig0.6.3"
+      <text name="Fig0.6.2"
         x="321"
         y="160"
         width="118"
@@ -10950,25 +10842,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         textsize="13"
         justification="Left"
       >-Report_Entry()</text>
-      <text name="Fig0.6.4"
+      <text name="Fig0.6.3"
         x="321"
         y="177"
-        width="118"
-        height="17"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Left"
-      >-Set_Timeout()</text>
-      <text name="Fig0.6.5"
-        x="321"
-        y="194"
         width="118"
         height="23"
         fill="0"
@@ -10981,7 +10857,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         bold="false"
         textsize="13"
         justification="Left"
-      >«entry» -Start()</text>
+      >-Set_Timeout()</text>
     </group>
   </group>
 </pgml>
@@ -11561,7 +11437,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[281, 129, 225, 59]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[281, 129, 225, 66]"
          href="-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E65"
          fill="0"
          fillcolor="white"
@@ -11575,7 +11451,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         x="281"
         y="129"
         width="225"
-        height="59"
+        height="66"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -11632,7 +11508,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
     </group>
     <rectangle name="Fig1.5"
       x="280"
-      y="187"
+      y="195"
       width="227"
       height="1"
       fill="1"
@@ -11641,7 +11517,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[281, 188, 225, 127]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[281, 196, 225, 117]"
          href="-64--88-1-2-212c2dde:135a56d326d:-8000:0000000000000E65"
          fill="0"
          fillcolor="white"
@@ -11653,9 +11529,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       
       <rectangle name="Fig1.6.0"
         x="281"
-        y="188"
+        y="196"
         width="225"
-        height="127"
+        height="117"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -11663,23 +11539,7 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
       />
       <text name="Fig1.6.1"
         x="281"
-        y="188"
-        width="225"
-        height="17"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Left"
-      >«init» -Setup()</text>
-      <text name="Fig1.6.2"
-        x="281"
-        y="205"
+        y="196"
         width="225"
         height="17"
         fill="0"
@@ -11693,9 +11553,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         textsize="13"
         justification="Left"
       >-Receive(Tick_For : Device)</text>
-      <text name="Fig1.6.3"
+      <text name="Fig1.6.2"
         x="281"
-        y="222"
+        y="213"
         width="225"
         height="17"
         fill="0"
@@ -11709,9 +11569,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         textsize="13"
         justification="Left"
       >-Clear_Heartbeat_Timeout()</text>
-      <text name="Fig1.6.4"
+      <text name="Fig1.6.3"
         x="281"
-        y="239"
+        y="230"
         width="225"
         height="17"
         fill="0"
@@ -11725,9 +11585,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         textsize="13"
         justification="Left"
       >-Clear_Warmup_Timeout()</text>
-      <text name="Fig1.6.5"
+      <text name="Fig1.6.4"
         x="281"
-        y="256"
+        y="247"
         width="225"
         height="17"
         fill="0"
@@ -11741,9 +11601,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         textsize="13"
         justification="Left"
       >-Set_2_Second_Warmup_Timeout()</text>
-      <text name="Fig1.6.6"
+      <text name="Fig1.6.5"
         x="281"
-        y="273"
+        y="264"
         width="225"
         height="17"
         fill="0"
@@ -11757,9 +11617,9 @@ Input_Signal is declared in Digital_IO, so the rules on visibility of parental d
         textsize="13"
         justification="Left"
       >-Set_6_Second_Warmup_Timeout()</text>
-      <text name="Fig1.6.7"
+      <text name="Fig1.6.6"
         x="281"
-        y="290"
+        y="281"
         width="225"
         height="23"
         fill="0"
@@ -18861,7 +18721,7 @@ This is slightly unusual.</text>
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[625, 97, 270, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[625, 97, 270, 32]"
          href="-64--88-1-2--5206b6e7:1688034fcec:-8000:000000000000101A"
          fill="0"
          fillcolor="white"
@@ -18875,7 +18735,7 @@ This is slightly unusual.</text>
         x="625"
         y="97"
         width="270"
-        height="25"
+        height="32"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -18900,7 +18760,7 @@ This is slightly unusual.</text>
     </group>
     <rectangle name="Fig1.5"
       x="624"
-      y="121"
+      y="129"
       width="272"
       height="1"
       fill="1"
@@ -18909,7 +18769,7 @@ This is slightly unusual.</text>
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[625, 122, 270, 59]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[625, 130, 270, 49]"
          href="-64--88-1-2--5206b6e7:1688034fcec:-8000:000000000000101A"
          fill="0"
          fillcolor="white"
@@ -18921,9 +18781,9 @@ This is slightly unusual.</text>
       
       <rectangle name="Fig1.6.0"
         x="625"
-        y="122"
+        y="130"
         width="270"
-        height="59"
+        height="49"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -18931,23 +18791,7 @@ This is slightly unusual.</text>
       />
       <text name="Fig1.6.1"
         x="625"
-        y="122"
-        width="270"
-        height="17"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Lucida Grande"
-        italic="false"
-        bold="false"
-        textsize="13"
-        justification="Left"
-      >«init» -Initialize()</text>
-      <text name="Fig1.6.2"
-        x="625"
-        y="139"
+        y="130"
         width="270"
         height="17"
         fill="0"
@@ -18961,9 +18805,9 @@ This is slightly unusual.</text>
         textsize="13"
         justification="Left"
       >+Changed()</text>
-      <text name="Fig1.6.3"
+      <text name="Fig1.6.2"
         x="625"
-        y="156"
+        y="147"
         width="270"
         height="23"
         fill="0"

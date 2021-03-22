@@ -30,19 +30,14 @@ initialization</a>.
 the supplied Event Queue, or (if it's <tt>null</tt>) by calling
 <tt><i>Domain</i>.Events.Initialize</tt>,
 
-<li>calling the domain initialization operation, if one was specified
-by <i>{init=package.operation}</i>,
+<li>calling the domain setup operation,
 
-<li>initializing all class attributes with default values and creating
-all singletons,
-
-<li>and then calling all the
-<em>&#171;init&#187;</em> operations of all the classes.
+<li>and then initializing all class attributes with default values and
+creating all singletons.
 
 </ol>
 
-<p>Everything is done in alphabetical order by class and then by
-operation.
+<p>Everything is done in alphabetical order by class.
 
 <h2>Event queues</h2>
 
@@ -73,12 +68,21 @@ by
 ColdFrame.Project.Events.Start (Q);
 </pre>
 
-<h2>Domain initialization operation</h2>
+<h2>Domain setup operation</h2>
 
-<p>The intended purpose of the domain initialization operation is to
-set up the environment expected by later initializations. At the point
-it's called, there are no instances of any class, including
-singletons.
+<p>ColdFrame creates a procedure
+<pre>
+private procedure <i>Domain</i>.Setup;
+</pre>
+<p>(<tt>private</tt> means it can't be called from outside the domain).
+
+<p>A null body is generated, to be replaced if necessary by
+appropriate code in the <tt>.impl</tt> directory.
+
+<p>The intended purpose of this operation is to set up the initial
+instances and associations. At the point it's called, there are no
+instances of any class, including singletons, and class variables with
+initial values haven't been set up.
 
 <h2><a name="singleton">&#171;Singleton&#187; classes</a></h2>
 
@@ -147,8 +151,8 @@ may not be reinitialized properly after teardown.
 stereotyped <i>&#171;init&#187;</i> are called, again in alphabetical
 order within the class.
 
-This ordering means that, for most purposes, you'll probably only want
-to have one <i>&#171;init&#187;</i> operation in the domain.
+<p>This ordering means that, for most purposes, you'll probably only
+want to have one <i>&#171;init&#187;</i> operation in the domain.
 
 </body>
 </html>

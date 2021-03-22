@@ -545,7 +545,7 @@
          with Ada.Exceptions;
          with ColdFrame.Project.Log_Error;
          with ColdFrame.Task_Deletion;
-         with {domain-init-proc-package};
+         with {domain}.Setup;
          with {domain}.Events;
          with {domain}.{class};
          procedure {domain}.Initialize
@@ -563,7 +563,7 @@
                if Events.Dispatcher /= null then
                   ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
                end if;
-               {domain-init-proc};
+               Setup;
                {class}.CF_Class_Initialize:
                {class}.{init-operation};
                Domain_Initialized := True;
@@ -607,6 +607,11 @@
         <xsl:text>with ColdFrame.Task_Deletion;&#10;</xsl:text>
       </xsl:if>
     </xsl:if>
+    <!-- .. domain setup .. -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Setup;&#10;</xsl:text>
+
     <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -621,6 +626,10 @@
       <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
     </xsl:for-each>
 
+    <!-- XXX This is to find any needed context clause for foo in
+         <<domain init={foo}>>
+         -->
+    <!--
     <xsl:if test="initialize">
       <xsl:variable name="context">
         <xsl:call-template name="ty:find-source-package">
@@ -633,6 +642,7 @@
         <xsl:text>;&#10;</xsl:text>
       </xsl:if>
     </xsl:if>
+    -->
 
     <xsl:for-each select="$instance-initializations">
       <xsl:sort select="name"/>
@@ -679,7 +689,6 @@
     <xsl:text>end if;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
 
-
     <xsl:if test="$profile = 'standard'">
       <xsl:text>if Events.Dispatcher /= null then&#10;</xsl:text>
       <xsl:value-of select="$III"/>
@@ -688,12 +697,9 @@
       <xsl:text>end if;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- .. any domain initialization .. -->
-    <xsl:if test="initialize">
-      <xsl:value-of select="$II"/>
-      <xsl:value-of select="initialize"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:if>
+    <!-- .. domain setup .. -->
+    <xsl:value-of select="$II"/>
+    <xsl:text>Setup;&#10;</xsl:text>
 
     <!-- .. class initializations .. -->
     <xsl:for-each select="$class-initializations">
@@ -737,6 +743,51 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Initialize;&#10;</xsl:text>
 
+    <!-- The domain Setup procedure .. -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Setup procedure ..'"/>
+    </xsl:call-template>
+
+    <!--
+         private procedure {domain}.Setup;
+         -->
+
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>private procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Setup;&#10;</xsl:text>
+
+    <!-- .. the domain Setup procedure body .. -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Setup procedure body ..'"/>
+    </xsl:call-template>
+
+    <!--
+         procedure {domain}.Setup is
+         begin
+            null;
+         end {domain}.Setup;
+         -->
+
+    <xsl:call-template name="ut:could-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Setup is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>null;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Setup;&#10;</xsl:text>
+
     <!-- The domain Cascade_Initialize procedure .. -->
     <xsl:call-template name="ut:progress-message">
       <xsl:with-param
@@ -746,7 +797,7 @@
 
     <!--
          with ColdFrame.Project.Events;
-         procedure {domain}.Cascade_Initialize
+         private procedure {domain}.Cascade_Initialize
            (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);
          -->
 
@@ -755,7 +806,7 @@
     <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
-    <xsl:text>procedure </xsl:text>
+    <xsl:text>private procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Cascade_Initialize&#10;</xsl:text>
     <xsl:value-of select="$C"/>
@@ -805,13 +856,13 @@
       </xsl:call-template>
 
       <!--
-           procedure {domain}.Cascade_Tear_Down;
+           private procedure {domain}.Cascade_Tear_Down;
            -->
 
       <xsl:call-template name="ut:do-not-edit"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:call-template name="ut:identification-info"/>
-      <xsl:text>procedure </xsl:text>
+      <xsl:text>private procedure </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
 

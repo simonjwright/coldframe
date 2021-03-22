@@ -16,10 +16,10 @@ task body T is
 
 begin
 
-   delay 0.1;  -- bodge to avoid mingled output.
-   Put_Line ("Interrupt_Handling.Device.T running");
-
-   accept Start;
+   while not Domain_Initialized loop
+      --  wait until ready
+      delay 0.1;
+   end loop;
 
    ColdFrame.Interrupts.Attach (H, Ada.Interrupts.Names.SIGINT);
 

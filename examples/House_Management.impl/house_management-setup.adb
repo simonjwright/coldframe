@@ -1,5 +1,3 @@
---  Copyright (C) Simon Wright <simon@pushface.org>
-
 --  This package is free software; you can redistribute it and/or
 --  modify it under terms of the GNU General Public License as
 --  published by the Free Software Foundation; either version 2, or
@@ -12,16 +10,17 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  This operation initializes the Lamps and Buttons.
+--  Initializes the domain by creating instances and linking them.
 
+with ColdFrame.Instances;
 with Digital_IO;
 with House_Management.Button;
+with House_Management.Lamp;
 with House_Management.Timed_Button.Inheritance;
 with House_Management.Toggle_Button.Inheritance;
 with House_Management.A1;
 
-separate (House_Management.Lamp)
-procedure Initialize is
+procedure House_Management.Setup is
 
    procedure Connect (The_Button : Button_Name; To : Lamp_Name);
    procedure Connect (The_Button : Button_Name; To : Lamp_Name) is
@@ -116,4 +115,4 @@ begin
 
    Connect (The_Button => Basement_Toggle, To => Basement);
 
-end Initialize;
+end House_Management.Setup;

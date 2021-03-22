@@ -122,6 +122,7 @@ DEVELOPMENT_DOMAINS =				\
   Associations					\
   Association_Classes				\
   Ignored_Child_Packages			\
+  Reflexive_Associations			\
   Types
 
 # Others (more regression-specific) in the Regressions model.
@@ -160,6 +161,7 @@ fails::
 
 # Bad code
 BAD_CODE_REGRESSION_DOMAINS =			\
+  Abbreviations					\
   State_Machines
 
 BAD_CODE_REGRESSION_NORMS = $(addsuffix .norm,$(BAD_CODE_REGRESSION_DOMAINS))
