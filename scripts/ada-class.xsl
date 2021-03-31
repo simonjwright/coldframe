@@ -480,9 +480,11 @@
         <xsl:if test="attribute/type='Unbounded_String'
                       or $ancestors/operation/parameter/type='Unbounded_String'
                       or $ancestors/operation/@return='Unbounded_String'
+                      or event/type='Unbounded_String'
                       or attribute/type='Text'
                       or $ancestors/operation/parameter/type='Text'
-                      or $ancestors/operation/@return='Text'">
+                      or $ancestors/operation/@return='Text'
+                      or event/type='Text'">
           <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
           <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
         </xsl:if>
@@ -491,9 +493,11 @@
         <xsl:if test="attribute/type='Date'
                       or $ancestors/operation/parameter/type='Date'
                       or $ancestors/operation/@return='Date'
-                      or attribute/type='Time'
+                      or attribute/type='Date'
+                      or event/type='Date'
                       or $ancestors/operation/parameter/type='Time'
-                      or $ancestors/operation/@return='Time'">
+                      or $ancestors/operation/@return='Time'
+                      or event/type='Time'">
           <xsl:text>with ColdFrame.Project.Calendar;</xsl:text>
           <xsl:text> use type ColdFrame.Project.Calendar.Time;&#10;</xsl:text>
         </xsl:if>

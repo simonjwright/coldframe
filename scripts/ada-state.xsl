@@ -87,7 +87,9 @@
           <xsl:text>record&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>Payload : </xsl:text>
-          <xsl:value-of select="type"/>
+          <xsl:call-template name="ut:type-name">
+            <xsl:with-param name="type" select="type"/>
+          </xsl:call-template>
           <xsl:text>;&#10;</xsl:text>
           <xsl:value-of select="$I"/>
           <xsl:text>end record;&#10;</xsl:text>
