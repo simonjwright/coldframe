@@ -264,13 +264,6 @@ model Simple_Buttons;
       id attribute Name : LED_Name;
 
       (*
-      Initializes the domain by creating Button(s) and LED(s) and \
-      associating them.
-      *)
-      [init]
-      private static operation Initialize();
-
-      (*
       Called when a controlling Button has changed to evaluate whether \
       the LED should be lit (if any of the controlling Buttons is set) \
       or not.

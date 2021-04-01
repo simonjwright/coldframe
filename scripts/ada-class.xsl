@@ -493,8 +493,8 @@
         <xsl:if test="attribute/type='Date'
                       or $ancestors/operation/parameter/type='Date'
                       or $ancestors/operation/@return='Date'
-                      or attribute/type='Date'
                       or event/type='Date'
+                      or attribute/type='Time'
                       or $ancestors/operation/parameter/type='Time'
                       or $ancestors/operation/@return='Time'
                       or event/type='Time'">
