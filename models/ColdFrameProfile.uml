@@ -4,7 +4,7 @@
     <documentation>
       <authorname>Simon Wright</authorname>
       <authoremail>simon@pushface.org</authoremail>
-      <version>0.35.1</version>
+      <version>PRE-0.35.2</version>
       <description>
         
       </description>
@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Feb 22 16:41:52 GMT 2016'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Apr 12 08:59:14 BST 2021'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.35.1(6) revised on $Date: 2016/02/22 17:04:40 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>PRE-0.35.2(6) revised on $Date$ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -109,26 +109,6 @@ Child UML packages are included (recursively), unless they are steretyped «igno
                 <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DCF'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>The VCS revision of the UML model.</UML:TaggedValue.dataValue>
-                  <UML:TaggedValue.type>
-                    <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
-                  </UML:TaggedValue.type>
-                </UML:TaggedValue>
-              </UML:ModelElement.taggedValue>
-            </UML:TagDefinition>
-            <UML:TagDefinition xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBA'
-              name = 'init' isSpecification = 'false'>
-              <UML:TagDefinition.multiplicity>
-                <UML:Multiplicity xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBC'>
-                  <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBB'
-                      lower = '0' upper = '0'/>
-                  </UML:Multiplicity.range>
-                </UML:Multiplicity>
-              </UML:TagDefinition.multiplicity>
-              <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DCD'
-                  isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>Specifies the fully-qualified name of an operation to be called before any other domain initialization.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
                   </UML:TaggedValue.type>
@@ -503,9 +483,9 @@ Corresponds directly to Ada.Strings.Unbounded.Unbounded_String.</UML:TaggedValue
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:0000000000001015'
           name = 'renaming' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Exception</UML:Stereotype.baseClass>
-          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Exception</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC9'
               isSpecification = 'false'>
@@ -563,8 +543,8 @@ Corresponds directly to Ada.Strings.Unbounded.Unbounded_String.</UML:TaggedValue
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:000000000000101D'
           name = 'imported' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Exception</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Exception</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC6'
               isSpecification = 'false'>
@@ -651,8 +631,8 @@ To be applied to a Class stereotyped «datatype» and with attributes.</UML:Tagg
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:0000000000001023'
           name = 'final' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>SimpleState</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--29007e96:1351af64880:-8000:0000000000000E96'
               isSpecification = 'false'>
@@ -683,8 +663,8 @@ The (generated) operation Delete is automatically «final».</UML:TaggedValue.da
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:0000000000001026'
           name = 'ignore' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Transition</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--29007e96:1351af64880:-8000:0000000000000E97'
               isSpecification = 'false'>
@@ -771,9 +751,9 @@ To be applied to a Class stereotyped «datatype» and with attributes.</UML:Tagg
         <UML:Stereotype xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9'
           name = 'callback' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC2'
               isSpecification = 'false'>
@@ -814,8 +794,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAA'
           name = 'abbreviation' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAF'
               isSpecification = 'false'>
@@ -1260,9 +1240,9 @@ If either {lower} or {upper} is absent, the lower or upper bound respectively of
         <UML:Stereotype xmi.id = '-64--88-1-74--4a05c5ce:13fd86d4961:-8000:0000000000000E0C'
           name = 'convention' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-74--4a05c5ce:13fd86d4961:-8000:0000000000000E10'
               isSpecification = 'false'>
