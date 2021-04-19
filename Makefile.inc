@@ -22,7 +22,7 @@ sys = $(shell uname)
 ifneq (, $(findstring CYGWIN, $(sys)))
   # Java and GNAT code need to see /cygwin in front of paths (not sure
   # what happens if Cygwin is installed elsewhere ...)
-  CYGWIN = $(shell cygpath -m "/")
+  CYGWIN = /cygwin
   SYSTEM = winnt
   EXE = .exe
 else
@@ -208,7 +208,7 @@ $(COLDFRAMEOUT)/%.xmi: %.tuml $(COLDFRAME)/scripts/tuml2xmi.py
 # This is actually cast as a rule to generate .tuml-norm-stamp files
 # from .xmi, because a .xmi file can contain any number of domains.
 # Depends on normalize_xmi while under development.
-%.tuml-norm-stamp: $(COLDFRAMEOUT)/%.xmi $(COLDFRAME)/tools/normalize_xmi
+%.tuml-norm-stamp: $(COLDFRAMEOUT)/%.xmi $(COLDFRAME)/tools/normalize_xmi$(EXE)
 	$(COLDFRAME)/tools/normalize_xmi	\
 	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
 	  $(NORM_VERBOSE)			\
