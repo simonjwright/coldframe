@@ -187,7 +187,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 # This is actually cast as a rule to generate .norm-stamp files from .rr,
 # because a .rr file can contain any number of domains.
 # Depends on normalize_xmi while under development.
-%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi
+%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
 	$(COLDFRAME)/tools/normalize_xmi	\
 	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
 	  $(NORM_VERBOSE)			\
