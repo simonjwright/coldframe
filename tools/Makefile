@@ -17,11 +17,22 @@
 include ../Makefile.inc
 
 GPRBUILD ?= gprbuild
-XIA ?= $(CYGWIN)$(HOME)/xia
+
+ifeq (, $(XIA))
+  xia := $(HOME)/xia
+else
+  xia := $(XIA)
+endif
+
+ADA_PROJECT_PATH := $(xia)
+
+ifneq (, $(CYGWIN))
+  ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
+endif
 
 all::
 
 setup:
-	ADA_PROJECT_PATH=$(XIA) $(GPRBUILD) -p -P tools.gpr
+	$(GPRBUILD) -p -P tools.gpr
 
 .PHONY: all setup
