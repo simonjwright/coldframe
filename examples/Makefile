@@ -53,46 +53,46 @@ else
   scripted_testing := $(SCRIPTED_TESTING)
 endif
 
-ada_project_path := "$(COLDFRAME):$(COLDFRAME)/extras:$(scripted_testing):$(tash)"
+ADA_PROJECT_PATH := $(scripted_testing):$(tash):$(ADA_PROJECT_PATH)
 
 ifneq (, $(CYGWIN))
-  ada_project_path := $(shell cygpath -pm "$(ada_project_path)")
+  ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
 endif
 
 #EXECUTABLES += house_management-harness$(exe)
 house_management-harness$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PHouse_Management_Test
+	$(GPRBUILD) -p -PHouse_Management_Test
 
 EXECUTABLES += house_management-scripting$(exe)
 house_management-scripting$(exe): \
   House_Management.gen Digital_IO_Interface.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PHouse_Management_Scripting
+	$(GPRBUILD) -p -PHouse_Management_Scripting
 
 EXECUTABLES += interrupt_handling-harness$(exe)
 interrupt_handling-harness$(exe): Interrupt_Handling.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PInterrupt_Handling
+	$(GPRBUILD) -p -PInterrupt_Handling
 
 EXECUTABLES += library_test_harness$(exe)
 library_test_harness$(exe): Library.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PLibrary
+	$(GPRBUILD) -p -PLibrary
 
 EXECUTABLES += performance-harness$(exe)
 performance-harness$(exe): Performance.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PPerformance
+	$(GPRBUILD) -p -PPerformance
 
 EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PProblem_Reporting
+	$(GPRBUILD) -p -PProblem_Reporting
 
 EXECUTABLES += simple_buttons-scripting$(exe)
 simple_buttons-scripting$(exe): \
   Simple_Buttons.gen Digital_IO_Interface.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PSimple_Buttons_Scripting
+	$(GPRBUILD) -p -PSimple_Buttons_Scripting
 
 EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PStates
+	$(GPRBUILD) -p -PStates
 
 EXECUTABLES += stairwell_demo$(exe)
 stairwell_demo$(exe):				\
@@ -100,11 +100,11 @@ stairwell_demo$(exe):				\
   Digital_IO.gen				\
   Digital_IO.Tcl.gen				\
   force
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -Pstairwell_demo
+	$(GPRBUILD) -p -Pstairwell_demo
 
 EXECUTABLES += van_fleet-demo$(exe)
 van_fleet-demo$(exe): Van_Fleet.gen
-	ADA_PROJECT_PATH="$(ada_project_path)" $(GPRBUILD) -p -PVan_Fleet
+	$(GPRBUILD) -p -PVan_Fleet
 
 all:: $(EXECUTABLES)
 
@@ -139,7 +139,7 @@ $(TUML_NORM_FILES): Simple_Buttons.tuml-norm-stamp ;
 
 clean::
 	-for g in *.gpr; do			\
-	  ADA_PROJECT_PATH="$(ada_project_path)" $(GPRCLEAN) -P $$g;			\
+	  $(GPRCLEAN) -P $$g;			\
 	done
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s clean;			\
