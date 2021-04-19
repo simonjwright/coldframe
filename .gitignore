@@ -11,3 +11,5 @@ gpr_query*
 
 # in case of Python virtual environment
 venv
+
+*.exe

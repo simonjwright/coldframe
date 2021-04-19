@@ -22,7 +22,7 @@ sys = $(shell uname)
 ifneq (, $(findstring CYGWIN, $(sys)))
   # Java and GNAT code need to see /cygwin in front of paths (not sure
   # what happens if Cygwin is installed elsewhere ...)
-  CYGWIN = /cygwin
+  CYGWIN = $(shell cygpath -m "/")
   SYSTEM = winnt
   EXE = .exe
 else
@@ -112,7 +112,7 @@ UNZIP ?= unzip
 ZIP ?= zip
 
 # Non-standard commands
-SAXON_CLASSPATH ?= $(CYGWIN)/usr/local/lib/saxon/saxon.jar
+SAXON_CLASSPATH ?= $(CYGWIN)$(HOME)/saxon/saxon.jar
 SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) com.icl.saxon.StyleSheet
 
 # Control depth of .impl directory search
