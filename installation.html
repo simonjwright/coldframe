@@ -22,18 +22,17 @@ noreferrer">GNAT</a> (an Ada 95/2005/2012 compiler; must support
 Ada2005 or later)
 
 <li><a href="https://sourceforge.net/projects/saxon/" target="_blank" rel="noopener noreferrer">Saxon</a> (an
-XSLT processor, version 6.5.5 known to work)
+XSLT processor, version 6.5.5 known to work, for code generation)
 
-<li><a href="https://github.com/simonjwright/xia" target="_blank" rel="noopener noreferrer">XIA</a> (XPath in Ada library)
+<li><a href="https://github.com/simonjwright/xia" target="_blank" rel="noopener noreferrer">XIA</a> (XPath in Ada library, for UML processing)
 
-<li><a href="http://www.dabeaz.com/ply/" target="_blank" rel="noopener noreferrer">PLY</a> (Python Lex-Yacc)
+<li><a href="http://www.dabeaz.com/ply/" target="_blank" rel="noopener noreferrer">PLY</a> (Python Lex-Yacc), for TextUML
+
+<li><a href="https://github.com/simonjwright/tcladashell" target="_blank" rel="noopener noreferrer">TclAdaShell</a>, for running examples
+
+<li><a href="https://github.com/simonjwright/scripted_testing" target="_blank" rel="noopener noreferrer">Scripted Testing</a>, likewise.
 
 </ul>
-
-<p>The <tt>examples/</tt> also
-require <a href="https://github.com/simonjwright/scripted_testing" target="_blank" rel="noopener noreferrer">scripted_testing</a>
-and <a href="https://github.com/simonjwright/tcladashell" target="_blank" rel="noopener noreferrer">TclAdaShell</a>
-to be installed on <tt>ADA_PROJECT_PATH</tt>.
 
 <h2>ColdFrame setup</h2>
 
@@ -153,11 +152,19 @@ of a project's model files).
 
 <tr><td>SAXON_CLASSPATH
 <td>Where Saxon's code is located.
-<td>/usr/local/lib/saxon/saxon.jar
+<td>$HOME/saxon/saxon.jar
+
+<tr><td>SCRIPTED_TESTING
+<td>Where Scripted Testing is located.
+<td>$HOME/scripted_testing
 
 <tr><td>SCRIPTS
 <td>Where ColdFrame's scripts are located. Shouldn't need to be overridden.
 <td>$COLDFRAME/scripts
+
+<tr><td>TASH
+<td>Where Tcl Ada Shell is located.
+<td>$HOME/tcladashell
 
 <tr><td>UNIT_TEST_SUPPORT
 <td>Should unit test support code (enabling inspection etc) be generated?
@@ -166,6 +173,10 @@ of a project's model files).
 <tr><td>VERBOSE
 <td>Should ColdFrame be chatty as it generates code?
 <td>no
+
+<tr><td>XIA
+<td>Where Xpath In Ada is located.
+<td>$HOME/xia
 
 </table>
 
