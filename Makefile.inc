@@ -80,7 +80,7 @@ SCRIPTS := $(COLDFRAME)/scripts
 MODELS ?= $(COLDFRAME)/models
 
 # Where are non-standard Ada project files?
-export ADA_PROJECT_PATH := $(COLDFRAME):$(ADA_PROJECT_PATH)
+export ADA_PROJECT_PATH := $(COLDFRAME)
 
 CASE_EXCEPTIONS ?= $(SCRIPTS)/emacs_case_exceptions
 COLDFRAMEOUT ?= $(COLDFRAME)/coldframeout
@@ -112,7 +112,7 @@ UNZIP ?= unzip
 ZIP ?= zip
 
 # Non-standard commands
-SAXON_CLASSPATH ?= $(CYGWIN)/usr/local/lib/saxon/saxon.jar
+SAXON_CLASSPATH ?= $(CYGWIN)$(HOME)/saxon/saxon.jar
 SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) com.icl.saxon.StyleSheet
 
 # Control depth of .impl directory search
@@ -187,7 +187,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
 # This is actually cast as a rule to generate .norm-stamp files from .rr,
 # because a .rr file can contain any number of domains.
 # Depends on normalize_xmi while under development.
-%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi
+%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
 	$(COLDFRAME)/tools/normalize_xmi	\
 	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
 	  $(NORM_VERBOSE)			\
@@ -208,7 +208,7 @@ $(COLDFRAMEOUT)/%.xmi: %.tuml $(COLDFRAME)/scripts/tuml2xmi.py
 # This is actually cast as a rule to generate .tuml-norm-stamp files
 # from .xmi, because a .xmi file can contain any number of domains.
 # Depends on normalize_xmi while under development.
-%.tuml-norm-stamp: $(COLDFRAMEOUT)/%.xmi $(COLDFRAME)/tools/normalize_xmi
+%.tuml-norm-stamp: $(COLDFRAMEOUT)/%.xmi $(COLDFRAME)/tools/normalize_xmi$(EXE)
 	$(COLDFRAME)/tools/normalize_xmi	\
 	  -c $(CYGWIN)$(CASE_EXCEPTIONS)	\
 	  $(NORM_VERBOSE)			\

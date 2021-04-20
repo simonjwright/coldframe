@@ -14,13 +14,25 @@
 
 # This Makefile is used to set up the tools and for tool development.
 
+include ../Makefile.inc
+
 GPRBUILD ?= gprbuild
-XIA_PATH ?= ~/xia
-ada_project_path=$(XIA_PATH):$(ADA_PROJECT_PATH)
+
+ifeq (, $(XIA))
+  xia := $(HOME)/xia
+else
+  xia := $(XIA)
+endif
+
+ADA_PROJECT_PATH := $(xia)
+
+ifneq (, $(CYGWIN))
+  ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
+endif
 
 all::
 
 setup:
-	ADA_PROJECT_PATH=$(ada_project_path) $(GPRBUILD) -p -P tools.gpr
+	$(GPRBUILD) -p -P tools.gpr
 
 .PHONY: all setup

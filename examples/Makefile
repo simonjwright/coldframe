@@ -53,7 +53,7 @@ else
   scripted_testing := $(SCRIPTED_TESTING)
 endif
 
-export ADA_PROJECT_PATH := ":$(tash):$(scripted_testing):$(ADA_PROJECT_PATH)"
+ADA_PROJECT_PATH := $(scripted_testing):$(tash):$(ADA_PROJECT_PATH)
 
 ifneq (, $(CYGWIN))
   ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
