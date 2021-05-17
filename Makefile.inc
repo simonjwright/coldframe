@@ -22,7 +22,7 @@ sys = $(shell uname)
 ifneq (, $(findstring CYGWIN, $(sys)))
   # Java and GNAT code need to see /cygwin in front of paths (not sure
   # what happens if Cygwin is installed elsewhere ...)
-  CYGWIN = /cygwin
+  CYGWIN = $(shell cygpath -m /)
   SYSTEM = winnt
   EXE = .exe
 else
@@ -80,7 +80,7 @@ SCRIPTS := $(COLDFRAME)/scripts
 MODELS ?= $(COLDFRAME)/models
 
 # Where are non-standard Ada project files?
-export ADA_PROJECT_PATH := $(COLDFRAME)
+export ADA_PROJECT_PATH := $(COLDFRAME):$(ADA_PROJECT_PATH)
 
 CASE_EXCEPTIONS ?= $(SCRIPTS)/emacs_case_exceptions
 COLDFRAMEOUT ?= $(COLDFRAME)/coldframeout
@@ -157,7 +157,6 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 	$(SAXON)							  \
 	  $(CYGWIN)$@~1							  \
 	  $(CYGWIN)$(COLDFRAME)/scripts/resolve-references.xsl		  \
-	  library_path=$(CYGWIN)$(COLDFRAME)/lib/			  \
 	  >$@~2								  \
 	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
 	# XXX This is a workround for an XML/Ada issue.

@@ -47,7 +47,7 @@
   <xsl:strip-space elements="*"/>
 
   <!-- Where to find the profile .xmi files. NB trailing '/'. -->
-  <xsl:param name="library_path" select="'./'"/>
+  <xsl:variable name="library_path" select="'../lib/'"/>
 
   <xsl:variable name="argo_xmi" select="'default-uml14.xmi'"/>
   <xsl:variable name="argo_path" select="concat($library_path, $argo_xmi)"/>
