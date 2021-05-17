@@ -59,51 +59,51 @@ ifneq (, $(CYGWIN))
   ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
 endif
 
-#EXECUTABLES += house_management-harness$(exe)
-house_management-harness$(exe): \
+#EXECUTABLES += house_management-harness$(EXE)
+house_management-harness$(EXE): \
   House_Management.gen Digital_IO_Interface.gen force
 	$(GPRBUILD) -p -PHouse_Management_Test
 
-EXECUTABLES += house_management-scripting$(exe)
-house_management-scripting$(exe): \
+EXECUTABLES += house_management-scripting$(EXE)
+house_management-scripting$(EXE): \
   House_Management.gen Digital_IO_Interface.gen force
 	$(GPRBUILD) -p -PHouse_Management_Scripting
 
-EXECUTABLES += interrupt_handling-harness$(exe)
-interrupt_handling-harness$(exe): Interrupt_Handling.gen force
+EXECUTABLES += interrupt_handling-harness$(EXE)
+interrupt_handling-harness$(EXE): Interrupt_Handling.gen force
 	$(GPRBUILD) -p -PInterrupt_Handling
 
-EXECUTABLES += library_test_harness$(exe)
-library_test_harness$(exe): Library.gen force
+EXECUTABLES += library_test_harness$(EXE)
+library_test_harness$(EXE): Library.gen force
 	$(GPRBUILD) -p -PLibrary
 
-EXECUTABLES += performance-harness$(exe)
-performance-harness$(exe): Performance.gen force
+EXECUTABLES += performance-harness$(EXE)
+performance-harness$(EXE): Performance.gen force
 	$(GPRBUILD) -p -PPerformance
 
-EXECUTABLES += problem_reporting_harness$(exe)
-problem_reporting_harness$(exe): Problem_Reporting.gen force
+EXECUTABLES += problem_reporting_harness$(EXE)
+problem_reporting_harness$(EXE): Problem_Reporting.gen force
 	$(GPRBUILD) -p -PProblem_Reporting
 
-EXECUTABLES += simple_buttons-scripting$(exe)
-simple_buttons-scripting$(exe): \
+EXECUTABLES += simple_buttons-scripting$(EXE)
+simple_buttons-scripting$(EXE): \
   Simple_Buttons.gen Digital_IO_Interface.gen force
 	$(GPRBUILD) -p -PSimple_Buttons_Scripting
 
-EXECUTABLES += states-t$(exe)
-states-t$(exe): States.gen force
+EXECUTABLES += states-t$(EXE)
+states-t$(EXE): States.gen force
 	$(GPRBUILD) -p -PStates
 
-EXECUTABLES += stairwell_demo$(exe)
-stairwell_demo$(exe):				\
+EXECUTABLES += stairwell_demo$(EXE)
+stairwell_demo$(EXE):				\
   House_Management.gen				\
   Digital_IO.gen				\
   Digital_IO.Tcl.gen				\
   force
 	$(GPRBUILD) -p -Pstairwell_demo
 
-EXECUTABLES += van_fleet-demo$(exe)
-van_fleet-demo$(exe): Van_Fleet.gen
+EXECUTABLES += van_fleet-demo$(EXE)
+van_fleet-demo$(EXE): Van_Fleet.gen
 	$(GPRBUILD) -p -PVan_Fleet
 
 all:: $(EXECUTABLES)
