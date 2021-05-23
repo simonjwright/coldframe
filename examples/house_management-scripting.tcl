@@ -8,6 +8,12 @@
 # This is a demonstration of Tcl-based scripted testing, to be run by
 # house_management-scripting(.exe).
 
+# Define the window round the timer expiry
+set margin_ms 2
+set margin_s [expr $margin_ms / 1000.0]
+
+puts "window for checks after delay is $margin_ms ms"
+
 # Check the settings of all 4 output signals. This is probably more
 # verbose than you'd need.
 proc check-outputs {s0 s1 s2 s3} {
@@ -24,7 +30,9 @@ proc check-outputs {s0 s1 s2 s3} {
     check-output 3 $s3
 }
 
-puts "script starting"
+puts "script compiling"
+
+echo "script executing"
 
 # setup required
 set-boolean digital_io.get return false
@@ -48,18 +56,17 @@ check_number_of_new_calls digital_io.set 2
 check-outputs true true false false
 save_number_of_calls digital_io.set
 
-echo "waiting until 100 ms before the timeout
-  to check that the lamps are still set"
-wait_from_mark a 4.900
-echo "checking the lamps are still set; then,
-  wait until 5 ms after the timeout to check that
-  they're clear"
+echo "waiting until $margin_ms ms before the timeout to check that the lamps
+  are still set"
+wait_from_mark a [expr 5.000 - $margin_s]
+echo "checking the lamps are still set; then, wait until $margin_ms ms after
+   the timeout to check that they're clear"
 check_number_of_new_calls digital_io.set 0
 check-outputs true true false false
 save_number_of_calls digital_io.set
 
-# echo "waiting until 100 ms after the timeout"
-wait_from_mark a 5.005
+# echo "waiting until $margin_ms ms after the timeout"
+wait_from_mark a [expr 5.000 + $margin_s]
 
 echo "checking the lamps are now clear"
 check_number_of_new_calls digital_io.set 2

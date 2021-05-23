@@ -16,38 +16,49 @@
 
 abstract project Options is
 
-  --  This project has no associated sources.
-  for Source_Files use ();
+   --  This project has no associated sources.
+   for Source_Files use ();
 
-  --  Builder configuration options.
-  package Builder is
-     for Default_Switches ("ada") use
-       (
-        "-gnat12",
-        "-g",
-        "-j2",
-        "-m"
-       );
-  end Builder;
+   type Build_Type is ("production", "debug");
+   Build : Build_Type := external ("BUILD", "debug");
 
-  --  GCC configuration options.
-  package Compiler is
-     for Default_Switches ("ada") use
-       (
-        "-gnatqQafoy",
-        "-gnatwaL",
-        "-O2"
-       );
-  end Compiler;
+   --  Builder configuration options.
+   package Builder is
+      for Default_Switches ("ada") use
+        (
+         "-gnat12",
+         "-g",
+         "-j2",
+         "-m"
+        );
+   end Builder;
 
-  -- GNATBIND configuration options.
-  package Binder is
-     for Default_Switches ("ada") use ("-E");
-  end Binder;
+   --  GCC configuration options.
+   package Compiler is
+      Optimization := "";
+      case Build is
+         when "production" =>
+            Optimization := "-O2";
+         when "debug" =>
+            Optimization := "-O0";
+      end case;
 
-  --  GNATLINK configuration options.
-  package Linker is
-     for Default_Switches ("ada") use External_As_List ("LDFLAGS", " ");
-  end Linker;
+      for Default_Switches ("ada") use
+        (
+         "-gnatqQafoy",
+         "-gnatwaL",
+         Optimization
+        );
+   end Compiler;
+
+   -- GNATBIND configuration options.
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+
+   --  GNATLINK configuration options.
+   package Linker is
+      for Default_Switches ("ada") use External_As_List ("LDFLAGS", " ");
+   end Linker;
 
 end Options;

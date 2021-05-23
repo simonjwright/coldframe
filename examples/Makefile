@@ -55,9 +55,11 @@ endif
 
 ADA_PROJECT_PATH := $(scripted_testing):$(tash):$(ADA_PROJECT_PATH)
 
-ifneq (, $(CYGWIN))
+ifneq ($(filter CYGWIN%, $(shell uname -s)), )
   ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
 endif
+
+export ADA_PROJECT_PATH
 
 #EXECUTABLES += house_management-harness$(EXE)
 house_management-harness$(EXE): \
