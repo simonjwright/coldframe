@@ -35,7 +35,7 @@
   xmlns:op="http://pushface.org/coldframe/operation"
   xmlns:st="http://pushface.org/coldframe/state"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.1">
+  version="1.0">
 
 
   <!-- Generate the class packages (specs). -->

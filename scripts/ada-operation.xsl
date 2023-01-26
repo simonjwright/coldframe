@@ -29,7 +29,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:op="http://pushface.org/coldframe/operation"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.1">
+  version="1.0">
 
 
   <!-- called at domain/class to generate subprogram specs for a class.

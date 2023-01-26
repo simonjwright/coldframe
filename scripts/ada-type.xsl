@@ -31,7 +31,7 @@
   xmlns:op="http://pushface.org/coldframe/operation"
   xmlns:ty="http://pushface.org/coldframe/type"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.1">
+  version="1.0">
 
   <!-- Called at /domain to generate domain context clauses. -->
   <xsl:template name="ty:domain-context">

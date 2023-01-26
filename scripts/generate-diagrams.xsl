@@ -22,7 +22,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:saxon="http://icl.com/saxon"
   extension-element-prefixes="saxon"
-  version="1.1">
+  version="1.0">
 
   <xsl:strip-space elements="*"/>
 
@@ -87,7 +87,7 @@
   <!-- Called at domain to output the overall class diagram as a dot
        file. -->
   <xsl:template name="overall-diagram">
-    <xsl:document href="{name}.images/{name}.overall.dot">
+    <xsl:result-document href="{name}.images/{name}.overall.dot">
       digraph "overall" {
       edge [fontsize=10];
       node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];
@@ -152,7 +152,7 @@
         </xsl:for-each>
       </xsl:for-each>
       }
-    </xsl:document>
+    </xsl:result-document>
   </xsl:template>
 
 
@@ -161,7 +161,7 @@
   <xsl:template name="class-diagram">
     <xsl:variable name="d" select="/domain"/>
     <xsl:variable name="n" select="name"/>
-    <xsl:document href="{../name}.images/{../name}.{$n}.class.dot">
+    <xsl:result-document href="{../name}.images/{../name}.{$n}.class.dot">
       <xsl:text>digraph "</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.class" {
@@ -355,14 +355,14 @@
         <xsl:text>"]&#10;</xsl:text>
       </xsl:for-each>
       }
-     </xsl:document>
+     </xsl:result-document>
   </xsl:template>
 
 
   <!-- Called at class to output the class's state diagram as a dot
        file. -->
   <xsl:template name="state-diagram">
-    <xsl:document href="{../name}.images/{../name}.{name}.state.dot">
+    <xsl:result-document href="{../name}.images/{../name}.{name}.state.dot">
       digraph {
       edge [fontsize=10];
       node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];
@@ -421,7 +421,7 @@
         <xsl:text>;&#10;</xsl:text>
       </xsl:for-each>
       }
-    </xsl:document>
+    </xsl:result-document>
   </xsl:template>
 
 

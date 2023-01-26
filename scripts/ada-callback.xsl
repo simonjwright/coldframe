@@ -31,7 +31,7 @@
   xmlns:cb="http://pushface.org/coldframe/callback"
   xmlns:ty="http://pushface.org/coldframe/type"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.1">
+  version="1.0">
 
   <xsl:template match="type[@callback]" mode="cb:callback-spec">
     <!--

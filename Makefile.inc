@@ -112,8 +112,8 @@ UNZIP ?= unzip
 ZIP ?= zip
 
 # Non-standard commands
-SAXON_CLASSPATH ?= $(CYGWIN)$(HOME)/saxon/saxon.jar
-SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) com.icl.saxon.StyleSheet
+# This is for Saxon-HE, on PATH (brew install saxon)
+SAXON ?= saxon
 
 # Control depth of .impl directory search
 MAXIMPLDEPTH ?= 1

@@ -29,7 +29,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:st="http://pushface.org/coldframe/state"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.1">
+  version="1.0">
 
 
   <!-- Called at domain/class to generate event types. -->
@@ -587,7 +587,9 @@
           </xsl:call-template>
         </xsl:variable>
         <xsl:if test="/domain/class[name=$impl-class]/operation[name=.]/@final">
-          <xsl:element name="action" select="."/>
+          <xsl:element name="action">
+            <xsl:value-of select="."/>
+          </xsl:element>
         </xsl:if>
       </xsl:for-each>
     </xsl:variable>

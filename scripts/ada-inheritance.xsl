@@ -29,7 +29,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:in="http://pushface.org/coldframe/inheritance"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.1">
+  version="1.0">
 
 
   <!-- Generate specs for inheritance support. -->
