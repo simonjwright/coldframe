@@ -3,13 +3,15 @@
 # the next line restarts using ./stairwell_demo \
 exec ./stairwell_demo "$0" "$@"
 
+package require Img
+
 set title "Stairwell demo"
 
 wm title . $title
 
 # The image used is Lansing's Castle
 # (http://www.sos.state.mi.us/history/archive/exhibits/barnes.html).
-image create photo pic -file ../doc/house-2.gif
+image create photo pic -file ../doc/house-2.jpg
 
 canvas .c -width 772 -height 691
 .c create image [expr 772 / 2] [expr 691 / 2] -image pic
