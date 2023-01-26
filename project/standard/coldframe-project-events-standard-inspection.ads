@@ -10,7 +10,6 @@
 --  This is ColdFrame's default implementation.
 
 with ColdFrame.Events_G.Standard_G.Inspection_G;
-with ColdFrame.Project.Events.Standard;
 with ColdFrame.Project.Held_Events.Inspection_Signature;
 
 package ColdFrame.Project.Events.Standard.Inspection

@@ -10,7 +10,6 @@
 --  This is ColdFrame's default implementation.
 
 with ColdFrame.Events_G.Trace_G;
-with ColdFrame.Project.Events.Standard;
 
 package ColdFrame.Project.Events.Standard.Trace
 is new Events.Trace_G (Standard_Queue => Standard.Event_Queue_Base);

@@ -11,7 +11,6 @@
 --  This is ColdFrame's default implementation.
 
 with ColdFrame.Events_G.Trace_G;
-with ColdFrame.Project.Events.Monitoring;
 
 package ColdFrame.Project.Events.Monitoring.Trace
 is new Events.Trace_G (Standard_Queue => Monitoring.Event_Queue_Base);

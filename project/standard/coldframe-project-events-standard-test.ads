@@ -10,7 +10,6 @@
 --  This is ColdFrame's default implementation.
 
 with ColdFrame.Events_G.Test_G;
-with ColdFrame.Project.Events.Standard;
 
 package ColdFrame.Project.Events.Standard.Test
 is new Events.Test_G (Standard_Queue => Standard.Event_Queue_Base);

@@ -11,7 +11,6 @@
 --  This is ColdFrame's default implementation.
 
 with ColdFrame.Events_G.Test_G;
-with ColdFrame.Project.Events.Monitoring;
 
 package ColdFrame.Project.Events.Monitoring.Test
 is new Events.Test_G (Standard_Queue => Monitoring.Event_Queue_Base);

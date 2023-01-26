@@ -10,7 +10,6 @@
 --  This is ColdFrame's default implementation.
 
 with ColdFrame.Events_G.Standard_G;
-with ColdFrame.Project.Events;
 with ColdFrame.Project.Held_Events.Signature;
 
 package ColdFrame.Project.Events.Standard
