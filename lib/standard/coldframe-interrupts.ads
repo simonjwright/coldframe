@@ -19,8 +19,8 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
-with Ada.Finalization;
 with Ada.Interrupts;
+private with Ada.Finalization;
 
 package ColdFrame.Interrupts is
 
@@ -28,27 +28,25 @@ package ColdFrame.Interrupts is
 
    procedure Attach (H : in out Handler; To : Ada.Interrupts.Interrupt_ID);
 
-   procedure Wait (On : Handler);
+   procedure Wait (On : in out Handler);
    --  Blocks until the attached interrupt occurs.
 
 private
 
    protected type Handling is
       entry Wait;
-      procedure Trigger;
-      pragma Interrupt_Handler (Trigger);
+      procedure Trigger with Interrupt_Handler;
    private
       Ready : Boolean := False;
    end Handling;
    type Handling_P is access Handling;
 
    type Handler is new Ada.Finalization.Limited_Controlled with record
-      Handling_PO : Handling_P;
-      Attached_Interrupt : Ada.Interrupts.Interrupt_ID;
-      Old_Handler : Ada.Interrupts.Parameterless_Handler;
+      Handling_PO        : Handling;
+      Attached_Interrupt : Ada.Interrupts.Interrupt_ID := 0;
+      Old_Handler        : Ada.Interrupts.Parameterless_Handler;
    end record;
 
-   procedure Initialize (H : in out Handler);
    procedure Finalize (H : in out Handler);
 
 end ColdFrame.Interrupts;

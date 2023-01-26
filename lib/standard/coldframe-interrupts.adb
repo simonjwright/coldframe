@@ -19,23 +19,21 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
-with Ada.Unchecked_Deallocation;
-
 package body ColdFrame.Interrupts is
 
 
-   procedure Attach (H : in out Handler;
-                     To : Ada.Interrupts.Interrupt_ID) is
+   procedure Attach (H  : in out Handler;
+                     To :        Ada.Interrupts.Interrupt_ID) is
    begin
       Ada.Interrupts.Exchange_Handler
         (Old_Handler => H.Old_Handler,
-         New_Handler => H.Handling_PO.Trigger'Access,
-         Interrupt => To);
+         New_Handler => H.Handling_PO.Trigger'Unrestricted_Access,
+         Interrupt   => To);
       H.Attached_Interrupt := To;
    end Attach;
 
 
-   procedure Wait (On : Handler) is
+   procedure Wait (On : in out Handler) is
    begin
       On.Handling_PO.Wait;
    end Wait;
@@ -56,23 +54,15 @@ package body ColdFrame.Interrupts is
    end Handling;
 
 
-   procedure Initialize (H : in out Handler) is
-   begin
-      H.Handling_PO := new Handling;
-   end Initialize;
-
-
    procedure Finalize (H : in out Handler) is
-      procedure Free is new Ada.Unchecked_Deallocation (Handling, Handling_P);
       use type Ada.Interrupts.Parameterless_Handler;
    begin
       if H.Old_Handler /= null then
          Ada.Interrupts.Attach_Handler (New_Handler => H.Old_Handler,
-                                        Interrupt => H.Attached_Interrupt);
+                                        Interrupt   => H.Attached_Interrupt);
       else
          Ada.Interrupts.Detach_Handler (Interrupt => H.Attached_Interrupt);
       end if;
-      Free (H.Handling_PO);
    end Finalize;
 
 
