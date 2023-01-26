@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Converts a GLIDE or ColdFrame case exception file into GPS (XML) format.
 
