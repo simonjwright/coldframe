@@ -13,9 +13,9 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Model.Type_References;
 with Normalize_XMI.Messages;
+with XIA;
 
 package body Normalize_XMI.Model.Attributes is
 
@@ -30,7 +30,7 @@ package body Normalize_XMI.Model.Attributes is
 
       --  Type
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:StructuralFeature.type/*");
       begin
          if DOM.Core.Nodes.Length (Nodes) = 0 then
@@ -45,7 +45,7 @@ package body Normalize_XMI.Model.Attributes is
 
       --  Initial value
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Attribute.initialValue/UML:Expression");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then

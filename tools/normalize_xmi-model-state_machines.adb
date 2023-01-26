@@ -12,11 +12,11 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
+with Ada.Strings.Fixed;
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
-with Ada.Strings.Fixed;
+with XIA;
 
 package body Normalize_XMI.Model.State_Machines is
 
@@ -129,7 +129,7 @@ package body Normalize_XMI.Model.State_Machines is
          else
             declare
                Nodes : constant DOM.Core.Node_List :=
-                 McKae.XML.XPath.XIA.XPath_Query
+                 XIA.XPath_Query
                  (S.Node,
                   "UML:StateMachine.top/descendant::*[@xmi.id='"
                     & With_Xmi_Id
@@ -152,7 +152,7 @@ package body Normalize_XMI.Model.State_Machines is
 
       --  Trigger
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Transition.trigger/*");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then
@@ -165,7 +165,7 @@ package body Normalize_XMI.Model.State_Machines is
                if not S.Events.Contains (Xmi_Idref) then
                   declare
                      Nodes : constant DOM.Core.Node_List :=
-                       McKae.XML.XPath.XIA.XPath_Query
+                       XIA.XPath_Query
                        (S.Node,
                         "../*[@xmi.id='"
                           & Xmi_Idref
@@ -187,7 +187,7 @@ package body Normalize_XMI.Model.State_Machines is
 
       --  Source
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Transition.source/*");
          Xmi_Idref : constant String :=
            Read_Attribute
@@ -199,7 +199,7 @@ package body Normalize_XMI.Model.State_Machines is
 
       --  Target
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Transition.target/*");
          Xmi_Idref : constant String :=
            Read_Attribute
@@ -211,7 +211,7 @@ package body Normalize_XMI.Model.State_Machines is
 
       --  Actions (XXX what will the translation do if there are > 1?)
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:ActionExpression");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then
@@ -302,7 +302,7 @@ package body Normalize_XMI.Model.State_Machines is
 
       --  Entry actions
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:ActionExpression");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then
@@ -408,7 +408,7 @@ package body Normalize_XMI.Model.State_Machines is
       --  and it's translated as a type extension with component name
       --  "Payload".
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Event.parameter/UML:Parameter/UML:Parameter.type/*");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 1 then
@@ -546,7 +546,7 @@ package body Normalize_XMI.Model.State_Machines is
       --
       --  XXX no check for unused Events, States.
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "UML:StateMachine.transitions/UML:Transition");
       begin

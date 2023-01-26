@@ -20,10 +20,10 @@ with DOM.Core.Nodes;
 with DOM.Readers;
 with GNAT.Command_Line;
 with Input_Sources.File;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model;
+with XIA;
 
 procedure Normalize_XMI.Main is
 
@@ -104,7 +104,7 @@ begin
 
          declare
             Ignored_Packages : constant DOM.Core.Node_List
-              := McKae.XML.XPath.XIA.XPath_Query
+              := XIA.XPath_Query
               (Doc,
                "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
                  & "@name='ignore']");
@@ -119,7 +119,7 @@ begin
                   Node_To_Prune : constant DOM.Core.Node
                     := DOM.Core.Nodes.Item (Ignored_Packages, J);
                   Name : constant DOM.Core.Node_List
-                    := McKae.XML.XPath.XIA.XPath_Query
+                    := XIA.XPath_Query
                     (Node_To_Prune, "@name");
                   Parent : constant DOM.Core.Node
                     := DOM.Core.Nodes.Parent_Node (Node_To_Prune);
@@ -143,7 +143,7 @@ begin
             end loop;
          end;
 
-         Domains := McKae.XML.XPath.XIA.XPath_Query
+         Domains := XIA.XPath_Query
            (Doc,
             "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
               & "@name='domain']");
@@ -157,7 +157,7 @@ begin
                                   In_File => Arg);
          end loop;
 
-         Domains := McKae.XML.XPath.XIA.XPath_Query
+         Domains := XIA.XPath_Query
            (Doc,
             "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
               & "@name='domain-interface']");

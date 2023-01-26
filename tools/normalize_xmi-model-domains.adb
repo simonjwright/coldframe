@@ -15,7 +15,6 @@
 with Ada.Calendar;
 with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Association_Classes;
@@ -26,6 +25,7 @@ with Normalize_XMI.Model.Data_Types;
 with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Exceptions;
 with Normalize_XMI.Model.Generalizations;
+with XIA;
 
 package body Normalize_XMI.Model.Domains is
 
@@ -49,7 +49,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  Classes
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "descendant::UML:Class"
               & "[@xmi.id and not(UML:ModelElement.stereotype/UML:Stereotype/"
@@ -68,7 +68,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  AssociationClasses
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:AssociationClass[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
@@ -92,7 +92,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  Class <<datatype>>s
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "descendant::UML:Class"
               & "[@xmi.id and UML:ModelElement.stereotype/UML:Stereotype/"
@@ -111,7 +111,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  DataTypes
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:DataType[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
@@ -127,7 +127,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  Enumerations
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:Enumeration[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
@@ -143,7 +143,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  Associations
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:Association[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
@@ -160,7 +160,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  Generalizations
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:Generalization[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
@@ -173,7 +173,7 @@ package body Normalize_XMI.Model.Domains is
 
       --  Exceptions
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "descendant::UML:Exception[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop

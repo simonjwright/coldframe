@@ -13,10 +13,10 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Association_Ends;
 with Normalize_XMI.Model.Classes;
+with XIA;
 
 package body Normalize_XMI.Model.Associations is
 
@@ -30,7 +30,7 @@ package body Normalize_XMI.Model.Associations is
 
       --  Ends
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Association.connection/UML:AssociationEnd");
       begin
          pragma Assert (DOM.Core.Nodes.Length (Nodes) = 2,

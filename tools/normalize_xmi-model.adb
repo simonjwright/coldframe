@@ -16,11 +16,11 @@ with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
 with Ada.Tags;
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Domains;
 with Unicode.CES;
+with XIA;
 
 package body Normalize_XMI.Model is
 
@@ -101,7 +101,7 @@ package body Normalize_XMI.Model is
       end if;
 
       declare
-         S : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         S : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:ModelElement.stereotype/UML:Stereotype/@name");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (S) - 1 loop
@@ -111,17 +111,17 @@ package body Normalize_XMI.Model is
       end;
 
       declare
-         T : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         T : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:ModelElement.taggedValue/UML:TaggedValue");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (T) - 1 loop
             declare
                Tag : constant DOM.Core.Node_List
-                 := McKae.XML.XPath.XIA.XPath_Query
+                 := XIA.XPath_Query
                    (DOM.Core.Nodes.Item (T, J),
                     "UML:TaggedValue.type/UML:TagDefinition/@name");
                Value : constant DOM.Core.Node_List
-                 := McKae.XML.XPath.XIA.XPath_Query
+                 := XIA.XPath_Query
                    (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
             begin
                if DOM.Core.Nodes.Length (Tag) = 1
@@ -339,7 +339,7 @@ package body Normalize_XMI.Model is
    function Read_Attribute (Named : String;
                             From_Element : DOM.Core.Node) return String
    is
-      P : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+      P : constant DOM.Core.Node_List := XIA.XPath_Query
         (From_Element, "@" & Named);
    begin
       if DOM.Core.Nodes.Length (P) = 0 then

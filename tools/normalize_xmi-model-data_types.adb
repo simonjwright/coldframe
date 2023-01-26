@@ -15,10 +15,10 @@
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Operations;
+with XIA;
 
 package body Normalize_XMI.Model.Data_Types is
 
@@ -33,7 +33,7 @@ package body Normalize_XMI.Model.Data_Types is
 
       --  Attributes
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Classifier.feature/UML:Attribute");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then
@@ -46,7 +46,7 @@ package body Normalize_XMI.Model.Data_Types is
 
       --  Operations
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Classifier.feature/UML:Operation");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop

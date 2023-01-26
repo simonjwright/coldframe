@@ -13,12 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Attributes;
 with Normalize_XMI.Model.Operations;
 with Normalize_XMI.Model.State_Machines;
+with XIA;
 
 package body Normalize_XMI.Model.Classes is
 
@@ -42,7 +42,7 @@ package body Normalize_XMI.Model.Classes is
 
       --  Attributes
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Classifier.feature/UML:Attribute");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
@@ -67,7 +67,7 @@ package body Normalize_XMI.Model.Classes is
 
       --  Operations
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:Classifier.feature/UML:Operation");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
@@ -85,7 +85,7 @@ package body Normalize_XMI.Model.Classes is
       declare
          Xmi_Id : constant String
            := Read_Attribute ("xmi.id", From_Element => From);
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "../UML:StateMachine"
               & "[UML:StateMachine.context/UML:Class/@xmi.idref='"
               & Xmi_Id
@@ -111,7 +111,7 @@ package body Normalize_XMI.Model.Classes is
       declare
          Xmi_Id : constant String
            := Read_Attribute ("xmi.id", From_Element => From);
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "../UML:StateMachine"
               & "[UML:StateMachine.context/UML:Class/@xmi.idref='"
               & Xmi_Id

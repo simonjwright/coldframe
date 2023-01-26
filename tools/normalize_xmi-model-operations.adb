@@ -15,10 +15,10 @@
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps;
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Parameters;
+with XIA;
 
 package body Normalize_XMI.Model.Operations is
 
@@ -33,7 +33,7 @@ package body Normalize_XMI.Model.Operations is
 
       --  Parameters
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "UML:BehavioralFeature.parameter/UML:Parameter"
               & "[not (@name='return')]");
@@ -51,7 +51,7 @@ package body Normalize_XMI.Model.Operations is
 
       --  Return
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "UML:BehavioralFeature.parameter/UML:Parameter"
               & "[(@name='return')]"
@@ -66,7 +66,7 @@ package body Normalize_XMI.Model.Operations is
 
       --  Body
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "../UML:Method/UML:Method.specification/UML:Operation"
               & "[(@name='" & (+O.Name) & "')]"

@@ -13,10 +13,10 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Classes;
+with XIA;
 
 package body Normalize_XMI.Model.Generalizations is
 
@@ -42,14 +42,14 @@ package body Normalize_XMI.Model.Generalizations is
         Normalize (Read_Attribute ("discriminator", From_Element => From));
       Name : Ada.Strings.Unbounded.Unbounded_String;
       Parent_Nodes : constant DOM.Core.Node_List
-        := McKae.XML.XPath.XIA.XPath_Query (From,
+        := XIA.XPath_Query (From,
                                             "UML:Generalization.parent/*");
       Parent_Name : constant String
         := Normalize
           (Read_Attribute
              ("name", From_Element => DOM.Core.Nodes.Item (Parent_Nodes, 0)));
       Child_Nodes : constant DOM.Core.Node_List
-        := McKae.XML.XPath.XIA.XPath_Query (From,
+        := XIA.XPath_Query (From,
                                             "UML:Generalization.child/*");
       Child_Name : constant String
         := Normalize

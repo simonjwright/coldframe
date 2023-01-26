@@ -13,9 +13,9 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with DOM.Core.Nodes;
-with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
+with XIA;
 
 package body Normalize_XMI.Model.Association_Ends is
 
@@ -31,7 +31,7 @@ package body Normalize_XMI.Model.Association_Ends is
 
       --  Lower
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "UML:AssociationEnd.multiplicity"
               & "/UML:Multiplicity"
@@ -60,7 +60,7 @@ package body Normalize_XMI.Model.Association_Ends is
 
       --  Upper
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From,
             "UML:AssociationEnd.multiplicity"
               & "/UML:Multiplicity"
@@ -89,7 +89,7 @@ package body Normalize_XMI.Model.Association_Ends is
 
       --  Participant
       declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+         Nodes : constant DOM.Core.Node_List := XIA.XPath_Query
            (From, "UML:AssociationEnd.participant/*/@name");
          pragma Assert
            (DOM.Core.Nodes.Length (Nodes) = 1,
