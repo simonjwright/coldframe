@@ -1,0 +1,138 @@
+<html>
+<head>
+<title>ColdFrame: Issues</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<h1>ColdFrame: Issues</h1>
+
+<p>Current issues are to be found on the
+Github <a href="https://github.com/simonjwright/coldframe/issues?q=is%3Aopen+is%3Aissue">Issues
+page</a>.
+
+<p>Historical issues are to be found on this
+Sourceforge <a href="https://sourceforge.net/p/coldframe/_list/tickets">Tickets
+page</a>.
+
+<h2>Outstanding non-logged issues</h2>
+
+<p>These issues never made it onto any formal ticketing system.
+
+<dl>
+
+<dt>0062 (raised 23.i.02)
+
+<dd>It would be useful to be able to specify constants.
+<br><i>Pi is specially handled, in "expression" contexts
+(initial values, <tt>{real}</tt> ranges).</i>
+
+<dt>0078 (raised 18.iv.02)
+
+<dd>ColdFrame doesn't detect the error of having non-unique
+abbreviations.
+
+<dt>0174 (raised 17.vi.03)
+
+<dd>The error of making an Association with a &#171;type&#187; should
+be detected (instead of generating bad code).
+
+<dt>0182 (raised 9.vii.03)
+
+<dd>Using <tt><i>{formalizes}</i></tt> on a non-class attribute gives
+an unhelpful error message.
+
+<dt>0183 (raised 9.vii.03)
+
+<dd>Using <tt><i>{imported}</i></tt> (and possibly others) on a
+&#171;type&#187; with attributes gives an unhelpful error message.
+
+<dt>0184 (raised 9.vii.03)
+
+<dd>&#171;public&#187; and &#171;singleton&#187; classes have a
+<tt>Create</tt> operation which is not meant to be called by
+handwritten code. Perhaps it should be renamed.
+
+<dt>0203 (raised 16.ix.03)
+
+<dd>When checking whether an abstract operation has been implemented,
+ColdFrame doesn't check that the operation profiles match (for
+example, that both are procedures or both functions). This can lead to
+compilation errors in generated code.
+
+<dt>0240 (raised 2.iii.04)
+
+<dd>The Event Queue operation <tt>Unset</tt> assumes it's called in an
+action (ie, with the Event Queue locked).
+
+<dt>0253 (raised 19.iv.04)
+
+<dd>In a state chart, the error of having more than one state with the
+same name is not detected as such (this really only happens if you
+name one of your states <i>initial</i> or <i>final</i>, which are the
+default names used for initial and final states).
+
+<dt>0265 (raised 26.v.04)
+
+<dd>There is no check that associations' multiplicities have been
+maintained.
+
+<dt>0277 (raised 26.vii.04)
+
+<dd>The error messages that are given if there's a relationship
+involving a class not in the current package (either from a
+non-&#171;generate&#187; child or from another domain altogether)
+aren't as helpful as they could be.
+
+<dt>0283 (raised 11.ix.04)
+
+<dd>The generated code won't compile if all the attributes of a
+&#171;public&#187; class are &#171;class&#187; attributes.
+<br><i>If you feel you absolutely must have &#171;class&#187;
+attributes, add a dummy instance attribute as well. But it's not
+obvious why you'd want to.</i>
+
+<dt>0285 (raised 6.xi.04)
+
+<dd>The fact that an operation's parameter has a default value isn't
+considered when checking whether the operation is allowable as an
+action.
+
+<dt>0292 (raised 31.i.05)
+
+<dd>There's no way of seeing the <i>{revision}</i> string for a
+&#171;generate&#187;d (now &#171;include&#187;d) package.
+
+<dt>0332 (raised 30.ix.05)
+
+<dd>You can't
+use <a href="event-modelling.html#post-to-self">events-to-self</a>
+from an event that's being handled synchronously.
+
+<dt>0342/<a href="https://sourceforge.net/support/tracker.php?aid=1401275">1401275</a> (raised 10.i.06)
+
+<dd>ColdFrame's checks on state machines don't properly handle the
+case where actions are inherited; in particular, the error of having
+transitions (particularly completion transitions) from a state with a
+&#171;final&#187; action (ie, where the instance has been deleted) may
+not be detected.
+<br><i>26.x.07: checks now include inherited actions, but the reported
+problem still exists.</i>
+
+<dt>0362 (raised 5.ix.06)
+
+<dd>Generated unit test support fails to compile if a
+&#171;public&#187; class has an attribute of a private type.
+<br><i>On the whole it's best if public classes don't have attributes
+at all.</i>
+
+<dt>0369/<a href="https://sourceforge.net/support/tracker.php?aid=1964067">1964067</a> (raised 14.v.08)
+
+<dd>If an instance event is declared with &#171;instance event&#187;
+but there's no corresponding transition on the state machine, the
+generated spec requires a handler which the body doesn't provide.
+
+</dl>
+
+</body>
+</html>

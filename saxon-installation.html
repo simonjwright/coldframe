@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>ColdFrame: Saxon installation</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<h1>ColdFrame: Saxon installation</h1>
+
+<p>We
+need <a href="https://www.saxonica.com/products/PD12/SaxonJ-HE.pdf">Saxon
+HE for Java</a> (Home Edition - paid-for versions are available, but
+may need a different invocation).
+
+<p>The releases are available
+on <a href="https://github.com/Saxonica/Saxon-HE">Github</a>; go
+to <a href="https://github.com/Saxonica/Saxon-HE/tree/main/12/Java">12/Java</a>
+and download the latest release; in this worked example,
+that's <tt>SaxonHE12-0J</tt>.
+
+<ol>
+
+<li> Go to <tt>$COLDFRAME/tools</tt>
+
+<li> <tt>$ mkdir SaxonHE12-0J</tt>
+
+<li> <tt>$ cd SaxonHE12-0J</tt>
+
+<li> <tt>$ unzip Downloads/SaxonHE12-0J.zip</tt>
+
+<li> This unpacks several <tt>.jar</tt> files, amongst others. In this
+case they
+are <tt>saxon-he-12.0.jar</tt>, <tt>saxon-he-test-12.0.jar</tt>
+and <tt>saxon-he-xqj-12.0.jar</tt>. The first is the one we need.
+
+<li> Set up a symbolic link to it in the <tt>tools/</tt> directory:<br/>
+<tt>$ cd ..; ln -s SaxonHE12-0J/saxon-he-12.0.jar saxon.jar</tt>
+
+</ol>
+
+<p>This approach has the effect of working with ColdFrame's default
+setup in <tt>Makefile.inc</tt>:
+
+<table border="1">
+
+<tr>
+<th>Variable
+<th>Meaning
+<th>Default
+
+<tr><td>SAXON
+<td>How to run Saxon. Shouldn't need to be overridden.
+<td>$JAVA -cp $SAXON_CLASSPATH net.sf.saxon.Transform
+
+<tr><td>SAXON_CLASSPATH
+<td>Where Saxon's code is located.
+<td>$COLDFRAME/tools/saxon.jar
+
+</table>
+
+<p>so you could set up your own <tt>SAXON_CLASSPATH</tt> instead.
+
+</body>
+</html>
