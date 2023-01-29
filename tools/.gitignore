@@ -1,5 +1,6 @@
+[Ss]axon*
 .build
 
-generated_lines
+coldframe_hash_strings_generate
 normalize_xmi
-serialized_to_csv
+
