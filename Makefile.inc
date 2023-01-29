@@ -112,8 +112,9 @@ UNZIP ?= unzip
 ZIP ?= zip
 
 # Non-standard commands
-# This is for Saxon-HE, on PATH (brew install saxon)
-SAXON ?= saxon
+SAXON_CLASSPATH ?= $(COLDFRAME)/tools/saxon.jar
+SAXON_MAIN ?= net.sf.saxon.Transform
+SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) $(SAXON_MAIN)
 
 # Control depth of .impl directory search
 MAXIMPLDEPTH ?= 1
