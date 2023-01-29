@@ -50,11 +50,16 @@ setup in <tt>Makefile.inc</tt>:
 
 <tr><td>SAXON
 <td>How to run Saxon. Shouldn't need to be overridden.
-<td>$JAVA -cp $SAXON_CLASSPATH net.sf.saxon.Transform
+<td>$JAVA -cp $SAXON_CLASSPATH $SAXON_MAIN
 
 <tr><td>SAXON_CLASSPATH
 <td>Where Saxon's code is located.
 <td>$COLDFRAME/tools/saxon.jar
+
+<tr><td>SAXON_MAIN
+<td>The Java main program that drives transformations.
+<td>net.sf.saxon.Transform<br/>
+(for Saxon 6.5.5 this would be com.icl.saxon.StyleSheet)
 
 </table>
 
