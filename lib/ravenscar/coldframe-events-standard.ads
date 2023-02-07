@@ -19,8 +19,6 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
-pragma Profile (Ravenscar);  -- see ticket #11, I think
-
 with Ada.Containers;
 
 private with Ada.Containers.Bounded_Vectors;

@@ -2,5 +2,7 @@
 Digital_IO.impl
 Simple_Buttons.impl
 
+Ada_Drivers_Library
+
 simple_buttons
 simple_buttons.hex

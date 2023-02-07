@@ -20,7 +20,7 @@ abstract project Options_Ravenscar is
    --  This project has no associated sources.
    for Source_Files use ();
 
-   CORTEX_GNAT_RTS := external ("HOME") & "/cortex-gnat-rts";
+   CORTEX_GNAT_RTS := external ("HOME") & "/Developer/cortex-gnat-rts";
 
    type RTS_Type is ("stm32f4", "arduino", "microbit", "full", "sfp", "native");
 

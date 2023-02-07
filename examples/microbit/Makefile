@@ -27,14 +27,19 @@ setup::
 clean::
 
 PROFILE=ravenscar
-ADA_PROJECT_PATH=../..:$(HOME)/cortex-gnat-rts/local/microbit
+ADA_PROJECT_PATH=../..:$(HOME)/Developer/cortex-gnat-rts/local/microbit
 
 include ../../Makefile.inc
 
 EXECUTABLES = simple_buttons.hex
 
 simple_buttons: Simple_Buttons.gen Digital_IO.gen force
-	gprbuild -p -P simple_buttons.gpr -XRTS=microbit
+	gprbuild -p -P simple_buttons.gpr	\
+	  -XRTS=microbit			\
+	  -XBUILD=Production			\
+	  -XPLATFORM_BUILD=Production		\
+	  -XADL_BUILD=Production		\
+	  -XADL_BUILD_CHECKS=Disabled
 
 %.hex: %
 	arm-eabi-objcopy -O ihex $^ $@
@@ -66,7 +71,7 @@ setup::
 
 clean::
 	-for g in *.gpr; do			\
-	  gprclean -P $$g -XRTS=microbit;			\
+	  gprclean -r -P $$g -XRTS=microbit;	\
 	done
 	rm -f Digital_IO.impl Simple_Buttons.impl
 	rm -rf *.{hex,map,norm-stamp,stamp,norm,ada,gen,html,images}

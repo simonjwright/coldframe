@@ -1,6 +1,17 @@
-Emacs ada-mode project file for the Simple_Buttons demonstration.
+#Emacs ada-mode project file for the Simple_Buttons demonstration.
+
+$HOME=/Users/simon
 
 gpr_file=simple_buttons.gpr
 gpr_project_path=../..
 $RTS=microbit
 $BUILD=Production
+
+casing=$HOME/.emacs_case_exceptions
+casing=emacs_case_exceptions
+
+target=arm-eabi-
+$RUNTIME=$HOME/Developer/cortex-gnat-rts/local/microbit
+$PLATFORM_BUILD=Production
+$ADL_BUILD=Production
+$ADL_BUILD_CHECKS=Disabled

@@ -2,6 +2,7 @@
 
 with "Options_Ravenscar";
 with "ColdFrame_Ravenscar";
+with "Ada_Drivers_Library/ada_drivers_library";
 
 project Simple_Buttons is
 

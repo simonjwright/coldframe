@@ -139,7 +139,7 @@ model Simple_Buttons;
           (The_Timer => This.Pushed_Timer,
            On => Events.Dispatcher,
            To_Fire => new Push_Timeout (This),
-           After => 0.25);
+           After => 1.0);
       }
 
       private operation Clear_Pushed_Timeout();

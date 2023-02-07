@@ -8,5 +8,5 @@ begin
    ColdFrame.Project.Events.Set (The_Timer => This.Lit_Timer,
                                  On        => Events.Dispatcher,
                                  To_Fire   => new Lit_Timeout (This),
-                                 After     => 5.0 - Since_Pushed);
+                                 After     => 3.0 - Since_Pushed);
 end Set_Lit_Timeout;
