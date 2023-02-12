@@ -6,8 +6,9 @@ library project ColdFrame_Scripting is
 
    for Library_Name use "coldframe_scripting";
    for Library_Kind use "static";
-   for Library_Dir use "lib-static";
-   for Library_Options use External_As_List ("LDFLAGS", " ");
+   for Library_Dir use "lib";
+
+   for Create_Missing_Dirs use "true";
 
    for Source_Files use
      (

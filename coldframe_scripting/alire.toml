@@ -1,0 +1,19 @@
+name = "coldframe_scripting"
+description = "Shiny new project"
+version = "0.1.0-dev"
+
+authors = ["Simon Wright"]
+maintainers = ["Simon Wright <simon@pushface.org>"]
+maintainers-logins = ["simonjwright"]
+
+[[depends-on]]
+xia = "^1.4.0"
+
+[[depends-on]]
+scripted_testing = "^2.0.0"
+
+[[depends-on]]
+coldframe = "*"
+
+[[pins]]
+coldframe = { path='..' }
