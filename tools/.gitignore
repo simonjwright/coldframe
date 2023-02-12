@@ -1,6 +1,7 @@
 [Ss]axon*
-.build
+
+alire
+config
 
 coldframe_hash_strings_generate
 normalize_xmi
-

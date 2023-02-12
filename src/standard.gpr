@@ -1,0 +1,23 @@
+library project standard extends "ravenscar" is
+
+   for Library_Name use "standard";
+   for Library_Kind use "static";
+   for Library_Dir use "lib-standard";
+
+   --  Our equivalents of these files are all generics (coldframe-events_g*).
+
+   for Excluded_Source_Files use
+     (
+      "coldframe-events-callback_manager.adb",
+      "coldframe-events-callback_manager.ads",
+      "coldframe-events-standard-event_management.adb",
+      "coldframe-events-standard.adb",
+      "coldframe-events-standard.ads",
+      "coldframe-events.adb",
+      "coldframe-events.ads"
+     );
+
+   for Source_Dirs use ("standard");
+   for Object_Dir use ".build-standard";
+
+end standard;
