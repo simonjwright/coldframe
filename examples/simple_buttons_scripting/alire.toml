@@ -1,0 +1,13 @@
+name = "simple_buttons_scripting"
+description = "Builds the simple_buttons_scripting demo"
+version = "0.1.0-dev"
+
+authors = ["Simon Wright"]
+maintainers = ["Simon Wright <simon@pushface.org>"]
+maintainers-logins = ["simonjwright"]
+
+[[depends-on]]
+coldframe_scripting = "*"
+
+[[pins]]
+coldframe_scripting = { path='../../coldframe_scripting' }

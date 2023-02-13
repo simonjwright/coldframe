@@ -12,23 +12,7 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
-# This Makefile is used to set up the tools and for tool development.
-
-#include ../Makefile.inc
-
-# GPRBUILD ?= gprbuild
-
-# ifeq (, $(XIA))
-#   xia := $(HOME)/xia
-# else
-#   xia := $(XIA)
-# endif
-
-# ADA_PROJECT_PATH := $(xia)
-
-# ifneq (, $(CYGWIN))
-#   ADA_PROJECT_PATH := $(shell cygpath -pm "$(ADA_PROJECT_PATH)")
-# endif
+# This Makefile is used to set up the tools.
 
 all::
 

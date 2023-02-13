@@ -1,0 +1,33 @@
+--  Project file for ColdFrame performance tests.
+
+with "Options";
+with "ColdFrame";
+
+project Performance is
+
+   for Main use ("performance-harness.adb");
+   for Exec_Dir use ".";
+
+   for Create_Missing_Dirs use "true";
+
+   Parent := project'Project_Dir & "/../";
+
+   for Source_Dirs use
+     (
+      Parent & "Performance.impl",
+      Parent & "Performance.gen",
+      "src"
+     );
+
+   for Object_Dir use ".build";
+
+   package Builder extends Options.Builder is
+      for Executable ("performance-harness.adb")
+      use "performance";
+   end Builder;
+
+   package Compiler renames Options.Compiler;
+   package Binder renames Options.Binder;
+   package Linker renames Options.Linker;
+
+end Performance;

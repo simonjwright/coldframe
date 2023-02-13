@@ -1,0 +1,21 @@
+name = "house_management_scripting"
+description = "Shiny new project"
+version = "0.1.0-dev"
+
+authors = ["Simon Wright"]
+maintainers = ["Simon Wright <simon@pushface.org>"]
+maintainers-logins = ["simonjwright"]
+
+executables = ["house_management_scripting"]
+
+[[depends-on]]
+coldframe = "^71.0.0-dev"
+
+[[pins]]
+coldframe = { path='../..' }
+
+[[depends-on]]
+coldframe_scripting = "~0.1.0-dev"
+
+[[pins]]
+coldframe_scripting = { path='../../coldframe_scripting' }

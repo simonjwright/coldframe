@@ -28,14 +28,16 @@ clean::
 
 PROFILE=ravenscar
 ADA_PROJECT_PATH=../..:$(HOME)/Developer/cortex-gnat-rts/local/microbit
+RTS=$(HOME)/Developer/cortex-gnat-rts/local/microbit
 
 include ../../Makefile.inc
 
 EXECUTABLES = simple_buttons.hex
 
 simple_buttons: Simple_Buttons.gen Digital_IO.gen force
-	gprbuild -p -P simple_buttons.gpr	\
-	  -XRTS=microbit			\
+	gprbuild -P simple_buttons.gpr		\
+	  --target=arm-eabi			\
+	  -XRTS=$(RTS)				\
 	  -XBUILD=Production			\
 	  -XPLATFORM_BUILD=Production		\
 	  -XADL_BUILD=Production		\
@@ -49,21 +51,20 @@ all:: $(EXECUTABLES)
 # ArgoUML support
 
 NORM_FILES =					\
- Digital_IO.norm				\
- Digital_IO.Tcl.norm				\
- Digital_IO_Interface.norm			\
- House_Management.norm				\
- Interrupt_Handling.norm			\
- Library.norm					\
- Performance.norm				\
- Problem_Reporting.norm				\
- Simple_Buttons.norm				\
- States.norm					\
- Van_Fleet.norm
+ Digital_IO.norm
 
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
 $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
+
+# TextUML support
+
+TUML_NORM_FILES =				\
+Simple_Buttons.norm
+
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(TUML_NORM_FILES): Simple_Buttons.tuml-norm-stamp ;
 
 setup::
 	-ln -s ../Digital_IO.impl .

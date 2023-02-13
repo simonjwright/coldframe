@@ -7,23 +7,32 @@
 
 with "Options";
 with "ColdFrame";
-with "../extras/ColdFrame_Scripting";
+with "coldframe_scripting";
 
 project Simple_Buttons_Scripting is
 
-   for Main use ("simple_buttons-scripting");
+   for Main use ("simple_buttons-scripting.adb");
    for Exec_Dir use ".";
-   for Source_Dirs use
-     (
-      "Simple_Buttons.gen",
-      "Simple_Buttons.impl",
-      "Simple_Buttons.test",
-      "Digital_IO_Interface.gen"
-     );
-   for Object_Dir use ".build-simple_buttons_test";
+
    for Create_Missing_Dirs use "true";
 
-   package Builder renames Options.Builder;
+   Parent := project'Project_Dir & "/../";
+
+   for Source_Dirs use
+     (
+      Parent & "Simple_Buttons.gen",
+      Parent & "Simple_Buttons.impl",
+      Parent & "Digital_IO_Interface.gen",
+      "src"
+     );
+
+   for Object_Dir use ".build";
+
+   package Builder extends Options.Builder is
+      for Executable ("simple_buttons-scripting.adb")
+      use "simple_buttons_scripting";
+   end Builder;
+
    package Compiler renames Options.Compiler;
    package Binder renames Options.Binder;
    package Linker renames Options.Linker;

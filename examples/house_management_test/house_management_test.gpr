@@ -11,17 +11,28 @@ with "aunit";
 
 project House_Management_Test is
 
-  for Main use ("house_management-harness");
-  for Exec_Dir use ".";
+  for Main use ("house_management-harness.adb");
+   for Exec_Dir use ".";
+
+   for Create_Missing_Dirs use "true";
+
+   Parent := project'Project_Dir & "/../";
+
   for Source_Dirs use
     (
-     "House_Management.gen",
-     "House_Management.impl",
-     "House_Management.test",
-     "Digital_IO_Interface.gen"
-    );
-  for Object_Dir use ".build-house_management_test";
-  package Builder renames Options.Builder;
+      Parent & "House_Management.gen",
+      Parent & "House_Management.impl",
+      Parent & "Digital_IO_Interface.gen",
+     "src"
+     );
+
+  for Object_Dir use ".build";
+
+   package Builder extends Options.Builder is
+      for Executable ("house_management_harness.adb")
+      use "house_management_test";
+   end Builder;
+
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
   package Linker renames Options.Linker;

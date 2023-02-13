@@ -1,0 +1,15 @@
+name = "interrupt_handling"
+description = "Shiny new project"
+version = "0.1.0-dev"
+
+authors = ["Simon Wright"]
+maintainers = ["Simon Wright <simon@pushface.org>"]
+maintainers-logins = ["simonjwright"]
+
+executables = ["interrupt_handling"]
+
+[[depends-on]]
+coldframe = "^71.0.0-dev"
+
+[[pins]]
+coldframe = { path='../..' }

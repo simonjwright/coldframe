@@ -1,0 +1,33 @@
+--  GNAT project file for the States demonstration.
+
+with "Options";
+with "ColdFrame";
+
+project States is
+
+   for Main use ("states-t.adb");
+   for Exec_Dir use ".";
+
+   for Create_Missing_Dirs use "true";
+
+   Parent := project'Project_Dir & "/../";
+
+   for Source_Dirs use
+     (
+      Parent & "States.impl",
+      Parent & "States.gen",
+      "src"
+     );
+
+   for Object_Dir use ".build";
+
+   package Builder extends Options.Builder is
+      for Executable ("states-t.adb")
+      use "states";
+   end Builder;
+
+   package Compiler renames Options.Compiler;
+   package Binder renames Options.Binder;
+   package Linker renames Options.Linker;
+
+end States;

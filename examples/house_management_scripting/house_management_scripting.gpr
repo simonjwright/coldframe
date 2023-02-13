@@ -1,0 +1,39 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This unit is free software; you can redistribute it and/or modify
+--  it as you wish. This unit is distributed in the hope that it will
+--  be useful, but WITHOUT ANY WARRANTY; without even the implied
+--  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+with "Options";
+with "ColdFrame";
+with "ColdFrame_Scripting";
+
+project House_Management_Scripting is
+
+   for Main use ("house_management-scripting.adb");
+   for Exec_Dir use ".";
+
+   for Create_Missing_Dirs use "true";
+
+   Parent := project'Project_Dir & "/../";
+
+   for Source_Dirs use
+     (
+      Parent & "House_Management.gen",
+      Parent & "House_Management.impl",
+      Parent & "Digital_IO_Interface.gen",
+      "src"
+     );
+   for Object_Dir use ".build";
+
+   package Builder extends Options.Builder is
+      for Executable ("house_management-scripting.adb")
+      use "house_management_scripting";
+   end Builder;
+
+   package Compiler renames Options.Compiler;
+   package Binder renames Options.Binder;
+   package Linker renames Options.Linker;
+
+end House_Management_Scripting;
