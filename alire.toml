@@ -1,0 +1,17 @@
+name = "coldframe"
+description = "OOA-oriented code framework generator"
+long-description = """
+"""
+
+# There have been 70 releases published to users: I'm not sure how
+# many of them would qualify as a major release, but let this serve as
+# an approximation.
+version = "71.0.0-dev"
+licenses = "GPL-2.0-or-later"
+
+authors = ["Simon Wright"]
+maintainers = ["Simon Wright <simon@pushface.org>"]
+maintainers-logins = ["simonjwright"]
+
+project-files = ["ColdFrame.gpr"]
+

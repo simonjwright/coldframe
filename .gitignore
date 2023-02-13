@@ -1,7 +1,11 @@
 .DS_Store
 
 .build*
-lib*static*
+lib-standard
+lib-ravenscar
+
+alire/
+config/
 
 coldframeout
 

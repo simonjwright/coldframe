@@ -13,23 +13,22 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  This file controls compilation of the Ravenscar versions of the
---  standard "library" and "project" source for ColdFrame.
+--  ColdFrame library.
 
 with "Options_Ravenscar";
 
-library project ColdFrame_Ravenscar is
+library project ColdFrame_Ravenscar extends "src/ravenscar" is
 
    for Target use Options_Ravenscar'Target;
    for Runtime ("ada") use Options_Ravenscar'Runtime ("ada");
 
    for Library_Name use "coldframe";
    for Library_Kind use "static";
-   for Library_Dir use "lib-ravenscar-static-" & Options_Ravenscar.RTS;
+   for Library_Dir use "lib-ravenscar";
 
-   for Source_Dirs use
-     ("lib", "lib/ravenscar", "project", "project/ravenscar");
+   for Source_Dirs use ();
 
-   for Object_Dir use ".build-ravenscar-" & Options_Ravenscar.RTS;
+   for Object_Dir use ".build-ravenscar" & Options_Ravenscar.RTS;
 
    package Compiler renames Options_Ravenscar.Compiler;
 

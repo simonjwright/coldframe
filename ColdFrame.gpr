@@ -12,19 +12,17 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  This file controls compilation of the standard "library" and
---  "project" source for ColdFrame.
+--  This file controls compilation of the standard ColdFrame library.
 
 with "Options";
 
-library project ColdFrame is
+library project ColdFrame extends "src/standard" is
 
   for Library_Name use "coldframe";
   for Library_Kind use "static";
-  for Library_Dir use "lib-static";
-  for Library_Options use external_as_list ("LDFLAGS", " ");
+  for Library_Dir use "lib-standard";
 
-  for Source_Dirs use ("lib", "lib/standard", "project", "project/standard");
+  for Source_Dirs use ();
 
   for Object_Dir use ".build";
 

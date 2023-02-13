@@ -20,32 +20,13 @@ abstract project Options_Ravenscar is
    --  This project has no associated sources.
    for Source_Files use ();
 
-   CORTEX_GNAT_RTS := external ("HOME") & "/Developer/cortex-gnat-rts";
-
-   type RTS_Type is ("stm32f4", "arduino", "microbit", "full", "sfp", "native");
-
-   RTS : RTS_Type := external ("RTS", "stm32f4");
+   RTS := external ("RTS", "");
 
    case RTS is
-      when "native" =>
+      when "" | "native" =>
          null;
       when others =>
-         for Target use "arm-eabi";
-   end case;
-
-   case RTS is
-      when "stm32f4" =>
-         for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/stm32f4";
-      when "arduino" =>
-         for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/arduino-due";
-      when "microbit" =>
-         for Runtime ("ada") use CORTEX_GNAT_RTS & "/local/microbit";
-      when "full" =>
-         for Runtime ("ada") use "ravenscar-full-stm32f4";
-      when "sfp" =>
-         for Runtime ("ada") use "ravenscar-sfp-stm32f4";
-      when "native" =>
-         null;
+         for Runtime ("ada") use RTS;
    end case;
 
    type Build_Type is ("Production", "Debug");
@@ -53,9 +34,9 @@ abstract project Options_Ravenscar is
 
    COMPILER_SWITCHES :=
      (
-      --  keep .alis, assertions, full messages, hardware overflow
+      --  keep .alis, full messages, hardware overflow
       --  checks, style checks
-      "-gnatqQafoy",
+      "-gnatqQfoy",
       --  All standard warnings except elaboration problems
       "-gnatwaL",
       "-gnat12",
@@ -79,7 +60,7 @@ abstract project Options_Ravenscar is
       when "Production" =>
          COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O2");
       when "Debug" =>
-         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O0");
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-Og", "-gnata");
    end case;
 
    --  Builder configuration options.
