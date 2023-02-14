@@ -2,6 +2,8 @@
 Digital_IO.impl
 Simple_Buttons.impl
 
+alire
+config
 Ada_Drivers_Library
 
 simple_buttons

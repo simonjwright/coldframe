@@ -27,8 +27,11 @@ setup::
 clean::
 
 PROFILE=ravenscar
-ADA_PROJECT_PATH=../..:$(HOME)/Developer/cortex-gnat-rts/local/microbit
-RTS=$(HOME)/Developer/cortex-gnat-rts/local/microbit
+
+#RTS=$(HOME)/Developer/cortex-gnat-rts/local/microbit
+
+# Assuming that the Cortex GNAT RTS has been installed with the compiler
+RTS=microbit
 
 include ../../Makefile.inc
 
