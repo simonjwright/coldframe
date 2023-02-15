@@ -224,7 +224,9 @@ private
 
       pragma Priority (Priority);
       pragma Storage_Size (Storage_Size);
-      pragma Secondary_Stack_Size (Secondary_Stack_Size);
+      --  pragma Secondary_Stack_Size (Secondary_Stack_Size);
+      --  ICE in GCC 12.2.0, PR108801
+      --  Will use Storage_Size / 10
 
    end Dispatcher;
 
