@@ -22,6 +22,13 @@ ADL_BUILD_CHECKS.set = "Disabled"
 type = "pre-build"
 command = ["make", "Simple_Buttons.gen", "Digital_IO.gen"]
 
+[[actions]]
+type = "post-build"
+command = ["arm-eabi-objcopy",
+           "-Obinary",
+           "simple_buttons",
+           "simple_buttons.bin"]
+
 [[depends-on]]
 coldframe = "^71.0.0-dev"
 
