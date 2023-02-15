@@ -74,9 +74,7 @@ setup::
 	-ln -s ../Simple_Buttons.impl .
 
 clean::
-	-for g in *.gpr; do			\
-	  gprclean -r -P $$g -XRTS=microbit;	\
-	done
+	-gprclean -r -P simple_buttons.gpr -XRTS=microbit;
 	rm -f Digital_IO.impl Simple_Buttons.impl
 	rm -rf *.{hex,map,norm-stamp,stamp,norm,ada,gen,html,images}
 

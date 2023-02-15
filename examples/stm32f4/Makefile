@@ -27,49 +27,57 @@ setup::
 clean::
 
 PROFILE=ravenscar
-ADA_PROJECT_PATH=../..
+
+#RTS=$(HOME)/Developer/cortex-gnat-rts/local/stm3f4
+
+# Assuming that the Cortex GNAT RTS has been installed with the compiler
+RTS=stm32f4
+# From gnat_arm_elf
+RTS=embedded-stm32f4
 
 include ../../Makefile.inc
 
-EXECUTABLES += simple_buttons.bin
+EXECUTABLES = simple_buttons.bin
 
-simple_buttons.bin: simple_buttons
 simple_buttons: Simple_Buttons.gen Digital_IO.gen force
-	gprbuild -p -P simple_buttons.gpr -XRTS=stm32f4
+	gprbuild -P simple_buttons.gpr		\
+	  --target=arm-eabi			\
+	  -XRTS=$(RTS)				\
+	  -XCOLDFRAME_BUILD=Production		\
+	  -XPLATFORM_BUILD=Production		\
+	  -XADL_BUILD=Production		\
+	  -XADL_BUILD_CHECKS=Disabled
 
 %.bin: %
-	arm-eabi-objcopy -O binary $< $@
+	arm-eabi-objcopy -O binary $^ $@
 
 all:: $(EXECUTABLES)
 
 # ArgoUML support
 
 NORM_FILES =					\
- Digital_IO.norm				\
- Digital_IO.Tcl.norm				\
- Digital_IO_Interface.norm			\
- House_Management.norm				\
- Interrupt_Handling.norm			\
- Library.norm					\
- Performance.norm				\
- Problem_Reporting.norm				\
- Simple_Buttons.norm				\
- States.norm					\
- Van_Fleet.norm
+ Digital_IO.norm
 
 # NB! the ';' at the end is important - without it, Make may not know
 # to rebuild the .gen directories.
 $(NORM_FILES): ColdFrame_Examples.norm-stamp ;
+
+# TextUML support
+
+TUML_NORM_FILES =				\
+Simple_Buttons.norm
+
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(TUML_NORM_FILES): Simple_Buttons.tuml-norm-stamp ;
 
 setup::
 	-ln -s ../Digital_IO.impl .
 	-ln -s ../Simple_Buttons.impl .
 
 clean::
-	-for g in *.gpr; do			\
-	  gprclean -P $$g;			\
-	done
+	-gprclean -r -P simple_buttons.gpr -XRTS=stm32f4;
 	rm -f Digital_IO.impl Simple_Buttons.impl
-	rm -rf *.{bin,map,norm-stamp,stamp,norm,ada,gen,html,images}
+	rm -rf *.{hex,map,norm-stamp,stamp,norm,ada,gen,html,images}
 
 .PHONY: force all setup clean
