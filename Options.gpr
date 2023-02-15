@@ -19,36 +19,36 @@ abstract project Options is
    --  This project has no associated sources.
    for Source_Files use ();
 
-   type Build_Type is ("production", "debug");
-   Build : Build_Type := external ("BUILD", "debug");
+   type Build_Type is ("Production", "Debug");
+   Build : Build_Type := external ("COLDFRAME_BUILD",
+                                   external ("BUILD", "Debug"));
+
+   COMPILER_SWITCHES :=
+     (
+      --  keep .alis, full messages, hardware overflow
+      --  checks, style checks
+      "-gnatqQfoy",
+      --  All standard warnings except elaboration problems
+      "-gnatwaL",
+      "-gnat12",
+      "-g"
+     );
+
+   case Build is
+      when "Production" =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O2");
+      when "Debug" =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-Og", "-gnata");
+   end case;
 
    --  Builder configuration options.
    package Builder is
-      for Default_Switches ("ada") use
-        (
-         "-gnat12",
-         "-g",
-         "-j2",
-         "-m"
-        );
+      for Global_Compilation_Switches ("ada") use COMPILER_SWITCHES;
    end Builder;
 
    --  GCC configuration options.
    package Compiler is
-      Optimization := "";
-      case Build is
-         when "production" =>
-            Optimization := "-O2";
-         when "debug" =>
-            Optimization := "-O0";
-      end case;
-
-      for Default_Switches ("ada") use
-        (
-         "-gnatqQafoy",
-         "-gnatwaL",
-         Optimization
-        );
+      for Switches ("ada") use COMPILER_SWITCHES;
    end Compiler;
 
    -- GNATBIND configuration options.
@@ -58,7 +58,6 @@ abstract project Options is
 
    --  GNATLINK configuration options.
    package Linker is
-      for Default_Switches ("ada") use External_As_List ("LDFLAGS", " ");
    end Linker;
 
 end Options;

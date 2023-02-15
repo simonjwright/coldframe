@@ -29,8 +29,18 @@ abstract project Options_Ravenscar is
          for Runtime ("ada") use RTS;
    end case;
 
+   TARGET := external ("TARGET", "");
+
+   case TARGET is
+      when "" | "native" =>
+         null;
+      when others =>
+         for Target use Target;
+   end case;
+
    type Build_Type is ("Production", "Debug");
-   Build : Build_Type := external ("BUILD", "Debug");
+   Build : Build_Type := external ("COLDFRAME_BUILD",
+                                   external ("BUILD", "Debug"));
 
    COMPILER_SWITCHES :=
      (
@@ -42,6 +52,7 @@ abstract project Options_Ravenscar is
       "-gnat12",
       "-g"
      );
+
    case RTS is
       when "native" =>
          null;
@@ -78,7 +89,7 @@ abstract project Options_Ravenscar is
       for Default_Switches ("ada") use ("-E");
    end Binder;
 
-   --  GNATLINK configuration options
+   --  GNATLINK configuration options.
    package Linker is
       case RTS is
          when "native" =>
