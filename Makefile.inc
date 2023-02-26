@@ -32,6 +32,7 @@ endif
 
 BLANK_LINES ?= yes
 CHECKING ?= strict
+CONTAINERS ?= standard
 GENERATE_ACCESSORS ?= defined
 GENERATE_DIAGRAMS ?= yes
 GENERATE_EVENT_LOGGING ?= no
@@ -239,6 +240,7 @@ $(COLDFRAMEOUT)/%.xmi: %.tuml $(COLDFRAME)/scripts/tuml2xmi.py
 	@$(SAXON) $< $(CYGWIN)/$(CODEGEN_SCRIPT)			  \
 	  add-blank-lines=$(BLANK_LINES)				  \
 	  checking-policy=$(CHECKING)					  \
+	  containers=$(CONTAINERS)					  \
 	  generate-accessors=$(GENERATE_ACCESSORS)			  \
 	  generate-event-logging=$(GENERATE_EVENT_LOGGING)		  \
 	  generate-stubs=$(GENERATE_STUBS)				  \

@@ -14,6 +14,7 @@ executables = ["simple_buttons"]
 TARGET.set = "arm-eabi"
 RTS.set = "microbit"
 COLDFRAME_BUILD.set = "Production"
+CONTAINERS.set = 'minimal'
 PLATFORM_BUILD.set = "Production"
 ADL_BUILD.set = "Production"
 ADL_BUILD_CHECKS.set = "Disabled"
@@ -30,7 +31,7 @@ command = ["arm-eabi-objcopy",
            "simple_buttons.hex"]
 
 [[depends-on]]
-coldframe = "^71.0.0-dev"
+coldframe = "*"
 
 [[pins]]
 coldframe = { path='../..' }

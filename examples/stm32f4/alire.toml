@@ -30,7 +30,7 @@ command = ["arm-eabi-objcopy",
            "simple_buttons.bin"]
 
 [[depends-on]]
-coldframe = "^71.0.0-dev"
+coldframe = "*"
 
 [[pins]]
 coldframe = { path='../..' }

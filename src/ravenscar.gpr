@@ -4,7 +4,7 @@ library project Ravenscar is
    for Library_Kind use "static";
    for Library_Dir use "lib-ravenscar";
 
-   for Source_Dirs use ("ravenscar");
+   for Source_Dirs use ("ravenscar", "containers");
    for Object_Dir use ".build-ravenscar";
 
 end Ravenscar;
