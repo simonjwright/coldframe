@@ -37,13 +37,17 @@
   xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0">
 
-
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/class" mode="cl:class-spec">
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
       <xsl:call-template name="ut:number-of-instances"/>
+    </xsl:variable>
+
+    <!-- What's the name of the parent Container class? -->
+    <xsl:variable name="container-parent">
+      <xsl:call-template name="ut:container-parent"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
@@ -176,11 +180,17 @@
    <!-- .. Vectors package .. -->
    <xsl:if test="not(@public or @utility)">
      <xsl:value-of select="$I"/>
-     <xsl:text>package Vectors is new Ada.Containers.</xsl:text>
-     <xsl:if test="$max &lt;= $max-bounded-container">
-       <xsl:text>Bounded_</xsl:text>
-     </xsl:if>
-     <xsl:text>Vectors&#10;</xsl:text>
+     <xsl:text>package Vectors is new </xsl:text>
+     <xsl:value-of select="$container-parent"/>
+     <xsl:text>.Containers</xsl:text>
+     <xsl:choose>
+       <xsl:when test="$max &lt;= $max-bounded-container">
+         <xsl:text>.Bounded_Vectors&#10;</xsl:text>
+       </xsl:when>
+       <xsl:otherwise>
+         <xsl:text>.Vectors&#10;</xsl:text>
+       </xsl:otherwise>
+     </xsl:choose>
      <xsl:value-of select="$IC"/>
      <xsl:text>(Index_Type => Positive,&#10;</xsl:text>
      <xsl:value-of select="$IC"/>
@@ -294,18 +304,20 @@
        <xsl:value-of select="$blank-line"/>
 
        <!-- .. the instance container .. -->
+       <xsl:value-of select="$I"/>
+       <xsl:text>package Containers is new </xsl:text>
+       <xsl:value-of select="$container-parent"/>
+       <xsl:text>.Containers</xsl:text>
        <xsl:choose>
 
-         <xsl:when test="$max &lt;= $max-bounded-container">
-           <!-- Wnen the size isn't too big, use the Bounded version -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>package Containers is new Ada.Containers.Bounded_Hashed_Maps&#10;</xsl:text>
+         <xsl:when test="$max &lt;= $max-bounded-container
+                         or $containers = 'minimal'">
+           <xsl:text>.Bounded_Hashed_Maps&#10;</xsl:text>
          </xsl:when>
 
          <xsl:otherwise>
            <!-- Use the Unbounded version -->
-           <xsl:value-of select="$I"/>
-           <xsl:text>package Containers is new Ada.Containers.Hashed_Maps&#10;</xsl:text>
+           <xsl:text>.Hashed_Maps&#10;</xsl:text>
          </xsl:otherwise>
 
        </xsl:choose>
@@ -405,6 +417,11 @@
     <!-- The ancestors so far. The default value is "null". -->
     <xsl:param name="ancestors" select="/.."/>
 
+    <!-- [Ada|ColdFrame].Containers.... -->
+    <xsl:variable name="container-parent">
+      <xsl:call-template name="ut:container-parent"/>
+    </xsl:variable>
+
     <xsl:choose>
 
       <xsl:when test="$parents">
@@ -434,12 +451,6 @@
           <xsl:call-template name="ut:can-use-array"/>
         </xsl:variable>
 
-        <!-- Workround for GCC 4.9.1 bug that reports this restriction
-             violated for Bounded_Vectors (which it isn't). -->
-        <xsl:if test="not ($profile = 'standard')">
-          <xsl:text>pragma Restrictions (No_Implicit_Heap_Allocations);&#10;</xsl:text>
-        </xsl:if>
-
         <!-- If this is an associative class, need the other classes. -->
         <xsl:if test="associative">
           <xsl:for-each select="associative/role/classname">
@@ -454,24 +465,37 @@
         <!-- Need Maps if there's more than one instance and we aren't
              using arrays. -->
         <xsl:if test="$max &gt; 1 and $array = 'no'">
+          <!-- Need Ada.Containers for Count_Type etc, even if using
+               ColdFrame.Containers -->
+          <xsl:text>with Ada.Containers;&#10;</xsl:text>
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="$container-parent"/>
+          <xsl:text>.Containers</xsl:text>
           <xsl:choose>
             <xsl:when test="$max &lt;= $max-bounded-container">
-              <xsl:text>with Ada.Containers.Bounded_Hashed_Maps;&#10;</xsl:text>
+              <xsl:text>.Bounded_Hashed_Maps;&#10;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:text>with Ada.Containers.Hashed_Maps;&#10;</xsl:text>
+              <xsl:text>.Hashed_Maps;&#10;</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:if>
 
         <!-- Need Vectors if non-public, non-utility. -->
         <xsl:if test="not(@public or @utility)">
+          <!-- Need Ada.Containers for Count_Type etc, even if using
+               ColdFrame.Containers
+               This will be a repeat if we're using Vectors; no problem. -->
+          <xsl:text>with Ada.Containers;&#10;</xsl:text>
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="$container-parent"/>
+          <xsl:text>.Containers</xsl:text>
           <xsl:choose>
             <xsl:when test="$max &lt;= $max-bounded-container">
-              <xsl:text>with Ada.Containers.Bounded_Vectors;&#10;</xsl:text>
+              <xsl:text>.Bounded_Vectors;&#10;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:text>with Ada.Containers.Vectors;&#10;</xsl:text>
+              <xsl:text>.Vectors;&#10;</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:if>
@@ -547,7 +571,6 @@
 
             <xsl:otherwise>
               <!-- not a standard profile; no tasks. -->
-              <xsl:call-template name="ut:log-error"/>
               <xsl:message>
                 <xsl:text>Error: active classes not supported in profile &quot;</xsl:text>
                 <xsl:value-of select="$profile"/>
@@ -780,6 +803,11 @@
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
       <xsl:call-template name="ut:number-of-instances"/>
+    </xsl:variable>
+
+    <!-- What's the name of the parent Container class? -->
+    <xsl:variable name="container-parent">
+      <xsl:call-template name="ut:container-parent"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
@@ -1778,14 +1806,17 @@
 
         <!--
              The_Container.Delete
-               (({attr} => This.{attr},
+               (Identifier'
+                ({attr} => This.{attr},
                  {attr} => This.{attr}));
              -->
         <!-- Remove from the container .. -->
         <xsl:value-of select="$II"/>
         <xsl:text>The_Container.Delete&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
-        <xsl:text>((</xsl:text>
+        <xsl:text>(Identifier'&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text> (</xsl:text>
 
         <xsl:for-each select="attribute[@identifier]">
           <xsl:call-template name="at:attribute-name"/>
@@ -2058,7 +2089,6 @@
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-
         <xsl:value-of select="$II"/>
         <xsl:text>if The_Container.Contains (With_Identifier) then&#10;</xsl:text>
         <xsl:value-of select="$III"/>

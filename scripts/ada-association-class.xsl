@@ -639,11 +639,13 @@
       <xsl:when test="$role-b/@multiple">
 
         <!--
-             {abbrev} : constant {class-name}.Vectors.Vector
-               := {role-a} ({a-abbrev});
-             It : {class-name}.Vectors.Cursor := {abbrev}.First;
-             Result : {b}.Vectors.Vector (Capacity => {b-max});
-             use type {class-name}.Vectors.Cursor;
+                {abbrev} : constant {class-name}.Vectors.Vector
+                  := {role-a} ({a-abbrev});
+                Result : {b}.Vectors.Vector (Capacity => {b-max});
+             begin
+                for {b-abbrev} of {abbrev} loop
+                   Result.Append (Controls ({b-abbrev});
+                end loop;
              -->
 
         <!-- Calculate the maximum number of b (target) instances. -->
@@ -656,8 +658,7 @@
         </xsl:variable>
 
         <xsl:value-of select="$II"/>
-        <xsl:value-of
-          select="abbreviation"/>
+        <xsl:value-of select="abbreviation"/>
         <xsl:text> : constant </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>.Vectors.Vector&#10;</xsl:text>
@@ -669,14 +670,6 @@
           select="/domain/class[name=$role-a/classname]/abbreviation"/>
         <xsl:text>);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>It : </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Vectors.Cursor&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> := </xsl:text>
-        <xsl:value-of select="abbreviation"/>
-        <xsl:text>.First;&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
         <xsl:text>Result : </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Vectors.Vector</xsl:text>
@@ -686,69 +679,23 @@
           <xsl:text>)</xsl:text>
         </xsl:if>
         <xsl:text>;&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>use type </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Vectors.Cursor;&#10;</xsl:text>
-      </xsl:when>
 
-      <xsl:otherwise>
-
-        <!--
-             {abbrev} : constant Handle
-               := {role-a} ({a-abbrev});
-             -->
+        <xsl:value-of select="$I"/>
+        <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
+        <xsl:text>for </xsl:text>
+        <xsl:value-of select="/domain/class[name=$role-b/classname]/abbreviation"/>
+        <xsl:text> of </xsl:text>
         <xsl:value-of select="abbreviation"/>
-        <xsl:text> : constant Handle&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>:= </xsl:text>
+        <xsl:text> loop&#10;</xsl:text>
+
+        <xsl:value-of select="$III"/>
+        <xsl:text>Result.Append (</xsl:text>
         <xsl:value-of select="$role-a/name"/>
         <xsl:text> (</xsl:text>
-        <xsl:value-of
-          select="/domain/class[name=$role-a/classname]/abbreviation"/>
-        <xsl:text>);&#10;</xsl:text>
-
-      </xsl:otherwise>
-
-    </xsl:choose>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:choose>
-
-      <xsl:when test="$role-b/@multiple">
-
-        <!--
-             while It /= {class-name}.Vectors.No_Element loop
-                Result.Append
-                  ({role-a}
-                     ({class-name}.Vectors.Element (It)));
-                {class-name}.Vectors.Next (It);
-             end loop;
-             return Result;
-             -->
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>while It /= </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Vectors.No_Element loop&#10;</xsl:text>
-
-        <xsl:value-of select="$III"/>
-        <xsl:text>Result.Append&#10;</xsl:text>
-        <xsl:value-of select="$IIIC"/>
-        <xsl:text>(</xsl:text>
-        <xsl:value-of select="$role-a/name"/>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="$IIIIC"/>
-        <xsl:text>(</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Vectors.Element (It)));&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:value-of select="name"/>
-        <xsl:text>.Vectors.Next (It);&#10;</xsl:text>
+        <xsl:value-of select="/domain/class[name=$role-b/classname]/abbreviation"/>
+        <xsl:text>));&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
         <xsl:text>end loop;&#10;</xsl:text>
@@ -759,27 +706,48 @@
       <xsl:otherwise>
 
         <!--
-             if {abbrev} = null then
-               return null;
-             else
-               return {role-a} ({abbrev});
-             end if;
+                {abbrev} : constant Handle
+                  := {role-a} ({a-abbrev});
+             begin
+                if {abbrev} = null then
+                   return null;
+                else
+                   return {role-a} ({abbrev});
+                end if;
              -->
+
+        <xsl:value-of select="$II"/>
+        <xsl:value-of select="abbreviation"/>
+        <xsl:text> : constant Handle&#10;</xsl:text>
+
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>:= </xsl:text>
+        <xsl:value-of select="$role-a/name"/>
+        <xsl:text> (</xsl:text>
+        <xsl:value-of
+          select="/domain/class[name=$role-a/classname]/abbreviation"/>
+        <xsl:text>);&#10;</xsl:text>
+
+        <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
         <xsl:text>if </xsl:text>
         <xsl:value-of select="abbreviation"/>
         <xsl:text> = null then&#10;</xsl:text>
+
         <xsl:value-of select="$III"/>
         <xsl:text>return null;&#10;</xsl:text>
+
         <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
+
         <xsl:value-of select="$III"/>
         <xsl:text>return </xsl:text>
         <xsl:value-of  select="$role-a/name"/>
         <xsl:text> (</xsl:text>
         <xsl:value-of select="abbreviation"/>
         <xsl:text>);&#10;</xsl:text>
+
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
       </xsl:otherwise>

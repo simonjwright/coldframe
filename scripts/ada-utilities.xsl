@@ -471,6 +471,21 @@
   </xsl:template>
 
 
+  <!-- Should container package parents be "Ada" or "ColdFrame"? -->
+  <xsl:template name="ut:container-parent">
+    <xsl:param name="c" select="."/>
+    <xsl:variable name="max">
+      <xsl:call-template name="ut:number-of-instances"/>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when
+        test="$max &lt;= $max-bounded-container and $containers !=
+              'standard'">ColdFrame</xsl:when>
+      <xsl:otherwise>Ada</xsl:otherwise>
+    </xsl:choose>
+
+  </xsl:template>
   <!-- Progress messages. -->
   <xsl:template name="ut:progress-message">
     <xsl:param name="m"/>

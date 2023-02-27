@@ -73,6 +73,9 @@
   <!-- Control checking policy: strict or relaxed. -->
   <xsl:param name="checking-policy" select="'strict'"/>
 
+  <!-- Control the Containers library used: standard or minimal -->
+  <xsl:param name="containers" select="standard"/>
+
   <!-- Control indentation. -->
   <xsl:param name="continuation-indent" select="'  '"/>
 
@@ -92,9 +95,9 @@
   <xsl:param name="max-bounded-container" select="49"/>
 
   <!-- Control limit on number of hash buckets. -->
-  <xsl:param name="max-hash-buckets" select="49"/>
+  <xsl:param name="max-hash-buckets" select="47"/>
 
-  <!-- Control profile. -->
+  <!-- Control profile, standard or minimal -->
   <xsl:param name="profile" select="standard"/>
 
   <!-- Control indentation. -->
@@ -116,6 +119,10 @@
 
         <xsl:text>checking-policy: </xsl:text>
         <xsl:value-of select="$checking-policy"/>
+        <xsl:text>&#10;</xsl:text>
+
+        <xsl:text>containers: </xsl:text>
+        <xsl:value-of select="$containers"/>
         <xsl:text>&#10;</xsl:text>
 
         <xsl:text>continuation-indent: "</xsl:text>

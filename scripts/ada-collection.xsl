@@ -1,5 +1,5 @@
 <!-- XSL stylesheet to generate Ada code for Collections, which are
-     Ada.Containers.[Bounded_]Vectors. -->
+     [Ada|ColdFrame].Containers.[Bounded_]Vectors. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -214,13 +214,10 @@
     <!-- full version ..
          function {dom}.{class}.All_Instances
            return {dom}.{class}.Vectors.Vector is
-            It : Vectors.Cursor := The_Container.First;
             Result : Vectors.Vector (Capacity => {max});
-            use type Vectors.Cursor;
          begin
-            while It /= No_Element loop
-               Result.Append (Vectors.Element (It)));
-               Vectors.Next (It);
+            for H of The_Container loop
+               Vectors.Append (Result, H));
             end loop;
             return Result;
          end {dom}.{class}.All_Instances;
@@ -236,13 +233,6 @@
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Vectors.Vector is&#10;</xsl:text>
-
-    <xsl:if test="$max &gt; 1 and $array = 'no'">
-      <xsl:value-of select="$I"/>
-      <xsl:text>It : Containers.Cursor := The_Container.First;&#10;</xsl:text>
-      <xsl:value-of select="$I"/>
-      <xsl:text>use type Containers.Cursor;&#10;</xsl:text>
-    </xsl:if>
 
     <xsl:value-of select="$I"/>
     <xsl:text>Result : Vectors.Vector</xsl:text>
@@ -285,11 +275,9 @@
       <xsl:otherwise>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>while It /= Containers.No_Element loop&#10;</xsl:text>
+        <xsl:text>for H of The_Container loop&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>Result.Append (Containers.Element (It));&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>Containers.Next (It);&#10;</xsl:text>
+        <xsl:text>Vectors.Append (Result, H);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 
@@ -308,19 +296,12 @@
     <!-- full version ..
          function {dom}.{class}.Selection_Function
            return {dom}.{class}.Vectors.Vector is
-            It : Containers.Cursor := The_Container.First;
-            use type Containers.Cursor;
             Result : Vectors.Vector (Capacity => {max});
-         begin
-            while It /= Containers.No_Element loop
-               declare
-                  H : constant Handle := Handle (Containers.Element (It));
-               begin
-                  if Pass (H) then
-                     Result.Append (H);
-                  end if;
-               end;
-               Containers.Next (It);
+          begin
+            for H of The_Container loop
+               if Pass (H) then
+                  Vectors.Append (Result, H);
+               end if;
             end loop;
             return Result;
          end {dom}.{class}.Selection_Function;
@@ -336,13 +317,6 @@
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Vectors.Vector is&#10;</xsl:text>
-
-    <xsl:if  test="$max &gt; 1 and $array = 'no'">
-      <xsl:value-of select="$I"/>
-      <xsl:text>It : Containers.Cursor := The_Container.First;&#10;</xsl:text>
-      <xsl:value-of select="$I"/>
-      <xsl:text>use type Containers.Cursor;&#10;</xsl:text>
-    </xsl:if>
 
     <xsl:value-of select="$I"/>
     <xsl:text>Result : Vectors.Vector</xsl:text>
@@ -385,29 +359,20 @@
       </xsl:when>
 
       <xsl:otherwise>
+        <!-- A Container -->
 
         <xsl:value-of select="$I"/>
-        <xsl:text>while It /= Containers.No_Element loop&#10;</xsl:text>
+        <xsl:text>for H of The_Container loop&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>declare&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:text>H : constant Handle := Handle (Containers.Element (It));&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>begin&#10;</xsl:text>
-
-        <xsl:value-of select="$III"/>
         <xsl:text>if Pass (H) then&#10;</xsl:text>
-        <xsl:value-of select="$IIII"/>
-        <xsl:text>Result.Append (H);&#10;</xsl:text>
+
         <xsl:value-of select="$III"/>
+        <xsl:text>Result.Append (H);&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
-        <xsl:value-of select="$II"/>
-        <xsl:text>end;&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>Containers.Next (It);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 
@@ -426,19 +391,12 @@
          function {dom}.{class}.Filter_Function
            (The_Vector : {dom}.{class}.Vectors.Vector)
            return {dom}.{class}.Vectors.Vector is
-            It : Vectors.Cursor := The_Vector.First;
             Result : Vectors.Vector (Capacity => {max});
-            use type Vectors.Cursor;
          begin
-            while It /= Vectors.No_Element loop
-               declare
-                  H : constant Handle := Vectors.Element (It);
-               begin
-                  if Pass (H) then
-                     Result.Append (H);
-                  end if;
-               end;
-               Vectors.Next (It);
+            for H of The_Vector loop
+               if Pass (H) then
+                  Vectors.Append (Result, H);
+               end if;
             end loop;
             return Result;
          end {dom}.{class}.Filter_Function;
@@ -460,8 +418,6 @@
     <xsl:text>.Vectors.Vector is&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>It : Vectors.Cursor := The_Vector.First;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
     <xsl:text>Result : Vectors.Vector</xsl:text>
     <xsl:if test="$max &lt;= $max-bounded-container">
       <xsl:text> (Capacity =&gt; </xsl:text>
@@ -469,32 +425,19 @@
       <xsl:text>)</xsl:text>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>use type Vectors.Cursor;&#10;</xsl:text>
+
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>while It /= Vectors.No_Element loop&#10;</xsl:text>
+    <xsl:text>for H of The_Vector loop&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>declare&#10;</xsl:text>
-    <xsl:value-of select="$III"/>
-    <xsl:text>H : constant Handle := Vectors.Element (It);&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
     <xsl:text>if Pass (H) then&#10;</xsl:text>
-    <xsl:value-of select="$IIII"/>
-    <xsl:text>Result.Append (H);&#10;</xsl:text>
     <xsl:value-of select="$III"/>
+    <xsl:text>Result.Append (H);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
     <xsl:text>end if;&#10;</xsl:text>
 
-    <xsl:value-of select="$II"/>
-    <xsl:text>end;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>Vectors.Next (It);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end loop;&#10;</xsl:text>
 
@@ -508,12 +451,9 @@
     <!--
          procedure {domain}.{class}.Iterate
            (Over : {domain}.{class}.Vectors.Vector) is
-            It : Vectors.Cursor := Over.First;
-            use type Vectors.Cursor;
          begin
-         while It /= Vectors.No_Element loop
-               Process (Vectors.Element (It));
-               Vectors.Next (It);
+            for H of Over loop
+               Process (H);
             end loop;
          end {domain}.{class}.Iterate;
          -->
@@ -527,17 +467,11 @@
     <xsl:text>(Over : </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Vectors.Vector) is&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>It : Vectors.Cursor := Over.First;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>use type Vectors.Cursor;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>while It /= Vectors.No_Element loop&#10;</xsl:text>
+    <xsl:text>for H of Over loop&#10;</xsl:text>
     <xsl:value-of select="$II"/>
-    <xsl:text>Process (Vectors.Element (It));&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>Vectors.Next (It);&#10;</xsl:text>
+    <xsl:text>Process (H);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end loop;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
