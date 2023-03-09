@@ -90,71 +90,54 @@ package body Event_Management is
         (For_The_Instance : not null access Instance_Base'Class) is
 
          procedure Invalidate_Events
-           (Using : in out Event_Queues.Cursor);
+           (In_The_Vector : in out Event_Queues.Vector);
          procedure Invalidate_Events
-           (Using : in out Event_Queues.Cursor) is
-            use type Event_Queues.Cursor;
+           (In_The_Vector : in out Event_Queues.Vector) is
          begin
-            while Using /= Event_Queues.No_Element loop
-               Invalidate (Event_Queues.Element (Using),
-                           If_For_Instance =>
-                             Instance_Base_P (For_The_Instance));
-               Event_Queues.Next (Using);
+            for El of In_The_Vector loop
+               Invalidate
+                 (El,
+                  If_For_Instance => Instance_Base_P (For_The_Instance));
             end loop;
          end Invalidate_Events;
-
-         Self_Iterator : Event_Queues.Cursor := The_Self_Events.First;
-         Instance_Iterator : Event_Queues.Cursor := The_Instance_Events.First;
-
-         --  We need to check actionable held events, which will be on
-         --  the class queue (since they aren't instance events).
-         Class_Iterator : Event_Queues.Cursor := The_Class_Events.First;
 
          --  We may not actually need to check Duration events
          --  (posted, before the Queue is actually started, to be run
          --  after an interval)? still, ...
          procedure Invalidate_Events
-           (Using : in out Duration_Vectors.Cursor);
+           (In_The_Vector : Duration_Vectors.Vector);
          procedure Invalidate_Events
-           (Using : in out Duration_Vectors.Cursor) is
-            use type Duration_Vectors.Cursor;
+           (In_The_Vector : Duration_Vectors.Vector)
+         is
          begin
-            while Using /= Duration_Vectors.No_Element loop
-               Invalidate (Duration_Vectors.Element (Using).Event,
-                           If_For_Instance =>
-                             Instance_Base_P (For_The_Instance));
-               Duration_Vectors.Next (Using);
+            for El of In_The_Vector loop
+               Invalidate
+                 (El.Event,  -- El is a Duration_Cell
+                  If_For_Instance => Instance_Base_P (For_The_Instance));
             end loop;
          end Invalidate_Events;
 
-         --  We need to check 'duration' held events.
-         Duration_Iterator : Duration_Vectors.Cursor
-           := The_Duration_Events.First;
-
          procedure Invalidate_Events
-           (Using : in out Time_Vectors.Cursor);
+           (In_The_Vector : Time_Vectors.Vector);
          procedure Invalidate_Events
-           (Using : in out Time_Vectors.Cursor) is
-            use type Time_Vectors.Cursor;
+           (In_The_Vector : Time_Vectors.Vector) is
          begin
-            while Using /= Time_Vectors.No_Element loop
-               Invalidate (Time_Vectors.Element (Using).Event,
-                           If_For_Instance =>
-                             Instance_Base_P (For_The_Instance));
-               Time_Vectors.Next (Using);
+            for El of In_The_Vector loop
+               Invalidate
+                 (El.Event,  -- El is a Time_Cell
+                  If_For_Instance => Instance_Base_P (For_The_Instance));
             end loop;
          end Invalidate_Events;
-
-         --  We need to check held held events.
-         Held_Event_Iterator : Time_Vectors.Cursor := The_Held_Events.First;
 
       begin
-         Invalidate_Events (Self_Iterator);
-         Invalidate_Events (Instance_Iterator);
-         Invalidate_Events (Class_Iterator);
+         Invalidate_Events (The_Self_Events.all);
+         Invalidate_Events (The_Instance_Events.all);
+         --  We need to check actionable held events, which will be on
+         --  the class queue (since they aren't instance events).
+         Invalidate_Events (The_Class_Events.all);
          --  no need to Check_Fetchable_Event (XXX why not?)
-         Invalidate_Events (Duration_Iterator);
-         Invalidate_Events (Held_Event_Iterator);
+         Invalidate_Events (The_Duration_Events.all);
+         Invalidate_Events (The_Held_Events.all);
       end Invalidate_Events;
 
       procedure Done is

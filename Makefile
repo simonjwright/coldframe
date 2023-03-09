@@ -25,7 +25,7 @@ setup:: force
 	$(GPRBUILD) -p -P ColdFrame
 
 # Set up subdirectories
-SETUP_SUBDIRS = lib tools examples
+SETUP_SUBDIRS = src lib tools examples
 setup::
 	for s in $(SETUP_SUBDIRS); do		\
 	  make -C $$s setup;			\
