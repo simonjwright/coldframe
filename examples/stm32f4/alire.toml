@@ -12,7 +12,9 @@ executables = ["simple_buttons"]
 
 [environment]
 TARGET.set = "arm-eabi"
-RTS.set = "embedded-stm32f4"
+#RTS.set = "embedded-stm32f4"
+RTS.set = "stm32f4"
+CONTAINERS.set = "minimal"
 COLDFRAME_BUILD.set = "Production"
 PLATFORM_BUILD.set = "Production"
 ADL_BUILD.set = "Production"
@@ -35,5 +37,5 @@ coldframe = "*"
 [[pins]]
 coldframe = { path='../..' }
 
-[[depends-on]]
-gnat_arm_elf = "^12.2.1"
+#[[depends-on]]
+#gnat_arm_elf = "^12.2.1"

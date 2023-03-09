@@ -36,10 +36,7 @@ project Simple_Buttons is
    package Binder extends Options_Ravenscar.Binder is
       for Switches ("ada") use
         (
-         "-minimal",
-         "-d512",    -- default primary stack size
-         "-D128",    -- default secondary stack size
-         "-Q0"       -- don't generate any
+         "-minimal"
         );
    end Binder;
 
