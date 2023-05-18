@@ -20,13 +20,11 @@ package body Normalize_XMI.Messages is
    Warnings : Natural := 0;
    Errors : Natural := 0;
 
-
    procedure Information (Message : String)
    is
    begin
       Put_Line (Standard_Error, Message);
    end Information;
-
 
    procedure Set_Verbosity (To : Boolean := False)
    is
@@ -42,7 +40,6 @@ package body Normalize_XMI.Messages is
       end if;
    end Trace;
 
-
    procedure Warning (Message : String)
    is
    begin
@@ -56,7 +53,6 @@ package body Normalize_XMI.Messages is
       return Warnings;
    end Number_Of_Warnings;
 
-
    procedure Error (Message : String)
    is
    begin
@@ -64,12 +60,10 @@ package body Normalize_XMI.Messages is
       Put_Line (Standard_Error, "Error: " & Message);
    end Error;
 
-
    function Number_Of_Errors return Natural
    is
    begin
       return Errors;
    end Number_Of_Errors;
-
 
 end Normalize_XMI.Messages;

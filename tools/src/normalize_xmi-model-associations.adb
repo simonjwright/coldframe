@@ -56,7 +56,6 @@ package body Normalize_XMI.Model.Associations is
       return N;
    end Read_Association;
 
-
    overriding
    procedure Resolve (A : in out Association_Element)
    is
@@ -80,14 +79,14 @@ package body Normalize_XMI.Model.Associations is
    begin
       Messages.Trace ("... checking association " & (+A.Name));
       A.Ends.Iterate (Resolve'Access);
-      if E1.Source and E2.Source then
+      if E1.Source and then E2.Source then
          Messages.Error
            ("Both ends of association "
               & A.Fully_Qualified_Name
               & " are marked <<source>>");
       elsif E1.Lower = E2.Lower
-        and E1.Upper = E2.Upper
-        and not E1.Source and not E2.Source
+        and then E1.Upper = E2.Upper
+        and then not E1.Source and then not E2.Source
       then
          Messages.Error
            ("Neither end of symmetric association "
@@ -233,7 +232,6 @@ package body Normalize_XMI.Model.Associations is
       end if;
    end Resolve;
 
-
    overriding
    procedure Output (A : Association_Element; To : Ada.Text_IO.File_Type)
    is
@@ -252,6 +250,5 @@ package body Normalize_XMI.Model.Associations is
       A.Output_Documentation (To);
       Put_Line (To, "</association>");
    end Output;
-
 
 end Normalize_XMI.Model.Associations;

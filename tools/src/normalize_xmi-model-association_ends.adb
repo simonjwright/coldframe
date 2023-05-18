@@ -19,7 +19,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Association_Ends is
 
-
    function Read_Association_End
      (From : DOM.Core.Node;
       Parent : not null Element_P) return Element_P
@@ -119,14 +118,12 @@ package body Normalize_XMI.Model.Association_Ends is
       return N;
    end Read_Association_End;
 
-
    overriding
    procedure Resolve (E : in out Association_End_Element)
    is
    begin
       Messages.Trace ("...... checking association_end " & (+E.Name));
    end Resolve;
-
 
    overriding
    procedure Output (E : Association_End_Element; To : Ada.Text_IO.File_Type)
@@ -149,6 +146,5 @@ package body Normalize_XMI.Model.Association_Ends is
       E.Output_Documentation (To);
       Put_Line (To, "</role>");
    end Output;
-
 
 end Normalize_XMI.Model.Association_Ends;

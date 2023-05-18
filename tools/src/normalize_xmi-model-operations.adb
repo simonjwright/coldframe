@@ -22,7 +22,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Operations is
 
-
    function Read_Operation (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
@@ -86,7 +85,6 @@ package body Normalize_XMI.Model.Operations is
       return N;
    end Read_Operation;
 
-
    overriding
    procedure Resolve (O : in out Operation_Element)
    is
@@ -100,7 +98,7 @@ package body Normalize_XMI.Model.Operations is
    begin
       Messages.Trace ("...... checking operation " & (+O.Name));
       if O.Has_Stereotype ("convention")
-        and not O.Has_Tag ("language")
+        and then not O.Has_Tag ("language")
       then
          Messages.Error
            ("Operation "
@@ -108,7 +106,7 @@ package body Normalize_XMI.Model.Operations is
               & " has <<convention>> but not {language}");
       end if;
       if O.Has_Stereotype ("entry")
-        and Ada.Strings.Unbounded.Length (O.Return_Type) > 0
+        and then Ada.Strings.Unbounded.Length (O.Return_Type) > 0
       then
          Messages.Error
            ("Entry "
@@ -131,7 +129,6 @@ package body Normalize_XMI.Model.Operations is
          end if;
       end if;
    end Resolve;
-
 
    overriding
    procedure Output (O : Operation_Element; To : Ada.Text_IO.File_Type)
@@ -293,6 +290,5 @@ package body Normalize_XMI.Model.Operations is
       O.Parameters.Iterate (Output'Access);
       Put_Line (To, "</operation>");
    end Output;
-
 
 end Normalize_XMI.Model.Operations;

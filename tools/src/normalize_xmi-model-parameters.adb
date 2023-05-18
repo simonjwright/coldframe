@@ -19,7 +19,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Parameters is
 
-
    function Read_Parameter (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
@@ -59,7 +58,6 @@ package body Normalize_XMI.Model.Parameters is
       return N;
    end Read_Parameter;
 
-
    overriding
    procedure Resolve (P : in out Parameter_Element)
    is
@@ -67,7 +65,6 @@ package body Normalize_XMI.Model.Parameters is
       Messages.Trace ("......... checking parameter " & (+P.Name));
       --  XXX should check <<not-null>> validity.
    end Resolve;
-
 
    overriding
    procedure Output (P : Parameter_Element; To : Ada.Text_IO.File_Type)
@@ -107,6 +104,5 @@ package body Normalize_XMI.Model.Parameters is
       P.Output_Documentation (To);
       Put_Line (To, "</parameter>");
    end Output;
-
 
 end Normalize_XMI.Model.Parameters;

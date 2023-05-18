@@ -19,7 +19,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Attributes is
 
-
    function Read_Attribute (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
@@ -58,14 +57,12 @@ package body Normalize_XMI.Model.Attributes is
       return N;
    end Read_Attribute;
 
-
    overriding
    procedure Resolve (A : in out Attribute_Element)
    is
    begin
       Messages.Trace ("...... checking attribute " & (+A.Name));
    end Resolve;
-
 
    overriding
    procedure Output (A : Attribute_Element; To : Ada.Text_IO.File_Type)
@@ -109,6 +106,5 @@ package body Normalize_XMI.Model.Attributes is
       A.Output_Documentation (To);
       Put_Line (To, "</attribute>");
    end Output;
-
 
 end Normalize_XMI.Model.Attributes;

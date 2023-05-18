@@ -596,7 +596,6 @@ package body Normalize_XMI.Model.State_Machines is
       end return;
    end Split_Effect;
 
-
    procedure Put_Actions (To     : Ada.Text_IO.File_Type;
                           Effect : String_Vectors.Vector)
    is

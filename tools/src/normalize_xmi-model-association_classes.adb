@@ -19,7 +19,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Association_Classes is
 
-
    function Read_Association_Class
      (From   : not null DOM.Core.Node;
       Parent : not null Element_P) return Element_P
@@ -57,7 +56,6 @@ package body Normalize_XMI.Model.Association_Classes is
       return N;
    end Read_Association_Class;
 
-
    overriding
    procedure Resolve (AC : in out Association_Class_Element)
    is
@@ -79,14 +77,14 @@ package body Normalize_XMI.Model.Association_Classes is
            (AC.Ends.Element (2).all);
          use Association_Ends;
       begin
-         if E1.Source and E2.Source then
+         if E1.Source and then E2.Source then
             Messages.Error
               ("Both ends of association "
                  & AC.Fully_Qualified_Name
                  & " are marked <<source>>");
          elsif E1.Lower = E2.Lower
-           and E1.Upper = One and E2.Upper = One
-           and not E1.Source and not E2.Source
+           and then E1.Upper = One and then E2.Upper = One
+           and then not E1.Source and then not E2.Source
          then
             Messages.Error
               ("Neither end of symmetric 1-(1:1) association "
@@ -286,7 +284,6 @@ package body Normalize_XMI.Model.Association_Classes is
       end;
    end Resolve;
 
-
    overriding
    procedure Output (AC : Association_Class_Element;
                      To : Ada.Text_IO.File_Type)
@@ -306,6 +303,5 @@ package body Normalize_XMI.Model.Association_Classes is
       Put_Line (To, "</associative>");
       Put_Line (To, "</class>");
    end Output;
-
 
 end Normalize_XMI.Model.Association_Classes;

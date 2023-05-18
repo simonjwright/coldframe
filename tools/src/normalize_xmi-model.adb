@@ -24,7 +24,6 @@ with XIA;
 
 package body Normalize_XMI.Model is
 
-
    --------------------
    --  Tag checking  --
    --------------------
@@ -41,10 +40,8 @@ package body Normalize_XMI.Model is
 
    Tags : Uncased_Tag_Properties_Maps.Map;
 
-
    procedure Process_Domain (From : not null DOM.Core.Node; In_File : String)
      renames Domains.Process_Domain;
-
 
    -------------------------
    --  Container support  --
@@ -58,7 +55,6 @@ package body Normalize_XMI.Model is
       return Translate (L, Lower_Case_Map) = Translate (R, Lower_Case_Map);
    end Uncased_Equals;
 
-
    function Uncased_Less_Than (L, R : String) return Boolean
    is
       use Ada.Strings.Fixed;
@@ -66,7 +62,6 @@ package body Normalize_XMI.Model is
    begin
       return Translate (L, Lower_Case_Map) < Translate (R, Lower_Case_Map);
    end Uncased_Less_Than;
-
 
    --------------------------
    --  Element operations  --
@@ -125,7 +120,7 @@ package body Normalize_XMI.Model is
                    (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
             begin
                if DOM.Core.Nodes.Length (Tag) = 1
-                 and DOM.Core.Nodes.Length (Value) = 1
+                 and then DOM.Core.Nodes.Length (Value) = 1
                then
                   declare
                      T : constant String
@@ -166,7 +161,6 @@ package body Normalize_XMI.Model is
       end;
    end Populate;
 
-
    not overriding
    function Fully_Qualified_Name (E : Element) return String
    is
@@ -182,7 +176,6 @@ package body Normalize_XMI.Model is
          return +E.Name;
       end if;
    end Fully_Qualified_Name;
-
 
    not overriding
    function Kind (E : Element) return String
@@ -216,7 +209,6 @@ package body Normalize_XMI.Model is
       end if;
    end Kind;
 
-
    not overriding
    function Find_Class (Known_To        : Element;
                         With_Model_Name : String) return Element_P
@@ -226,7 +218,6 @@ package body Normalize_XMI.Model is
                      "Parent reference is null");
       return Known_To.Parent.Find_Class (With_Model_Name);
    end Find_Class;
-
 
    not overriding
    function Find_Type (Known_To        : Element;
@@ -238,7 +229,6 @@ package body Normalize_XMI.Model is
       return Known_To.Parent.Find_Type (With_Model_Name);
    end Find_Type;
 
-
    not overriding
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean
    is
@@ -246,14 +236,12 @@ package body Normalize_XMI.Model is
       return E.Stereotypes.Contains (Stereotype);
    end Has_Stereotype;
 
-
    not overriding
    function Has_Tag (E : Element; Tag : String) return Boolean
    is
    begin
       return E.Tagged_Values.Contains (Tag);
    end Has_Tag;
-
 
    not overriding
    function Tag_Value (E : Element; Tag : String) return String
@@ -265,7 +253,6 @@ package body Normalize_XMI.Model is
          return "";
       end if;
    end Tag_Value;
-
 
    not overriding
    procedure Output_Documentation (E : Element; To : Ada.Text_IO.File_Type)
@@ -308,7 +295,6 @@ package body Normalize_XMI.Model is
       Put_Line (To, "</documentation>");
    end Output_Documentation;
 
-
    ----------------------
    --  Standard types  --
    ----------------------
@@ -320,7 +306,6 @@ package body Normalize_XMI.Model is
       null;
    end Resolve;
 
-
    overriding
    procedure Output (ST : Standard_Type_Element; To : Ada.Text_IO.File_Type)
    is
@@ -330,7 +315,6 @@ package body Normalize_XMI.Model is
       Put_Line (To, "<name>" & (+ST.Name) & "</name>");
       Put_Line (To, "</type>");
    end Output;
-
 
    --------------------
    --  XML Utilities --
@@ -349,7 +333,6 @@ package body Normalize_XMI.Model is
       end if;
    end Read_Attribute;
 
-
    function Read_Text (From_Element : DOM.Core.Node) return String
    is
       use Ada.Strings.Unbounded;
@@ -364,7 +347,6 @@ package body Normalize_XMI.Model is
       end loop;
       return +Result;
    end Read_Text;
-
 
    -------------------------
    --  Output  utilities  --
@@ -440,7 +422,6 @@ package body Normalize_XMI.Model is
          Put (DOM.Core.Nodes.Node_Value (N));
       end if;
    end Print_Node;
-
 
 begin
 

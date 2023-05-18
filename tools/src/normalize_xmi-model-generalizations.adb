@@ -20,7 +20,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Generalizations is
 
-
    procedure Read_Generalization
      (From            :        not null DOM.Core.Node;
       Parent          :        not null Element_P;
@@ -141,7 +140,6 @@ package body Normalize_XMI.Model.Generalizations is
       end;
    end Read_Generalization;
 
-
    overriding
    procedure Resolve (G : in out Generalization_Element)
    is
@@ -161,7 +159,6 @@ package body Normalize_XMI.Model.Generalizations is
       Messages.Trace ("... checking generalization " & (+G.Name));
       G.Child_Classes.Iterate (Resolve'Access);
    end Resolve;
-
 
    overriding
    procedure Output (G : Generalization_Element; To : Ada.Text_IO.File_Type)
@@ -184,6 +181,5 @@ package body Normalize_XMI.Model.Generalizations is
       G.Output_Documentation (To);
       Put_Line (To, "</inheritance>");
    end Output;
-
 
 end Normalize_XMI.Model.Generalizations;

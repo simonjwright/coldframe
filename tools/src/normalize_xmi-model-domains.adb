@@ -215,7 +215,6 @@ package body Normalize_XMI.Model.Domains is
 
    end Process_Domain;
 
-
    overriding
    function Find_Class (Known_To        : Domain;
                         With_Model_Name : String) return Element_P
@@ -228,7 +227,6 @@ package body Normalize_XMI.Model.Domains is
       end if;
    end Find_Class;
 
-
    overriding
    function Find_Type (Known_To        : Domain;
                        With_Model_Name : String) return Element_P
@@ -240,7 +238,6 @@ package body Normalize_XMI.Model.Domains is
          return null;
       end if;
    end Find_Type;
-
 
    overriding
    procedure Resolve (D : in out Domain)
@@ -305,7 +302,6 @@ package body Normalize_XMI.Model.Domains is
       D.Generalizations.Iterate (Resolve'Access);
       D.Exceptions.Iterate (Resolve'Access);
    end Resolve;
-
 
    overriding
    procedure Output (D : Domain; To : Ada.Text_IO.File_Type)
@@ -372,7 +368,6 @@ package body Normalize_XMI.Model.Domains is
       Put_Line (To, "</domain>");
    end Output;
 
-
    procedure Add_Standard_Types (To : in out Element_Maps.Map;
                                  In_Domain : Element_P)
    is
@@ -405,6 +400,5 @@ package body Normalize_XMI.Model.Domains is
       Add_Standard_Type ("Timer");
       Add_Standard_Type ("Unbounded_String");
    end Add_Standard_Types;
-
 
 end Normalize_XMI.Model.Domains;

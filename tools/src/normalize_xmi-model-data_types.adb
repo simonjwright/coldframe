@@ -22,7 +22,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Data_Types is
 
-
    function Read_Data_Type (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
@@ -71,7 +70,6 @@ package body Normalize_XMI.Model.Data_Types is
 
       return N;
    end Read_Data_Type;
-
 
    overriding
    procedure Resolve (T : in out Data_Type_Element)
@@ -150,7 +148,7 @@ package body Normalize_XMI.Model.Data_Types is
       --  There are all sorts of complicated illegal possibilities
       --  here!
       if T.Has_Stereotype ("bounded-string")
-        and not T.Has_Tag ("length")
+        and then not T.Has_Tag ("length")
       then
          Messages.Error
            ("Type "
@@ -174,9 +172,9 @@ package body Normalize_XMI.Model.Data_Types is
                        & ", not found");
                elsif not
                  (Constrained_Type.all in Data_Type_Element'Class
-                  or Constrained_Type.all in
+                  or else Constrained_Type.all in
                     Enumerations.Enumeration_Element'Class
-                  or Constrained_Type.all in Standard_Type_Element'Class)
+                  or else Constrained_Type.all in Standard_Type_Element'Class)
                then
                   Messages.Error
                     ("Type '"
@@ -192,7 +190,7 @@ package body Normalize_XMI.Model.Data_Types is
                  & T.Fully_Qualified_Name
                  & " has <<constraint>> but not {constrains}");
          end if;
-         if not (T.Has_Tag ("lower") or T.Has_Tag ("upper")) then
+         if not (T.Has_Tag ("lower") or else T.Has_Tag ("upper")) then
             Messages.Error
               ("Type "
                  & T.Fully_Qualified_Name
@@ -206,20 +204,20 @@ package body Normalize_XMI.Model.Data_Types is
               & " is not allowed to have <<convention>>");
       end if;
       if T.Has_Stereotype ("fixed-string")
-        and not T.Has_Tag ("length")
+        and then not T.Has_Tag ("length")
       then
          Messages.Error
            ("Type "
               & T.Fully_Qualified_Name
               & " has <<fixed-string>> but not {length}");
       end if;
-      if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
+      if T.Has_Stereotype ("imported") and then not T.Has_Tag ("imported") then
          Messages.Error
            ("Type "
               & T.Fully_Qualified_Name
               & " has <<imported>> but not {imported}");
       end if;
-      if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
+      if T.Has_Stereotype ("renaming") and then not T.Has_Tag ("renames") then
          Messages.Error
            ("Type "
               & T.Fully_Qualified_Name
@@ -227,7 +225,6 @@ package body Normalize_XMI.Model.Data_Types is
       end if;
       T.Operations.Iterate (Resolve'Access);
    end Resolve;
-
 
    overriding
    procedure Output (T : Data_Type_Element; To : Ada.Text_IO.File_Type)
@@ -263,7 +260,7 @@ package body Normalize_XMI.Model.Data_Types is
          Visibility : constant String
            := Read_Attribute ("visibility", From_Element => T.Node);
       begin
-         if Visibility = "" or Visibility = "package" then
+         if Visibility = "" or else Visibility = "package" then
             Put (To, " visibility='private'");
          else
             Put (To, " visibility='" & Visibility & "'");
@@ -338,6 +335,5 @@ package body Normalize_XMI.Model.Data_Types is
       T.Operations.Iterate (Output'Access);
       Put_Line (To, "</type>");
    end Output;
-
 
 end Normalize_XMI.Model.Data_Types;

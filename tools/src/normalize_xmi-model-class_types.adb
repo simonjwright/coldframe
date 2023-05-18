@@ -20,7 +20,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Class_Types is
 
-
    function Read_Class_Type (From   : not null DOM.Core.Node;
                              Parent : not null Element_P) return Element_P
    is
@@ -82,7 +81,6 @@ package body Normalize_XMI.Model.Class_Types is
       return N;
    end Read_Class_Type;
 
-
    overriding
    procedure Resolve (T : in out Class_Type_Element)
    is
@@ -113,7 +111,7 @@ package body Normalize_XMI.Model.Class_Types is
          end if;
       end if;
       if T.Has_Stereotype ("convention")
-        and not T.Has_Tag ("language")
+        and then not T.Has_Tag ("language")
       then
          Messages.Error
            ("Type "
@@ -123,7 +121,6 @@ package body Normalize_XMI.Model.Class_Types is
       T.Attributes.Iterate (Resolve'Access);
       T.Operations.Iterate (Resolve'Access);
    end Resolve;
-
 
    overriding
    procedure Output (T : Class_Type_Element; To : Ada.Text_IO.File_Type)
@@ -159,7 +156,7 @@ package body Normalize_XMI.Model.Class_Types is
          Visibility : constant String
            := Read_Attribute ("visibility", From_Element => T.Node);
       begin
-         if Visibility = "" or Visibility = "package" then
+         if Visibility = "" or else Visibility = "package" then
             Put (To, " visibility='private'");
          else
             Put (To, " visibility='" & Visibility & "'");
@@ -172,6 +169,5 @@ package body Normalize_XMI.Model.Class_Types is
       T.Operations.Iterate (Output'Access);
       Put_Line (To, "</type>");
    end Output;
-
 
 end Normalize_XMI.Model.Class_Types;
