@@ -188,6 +188,8 @@ private
          --  Post_To_Self is called during event processing, not by some
          --  external task. XXX how to do this? is it needed?
 
+         pragma Warnings (Off, "anonymous access type allocator");
+
          The_Self_Events     : access Event_Queues.Vector :=
            new Event_Queues.Vector (Capacity => Capacity);
          The_Instance_Events : access Event_Queues.Vector :=
@@ -195,14 +197,16 @@ private
          The_Class_Events    : access Event_Queues.Vector :=
            new Event_Queues.Vector (Capacity => Capacity);
 
-         Started : Boolean := False;
-         --  Set True by Running (called by Ticker; at which point
-         --  tasking must have started).
-
          The_Duration_Events   : access Duration_Vectors.Vector :=
            new Duration_Vectors.Vector (Capacity => Capacity);
          The_Held_Events : access Time_Vectors.Vector :=
            new Time_Vectors.Vector (Capacity => Capacity);
+
+         pragma Warnings (On, "anonymous access type allocator");
+
+         Started : Boolean := False;
+         --  Set True by Running (called by Ticker; at which point
+         --  tasking must have started).
 
       end All_Events;
 
