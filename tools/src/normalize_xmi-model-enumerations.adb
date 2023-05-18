@@ -20,7 +20,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Enumerations is
 
-
    function Read_Enumeration (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
@@ -82,7 +81,6 @@ package body Normalize_XMI.Model.Enumerations is
       return N;
    end Read_Enumeration;
 
-
    overriding
    procedure Resolve (E : in out Enumeration_Element)
    is
@@ -95,7 +93,7 @@ package body Normalize_XMI.Model.Enumerations is
    begin
       Messages.Trace ("... checking enumeration " & (+E.Name));
       if E.Has_Stereotype ("convention")
-        and not E.Has_Tag ("language")
+        and then not E.Has_Tag ("language")
       then
          Messages.Error
            ("Type "
@@ -104,7 +102,6 @@ package body Normalize_XMI.Model.Enumerations is
       end if;
       E.Operations.Iterate (Resolve'Access);
    end Resolve;
-
 
    overriding
    procedure Output (E : Enumeration_Element; To : Ada.Text_IO.File_Type)
@@ -139,7 +136,7 @@ package body Normalize_XMI.Model.Enumerations is
          Visibility : constant String
            := Read_Attribute ("visibility", From_Element => E.Node);
       begin
-         if Visibility = "" or Visibility = "package" then
+         if Visibility = "" or else Visibility = "package" then
             Put (To, " visibility='private'");
          else
             Put (To, " visibility='" & Visibility & "'");
@@ -154,6 +151,5 @@ package body Normalize_XMI.Model.Enumerations is
       E.Operations.Iterate (Output_Operation'Access);
       Put_Line (To, "</type>");
    end Output;
-
 
 end Normalize_XMI.Model.Enumerations;

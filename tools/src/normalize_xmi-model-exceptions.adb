@@ -16,7 +16,6 @@ with Normalize_XMI.Messages;
 
 package body Normalize_XMI.Model.Exceptions is
 
-
    function Read_Exception (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
@@ -27,20 +26,18 @@ package body Normalize_XMI.Model.Exceptions is
       return N;
    end Read_Exception;
 
-
    overriding
    procedure Resolve (E : in out Exception_Element)
    is
    begin
       Messages.Trace ("... checking exception " & (+E.Name));
-      if E.Has_Tag ("imported") and E.Has_Tag ("renames") then
+      if E.Has_Tag ("imported") and then E.Has_Tag ("renames") then
          Messages.Error
            ("Exception "
               & E.Fully_Qualified_Name
               & " has both {imported} and {renames} specified");
       end if;
    end Resolve;
-
 
    overriding
    procedure Output (E : Exception_Element; To : Ada.Text_IO.File_Type)
@@ -59,6 +56,5 @@ package body Normalize_XMI.Model.Exceptions is
       E.Output_Documentation (To);
       Put_Line (To, "</exception>");
    end Output;
-
 
 end Normalize_XMI.Model.Exceptions;

@@ -42,7 +42,7 @@ private
       "<" => Uncased_Less_Than,
       "=" => Uncased_Equals);
 
-   type Element;
+   type Element is tagged;
    type Element_P is access all Element'Class;
 
    --  A UML Model Element, abstracted to the form required to

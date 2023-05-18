@@ -23,7 +23,6 @@ package body Normalize_XMI.Model.Type_References is
       return N;
    end Read_Type_Reference;
 
-
    not overriding
    function Type_Name (T : Type_Reference_Element) return String
    is

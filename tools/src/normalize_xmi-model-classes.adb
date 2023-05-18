@@ -22,7 +22,6 @@ with XIA;
 
 package body Normalize_XMI.Model.Classes is
 
-
    function Read_Class (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
@@ -31,7 +30,6 @@ package body Normalize_XMI.Model.Classes is
       Populate_Class_Aspects (N, From);
       return N;
    end Read_Class;
-
 
    procedure Populate_Class_Aspects
      (Of_Element : not null Element_P;
@@ -134,7 +132,6 @@ package body Normalize_XMI.Model.Classes is
       end;
    end Populate_Class_Aspects;
 
-
    procedure Output_Class_Aspects (C  : Class_Element'Class;
                                    To : Ada.Text_IO.File_Type) is
       use Ada.Text_IO;
@@ -155,14 +152,15 @@ package body Normalize_XMI.Model.Classes is
          Visibility : constant String
            := Read_Attribute ("visibility", From_Element => C.Node);
       begin
-         if Visibility = "" or Visibility = "package" then
+         if Visibility = "" or else Visibility = "package" then
             Put (To, " visibility='private'");
          else
             Put (To, " visibility='" & Visibility & "'");
          end if;
       end;
       if C.Has_Stereotype ("active")
-        or Boolean'Value (Read_Attribute ("isActive", From_Element => C.Node))
+        or else Boolean'Value (Read_Attribute ("isActive",
+                                               From_Element => C.Node))
       then
          Put (To, " active='true'");
          if C.Has_Tag ("priority") then
@@ -277,7 +275,6 @@ package body Normalize_XMI.Model.Classes is
       end if;
    end Create_Referential_Attribute;
 
-
    overriding
    procedure Resolve (C : in out Class_Element)
    is
@@ -300,7 +297,6 @@ package body Normalize_XMI.Model.Classes is
       C.State_Machines.Iterate (Resolve_V'Access);
    end Resolve;
 
-
    overriding
    procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type)
    is
@@ -310,7 +306,6 @@ package body Normalize_XMI.Model.Classes is
       Output_Class_Aspects (C, To);
       Put_Line (To, "</class>");
    end Output;
-
 
    overriding
    procedure Output (R : Referential_Attribute_Element;
@@ -327,6 +322,5 @@ package body Normalize_XMI.Model.Classes is
       end if;
       Put_Line (To, "/>");
    end Output;
-
 
 end Normalize_XMI.Model.Classes;

@@ -24,14 +24,9 @@ with Ada.Text_IO; use Ada.Text_IO;
 
 procedure ColdFrame_Hash_Strings_Generate is
 
-
    procedure Init (Seed : Integer := 10009);
 
-
    CH : array (Character) of Ada.Containers.Hash_Type;
-
-   use type Ada.Containers.Hash_Type;
-
 
    procedure Init (Seed : Integer := 10009) is
       package Random_Hash is new
@@ -46,13 +41,12 @@ procedure ColdFrame_Hash_Strings_Generate is
       end loop;
    end Init;
 
-
 begin
 
    Init;
 
    for K in CH'Range loop
-      if Character'Pos (K) /= 0 and Character'Pos (K) mod 4 = 0 then
+      if Character'Pos (K) /= 0 and then Character'Pos (K) mod 4 = 0 then
          New_Line;
       end if;
       Put (CH (K)'Img & ',');

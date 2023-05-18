@@ -54,7 +54,6 @@ package body Normalize_XMI.Identifiers is
       return Translate (L, Lower_Case_Map) = Translate (R, Lower_Case_Map);
    end Casing_Equals;
 
-
    function Casing_Less_Than (L, R : String) return Boolean
    is
       use Ada.Strings.Fixed;
@@ -62,7 +61,6 @@ package body Normalize_XMI.Identifiers is
    begin
       return Translate (L, Lower_Case_Map) < Translate (R, Lower_Case_Map);
    end Casing_Less_Than;
-
 
    procedure Read_Case_Exceptions (From : String)
    is
@@ -139,7 +137,6 @@ package body Normalize_XMI.Identifiers is
       end loop;
    end Read_Case_Exceptions;
 
-
    function Is_Valid (Str : String) return Boolean
    is
    begin
@@ -153,7 +150,6 @@ package body Normalize_XMI.Identifiers is
       when Invalid_Name =>
          return False;
    end Is_Valid;
-
 
    function Normalize (Id : String) return String
    is
@@ -279,7 +275,6 @@ package body Normalize_XMI.Identifiers is
       return +Result;
    end Normalize;
 
-
    function Abbreviate (Name : String) return String
    is
       Words : constant Spans := Find_Spans (Name, '_');
@@ -308,7 +303,6 @@ package body Normalize_XMI.Identifiers is
       end if;
    end Abbreviate;
 
-
    function Find_Spans (S : String; Splitting_At : Character) return Spans
    is
       use Ada.Strings.Fixed;
@@ -327,7 +321,6 @@ package body Normalize_XMI.Identifiers is
       end loop;
       return Result;
    end Find_Spans;
-
 
 begin
 
