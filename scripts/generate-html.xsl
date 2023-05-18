@@ -48,6 +48,9 @@
   <!-- Controls how attribute accessor functions are generated. -->
   <xsl:param name="generate-accessors"/>
 
+  <!-- Control the Containers library used: standard or minimal -->
+  <xsl:param name="containers" select="standard"/>
+
   <!-- Control indentation. -->
   <xsl:param name="standard-indent" select="'   '"/>
   <xsl:param name="continuation-indent" select="'  '"/>
