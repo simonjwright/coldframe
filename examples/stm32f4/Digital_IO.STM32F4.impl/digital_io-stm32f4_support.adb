@@ -192,8 +192,13 @@ package body Digital_IO.STM32F4_Support is
       To         : Boolean)
    is
       use type Digital_IO_Support.Output_Signal;
-      pragma Assert (For_Output = 0, "only output 0 supported");
    begin
+      --  We're only controlling the one Lamp, but initialization goes
+      --  wild and clears all 0 .. 15 possibilities.
+      if For_Output /= 0 then
+         return;
+      end if;
+
       if To then
          LEDs (Red'Enum_Rep).Set;
       else
