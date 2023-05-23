@@ -1,7 +1,6 @@
 --  GNAT project file for the Simple_Buttons demonstration.
 
-with "Options_Ravenscar";
-with "ColdFrame_Ravenscar";
+with "ColdFrame";
 
 project Simple_Buttons is
 
@@ -17,8 +16,8 @@ project Simple_Buttons is
       "Digital_IO.gen",
       "Digital_IO.Arduino.impl");
 
-   for Target use Options_Ravenscar'Target;
-   for Runtime ("ada") use Options_Ravenscar'Runtime ("ada");
+   for Target use external ("TARGET");
+   for Runtime ("ada") use external ("COLDFRAME_RUNTIME");
    for Create_Missing_Dirs use "true";
 
    for Object_Dir use ".build";
@@ -26,12 +25,12 @@ project Simple_Buttons is
    package Builder is
       for Executable ("simple_buttons_main.adb") use "simple_buttons";
       for Default_Switches ("ada") use
-        Options_Ravenscar.Builder'Default_Switches ("ada")
+        ColdFrame.Builder'Default_Switches ("ada")
         & ("--create-map-file=" & project'Project_Dir & project'Name & ".map");
    end Builder;
 
-   package Compiler renames Options_Ravenscar.Compiler;
-   package Binder renames Options_Ravenscar.Binder;
-   package Linker renames Options_Ravenscar.Linker;
+   package Compiler renames ColdFrame.Compiler;
+   package Binder renames ColdFrame.Binder;
+   package Linker renames ColdFrame.Linker;
 
 end Simple_Buttons;

@@ -1,6 +1,5 @@
 --  GNAT project file for the States demonstration.
 
-with "Options";
 with "ColdFrame";
 
 project States is
@@ -21,13 +20,13 @@ project States is
 
    for Object_Dir use ".build";
 
-   package Builder extends Options.Builder is
+   package Builder extends ColdFrame.Builder is
       for Executable ("states-t.adb")
       use "states";
    end Builder;
 
-   package Compiler renames Options.Compiler;
-   package Binder renames Options.Binder;
-   package Linker renames Options.Linker;
+   package Compiler renames ColdFrame.Compiler;
+   package Binder renames ColdFrame.Binder;
+   package Linker renames ColdFrame.Linker;
 
 end States;

@@ -43,8 +43,8 @@ package body Digital_IO.Arduino_Support is
    --  **** NB ****
    --
    --  PC0 is the ERASE pin, which is the only pushbutton on the
-   --  board. Can be configured as PIO; we'll configure properly
-   --  later.
+   --  board. Can in theory be configured as PIO; couldn't get it to
+   --  work.
 
    Input_Pin_Map : constant Input_Pin_Mapping
      := (0 => (Ada.Interrupts.Names.PIOC_IRQ,

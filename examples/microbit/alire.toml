@@ -1,6 +1,6 @@
 name = "microbit"
-description = "Shiny new project"
-version = "0.1.0-dev"
+description = "Simple Buttons demonstrator on BBC micro:bit (v1.3b)"
+version = "71.0.0-dev"
 
 authors = ["Simon Wright"]
 maintainers = ["Simon Wright <simon@pushface.org>"]
@@ -12,12 +12,15 @@ executables = ["simple_buttons"]
 
 [environment]
 TARGET.set = "arm-eabi"
-RTS.set = "microbit"
-COLDFRAME_BUILD.set = "Production"
-CONTAINERS.set = 'minimal'
 PLATFORM_BUILD.set = "Production"
 ADL_BUILD.set = "Production"
 ADL_BUILD_CHECKS.set = "Disabled"
+
+[gpr-set-externals]
+COLDFRAME_PROFILE = "ravenscar"
+COLDFRAME_CONTAINERS = "minimal"
+COLDFRAME_BUILD = "Debug"
+COLDFRAME_RUNTIME = "/Users/simon/Developer/cortex-gnat-rts/local/microbit"
 
 [[actions]]
 type = "pre-build"
@@ -26,6 +29,7 @@ command = ["make", "Simple_Buttons.gen", "Digital_IO.gen"]
 [[actions]]
 type = "post-build"
 command = ["arm-eabi-objcopy",
+           "-v",
            "-Oihex",
            "simple_buttons",
            "simple_buttons.hex"]
@@ -37,4 +41,4 @@ coldframe = "*"
 coldframe = { path='../..' }
 
 [[depends-on]]
-gnat_arm_elf = "^12.2.1"
+gnat_external = ">=12.2.0"

@@ -45,8 +45,10 @@ package ColdFrame.Times is
      is (Ada.Real_Time."+" (Ada.Real_Time.Clock,
                             Ada.Real_Time.To_Time_Span (Period)));
 
+   pragma Warnings (Off, "formal parameter*is not referenced");
    function Image (Of_Time : Time) return String
      is ("");
+   pragma Warnings (On, "formal parameter*is not referenced");
 
    --  Additional operations
 

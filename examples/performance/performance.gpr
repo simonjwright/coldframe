@@ -1,6 +1,5 @@
 --  Project file for ColdFrame performance tests.
 
-with "Options";
 with "ColdFrame";
 
 project Performance is
@@ -21,13 +20,13 @@ project Performance is
 
    for Object_Dir use ".build";
 
-   package Builder extends Options.Builder is
+   package Builder extends ColdFrame.Builder is
       for Executable ("performance-harness.adb")
       use "performance";
    end Builder;
 
-   package Compiler renames Options.Compiler;
-   package Binder renames Options.Binder;
-   package Linker renames Options.Linker;
+   package Compiler renames ColdFrame.Compiler;
+   package Binder renames ColdFrame.Binder;
+   package Linker renames ColdFrame.Linker;
 
 end Performance;

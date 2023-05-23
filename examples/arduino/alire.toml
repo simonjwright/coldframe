@@ -1,5 +1,5 @@
-name = "stm32f4"
-description = "Simple Buttons demonstrator on STM32F4"
+name = "arduino"
+description = "Simple Buttons demonstrator on Arduino Due"
 version = "71.0.0-dev"
 
 authors = ["Simon Wright"]
@@ -20,19 +20,11 @@ ADL_BUILD_CHECKS.set = "Disabled"
 COLDFRAME_PROFILE = "ravenscar"
 COLDFRAME_CONTAINERS = "standard"
 COLDFRAME_BUILD = "Debug"
-COLDFRAME_RUNTIME = "/Users/simon/Developer/cortex-gnat-rts/local/stm32f4"
+COLDFRAME_RUNTIME = "/Users/simon/Developer/cortex-gnat-rts/local/arduino-due"
 
 [[actions]]
 type = "pre-build"
 command = ["make", "Simple_Buttons.gen", "Digital_IO.gen"]
-
-[[actions]]
-type = "post-build"
-command = ["arm-eabi-objcopy",
-           "-v",
-           "-Obinary",
-           "simple_buttons",
-           "simple_buttons.bin"]
 
 [[depends-on]]
 coldframe = "*"

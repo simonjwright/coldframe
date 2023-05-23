@@ -1,12 +1,18 @@
 name = "van_fleet"
-description = "Shiny new project"
-version = "0.1.0-dev"
+description = "Van Fleet demonstrator"
+version = "71.0.0-dev"
 
 authors = ["Simon Wright"]
 maintainers = ["Simon Wright <simon@pushface.org>"]
 maintainers-logins = ["simonjwright"]
 
 executables = ["van_fleet"]
+
+[gpr-set-externals]
+COLDFRAME_PROFILE = "standard"
+COLDFRAME_CONTAINERS = "standard"
+COLDFRAME_BUILD = "Debug"
+COLDFRAME_RUNTIME = "native"
 
 [[depends-on]]
 coldframe = "^71.0.0-dev"

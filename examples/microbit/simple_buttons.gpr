@@ -1,7 +1,6 @@
 --  GNAT project file for the Simple_Buttons demonstration.
 
-with "Options_Ravenscar";
-with "ColdFrame_Ravenscar";
+with "ColdFrame";
 with "Ada_Drivers_Library/ada_drivers_library";
 
 project Simple_Buttons is
@@ -18,8 +17,8 @@ project Simple_Buttons is
       "Digital_IO.gen",
       "Digital_IO.Microbit.impl");
 
-   for Target use Options_Ravenscar'Target;
-   for Runtime ("ada") use Options_Ravenscar'Runtime ("ada");
+   for Target use external ("TARGET");
+   for Runtime ("ada") use external ("COLDFRAME_RUNTIME");
    for Create_Missing_Dirs use "true";
 
    for Object_Dir use ".build";
@@ -27,25 +26,19 @@ project Simple_Buttons is
    package Builder is
       for Executable ("simple_buttons_main.adb") use "simple_buttons";
       for Default_Switches ("ada") use
-        Options_Ravenscar.Builder'Default_Switches ("ada")
+        ColdFrame.Builder'Default_Switches ("ada")
         & ("--create-map-file=" & project'Project_Dir & project'Name & ".map");
    end Builder;
 
-   package Compiler renames Options_Ravenscar.Compiler;
+   package Compiler renames ColdFrame.Compiler;
 
-   package Binder extends Options_Ravenscar.Binder is
+   package Binder extends ColdFrame.Binder is
       for Switches ("ada") use
         (
          "-minimal"
-         --  ,
-         --  "-d512",    -- default primary stack size
-         --  "-D128",    -- default secondary stack size
-         --  "-Q0"       -- don't generate any
-        --  ^^^^ these fail on cortex-gnat-rts because of missing symbols in
-        --  bind-generated code (e.g. __gl_default_stack_size)
         );
    end Binder;
 
-   package Linker renames Options_Ravenscar.Linker;
+   package Linker renames ColdFrame.Linker;
 
 end Simple_Buttons;

@@ -14,19 +14,113 @@
 
 --  This file controls compilation of the standard ColdFrame library.
 
-with "Options";
+library project ColdFrame is
 
-library project ColdFrame extends "src/standard" is
+   type Profile_Type is ("standard", "ravenscar");
+   Profile : Profile_Type := external ("COLDFRAME_PROFILE", "standard");
 
-  for Library_Name use "coldframe";
-  for Library_Kind use "static";
-  for Library_Dir use "lib-standard";
+   type Containers_Type is ("standard", "minimal");
+   Containers : Containers_Type :=
+     external ("COLDFRAME_CONTAINERS", external ("CONTAINERS", "standard"));
 
-  for Source_Dirs use ();
+   type Build_Type is ("Production", "Debug");
+   Build : Build_Type := external ("COLDFRAME_BUILD",
+                                   external ("BUILD", "Debug"));
 
-  for Object_Dir use ".build";
+   RTS := external ("COLDFRAME_RUNTIME", "native");
 
-  package Builder renames Options.Builder;
-  package Compiler renames Options.Compiler;
+   for Library_Name use "coldframe";
+   for Library_Kind use "static";
+
+   case Profile is
+      when "standard" =>
+         for Source_Dirs use ("src/common", "src/standard");
+      when "ravenscar" =>
+         for Source_Dirs use ("src/common", "src/ravenscar", "src/containers");
+   end Case;
+
+   package Naming is
+      case Profile is
+         when "ravenscar" =>
+            case Containers is
+               when "minimal" =>
+                  for Spec ("ColdFrame.Events.Standard")
+                  use "coldframe-events-standard.ads-minimal";
+               when others =>
+                  null;
+            end case;
+         when "standard" =>
+            null;
+      end case;
+   end Naming;
+
+   Build_Kind := Profile;
+   case Build is
+      when "Production" =>
+         Build_Kind := Build_Kind & "-production";
+      when "Debug" =>
+         Build_Kind := Build_Kind & "-debug";
+   end case;
+
+   for Library_Dir use "lib-" & Build_Kind;
+
+   for Object_Dir use ".build-" & Build_Kind;
+
+   COMPILER_SWITCHES :=
+     (
+      --  keep .alis, full messages, hardware overflow
+      --  checks, style checks
+      "-gnatqQfoy",
+      --  All standard warnings except elaboration problems
+      "-gnatwaL",
+      "-gnat12",
+      "-g"
+     );
+
+   case Build is
+      when "Production" =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O2");
+      when "Debug" =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES & ("-O0", "-gnata");
+   end case;
+
+   case RTS is
+      when "native" =>
+         null;
+      when others =>
+         COMPILER_SWITCHES := COMPILER_SWITCHES &
+           (
+            --  .. dead code elimination (with -fgc-sections at link)
+            "-ffunction-sections",
+            "-fdata-sections",
+            --  .. non-local exceptions (exceptions invoking Last
+            --  Chance Handler: expected!)
+            "-gnatw.X"
+           );
+   end case;
+   --  Builder configuration options.
+   package Builder is
+      for Global_Compilation_Switches ("ada") use COMPILER_SWITCHES;
+   end Builder;
+
+   --  GCC configuration options.
+   package Compiler is
+      for Switches ("ada") use COMPILER_SWITCHES;
+   end Compiler;
+
+   -- GNATBIND configuration options.
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+
+   --  GNATLINK configuration options.
+   package Linker is
+      case RTS is
+         when "native" =>
+            null;
+         when others =>
+            for Default_Switches ("ada") use ("-Wl,-gc-sections");
+      end case;
+   end Linker;
 
 end ColdFrame;
