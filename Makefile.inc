@@ -237,18 +237,24 @@ $(COLDFRAMEOUT)/%.xmi: %.tuml $(COLDFRAME)/scripts/tuml2xmi.py
 # Generate .ada files.
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(CYGWIN)/$(CODEGEN_SCRIPT)			  \
-	  add-blank-lines=$(BLANK_LINES)				  \
-	  checking-policy=$(CHECKING)					  \
-	  containers=$(CONTAINERS)					  \
-	  generate-accessors=$(GENERATE_ACCESSORS)			  \
-	  generate-event-logging=$(GENERATE_EVENT_LOGGING)		  \
-	  generate-stubs=$(GENERATE_STUBS)				  \
-	  profile=$(PROFILE)						  \
-	  unit-test-support=$(UNIT_TEST_SUPPORT)			  \
-	  verbose=$(VERBOSE)						  \
-	  >$@-t								  \
-	  || ($(ECHO) "Generation problem."; $(RM) -f $@ $@-t; $(EXIT) 1)
+	@if $(SAXON) $< $(CYGWIN)/$(CODEGEN_SCRIPT)			\
+	  add-blank-lines=$(BLANK_LINES)				\
+	  checking-policy=$(CHECKING)					\
+	  containers=$(CONTAINERS)					\
+	  generate-accessors=$(GENERATE_ACCESSORS)			\
+	  generate-event-logging=$(GENERATE_EVENT_LOGGING)		\
+	  generate-stubs=$(GENERATE_STUBS)				\
+	  profile=$(PROFILE)						\
+	  unit-test-support=$(UNIT_TEST_SUPPORT)			\
+	  verbose=$(VERBOSE)						\
+	  >$@-t; then							\
+	    true;							\
+	  else								\
+	    $(ECHO) "Generation problem."; $(RM) -f $@ $@-t; $(EXIT) 1;	\
+	  fi
+	@if $(GREP) 'Model error detected hereabouts' $@-t >/dev/null; then \
+	    $(ECHO) "Generation problem."; $(RM) -f $@ $@-t; false;	    \
+	fi
 	@$(SED) -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
 	  <$@-t >$@
 	@$(RM) -f $@-t

@@ -196,29 +196,11 @@
     <xsl:text>--  Generator: cf-DATE&#10;</xsl:text>
   </xsl:template>
 
-
-  <!-- Error handling. -->
-
-  <xsl:variable name="ut:detected-errors" saxon:assignable="yes" select="0"/>
-
+  <!-- Generates a distinctive text pattern in the generated code,
+       to be detected during code generation to indicate failure.
+       We used to use saxon:assign; no longer supported. -->
   <xsl:template name="ut:log-error">
-    <saxon:assign name="ut:detected-errors" select="$ut:detected-errors + 1"/>
-  </xsl:template>
-
-  <xsl:template name="ut:check-for-errors">
-    <xsl:choose>
-      <xsl:when test="$ut:detected-errors=1">
-        <xsl:message terminate="yes">
-          <xsl:text>1 error detected.</xsl:text>
-        </xsl:message>
-      </xsl:when>
-      <xsl:when test="$ut:detected-errors&gt;1">
-        <xsl:message terminate="yes">
-          <xsl:value-of select="$ut:detected-errors"/>
-          <xsl:text> errors detected.</xsl:text>
-        </xsl:message>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:text>&#10;[[[Model error detected hereabouts]]]&#10;</xsl:text>
   </xsl:template>
 
   <!-- Called at domain/class to compute number of instances.

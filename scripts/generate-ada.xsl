@@ -1113,8 +1113,6 @@
       <xsl:with-param name="m" select="'.. done.'"/>
     </xsl:call-template>
 
-    <xsl:call-template name="ut:check-for-errors"/>
-
   </xsl:template>
 
 
