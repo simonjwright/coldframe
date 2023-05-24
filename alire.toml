@@ -29,4 +29,4 @@ BUILD = ["Debug", "Production"]
 COLDFRAME_RUNTIME = ""   # e.g. "native", "light-tasking-stm32f4"
 
 [[depends-on]]
-minimal_containers = "~0.1.3-dev"
+minimal_containers = "^1.0.0"
