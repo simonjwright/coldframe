@@ -15,6 +15,10 @@ maintainers-logins = ["simonjwright"]
 
 project-files = ["ColdFrame.gpr"]
 
+[[actions]]
+type = "post-fetch"
+command = ["make", "setup"]
+
 [gpr-externals]
 COLDFRAME_PROFILE = ["standard", "ravenscar"]
 

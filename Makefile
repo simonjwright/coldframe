@@ -28,7 +28,7 @@ setup:: force
 SETUP_SUBDIRS = src lib tools examples
 setup::
 	for s in $(SETUP_SUBDIRS); do		\
-	  make -C $$s setup;			\
+	  make -C $$s -w setup;			\
 	done
 
 .PHONY: all force setup
