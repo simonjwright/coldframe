@@ -20,10 +20,8 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:saxon="http://icl.com/saxon"
   xmlns:at="http://pushface.org/coldframe/attribute"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  extension-element-prefixes="saxon"
   version="1.0">
 
   <xsl:import href="ada-attribute.xsl"/>

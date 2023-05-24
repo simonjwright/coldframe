@@ -29,8 +29,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0"
-  xmlns:saxon="http://icl.com/saxon"
-  extension-element-prefixes="saxon"
 >
 
   <!-- Generate commentary. -->
