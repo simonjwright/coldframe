@@ -14,6 +14,10 @@ COLDFRAME_CONTAINERS = "standard"
 COLDFRAME_BUILD = "Debug"
 COLDFRAME_RUNTIME = "native"
 
+[[actions]]
+type = "pre-build"
+command = ["make", "-C..", "House_Management.gen", "Digital_IO.gen"]
+
 [[depends-on]]
 coldframe = "^71.0.0-dev"
 
