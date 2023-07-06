@@ -1,0 +1,26 @@
+--  GNAT project file for the Stairwell demonstration.
+
+with "ColdFrame";
+with "tash";
+
+project Stairwell_Demo is
+
+  for Main use ("stairwell_demo");
+
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("../House_Management.impl",
+                       "../House_Management.gen",
+                       "../Digital_IO.impl",
+                       "../Digital_IO.gen",
+                       "../Digital_IO.Tcl.impl",
+                       "../Digital_IO.Tcl.gen");
+
+  for Object_Dir use ".build";
+
+  package Builder renames ColdFrame.Builder;
+  package Compiler renames ColdFrame.Compiler;
+  package Binder renames ColdFrame.Binder;
+  package Linker renames ColdFrame.Linker;
+
+end Stairwell_Demo;
