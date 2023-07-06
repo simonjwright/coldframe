@@ -12,7 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-with "Options";
 with "ColdFrame";
 with "aunit";
 
@@ -30,9 +29,9 @@ project Hierarchies is
 
   for Object_Dir use ".build";
 
-  package Builder renames Options.Builder;
-  package Compiler renames Options.Compiler;
-  package Binder renames Options.Binder;
-  package Linker renames Options.Linker;
+  package Builder renames ColdFrame.Builder;
+  package Compiler renames ColdFrame.Compiler;
+  package Binder renames ColdFrame.Binder;
+  package Linker renames ColdFrame.Linker;
 
 end Hierarchies;

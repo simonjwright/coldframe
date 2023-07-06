@@ -13,7 +13,6 @@
 --  330, Boston, MA 02111-1307, USA.
 
 with "ColdFrame";
-with "Options";
 with "aunit";
 
 project Stub_Test is
@@ -30,9 +29,9 @@ project Stub_Test is
 
   for Object_Dir use ".build";
 
-  package Builder renames Options.Builder;
-  package Compiler renames Options.Compiler;
-  package Binder renames Options.Binder;
-  package Linker renames Options.Linker;
+  package Builder renames ColdFrame.Builder;
+  package Compiler renames ColdFrame.Compiler;
+  package Binder renames ColdFrame.Binder;
+  package Linker renames ColdFrame.Linker;
 
 end Stub_Test;

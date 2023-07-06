@@ -1,4 +1,3 @@
-with "Options";
 with "ColdFrame";
 with "scripted_testing";
 
@@ -23,7 +22,7 @@ library project ColdFrame_Scripting is
 
    for Object_Dir use ".build";
 
-   package Builder renames Options.Builder;
-   package Compiler renames Options.Compiler;
+   package Builder renames ColdFrame.Builder;
+   package Compiler renames ColdFrame.Compiler;
 
 end ColdFrame_Scripting;
