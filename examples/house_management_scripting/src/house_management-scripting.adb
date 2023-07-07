@@ -8,8 +8,10 @@
 with ColdFrame.Project.Events.Standard.Test_Trace;
 with ColdFrame.Project.Scripted_Testing;
 with Digital_IO.Initialize;
+with Digital_IO.Tear_Down;
 with Digital_IO.Scripting;
 with House_Management.Initialize;
+with House_Management.Tear_Down;
 with Scripted_Testing;
 
 procedure House_Management.Scripting is
@@ -24,6 +26,14 @@ procedure House_Management.Scripting is
       House_Management.Initialize (The_Dispatcher);
    end Initialize;
 
+   procedure Tear_Down;
+   procedure Tear_Down
+   is
+   begin
+      House_Management.Tear_Down;
+      Digital_IO.Tear_Down;
+   end Tear_Down;
+
    Q : constant ColdFrame.Project.Events.Event_Queue_P
      := new ColdFrame.Project.Events.Standard.Test_Trace.Event_Queue;
 
@@ -34,5 +44,7 @@ begin
       With_Initialize => Initialize'Unrestricted_Access);
 
    Scripted_Testing.Start;
+
+   Tear_Down;
 
 end House_Management.Scripting;
