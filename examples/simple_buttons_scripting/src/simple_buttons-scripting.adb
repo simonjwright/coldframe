@@ -5,11 +5,14 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+with Ada.Task_Identification;
 with ColdFrame.Project.Events.Standard.Test_Trace;
 with ColdFrame.Project.Scripted_Testing;
 with Digital_IO.Initialize;
+with Digital_IO.Tear_Down;
 with Digital_IO.Scripting;
 with Simple_Buttons.Initialize;
+with Simple_Buttons.Tear_Down;
 with Scripted_Testing;
 
 procedure Simple_Buttons.Scripting is
@@ -24,6 +27,14 @@ procedure Simple_Buttons.Scripting is
       Simple_Buttons.Initialize (The_Dispatcher);
    end Initialize;
 
+   procedure Tear_Down;
+   procedure Tear_Down
+   is
+   begin
+      Simple_Buttons.Tear_Down;
+      Digital_IO.Tear_Down;
+   end Tear_Down;
+
    Q : constant ColdFrame.Project.Events.Event_Queue_P
      := new ColdFrame.Project.Events.Standard.Test_Trace.Event_Queue;
 
@@ -34,5 +45,7 @@ begin
       With_Initialize => Initialize'Unrestricted_Access);
 
    Scripted_Testing.Start;
+
+   Tear_Down;
 
 end Simple_Buttons.Scripting;
