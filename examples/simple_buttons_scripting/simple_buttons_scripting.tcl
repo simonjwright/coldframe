@@ -25,8 +25,10 @@ puts "script starting"
 # setup required
 set-boolean digital_io.get return false
 
-set SHORT_PUSH_LIMIT 0.25
-set LIT_PERIOD 5.0
+# The time the button has to remain pushed for it to register as a long push
+set SHORT_PUSH_LIMIT 1.0
+# The time the LED remains lit after a short push
+set LIT_PERIOD 3.0
 
 #setup done
 initialize
