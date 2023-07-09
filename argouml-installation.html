@@ -17,7 +17,10 @@ img.screenshot {
 <h2>Contents</h2>
 
 <ul>
-<li>Default settings
+
+<li><a href=="#java">Java</a>
+<li><a href=="#download">Download</a>
+<li><a href=="#default-settings">Default settings</a>
 <ul>
 <li><a href="#user">User tab</a>
 <li><a href="#profiles">Profiles tab</a>
@@ -27,11 +30,27 @@ img.screenshot {
 <li><a href="#project-properties">Project Properties</a>
 </ul>
 
-<h2>Default settings</h2>
+<h2><a name="java">Java</a></h2>
+
+<p>You can download two different flavours of Java; SE and OpenJDK. For <a href="https://github.com/argouml-tigris-org/argouml/issues/51">reasons</a>, at any rate on macOS, the <a href=="#default-settings">default settings</a> option is invisible under OpenJDK, so it's probably best to stick with SE. This is the 'Download Java" button <a href="https://www.java.com">here</a>.
+
+<h2><a name="download">Download</a></h2>
+
+<p>You can find copies of the old releases <a href="https://github.com/argouml-tigris-org/argouml/releases/tag/VERSION_0_35_1">here</a>.
+
+<p>For macOS, you might have expected that <tt>ArgoUML-0.35.1.app.tar.gz</tt> would have been the thing, but (at any rate on Ventura) it won't unpack into <tt>~/tmp</tt>, and even if unpacked onto an external disk macOS claims it's damaged and won't open it.
+
+<p>Instead, download <tt>ArgoUML-0.35.1.tar.gz</tt> and unpack to a convenient place, then
+<pre>
+java -jar <i>/where/ever/</i>argouml-0.35.1/argouml.jar
+</pre>
+<p>(this will result in a <em>lot</em> of logging output).
+
+<h2><a name="default-settings">Default settings</a></h2>
 
 <p>On Linux and (probably) Windows, you can set up ColdFrame-specific
 and ColdFrame-recommended defaults in the <i>Edit/Settings</i>
-menu. On Mac OS X, use <i>Main/Preferences</i>.
+menu. On macOS, use <i>Main/Preferences</i>.
 
 <h4><a name="user">User tab</a></h4>
 
