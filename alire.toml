@@ -1,12 +1,13 @@
 name = "coldframe"
 description = "OOA-oriented code framework generator"
-long-description = """
-"""
+website = "https://simonjwright.github.io/coldframe"
+tags = ["ooa", "uml", "code", "generator"]
 
 # There have been 70 releases published to users: I'm not sure how
 # many of them would qualify as a major release, but let this serve as
 # an approximation.
-version = "71.0.0-dev"
+version = "71.0.0"
+
 licenses = "GPL-2.0-or-later WITH GCC-exception-2.0"
 
 authors = ["Simon Wright"]
