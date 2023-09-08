@@ -384,7 +384,6 @@ package body Stub_Test_Suite is
       pragma Unreferenced (C);
       D : Stub_Test.Discriminated_Type;
       use type Stub_Test.Discriminated_Type;
-      use type Stub_Test.Record_Type;
    begin
       Set_Discriminated_Type ("Stub_Test.Create_Discriminated",
                               "return",
