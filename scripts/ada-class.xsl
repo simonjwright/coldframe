@@ -462,12 +462,17 @@
           </xsl:for-each>
         </xsl:if>
 
+        <!-- If we're using Maps (the first test) or Vectors (the
+             second), we'll need Ada.Containers for Count_Type,
+             Hash_Type, even if we're using ColdFrame.Containers. -->
+        <xsl:if test="(($max &gt; 1 and $array = 'no') or
+                      (not(@public or @utility)))">
+          <xsl:text>with Ada.Containers;&#10;</xsl:text>
+        </xsl:if>
+
         <!-- Need Maps if there's more than one instance and we aren't
              using arrays. -->
         <xsl:if test="$max &gt; 1 and $array = 'no'">
-          <!-- Need Ada.Containers for Count_Type etc, even if using
-               ColdFrame.Containers -->
-          <xsl:text>with Ada.Containers;&#10;</xsl:text>
           <xsl:text>with </xsl:text>
           <xsl:value-of select="$container-parent"/>
           <xsl:text>.Containers</xsl:text>
@@ -480,13 +485,9 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:if>
-
+        
         <!-- Need Vectors if non-public, non-utility. -->
         <xsl:if test="not(@public or @utility)">
-          <!-- Need Ada.Containers for Count_Type etc, even if using
-               ColdFrame.Containers
-               This will be a repeat if we're using Vectors; no problem. -->
-          <xsl:text>with Ada.Containers;&#10;</xsl:text>
           <xsl:text>with </xsl:text>
           <xsl:value-of select="$container-parent"/>
           <xsl:text>.Containers</xsl:text>
