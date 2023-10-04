@@ -1,9 +1,9 @@
-
 <!DOCTYPE html
   PUBLIC "-//W3C/DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:at="http://pushface.org/coldframe/attribute" xmlns:ut="http://pushface.org/coldframe/utilities" lang="en" xml:lang="en">
    <head>
-      <meta http-equiv="Content-type" content="text/html; charset=iso-8859-1"></meta><style type="text/css">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <style type="text/css">
           * { margin : 0;
           padding : 0;
           }
@@ -46,35 +46,37 @@
           font-size : 1.05em;
           }
           hr { margin-top : .5em; }
-        </style><title>Digital_IO</title>
+        </style>
+      <title>Digital_IO</title>
    </head>
    <body>
       <h1>Digital_IO</h1>
       <p xmlns="">Copyright (C) Simon Wright &lt;simon@pushface.org&gt;</p>
-      <p xmlns="">     This package is free software; you can redistribute it and/or      modify it under terms of the GNU General Public License
-         as      published by the Free Software Foundation; either version 2,      or (at your option) any later version. This package
-         is distributed      in the hope that it will be useful, but WITHOUT ANY WARRANTY;      without even the implied warranty of
-         MERCHANTABILITY or FITNESS      FOR A PARTICULAR PURPOSE. See the GNU General Public License for      more details. You should
-         have received a copy of the GNU General      Public License distributed with this package; see file COPYING.      If not,
-         write to the Free Software Foundation, 59 Temple Place -      Suite 330, Boston, MA 02111-1307, USA.
-      </p>
-      <p xmlns="">     Contains the input-output domain Digital_IO for ColdFrame's House      Management demonstration.</p>
+      <p xmlns="">     This package is free software; you can redistribute it and/or      modify it
+         under terms of the GNU General Public License as      published by the Free Software
+         Foundation; either version 2,      or (at your option) any later version. This package
+         is distributed      in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+         without even the implied warranty of MERCHANTABILITY or FITNESS      FOR A PARTICULAR
+         PURPOSE. See the GNU General Public License for      more details. You should have
+         received a copy of the GNU General      Public License distributed with this package;
+         see file COPYING.      If not, write to the Free Software Foundation, 59 Temple Place
+         -      Suite 330, Boston, MA 02111-1307, USA.</p>
+      <p xmlns="">     Contains the input-output domain Digital_IO for ColdFrame's House      Management
+         demonstration.</p>
       <h1>Contents</h1>
-      <h2>All classes</h2><map xmlns="" id="overall" name="overall"></map><img src="Digital_IO.images/Digital_IO.overall.png" border="0" ismap="true" usemap="#overall" alt="Class diagram for Digital_IO"></img><h2>Types</h2>
+      <h2>All classes</h2><map xmlns="" id="overall" name="overall"></map><img src="Digital_IO.images/Digital_IO.overall.png" border="0" ismap="true" usemap="#overall" alt="Class diagram for Digital_IO"><h2>Types</h2>
       <ul>
          <li xmlns=""><a href="#Implementation_Class_P">Implementation_Class_P</a></li>
          <li xmlns=""><a href="#Input_Signal">Input_Signal</a></li>
          <li xmlns=""><a href="#Input_Signal_State">Input_Signal_State</a></li>
          <li xmlns=""><a href="#Output_Signal">Output_Signal</a></li>
       </ul>
-      <hr></hr>
+      <hr>
       <h1>Types</h1>
       <h2 xmlns=""><a name="Implementation_Class_P">Implementation_Class_P</a></h2>
-      <p xmlns="">This type is a class-wide pointer to the abstract type        Implementation; the required concrete bottom half calls    
-            Register to connect itself to the top half.
-      </p>
-      <p xmlns="">Imported from <tt>Digital_IO_Support</tt>.
-      </p>
+      <p xmlns="">This type is a class-wide pointer to the abstract type        Implementation; the
+         required concrete bottom half calls        Register to connect itself to the top half.</p>
+      <p xmlns="">Imported from <tt>Digital_IO_Support</tt>.</p>
       <p xmlns="">Implementation_Class_P has operations:</p>
       <dl xmlns="">
          <dt><a name="Implementation_Class_P.Register">Register</a></dt>
@@ -89,12 +91,10 @@
       </dl>
       <h2 xmlns=""><a name="Input_Signal">Input_Signal</a></h2>
       <p xmlns="">Numbers the input (switch) signal pins.</p>
-      <p xmlns="">A constrained version  of <a href="#Integer">Integer</a> from 0 to 15.
-      </p>
+      <p xmlns="">A constrained version  of <a href="#Integer">Integer</a> from 0 to 15.</p>
       <p xmlns="">Input_Signal has operations:</p>
       <dl xmlns="">
-         <dt><a name="Input_Signal.Get">Get</a> returns Boolean
-         </dt>
+         <dt><a name="Input_Signal.Get">Get</a> returns Boolean</dt>
          <dd>
             <p>Returns the current state of the input signal for pin S.</p>
             <p>Parameters:</p>
@@ -105,7 +105,8 @@
          </dd>
       </dl>
       <h2 xmlns=""><a name="Input_Signal_State">Input_Signal_State</a></h2>
-      <p xmlns="">Provides application domains with callback facilities for          input signal state changes.</p>
+      <p xmlns="">Provides application domains with callback facilities for          input signal state
+         changes.</p>
       <p xmlns="">Callback support is provided.</p>
       <p xmlns="">A record type, with attributes:</p>
       <dl xmlns="">
@@ -120,8 +121,7 @@
       </dl>
       <h2 xmlns=""><a name="Output_Signal">Output_Signal</a></h2>
       <p xmlns="">Numbers the output (lamp) signal pins.</p>
-      <p xmlns="">A constrained version  of <a href="#Integer">Integer</a> from 0 to 15.
-      </p>
+      <p xmlns="">A constrained version  of <a href="#Integer">Integer</a> from 0 to 15.</p>
       <p xmlns="">Output_Signal has operations:</p>
       <dl xmlns="">
          <dt><a name="Output_Signal.Set">Set</a></dt>

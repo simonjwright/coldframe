@@ -1,379 +1,336 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Use Cases for Code Generation</title>
-<meta http-equiv="Content-Type" content="text/html">
+
 <meta name="description" content="Use Cases for Code Generation">
-<meta name="generator" content="makeinfo 4.8">
-<link title="Top" rel="top" href="#Top">
-<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<style type="text/css"><!--
-  pre.display { font-family:inherit }
-  pre.format  { font-family:inherit }
-  pre.smalldisplay { font-family:inherit; font-size:smaller }
-  pre.smallformat  { font-family:inherit; font-size:smaller }
-  pre.smallexample { font-size:smaller }
-  pre.smalllisp    { font-size:smaller }
-  span.sc    { font-variant:small-caps }
-  span.roman { font-family:serif; font-weight:normal; } 
-  span.sansserif { font-family:sans-serif; font-weight:normal; } 
---></style>
+<meta name="keywords" content="Use Cases for Code Generation">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="#Top" rel="start" title="Top">
+<link href="dir.html#Top" rel="up" title="(dir)">
+<link href="#Introduction" rel="next" title="Introduction">
+<link href="dir.html#Top" rel="prev" title="(dir)">
+<style type="text/css">
+<!--
+ul.mark-bullet {list-style-type: disc}
+-->
+</style>
+
+
 </head>
-<body>
-<div class="node">
-<p><hr>
-<a name="Top"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Introduction">Introduction</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#dir">(dir)</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 
+<body lang="en">
+
+<div class="top-level-extent" id="Top">
+<div class="nav-panel">
+<p>
+Next: <a href="#Introduction" accesskey="n" rel="next">Introduction</a>, Previous: <a href="dir.html#Top" accesskey="p" rel="prev">(dir)</a>, Up: <a href="dir.html#Top" accesskey="u" rel="up">(dir)</a> &nbsp; </p>
 </div>
+<h1 class="top" id="Code-Generation">Code Generation</h1>
 
-<h2 class="unnumbered">Code Generation</h2>
 
-<ul class="menu">
-<li><a accesskey="1" href="#Introduction">Introduction</a>
-<li><a accesskey="2" href="#General-considerations">General considerations</a>
-<li><a accesskey="3" href="#Instances">Instances</a>
-<li><a accesskey="4" href="#Associations">Associations</a>
-<li><a accesskey="5" href="#Inheritance-relationships">Inheritance relationships</a>
-<li><a accesskey="6" href="#Glossary">Glossary</a>
-
-</li></ul>
-<p>--- The Detailed Node Listing ---
-
-<p>Instances
-
-</p>
-<ul class="menu">
-<li><a accesskey="7" href="#Create-an-Instance">Create an Instance</a>
-<li><a accesskey="8" href="#Delete-an-Instance">Delete an Instance</a>
-<li><a accesskey="9" href="#Access-an-Instance">Access an Instance</a>
-<li><a href="#Select-a-set-of-Instances">Select a set of Instances</a>
-<li><a href="#Operate-on-a-set-of-Instances">Operate on a set of Instances</a>
-
-</li></ul>
-<p>Associations
-
-</p>
-<ul class="menu">
-<li><a href="#Create-an-association">Create an association</a>
-<li><a href="#Delete-an-association">Delete an association</a>
-<li><a href="#Navigate-an-association">Navigate an association</a>
-
-</li></ul>
-<p>Inheritance relationships
-
-</p>
-<ul class="menu">
-<li><a href="#Create-an-inheritance">Create an inheritance</a>
-<li><a href="#Delete-an-inheritance">Delete an inheritance</a>
-<li><a href="#Migrate-an-inheritance">Migrate an inheritance</a>
-<li><a href="#Navigate-an-inheritance">Navigate an inheritance</a>
-
-</li></ul>
-<p>Glossary
-
-</p>
-<ul class="menu">
-<li><a href="#Identifier">Identifier</a>
-<li><a href="#Software-Architecture">Software Architecture</a>
-
-   </ul>
-
-<!-- ======================================================================== -->
-<div class="node">
-<p><hr>
-<a name="Introduction"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#General-considerations">General considerations</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Top">Top</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
-
+<ul class="mini-toc">
+<li><a href="#Introduction" accesskey="1">Introduction</a></li>
+<li><a href="#General-considerations" accesskey="2">General considerations</a></li>
+<li><a href="#Instances" accesskey="3">Instances</a></li>
+<li><a href="#Associations" accesskey="4">Associations</a></li>
+<li><a href="#Inheritance-relationships" accesskey="5">Inheritance relationships</a></li>
+<li><a href="#Glossary" accesskey="6">Glossary</a></li>
+</ul>
+<hr>
+<div class="chapter-level-extent" id="Introduction">
+<div class="nav-panel">
+<p>
+Next: <a href="#General-considerations" accesskey="n" rel="next">General considerations</a>, Previous: <a href="#Top" accesskey="p" rel="prev">Code Generation</a>, Up: <a href="#Top" accesskey="u" rel="up">Code Generation</a> &nbsp; </p>
 </div>
-
-<h2 class="chapter">1 Introduction</h2>
+<h2 class="chapter" id="Introduction-1">1 Introduction</h2>
 
 <p>When code is automatically generated from a model (in the present case,
 a UML model), there are two approaches:
-
-     <dl>
-<dt>Use a Design Model<dd>
-A design model is derived from an analysis model by adding support
+</p>
+<dl class="table">
+<dt>Use a Design Model</dt>
+<dd>
+<p>A design model is derived from an analysis model by adding support
 classes to map the analysis model to the Software Architecture
-(see <a href="#Software-Architecture">Software Architecture</a>). An example would be a container for all
+(see <a class="pxref" href="#Software-Architecture">Software Architecture</a>). An example would be a container for all
 the instances of a given class.
-
-     <p>A tool which uses this approach is <a href="https://www.rational.com/">Rational</a> Rose.
-
-     <br><dt>Use an Analysis model<dd>
-An analysis model contains classes and relationships that are part of
+</p>
+<p>A tool which uses this approach is <a class="uref" href="https://www.rational.com/">Rational</a> Rose.
+</p>
+</dd>
+<dt>Use an Analysis model</dt>
+<dd>
+<p>An analysis model contains classes and relationships that are part of
 the subject matter of the analyzed subsystem. Code which supports the
 execution of the model (for example, navigation from an instance of one
 class through an association to find the set of corresponding instances
 of another class) is automatically generated.
-
-     <p>Tools which use this approach include Software through Pictures from
-<a href="https://www.aonix.com/">Aonix</a>, Rhapsody from I-Logix, xUML from
-<a href="https://www.abstractsolutions.co.uk/">Abstract Solutions</a> (was
+</p>
+<p>Tools which use this approach include Software through Pictures from
+<a class="uref" href="https://www.aonix.com/">Aonix</a>, Rhapsody from I-Logix, xUML from
+<a class="uref" href="https://www.abstractsolutions.co.uk/">Abstract Solutions</a> (was
 Kennedy-Carter), BridgePoint from
-<a href="https://www.mentor.com/products/sm/bridgepoint">Mentor Graphics</a>
+<a class="uref" href="https://www.mentor.com/products/sm/bridgepoint">Mentor Graphics</a>
 (was Project Technology; now open-sourced), and the present project.
+</p>
+</dd>
+</dl>
 
-   </dl>
-
-   <p>Automatically-generated support code comes in several flavours:
-
-     <dl>
-<dt>Explicitly-generated<dd>
-The code generation process writes out new code. An example is the
+<p>Automatically-generated support code comes in several flavours:
+</p>
+<dl class="table">
+<dt>Explicitly-generated</dt>
+<dd>
+<p>The code generation process writes out new code. An example is the
 creation of a record structure to correspond to instance attributes.
+</p>
+</dd>
+<dt>Instantiation</dt>
+<dd>
+<p>The new code is an instantiation of an existing generic component.
+</p>
+</dd>
+<dt>Derivation</dt>
+<dd>
+<p>The new code is an extension of an existing (base) component.
+</p>
+</dd>
+</dl>
 
-     <br><dt>Instantiation<dd>
-The new code is an instantiation of an existing generic component.
-
-     <br><dt>Derivation<dd>
-The new code is an extension of an existing (base) component.
-
-   </dl>
-
-   <p>This set of Use Cases (well, that's what I'm calling them!) covers the
-requirements to be met by the Software Architecture (see <a href="#Software-Architecture">Software Architecture</a>), particularly by supporting components.
-
-   <p>The Actor concerned is the analyst who specifies the logic of operations
+<p>This set of Use Cases (well, that&rsquo;s what I&rsquo;m calling them!) covers the
+requirements to be met by the Software Architecture (see <a class="pxref" href="#Software-Architecture">Software Architecture</a>), particularly by supporting components.
+</p>
+<p>The Actor concerned is the analyst who specifies the logic of operations
 or actions. The programmer who implements these specifications (or, in
 an advanced tool such as iUML or BridgePoint, implements the mechanisms
 which provide full translation) is, rather, concerned with building
 components to meet the requirements expressed here, and (eventually)
 with using them.
-
-   <p>No distinction is made at this point between generic and base
+</p>
+<p>No distinction is made at this point between generic and base
 components.
+</p>
 
-<!-- ======================================================================== -->
-<div class="node">
-<p><hr>
-<a name="General-considerations"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Instances">Instances</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
+<hr>
 </div>
+<div class="chapter-level-extent" id="General-considerations">
+<div class="nav-panel">
+<p>
+Next: <a href="#Instances" accesskey="n" rel="next">Instances</a>, Previous: <a href="#Introduction" accesskey="p" rel="prev">Introduction</a>, Up: <a href="#Top" accesskey="u" rel="up">Code Generation</a> &nbsp; </p>
+</div>
+<h2 class="chapter" id="General-considerations-1">2 General considerations</h2>
 
-<h2 class="chapter">2 General considerations</h2>
-
-<p>It isn't possible to maintain all the invariants of the model (for
+<p>It isn&rsquo;t possible to maintain all the invariants of the model (for
 example, constraints on relationships) within any given operation; on
 the other hand, the analyst must not allow any operation to complete
 with the model in an inconsistent state.
+</p>
 
-<!-- ======================================================================== -->
-<div class="node">
-<p><hr>
-<a name="Instances"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Associations">Associations</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#General-considerations">General considerations</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
+<hr>
 </div>
-
-<h2 class="chapter">3 Instances</h2>
+<div class="chapter-level-extent" id="Instances">
+<div class="nav-panel">
+<p>
+Next: <a href="#Associations" accesskey="n" rel="next">Associations</a>, Previous: <a href="#General-considerations" accesskey="p" rel="prev">General considerations</a>, Up: <a href="#Top" accesskey="u" rel="up">Code Generation</a> &nbsp; </p>
+</div>
+<h2 class="chapter" id="Instances-1">3 Instances</h2>
 
 <p>The existence of an Instance must be independent of how many copies of
 its data are held. One possibility is to have the Class be responsible
 for the existence of Instances.
+</p>
 
-<ul class="menu">
-<li><a accesskey="1" href="#Create-an-Instance">Create an Instance</a>
-<li><a accesskey="2" href="#Delete-an-Instance">Delete an Instance</a>
-<li><a accesskey="3" href="#Access-an-Instance">Access an Instance</a>
-<li><a accesskey="4" href="#Select-a-set-of-Instances">Select a set of Instances</a>
-<li><a accesskey="5" href="#Operate-on-a-set-of-Instances">Operate on a set of Instances</a>
+<ul class="mini-toc">
+<li><a href="#Create-an-Instance" accesskey="1">Create an Instance</a></li>
+<li><a href="#Delete-an-Instance" accesskey="2">Delete an Instance</a></li>
+<li><a href="#Access-an-Instance" accesskey="3">Access an Instance</a></li>
+<li><a href="#Select-a-set-of-Instances" accesskey="4">Select a set of Instances</a></li>
+<li><a href="#Operate-on-a-set-of-Instances" accesskey="5">Operate on a set of Instances</a></li>
 </ul>
-
-<div class="node">
-<p><hr>
-<a name="Create-an-Instance"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Delete-an-Instance">Delete an Instance</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Instances">Instances</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Instances">Instances</a>
-
+<hr>
+<div class="section-level-extent" id="Create-an-Instance">
+<div class="nav-panel">
+<p>
+Next: <a href="#Delete-an-Instance" accesskey="n" rel="next">Delete an Instance</a>, Previous: <a href="#Instances" accesskey="p" rel="prev">Instances</a>, Up: <a href="#Instances" accesskey="u" rel="up">Instances</a> &nbsp; </p>
 </div>
-
-<h3 class="section">3.1 Create an Instance</h3>
+<h3 class="section" id="Create-an-Instance-1">3.1 Create an Instance</h3>
 
 <p>When an Instance of a Class is to be created, the analyst specifies a
-set of attributes which cover the Class' Identifier
-(see <a href="#Identifier">Identifier</a>).
-
-   <p>Once the Instance has been created (with default values for
+set of attributes which cover the Class&rsquo; Identifier
+(see <a class="pxref" href="#Identifier">Identifier</a>).
+</p>
+<p>Once the Instance has been created (with default values for
 non-identifier attributes), other attributes are set.
-
-   <p>It would be possible to support any legal combination of attributes
+</p>
+<p>It would be possible to support any legal combination of attributes
 (besides the identifying attributes, which must be supplied); this is
 likely to be prohibitively complex, unless the implementation language
 allows default values for subprogram parameters. An acceptable
 alternative strategy would be to require that all the attributes be
 supplied at once.
+</p>
 
-<div class="node">
-<p><hr>
-<a name="Delete-an-Instance"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Access-an-Instance">Access an Instance</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Create-an-Instance">Create an Instance</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Instances">Instances</a>
-
+<hr>
 </div>
-
-<h3 class="section">3.2 Delete an Instance</h3>
+<div class="section-level-extent" id="Delete-an-Instance">
+<div class="nav-panel">
+<p>
+Next: <a href="#Access-an-Instance" accesskey="n" rel="next">Access an Instance</a>, Previous: <a href="#Create-an-Instance" accesskey="p" rel="prev">Create an Instance</a>, Up: <a href="#Instances" accesskey="u" rel="up">Instances</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Delete-an-Instance-1">3.2 Delete an Instance</h3>
 
 <p>The prime way of deleting an Instance is to ask its Class to delete
 it. This could either be in terms of the complete Identifier
-(see <a href="#Identifier">Identifier</a>) or by using a valid selected Instance.
-
-   <p>An Instance can be asked to delete itself; this will resolve into the
+(see <a class="pxref" href="#Identifier">Identifier</a>) or by using a valid selected Instance.
+</p>
+<p>An Instance can be asked to delete itself; this will resolve into the
 Class operation discussed above.
+</p>
 
-<div class="node">
-<p><hr>
-<a name="Access-an-Instance"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Select-a-set-of-Instances">Select a set of Instances</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Delete-an-Instance">Delete an Instance</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Instances">Instances</a>
-
+<hr>
 </div>
-
-<h3 class="section">3.3 Access an Instance</h3>
+<div class="section-level-extent" id="Access-an-Instance">
+<div class="nav-panel">
+<p>
+Next: <a href="#Select-a-set-of-Instances" accesskey="n" rel="next">Select a set of Instances</a>, Previous: <a href="#Delete-an-Instance" accesskey="p" rel="prev">Delete an Instance</a>, Up: <a href="#Instances" accesskey="u" rel="up">Instances</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Access-an-Instance-1">3.3 Access an Instance</h3>
 
 <p>There are five (any advance on five?) ways of getting a single Instance:
-
-     <ul>
+</p>
+<ul class="itemize mark-bullet">
 <li>By creating it.
 
-     <li>By querying its Class using the identifier (see <a href="#Identifier">Identifier</a>).
+</li><li>By querying its Class using the identifier (see <a class="pxref" href="#Identifier">Identifier</a>).
 
-     <li>During iteration over a set of Instances.
+</li><li>During iteration over a set of Instances.
 
-     <li>By navigating from a single Instance to the &ldquo;1&rdquo; or &ldquo;0..1&rdquo; end
-of an Association (see <a href="#Associations">Associations</a>). Note, the latter can result in
+</li><li>By navigating from a single Instance to the &ldquo;1&rdquo; or &ldquo;0..1&rdquo; end
+of an Association (see <a class="pxref" href="#Associations">Associations</a>). Note, the latter can result in
 &ldquo;None&rdquo; as a valid answer.
 
-     <li>By navigating an Inheritance relationship from a single Instance
-(see <a href="#Inheritance-relationships">Inheritance relationships</a>).
+</li><li>By navigating an Inheritance relationship from a single Instance
+(see <a class="pxref" href="#Inheritance-relationships">Inheritance relationships</a>).
 
-   </ul>
+</li></ul>
 
-   <p>Once the Instance has been accessed, various operations are possible:
-
-     <ul>
+<p>Once the Instance has been accessed, various operations are possible:
+</p>
+<ul class="itemize mark-bullet">
 <li>Read the values of attributes.
 
-     <li>Update the values of non-identifying attributes.
+</li><li>Update the values of non-identifying attributes.
 
-     <li>Delete the Instance.
+</li><li>Delete the Instance.
 
-   </ul>
+</li></ul>
 
-<div class="node">
-<p><hr>
-<a name="Select-a-set-of-Instances"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Operate-on-a-set-of-Instances">Operate on a set of Instances</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Access-an-Instance">Access an Instance</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Instances">Instances</a>
 
+<hr>
 </div>
+<div class="section-level-extent" id="Select-a-set-of-Instances">
+<div class="nav-panel">
+<p>
+Next: <a href="#Operate-on-a-set-of-Instances" accesskey="n" rel="next">Operate on a set of Instances</a>, Previous: <a href="#Access-an-Instance" accesskey="p" rel="prev">Access an Instance</a>, Up: <a href="#Instances" accesskey="u" rel="up">Instances</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Select-a-set-of-Instances-1">3.4 Select a set of Instances</h3>
 
-<h3 class="section">3.4 Select a set of Instances</h3>
-
-<p>Some operations (see see <a href="#Access-an-Instance">Access an Instance</a>) result in single
+<p>Some operations (see see <a class="pxref" href="#Access-an-Instance">Access an Instance</a>) result in single
 Instances; others result in (possibly empty) sets of Instances. These
 include:
-
-     <ul>
+</p>
+<ul class="itemize mark-bullet">
 <li>Querying the Class using a non-identifying subset of the
 attributes.
 
-     <li>Navigating from a single Instance to the &ldquo;1..n&rdquo; or &ldquo;0..n&rdquo; end
-of an Association (see <a href="#Associations">Associations</a>).
+</li><li>Navigating from a single Instance to the &ldquo;1..n&rdquo; or &ldquo;0..n&rdquo; end
+of an Association (see <a class="pxref" href="#Associations">Associations</a>).
 
-     <li>Any navigation from a set of Instances.
+</li><li>Any navigation from a set of Instances.
 
-   </ul>
+</li></ul>
 
-<div class="node">
-<p><hr>
-<a name="Operate-on-a-set-of-Instances"></a>
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Select-a-set-of-Instances">Select a set of Instances</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Instances">Instances</a>
 
+<hr>
 </div>
-
-<h3 class="section">3.5 Operate on a set of Instances</h3>
+<div class="section-level-extent" id="Operate-on-a-set-of-Instances">
+<div class="nav-panel">
+<p>
+Previous: <a href="#Select-a-set-of-Instances" accesskey="p" rel="prev">Select a set of Instances</a>, Up: <a href="#Instances" accesskey="u" rel="up">Instances</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Operate-on-a-set-of-Instances-1">3.5 Operate on a set of Instances</h3>
 
 <p>Given a set of Instances (which includes the set of all the Instances),
 the analyst must be able to specify operations on the set.
-
-   <p>In some cases these may be predetermined (for example, determine the
+</p>
+<p>In some cases these may be predetermined (for example, determine the
 number of members of the set).
-
-   <p>In other cases the actual operation is analyst-specified. Variations to
+</p>
+<p>In other cases the actual operation is analyst-specified. Variations to
 consider include:
-
-     <ul>
+</p>
+<ul class="itemize mark-bullet">
 <li>Perform a read-only operation on each member: for example, print
 all Policies.
 
-     <li>Update each member: for example, apply increment to terminal bonus.
+</li><li>Update each member: for example, apply increment to terminal bonus.
 
-     <li>Delete each member: for example, delete expired Policies.
+</li><li>Delete each member: for example, delete expired Policies.
 
-     <li>Navigate from each member: for example, collect the Policy Holder's
+</li><li>Navigate from each member: for example, collect the Policy Holder&rsquo;s
 address details.
 
-   </ul>
+</li></ul>
 
-   <p>The above list is expressed as though the operation must apply to each
-set member. Clearly this isn't necessarily the case; however, it may
+<p>The above list is expressed as though the operation must apply to each
+set member. Clearly this isn&rsquo;t necessarily the case; however, it may
 often be cleaner to perform a more rigorous selection first and then
 apply the operation to all the members of the result set.
+</p>
 
-<!-- ======================================================================== -->
-<div class="node">
-<p><hr>
-<a name="Associations"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Inheritance-relationships">Inheritance relationships</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Instances">Instances</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
+<hr>
 </div>
-
-<h2 class="chapter">4 Associations</h2>
+</div>
+<div class="chapter-level-extent" id="Associations">
+<div class="nav-panel">
+<p>
+Next: <a href="#Inheritance-relationships" accesskey="n" rel="next">Inheritance relationships</a>, Previous: <a href="#Instances" accesskey="p" rel="prev">Instances</a>, Up: <a href="#Top" accesskey="u" rel="up">Code Generation</a> &nbsp; </p>
+</div>
+<h2 class="chapter" id="Associations-1">4 Associations</h2>
 
 <p>In some simple cases it may be possible to implement an association
 between instances of two classes (or two instances of the same class)
 without introducing a &ldquo;third party&rdquo;. In most cases, though, a third
 party class will be necessary.
-
-   <p>For example, if it is (or may be) necessary to navigate the association
+</p>
+<p>For example, if it is (or may be) necessary to navigate the association
 in either direction, language rules may well prohibit the mutual
-visibility that would be necessary (Ada 95 doesn't permit this unless
+visibility that would be necessary (Ada 95 doesn&rsquo;t permit this unless
 the &ldquo;with type&rdquo; feature is implemented).
+</p>
 
-<ul class="menu">
-<li><a accesskey="1" href="#Create-an-association">Create an association</a>
-<li><a accesskey="2" href="#Delete-an-association">Delete an association</a>
-<li><a accesskey="3" href="#Navigate-an-association">Navigate an association</a>
+<ul class="mini-toc">
+<li><a href="#Create-an-association" accesskey="1">Create an association</a></li>
+<li><a href="#Delete-an-association" accesskey="2">Delete an association</a></li>
+<li><a href="#Navigate-an-association" accesskey="3">Navigate an association</a></li>
 </ul>
-
-<div class="node">
-<p><hr>
-<a name="Create-an-association"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Delete-an-association">Delete an association</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Associations">Associations</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Associations">Associations</a>
-
+<hr>
+<div class="section-level-extent" id="Create-an-association">
+<div class="nav-panel">
+<p>
+Next: <a href="#Delete-an-association" accesskey="n" rel="next">Delete an association</a>, Previous: <a href="#Associations" accesskey="p" rel="prev">Associations</a>, Up: <a href="#Associations" accesskey="u" rel="up">Associations</a> &nbsp; </p>
 </div>
-
-<h3 class="section">4.1 Create an association</h3>
+<h3 class="section" id="Create-an-association-1">4.1 Create an association</h3>
 
 <p>Given two distinct instances (is that true? is it possible for an
 instance to be associated with itself?), the analyst can require that
@@ -381,184 +338,170 @@ they be linked via an association. In some cases (eg, unconditional
 associations), instances must be associated. Ideally some form of model
 integrity check should be supported. This should include checks that no
 extant association involving either instance already exists.
-
-   <p>Normally it will be obvious which end is which; this won't be so for
+</p>
+<p>Normally it will be obvious which end is which; this won&rsquo;t be so for
 reflexive associations. It must be possible to specify which is which:
 the role names (phrases) may prove useful.
-
-   <p>The Software Architecture (see <a href="#Software-Architecture">Software Architecture</a>) may support
+</p>
+<p>The Software Architecture (see <a class="pxref" href="#Software-Architecture">Software Architecture</a>) may support
 handles, in which case this operation may be expressed in terms of
 handles; if not, it will have to be in terms of Identifiers.
-
-<div class="node">
-<p><hr>
-<a name="Delete-an-association"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Navigate-an-association">Navigate an association</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Create-an-association">Create an association</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Associations">Associations</a>
-
+</p>
+<hr>
 </div>
-
-<h3 class="section">4.2 Delete an association</h3>
+<div class="section-level-extent" id="Delete-an-association">
+<div class="nav-panel">
+<p>
+Next: <a href="#Navigate-an-association" accesskey="n" rel="next">Navigate an association</a>, Previous: <a href="#Create-an-association" accesskey="p" rel="prev">Create an association</a>, Up: <a href="#Associations" accesskey="u" rel="up">Associations</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Delete-an-association-1">4.2 Delete an association</h3>
 
 <p>Deleting an association between two Instances may require that one or
 both of the Instances be deleted, to maintain model integrity; this is
 left to the Analyst.
-
-   <p>The Software Architecture (see <a href="#Software-Architecture">Software Architecture</a>) may support
+</p>
+<p>The Software Architecture (see <a class="pxref" href="#Software-Architecture">Software Architecture</a>) may support
 handles, in which case this operation may be expressed in terms of
 handles; if not, it will have to be in terms of Identifiers.
-
-<div class="node">
-<p><hr>
-<a name="Navigate-an-association"></a>
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Delete-an-association">Delete an association</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Associations">Associations</a>
-
+</p>
+<hr>
 </div>
-
-<h3 class="section">4.3 Navigate an association</h3>
+<div class="section-level-extent" id="Navigate-an-association">
+<div class="nav-panel">
+<p>
+Previous: <a href="#Delete-an-association" accesskey="p" rel="prev">Delete an association</a>, Up: <a href="#Associations" accesskey="u" rel="up">Associations</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Navigate-an-association-1">4.3 Navigate an association</h3>
 
 <p>Given an Instance or set of Instances, it must be possible to obtain the
 Instance or set of Instances linked via a particular Association.
-
-   <p>There is no special support required for chained navigations.
-
-   <p>If an association is conditional, it is necessary to support the concept
+</p>
+<p>There is no special support required for chained navigations.
+</p>
+<p>If an association is conditional, it is necessary to support the concept
 of a null result (or empty result set).
-
-   <p>If an association is unconditional, a null result (or empty result set)
+</p>
+<p>If an association is unconditional, a null result (or empty result set)
 indicates a failure of model integrity and should be unambiguously
 reported as such. The reporting mechanism must be controllable.
+</p>
 
-<!-- ======================================================================== -->
-<div class="node">
-<p><hr>
-<a name="Inheritance-relationships"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Glossary">Glossary</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Associations">Associations</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
-
+<hr>
 </div>
-
-<h2 class="chapter">5 Inheritance relationships</h2>
+</div>
+<div class="chapter-level-extent" id="Inheritance-relationships">
+<div class="nav-panel">
+<p>
+Next: <a href="#Glossary" accesskey="n" rel="next">Glossary</a>, Previous: <a href="#Associations" accesskey="p" rel="prev">Associations</a>, Up: <a href="#Top" accesskey="u" rel="up">Code Generation</a> &nbsp; </p>
+</div>
+<h2 class="chapter" id="Inheritance-relationships-1">5 Inheritance relationships</h2>
 
 <p>Following the Shlaer-Mellor rules, all parent classes in inheritance
 relationships are, in a sense, abstract: whenever an instance of the
 parent class exists, there exists precisely one related instance of one
 of the child classes.
+</p>
 
-<ul class="menu">
-<li><a accesskey="1" href="#Create-an-inheritance">Create an inheritance</a>
-<li><a accesskey="2" href="#Delete-an-inheritance">Delete an inheritance</a>
-<li><a accesskey="3" href="#Migrate-an-inheritance">Migrate an inheritance</a>
-<li><a accesskey="4" href="#Navigate-an-inheritance">Navigate an inheritance</a>
+<ul class="mini-toc">
+<li><a href="#Create-an-inheritance" accesskey="1">Create an inheritance</a></li>
+<li><a href="#Delete-an-inheritance" accesskey="2">Delete an inheritance</a></li>
+<li><a href="#Migrate-an-inheritance" accesskey="3">Migrate an inheritance</a></li>
+<li><a href="#Navigate-an-inheritance" accesskey="4">Navigate an inheritance</a></li>
 </ul>
-
-<div class="node">
-<p><hr>
-<a name="Create-an-inheritance"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Delete-an-inheritance">Delete an inheritance</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Inheritance-relationships">Inheritance relationships</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Inheritance-relationships">Inheritance relationships</a>
-
+<hr>
+<div class="section-level-extent" id="Create-an-inheritance">
+<div class="nav-panel">
+<p>
+Next: <a href="#Delete-an-inheritance" accesskey="n" rel="next">Delete an inheritance</a>, Previous: <a href="#Inheritance-relationships" accesskey="p" rel="prev">Inheritance relationships</a>, Up: <a href="#Inheritance-relationships" accesskey="u" rel="up">Inheritance relationships</a> &nbsp; </p>
 </div>
-
-<h3 class="section">5.1 Create an inheritance</h3>
+<h3 class="section" id="Create-an-inheritance-1">5.1 Create an inheritance</h3>
 
 <p>Given a new instance each of parent and child classes, the analyst must
 require that they be linked via an inheritance relationship. Ideally
 some form of model integrity check should be supported. This should
 include checks that no extant relationship involving either instance
 already exists.
-
-   <p>The Software Architecture (see <a href="#Software-Architecture">Software Architecture</a>) may support
+</p>
+<p>The Software Architecture (see <a class="pxref" href="#Software-Architecture">Software Architecture</a>) may support
 handles, in which case this operation may be expressed in terms of
 handles; if not, it will have to be in terms of Identifiers. Note that
 the Identifier of the child class is very likely to be identical to that
 of the parent.
-
-<div class="node">
-<p><hr>
-<a name="Delete-an-inheritance"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Migrate-an-inheritance">Migrate an inheritance</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Create-an-inheritance">Create an inheritance</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Inheritance-relationships">Inheritance relationships</a>
-
+</p>
+<hr>
 </div>
-
-<h3 class="section">5.2 Delete an inheritance</h3>
+<div class="section-level-extent" id="Delete-an-inheritance">
+<div class="nav-panel">
+<p>
+Next: <a href="#Migrate-an-inheritance" accesskey="n" rel="next">Migrate an inheritance</a>, Previous: <a href="#Create-an-inheritance" accesskey="p" rel="prev">Create an inheritance</a>, Up: <a href="#Inheritance-relationships" accesskey="u" rel="up">Inheritance relationships</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Delete-an-inheritance-1">5.2 Delete an inheritance</h3>
 
 <p>Deleting an inheritance relationship between two Instances requires that
 both of the Instances be deleted, to maintain model integrity; this is
 left to the Analyst.
-
-   <p>The Software Architecture (see <a href="#Software-Architecture">Software Architecture</a>) may support
+</p>
+<p>The Software Architecture (see <a class="pxref" href="#Software-Architecture">Software Architecture</a>) may support
 handles, in which case this operation may be expressed in terms of
 handles; if not, it will have to be in terms of Identifiers.
-
-<div class="node">
-<p><hr>
-<a name="Migrate-an-inheritance"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Navigate-an-inheritance">Navigate an inheritance</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Delete-an-inheritance">Delete an inheritance</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Inheritance-relationships">Inheritance relationships</a>
-
+</p>
+<hr>
 </div>
-
-<h3 class="section">5.3 Migrate an inheritance</h3>
+<div class="section-level-extent" id="Migrate-an-inheritance">
+<div class="nav-panel">
+<p>
+Next: <a href="#Navigate-an-inheritance" accesskey="n" rel="next">Navigate an inheritance</a>, Previous: <a href="#Delete-an-inheritance" accesskey="p" rel="prev">Delete an inheritance</a>, Up: <a href="#Inheritance-relationships" accesskey="u" rel="up">Inheritance relationships</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Migrate-an-inheritance-1">5.3 Migrate an inheritance</h3>
 
 <p>Migrating an inheritance relationship between two Instances requires
 that the old child Instance be deleted, to maintain model integrity;
 this is left to the Analyst.
-
-   <p>The Software Architecture (see <a href="#Software-Architecture">Software Architecture</a>) may support
+</p>
+<p>The Software Architecture (see <a class="pxref" href="#Software-Architecture">Software Architecture</a>) may support
 handles, in which case this operation may be expressed in terms of
 handles; if not, it will have to be in terms of Identifiers.
-
-<div class="node">
-<p><hr>
-<a name="Navigate-an-inheritance"></a>
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Migrate-an-inheritance">Migrate an inheritance</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Inheritance-relationships">Inheritance relationships</a>
-
+</p>
+<hr>
 </div>
-
-<h3 class="section">5.4 Navigate an inheritance</h3>
+<div class="section-level-extent" id="Navigate-an-inheritance">
+<div class="nav-panel">
+<p>
+Previous: <a href="#Migrate-an-inheritance" accesskey="p" rel="prev">Migrate an inheritance</a>, Up: <a href="#Inheritance-relationships" accesskey="u" rel="up">Inheritance relationships</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Navigate-an-inheritance-1">5.4 Navigate an inheritance</h3>
 
 <p>Given a parent Instance, it must be possible to navigate to the child,
 and vice versa.
-
-   <p>A null result indicates a failure of model integrity and should be
+</p>
+<p>A null result indicates a failure of model integrity and should be
 unambiguously reported as such. The reporting mechanism must be
 controllable.
+</p>
 
-<!-- ======================================================================== -->
-<div class="node">
-<p><hr>
-<a name="Glossary"></a>
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Inheritance-relationships">Inheritance relationships</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
+<hr>
 </div>
+</div>
+<div class="chapter-level-extent" id="Glossary">
+<div class="nav-panel">
+<p>
+Previous: <a href="#Inheritance-relationships" accesskey="p" rel="prev">Inheritance relationships</a>, Up: <a href="#Top" accesskey="u" rel="up">Code Generation</a> &nbsp; </p>
+</div>
+<h2 class="chapter" id="Glossary-1">6 Glossary</h2>
 
-<h2 class="chapter">6 Glossary</h2>
 
-<ul class="menu">
-<li><a accesskey="1" href="#Identifier">Identifier</a>
-<li><a accesskey="2" href="#Software-Architecture">Software Architecture</a>
+<ul class="mini-toc">
+<li><a href="#Identifier" accesskey="1">Identifier</a></li>
+<li><a href="#Software-Architecture" accesskey="2">Software Architecture</a></li>
 </ul>
-
-<div class="node">
-<p><hr>
-<a name="Identifier"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="#Software-Architecture">Software Architecture</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Glossary">Glossary</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Glossary">Glossary</a>
-
+<hr>
+<div class="section-level-extent" id="Identifier">
+<div class="nav-panel">
+<p>
+Next: <a href="#Software-Architecture" accesskey="n" rel="next">Software Architecture</a>, Previous: <a href="#Glossary" accesskey="p" rel="prev">Glossary</a>, Up: <a href="#Glossary" accesskey="u" rel="up">Glossary</a> &nbsp; </p>
 </div>
-
-<h3 class="section">6.1 Identifier</h3>
+<h3 class="section" id="Identifier-1">6.1 Identifier</h3>
 
 <p>Instances of a Class must be uniquely identifiable by some attribute or
 combination of attributes. For example, a Vehicle Excise Disk might be
@@ -568,31 +511,38 @@ Date. Vehicle Index Mark and Validity Start Date then become
 are just common-or-garden attributes. A different analyst might make a
 different choice (Serial Number, for example) governed often by
 practical considerations such as whether they already exist.
-
-<div class="node">
-<p><hr>
-<a name="Software-Architecture"></a>
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Identifier">Identifier</a>,
-Up:&nbsp;<a rel="up" accesskey="u" href="#Glossary">Glossary</a>
-
+</p>
+<hr>
 </div>
-
-<h3 class="section">6.2 Software Architecture</h3>
+<div class="section-level-extent" id="Software-Architecture">
+<div class="nav-panel">
+<p>
+Previous: <a href="#Identifier" accesskey="p" rel="prev">Identifier</a>, Up: <a href="#Glossary" accesskey="u" rel="up">Glossary</a> &nbsp; </p>
+</div>
+<h3 class="section" id="Software-Architecture-1">6.2 Software Architecture</h3>
 
 <p>The Software Architecture, as considered here, has several components,
-but basically it comes down to how the analyst's model is implemented:
-
-     <ul>
+but basically it comes down to how the analyst&rsquo;s model is implemented:
+</p>
+<ul class="itemize mark-bullet">
 <li>The rules and policies which determine how analytical constructs
 such as Classes and Associations are mapped to code.
 
-     <li>The supporting components (typically generic) which provide the
+</li><li>The supporting components (typically generic) which provide the
 mechanisms to support the translated code.
 
-     <li>The language and operating system mechanisms which underpin the
+</li><li>The language and operating system mechanisms which underpin the
 whole.
 
-   </ul>
+</li></ul>
 
-</body></html>
 
+
+</div>
+</div>
+</div>
+
+
+
+</body>
+</html>

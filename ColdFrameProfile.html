@@ -1,10 +1,8 @@
-
 <!DOCTYPE html
   PUBLIC "-//W3C/DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:UML="http://www.omg.org/spec/XMI">
    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>ColdFrameProfile</title>
       <link href="cf.css" rel="stylesheet" type="text/css">
    </head>
@@ -35,10 +33,10 @@
                   </tr>
                </table>
             </td>
-            <td>Normally the abbreviation of a class's name is formed from the initial letters of the words in the name. If there's only one
-               word, it's formed by prepending "A_" or "An_". This stereotype is provided to support the {abbreviation} tag, which allows
-               the modeller to override the default behaviour.
-            </td>
+            <td>Normally the abbreviation of a class's name is formed from the initial letters of
+               the words in the name. If there's only one word, it's formed by prepending "A_" or
+               "An_". This stereotype is provided to support the {abbreviation} tag, which allows
+               the modeller to override the default behaviour.</td>
             <td>
                <table>
                   <tr>
@@ -74,9 +72,9 @@
                   </tr>
                </table>
             </td>
-            <td>The marked datatype must have only one operation, whose name is discarded (and can be omitted): instead, the datatype specifies
-               an access to an operation of the given profile.
-            </td>
+            <td>The marked datatype must have only one operation, whose name is discarded (and can
+               be omitted): instead, the datatype specifies an access to an operation of the given
+               profile.</td>
             <td>
                <table></table>
             </td>
@@ -90,9 +88,8 @@
                   </tr>
                </table>
             </td>
-            <td>The tagged operation is an accessor for one of the attributes of the class, determined by scope (instance/class), name and
-               parameter or result type.
-            </td>
+            <td>The tagged operation is an accessor for one of the attributes of the class, determined
+               by scope (instance/class), name and parameter or result type.</td>
             <td>
                <table></table>
             </td>
@@ -106,9 +103,9 @@
                   </tr>
                </table>
             </td>
-            <td>Each instance of the class is to have an associated task.<br>Setting the "isActive" modifier "true" has the same effect but is less visible for such a significant aspect of the generated
-               code, and also doesn't allow setting of {priority} and {stack}.
-            </td>
+            <td>Each instance of the class is to have an associated task.<br>Setting the "isActive" modifier "true" has the same effect but is less visible for
+               such a significant aspect of the generated code, and also doesn't allow setting of
+               {priority} and {stack}.</td>
             <td>
                <table>
                   <tr>
@@ -123,8 +120,7 @@
          <tr>
             <td><a name="st-association-class-naming">association-class-naming</a>
                *deprecated*
-               
-            </td>
+               </td>
             <td>
                <table>
                   <tr>
@@ -132,11 +128,12 @@
                   </tr>
                </table>
             </td>
-            <td>This stereotype supports the tags {association-name}, which is used to specify the name to be used for the association part
-               of an AssociationClass, and {class-name}, which is used to specify the name to be used for the class part. Both can be supplied;
-               if only one is supplied, the other part retains the name specified in the model; if neither is supplied, the name used is
-               formed by appending "_Class" to the AssociationClass name.
-            </td>
+            <td>This stereotype supports the tags {association-name}, which is used to specify the
+               name to be used for the association part of an AssociationClass, and {class-name},
+               which is used to specify the name to be used for the class part. Both can be supplied;
+               if only one is supplied, the other part retains the name specified in the model; if
+               neither is supplied, the name used is formed by appending "_Class" to the AssociationClass
+               name.</td>
             <td>
                <table>
                   <tr>
@@ -157,9 +154,9 @@
                   </tr>
                </table>
             </td>
-            <td>The attribute must be read from memory or written to memory each time it is accessed, like &laquo;volatile&raquo;, but additionally in
-               such a way that it's proof against concurrent access.<br>The implementation may limit the size of objects that can be treated as atomic.
-            </td>
+            <td>The attribute must be read from memory or written to memory each time it is accessed,
+               like «volatile», but additionally in such a way that it's proof against concurrent
+               access.<br>The implementation may limit the size of objects that can be treated as atomic.</td>
             <td>
                <table></table>
             </td>
@@ -173,7 +170,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that the datatype is a string of length up to a maximum. The maximum length is specified in the tag {length}.</td>
+            <td>Specifies that the datatype is a string of length up to a maximum. The maximum length
+               is specified in the tag {length}.</td>
             <td>
                <table>
                   <tr>
@@ -197,11 +195,12 @@
                   </tr>
                </table>
             </td>
-            <td>If applied to a type, callback support code is to be generated. The idea here is that a (lower-level) Domain may need to support
-               Observers from higher-level Domains, and the higher-level Domains can register to be notified when something has changed in
-               the lower-level Domain.<br>If applied to an operation, the operation is to be an Observer of some change in a lower-level domain. This implies the stereotype
-               &laquo;class&raquo;. The operation must take a single parameter of the type concerned.
-            </td>
+            <td>If applied to a type, callback support code is to be generated. The idea here is that
+               a (lower-level) Domain may need to support Observers from higher-level Domains, and
+               the higher-level Domains can register to be notified when something has changed in
+               the lower-level Domain.<br>If applied to an operation, the operation is to be an Observer of some change in a
+               lower-level domain. This implies the stereotype «class». The operation must take a
+               single parameter of the type concerned.</td>
             <td>
                <table></table>
             </td>
@@ -215,10 +214,10 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies (in the associated {max} tag) the maximum number of instances of a class. Note, under some circumstances ColdFrame
-               can calculate the maximum number of instances (for example, if the class has a single identifier of an enumeration type):
-               this setting will override such a calculation.
-            </td>
+            <td>Specifies (in the associated {max} tag) the maximum number of instances of a class.
+               Note, under some circumstances ColdFrame can calculate the maximum number of instances
+               (for example, if the class has a single identifier of an enumeration type): this setting
+               will override such a calculation.</td>
             <td>
                <table>
                   <tr>
@@ -242,10 +241,10 @@
                   </tr>
                </table>
             </td>
-            <td>This stereotype is used to manage class events, which is a ColdFrame concept that distinguishes events directed to state machines
-               (instance events) from events originating outside the domain (class events, because external entities have no visibility of
-               state-machine related events).
-            </td>
+            <td>This stereotype is used to manage class events, which is a ColdFrame concept that
+               distinguishes events directed to state machines (instance events) from events originating
+               outside the domain (class events, because external entities have no visibility of
+               state-machine related events).</td>
             <td>
                <table></table>
             </td>
@@ -259,8 +258,10 @@
                   </tr>
                </table>
             </td>
-            <td>Indicates that the type is a constrained subtype of the type specified in the accompanying {constrains}.<br>The constraints are indicated in the accompanying {lower} and {upper}, at least one of which must be present.<br>If either {lower} or {upper} is absent, the lower or upper bound respectively of the {constrains} type is used.
-            </td>
+            <td>Indicates that the type is a constrained subtype of the type specified in the accompanying
+               {constrains}.<br>The constraints are indicated in the accompanying {lower} and {upper}, at least one
+               of which must be present.<br>If either {lower} or {upper} is absent, the lower or upper bound respectively of the
+               {constrains} type is used.</td>
             <td>
                <table>
                   <tr>
@@ -290,8 +291,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that the conventions of the programming language specified in the accompanying {language} tag are to be used.<br>If specified on a class, the class must be stereotyped &laquo;datatype&raquo;.
-            </td>
+            <td>Specifies that the conventions of the programming language specified in the accompanying
+               {language} tag are to be used.<br>If specified on a class, the class must be stereotyped «datatype».</td>
             <td>
                <table>
                   <tr>
@@ -337,9 +338,8 @@
                   </tr>
                </table>
             </td>
-            <td>Causes the generation of discriminated records; the discriminant is an enumeration type with literals formed from the attribute
-               names with _T appended.<br>To be applied to a Class stereotyped &laquo;datatype&raquo; and with attributes.
-            </td>
+            <td>Causes the generation of discriminated records; the discriminant is an enumeration
+               type with literals formed from the attribute names with _T appended.<br>To be applied to a Class stereotyped «datatype» and with attributes.</td>
             <td>
                <table></table>
             </td>
@@ -353,11 +353,13 @@
                   </tr>
                </table>
             </td>
-            <td>A domain is a separate real, hypothetical, or abstract world inhabited by a distinct set of classes that behave according
-               to rules and policies characteristic of that domain.<br>A domain is translated as a top-level Ada package, with the name derived from the package name using the usual name conversion
-               rules (it can be overridden using the tagged value {name}).<br>Child UML packages are included (recursively), unless they are steretyped &laquo;ignore&raquo;. The child UML package structure is not
-               reflected in the generated code (for example, all classes end up as direct Ada child packages of the domain package).
-            </td>
+            <td>A domain is a separate real, hypothetical, or abstract world inhabited by a distinct
+               set of classes that behave according to rules and policies characteristic of that
+               domain.<br>A domain is translated as a top-level Ada package, with the name derived from the
+               package name using the usual name conversion rules (it can be overridden using the
+               tagged value {name}).<br>Child UML packages are included (recursively), unless they are steretyped «ignore».
+               The child UML package structure is not reflected in the generated code (for example,
+               all classes end up as direct Ada child packages of the domain package).</td>
             <td>
                <table>
                   <tr>
@@ -378,10 +380,10 @@
                   </tr>
                </table>
             </td>
-            <td>Supports unit test.<br>Marks a package (which needs to be a child of a &laquo;domain&raquo; package) as containing all the &laquo;public&raquo; classes and &laquo;callback&raquo; types,
-               any types used by them, and any exceptions that form part of the external interface of the parent package.<br>Use the {name} tag to define the name to generate (the code will still be placed in the directory derived from the actual
-               package name, which should be &lt;parent&gt;_Interface).
-            </td>
+            <td>Supports unit test.<br>Marks a package (which needs to be a child of a «domain» package) as containing all
+               the «public» classes and «callback» types, any types used by them, and any exceptions
+               that form part of the external interface of the parent package.<br>Use the {name} tag to define the name to generate (the code will still be placed in
+               the directory derived from the actual package name, which should be &lt;parent&gt;_Interface).</td>
             <td>
                <table>
                   <tr>
@@ -402,10 +404,11 @@
                   </tr>
                </table>
             </td>
-            <td>In an active class, you can specify task entries using the &laquo;entry&raquo; stereotype. It's permissible to have an ordinary operation
-               with the same name as an &laquo;entry&raquo;, because &laquo;entry&raquo; operations don't generate normal subprograms.<br>In a &laquo;protected&raquo; type, you can nominate procedures (operations without a return value) as entries using the &laquo;entry&raquo; stereotype.<br>The point about an entry of a protected type is that your implementation specifies a guard condition; callers of the entry
-               block until the guard becomes open.
-            </td>
+            <td>In an active class, you can specify task entries using the «entry» stereotype. It's
+               permissible to have an ordinary operation with the same name as an «entry», because
+               «entry» operations don't generate normal subprograms.<br>In a «protected» type, you can nominate procedures (operations without a return value)
+               as entries using the «entry» stereotype.<br>The point about an entry of a protected type is that your implementation specifies
+               a guard condition; callers of the entry block until the guard becomes open.</td>
             <td>
                <table></table>
             </td>
@@ -422,8 +425,9 @@
                   </tr>
                </table>
             </td>
-            <td>If applied to a (Simple)State, indicates that the marked state is a final state; no outgoing transitions are allowed.<br>If applied to an Operation, indicates that the marked operation deletes the instance.<br>Used in state machines to ensure that no further accesses are made to the deleted instance.<br>The (generated) operation Delete is automatically &laquo;final&raquo;.
-            </td>
+            <td>If applied to a (Simple)State, indicates that the marked state is a final state; no
+               outgoing transitions are allowed.<br>If applied to an Operation, indicates that the marked operation deletes the instance.<br>Used in state machines to ensure that no further accesses are made to the deleted
+               instance.<br>The (generated) operation Delete is automatically «final».</td>
             <td>
                <table></table>
             </td>
@@ -437,10 +441,11 @@
                   </tr>
                </table>
             </td>
-            <td>Operations to be called to clean up as an instance is deleted (for example, to tidy up associations) are marked with the stereotype
-               &laquo;finalize&raquo;. (It would be possible in theory to use Ada's controlled types, but that depends on your target language being
-               Ada). Also, it's possible to have more than one &laquo;finalize&raquo; operation; if so, they're called in alphabetical order.
-            </td>
+            <td>Operations to be called to clean up as an instance is deleted (for example, to tidy
+               up associations) are marked with the stereotype «finalize». (It would be possible
+               in theory to use Ada's controlled types, but that depends on your target language
+               being Ada). Also, it's possible to have more than one «finalize» operation; if so,
+               they're called in alphabetical order.</td>
             <td>
                <table></table>
             </td>
@@ -454,7 +459,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that the datatype is a fixed length string. The length is specified in the tag {length}.</td>
+            <td>Specifies that the datatype is a fixed length string. The length is specified in the
+               tag {length}.</td>
             <td>
                <table>
                   <tr>
@@ -493,8 +499,9 @@
                   </tr>
                </table>
             </td>
-            <td>Used on a package to indicate that the contents of the package is to be ignored for code generation (it may, for example,
-               include additional documentation).<br>Used on a state transition to indicate that the trigger event is to be ignored in the source state.<br></td>
+            <td>Used on a package to indicate that the contents of the package is to be ignored for
+               code generation (it may, for example, include additional documentation).<br>Used on a state transition to indicate that the trigger event is to be ignored in
+               the source state.<br></td>
             <td>
                <table></table>
             </td>
@@ -511,7 +518,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that the object is to be found at the external reference specified in the {imported} tag.</td>
+            <td>Specifies that the object is to be found at the external reference specified in the
+               {imported} tag.</td>
             <td>
                <table>
                   <tr>
@@ -532,9 +540,9 @@
                   </tr>
                </table>
             </td>
-            <td>Operations to be called from the Domain Initialize procedure are marked with the stereotype &laquo;init&raquo;. This implies the stereotype
-               &laquo;class&raquo;. These operations must be parameterless procedures.
-            </td>
+            <td>Operations to be called from the Domain Initialize procedure are marked with the stereotype
+               «init». This implies the stereotype «class». These operations must be parameterless
+               procedures.</td>
             <td>
                <table></table>
             </td>
@@ -548,8 +556,9 @@
                   </tr>
                </table>
             </td>
-            <td>This stereotype is applied to an operation parameter which is not permitted to be null.<br>It must only be applied to parameters of an access type (for example, a class in the domain).
-            </td>
+            <td>This stereotype is applied to an operation parameter which is not permitted to be
+               null.<br>It must only be applied to parameters of an access type (for example, a class in the
+               domain).</td>
             <td>
                <table></table>
             </td>
@@ -577,8 +586,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that instances of the type are protected against concurrent access by multiple threads of execution.<br>To be applied to a Class stereotyped &laquo;datatype&raquo; and with attributes.
-            </td>
+            <td>Specifies that instances of the type are protected against concurrent access by multiple
+               threads of execution.<br>To be applied to a Class stereotyped «datatype» and with attributes.</td>
             <td>
                <table></table>
             </td>
@@ -612,7 +621,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that the object is a renaming of the external reference specified in the {renames} tag.</td>
+            <td>Specifies that the object is a renaming of the external reference specified in the
+               {renames} tag.</td>
             <td>
                <table>
                   <tr>
@@ -633,7 +643,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that the marked class has precisely one instance (which will be automatically created on domain initialization).</td>
+            <td>Specifies that the marked class has precisely one instance (which will be automatically
+               created on domain initialization).</td>
             <td>
                <table></table>
             </td>
@@ -647,10 +658,10 @@
                   </tr>
                </table>
             </td>
-            <td>If you have a symmetrical association of multiplicity 1:1, 1c:1c, 1-(1:1) or 1-(1c:1c), ColdFrame requires you to tell it
-               how the association is to be formalized.<br>This stereotype marks the association end from which the referential attribute (which appears in the other end, or which forms
-               the identifier of the Association Class) is taken.
-            </td>
+            <td>If you have a symmetrical association of multiplicity 1:1, 1c:1c, 1-(1:1) or 1-(1c:1c),
+               ColdFrame requires you to tell it how the association is to be formalized.<br>This stereotype marks the association end from which the referential attribute (which
+               appears in the other end, or which forms the identifier of the Association Class)
+               is taken.</td>
             <td>
                <table></table>
             </td>
@@ -664,7 +675,8 @@
                   </tr>
                </table>
             </td>
-            <td>Instance operations to be called during teardown (in unit test) are marked with the stereotype &laquo;teardown&raquo;.</td>
+            <td>Instance operations to be called during teardown (in unit test) are marked with the
+               stereotype «teardown».</td>
             <td>
                <table></table>
             </td>
@@ -678,7 +690,8 @@
                   </tr>
                </table>
             </td>
-            <td>Specifies that the datatype is an unsigned type, with modulus stated in the accompanying {mod} tag.</td>
+            <td>Specifies that the datatype is an unsigned type, with modulus stated in the accompanying
+               {mod} tag.</td>
             <td>
                <table>
                   <tr>
@@ -725,37 +738,33 @@
          </tr>
          <tr>
             <td><a name="st-abbreviation-tag-abbreviation">abbreviation</a></td>
-            <td>Normally the abbreviation of a class's name is formed from the initial letters of the words in the name. If there's only one
-               word, it's formed by prepending "A_" or "An". This tag allows the modeller to override this, if the default behaviour leads
-               to aliasing.
-            </td>
+            <td>Normally the abbreviation of a class's name is formed from the initial letters of
+               the words in the name. If there's only one word, it's formed by prepending "A_" or
+               "An". This tag allows the modeller to override this, if the default behaviour leads
+               to aliasing.</td>
             <td><a href="#st-abbreviation">abbreviation</a></td>
          </tr>
          <tr>
             <td><a name="st-access-tag-access-to-type">access-to-type</a></td>
-            <td>Names the type to which the marked type is an access; it must be a domain type, not one of those that ColdFrame defines (such
-               as Integer).<br>Mandatory.
-            </td>
+            <td>Names the type to which the marked type is an access; it must be a domain type, not
+               one of those that ColdFrame defines (such as Integer).<br>Mandatory.</td>
             <td><a href="#st-access">access</a></td>
          </tr>
          <tr>
             <td><a name="st-association-class-naming-tag-association-name">association-name</a>
                *deprecated*
-               
-            </td>
-            <td>This tag is used to specify the name to be used for the association part of an AssociationClass. If not supplied, the name
-               used is the AssociationClass name.
-            </td>
+               </td>
+            <td>This tag is used to specify the name to be used for the association part of an AssociationClass.
+               If not supplied, the name used is the AssociationClass name.</td>
             <td><a href="#st-association-class-naming">association-class-naming</a></td>
          </tr>
          <tr>
             <td><a name="st-association-class-naming-tag-class-name">class-name</a>
                *deprecated*
-               
-            </td>
-            <td>This tag is used to specify the name to be used for the class part of an AssociationClass. If neither this tag nor {association-name}
-               is supplied, the name used is formed by appending "_Class" to the AssociationClass name.
-            </td>
+               </td>
+            <td>This tag is used to specify the name to be used for the class part of an AssociationClass.
+               If neither this tag nor {association-name} is supplied, the name used is formed by
+               appending "_Class" to the AssociationClass name.</td>
             <td><a href="#st-association-class-naming">association-class-naming</a></td>
          </tr>
          <tr>
@@ -765,21 +774,22 @@
          </tr>
          <tr>
             <td><a name="st-id-tag-formalizes">formalizes</a></td>
-            <td>The marked identifying attribute suffices to formalize the named association. It must be the name of the class at the other
-               end of the association.
-            </td>
+            <td>The marked identifying attribute suffices to formalize the named association. It must
+               be the name of the class at the other end of the association.</td>
             <td><a href="#st-id">id</a></td>
          </tr>
          <tr>
             <td><a name="st-renaming-tag-hash">hash</a></td>
-            <td>Specifies how a renamed type is to be hashed. Currently the only supported styles are:<br>* 'discrete', which will work for imported enumerations or integer ranges but not for private or access types, and<br>* 'enumeration', which is similar but acts as a code generation optimization directive.
-            </td>
+            <td>Specifies how a renamed type is to be hashed. Currently the only supported styles
+               are:<br>* 'discrete', which will work for imported enumerations or integer ranges but not
+               for private or access types, and<br>* 'enumeration', which is similar but acts as a code generation optimization directive.</td>
             <td><a href="#st-renaming">renaming</a></td>
          </tr>
          <tr>
             <td><a name="st-imported-tag-hash">hash</a></td>
-            <td>Specifies how an imported type is to be hashed. Currently the only supported styles are:<br>* 'discrete', which will work for imported enumerations or integer ranges but not for private or access types, and<br>* 'enumeration', which is similar but acts as a code generation optimization directive.
-            </td>
+            <td>Specifies how an imported type is to be hashed. Currently the only supported styles
+               are:<br>* 'discrete', which will work for imported enumerations or integer ranges but not
+               for private or access types, and<br>* 'enumeration', which is similar but acts as a code generation optimization directive.</td>
             <td><a href="#st-imported">imported</a></td>
          </tr>
          <tr>
@@ -789,17 +799,18 @@
          </tr>
          <tr>
             <td><a name="st-convention-tag-language">language</a></td>
-            <td>Specifies the programming language whose conventions are to be used in the translation; mandatory.</td>
+            <td>Specifies the programming language whose conventions are to be used in the translation;
+               mandatory.</td>
             <td><a href="#st-convention">convention</a></td>
          </tr>
          <tr>
             <td><a name="st-bounded-string-tag-length">length</a></td>
-            <td>Specifies the maximum length of the &laquo;bounded-string&raquo; string.</td>
+            <td>Specifies the maximum length of the «bounded-string» string.</td>
             <td><a href="#st-bounded-string">bounded-string</a></td>
          </tr>
          <tr>
             <td><a name="st-fixed-string-tag-length">length</a></td>
-            <td>Specifies the length of the &laquo;fixed-string&raquo; string.</td>
+            <td>Specifies the length of the «fixed-string» string.</td>
             <td><a href="#st-fixed-string">fixed-string</a></td>
          </tr>
          <tr>
@@ -814,7 +825,8 @@
          </tr>
          <tr>
             <td><a name="st-unsigned-tag-mod">mod</a></td>
-            <td>If the value is m, the tagged &laquo;unsigned type&raquo; is to be able to store values 0 .. m - 1.</td>
+            <td>If the value is m, the tagged «unsigned type» is to be able to store values 0 .. m
+               - 1.</td>
             <td><a href="#st-unsigned">unsigned</a></td>
          </tr>
          <tr>
@@ -824,8 +836,7 @@
          </tr>
          <tr>
             <td><a name="st-domain-interface-tag-name">name</a></td>
-            <td>The Ada package name to be used, if not the default (the UML package name).<br>Should match the name of the parent &laquo;domain&raquo; package.
-            </td>
+            <td>The Ada package name to be used, if not the default (the UML package name).<br>Should match the name of the parent «domain» package.</td>
             <td><a href="#st-domain-interface">domain-interface</a></td>
          </tr>
          <tr>
@@ -867,85 +878,76 @@
          </tr>
          <tr>
             <td>Autonumber</td>
-            <td>Used for automatically-generated instance identifiers.<br>For Ada, translates to Long_Long_Integer (typically 64-bits).
-            </td>
+            <td>Used for automatically-generated instance identifiers.<br>For Ada, translates to Long_Long_Integer (typically 64-bits).</td>
          </tr>
          <tr>
             <td>Boolean</td>
-            <td>The standard boolean type.<br>Corresponds directly to the Ada Boolean.
-            </td>
+            <td>The standard boolean type.<br>Corresponds directly to the Ada Boolean.</td>
          </tr>
          <tr>
             <td>Character</td>
-            <td>The standard character type.<br>Corresponds directly to the Ada Character.
-            </td>
+            <td>The standard character type.<br>Corresponds directly to the Ada Character.</td>
          </tr>
          <tr>
             <td>Counterpart</td>
-            <td>Used for references to instances in other domains (but see &laquo;counterpart&raquo;).</td>
+            <td>Used for references to instances in other domains (but see «counterpart»).</td>
          </tr>
          <tr>
             <td>Date</td>
-            <td>May correspond to a calendar date, but for Ada translates to ColdFrame.Project.Calendar.Time (the same as Time).</td>
+            <td>May correspond to a calendar date, but for Ada translates to ColdFrame.Project.Calendar.Time
+               (the same as Time).</td>
          </tr>
          <tr>
             <td>Duration</td>
-            <td>A time interval.<br>Corresponds directly to the Ada Duration.
-            </td>
+            <td>A time interval.<br>Corresponds directly to the Ada Duration.</td>
          </tr>
          <tr>
             <td>Float</td>
-            <td>The standard short float type.<br>Corresponds directly to the Ada Float.
-            </td>
+            <td>The standard short float type.<br>Corresponds directly to the Ada Float.</td>
          </tr>
          <tr>
             <td>Integer</td>
-            <td>The standard integer type.<br>Corresponds directly to the Ada Integer.
-            </td>
+            <td>The standard integer type.<br>Corresponds directly to the Ada Integer.</td>
          </tr>
          <tr>
             <td>Long_Float</td>
-            <td>The standard long float type.<br>Corresponds directly to the Ada Long_Float.
-            </td>
+            <td>The standard long float type.<br>Corresponds directly to the Ada Long_Float.</td>
          </tr>
          <tr>
             <td>Natural</td>
-            <td>An integer, constrained to be greater than or equal to zero.<br>Corresponds directly to the Ada Natural.
-            </td>
+            <td>An integer, constrained to be greater than or equal to zero.<br>Corresponds directly to the Ada Natural.</td>
          </tr>
          <tr>
             <td>Positive</td>
-            <td>An integer, constrained to be greater than zero.<br>Corresponds directly to the Ada  Positive.
-            </td>
+            <td>An integer, constrained to be greater than zero.<br>Corresponds directly to the Ada  Positive.</td>
          </tr>
          <tr>
             <td>Real</td>
-            <td>A floating-point value.<br>For Ada, translates to Float.
-            </td>
+            <td>A floating-point value.<br>For Ada, translates to Float.</td>
          </tr>
          <tr>
             <td>String</td>
-            <td>A fixed-length character string, normally used as an operation parameter, when it has the length of the actual. Can only be
-               used for an attribute if the attribute is given an initial value.<br>Corresponds directly to the Ada  String.<br></td>
+            <td>A fixed-length character string, normally used as an operation parameter, when it
+               has the length of the actual. Can only be used for an attribute if the attribute is
+               given an initial value.<br>Corresponds directly to the Ada  String.<br></td>
          </tr>
          <tr>
             <td>Text</td>
-            <td>An unbounded string.<br>For Ada, translates to Ada.Strings.Unbounded.Unbounded_String.
-            </td>
+            <td>An unbounded string.<br>For Ada, translates to Ada.Strings.Unbounded.Unbounded_String.</td>
          </tr>
          <tr>
             <td>Time</td>
-            <td>May correspond to a time-of-day, but for Ada translates to ColdFrame.Project.Calendar.Time (the same as Date).</td>
+            <td>May correspond to a time-of-day, but for Ada translates to ColdFrame.Project.Calendar.Time
+               (the same as Date).</td>
          </tr>
          <tr>
             <td>Timer</td>
-            <td>Used mainly for timeouts in state machines.<br>A timer can hold at most one event, which is to be released at some future time but which can be cancelled or revoked.
-            </td>
+            <td>Used mainly for timeouts in state machines.<br>A timer can hold at most one event, which is to be released at some future time but
+               which can be cancelled or revoked.</td>
          </tr>
          <tr>
             <td>Unbounded_String</td>
-            <td>A variable-length string.<br>Corresponds directly to Ada.Strings.Unbounded.Unbounded_String.
-            </td>
+            <td>A variable-length string.<br>Corresponds directly to Ada.Strings.Unbounded.Unbounded_String.</td>
          </tr>
       </table>
    </body>

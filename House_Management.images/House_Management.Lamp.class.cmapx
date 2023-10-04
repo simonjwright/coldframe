@@ -1,6 +1,6 @@
 <map id="Lamp.class" name="Lamp.class">
-<area shape="rect" id="node1" href="#Lamp" title="{Lamp|«id» Name : Lamp_Name|&#45; «class» Initialize()\n+ Changed()\n&#45; Output_For_Lamp(): Output_Signal}" alt="" coords="5,5,229,112"/>
-<area shape="rect" id="node2" href="#A1" title="\N" alt="" coords="325,34,397,83"/>
-<area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="229,56,325,56,325,61,229,61"/>
-<area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="260,44,277,59"/>
+<area shape="rect" id="node1" href="#Lamp" title="{Lamp|«id» Name : Lamp_Name|&#45; «class» Initialize()\n+ Changed()\n&#45; Output_For_Lamp(): Output_Signal}" alt="" coords="5,5,232,114"/>
+<area shape="rect" id="node2" href="#A1" title="\N" alt="" coords="328,35,400,84"/>
+<area shape="poly" id="edge1" href="#A1" title="A1" alt="" coords="232,57,327,57,327,62,232,62"/>
+<area shape="rect" id="edge1-label" href="#A1" title="A1" alt="" coords="263,45,280,60"/>
 </map>
