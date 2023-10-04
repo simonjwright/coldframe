@@ -10,7 +10,7 @@ include ../../Makefile.inc
 MODELS = .
 
 # nuweb
-NUWEB ?= ~/nuweb.py/nuweb.py
+NUWEB ?= ~/Developer/nuweb.py/nuweb.py
 
 all:: Simple_Buttons.gen
 all:: Test_It.gen

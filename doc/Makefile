@@ -20,7 +20,7 @@ include ../Makefile.inc
 
 # This is to be a directory containing the gh-pages branch of the
 # Github repo.
-DEST ?= $(HOME)/coldframe-pages
+DEST ?= ../../coldframe-pages
 
 all::
 
@@ -84,7 +84,7 @@ DOCS =						\
   use-of-containers.html			\
   ColdFrame-norm.xsd
 
-GIFS = States.gif States-Monitor.gif house-2.gif
+GIFS = States.gif States-Monitor.gif
 
 JPEGS = navigation.jpg window-screen.jpg
 
@@ -114,6 +114,7 @@ event-mapping.png				\
 event-payload.png				\
 hierarchies-full.png				\
 hierarchies.png					\
+house-2.png					\
 house-digital-io.png				\
 house-management-operation.png			\
 house-management.png				\
@@ -135,7 +136,7 @@ type-mapping.png				\
 vague-association.png
 
 PDFS =						\
-textuml/textuml.pdf
+textuml.pdf
 
 ALL = $(DOCS) $(GIFS) $(JPEGS) $(PNGS) $(PDFS)
 

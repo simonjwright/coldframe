@@ -676,7 +676,8 @@ end.
 
 Note, this syntax doesn't include the tokens; they are the UPPER CASE
 elements below. In most cases, the actual token is the lower-case
-version of the element here.
+version of the element here (exceptionally, \verb|NAMESPACE_SEPARATOR|
+is \verb|::|).
 
 \begin{verbatim}
 start : \
